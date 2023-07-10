@@ -27,165 +27,101 @@ exports[`IT Solutions About Components matches the snapshot: 4innovation 1`] = `
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Agreement management - 
-            </span>
-            Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data
+          <li>
+            <strong>
+              Agreement management
+            </strong>
+             - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Participant Management - 
-            </span>
-            Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.
+          <li>
+            <strong>
+              Participant Management
+            </strong>
+             - Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Benefits Enhancements - 
-            </span>
-            Add and manage Benefit Enhancements and Payment mechanisms.
+          <li>
+            <strong>
+              Benefits Enhancements
+            </strong>
+             - Add and manage Benefit Enhancements and Payment mechanisms.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Contact/User Management - 
-            </span>
-            Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)
+          <li>
+            <strong>
+              Contact/User Management
+            </strong>
+             - Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Reports & Analytics - 
-            </span>
-            View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities
+          <li>
+            <strong>
+              Reports & Analytics
+            </strong>
+             - View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Data Hub & Data Exchange - 
-            </span>
-            Provide secure access to sensitive data such as claims and beneficiary reports,
+          <li>
+            <strong>
+              Data Hub & Data Exchange
+            </strong>
+             - Provide secure access to sensitive data such as claims and beneficiary reports,
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Knowledge Library - 
-            </span>
-            Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)
+          <li>
+            <strong>
+              Knowledge Library
+            </strong>
+             - Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Provider Overlap Check - 
-            </span>
-            Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.
+          <li>
+            <strong>
+              Provider Overlap Check
+            </strong>
+             - Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Beneficiary Overlap Check - 
-            </span>
-            Beneficiary overlap check across the models
+          <li>
+            <strong>
+              Beneficiary Overlap Check
+            </strong>
+             - Beneficiary overlap check across the models
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Beneficiary Lookup Feature - 
-            </span>
-            This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.
+          <li>
+            <strong>
+              Beneficiary Lookup Feature
+            </strong>
+             - This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Data Exchange with downstream systems - 
-            </span>
-            Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)
+          <li>
+            <strong>
+              Data Exchange with downstream systems
+            </strong>
+             - Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Claim and Claim Line Feeds (CCLF) - 
-            </span>
-            CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI
+          <li>
+            <strong>
+              Claim and Claim Line Feeds (CCLF)
+            </strong>
+             - CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Identity & Access Management - 
-            </span>
-            Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA
+          <li>
+            <strong>
+              Identity & Access Management
+            </strong>
+             - Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Application Programming Interface (API) Key Mgt - 
-            </span>
-            Request and manage API keys and monitor API usage statistics
+          <li>
+            <strong>
+              Application Programming Interface (API) Key Mgt
+            </strong>
+             - Request and manage API keys and monitor API usage statistics
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              4i Command Line Interface (CLI) Tool - 
-            </span>
-            Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.
+          <li>
+            <strong>
+              4i Command Line Interface (CLI) Tool
+            </strong>
+             - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Tasks and Notifications - 
-            </span>
-            Show users Tasks and Notifications, the ability for users to manage and control the notifications
+          <li>
+            <strong>
+              Tasks and Notifications
+            </strong>
+             - Show users Tasks and Notifications, the ability for users to manage and control the notifications
           </li>
         </ul>
       </div>
@@ -221,165 +157,101 @@ exports[`IT Solutions About Components matches the snapshot: Accountable Care Or
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Agreement management - 
-            </span>
-            Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data
+          <li>
+            <strong>
+              Agreement management
+            </strong>
+             - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Participant Management - 
-            </span>
-            Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.
+          <li>
+            <strong>
+              Participant Management
+            </strong>
+             - Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Benefits Enhancements - 
-            </span>
-            Add and manage Benefit Enhancements and Payment mechanisms.
+          <li>
+            <strong>
+              Benefits Enhancements
+            </strong>
+             - Add and manage Benefit Enhancements and Payment mechanisms.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Contact/User Management - 
-            </span>
-            Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)
+          <li>
+            <strong>
+              Contact/User Management
+            </strong>
+             - Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Reports & Analytics - 
-            </span>
-            View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities
+          <li>
+            <strong>
+              Reports & Analytics
+            </strong>
+             - View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Data Hub & Data Exchange - 
-            </span>
-            Provide secure access to sensitive data such as claims and beneficiary reports,
+          <li>
+            <strong>
+              Data Hub & Data Exchange
+            </strong>
+             - Provide secure access to sensitive data such as claims and beneficiary reports,
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Knowledge Library - 
-            </span>
-            Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)
+          <li>
+            <strong>
+              Knowledge Library
+            </strong>
+             - Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Provider Overlap Check - 
-            </span>
-            Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.
+          <li>
+            <strong>
+              Provider Overlap Check
+            </strong>
+             - Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Beneficiary Overlap Check - 
-            </span>
-            Beneficiary overlap check across the models
+          <li>
+            <strong>
+              Beneficiary Overlap Check
+            </strong>
+             - Beneficiary overlap check across the models
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Beneficiary Lookup Feature - 
-            </span>
-            This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.
+          <li>
+            <strong>
+              Beneficiary Lookup Feature
+            </strong>
+             - This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Data Exchange with downstream systems - 
-            </span>
-            Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)
+          <li>
+            <strong>
+              Data Exchange with downstream systems
+            </strong>
+             - Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Claim and Claim Line Feeds (CCLF) - 
-            </span>
-            CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI
+          <li>
+            <strong>
+              Claim and Claim Line Feeds (CCLF)
+            </strong>
+             - CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Identity & Access Management - 
-            </span>
-            Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA
+          <li>
+            <strong>
+              Identity & Access Management
+            </strong>
+             - Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Application Programming Interface (API) Key Mgt - 
-            </span>
-            Request and manage API keys and monitor API usage statistics
+          <li>
+            <strong>
+              Application Programming Interface (API) Key Mgt
+            </strong>
+             - Request and manage API keys and monitor API usage statistics
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              4i Command Line Interface (CLI) Tool - 
-            </span>
-            Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.
+          <li>
+            <strong>
+              4i Command Line Interface (CLI) Tool
+            </strong>
+             - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Tasks and Notifications - 
-            </span>
-            Show users Tasks and Notifications, the ability for users to manage and control the notifications
+          <li>
+            <strong>
+              Tasks and Notifications
+            </strong>
+             - Show users Tasks and Notifications, the ability for users to manage and control the notifications
           </li>
         </ul>
       </div>
@@ -415,24 +287,16 @@ exports[`IT Solutions About Components matches the snapshot: Automated Plan Paym
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Computes plan level monthly payments to Medicare Advantage, PACE Plans Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, and Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS receives plan level specific from the Health Plan Management System (HPMS) and Medicare Advantage Prescription Drug System (MARx)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Receives Annual Part D reconciliation and Coverage Gap Discount payments
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Produces a monthly file containing plan level payments for HIGLAS
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Computes and stores plan level sequestration payment adjustments amounts
           </li>
         </ul>
@@ -469,19 +333,13 @@ exports[`IT Solutions About Components matches the snapshot: Beneficiary Claims 
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             BCDA supplements ACOs’ insight into their assigned beneficiary populations with Medicare claims data.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             BCDA enables ACOs to make claims data requests more often - once a week.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             BCDA offers Medicare claims data in a format that is aligned with a healthcare interoperability standard and the CMS interoperability rule.
           </li>
         </ul>
@@ -539,14 +397,10 @@ exports[`IT Solutions About Components matches the snapshot: CMS Qualtrics 1`] =
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Customizable survey or application creation
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Survey or application distribution
           </li>
         </ul>
@@ -612,44 +466,28 @@ The business function of CDX is a centralized data exchange to enable interopera
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Onboard participants & vendors
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Tap into existing data feeds
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provide center-wide data collect and use the data
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Enable interoperability
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Exchange data with Application Program Interfaces (APIs)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Shared Drives for secure data exchange with PII/PHI
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Outside vendor API testing
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Collects data from HDR/ virus scans/ transforms templated into FHIR format
           </li>
         </ul>
@@ -665,44 +503,28 @@ The business function of CDX is a centralized data exchange to enable interopera
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Manage API keys and tokens
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Basic API functions (GET, POST, PUT, DELETE)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             For the ET3 model: A Simple Object Access Protocol (SOAP) API with EMS Vendors
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             For other purposes: A REST API (representational state transfer)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Transform data
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Exchange data with Fast Healthcare Interoperable Resource (FHIR) Azure Managed Service
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Exchange data with EMRs, Health Exchange Networks, etc.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             File handling (create folder, upload file, download file)
           </li>
         </ul>
@@ -774,34 +596,22 @@ Performing model implementation, design, monitoring, and evaluation activities t
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             accessing CMS data
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             exchanging files/data with model participants
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             transferring data from the CCW to model operational systems within the CMS boundaries
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             uploading model awardee-specific data collections into the VRDC
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             sharing common files/data between projects
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             sharing CMS and CMMI model data with external researchers
           </li>
         </ul>
@@ -817,29 +627,19 @@ Performing model implementation, design, monitoring, and evaluation activities t
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Follow beneficiaries across multiple care settings
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Identify areas for improving quality of care provided to chronically ill Medicare beneficiaries.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Identify ways to reduce program spending.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Make current Medicare, Medicaid, Assessment and Part D data more readily available to researchers for all studies, populations, and rare events.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provide thorough documentation so researchers understand the common keys, relationships between claims types, and how to use data accurately.
           </li>
         </ul>
@@ -918,19 +718,13 @@ exports[`IT Solutions About Components matches the snapshot: Expanded Data Feedb
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Receive data from CMMI (claims data, feedback reports)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Produce Business Intelligence (BI) reports and dashboards for internal and external uers
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Complete data analytics to supply visibility into peformance against model’s objectives
           </li>
         </ul>
@@ -946,29 +740,19 @@ exports[`IT Solutions About Components matches the snapshot: Expanded Data Feedb
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Provide up to date (quarterly) dashboards for model participants (practices and physicians)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Each dashboard is specific to the exact practice, and will contain information about that practice’s patients.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Dashboards are targeted at the Practice/Physician level, not at higher levels like hospital administrators or group administrators.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Dashboards are not intended to be used by CMS or CMMI internally – they are for the participating practices.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             <span>
               Each dashboard will contain information that is sensitive to each practice, including:
             </span>
@@ -997,19 +781,13 @@ exports[`IT Solutions About Components matches the snapshot: Expanded Data Feedb
               </li>
             </ul>
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Each dashboard can contain information to help practices increase their rankings within a model as well as (potentially) patients well being – but... practices are not required to act on the data included in a dashboard. Dashboards are for informational purposes only.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provide CMMI internal model teams with intelligence on model participants
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provide ET3 model with a tool for linking data attributes to patients through Probabilistic Matching
           </li>
         </ul>
@@ -1046,24 +824,16 @@ exports[`IT Solutions About Components matches the snapshot: GovDelivery 1`] = `
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Reach subscribers by email
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Automate and schedule emails
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Utilize branded templates
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Access detailed reporting
           </li>
         </ul>
@@ -1127,11 +897,9 @@ HDR’s Configuration Management allows model teams to define and modify perform
           Functions
         </h3>
         <ul
-          class="padding-left-4 list-style-none padding-left-0 margin-top-neg-2"
+          class="padding-left-4"
         >
-          <li
-            class=""
-          >
+          <li>
             A model’s participating entities submit model-specified data at specified times throughout the model’s life. Submitted data is validated, errors are reported back for correction, and submission statuses are reported within the UI for monitoring.
           </li>
         </ul>
@@ -1159,19 +927,13 @@ HDR’s Configuration Management allows model teams to define and modify perform
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Health data submissions via Microsoft Excel spreadsheets
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Aggregate quality measure (i.e., numerators, denominators, exclusions, exceptions)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             All other types of health-related data (e.g., clinical data, health equity data, etc.)
           </li>
         </ul>
@@ -1185,11 +947,9 @@ HDR’s Configuration Management allows model teams to define and modify perform
           Health data submissions via UI
         </h4>
         <ul
-          class="padding-left-4 list-style-none padding-left-0 margin-top-neg-2"
+          class="padding-left-4"
         >
-          <li
-            class=""
-          >
+          <li>
             Aggregate quality measures
           </li>
         </ul>
@@ -1205,34 +965,22 @@ HDR’s Configuration Management allows model teams to define and modify perform
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Model configuration
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Basic configuration (field names aligned with AMS)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Model year, performance periods, and submission periods configuration
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Quality measure with optional results display configuration
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Pre-loaded beneficiary information including minimum thresholds for reporting
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Two-tier data validation and status reporting leverages: 1) Microsoft Excel’s in-cell validations and 2) HDR’s backend services
           </li>
         </ul>
@@ -1246,11 +994,9 @@ HDR’s Configuration Management allows model teams to define and modify perform
           Quality measure results
         </h4>
         <ul
-          class="padding-left-4 list-style-none padding-left-0 margin-top-neg-2"
+          class="padding-left-4"
         >
-          <li
-            class=""
-          >
+          <li>
             Aggregate quality measure calculation results report
           </li>
         </ul>
@@ -1296,14 +1042,10 @@ Health Plan Management System, all health insurance companies participating in t
         <ol
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             HPMS functionality facilitates the numerous data collection and reporting activities mandated for these entities by legislation.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             HPMS provides support for the ongoing operations of the plan enrollment and plan compliance business functions and for longer-term strategic planning and program analysis.
           </li>
         </ol>
@@ -1324,134 +1066,82 @@ Health Plan Management System, all health insurance companies participating in t
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Contract and plan enumeration and management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Application submission and review
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Formulary submission and review
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Bid and benefit package submission and review
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Electronic contracting and certifications
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Marketing material submission and review
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Audit and assessment of plan performance
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Plan payment reconciliation data reporting
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Part D drug pricing and pharmacy data submissions
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Fiscal soundness
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Complaint tracking
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Compliance
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Plan data reporting and performance metrics
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Financial, plan bid, and plan data reporting audits
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Coverage gap discount program
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Electronic health record reporting
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Cost reporting and audit
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Plan connectivity
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Operational data exchanges
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Online Enrollment Center (OEC) management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Data support for the Medicare & You handbook and Medicare Plan Finder
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Quality improvement
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Research and evaluation
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Manage stakeholder contacts and organizations
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Track events (campaigns) and capture feedback (surveys)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Measure event registration, attendance, and performance
           </li>
         </ul>
@@ -1504,39 +1194,25 @@ Specific to CMMI, HIGLAS has two integrated points:
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Strengthens Medicare’s management of accounts receivable and allows more timely and effective collection activities on outstanding debts
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Enhances CMS oversight of contractor financial operations, including data entry, transaction processing and reporting
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Produces automated agency financial statements and other required reports, leading to fewer errors in financial reporting and a reduction in manual labor
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Allows for the elimination of redundant accounting processes and provides standardized accounting business practices
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Enables Medicare contractors to cut back on the number of cuff systems currently used to track financial data
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provides a standard General Ledger accounting system, standardized accounting and financial management process for CMS central office and administrative program accounting activities
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Incorporates Medicaid and CHIP government data
           </li>
         </ul>
@@ -1573,55 +1249,337 @@ exports[`IT Solutions About Components matches the snapshot: Innovation Payment 
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Process payments for Models and disburse Electronic Funds Transfer (EFT) or paper check payments, as required, to eligible Medicare, Non-Medicare, and Medicaid providers, Model participants, and beneficiaries.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Apply Federal Payment Levy Program (FPLP) withholding for each payee in accordance with U.S. Department of Treasury requirements.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Issue demand letters, conduct collection activities, and report on receivables.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Process and apply receipts to Model overpayments and make adjustments as needed to refund excess collections received.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Process referrals of delinquent Model debts to the U.S. Department of Treasury for collection in accordance with CMS debt management policy.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Manage/monitor Extended Repayment Schedule (ERS) arrangements to provide hardship relief to eligible Model participants in accordance with CMS debt management policy.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Manage a single bank account for all new and existing Models that make EFT payments, in accordance with the CMS demonstration payment schedule provided by CMMI and OFM.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Send IRS Forms 1099-MISC annually for payments made to payees in accordance with the IRS threshold requirements.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Send IRS Forms 1099-C annually to Model participants for the cancellation of CMMI model overpayments that were deemed uncollectible and approved for write-off and termination of collection by CMS management.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provide proper funds control, oversight, and compliance with all applicable laws, regulations, Federal Accounting Standards, Generally Accepted Accounting Principles, CMS Office of Financial Management (OFM) guidelines and reporting requirements, and CMS Internet Only Manual (IOM)/Medicare Financial Management Manual, Chapters 3-7.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions About Components matches the snapshot: Innovation Support Platform 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        The Innovation Support Platform (ISP) is a contract with three integrated IT systems that support the participant interaction that occurs after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.
+      </p>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Product capabilities
+        </h3>
+        <span
+          class="text-pre-wrap "
+        >
+          ISP supplies the capabilities below through: 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about"
+          >
+            Centralized Data Exchange (CDX)
+          </a>
+          , 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about"
+          >
+            Health Data Reporting (HDR)
+          </a>
+          , and 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about"
+          >
+            Expanded Data Feedback Reporting (eDFR)
+          </a>
+          . You can work with BSG to configure the specific capabilities you need for your model.
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Access management
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Participants can reuse existing CMS user accounts or create a new one.
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Configure model
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Setup the model in the system, including:
+        </span>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li>
+            Model year
+          </li>
+          <li>
+            Performance periods
+          </li>
+          <li>
+            Submission periods
+          </li>
+          <li>
+            Pre-load participant information
+          </li>
+          <li>
+            Pre-load beneficiary information
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Submission management
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Establish and manage timeframes for data submission.
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Exchange data through Application Programming Interfaces (API)
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Engage in interoperable data exchanges, including:
+        </span>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li>
+            API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with 
+            <a
+              aria-label="Open in a new tab"
+              class="usa-link usa-link--external"
+              href="https://nemsis.org/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Emergency Management Services
+            </a>
+          </li>
+          <li>
+            Electronic Health Records integration (a Bulk FHIR API is coming soon)
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Collect and process health-related data.
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Collect data from participants through data entry on web pages, file uploads, or APIs, including:
+        </span>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li>
+            Expanded Demographics data that complies with United States Core Data for Interoperability (USCDI) standards.
+          </li>
+          <li>
+            Social Determinants of Health (SDOH) data using the PRAPARE, North Carolina, or AHC tools.
+          </li>
+          <li>
+            Quality Measures (i.e., numerators, denominators, exclusions, exceptions)
+          </li>
+          <li>
+            Clinical Data
+          </li>
+          <li>
+            Other model-defined metrics and qualitative data.
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        />
+        <span
+          class="text-pre-wrap "
+        >
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://www.loom.com/share/ba9eec7f6a0b401a8a5ea102d9c433f1"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            See a video sample.
+          </a>
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Produce reports and files for participants. 
+        </h4>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li>
+            <span>
+              Participant feedback dashboards that supply curated reports to participants based on CMS data (
+              <a
+                aria-label="Open in a new tab"
+                class="usa-link usa-link--external"
+                href="https://cmsbox.app.box.com/s/8rody63c7w6x2skkrchit43a7q4e7fa1"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                see a video sample
+              </a>
+              ). Dashboards use the Looker commercial tool and can include information such as:
+            </span>
+            <ul
+              class="padding-left-4 margin-top-0"
+            >
+              <li
+                class="list-item"
+              >
+                Multiple levels of reports (e.g., entity, practitioner, beneficiary)
+              </li>
+              <li
+                class="list-item"
+              >
+                Utilization information
+              </li>
+              <li
+                class="list-item"
+              >
+                Cost information
+              </li>
+              <li
+                class="list-item"
+              >
+                Claims-based quality measures
+              </li>
+              <li
+                class="list-item"
+              >
+                Model-specific metrics
+              </li>
+            </ul>
+          </li>
+          <li>
+            Quality measure results - aggregate quality measure calculation results report
+          </li>
+          <li>
+            Medicare FFS Claims and Part D raw data files.
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Analytics
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Create analytics for model teams, including:
+        </span>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li>
+            Computations and algorithms such as probabilistic matching and attribution.
+          </li>
+          <li>
+            Model Space (coming soon) – a workspace for model contractors, model teams, and BSG’s IT teams to create and share analytical tools using languages such as Python through Data Bricks.
           </li>
         </ul>
       </div>
@@ -1659,44 +1617,28 @@ The data in the IDR is leveraged by various components across the agency to faci
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Medical Trend & Utilization Analysis
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Healthcare Cost & Assessment
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Policy Analysis and Development
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provider Profiling & Management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Quality and Effectiveness: Pay for Performance
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Program Integrity and Fraud, Waste & Abuse
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Rapid response to legislative inquiries
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Data available for claims-based program operational needs
           </li>
         </ul>
@@ -1712,24 +1654,16 @@ The data in the IDR is leveraged by various components across the agency to faci
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             State of the art business intelligence, reporting, and additional data access capabilities
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Automated Finder File and Data Extract Process
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Data dictionary, data limitations information, source to target mappings, etc.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Customer support and assistance
           </li>
         </ul>
@@ -1766,74 +1700,46 @@ exports[`IT Solutions About Components matches the snapshot: Learning and Diffus
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Learning systems
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Driver diagram development
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Educating beneficiaries
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Recruiting participants (advertising the model to stakeholders)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Cross-participant sharing (using Connect, 4i, or other)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Learning contractor (a cross-model contract or something else)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Technical assistance
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Model-specific learning (for example, a focus on quality)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Model-specific data collection efforts
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Model-specific care redesign/care reporting
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Dashboard development (piloting)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Complete health equity analyses
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Model-specific learning cost estimate
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Have an LDG member as part of the team
           </li>
         </ul>
@@ -1872,24 +1778,16 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Manage CMMI’s overall relationship with OGC
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Draft Participation Agreements, Cooperative Agreements, State Agreements, addendums to Medicare Agreements, certain aspects of rulemaking, and upon request and subject to availability, other legal-related documents ​
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provide technical assistance to model teams and groups for cross-cutting initiatives
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Develop recommendations to address cross-cutting legal issues
           </li>
         </ul>
@@ -1961,14 +1859,10 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Identity resolution of CMS enterprise data entities (providers, beneficiaries, enrollees, ACO model participation)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Federation of identity resolved CMS enterprise data
           </li>
         </ul>
@@ -2005,19 +1899,13 @@ exports[`IT Solutions About Components matches the snapshot: Measure and Instrum
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Develop de novo quality measures and re-specify existing quality measures to support measuring and incentivizing quality in the Center’s portfolio of APMs,
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Support measures through the full Measure Lifecycle including endorsement, rulemaking as needed, reevaluation, and implementation, and
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provide ad hoc analysis support or reports to assist the Center and its models in the design of their quality strategy during new model development or when the model desires to revise a measure used in its current quality portfolio.
           </li>
         </ul>
@@ -2078,24 +1966,16 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Responsible for the enrollment of beneficiaries into Medicare Advantage and Part D plans
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Calculates monthly premiums for Part D plans, Medicare Advantage plan providers and Part D plan providers
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Generates the payment file used to pay plan providers
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Provides withholding information to SSA so that monthly premiums are deducted from a beneficiaries SSA check
           </li>
         </ul>
@@ -2153,19 +2033,13 @@ exports[`IT Solutions About Components matches the snapshot: Quality Vertical 1`
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Guidance in quality measure selection and recommendations for usage
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Assistance in developing a new quality measure
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Technical assistance to model teams
           </li>
         </ul>
@@ -2181,9 +2055,7 @@ exports[`IT Solutions About Components matches the snapshot: Quality Vertical 1`
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -2194,9 +2066,7 @@ exports[`IT Solutions About Components matches the snapshot: Quality Vertical 1`
               Quality Vertical Model Resources on SharePoint
             </a>
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -2207,9 +2077,7 @@ exports[`IT Solutions About Components matches the snapshot: Quality Vertical 1`
               Measure Management System (MMS) Tools
             </a>
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -2349,25 +2217,17 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Applicat
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Scoring Rubric - 
-            </span>
-            Establish a framework to score applications and set up the panel members.
+          <li>
+            <strong>
+              Scoring Rubric
+            </strong>
+             - Establish a framework to score applications and set up the panel members.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Application Scoring - 
-            </span>
-            Score applications and track the input from each panel member.
+          <li>
+            <strong>
+              Application Scoring
+            </strong>
+             - Score applications and track the input from each panel member.
           </li>
         </ul>
       </div>
@@ -2378,11 +2238,9 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Applicat
           class="margin-bottom-2"
         />
         <ul
-          class="padding-left-4 list-style-none padding-left-0 margin-top-neg-2"
+          class="padding-left-4"
         >
-          <li
-            class=""
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -2427,35 +2285,23 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Group management - 
-            </span>
-            Define collaboration groups that can include participants, contractors, and CMS staff.
+          <li>
+            <strong>
+              Group management
+            </strong>
+             - Define collaboration groups that can include participants, contractors, and CMS staff.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Engage - 
-            </span>
-            Members of a Group can interact through chat, Q&A, and information sharing.
+          <li>
+            <strong>
+              Engage
+            </strong>
+             - Members of a Group can interact through chat, Q&A, and information sharing.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Learn - 
-            </span>
-            Follow topics and search for information. Share and organize relevant materials.
+          <li>
+            <strong>
+              Learn
+            </strong>
+             - Follow topics and search for information. Share and organize relevant materials.
           </li>
         </ul>
       </div>
@@ -2470,9 +2316,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -2483,9 +2327,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 
               View sample 1
             </a>
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -2530,104 +2372,64 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Letter o
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Portal registration
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             User access management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Model application management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Organization management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Contact management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Practitioner submission & tracking
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Submission Period management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Case management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             File submission / approval
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Mass file download
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             File tracker / dashboard
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Annual / quarterly deliverable management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Attestation management
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Corrective action planning
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Events, tasks, email / templates
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Reports
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Dashboards
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Single Sign On (OKTA) w/ MFA
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             RIDP (Remote Identity Proofing)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Anti-virus file scanning
           </li>
         </ul>
@@ -2643,24 +2445,16 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Letter o
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Enable the collection of information and the exchange of documents
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Track/monitor model participant deliverable submission and compliance
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Enter/escalate questions/issues to support contractors
           </li>
         </ul>
@@ -2702,76 +2496,48 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Access management - 
-            </span>
-            Participants can reuse existing CMS user accounts or create a new one.
+          <li>
+            <strong>
+              Access management
+            </strong>
+             - Participants can reuse existing CMS user accounts or create a new one.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Applications - 
-            </span>
-            Applications – View and edit applications submitted through the RFA.
+          <li>
+            <strong>
+              Applications
+            </strong>
+             - Applications – View and edit applications submitted through the RFA.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Sign Participant Agreements - 
-            </span>
-            (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.
+          <li>
+            <strong>
+              Sign Participant Agreements
+            </strong>
+             - (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Participant Profile - 
-            </span>
-            Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.
+          <li>
+            <strong>
+              Participant Profile
+            </strong>
+             - Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Participant Documents - 
-            </span>
-            Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).
+          <li>
+            <strong>
+              Participant Documents
+            </strong>
+             - Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Submission Management - 
-            </span>
-            Submission Management – Establish and manage timeframes for data submission.
+          <li>
+            <strong>
+              Submission Management
+            </strong>
+             - Submission Management – Establish and manage timeframes for data submission.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Participant Engagement - 
-            </span>
+          <li>
             <span>
-              Engage with your participants with features such as:
+              <strong>
+                Participant Engagement
+              </strong>
+               - Engage with your participants with features such as:
             </span>
             <ul
               class="padding-left-4 margin-top-0"
@@ -2798,25 +2564,17 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
               </li>
             </ul>
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Case Management - 
-            </span>
-            Case Management – Manage requests, tickets, and questions from participants.
+          <li>
+            <strong>
+              Case Management
+            </strong>
+             - Case Management – Manage requests, tickets, and questions from participants.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Reports and Dashboards - 
-            </span>
-            Reports and Dashboards – Produce standard and ad-hoc reports based on the data in the system.
+          <li>
+            <strong>
+              Reports and Dashboards
+            </strong>
+             - Reports and Dashboards – Produce standard and ad-hoc reports based on the data in the system.
           </li>
         </ul>
       </div>
@@ -2831,9 +2589,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -2844,9 +2600,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
               View sample 1
             </a>
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -2891,26 +2645,18 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Request 
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Access management - 
-            </span>
-            Access management – Candidate participants can reuse existing CMS user accounts or create a new one.
+          <li>
+            <strong>
+              Access management
+            </strong>
+             - Access management – Candidate participants can reuse existing CMS user accounts or create a new one.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Data collection - 
-            </span>
+          <li>
             <span>
-              Collect the data you need to review and select participants such as:
+              <strong>
+                Data collection
+              </strong>
+               - Collect the data you need to review and select participants such as:
             </span>
             <ul
               class="padding-left-4 margin-top-0"
@@ -2937,55 +2683,35 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Request 
               You can customize the data collection during the development process.
             </p>
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Conditional logic - 
-            </span>
-            Build logic into the questions you ask applicants (e.g., present new questions based on answers to prior questions)
+          <li>
+            <strong>
+              Conditional logic
+            </strong>
+             - Build logic into the questions you ask applicants (e.g., present new questions based on answers to prior questions)
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Documents - 
-            </span>
-            Collect supporting documents from the candidate participants.
+          <li>
+            <strong>
+              Documents
+            </strong>
+             - Collect supporting documents from the candidate participants.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Vet Providers - 
-            </span>
-            (coming soon) – Determine if Medicare FFS providers are valid by checking against data from the Center for Program Integrity (CPI), such as PECOS.
+          <li>
+            <strong>
+              Vet Providers
+            </strong>
+             - (coming soon) – Determine if Medicare FFS providers are valid by checking against data from the Center for Program Integrity (CPI), such as PECOS.
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Track - 
-            </span>
-            submissions
+          <li>
+            <strong>
+              Track
+            </strong>
+             - submissions
           </li>
-          <li
-            class="list-item"
-          >
-            <span
-              class="text-bold"
-            >
-              Sign Participant Agreements - 
-            </span>
-            (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.
+          <li>
+            <strong>
+              Sign Participant Agreements
+            </strong>
+             - (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.
           </li>
         </ul>
       </div>
@@ -2996,11 +2722,9 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Request 
           class="margin-bottom-2"
         />
         <ul
-          class="padding-left-4 list-style-none padding-left-0 margin-top-neg-2"
+          class="padding-left-4"
         >
-          <li
-            class=""
-          >
+          <li>
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -3066,19 +2790,13 @@ The following systems are a part of Shared Systems:
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             Adjudication of Part A and Part B institutional claims
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             FISS is a mainframe system Medicare Part A contractors use to process Medicare Part A and Part B institutional claims nationwide.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             Inquiries for claims statuses, additional development requests or eligibility, and various codes are processed.
           </li>
         </ul>
@@ -3111,19 +2829,13 @@ The following systems are a part of Shared Systems:
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             The MCS is the shared system that processes Medicare Part B claims for physician care and other outpatient services nationwide.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             It interfaces directly with the CWF.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             It meets CMS core requirements for processing Medicare Part B claims, including data collection and validation, claims control, pricing, adjudication, correspondence, online inquiry, file maintenance, reimbursement, and financial processing.
           </li>
         </ul>
@@ -3156,14 +2868,10 @@ The following systems are a part of Shared Systems:
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li
-            class="list-item"
-          >
+          <li>
             GDIT maintains the VMS software that processes DME claims through adjudication and payment and for Medical Review.
           </li>
-          <li
-            class="list-item"
-          >
+          <li>
             The VMS claims processing system is the shared system that processes claims for physician and other practitioner services, prior authorization, diagnostic tests, ambulance services, DMEPOS, and other services/supplies not covered by Part A. It interfaces directly with the CWF for verification, validation, and payment authorization.
           </li>
         </ul>

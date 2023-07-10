@@ -101,41 +101,23 @@ const solutions: SolutionTType = {
       components: [
         {
           header: 'Product capabilties',
-          itemHeaders: [
-            'Agreement management',
-            'Participant Management',
-            'Benefits Enhancements',
-            'Contact/User Management',
-            'Reports & Analytics',
-            'Data Hub & Data Exchange',
-            'Knowledge Library',
-            'Provider Overlap Check',
-            'Beneficiary Overlap Check',
-            'Beneficiary Lookup Feature',
-            'Data Exchange with downstream systems',
-            'Claim and Claim Line Feeds (CCLF)',
-            'Identity & Access Management',
-            'Application Programming Interface (API) Key Mgt',
-            '4i Command Line Interface (CLI) Tool',
-            'Tasks and Notifications'
-          ],
           items: [
-            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
-            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
-            'Add and manage Benefit Enhancements and Payment mechanisms.',
-            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
-            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
-            'Provide secure access to sensitive data such as claims and beneficiary reports,',
-            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
-            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
-            'Beneficiary overlap check across the models',
-            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
-            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
-            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
-            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
-            'Request and manage API keys and monitor API usage statistics',
-            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
-            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+            '<bold>Agreement management</bold> - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            '<bold>Participant Management</bold> - Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            '<bold>Benefits Enhancements</bold> - Add and manage Benefit Enhancements and Payment mechanisms.',
+            '<bold>Contact/User Management</bold> - Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            '<bold>Reports & Analytics</bold> - View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            '<bold>Data Hub & Data Exchange</bold> - Provide secure access to sensitive data such as claims and beneficiary reports,',
+            '<bold>Knowledge Library</bold> - Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            '<bold>Provider Overlap Check</bold> - Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            '<bold>Beneficiary Overlap Check</bold> - Beneficiary overlap check across the models',
+            '<bold>Beneficiary Lookup Feature</bold> - This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            '<bold>Data Exchange with downstream systems</bold> - Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            '<bold>Claim and Claim Line Feeds (CCLF)</bold> - CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            '<bold>Identity & Access Management</bold> - Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            '<bold>Application Programming Interface (API) Key Mgt</bold> - Request and manage API keys and monitor API usage statistics',
+            '<bold>4i Command Line Interface (CLI) Tool</bold> - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
         }
       ]
@@ -209,41 +191,23 @@ const solutions: SolutionTType = {
       components: [
         {
           header: 'Product capabilties',
-          itemHeaders: [
-            'Agreement management',
-            'Participant Management',
-            'Benefits Enhancements',
-            'Contact/User Management',
-            'Reports & Analytics',
-            'Data Hub & Data Exchange',
-            'Knowledge Library',
-            'Provider Overlap Check',
-            'Beneficiary Overlap Check',
-            'Beneficiary Lookup Feature',
-            'Data Exchange with downstream systems',
-            'Claim and Claim Line Feeds (CCLF)',
-            'Identity & Access Management',
-            'Application Programming Interface (API) Key Mgt',
-            '4i Command Line Interface (CLI) Tool',
-            'Tasks and Notifications'
-          ],
           items: [
-            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
-            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
-            'Add and manage Benefit Enhancements and Payment mechanisms.',
-            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
-            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
-            'Provide secure access to sensitive data such as claims and beneficiary reports,',
-            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
-            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
-            'Beneficiary overlap check across the models',
-            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
-            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
-            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
-            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
-            'Request and manage API keys and monitor API usage statistics',
-            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
-            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+            '<bold>Agreement management</bold> - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            '<bold>Participant Management</bold> - Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            '<bold>Benefits Enhancements</bold> - Add and manage Benefit Enhancements and Payment mechanisms.',
+            '<bold>Contact/User Management</bold> - Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            '<bold>Reports & Analytics</bold> - View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            '<bold>Data Hub & Data Exchange</bold> - Provide secure access to sensitive data such as claims and beneficiary reports,',
+            '<bold>Knowledge Library</bold> - Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            '<bold>Provider Overlap Check</bold> - Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            '<bold>Beneficiary Overlap Check</bold> - Beneficiary overlap check across the models',
+            '<bold>Beneficiary Lookup Feature</bold> - This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            '<bold>Data Exchange with downstream systems</bold> - Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            '<bold>Claim and Claim Line Feeds (CCLF)</bold> - CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            '<bold>Identity & Access Management</bold> - Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            '<bold>Application Programming Interface (API) Key Mgt</bold> - Request and manage API keys and monitor API usage statistics',
+            '<bold>4i Command Line Interface (CLI) Tool</bold> - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
         }
       ]
@@ -611,8 +575,6 @@ CMMI works with CPI to screen participant and provider candidates prior to those
             'Each dashboard is specific to the exact practice, and will contain information about that practice’s patients.',
             'Dashboards are targeted at the Practice/Physician level, not at higher levels like hospital administrators or group administrators.',
             'Dashboards are not intended to be used by CMS or CMMI internally – they are for the participating practices.',
-            // Not sure why typescript isn't respecting the union type here - string[] | ListItemType
-            // @ts-ignore
             {
               header:
                 'Each dashboard will contain information that is sensitive to each practice, including:',
@@ -953,6 +915,175 @@ The Model team will receive an implementation milestone schedule that identifies
       ]
     }
   },
+  innovationSupport: {
+    about: {
+      description:
+        'The Innovation Support Platform (ISP) is a contract with three integrated IT systems that support the participant interaction that occurs after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.',
+      components: [
+        {
+          header: 'Product capabilities',
+          items: [],
+          links: [
+            {
+              link:
+                'https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about',
+              external: false
+            },
+            {
+              link:
+                'https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about',
+              external: false
+            },
+            {
+              link:
+                'https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about',
+              external: false
+            }
+          ],
+          description:
+            'ISP supplies the capabilities below through: <link1>Centralized Data Exchange (CDX)</link1>, <link2>Health Data Reporting (HDR)</link2>, and <link3>Expanded Data Feedback Reporting (eDFR)</link3>. You can work with BSG to configure the specific capabilities you need for your model.'
+        },
+        {
+          header: 'Access management',
+          items: [],
+          level: 'h4',
+          description:
+            'Participants can reuse existing CMS user accounts or create a new one.'
+        },
+        {
+          header: 'Configure model',
+          items: [
+            'Model year',
+            'Performance periods',
+            'Submission periods',
+            'Pre-load participant information',
+            'Pre-load beneficiary information'
+          ],
+          level: 'h4',
+          description: 'Setup the model in the system, including:'
+        },
+        {
+          header: 'Submission management',
+          items: [],
+          level: 'h4',
+          description: 'Establish and manage timeframes for data submission.'
+        },
+        {
+          header:
+            'Exchange data through Application Programming Interfaces (API)',
+          links: [{ link: 'https://nemsis.org/', external: true }],
+          items: [
+            'API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with <link1>Emergency Management Services</link1>',
+            'Electronic Health Records integration (a Bulk FHIR API is coming soon)'
+          ],
+          level: 'h4',
+          description: 'Engage in interoperable data exchanges, including:'
+        },
+        {
+          header: 'Collect and process health-related data.',
+          items: [
+            'Expanded Demographics data that complies with United States Core Data for Interoperability (USCDI) standards.',
+            'Social Determinants of Health (SDOH) data using the PRAPARE, North Carolina, or AHC tools.',
+            'Quality Measures (i.e., numerators, denominators, exclusions, exceptions)',
+            'Clinical Data',
+            'Other model-defined metrics and qualitative data.'
+          ],
+          level: 'h4',
+          description:
+            'Collect data from participants through data entry on web pages, file uploads, or APIs, including:'
+        },
+        {
+          header: '',
+          items: [],
+          level: 'h4',
+          links: [
+            {
+              link:
+                'https://www.loom.com/share/ba9eec7f6a0b401a8a5ea102d9c433f1',
+              external: true
+            }
+          ],
+          description: '<link1>See a video sample.</link1>'
+        },
+        {
+          header: 'Produce reports and files for participants. ',
+          links: [
+            {
+              link:
+                'https://cmsbox.app.box.com/s/8rody63c7w6x2skkrchit43a7q4e7fa1',
+              external: true
+            }
+          ],
+          items: [
+            {
+              header:
+                'Participant feedback dashboards that supply curated reports to participants based on CMS data (<link1>see a video sample</link1>). Dashboards use the Looker commercial tool and can include information such as:',
+              items: [
+                'Multiple levels of reports (e.g., entity, practitioner, beneficiary)',
+                'Utilization information',
+                'Cost information',
+                'Claims-based quality measures',
+                'Model-specific metrics'
+              ]
+            },
+            'Quality measure results - aggregate quality measure calculation results report',
+            'Medicare FFS Claims and Part D raw data files.'
+          ],
+          level: 'h4'
+        },
+        {
+          header: 'Analytics',
+          items: [
+            'Computations and algorithms such as probabilistic matching and attribution.',
+            'Model Space (coming soon) – a workspace for model contractors, model teams, and BSG’s IT teams to create and share analytical tools using languages such as Python through Data Bricks.'
+          ],
+          level: 'h4',
+          description: 'Create analytics for model teams, including:'
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'The ISP systems (CDX, HDR, eDFR) vary in functionality. Therefore, onboarding and implementation times for the three systems vary. However, the onboarding typically takes months rather than years depending on capacity.',
+      items: [
+        {
+          header: 'Contact the ISP Team',
+          description:
+            'Contact Hung Van if you’re interested in using ISP or want to learn more.'
+        },
+        {
+          header: 'Initial discussion',
+          description:
+            'The ISP team will discuss your needs and demonstrate the features available in the systems in ISP.'
+        },
+        {
+          header: 'Commit to using ISP',
+          description:
+            'The ISP team will add your need to its backlog once you decide to use ISP. The backlog represents the work that ISP must deliver to CMMI model teams.'
+        },
+        {
+          header: 'Discovery, user research, and roadmap',
+          description:
+            'The ISP team will conduct user research to gain more insight into user behavior, to adjust the existing features, and design the user experience with the ISP systems. The ISP team will discuss requirements with you and identify the Minimal Viable Product (MVP) and a high-level roadmap for the initial go-live.'
+        },
+        {
+          header: 'Sprints',
+          description:
+            'Develop and test the product iteratively. The ISP team will demonstrate the software product to you iteratively during the sprints.'
+        },
+        {
+          header: 'Prepare for live system operations',
+          description:
+            'ISP will test the systems rigorously. The team will also work with you to onboard users, prepare the help desk, and to prepare any documentation that your participants may need.'
+        },
+        {
+          header: 'Monitor system performance',
+          description:
+            'After go-live, the ISP team will monitor how the system performance and design continuing updates to the features.'
+        }
+      ]
+    }
+  },
   integratedDataRepository: {
     about: {
       description: `The Integrated Data Repository (IDR) is a multi-platform and high-volume data warehouse comprising integrated views of data across Medicare Parts A, B, C, and D, Beneficiary Entitlement, Enrollment and Utilization data. Provider reference information, Drug data, Contracts for Plans, and Medicaid and Children’s Health Insurance Program (CHIP).
@@ -1228,7 +1359,6 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
             'From the CMS Connect app on your desktop, search for “Create or manage a resource mailbox” or “Mailbox request.” You’ll need to provide the following information:',
           items: [
             'Request type (Create a new resource mailbox)',
-            // @ts-ignore
             {
               items: [
                 'Mailbox name (Please be specific. For example: CMS OP Feedback).',
@@ -1272,14 +1402,24 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Additional resources',
           links: [
-            'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
-            'https://mmshub.cms.gov/mms-tools',
-            'https://qpp.cms.gov/'
+            {
+              link:
+                'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
+              external: true
+            },
+            {
+              link: 'https://mmshub.cms.gov/mms-tools',
+              external: true
+            },
+            {
+              link: 'https://qpp.cms.gov/',
+              external: true
+            }
           ],
           items: [
-            'Quality Vertical Model Resources on SharePoint',
-            'Measure Management System (MMS) Tools',
-            'Quality Payment Program'
+            '<link1>Quality Vertical Model Resources on SharePoint</link1>',
+            '<link2>Measure Management System (MMS) Tools</link2>',
+            '<link3>Quality Payment Program</link3>'
           ]
         }
       ]
@@ -1340,17 +1480,20 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       components: [
         {
           header: 'Product capabilities',
-          itemHeaders: ['Scoring Rubric', 'Application Scoring'],
           items: [
-            'Establish a framework to score applications and set up the panel members.',
-            'Score applications and track the input from each panel member.'
+            '<bold>Scoring Rubric</bold> - Establish a framework to score applications and set up the panel members.',
+            '<bold>Application Scoring</bold> - Score applications and track the input from each panel member.'
           ]
         },
         {
           header: '',
-          items: ['View an ARS screenshot'],
+          items: ['<link1>View an ARS screenshot</link1>'],
           links: [
-            'https://drive.google.com/uc?export=view&id=1z1jWuUk4xLgW4NY0UjbYW9gO_9IjI7BW'
+            {
+              link:
+                'https://drive.google.com/uc?export=view&id=1z1jWuUk4xLgW4NY0UjbYW9gO_9IjI7BW',
+              external: true
+            }
           ]
         }
       ]
@@ -1399,19 +1542,29 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       components: [
         {
           header: 'Product capabilities',
-          itemHeaders: ['Group management', 'Engage', 'Learn'],
           items: [
-            'Define collaboration groups that can include participants, contractors, and CMS staff.',
-            'Members of a Group can interact through chat, Q&A, and information sharing.',
-            'Follow topics and search for information. Share and organize relevant materials.'
+            '<bold>Group management</bold> - Define collaboration groups that can include participants, contractors, and CMS staff.',
+            '<bold>Engage</bold> - Members of a Group can interact through chat, Q&A, and information sharing.',
+            '<bold>Learn</bold> - Follow topics and search for information. Share and organize relevant materials.'
           ]
         },
         {
           header: 'Samples',
-          items: ['View sample 1', 'View sample 2'],
+          items: [
+            '<link1>View sample 1</link1>',
+            '<link2>View sample 2</link2>'
+          ],
           links: [
-            'https://drive.google.com/uc?export=view&id=16cg308CI-PnbbWOaDanXlHmpzKPqQWdc',
-            'https://drive.google.com/uc?export=view&id=1ArGZsXTeFrsLA67uRN3Jyr4U6UwG1sVR'
+            {
+              link:
+                'https://drive.google.com/uc?export=view&id=16cg308CI-PnbbWOaDanXlHmpzKPqQWdc',
+              external: true
+            },
+            {
+              link:
+                'https://drive.google.com/uc?export=view&id=1ArGZsXTeFrsLA67uRN3Jyr4U6UwG1sVR',
+              external: true
+            }
           ]
         }
       ]
@@ -1468,27 +1621,16 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           header: 'Product capabilities',
           description:
             'The capabilities for POST vary between models. The following capabilities are common across models. The project team will create the capabilities that your model requires.',
-          itemHeaders: [
-            'Access management',
-            'Applications',
-            'Sign Participant Agreements',
-            'Participant Profile',
-            'Participant Documents',
-            'Submission Management',
-            'Participant Engagement',
-            'Case Management',
-            'Reports and Dashboards'
-          ],
           items: [
-            'Participants can reuse existing CMS user accounts or create a new one.',
-            'Applications – View and edit applications submitted through the RFA.',
-            '(coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.',
-            'Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.',
-            'Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).',
-            'Submission Management – Establish and manage timeframes for data submission.',
-            // @ts-ignore
+            '<bold>Access management</bold> - Participants can reuse existing CMS user accounts or create a new one.',
+            '<bold>Applications</bold> - Applications – View and edit applications submitted through the RFA.',
+            '<bold>Sign Participant Agreements</bold> - (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.',
+            '<bold>Participant Profile</bold> - Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.',
+            '<bold>Participant Documents</bold> - Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).',
+            '<bold>Submission Management</bold> - Submission Management – Establish and manage timeframes for data submission.',
             {
-              header: 'Engage with your participants with features such as:',
+              header:
+                '<bold>Participant Engagement</bold> - Engage with your participants with features such as:',
               items: [
                 'Post announcements, FAQs, and other information',
                 'Engage in chats, surveys, and polls',
@@ -1496,16 +1638,27 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
                 'Manage Corrective Action Plans'
               ]
             },
-            'Case Management – Manage requests, tickets, and questions from participants.',
-            'Reports and Dashboards – Produce standard and ad-hoc reports based on the data in the system.'
+            '<bold>Case Management</bold> - Case Management – Manage requests, tickets, and questions from participants.',
+            '<bold>Reports and Dashboards</bold> - Reports and Dashboards – Produce standard and ad-hoc reports based on the data in the system.'
           ]
         },
         {
           header: 'Samples',
-          items: ['View sample 1', 'View sample 2'],
+          items: [
+            '<link1>View sample 1</link1>',
+            '<link2>View sample 2</link2>'
+          ],
           links: [
-            'https://drive.google.com/uc?export=view&id=1cFGP0eisdER8wZ7mFwR6ctwV09wWu11G',
-            'https://drive.google.com/uc?export=view&id=1AXJ29X1Lo21EfDcqrCsHv0q2XVvO9ZzE'
+            {
+              link:
+                'https://drive.google.com/uc?export=view&id=1cFGP0eisdER8wZ7mFwR6ctwV09wWu11G',
+              external: true
+            },
+            {
+              link:
+                'https://drive.google.com/uc?export=view&id=1AXJ29X1Lo21EfDcqrCsHv0q2XVvO9ZzE',
+              external: true
+            }
           ]
         }
       ]
@@ -1518,21 +1671,11 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       components: [
         {
           header: 'Product capabilities',
-          itemHeaders: [
-            'Access management',
-            'Data collection',
-            'Conditional logic',
-            'Documents',
-            'Vet Providers',
-            'Track',
-            'Sign Participant Agreements'
-          ],
           items: [
-            'Access management – Candidate participants can reuse existing CMS user accounts or create a new one.',
-            // @ts-ignore
+            '<bold>Access management</bold> - Access management – Candidate participants can reuse existing CMS user accounts or create a new one.',
             {
               header:
-                'Collect the data you need to review and select participants such as:',
+                '<bold>Data collection</bold> - Collect the data you need to review and select participants such as:',
               items: [
                 'Organization information',
                 'Contact information',
@@ -1541,18 +1684,22 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
               description:
                 'You can customize the data collection during the development process.'
             },
-            'Build logic into the questions you ask applicants (e.g., present new questions based on answers to prior questions)',
-            'Collect supporting documents from the candidate participants.',
-            '(coming soon) – Determine if Medicare FFS providers are valid by checking against data from the Center for Program Integrity (CPI), such as PECOS.',
-            'submissions',
-            '(coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.'
+            '<bold>Conditional logic</bold> - Build logic into the questions you ask applicants (e.g., present new questions based on answers to prior questions)',
+            '<bold>Documents</bold> - Collect supporting documents from the candidate participants.',
+            '<bold>Vet Providers</bold> - (coming soon) – Determine if Medicare FFS providers are valid by checking against data from the Center for Program Integrity (CPI), such as PECOS.',
+            '<bold>Track</bold> - submissions',
+            '<bold>Sign Participant Agreements</bold> - (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.'
           ]
         },
         {
           header: '',
-          items: ['View an RFA screenshot'],
+          items: ['<link1>View an RFA screenshot</link1>'],
           links: [
-            'https://drive.google.com/uc?export=view&id=1xijatfSN4cv8cYAT29oKZcv1jo15RDcl'
+            {
+              link:
+                'https://drive.google.com/uc?export=view&id=1xijatfSN4cv8cYAT29oKZcv1jo15RDcl',
+              external: true
+            }
           ]
         }
       ]

@@ -442,7 +442,6 @@ exports[`IT Solutions Timeline Components matches the snapshot: Beneficiary Clai
             <a
               class="usa-link"
               href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline"
-              target="_blank"
             >
               timing and steps involved for using 4i
             </a>
@@ -1605,6 +1604,134 @@ The Model team will receive an implementation milestone schedule that identifies
             class="margin-bottom-0"
           >
             After the Model has been successfully implemented to the IPC, payments can be made to the Model participants.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Timeline Components matches the snapshot: Innovation Support Platform 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+    >
+      <p>
+        The ISP systems (CDX, HDR, eDFR) vary in functionality. Therefore, onboarding and implementation times for the three systems vary. However, the onboarding typically takes months rather than years depending on capacity.
+      </p>
+      <ol
+        class="usa-process-list padding-top-1"
+      >
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Contact the ISP Team
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            Contact Hung Van if you’re interested in using ISP or want to learn more.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Initial discussion
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            The ISP team will discuss your needs and demonstrate the features available in the systems in ISP.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Commit to using ISP
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            The ISP team will add your need to its backlog once you decide to use ISP. The backlog represents the work that ISP must deliver to CMMI model teams.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Discovery, user research, and roadmap
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            The ISP team will conduct user research to gain more insight into user behavior, to adjust the existing features, and design the user experience with the ISP systems. The ISP team will discuss requirements with you and identify the Minimal Viable Product (MVP) and a high-level roadmap for the initial go-live.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Sprints
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            Develop and test the product iteratively. The ISP team will demonstrate the software product to you iteratively during the sprints.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Prepare for live system operations
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            ISP will test the systems rigorously. The team will also work with you to onboard users, prepare the help desk, and to prepare any documentation that your participants may need.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Monitor system performance
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            After go-live, the ISP team will monitor how the system performance and design continuing updates to the features.
           </p>
         </li>
       </ol>
