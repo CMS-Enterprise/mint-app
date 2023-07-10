@@ -28,9 +28,9 @@ exports[`IT Solutions About Components matches the snapshot: 4innovation 1`] = `
           class="padding-left-4 margin-top-0"
         >
           <li>
-            <strong>
+            <str>
               Agreement management
-            </strong>
+            </str ong>
              - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data
           </li>
           <li>
@@ -333,13 +333,19 @@ exports[`IT Solutions About Components matches the snapshot: Beneficiary Claims 
         <ul
           class="padding-left-4 margin-top-0"
         >
-          <li>
+          <li
+            class="list-item"
+          >
             BCDA supplements ACOs’ insight into their assigned beneficiary populations with Medicare claims data.
           </li>
-          <li>
+          <li
+            class="list-item"
+          >
             BCDA enables ACOs to make claims data requests more often - once a week.
           </li>
-          <li>
+          <li
+            class="list-item"
+          >
             BCDA offers Medicare claims data in a format that is aligned with a healthcare interoperability standard and the CMS interoperability rule.
           </li>
         </ul>
