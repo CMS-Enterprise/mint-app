@@ -236,7 +236,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
               data-testid="tooltipWrapper"
             >
               <div
-                aria-describedby="tooltip-569973"
+                aria-describedby="tooltip-319751"
                 class="usa-tooltip__trigger"
                 data-testid="triggerElement"
                 position="right"
@@ -265,7 +265,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 aria-hidden="true"
                 class="usa-tooltip__body"
                 data-testid="tooltipBody"
-                id="tooltip-569973"
+                id="tooltip-319751"
                 role="tooltip"
                 title="Filter to view the content specific groups at CMS care about."
               >
