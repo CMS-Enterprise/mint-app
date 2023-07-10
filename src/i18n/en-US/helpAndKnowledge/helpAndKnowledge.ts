@@ -1,3 +1,7 @@
+import {
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
+} from 'data/operationalSolutionCategories';
 import { AboutConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
 import { TimelineConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
 
@@ -10,36 +14,40 @@ type SolutionTType = {
   [key: string]: SolutionModelType;
 };
 
-const solutionCategoryies = {
-  applications: {
-    header: 'Applications',
-    description: 'Learn about the solutions available for applications.'
-  },
-  'communication-tools': {
-    header: 'Communication tools',
-    description: 'Learn about the solutions available for communication tools.'
-  },
-  'contractors-and-contract-vehicles': {
-    header: 'Contractors and contract vehicles',
+type SolutionCategoryType = {
+  header: string;
+  subHeader?: string;
+  description: string;
+};
+
+export const solutionCategories: Record<
+  OperationalSolutionCategoryRoute,
+  SolutionCategoryType
+> = {
+  'applications-and-participation-interaction-aco-and-kidney': {
+    header: 'Applications and participant interaction',
+    subHeader: '(ACO and kidney models)',
     description:
-      'Learn about the solutions available for contractors and contract vehicles.'
+      'Learn about the solutions available for applications and participant interaction for ACO and kidney models.'
   },
-  'database-and-data-management': {
-    header: 'Databases and data management',
+  'applications-and-participation-interaction-non-aco': {
+    header: 'Applications and participant interaction',
+    subHeader: '(non-ACO models)',
     description:
-      'Learn about the solutions available for databases and data management.'
+      'Learn about the solutions available for cooperative agreement applications, participant agreement applications, and participant interaction for non-ACO models.'
   },
-  'data-exchange': {
-    header: 'Data exchange',
-    description: 'Learn about the solutions available for data exchange.'
+  'communication-tools-and-help-desk': {
+    header: 'Communication tools and help desk',
+    description:
+      'Learn about the solutions available for communication tools and help desk.'
   },
-  'data-reporting': {
-    header: 'Data reporting',
-    description: 'Learn about the solutions available for data reporting.'
+  'contract-vehicles': {
+    header: 'Contract vehicles',
+    description: 'Learn about the solutions available for contract vehicles.'
   },
-  'help-desks': {
-    header: 'Help desks',
-    description: 'Learn about the solutions available for help desks.'
+  data: {
+    header: 'Data',
+    description: 'Learn about the solutions available for data.'
   },
   learning: {
     header: 'Learning',
@@ -51,17 +59,38 @@ const solutionCategoryies = {
   },
   'medicare-advantage-and-part-d': {
     header: 'Medicare Advantage and Part D',
-    description: 'Learn about the solutions available for legal.'
+    description:
+      'Learn about the solutions available for Medicare Advantage and Part D.'
   },
   'medicare-fee-for-service': {
     header: 'Medicare Fee-for-Service',
     description:
       'Learn about the solutions available for Medicare Fee-for-Service.'
   },
+  'payments-and-financials': {
+    header: 'Payments and financials',
+    description:
+      'Learn about the solutions available for payments and financials.'
+  },
   quality: {
     header: 'Quality',
     description: 'Learn about the solutions available for quality.'
   }
+};
+
+const solutionSubCategories: Record<
+  OperationalSolutionSubCategories,
+  string
+> = {
+  [OperationalSolutionSubCategories.APPLICATIONS]: 'Applications',
+  [OperationalSolutionSubCategories.COMMUNICATION_TOOLS]: 'Communication tools',
+  [OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS]:
+    'Cooperative agreement applications',
+  [OperationalSolutionSubCategories.HELP_DESK]: 'Help desk',
+  [OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS]:
+    'Participant agreement applications',
+  [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION]:
+    'Participant interaction'
 };
 
 const solutions: SolutionTType = {
@@ -1671,9 +1700,11 @@ const helpAndKnowledge = {
       'In the meantime, contact the MINT Team at MINTTeam@cms.hhs.gov',
     description2: 'if you have any questions.'
   },
+
+  categories: solutionCategories,
+  subCategories: solutionSubCategories,
   itLeadInfo:
     'If your model has an IT lead, please make sure you work with them when expressing interest in solutions.',
-  categories: solutionCategoryies,
   solutions
 };
 

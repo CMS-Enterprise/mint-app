@@ -10,7 +10,11 @@ describe('Operation Solution Detail Header', () => {
     const { getByText } = render(<Header solution={helpSolutions[0]} />);
 
     expect(getByText('4innovation')).toBeInTheDocument();
-    expect(getByText('Data reporting')).toBeInTheDocument();
+    expect(
+      getByText(
+        'Applications and participant interaction (ACO and kidney models)'
+      )
+    ).toBeInTheDocument();
   });
 
   it('matches snapshot', () => {
