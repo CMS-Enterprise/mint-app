@@ -704,19 +704,19 @@ const ReadOnlyOpsEvalAndLearning = ({
       </div>
 
       {/* CCWAndQuality */}
-      <div
-        className={`${
-          isViewingFilteredView
-            ? ''
-            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
-        }`}
-      >
-        {!isViewingFilteredView && (
-          <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
-        )}
+      {isCCWInvolvement(ccmInvolvment) && (
+        <div
+          className={`${
+            isViewingFilteredView
+              ? ''
+              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+          }`}
+        >
+          {!isViewingFilteredView && (
+            <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
+          )}
 
-        {isCCWInvolvement(ccmInvolvment) ||
-          checkGroupMap(
+          {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'sendFilesBetweenCcw',
@@ -727,8 +727,7 @@ const ReadOnlyOpsEvalAndLearning = ({
             />
           )}
 
-        {isCCWInvolvement(ccmInvolvment) ||
-          checkGroupMap(
+          {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'appToSendFilesToKnown',
@@ -746,17 +745,15 @@ const ReadOnlyOpsEvalAndLearning = ({
             />
           )}
 
-        {/* This is a slight "hack" of this component in order to get around the heading being required */}
-        {isCCWInvolvement(ccmInvolvment) ||
-          checkGroupMap(
+          {/* This is a slight "hack" of this component in order to get around the heading being required */}
+          {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'appToSendFilesToKnown',
             <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
           )}
 
-        {isCCWInvolvement(ccmInvolvment) ||
-          checkGroupMap(
+          {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'useCcwForFileDistribiutionToParticipants',
@@ -768,22 +765,23 @@ const ReadOnlyOpsEvalAndLearning = ({
               notes={useCcwForFileDistribiutionToParticipantsNote}
             />
           )}
-      </div>
+        </div>
+      )}
 
       {/* Quality */}
-      <div
-        className={`${
-          isViewingFilteredView
-            ? ''
-            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
-        }`}
-      >
-        {!isViewingFilteredView && (
-          <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
-        )}
+      {isQualityMeasures(dataNeededForMonitoring) && (
+        <div
+          className={`${
+            isViewingFilteredView
+              ? ''
+              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+          }`}
+        >
+          {!isViewingFilteredView && (
+            <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
+          )}
 
-        {isQualityMeasures(dataNeededForMonitoring) ||
-          checkGroupMap(
+          {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'developNewQualityMeasures',
@@ -794,8 +792,7 @@ const ReadOnlyOpsEvalAndLearning = ({
             />
           )}
 
-        {isQualityMeasures(dataNeededForMonitoring) ||
-          checkGroupMap(
+          {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'qualityPerformanceImpactsPayment',
@@ -805,7 +802,8 @@ const ReadOnlyOpsEvalAndLearning = ({
               notes={qualityPerformanceImpactsPaymentNote}
             />
           )}
-      </div>
+        </div>
+      )}
 
       {/* DataSharing */}
       <div

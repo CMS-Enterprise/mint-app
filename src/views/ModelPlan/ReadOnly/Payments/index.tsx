@@ -259,7 +259,7 @@ const ReadOnlyPayments = ({
       >
         {isClaims && <h3>{t('whatWillYouPayOptions.claims')}</h3>}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -273,7 +273,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -287,7 +287,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -299,7 +299,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -330,7 +330,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -341,7 +341,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -353,7 +353,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -365,7 +365,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -376,7 +376,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isClaims ||
+        {isClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -398,7 +398,7 @@ const ReadOnlyPayments = ({
       >
         {isCostSharing && <h3>{t('beneficaryCostSharingQuestions')}</h3>}
 
-        {isCostSharing ||
+        {isCostSharing &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -409,7 +409,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isCostSharing ||
+        {isCostSharing &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -450,7 +450,7 @@ const ReadOnlyPayments = ({
       >
         {isNonClaims && <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>}
 
-        {isNonClaims ||
+        {isNonClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -464,7 +464,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isNonClaims ||
+        {isNonClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -475,7 +475,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isNonClaims ||
+        {isNonClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -487,7 +487,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isNonClaims ||
+        {isNonClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -501,7 +501,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isNonClaims ||
+        {isNonClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -515,7 +515,7 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isNonClaims ||
+        {isNonClaims &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
