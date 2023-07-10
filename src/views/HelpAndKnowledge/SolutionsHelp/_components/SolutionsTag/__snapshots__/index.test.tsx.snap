@@ -3,16 +3,16 @@
 exports[`Operation Solution Help Tag matches snapshot 1`] = `
 <DocumentFragment>
   <a
-    aria-label="Articles under the Data reporting category"
+    aria-label="Articles under the Data category"
     class="usa-link display-block margin-right-05 margin-bottom-1"
     data-testid="solutions-tag"
-    href="/help-and-knowledge/operational-solutions?category=data-reporting"
+    href="/help-and-knowledge/operational-solutions?category=data"
   >
     <span
       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
       data-testid="tag"
     >
-      Data reporting
+      Data
     </span>
   </a>
 </DocumentFragment>

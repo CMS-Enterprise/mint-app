@@ -26,7 +26,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: 4innovation 1`] 
           >
             Inquire about using 4i/ACO-OS
           </h3>
-          Send an email to 
+          Send an email to
           <a
             aria-label="Open in a new tab"
             class="usa-link"
@@ -163,7 +163,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: 4innovation 1`] 
             class="usa-process-list__heading margin-top-neg-05"
             data-testid="processListHeading"
           >
-            Monitor systems 
+            Monitor systems
           </h3>
           <p>
             Monitor the 4i and ACO-OS systems in Production and provide end user support. Post model Go-Live, model team leads continue to attend status meetings and sprint ceremonies in order to receive ongoing support and provide input into future features to be developed in the UI.
@@ -201,7 +201,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Accountable Care
           >
             Inquire about using 4i/ACO-OS
           </h3>
-          Send an email to 
+          Send an email to
           <a
             aria-label="Open in a new tab"
             class="usa-link"
@@ -338,7 +338,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Accountable Care
             class="usa-process-list__heading margin-top-neg-05"
             data-testid="processListHeading"
           >
-            Monitor systems 
+            Monitor systems
           </h3>
           <p>
             Monitor the 4i and ACO-OS systems in Production and provide end user support. Post model Go-Live, model team leads continue to attend status meetings and sprint ceremonies in order to receive ongoing support and provide input into future features to be developed in the UI.
@@ -438,11 +438,10 @@ exports[`IT Solutions Timeline Components matches the snapshot: Beneficiary Clai
             class="padding-left-4 margin-top-0"
           />
           <p>
-            Since BCDA leverages 4i, model teams are encouraged to learn more about the 
+            Since BCDA leverages 4i, model teams are encouraged to learn more about the
             <a
               class="usa-link"
               href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline"
-              target="_blank"
             >
               timing and steps involved for using 4i
             </a>
@@ -502,7 +501,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: CMS Box 1`] = `
     <div
       class="operational-solution-details line-height-body-5 font-body-md"
     >
-      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at 
+      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at
       <a
         aria-label="Open in a new tab"
         class="usa-link"
@@ -577,7 +576,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: CMS Qualtrics 1`
     <div
       class="operational-solution-details line-height-body-5 font-body-md"
     >
-      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at 
+      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at
       <a
         aria-label="Open in a new tab"
         class="usa-link"
@@ -665,7 +664,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: CPI Vetting 1`] 
           class="usa-alert__text"
         >
           <span>
-            In the meantime, contact the MINT Team at 
+            In the meantime, contact the MINT Team at
             <a
               aria-label="Open in a new tab"
               class="usa-link"
@@ -708,7 +707,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Centralized Data
           >
             Inquire about CDX
           </h3>
-          If you’re interested in using CDX for your model or would like to learn more about the system, please contact 
+          If you’re interested in using CDX for your model or would like to learn more about the system, please contact
           <a
             aria-label="Open in a new tab"
             class="usa-link"
@@ -734,7 +733,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Centralized Data
           </p>
           <ol>
             <li>
-              Register as New User in the 
+              Register as New User in the
               <a
                 aria-label="Open in a new tab"
                 class="usa-link usa-link--external"
@@ -825,7 +824,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Chronic Conditio
           >
             Complete CCW VRDC Access Request worksheet
           </h3>
-          Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA 
+          Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA
           <a
             aria-label="Open in a new tab"
             class="usa-link"
@@ -847,7 +846,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Chronic Conditio
             Complete CCW CARS application
           </h3>
           <p>
-            Upon approval, OEDA will initiate a request in CCW Access Request System (CARS) application. The new user will receive an email invitation to submit and complete the CARS request for access. 
+            Upon approval, OEDA will initiate a request in CCW Access Request System (CARS) application. The new user will receive an email invitation to submit and complete the CARS request for access.
           </p>
         </li>
         <li
@@ -881,7 +880,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Chronic Conditio
           >
             Complete Employee CCW Access Request form
           </h3>
-          Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA 
+          Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA
           <a
             aria-label="Open in a new tab"
             class="usa-link"
@@ -903,7 +902,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Chronic Conditio
             Complete CCW CARS application
           </h3>
           <p>
-            Upon approval, OEDA will initiate a request in CCW Access Request System (CARS) application. The new user will receive an email invitation to submit and complete the CARS request for access. 
+            Upon approval, OEDA will initiate a request in CCW Access Request System (CARS) application. The new user will receive an email invitation to submit and complete the CARS request for access.
           </p>
         </li>
         <li
@@ -984,7 +983,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Consolidated Bus
           <p
             class="margin-bottom-0"
           >
-            CBOS will review and confirm the needs of the model. If the model intends to use phone, the call center must also evaluate interactive voice response (IVR) option tree at this phase. 
+            CBOS will review and confirm the needs of the model. If the model intends to use phone, the call center must also evaluate interactive voice response (IVR) option tree at this phase.
           </p>
         </li>
         <li
@@ -1014,7 +1013,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Consolidated Bus
           <p
             class="margin-bottom-0"
           >
-            The Help Desk Manager works with the Model Lead to review training materials. These will include any prepared materials, knowledge base articles, or other items. Each level of the support center will receive training. 
+            The Help Desk Manager works with the Model Lead to review training materials. These will include any prepared materials, knowledge base articles, or other items. Each level of the support center will receive training.
           </p>
         </li>
         <li
@@ -1044,7 +1043,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Consolidated Bus
           <p
             class="margin-bottom-0"
           >
-            After standard outreach procedures are defined and final testing is complete, CBOSC is ready to support the model. 
+            After standard outreach procedures are defined and final testing is complete, CBOSC is ready to support the model.
           </p>
         </li>
       </ol>
@@ -1077,7 +1076,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Electronic File 
           class="usa-alert__text"
         >
           <span>
-            In the meantime, contact the MINT Team at 
+            In the meantime, contact the MINT Team at
             <a
               aria-label="Open in a new tab"
               class="usa-link"
@@ -1120,7 +1119,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Expanded Data Fe
             class="usa-process-list__heading margin-top-neg-05"
             data-testid="processListHeading"
           >
-            Reach out to eDFR 
+            Reach out to eDFR
           </h3>
           <p
             class="margin-bottom-0"
@@ -1160,7 +1159,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Expanded Data Fe
           <p
             class="margin-bottom-0"
           >
-            Generally from first talks to first release, it can take 6 to 12 months to get a model using eDFR. Any future changes are released quarterly. 
+            Generally from first talks to first release, it can take 6 to 12 months to get a model using eDFR. Any future changes are released quarterly.
           </p>
         </li>
       </ol>
@@ -1242,7 +1241,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: GovDelivery 1`] 
           <p
             class="margin-bottom-0"
           >
-            Once you’re comfortable with GovDelivery, you’re able to start using it. 
+            Once you’re comfortable with GovDelivery, you’re able to start using it.
           </p>
         </li>
       </ol>
@@ -1330,7 +1329,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Health Data Repo
           <p
             class="margin-bottom-0"
           >
-            If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Hung Van. 
+            If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Hung Van.
           </p>
         </li>
         <li
@@ -1419,7 +1418,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Health Plan Mana
           class="usa-alert__text"
         >
           <span>
-            In the meantime, contact the MINT Team at 
+            In the meantime, contact the MINT Team at
             <a
               aria-label="Open in a new tab"
               class="usa-link"
@@ -1449,7 +1448,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Healthcare Integ
     <div
       class="line-height-body-5 font-body-md"
     >
-      Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at 
+      Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at
       <a
         aria-label="Open in a new tab"
         class="usa-link"
@@ -1613,6 +1612,134 @@ The Model team will receive an implementation milestone schedule that identifies
 </DocumentFragment>
 `;
 
+exports[`IT Solutions Timeline Components matches the snapshot: Innovation Support Platform 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+    >
+      <p>
+        The ISP systems (CDX, HDR, eDFR) vary in functionality. Therefore, onboarding and implementation times for the three systems vary. However, the onboarding typically takes months rather than years depending on capacity.
+      </p>
+      <ol
+        class="usa-process-list padding-top-1"
+      >
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Contact the ISP Team
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            Contact Hung Van if you’re interested in using ISP or want to learn more.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Initial discussion
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            The ISP team will discuss your needs and demonstrate the features available in the systems in ISP.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Commit to using ISP
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            The ISP team will add your need to its backlog once you decide to use ISP. The backlog represents the work that ISP must deliver to CMMI model teams.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Discovery, user research, and roadmap
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            The ISP team will conduct user research to gain more insight into user behavior, to adjust the existing features, and design the user experience with the ISP systems. The ISP team will discuss requirements with you and identify the Minimal Viable Product (MVP) and a high-level roadmap for the initial go-live.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Sprints
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            Develop and test the product iteratively. The ISP team will demonstrate the software product to you iteratively during the sprints.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Prepare for live system operations
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            ISP will test the systems rigorously. The team will also work with you to onboard users, prepare the help desk, and to prepare any documentation that your participants may need.
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05"
+            data-testid="processListHeading"
+          >
+            Monitor system performance
+          </h3>
+          <p
+            class="margin-bottom-0"
+          >
+            After go-live, the ISP team will monitor how the system performance and design continuing updates to the features.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`IT Solutions Timeline Components matches the snapshot: Integrated Data Repository 1`] = `
 <DocumentFragment>
   <div>
@@ -1637,7 +1764,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Integrated Data 
           class="usa-alert__text"
         >
           <span>
-            In the meantime, contact the MINT Team at 
+            In the meantime, contact the MINT Team at
             <a
               aria-label="Open in a new tab"
               class="usa-link"
@@ -1801,7 +1928,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Master Data Mana
       class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
     >
       <p>
-        Coordination with MDM can happen prior to having an implementation contractor. Once the model has an implementation contractor, it takes an average of two months to onboard. 
+        Coordination with MDM can happen prior to having an implementation contractor. Once the model has an implementation contractor, it takes an average of two months to onboard.
       </p>
       <ol
         class="usa-process-list padding-top-1"
@@ -1916,7 +2043,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Measure and Inst
           <p
             class="margin-bottom-0"
           >
-            Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical (QV) Team’s Quality Officer, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. 
+            Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical (QV) Team’s Quality Officer, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request.
           </p>
         </li>
         <li
@@ -1931,7 +2058,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Measure and Inst
           <p
             class="margin-bottom-0"
           >
-            Once model teams receive approval from Dustin to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, Teresa Winder-Wells, and the CMMI MIDS Quality Subject Matter Expert (QSME), Tim Day to discuss their quality measure needs. Teresa and Tim will guide the model teams as they prepare justification to present their request to the Front Office (FO). 
+            Once model teams receive approval from Dustin to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, Teresa Winder-Wells, and the CMMI MIDS Quality Subject Matter Expert (QSME), Tim Day to discuss their quality measure needs. Teresa and Tim will guide the model teams as they prepare justification to present their request to the Front Office (FO).
           </p>
         </li>
         <li
@@ -2024,7 +2151,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Medicare Advanta
           class="usa-alert__text"
         >
           <span>
-            In the meantime, contact the MINT Team at 
+            In the meantime, contact the MINT Team at
             <a
               aria-label="Open in a new tab"
               class="usa-link"
@@ -2034,7 +2161,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Medicare Advanta
             >
               MINTTeam@cms.hhs.gov
             </a>
-              if your model will use MARx or if you have any questions. 
+              if your model will use MARx or if you have any questions.
           </span>
         </p>
       </div>
@@ -2148,7 +2275,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Outlook Mailbox 
               Add attachments associated with the request (optional)
             </li>
           </ul>
-          If you’d rather submit a request by email, please send the above information to 
+          If you’d rather submit a request by email, please send the above information to
           <a
             aria-label="Open in a new tab"
             class="usa-link"
@@ -2191,7 +2318,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Quality Vertical
       class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
     >
       <p>
-        Timing for working with the Quality Vertical varies based on the model’s needs though it is best to reach out as early as possible. 
+        Timing for working with the Quality Vertical varies based on the model’s needs though it is best to reach out as early as possible.
       </p>
       <ol
         class="usa-process-list padding-top-1"
@@ -2208,7 +2335,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Quality Vertical
           <p
             class="margin-bottom-0"
           >
-            Early in model development, model teams should reach out to one of the Quality Vertical leads, Alesia Hovatter, Susannah Bernheim, or Dustin Allison. The QV team meets Wednesdays to discuss, so new models should be prepared to join and share information about their model concept. 
+            Early in model development, model teams should reach out to one of the Quality Vertical leads, Alesia Hovatter, Susannah Bernheim, or Dustin Allison. The QV team meets Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.
           </p>
         </li>
         <li
@@ -2258,7 +2385,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Research, Measur
     <div
       class="line-height-body-5 font-body-md"
     >
-      Model teams should follow the 
+      Model teams should follow the
       <a
         aria-label="Open in a new tab"
         class="usa-link usa-link--external"
@@ -2670,7 +2797,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Salesforce Lette
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Timeline Components matches the snapshot: Salesforce Project Officer Support Tool or Portal 1`] = `
+exports[`IT Solutions Timeline Components matches the snapshot: Salesforce Project Officer Support Tool / Portal 1`] = `
 <DocumentFragment>
   <div>
     <h2
