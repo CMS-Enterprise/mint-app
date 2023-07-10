@@ -8,6 +8,8 @@ import {
   IconVisiblity
 } from '@trussworks/react-uswds';
 
+import Tooltip from 'components/shared/Tooltip';
+
 import './index.scss';
 
 type FilterViewBannerProps = {
@@ -37,7 +39,11 @@ const FilterViewBanner = ({
               {t('youAreViewing')} <strong>{filteredView ?? t('all')}</strong>{' '}
               {filteredView !== null ? t('information') : t('allInformation')}
             </div>
-            {filteredView === null && <IconInfo />}
+            {filteredView === null && (
+              <Tooltip label={t('tooltip')} position="right">
+                <IconInfo />
+              </Tooltip>
+            )}
           </div>
           <div
             className="display-flex flex-justify flex-align-center flex-align-self-end"
