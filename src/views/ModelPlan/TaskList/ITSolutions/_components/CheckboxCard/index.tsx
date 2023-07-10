@@ -79,11 +79,15 @@ const CheckboxCard = ({
     OperationalSolutionKey.CONTRACTOR,
     OperationalSolutionKey.CROSS_MODEL_CONTRACT,
     OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
-    OperationalSolutionKey.INTERNAL_STAFF
+    OperationalSolutionKey.INTERNAL_STAFF,
+    OperationalSolutionKey.OTHER_NEW_PROCESS
   ];
 
   const isDefaultSolutionOptions =
-    solution.name !== null && solution.pocEmail === null;
+    (solution.name !== null && solution.pocEmail === null) ||
+    (solution.name !== null && solution.isOther);
+
+  const solutionParam = solution.key ? `?selectedSolution=${solution.key}` : '';
 
   const renderCTALink = () => {
     if (isDefaultSolutionOptions && solution.isOther) {
@@ -97,13 +101,16 @@ const CheckboxCard = ({
                 solution.id !== '00000000-0000-0000-0000-000000000000'
                   ? solution.id
                   : ''
-              }?selectedSolution=${
-                solution.key || OperationalSolutionKey.OTHER_NEW_PROCESS
-              }`
+              }${solutionParam}`
             )
           }
         >
-          {solution.otherHeader ? t('updateTheseDetails') : t('addDetails')}
+          {!solution.pocName &&
+          !solution.pocEmail &&
+          !solution.otherHeader &&
+          solution.isOther
+            ? t('addDetails')
+            : t('updateTheseDetails')}
           <IconArrowForward className="margin-left-1" />
         </Button>
       );
@@ -116,11 +123,7 @@ const CheckboxCard = ({
           className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
           onClick={() =>
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
-                solution.id
-              }?selectedSolution=${
-                solution.key || OperationalSolutionKey.OTHER_NEW_PROCESS
-              }`
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}${solutionParam}`
             )
           }
         >
@@ -181,7 +184,9 @@ const CheckboxCard = ({
                       {solution.otherHeader}
                     </h3>
                     <h5 className="text-normal margin-top-0 margin-bottom-2">
-                      {translateOperationalSolutionKey(solution.key)}
+                      {solution.key === OperationalSolutionKey.OTHER_NEW_PROCESS
+                        ? t('otherNewProcess')
+                        : translateOperationalSolutionKey(solution.key)}
                     </h5>
                   </>
                 ) : (
