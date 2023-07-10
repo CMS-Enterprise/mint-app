@@ -162,6 +162,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     abbreviation,
     modelName,
     isFavorite,
+    createdDts,
     modifiedDts,
     status,
     basics,
@@ -322,7 +323,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
             modelID={modelID}
             status={status}
             statusLabel
-            modifiedDts={modifiedDts ?? ''}
+            modifiedOrCreateLabel={!!modifiedDts}
+            modifiedDts={modifiedDts ?? createdDts}
           />
 
           {!isViewingFilteredGroup && (

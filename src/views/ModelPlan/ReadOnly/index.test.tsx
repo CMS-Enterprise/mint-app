@@ -23,6 +23,7 @@ const mockData: GetModelSummaryTypes = {
   isFavorite: false,
   modelName: 'Testing Model Summary',
   abbreviation: 'TMS',
+  createdDts: '2022-08-23T04:00:00Z',
   modifiedDts: '2022-08-27T04:00:00Z',
   status: ModelStatus.PLAN_DRAFT,
   basics: {

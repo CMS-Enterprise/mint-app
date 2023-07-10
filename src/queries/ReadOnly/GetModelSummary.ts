@@ -6,6 +6,7 @@ export default gql`
       id
       modelName
       abbreviation
+      createdDts
       modifiedDts
       status
       isFavorite

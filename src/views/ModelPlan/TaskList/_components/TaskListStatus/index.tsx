@@ -16,6 +16,7 @@ type TaskListStatusProps = {
   updateLabel?: boolean;
   modifiedDts?: string;
   readOnly?: boolean;
+  modifiedOrCreateLabel?: boolean;
 };
 
 const TaskListStatus = ({
@@ -25,7 +26,8 @@ const TaskListStatus = ({
   statusLabel = false,
   updateLabel = false,
   modifiedDts,
-  readOnly
+  readOnly,
+  modifiedOrCreateLabel
 }: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('generalReadOnly');
@@ -51,7 +53,7 @@ const TaskListStatus = ({
         >
           {!!modifiedDts && (
             <p className="margin-y-0 text-normal">
-              {h('lastUpdate')}
+              {modifiedOrCreateLabel ? h('lastUpdate') : h('createdOn')}
               {formatDateLocal(modifiedDts, 'MM/dd/yyyy')}
             </p>
           )}

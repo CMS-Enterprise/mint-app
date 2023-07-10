@@ -9,6 +9,7 @@ const generalReadOnly = {
   status: 'Status',
   updateStatus: 'Update this Model Plan',
   lastUpdate: 'Last updated on ',
+  createdOn: 'Created on ',
   alert:
     'Information outlined in this Model Plan can change drastically until it’s been cleared.',
   contactInfo: {
