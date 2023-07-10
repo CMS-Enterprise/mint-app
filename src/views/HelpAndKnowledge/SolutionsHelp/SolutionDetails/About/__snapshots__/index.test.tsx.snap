@@ -363,7 +363,7 @@ exports[`IT Solutions About Components matches the snapshot: CMS Box 1`] = `
       <p
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
-        CMS Box is a cloud content management tool that allows users to upload, download, edit, and share documents t​o one central place. Users can also ​access documents through the web or a mobile device without VPN and without compromising security. All CMS employees should have access by default.
+        CMS Box is a cloud content management tool that allows users to upload, download, edit, and share documents t​o one central place. Users can also ​access documents through the web or a mobile device without VPN and without compromising security. All CMS employees should have access by default. 
       </p>
     </div>
   </div>
@@ -591,7 +591,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
         >
           CCW provides researchers with Medicare and Medicaid beneficiary, claims, and assessment data linked by beneficiary across the continuum of care. In the past, researchers analyzing data files had to perform extensive analysis related to beneficiary matching, deduplication, and merging of the files in preparation for their study analysis. With the CCW data, this preliminary linkage work is already accomplished and delivered as part of the data files sent to researchers.
 
-Performing model implementation, design, monitoring, and evaluation activities that include:
+Performing model implementation, design, monitoring, and evaluation activities that include: 
         </span>
         <ul
           class="padding-left-4 margin-top-0"
@@ -1313,21 +1313,21 @@ exports[`IT Solutions About Components matches the snapshot: Innovation Support 
         <span
           class="text-pre-wrap "
         >
-          ISP supplies the capabilities below through:
+          ISP supplies the capabilities below through: 
           <a
             class="usa-link"
             href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about"
           >
             Centralized Data Exchange (CDX)
           </a>
-          ,
+          , 
           <a
             class="usa-link"
             href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about"
           >
             Health Data Reporting (HDR)
           </a>
-          , and
+          , and 
           <a
             class="usa-link"
             href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about"
@@ -1424,7 +1424,7 @@ exports[`IT Solutions About Components matches the snapshot: Innovation Support 
           class="padding-left-4 margin-top-0"
         >
           <li>
-            API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with
+            API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
@@ -1936,7 +1936,7 @@ exports[`IT Solutions About Components matches the snapshot: Medicare Advantage 
 
 Transaction Processing Plans submit batch files that contain enrollment, disenrollment, and various status update transactions to MARx. Using CMS business rules, MARx validates the transactions and accepts or rejects the submitted enrollments, disenrollment, or changes. Daily response files report the results of all transactions back to the plans. Other Medicare Modernization Act (MMA) systems also interact with MARx. Notifications from other systems, such as the Medicare Beneficiary Database (MBD), which report changes in beneficiary demographics, entitlement, health status, low-income subsidy status, etc. may affect beneficiary enrollment and payment to the Plans.
 
-Payment Processing MARx calculates monthly Medicare payments for each Plan and generates payment adjustments when changes in membership and/or beneficiary health status occur. Monthly reports detail enrollment and payment information for the plans and CMS. Premium Processing MARx receives and processes transactions impacting Part C and Part D premiums, Medicare Part B Reduction, and Medicare Part C/D Plan enrollment status. Beneficiaries may elect to have their premiums withheld from their Social Security Administration (SSA) or Railroad Retirement Board (RRB) checks. MARx is responsible for interfacing with SSA or RRB to establish or terminate withholding and tracks expected withholding amounts. Once the withholding agency completes processing each transaction, a response is sent back to MARx informing CMS of the withholding agency's acceptance or rejection of each of the individual premium withholding requests, cancellations, statuses, and amounts. The withholding agency's acceptance or rejection of the transactions is communicated to the Plans. The Premium Withhold Accounting functionality was implemented to reconcile the withheld premium amounts. Based on reconciliation of the expected and actual premium amounts, the premium dollars to be included in a plan's payment are determined.
+Payment Processing MARx calculates monthly Medicare payments for each Plan and generates payment adjustments when changes in membership and/or beneficiary health status occur. Monthly reports detail enrollment and payment information for the plans and CMS. Premium Processing MARx receives and processes transactions impacting Part C and Part D premiums, Medicare Part B Reduction, and Medicare Part C/D Plan enrollment status. Beneficiaries may elect to have their premiums withheld from their Social Security Administration (SSA) or Railroad Retirement Board (RRB) checks. MARx is responsible for interfacing with SSA or RRB to establish or terminate withholding and tracks expected withholding amounts. Once the withholding agency completes processing each transaction, a response is sent back to MARx informing CMS of the withholding agency's acceptance or rejection of each of the individual premium withholding requests, cancellations, statuses, and amounts. The withholding agency's acceptance or rejection of the transactions is communicated to the Plans. The Premium Withhold Accounting functionality was implemented to reconcile the withheld premium amounts. Based on reconciliation of the expected and actual premium amounts, the premium dollars to be included in a plan's payment are determined. 
       </p>
       <div
         class="margin-top-4"
