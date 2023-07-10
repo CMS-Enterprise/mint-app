@@ -78,7 +78,7 @@ const ModelSummary = ({
     <CollapsableLink
       className="margin-top-3 padding-0"
       labelPosition="top"
-      iconPosition="right"
+      iconPosition="left"
       closeLabel={h('hideSummary')}
       styleLeftBar={false}
       id={`${modelName?.replace(/\s+/g, '-').toLowerCase()}--description`}
