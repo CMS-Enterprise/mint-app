@@ -285,10 +285,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
       <SummaryBox
         heading=""
-        className="padding-y-6 border-0 bg-primary-lighter margin-top-0"
+        className="padding-y-6 padding-x-2 border-0 bg-primary-lighter margin-top-0"
         data-testid="read-only-model-summary"
       >
-        <GridContainer>
+        <GridContainer className="padding-x-0">
           {!isHelpArticle && (
             <div className="display-flex flex-justify">
               <UswdsReactLink
