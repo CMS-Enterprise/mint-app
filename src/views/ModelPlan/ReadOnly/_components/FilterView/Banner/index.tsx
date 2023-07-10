@@ -1,7 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, GridContainer, IconVisiblity } from '@trussworks/react-uswds';
+import {
+  Button,
+  GridContainer,
+  IconInfo,
+  IconVisiblity
+} from '@trussworks/react-uswds';
 
 import './index.scss';
 
@@ -32,6 +37,7 @@ const FilterViewBanner = ({
               {t('youAreViewing')} <strong>{filteredView ?? t('all')}</strong>{' '}
               {filteredView !== null ? t('information') : t('allInformation')}
             </div>
+            {filteredView === null && <IconInfo />}
           </div>
           <div
             className="display-flex flex-justify flex-align-center flex-align-self-end"
