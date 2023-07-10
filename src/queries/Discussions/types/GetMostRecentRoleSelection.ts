@@ -16,5 +16,5 @@ export interface GetMostRecentRoleSelection_mostRecentDiscussionRoleSelection {
 }
 
 export interface GetMostRecentRoleSelection {
-  mostRecentDiscussionRoleSelection: GetMostRecentRoleSelection_mostRecentDiscussionRoleSelection;
+  mostRecentDiscussionRoleSelection: GetMostRecentRoleSelection_mostRecentDiscussionRoleSelection | null;
 }
