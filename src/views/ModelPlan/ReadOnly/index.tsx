@@ -375,7 +375,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
       <GridContainer className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
-          <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
+          <Alert
+            type="warning"
+            className="margin-bottom-5 desktop:margin-y-3"
+            slim
+          >
             {h('alert')}
           </Alert>
         )}
