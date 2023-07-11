@@ -120,7 +120,7 @@ const participantsAndProviders = {
   frequency: 'How frequently are providers added?',
   frequencyOptions: {
     annually: 'Annually',
-    semiAnnually: 'Semi-Annually',
+    biannually: 'Biannually',
     quarterly: 'Quarterly',
     monthly: 'Monthly',
     rolling: 'Rolling',

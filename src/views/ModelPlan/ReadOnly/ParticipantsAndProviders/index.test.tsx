@@ -71,7 +71,7 @@ const mockData: GetAllParticipantsTypes = {
   participantsIds: [ParticipantsIDType.CCNS],
   participantsIdsOther: null,
   participantsIDSNote: null,
-  providerAdditionFrequency: FrequencyType.SEMIANNUALLY,
+  providerAdditionFrequency: FrequencyType.BIANNUALLY,
   providerAdditionFrequencyOther: null,
   providerAdditionFrequencyNote: null,
   providerAddMethod: [ProviderAddType.RETROSPECTIVELY],

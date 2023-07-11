@@ -73,7 +73,7 @@ const mockData: PaymentTypes = {
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow: null,
   canParticipantsSelectBetweenPaymentMechanismsNote: null,
-  anticipatedPaymentFrequency: [AnticipatedPaymentFrequencyType.SEMIANNUALLY],
+  anticipatedPaymentFrequency: [AnticipatedPaymentFrequencyType.BIANNUALLY],
   anticipatedPaymentFrequencyOther: null,
   anticipatedPaymentFrequencyNote: null,
   willRecoverPayments: true,

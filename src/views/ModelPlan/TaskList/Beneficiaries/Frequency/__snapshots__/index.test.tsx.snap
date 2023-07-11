@@ -148,6 +148,24 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
+                  id="beneficiaries-beneficiarySelectionFrequency-BIANNUALLY"
+                  name="beneficiarySelectionFrequency"
+                  type="radio"
+                  value="BIANNUALLY"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-beneficiarySelectionFrequency-BIANNUALLY"
+                >
+                  Biannually
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-MONTHLY"
                   name="beneficiarySelectionFrequency"
                   type="radio"
@@ -194,24 +212,6 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   for="beneficiaries-beneficiarySelectionFrequency-ROLLING"
                 >
                   Rolling
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-beneficiarySelectionFrequency-SEMIANNUALLY"
-                  name="beneficiarySelectionFrequency"
-                  type="radio"
-                  value="SEMIANNUALLY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-beneficiarySelectionFrequency-SEMIANNUALLY"
-                >
-                  Semi-Annually
                 </label>
               </div>
               <div

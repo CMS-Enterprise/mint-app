@@ -35,6 +35,7 @@ export enum AlternativePaymentModelType {
 
 export enum AnticipatedPaymentFrequencyType {
   ANNUALLY = "ANNUALLY",
+  BIANNUALLY = "BIANNUALLY",
   DAILY = "DAILY",
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
@@ -145,6 +146,7 @@ export enum DataForMonitoringType {
 
 export enum DataFrequencyType {
   ANNUALLY = "ANNUALLY",
+  BIANNUALLY = "BIANNUALLY",
   DAILY = "DAILY",
   MONTHLY = "MONTHLY",
   NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
@@ -219,6 +221,7 @@ export enum EvaluationApproachType {
 
 export enum FrequencyType {
   ANNUALLY = "ANNUALLY",
+  BIANNUALLY = "BIANNUALLY",
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",

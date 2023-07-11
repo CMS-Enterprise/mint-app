@@ -52,7 +52,7 @@ import { renderCurrentPage, renderTotalPages } from '..';
 
 const dataFrequencyOptions: AnticipatedPaymentFrequencyType[] = [
   AnticipatedPaymentFrequencyType.ANNUALLY,
-  AnticipatedPaymentFrequencyType.SEMIANNUALLY,
+  AnticipatedPaymentFrequencyType.BIANNUALLY,
   AnticipatedPaymentFrequencyType.QUARTERLY,
   AnticipatedPaymentFrequencyType.MONTHLY,
   AnticipatedPaymentFrequencyType.SEMIMONTHLY,
