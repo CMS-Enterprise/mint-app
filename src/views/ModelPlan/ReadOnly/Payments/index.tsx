@@ -161,26 +161,22 @@ const ReadOnlyPayments = ({
           isViewingFilteredView,
           filteredQuestions,
           'fundingSource',
-          <ReadOnlySection
-            heading={t('fundingSourceQuestion')}
-            list
-            listItems={fundingSource?.map(translateSourceOptions)}
-            listOtherItem={fundingSourceOther}
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('fundingSourceQuestion'),
+              list: true,
+              listItems: fundingSource?.map(translateSourceOptions),
+              listOtherItem: fundingSourceOther
+            }}
+            secondSection={
+              !!fundingSourceTrustFund && {
+                heading: t('whichFundingType'),
+                copy: fundingSourceTrustFund
+              }
+            }
           />
         )}
-
-        {(isViewingFilteredView || fundingSourceTrustFund) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSourceTrustFund',
-            <ReadOnlySection
-              heading={t('whichFundingType')}
-              copy={fundingSourceTrustFund}
-            />
-          )}
-
-        {(isViewingFilteredView || fundingSourceNote) &&
+        {fundingSourceNote &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -195,25 +191,21 @@ const ReadOnlyPayments = ({
           isViewingFilteredView,
           filteredQuestions,
           'fundingSourceR',
-          <ReadOnlySection
-            heading={t('reconciliationQuestion')}
-            list
-            listItems={fundingSourceR?.map(translateSourceOptions)}
-            listOtherItem={fundingSourceROther}
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('reconciliationQuestion'),
+              list: true,
+              listItems: fundingSourceR?.map(translateSourceOptions),
+              listOtherItem: fundingSourceROther
+            }}
+            secondSection={
+              !!fundingSourceRTrustFund && {
+                heading: t('whichFundingType'),
+                copy: fundingSourceRTrustFund
+              }
+            }
           />
         )}
-
-        {(fundingSourceRTrustFund || isViewingFilteredView) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSourceRTrustFund',
-            <ReadOnlySection
-              heading={t('whichFundingType')}
-              copy={fundingSourceRTrustFund}
-            />
-          )}
-
         {fundingSourceRNote &&
           checkGroupMap(
             isViewingFilteredView,
@@ -237,7 +229,6 @@ const ReadOnlyPayments = ({
             notes={payRecipientsNote}
           />
         )}
-
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
