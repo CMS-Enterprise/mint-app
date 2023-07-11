@@ -192,6 +192,7 @@ const FilterGroupMap = {
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
       'nonClaimsPayments',
+      'waiverOnlyAppliesPartOfPayment',
       'planningToUseInnovationPaymentContractor',
       'anticipateReconcilingPaymentsRetrospectively'
     ]
