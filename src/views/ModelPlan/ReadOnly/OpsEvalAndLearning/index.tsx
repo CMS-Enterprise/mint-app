@@ -240,23 +240,25 @@ const ReadOnlyOpsEvalAndLearning = ({
           isViewingFilteredView,
           filteredQuestions,
           'contractorSupport',
-          <ReadOnlySection
-            heading={t('whatContractors')}
-            list
-            listItems={contractorSupport?.map(translateContractorSupportType)}
-            listOtherItem={contractorSupportOther}
-            notes={contractorSupportNote}
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('whatContractors'),
+              list: true,
+              listItems: contractorSupport?.map(translateContractorSupportType),
+              listOtherItem: contractorSupportOther
+            }}
+            secondSection={{
+              heading: t('whatContractorsHow'),
+              copy: contractorSupportHow
+            }}
           />
         )}
 
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'contractorSupportHow',
-          <ReadOnlySection
-            heading={t('whatContractorsHow')}
-            copy={contractorSupportHow}
-          />
+          'contractorSupport',
+          <ReadOnlySection heading={h('note')} copy={contractorSupportNote} />
         )}
       </div>
 
