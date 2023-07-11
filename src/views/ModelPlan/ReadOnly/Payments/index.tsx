@@ -304,7 +304,7 @@ const ReadOnlyPayments = ({
               }}
               secondSection={
                 affectsMedicareSecondaryPayerClaims === true && {
-                  heading: h('howSo'),
+                  heading: h('pleaseDescribe'),
                   copy: affectsMedicareSecondaryPayerClaimsHow
                 }
               }
@@ -552,7 +552,7 @@ const ReadOnlyPayments = ({
             }}
             secondSection={
               canParticipantsSelectBetweenPaymentMechanisms === true && {
-                heading: h('howSo'),
+                heading: h('pleaseDescribe'),
                 copy: canParticipantsSelectBetweenPaymentMechanismsHow
               }
             }
