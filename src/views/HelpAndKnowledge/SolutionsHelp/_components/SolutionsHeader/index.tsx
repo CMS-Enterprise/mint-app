@@ -6,6 +6,8 @@ import classNames from 'classnames';
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import GlobalClientFilter from 'components/TableFilter';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
+import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
@@ -13,7 +15,7 @@ import './index.scss';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
   resultsNum: number;
   resultsMax: number;
   setQuery: (query: string) => void;
@@ -30,7 +32,9 @@ const SolutionsHeader = ({
 }: OperationalSolutionsHelpProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const categoryKey = operationalSolutionCategoryMap[category || ''];
+  const categoryKey: OperationalSolutionCategoryRoute | '' = category
+    ? operationalSolutionCategoryMap[category]
+    : '';
 
   const breadcrumbs = [
     { text: t('heading'), url: '/help-and-knowledge' },
@@ -41,7 +45,16 @@ const SolutionsHeader = ({
   ];
 
   if (categoryKey) {
-    breadcrumbs.push({ text: t(`categories.${categoryKey}.header`), url: '' });
+    let crumbText = t(`categories.${categoryKey}.header`);
+
+    if (
+      solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
+        ?.subHeader
+    ) {
+      crumbText += ` ${t(`categories.${categoryKey}.subHeader`)}`;
+    }
+
+    breadcrumbs.push({ text: crumbText, url: '' });
   }
 
   return (
@@ -62,6 +75,13 @@ const SolutionsHeader = ({
             ? t(`categories.${categoryKey}.header`)
             : t('operationalSolutions')}
         </PageHeading>
+
+        {solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
+          ?.subHeader && (
+          <span className="font-body-xl">
+            {t(`categories.${categoryKey}.subHeader`)}
+          </span>
+        )}
 
         <p className="margin-bottom-4 font-body-lg">
           {categoryKey

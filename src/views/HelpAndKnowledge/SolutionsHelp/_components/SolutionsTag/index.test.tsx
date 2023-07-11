@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+import { OperationalSolutionCategories } from 'data/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
@@ -16,8 +16,8 @@ describe('Operation Solution Help Tag', () => {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
-            route={operationalSolutionCategoryMap['data-reporting']}
-            category={OperationalSolutionCategories.DATA_REPORTING}
+            route={operationalSolutionCategoryMap.data}
+            category={OperationalSolutionCategories.DATA}
           />
         </Route>
       </MemoryRouter>
@@ -26,10 +26,10 @@ describe('Operation Solution Help Tag', () => {
     const tag = getByTestId('solutions-tag');
 
     expect(tag).toBeInTheDocument();
-    expect(tag).toHaveTextContent('Data reporting');
+    expect(tag).toHaveTextContent('Data');
     expect(tag).toHaveAttribute(
       'href',
-      '/help-and-knowledge/operational-solutions?category=data-reporting'
+      '/help-and-knowledge/operational-solutions?category=data'
     );
   });
 
@@ -40,8 +40,8 @@ describe('Operation Solution Help Tag', () => {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
-            route={operationalSolutionCategoryMap['data-reporting']}
-            category={OperationalSolutionCategories.DATA_REPORTING}
+            route={operationalSolutionCategoryMap.data}
+            category={OperationalSolutionCategories.DATA}
           />
         </Route>
       </MemoryRouter>
