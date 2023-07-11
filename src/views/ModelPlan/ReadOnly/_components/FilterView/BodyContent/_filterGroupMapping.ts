@@ -70,9 +70,9 @@ const FilterGroupMap = {
     payments: [
       'fundingSource',
       'fundingSourceTrustFund',
+      'fundingSourceR',
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
-      'fundingStructure',
       'anticipatedPaymentFrequency',
       'paymentStartDate'
     ]
