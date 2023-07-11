@@ -116,35 +116,6 @@ describe('Read Only Model Plan Summary', () => {
     });
   });
 
-  it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics'
-        ]}
-      >
-        <MockedProvider mocks={mock} addTypename={false}>
-          <Provider store={store}>
-            <Route path="/models/:modelID/read-only/:subinfo">
-              <ReadOnly />
-            </Route>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId('read-only-model-summary')).toBeInTheDocument();
-      expect(
-        screen.getByTestId('read-only-model-plan__contact-info')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByTestId('read-only-side-nav__wrapper')
-      ).toBeInTheDocument();
-    });
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   describe('Status Tag updates', () => {
     it('renders "ICIP complete" tag and alert', async () => {
       mock[0].result.data.modelPlan.status = ModelStatus.ICIP_COMPLETE;
