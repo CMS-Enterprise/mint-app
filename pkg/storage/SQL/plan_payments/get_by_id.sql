@@ -46,7 +46,6 @@ SELECT
     shared_systems_involved_additional_claim_payment_note,
     planning_to_use_innovation_payment_contractor,
     planning_to_use_innovation_payment_contractor_note,
-    funding_structure,
     expected_calculation_complexity_level,
     expected_calculation_complexity_level_note,
     can_participants_select_between_payment_mechanisms,

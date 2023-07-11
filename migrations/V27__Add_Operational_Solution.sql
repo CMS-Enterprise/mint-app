@@ -50,6 +50,10 @@ ALTER TABLE operational_solution
 ADD CONSTRAINT unique_solution_name_other_per_plan UNIQUE (operational_need_id, name_other); -- 1 specifc custom solution per model
 
 ALTER TABLE operational_solution
-ADD CONSTRAINT solution_type_null_if_other CHECK ((solution_type IS NULL OR name_other IS NULL) AND NOT (solution_type IS NULL AND name_other IS NULL)); -- Can't be a custom type and a specifc type at the same time. One is required
+ADD CONSTRAINT solution_type_null_if_other CHECK (
+  (solution_type IS NULL OR name_other IS NULL) -- Either solution type or name_other must be null
+    AND NOT
+    (solution_type IS NULL AND name_other IS NULL) -- Either solution_type or name_other must be defined
+  ); -- Can't be a custom type and a specifc type at the same time. One is required
 
 SELECT audit.AUDIT_TABLE('public', 'operational_solution', 'id', 'operational_need_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);

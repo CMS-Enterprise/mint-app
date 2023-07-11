@@ -54,7 +54,6 @@ SELECT
     pay.shared_systems_involved_additional_claim_payment_note,
     pay.planning_to_use_innovation_payment_contractor,
     pay.planning_to_use_innovation_payment_contractor_note,
-    pay.funding_structure,
     pay.expected_calculation_complexity_level,
     pay.expected_calculation_complexity_level_note,
     pay.can_participants_select_between_payment_mechanisms,

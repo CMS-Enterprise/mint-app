@@ -713,6 +713,11 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 	return obj.NonClaimsPaymentsOther, nil
 }
 
+// FundingStructure is the resolver for the fundingStructure field.
+func (r *planPaymentsResolver) FundingStructure(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented: FundingStructure - fundingStructure"))
+}
+
 // AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
 func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error) {
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
