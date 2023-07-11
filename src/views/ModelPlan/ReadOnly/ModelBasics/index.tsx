@@ -375,9 +375,7 @@ const ReadOnlyModelBasics = ({
             }
           )}
         >
-          <h3 className="margin-top-0 margin-bottom-4">
-            {planBasicsMiscT('highLevelTimeline')}
-          </h3>
+          <h3 className="margin-y-0">{planBasicsMiscT('highLevelTimeline')}</h3>
 
           <ProcessList className="read-only-model-plan__timeline">
             <ProcessListItem className="read-only-model-plan__timeline__list-item">
