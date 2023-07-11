@@ -37,7 +37,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
-import BodyContent from './_components/FilterView/BodyContent';
+import FilteredViewBodyContent from './_components/FilterView/BodyContent';
 import FilterButton from './_components/FilterView/FilterButton';
 import FilterViewModal from './_components/FilterView/Modal';
 import { groupOptions } from './_components/FilterView/util';
@@ -388,7 +388,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
           {isViewingFilteredGroup ? (
-            <BodyContent modelID={modelID} filteredView={filteredView} />
+            <FilteredViewBodyContent
+              modelID={modelID}
+              filteredView={filteredView}
+            />
           ) : (
             <Grid row gap>
               {!isMobile && (

@@ -363,6 +363,8 @@ const ReadOnlyModelBasics = ({
               copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}
             />
           )}
+
+          <ReadOnlySection heading={generalT('note')} copy={highLevelNote} />
         </>
       ) : (
         <SectionWrapper
