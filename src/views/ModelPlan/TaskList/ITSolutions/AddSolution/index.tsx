@@ -360,9 +360,18 @@ const AddSolution = () => {
                                   id="add-custom-solution-button"
                                   className="usa-button usa-button--outline margin-top-3"
                                   onClick={() => {
-                                    history.push(
-                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution?selectedSolution=${values.key}`
-                                    );
+                                    if (
+                                      values.key ===
+                                      OperationalSolutionKey.OTHER_NEW_PROCESS
+                                    ) {
+                                      history.push(
+                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                      );
+                                    } else {
+                                      history.push(
+                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution?selectedSolution=${values.key}`
+                                      );
+                                    }
                                   }}
                                 >
                                   {t('addSolutionDetails')}

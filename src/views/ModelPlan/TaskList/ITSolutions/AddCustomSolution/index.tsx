@@ -137,14 +137,11 @@ const AddCustomSolution = () => {
         updateMutation = await createSolution({
           variables: {
             operationalNeedID,
-            solutionType:
-              selectedSolution !== OperationalSolutionKey.OTHER_NEW_PROCESS
-                ? selectedSolution
-                : null,
+            solutionType: selectedSolution || null,
             changes: {
               needed: true,
-              nameOther: nameOther ?? null,
-              otherHeader: otherHeader ?? null,
+              nameOther: !selectedSolution ? nameOther : null,
+              otherHeader: selectedSolution ? otherHeader : null,
               status: OpSolutionStatus.NOT_STARTED,
               pocEmail,
               pocName
@@ -295,9 +292,7 @@ const AddCustomSolution = () => {
                             </h3>
                           )}
                           <Fieldset disabled={loading}>
-                            {selectedSolution ===
-                              OperationalSolutionKey.OTHER_NEW_PROCESS ||
-                            selectedSolution === null ? (
+                            {selectedSolution === null ? (
                               <FieldGroup
                                 scrollElement="nameOther"
                                 error={!!flatErrors.nameOther}
@@ -411,8 +406,6 @@ const AddCustomSolution = () => {
                                 className="margin-bottom-1"
                                 id="submit-custom-solution"
                                 disabled={
-                                  selectedSolution ===
-                                    OperationalSolutionKey.OTHER_NEW_PROCESS ||
                                   selectedSolution === null
                                     ? !values.nameOther
                                     : !values.otherHeader
