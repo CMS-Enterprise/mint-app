@@ -7,6 +7,7 @@ import { GetAllParticipants as GetAllParticipantsTypes } from 'queries/ReadOnly/
 import {
   FrequencyType,
   OverlapType,
+  ParticipantsType,
   RecruitmentType
 } from 'types/graphql-global-types';
 import {
@@ -148,29 +149,27 @@ const ReadOnlyParticipantsAndProviders = ({
           />
         )}
 
-        {(!isViewingFilteredView && medicareProviderType) ||
-          (isViewingFilteredView &&
-            checkGroupMap(
-              isViewingFilteredView,
-              filteredQuestions,
-              'medicareProviderType',
-              <ReadOnlySection
-                heading={t('typeMedicateProvider')}
-                copy={medicareProviderType}
-              />
-            ))}
+        {participants?.includes(ParticipantsType.MEDICARE_PROVIDERS) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'medicareProviderType',
+            <ReadOnlySection
+              heading={t('typeMedicateProvider')}
+              copy={medicareProviderType}
+            />
+          )}
 
-        {(!isViewingFilteredView && statesEngagement) ||
-          (isViewingFilteredView &&
-            checkGroupMap(
-              isViewingFilteredView,
-              filteredQuestions,
-              'statesEngagement',
-              <ReadOnlySection
-                heading={t('describeStates')}
-                copy={statesEngagement}
-              />
-            ))}
+        {participants?.includes(ParticipantsType.STATES) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'statesEngagement',
+            <ReadOnlySection
+              heading={t('describeStates')}
+              copy={statesEngagement}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
