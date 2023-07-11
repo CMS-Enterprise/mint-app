@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor, within } from '@testing-library/react';
+import { mount } from 'enzyme';
+import toJSON, { OutputMapper } from 'enzyme-to-json';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -14,6 +16,7 @@ import {
   TeamRole
 } from 'types/graphql-global-types';
 import { translateModelPlanStatus } from 'utils/modelPlan';
+import renameTooltipAriaAndID from 'utils/testing/snapshotSerializeReplacements';
 
 import ReadOnly from './index';
 
@@ -117,7 +120,7 @@ describe('Read Only Model Plan Summary', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const component = mount(
       <MemoryRouter
         initialEntries={[
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics'
@@ -134,15 +137,15 @@ describe('Read Only Model Plan Summary', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('read-only-model-summary')).toBeInTheDocument();
-      expect(
-        screen.getByTestId('read-only-model-plan__contact-info')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByTestId('read-only-side-nav__wrapper')
-      ).toBeInTheDocument();
+      expect(component.text().includes('Testing Model Summary')).toBe(true);
     });
-    expect(asFragment()).toMatchSnapshot();
+
+    expect(
+      toJSON(component, {
+        mode: 'deep',
+        map: renameTooltipAriaAndID as OutputMapper
+      })
+    ).toMatchSnapshot();
   });
 
   describe('Status Tag updates', () => {
