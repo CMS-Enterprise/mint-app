@@ -240,6 +240,7 @@ const FilterGroupMap = {
       'needsClaimsDataCollection',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
+      'waiverOnlyAppliesPartOfPayment',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
       'nonClaimsPayments',
