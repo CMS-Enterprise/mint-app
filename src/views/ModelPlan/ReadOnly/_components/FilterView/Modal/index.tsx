@@ -32,10 +32,14 @@ const FilterViewModal = ({
       window.scrollTo(0, 0);
     }, 0);
 
+    const { pathname } = history.location;
+
     if (value === 'view-all') {
-      history.push(`${history.location.pathname}`);
+      history.push(
+        `${pathname}${pathname.length === 4 ? '/model-basics' : ''}`
+      );
     } else {
-      history.push(`${history.location.pathname}?filter-view=${value}`);
+      history.push(`${pathname}?filter-view=${value}`);
     }
 
     closeModal();
