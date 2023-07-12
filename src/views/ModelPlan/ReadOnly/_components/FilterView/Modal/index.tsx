@@ -35,9 +35,7 @@ const FilterViewModal = ({
     const { pathname } = history.location;
 
     if (value === 'view-all') {
-      history.push(
-        `${pathname}${pathname.length === 4 ? '/model-basics' : ''}`
-      );
+      history.push(pathname);
     } else {
       history.push(`${pathname}?filter-view=${value}`);
     }

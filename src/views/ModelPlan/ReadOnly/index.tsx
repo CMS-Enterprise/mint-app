@@ -271,7 +271,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   }
 
   if (!subinfo && !isViewingFilteredGroup) {
-    history.push(`${location.pathname}/model-basics`);
+    history.replace(`${location.pathname}/model-basics`);
   }
 
   if (!isSubpage(subinfo, flags, isHelpArticle) && !isViewingFilteredGroup) {
