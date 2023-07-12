@@ -429,7 +429,7 @@ const ReadOnlyPayments = ({
               }
             />
           )}
-        {(isCostSharing && waiveBeneficiaryCostSharingForAnyServices) ||
+        {isCostSharing &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
