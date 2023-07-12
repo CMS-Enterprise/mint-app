@@ -254,7 +254,4 @@ func (s *Seeder) SeedData() {
 			},
 		},
 	)
-
-	s.createEmailRecipientModelDatesChanged("one@test.gov")
-	s.createEmailRecipientModelDatesChanged("two@test.gov")
 }

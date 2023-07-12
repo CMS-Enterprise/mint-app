@@ -1,2 +1,0 @@
-SELECT email
-FROM config.model_plan_date_changed_email_recipients

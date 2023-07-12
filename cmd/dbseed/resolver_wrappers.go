@@ -330,12 +330,3 @@ func (s *Seeder) existingModelLinkCreate(
 	}
 	return links
 }
-
-func (s *Seeder) createEmailRecipientModelDatesChanged(
-	recipientEmail string,
-) {
-	_, _, _ = s.Config.Store.ModelPlanDateChangedEmailRecipientCreate(
-		s.Config.Logger,
-		recipientEmail,
-	)
-}
