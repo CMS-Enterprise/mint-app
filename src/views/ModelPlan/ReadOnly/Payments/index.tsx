@@ -421,7 +421,6 @@ const ReadOnlyPayments = ({
             />
           )}
         {isCostSharing &&
-          waiveBeneficiaryCostSharingForAnyServices &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
