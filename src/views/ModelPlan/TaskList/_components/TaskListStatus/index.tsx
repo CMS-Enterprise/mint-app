@@ -36,8 +36,6 @@ const TaskListStatus = ({
     <div className="padding-0" data-testid="task-list-status">
       <Grid row style={{ gap: '16px' }}>
         <Grid
-          col={modifiedDts ? 12 : 'auto'}
-          desktop={{ col: 'auto' }}
           className="display-flex flex-align-center"
           style={{ gap: '10px' }}
         >
@@ -46,11 +44,7 @@ const TaskListStatus = ({
             {translateModelPlanStatus(status)}
           </Tag>
         </Grid>
-        <Grid
-          col={modifiedDts ? 12 : 'auto'}
-          desktop={{ col: 'auto' }}
-          className="display-flex flex-align-center flex-wrap"
-        >
+        <Grid className="display-flex flex-align-center flex-wrap">
           {!!modifiedDts && (
             <p className="margin-y-0 text-normal">
               {modifiedOrCreateLabel ? h('lastUpdate') : h('createdOn')}
