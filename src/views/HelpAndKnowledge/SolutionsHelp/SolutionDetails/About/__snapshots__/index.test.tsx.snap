@@ -2654,7 +2654,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Applicat
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/salesforce-ars.png"
+              href="http://localhost/help-center/salesforce-ars.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -2738,7 +2738,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/salesforce-connect-1.png"
+              href="http://localhost/help-center/salesforce-connect-1.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -2751,7 +2751,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/salesforce-connect-2.png"
+              href="http://localhost/help-center/salesforce-connect-2.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -2942,7 +2942,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Letter o
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/salesforce-loi.png"
+              href="http://localhost/help-center/salesforce-loi.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -3105,7 +3105,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/salesforce-post-1.png"
+              href="http://localhost/help-center/salesforce-post-1.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -3118,7 +3118,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/salesforce-post-2.png"
+              href="http://localhost/help-center/salesforce-post-2.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -3258,7 +3258,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Request 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/salesforce-rfa.png"
+              href="http://localhost/help-center/salesforce-rfa.png"
               rel="noopener noreferrer"
               target="_blank"
             >

@@ -1490,7 +1490,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           items: ['<link1>View an ARS screenshot</link1>'],
           links: [
             {
-              link: `${window.location.origin}/salesforce-ars.png`,
+              link: `${window.location.origin}/help-center/salesforce-ars.png`,
               external: true
             }
           ]
@@ -1555,11 +1555,11 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           ],
           links: [
             {
-              link: `${window.location.origin}/salesforce-connect-1.png`,
+              link: `${window.location.origin}/help-center/salesforce-connect-1.png`,
               external: true
             },
             {
-              link: `${window.location.origin}/salesforce-connect-2.png`,
+              link: `${window.location.origin}/help-center/salesforce-connect-2.png`,
               external: true
             }
           ]
@@ -1611,7 +1611,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           items: ['<link1>View an LOI sample</link1>'],
           links: [
             {
-              link: `${window.location.origin}/salesforce-loi.png`,
+              link: `${window.location.origin}/help-center/salesforce-loi.png`,
               external: true
             }
           ]
@@ -1657,11 +1657,11 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           ],
           links: [
             {
-              link: `${window.location.origin}/salesforce-post-1.png`,
+              link: `${window.location.origin}/help-center/salesforce-post-1.png`,
               external: true
             },
             {
-              link: `${window.location.origin}/salesforce-post-2.png`,
+              link: `${window.location.origin}/help-center/salesforce-post-2.png`,
               external: true
             }
           ]
@@ -1701,7 +1701,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           items: ['<link1>View an RFA screenshot</link1>'],
           links: [
             {
-              link: `${window.location.origin}/salesforce-rfa.png`,
+              link: `${window.location.origin}/help-center/salesforce-rfa.png`,
               external: true
             }
           ]
