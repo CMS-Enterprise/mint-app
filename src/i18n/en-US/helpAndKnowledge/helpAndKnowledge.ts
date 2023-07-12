@@ -1490,8 +1490,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           items: ['<link1>View an ARS screenshot</link1>'],
           links: [
             {
-              link:
-                'https://drive.google.com/uc?export=view&id=1z1jWuUk4xLgW4NY0UjbYW9gO_9IjI7BW',
+              link: `${window.location.origin}/salesforce-ars.png`,
               external: true
             }
           ]
@@ -1556,13 +1555,11 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           ],
           links: [
             {
-              link:
-                'https://drive.google.com/uc?export=view&id=16cg308CI-PnbbWOaDanXlHmpzKPqQWdc',
+              link: `${window.location.origin}/salesforce-connect-1.png`,
               external: true
             },
             {
-              link:
-                'https://drive.google.com/uc?export=view&id=1ArGZsXTeFrsLA67uRN3Jyr4U6UwG1sVR',
+              link: `${window.location.origin}/salesforce-connect-2.png`,
               external: true
             }
           ]
@@ -1608,6 +1605,16 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
             'Track/monitor model participant deliverable submission and compliance',
             'Enter/escalate questions/issues to support contractors'
           ]
+        },
+        {
+          header: '',
+          items: ['<link1>View an LOI sample</link1>'],
+          links: [
+            {
+              link: `${window.location.origin}/salesforce-loi.png`,
+              external: true
+            }
+          ]
         }
       ]
     }
@@ -1650,13 +1657,11 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           ],
           links: [
             {
-              link:
-                'https://drive.google.com/uc?export=view&id=1cFGP0eisdER8wZ7mFwR6ctwV09wWu11G',
+              link: `${window.location.origin}/salesforce-post-1.png`,
               external: true
             },
             {
-              link:
-                'https://drive.google.com/uc?export=view&id=1AXJ29X1Lo21EfDcqrCsHv0q2XVvO9ZzE',
+              link: `${window.location.origin}/salesforce-post-2.png`,
               external: true
             }
           ]
@@ -1696,8 +1701,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           items: ['<link1>View an RFA screenshot</link1>'],
           links: [
             {
-              link:
-                'https://drive.google.com/uc?export=view&id=1xijatfSN4cv8cYAT29oKZcv1jo15RDcl',
+              link: `${window.location.origin}/salesforce-rfa.png`,
               external: true
             }
           ]

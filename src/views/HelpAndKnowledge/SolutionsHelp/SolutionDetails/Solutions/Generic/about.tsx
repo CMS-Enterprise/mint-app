@@ -154,8 +154,13 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
 
               <ComponentListType
                 className={classNames('padding-left-4', {
-                  // 'list-style-none padding-left-0 margin-top-neg-2':
-                  //   component.items.length === 1 && component.level !== 'h4',
+                  'list-style-none padding-left-0 ':
+                    component.items.length === 1 &&
+                    (component.level === 'h4' || !component.header),
+                  'list-style-none padding-left-0 margin-top-neg-2':
+                    component.items.length === 1 &&
+                    component.level !== 'h4' &&
+                    component.header,
                   'margin-top-0': component.items.length > 1
                 })}
               >
@@ -166,9 +171,12 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                         key={
                           typeof item === 'object' ? item.header : item + index
                         }
-                        // className={classNames({
-                        //   'list-item': component.items.length > 1
-                        // })}
+                        className={classNames({
+                          'list-item':
+                            component.items.length > 1 &&
+                            component.level !== 'h4' &&
+                            component.header
+                        })}
                       >
                         {/* Renders list item or another nested list */}
                         {typeof item === 'object' ? (
