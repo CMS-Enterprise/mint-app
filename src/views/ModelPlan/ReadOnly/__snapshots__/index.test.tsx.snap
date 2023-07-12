@@ -106,7 +106,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
               }
             >
               <div
-                className="grid-col-auto desktop:grid-col-auto display-flex flex-align-center"
+                className="display-flex flex-align-center"
                 data-testid="grid"
                 style={
                   Object {
@@ -126,7 +126,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 />
               </div>
               <div
-                className="grid-col-auto desktop:grid-col-auto display-flex flex-align-center flex-wrap"
+                className="display-flex flex-align-center flex-wrap"
                 data-testid="grid"
               />
               <div
@@ -354,7 +354,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
     data-testid="gridContainer"
   >
     <div
-      className="usa-alert usa-alert--warning margin-bottom-5 desktop:margin-y-3"
+      className="usa-alert usa-alert--warning margin-top-2 margin-bottom-5 desktop:margin-y-3"
       data-testid="alert"
     >
       <div
