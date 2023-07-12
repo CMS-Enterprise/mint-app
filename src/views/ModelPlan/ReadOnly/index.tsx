@@ -17,7 +17,6 @@ import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
-import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
@@ -38,7 +37,6 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
 import BodyContent from './_components/FilterView/BodyContent';
-import FilterButton from './_components/FilterView/FilterButton';
 import FilterViewModal from './_components/FilterView/Modal';
 import { groupOptions } from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
@@ -164,6 +162,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     abbreviation,
     modelName,
     isFavorite,
+    createdDts,
     modifiedDts,
     status,
     basics,
@@ -285,21 +284,12 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         />
       </Modal>
 
-      {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
-
-      {filteredView && (
-        <FilterViewBanner
-          filteredView={filteredViewOutput(filteredView)}
-          openFilterModal={() => setIsFilterViewModalOpen(true)}
-        />
-      )}
-
       <SummaryBox
         heading=""
-        className="padding-y-6 border-0 bg-primary-lighter margin-top-0"
+        className="padding-y-6 padding-x-2 border-0 bg-primary-lighter margin-top-0"
         data-testid="read-only-model-summary"
       >
-        <GridContainer>
+        <GridContainer className="padding-x-0">
           {!isHelpArticle && (
             <div className="display-flex flex-justify">
               <UswdsReactLink
@@ -319,7 +309,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           )}
 
           <PageHeading
-            className="margin-0 line-height-sans-2 minh-6"
+            className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
             headingLevel={isHelpArticle ? 'h2' : 'h1'}
           >
             {modelName}{' '}
@@ -327,6 +317,15 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               <span className="font-sans-sm text-normal">({abbreviation})</span>
             )}
           </PageHeading>
+
+          <TaskListStatus
+            readOnly
+            modelID={modelID}
+            status={status}
+            statusLabel
+            modifiedOrCreateLabel={!!modifiedDts}
+            modifiedDts={modifiedDts ?? createdDts}
+          />
 
           {!isViewingFilteredGroup && (
             <ModelSummary
@@ -345,19 +344,13 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           )}
         </GridContainer>
       </SummaryBox>
-      <SectionWrapper className="model-plan-status-bar bg-base-lightest">
-        <GridContainer>
-          <div className="padding-y-1 status-min-height">
-            <TaskListStatus
-              readOnly
-              modelID={modelID}
-              status={status}
-              statusLabel
-              modifiedDts={modifiedDts ?? ''}
-            />
-          </div>
-        </GridContainer>
-      </SectionWrapper>
+
+      {!flags.hideGroupView && (
+        <FilterViewBanner
+          filteredView={filteredView && filteredViewOutput(filteredView)}
+          openFilterModal={() => setIsFilterViewModalOpen(true)}
+        />
+      )}
 
       <MobileNav
         subComponents={subComponents}
@@ -365,17 +358,12 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         isHelpArticle={isHelpArticle}
       />
 
-      {isMobile && !flags.hideGroupView && (
-        <GridContainer className="padding-y-2">
-          <FilterButton
-            openFilterModal={() => setIsFilterViewModalOpen(true)}
-          />
-        </GridContainer>
-      )}
-
       <GridContainer className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
-          <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
+          <Alert
+            type="warning"
+            className="margin-top-2 margin-bottom-5 desktop:margin-y-3"
+          >
             {h('alert')}
           </Alert>
         )}

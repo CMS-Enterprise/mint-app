@@ -104,14 +104,18 @@ const TaskListSideNav = ({
         className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"
       >
-        <UswdsReactLink to="/" className="display-block">
-          {t('sideNav.saveAndExit')}
+        <h4 className="margin-top-0 margin-bottom-1">{t('sideNav.actions')}</h4>
+        <UswdsReactLink
+          to={`/models/${modelID}/read-only`}
+          className="display-block line-height-body-5"
+        >
+          {t('sideNav.readOnlyView')}
         </UswdsReactLink>
         <div className="flex-align-self-center margin-y-2">
           <CsvExportLink modelPlanID={modelID} includeAll={false} />
         </div>
         <Button
-          className="line-height-body-5 test-withdraw-request"
+          className="line-height-body-5 test-withdraw-request text-red"
           type="button"
           unstyled
           onClick={() => setModalOpen(true)}

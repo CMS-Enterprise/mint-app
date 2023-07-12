@@ -6,6 +6,7 @@ const modelPlanTaskList = {
   subheading: 'for <1>{{modelName}}</1>',
   status: 'Status:',
   update: 'Update',
+  edit: 'Edit Model Plan',
   documentSummaryBox: {
     heading: 'Documents',
     copy: 'There are no documents uploaded',
@@ -23,6 +24,8 @@ const modelPlanTaskList = {
     more: ' more'
   },
   sideNav: {
+    actions: 'Actions',
+    readOnlyView: 'Switch to the Read View for this Model Plan',
     saveAndExit: 'Save & Exit',
     view: 'View this Model Plan',
     remove: 'Remove your Model Plan',
