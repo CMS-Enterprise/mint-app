@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import CategoryCard from './index';
 
 describe('Operational Solution Category Card', () => {
-  const categoryRoute = 'data-reporting';
+  const categoryRoute = 'data';
 
   it('rendered category name and link', () => {
     const { getByText } = render(

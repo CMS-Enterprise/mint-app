@@ -45,7 +45,7 @@ function useHashScroll(anchorElement?: string) {
 
       const bottomOfPage =
         window.innerHeight + Math.round(window.scrollY) >=
-        document.body.offsetHeight;
+        document.body.offsetHeight - 100; // 100 px buffer to trigger bottom of page
 
       const topOfPage = window.scrollY === 0;
 

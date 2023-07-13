@@ -17,5 +17,5 @@ export default {
 } as ComponentMeta<typeof CategoryCard>;
 
 export const Default = () => (
-  <CategoryCard category="Data reporting" route="data-reporting" />
+  <CategoryCard category="Data reporting" route="data" />
 );

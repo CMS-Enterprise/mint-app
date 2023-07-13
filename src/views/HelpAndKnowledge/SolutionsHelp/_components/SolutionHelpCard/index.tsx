@@ -11,6 +11,7 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionsTag from '../SolutionsTag';
@@ -19,7 +20,7 @@ import './index.scss';
 
 type SolutionCardProps = {
   className?: string;
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
   solution: HelpSolutionType;
 };
 
@@ -33,15 +34,15 @@ const SolutionHelpCard = ({
   const location = useLocation();
 
   return (
-    <CardGroup className="flex-column flex-no-wrap">
+    <CardGroup className="flex-no-wrap">
       <Card
         className={classNames(
           'solution-card margin-bottom-2 shadow',
           className
         )}
       >
-        <div className="padding-3 solution-card__container">
-          <div className="solution-card__header">
+        <div className="padding-3 solution-card__container solution-card__fill-card-space">
+          <div className="solution-card__header solution-card__fill-card-space">
             <h3
               className="margin-bottom-0 margin-top-0 solutions-checkbox__header"
               style={{ wordBreak: 'break-word' }}

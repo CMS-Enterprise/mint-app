@@ -56,14 +56,15 @@ exports[`FavoriteCard matches the snapshot 1`] = `
           </div>
           <div
             class="padding-0"
+            data-testid="task-list-status"
           >
             <div
               class="grid-row"
               data-testid="grid"
-              style="gap: 10px;"
+              style="gap: 16px;"
             >
               <div
-                class="grid-col-auto desktop:grid-col-auto display-flex flex-align-center"
+                class="display-flex flex-align-center"
                 data-testid="grid"
                 style="gap: 10px;"
               >
@@ -75,9 +76,8 @@ exports[`FavoriteCard matches the snapshot 1`] = `
                 </span>
               </div>
               <div
-                class="grid-col-auto desktop:grid-col-auto display-flex flex-align-center flex-wrap"
+                class="display-flex flex-align-center flex-wrap"
                 data-testid="grid"
-                style="gap: 10px;"
               >
                 <div>
                   <a

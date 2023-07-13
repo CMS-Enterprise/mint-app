@@ -31,7 +31,7 @@ require (
 
 require github.com/gorilla/websocket v1.5.0
 
-require github.com/xhit/go-simple-mail/v2 v2.13.0
+require github.com/xhit/go-simple-mail/v2 v2.15.0
 
 require (
 	github.com/aquasecurity/esquery v0.2.0
@@ -50,7 +50,7 @@ require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0 // indirect
-	github.com/okta/okta-sdk-golang/v2 v2.18.0
+	github.com/okta/okta-sdk-golang/v2 v2.19.0
 	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 )
 

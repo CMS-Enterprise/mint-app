@@ -17,7 +17,10 @@ import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { DiscussionStatus } from 'types/graphql-global-types';
+import {
+  DiscussionStatus,
+  DiscussionUserRole
+} from 'types/graphql-global-types';
 import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
 
 import './index.scss';
@@ -336,6 +339,8 @@ const DiscussionCard = () => {
       id: 'c5960290-81b2-4303-8249-84d334de56b3',
       content: 'When should we submit an onboarding request to use Salesforce?',
       createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
+      userRole: DiscussionUserRole.MODEL_TEAM,
+      userRoleDescription: '',
       createdDts: hour3ago,
       status: DiscussionStatus.ANSWERED,
       isAssessment: false,
@@ -350,6 +355,8 @@ const DiscussionCard = () => {
           content:
             'You should submit an onboarding request as soon as your team has a sense of what direction you want for IT support.',
           isAssessment: true,
+          userRole: DiscussionUserRole.LEADERSHIP,
+          userRoleDescription: '',
           createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
           createdDts: justNow,
           resolution: true,
