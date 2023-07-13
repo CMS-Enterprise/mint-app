@@ -40,7 +40,7 @@ const SolutionsHeader = ({
     { text: t('heading'), url: '/help-and-knowledge' },
     {
       text: t('operationalSolutions'),
-      url: `/help-and-knowledge/operational-solutions`
+      url: `/help-and-knowledge/operational-solutions?page=1`
     }
   ];
 

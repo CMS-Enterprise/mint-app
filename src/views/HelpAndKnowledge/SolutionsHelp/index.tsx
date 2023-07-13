@@ -75,6 +75,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const category = params.get('category') as OperationalSolutionCategoryRoute;
   const page = params.get('page');
+  const modal = params.get('solution');
 
   // Get the solution map details from solution route param
   const { prevPathname, selectedSolution: solution } = useModalSolutionState(
@@ -91,11 +92,18 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   // Resets the query on route or category change
   // Also preserves the query/scroll when the modal is open/closed
   useEffect(() => {
-    if (!page && location.pathname) {
+    if (
+      !page &&
+      location.pathname &&
+      (!category || (!modal && !prevPathname.includes('solution=')))
+    ) {
       setQuery('');
       window.scrollTo(0, 0);
     }
-  }, [page, location.pathname, category]);
+    if (!query && !modal && !prevPathname.includes('solution=')) {
+      window.scrollTo(0, 0);
+    }
+  }, [page, location.pathname, category, modal, prevPathname, query]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
