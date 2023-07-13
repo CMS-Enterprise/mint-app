@@ -973,7 +973,7 @@ The Model team will receive an implementation milestone schedule that identifies
             'Exchange data through Application Programming Interfaces (API)',
           links: [{ link: 'https://nemsis.org/', external: true }],
           items: [
-            'API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with <link1>Emergency Management Services</link1>',
+            'API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with Emergency Management Services software vendors using a <link1>data standard for emergency services.</link1>',
             'Electronic Health Records integration (a Bulk FHIR API is coming soon)'
           ],
           level: 'h4',
