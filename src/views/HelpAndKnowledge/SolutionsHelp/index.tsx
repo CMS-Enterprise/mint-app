@@ -89,21 +89,19 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     helpSolutions
   );
 
+  const fromModal: boolean = prevPathname.includes('solution=');
+
   // Resets the query on route or category change
   // Also preserves the query/scroll when the modal is open/closed
   useEffect(() => {
-    if (
-      !page &&
-      location.pathname &&
-      (!category || (!modal && !prevPathname.includes('solution=')))
-    ) {
+    if (!page && location.pathname && (!category || (!modal && !fromModal))) {
       setQuery('');
       window.scrollTo(0, 0);
     }
-    if (!query && !modal && !prevPathname.includes('solution=')) {
+    if (!query && !modal && !fromModal) {
       window.scrollTo(0, 0);
     }
-  }, [page, location.pathname, category, modal, prevPathname, query]);
+  }, [page, location.pathname, category, modal, query, fromModal]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
