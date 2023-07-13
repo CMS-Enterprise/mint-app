@@ -1,0 +1,38 @@
+name: Deploy Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy
+
+jobs:
+  deploy_dev:
+    needs: build_application_images
+    uses: ./.github/workflows/deploy_to_environment.yml
+    with:
+      env: dev
+    secrets: inherit
+
+  deploy_test:
+    needs: build_application_images
+    uses: ./.github/workflows/deploy_to_environment.yml
+    with:
+      env: test
+    secrets: inherit
+
+  deploy_impl:
+    needs: [deploy_dev, deploy_test]
+    uses: ./.github/workflows/deploy_to_environment.yml
+    with:
+      env: impl
+    secrets: inherit
+
+  deploy_prod:
+    needs: deploy_impl
+    uses: ./.github/workflows/deploy_to_environment.yml
+    with:
+      env: prod
+    secrets: inherit
