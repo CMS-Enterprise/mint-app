@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -8,6 +8,7 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
+  ModalRef,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -19,6 +20,9 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import ShareExportModal, {
+  ShareExportModalOpener
+} from 'components/ShareExportModal';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
@@ -37,6 +41,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
 import BodyContent from './_components/FilterView/BodyContent';
+import { filterGroups } from './_components/FilterView/BodyContent/_filterGroupMapping';
 import FilterViewModal from './_components/FilterView/Modal';
 import { groupOptions } from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
@@ -66,7 +71,7 @@ export interface subComponentsProps {
   [key: string]: subComponentProps;
 }
 
-const listOfSubpageKey = [
+const listOfSubpageKey: string[] = [
   'model-basics',
   'general-characteristics',
   'participants-and-providers',
@@ -79,6 +84,76 @@ const listOfSubpageKey = [
   'documents',
   'crs-and-tdl'
 ];
+
+export const ReadOnlyComponents = (
+  modelID: string,
+  isHelpArticle: boolean | undefined
+): subComponentsProps => {
+  return {
+    'model-basics': {
+      route: `/models/${modelID}/read-only/model-basics`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/model-basics',
+      component: <ReadOnlyModelBasics modelID={modelID} />
+    },
+    'general-characteristics': {
+      route: `/models/${modelID}/read-only/general-characteristics`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/general-characteristics',
+      component: <ReadOnlyGeneralCharacteristics modelID={modelID} />
+    },
+    'participants-and-providers': {
+      route: `/models/${modelID}/read-only/participants-and-providers`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/participants-and-providers',
+      component: <ReadOnlyParticipantsAndProviders modelID={modelID} />
+    },
+    beneficiaries: {
+      route: `/models/${modelID}/read-only/beneficiaries`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/beneficiaries',
+      component: <ReadOnlyBeneficiaries modelID={modelID} />
+    },
+    'operations-evaluation-and-learning': {
+      route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/operations-evaluation-and-learning',
+      component: <ReadOnlyOpsEvalAndLearning modelID={modelID} />
+    },
+    payment: {
+      route: `/models/${modelID}/read-only/payment`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/payment',
+      component: <ReadOnlyPayments modelID={modelID} />
+    },
+    'it-solutions': {
+      route: `/models/${modelID}/read-only/it-solutions`,
+      component: <ReadOnlyOperationalNeeds modelID={modelID} />,
+      helpRoute: '/help-and-knowledge/sample-model-plan/it-solutions'
+    },
+    team: {
+      route: `/models/${modelID}/read-only/team`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/team',
+      component: <ReadOnlyTeamInfo modelID={modelID} />
+    },
+    discussions: {
+      route: `/models/${modelID}/read-only/discussions`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/discussions',
+      component: <ReadOnlyDiscussions modelID={modelID} />
+    },
+    documents: {
+      route: `/models/${modelID}/read-only/documents`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/documents',
+      component: (
+        <ReadOnlyDocuments modelID={modelID} isHelpArticle={isHelpArticle} />
+      )
+    },
+    'crs-and-tdl': {
+      route: `/models/${modelID}/read-only/crs-and-tdl`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
+      component: (
+        <ReadOnlyCRTDLs modelID={modelID} isHelpArticle={isHelpArticle} />
+      )
+    }
+  };
+};
 
 export type SubpageKey = typeof listOfSubpageKey[number];
 const isSubpage = (
@@ -105,6 +180,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const flags = useFlags();
 
+  const shareExportModalRef = useRef<ModalRef>(null);
+
   const {
     modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
     subinfo
@@ -115,7 +192,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const filteredView = params.get('filter-view');
+  const filteredView = params.get('filter-view') as typeof filterGroups[number];
   const isViewingFilteredGroup = filteredView !== null;
 
   // Used to check if user is assessment for rendering subnav to task list
@@ -186,70 +263,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       .value.toUpperCase();
   };
 
-  const subComponents: subComponentsProps = {
-    'model-basics': {
-      route: `/models/${modelID}/read-only/model-basics`,
-      helpRoute: '/help-and-knowledge/sample-model-plan/model-basics',
-      component: <ReadOnlyModelBasics modelID={modelID} />
-    },
-    'general-characteristics': {
-      route: `/models/${modelID}/read-only/general-characteristics`,
-      helpRoute:
-        '/help-and-knowledge/sample-model-plan/general-characteristics',
-      component: <ReadOnlyGeneralCharacteristics modelID={modelID} />
-    },
-    'participants-and-providers': {
-      route: `/models/${modelID}/read-only/participants-and-providers`,
-      helpRoute:
-        '/help-and-knowledge/sample-model-plan/participants-and-providers',
-      component: <ReadOnlyParticipantsAndProviders modelID={modelID} />
-    },
-    beneficiaries: {
-      route: `/models/${modelID}/read-only/beneficiaries`,
-      helpRoute: '/help-and-knowledge/sample-model-plan/beneficiaries',
-      component: <ReadOnlyBeneficiaries modelID={modelID} />
-    },
-    'operations-evaluation-and-learning': {
-      route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
-      helpRoute:
-        '/help-and-knowledge/sample-model-plan/operations-evaluation-and-learning',
-      component: <ReadOnlyOpsEvalAndLearning modelID={modelID} />
-    },
-    payment: {
-      route: `/models/${modelID}/read-only/payment`,
-      helpRoute: '/help-and-knowledge/sample-model-plan/payment',
-      component: <ReadOnlyPayments modelID={modelID} />
-    },
-    'it-solutions': {
-      route: `/models/${modelID}/read-only/it-solutions`,
-      component: <ReadOnlyOperationalNeeds modelID={modelID} />,
-      helpRoute: '/help-and-knowledge/sample-model-plan/it-solutions'
-    },
-    team: {
-      route: `/models/${modelID}/read-only/team`,
-      helpRoute: '/help-and-knowledge/sample-model-plan/team',
-      component: <ReadOnlyTeamInfo modelID={modelID} />
-    },
-    discussions: {
-      route: `/models/${modelID}/read-only/discussions`,
-      helpRoute: '/help-and-knowledge/sample-model-plan/discussions',
-      component: <ReadOnlyDiscussions modelID={modelID} />
-    },
-    documents: {
-      route: `/models/${modelID}/read-only/documents`,
-      helpRoute: '/help-and-knowledge/sample-model-plan/documents',
-      component: (
-        <ReadOnlyDocuments modelID={modelID} isHelpArticle={isHelpArticle} />
-      )
-    },
-    'crs-and-tdl': {
-      route: `/models/${modelID}/read-only/crs-and-tdl`,
-      helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
-      component: (
-        <ReadOnlyCRTDLs modelID={modelID} isHelpArticle={isHelpArticle} />
-      )
-    }
-  };
+  const subComponents = ReadOnlyComponents(modelID, isHelpArticle);
 
   if (isHelpArticle) delete subComponents.discussions;
 
@@ -344,6 +358,16 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           )}
         </GridContainer>
       </SummaryBox>
+
+      <ShareExportModalOpener modalRef={shareExportModalRef}>
+        EXPORT
+      </ShareExportModalOpener>
+
+      <ShareExportModal
+        modalRef={shareExportModalRef}
+        modelID={modelID}
+        filteredView={filteredView}
+      />
 
       {!flags.hideGroupView && (
         <FilterViewBanner

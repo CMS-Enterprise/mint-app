@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useReactToPrint } from 'react-to-print';
 import {
   Grid,
   GridContainer,
@@ -37,25 +36,11 @@ export type TableItemType = {
 };
 
 export const Landing = () => {
-  const componentRef = useRef(null);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-    documentTitle: 'MINT Landing Page'
-  });
   return (
     <div className="display-flex flex-column">
-      <div>
-        <button type="button" onClick={handlePrint}>
-          Print this out!
-        </button>
-      </div>
-      <div ref={componentRef}>
-        <LandingHeader />
-        <div className="page-break" />
-        <LandingBody />
-        <div className="page-break" />
-        <LandingFooter />
-      </div>
+      <LandingHeader />
+      <LandingBody />
+      <LandingFooter />
     </div>
   );
 };
