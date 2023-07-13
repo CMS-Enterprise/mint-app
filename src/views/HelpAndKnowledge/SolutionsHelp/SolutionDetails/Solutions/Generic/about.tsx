@@ -31,6 +31,7 @@ interface AboutComponentType {
 
 export interface AboutConfigType {
   description: string;
+  links?: LinkType[];
   subDescription?: string;
   items?: string[];
   noList?: boolean;
@@ -58,7 +59,7 @@ Formats Trans component from array of links to be embedded
 Returns links as MINT/internal or external links
 Used with <link1>, <link2>, etc embedded tags in translation file
 */
-const getTransLinkComponents = (links?: LinkType[]) => {
+export const getTransLinkComponents = (links?: LinkType[]) => {
   const linkObj: Record<string, React.ReactNode> = {};
   if (links) {
     links.forEach((link, index) => {
@@ -102,7 +103,13 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md">
       <p className="margin-top-0 text-pre-wrap margin-bottom-0">
-        {t(`solutions.${solution.key}.about.description`)}
+        <Trans
+          i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.description`}
+          components={{
+            ...getTransLinkComponents(aboutConfig.links),
+            bold: <strong />
+          }}
+        />
       </p>
 
       {hasDescriptionItems && (
