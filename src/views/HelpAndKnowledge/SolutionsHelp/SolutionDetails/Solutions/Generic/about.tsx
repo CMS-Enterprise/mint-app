@@ -59,7 +59,7 @@ Formats Trans component from array of links to be embedded
 Returns links as MINT/internal or external links
 Used with <link1>, <link2>, etc embedded tags in translation file
 */
-const getTransLinkComponents = (links?: LinkType[]) => {
+export const getTransLinkComponents = (links?: LinkType[]) => {
   const linkObj: Record<string, React.ReactNode> = {};
   if (links) {
     links.forEach((link, index) => {

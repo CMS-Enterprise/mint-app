@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import {
   Card,
@@ -13,6 +13,10 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 
+import {
+  AboutConfigType,
+  getTransLinkComponents
+} from '../../SolutionDetails/Solutions/Generic/about';
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionsTag from '../SolutionsTag';
 
@@ -30,6 +34,10 @@ const SolutionHelpCard = ({
   solution
 }: SolutionCardProps) => {
   const { t } = useTranslation('helpAndKnowledge');
+
+  const aboutConfig: AboutConfigType = t(`solutions.${solution.key}.about`, {
+    returnObjects: true
+  });
 
   const location = useLocation();
 
@@ -66,7 +74,13 @@ const SolutionHelpCard = ({
             </div>
 
             <p className="solution-card__body">
-              {t(`solutions.${solution.key}.about.description`)}
+              <Trans
+                i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.description`}
+                components={{
+                  ...getTransLinkComponents(aboutConfig.links),
+                  bold: <strong />
+                }}
+              />
             </p>
 
             <Grid
