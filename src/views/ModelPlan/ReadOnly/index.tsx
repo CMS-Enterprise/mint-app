@@ -128,6 +128,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
   const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
 
+  // If no subinfo param exists, default to first subpage key
+  const defaultSection: typeof listOfSubpageKey[number] = listOfSubpageKey[0];
+
   // Enable the description toggle if it overflows
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -271,7 +274,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   }
 
   if (!subinfo && !isViewingFilteredGroup) {
-    history.replace(`${location.pathname}/model-basics`);
+    history.replace(`${location.pathname}/${defaultSection}`);
   }
 
   if (!isSubpage(subinfo, flags, isHelpArticle) && !isViewingFilteredGroup) {
