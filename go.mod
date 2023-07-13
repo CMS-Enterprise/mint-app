@@ -31,7 +31,7 @@ require (
 
 require github.com/gorilla/websocket v1.5.0
 
-require github.com/xhit/go-simple-mail/v2 v2.13.0
+require github.com/xhit/go-simple-mail/v2 v2.15.0
 
 require (
 	github.com/aquasecurity/esquery v0.2.0
