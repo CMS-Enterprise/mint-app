@@ -68,15 +68,29 @@ function ShareExportModal({
 
   const AllReadonlyComponents = ReadOnlyComponents(modelID, false);
 
+  const excludedComponents: string[] = [
+    'team',
+    'discussions',
+    'documents',
+    'crs-and-tdl',
+    'it-solutions'
+  ];
+
   const ComponentToPrint = (
-    <div className="display-none mint-only-print" ref={componentRef}>
+    <div className="display-none mint-only-print padding-8" ref={componentRef}>
       {filteredView ? (
         <BodyContent modelID={modelID} filteredView={filteredView} />
       ) : (
         <>
-          {Object.keys(AllReadonlyComponents).map(
-            component => AllReadonlyComponents[component].component
-          )}
+          {Object.keys(AllReadonlyComponents)
+            .filter(
+              component => !excludedComponents.includes(component as string)
+            )
+            .map(component => (
+              <div className="margin-top-6">
+                {AllReadonlyComponents[component].component}
+              </div>
+            ))}
         </>
       )}
     </div>
