@@ -22,7 +22,9 @@ const FilterViewBanner = ({
   openFilterModal
 }: FilterViewBannerProps) => {
   const { t } = useTranslation('filterView');
+
   const history = useHistory();
+
   return (
     <div
       className="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
@@ -54,7 +56,7 @@ const FilterViewBanner = ({
                 type="button"
                 unstyled
                 className="text-white text-no-wrap"
-                onClick={() => history.push(`${history.location.pathname}`)}
+                onClick={() => history.push(history.location.pathname)}
               >
                 {t('clearFilter')}
               </Button>

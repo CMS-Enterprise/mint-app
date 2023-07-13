@@ -38,14 +38,12 @@ const CategoryFooter = ({
                   key={key}
                   to={`/help-and-knowledge/operational-solutions?category=${key}`}
                 >
-                  {t(`categories.${key}.header`)}
-
-                  {solutionCategories[key as OperationalSolutionCategoryRoute]
-                    ?.subHeader && (
-                    <span>&nbsp;{t(`categories.${key}.subHeader`)}</span>
-                  )}
-
-                  <IconArrowForward className="margin-left-1" />
+                  <span>
+                    {t(`categories.${key}.header`)}&nbsp;
+                    {solutionCategories[key as OperationalSolutionCategoryRoute]
+                      ?.subHeader && t(`categories.${key}.subHeader`)}
+                    <IconArrowForward className="margin-left-1 top-2px" />
+                  </span>
                 </UswdsReactLink>
               </Grid>
             );

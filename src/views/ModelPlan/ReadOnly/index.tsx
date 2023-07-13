@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Alert,
@@ -29,7 +29,7 @@ import {
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { isAssessment, isMAC } from 'utils/user';
-import NotFound, { NotFoundPartial } from 'views/NotFound';
+import NotFound from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -37,6 +37,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
 import FilteredViewBodyContent from './_components/FilterView/BodyContent';
+import FilterGroupMap from './_components/FilterView/BodyContent/_filterGroupMapping';
 import FilterViewModal from './_components/FilterView/Modal';
 import { groupOptions } from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
@@ -103,6 +104,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
+  const history = useHistory();
+
   const flags = useFlags();
 
   const {
@@ -124,6 +127,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const descriptionRef = React.createRef<HTMLElement>();
   const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
   const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
+
+  // If no subinfo param exists, default to first subpage key
+  const defaultSection: typeof listOfSubpageKey[number] = listOfSubpageKey[0];
 
   // Enable the description toggle if it overflows
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,6 +177,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     isCollaborator,
     crTdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
+
+  if (filteredView && !Object.keys(FilterGroupMap).includes(filteredView)) {
+    return <NotFound />;
+  }
 
   const hasEditAccess: boolean =
     !isHelpArticle &&
@@ -260,10 +270,14 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const subComponent = subComponents[subinfo];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFound />;
   }
 
-  if (!isSubpage(subinfo, flags, isHelpArticle)) {
+  if (!subinfo && !isViewingFilteredGroup) {
+    history.replace(`${location.pathname}/${defaultSection}`);
+  }
+
+  if (!isSubpage(subinfo, flags, isHelpArticle) && !isViewingFilteredGroup) {
     return <NotFound />;
   }
 
