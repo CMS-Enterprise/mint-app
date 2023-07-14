@@ -1,28 +1,37 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
   Button,
   GridContainer,
   IconInfo,
-  IconVisiblity
+  IconVisiblity,
+  ModalRef
 } from '@trussworks/react-uswds';
 
 import Tooltip from 'components/shared/Tooltip';
+import { ShareExportModalOpener } from 'components/ShareExport/modal';
+
+import { filterGroups } from '../BodyContent/_filterGroupMapping';
 
 import './index.scss';
 
 type FilterViewBannerProps = {
-  filteredView: string | null | undefined;
+  filteredView?: typeof filterGroups[number];
   openFilterModal: () => void;
+  shareExportModalRef?: RefObject<ModalRef>;
 };
 
 const FilterViewBanner = ({
   filteredView,
-  openFilterModal
+  openFilterModal,
+  shareExportModalRef
 }: FilterViewBannerProps) => {
   const { t } = useTranslation('filterView');
+  const { t: reaonlyT } = useTranslation('generalReadOnly');
+
   const history = useHistory();
+
   return (
     <div
       className="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
@@ -63,6 +72,12 @@ const FilterViewBanner = ({
               <Button type="button" onClick={openFilterModal}>
                 {t('filterButton')}
               </Button>
+
+              {shareExportModalRef && (
+                <ShareExportModalOpener modalRef={shareExportModalRef}>
+                  {reaonlyT('shareExport')}
+                </ShareExportModalOpener>
+              )}
             </div>
           </div>
         </div>

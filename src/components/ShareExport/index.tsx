@@ -79,7 +79,10 @@ const ShareExportHeader = ({
 
       {!flags.hideGroupView && (
         <FilterViewBanner
-          filteredView={filteredView && filteredViewOutput(filteredView)}
+          filteredView={
+            filteredView &&
+            (filteredViewOutput(filteredView) as typeof filterGroups[number])
+          }
           openFilterModal={() => null}
         />
       )}

@@ -16,7 +16,8 @@ const generalReadOnly = {
     modelLeads: 'Model lead(s)',
     sendAnEmail: 'Send an email',
     moreTeamMembers: 'More team members'
-  }
+  },
+  shareExport: 'Share or export'
 };
 
 export default generalReadOnly;

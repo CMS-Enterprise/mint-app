@@ -20,9 +20,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
-import ShareExportModal, {
-  ShareExportModalOpener
-} from 'components/ShareExport/modal';
+import ShareExportModal from 'components/ShareExport/modal';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
@@ -378,21 +376,21 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         />
       </Modal>
 
-      {Summary}
-
-      <ShareExportModalOpener modalRef={shareExportModalRef}>
-        EXPORT
-      </ShareExportModalOpener>
-
       <ShareExportModal
         modalRef={shareExportModalRef}
         modelID={modelID}
         filteredView={filteredView}
       />
 
+      {Summary}
+
       {!flags.hideGroupView && (
         <FilterViewBanner
-          filteredView={filteredView && filteredViewOutput(filteredView)}
+          shareExportModalRef={shareExportModalRef}
+          filteredView={
+            filteredView &&
+            (filteredViewOutput(filteredView) as typeof filterGroups[number])
+          }
           openFilterModal={() => setIsFilterViewModalOpen(true)}
         />
       )}

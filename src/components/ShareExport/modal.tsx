@@ -19,6 +19,8 @@ import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/Bo
 
 import ShareExportHeader from '.';
 
+import './index.scss';
+
 type ShareExportModalButtonProps = {
   modalRef: React.RefObject<ModalRef>;
 } & JSX.IntrinsicElements['button'];
@@ -30,16 +32,19 @@ export const ShareExportModalOpener = ({
   ...buttonProps
 }: ShareExportModalButtonProps) => {
   return (
-    <button
+    <Button
       {...buttonProps}
       type="button"
-      className={classNames('usa-button', className)}
+      className={classNames(
+        'usa-button--outline text-white shadow-none border-white border-2px',
+        className
+      )}
       onClick={e => {
         modalRef.current?.toggleModal(e, true);
       }}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 
