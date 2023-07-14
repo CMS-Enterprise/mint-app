@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageHeading from 'components/PageHeading';
@@ -20,11 +21,13 @@ import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus'
 import NotFound from 'views/NotFound';
 
 const ShareExportHeader = ({
-  filteredView
+  filteredView,
+  className
 }: {
   filteredView?: typeof filterGroups[number];
+  className?: string;
 }) => {
-  const { t: h } = useTranslation('generalReadOnly');
+  const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
   const flags = useFlags();
 
@@ -49,7 +52,7 @@ const ShareExportHeader = ({
   }
 
   const Summary = (
-    <>
+    <div className={classNames(className)}>
       <SummaryBox
         heading=""
         className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
@@ -86,7 +89,7 @@ const ShareExportHeader = ({
           openFilterModal={() => null}
         />
       )}
-    </>
+    </div>
   );
 
   const ModelWarning = (
@@ -96,7 +99,7 @@ const ShareExportHeader = ({
           type="warning"
           className="margin-top-2 margin-bottom-5 desktop:margin-y-3"
         >
-          {h('alert')}
+          {generalReadOnlyT('alert')}
         </Alert>
       )}
     </>

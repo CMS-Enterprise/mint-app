@@ -28,7 +28,7 @@ const FilterViewBanner = ({
   shareExportModalRef
 }: FilterViewBannerProps) => {
   const { t } = useTranslation('filterView');
-  const { t: reaonlyT } = useTranslation('generalReadOnly');
+  const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
   const history = useHistory();
 
@@ -75,7 +75,7 @@ const FilterViewBanner = ({
 
               {shareExportModalRef && (
                 <ShareExportModalOpener modalRef={shareExportModalRef}>
-                  {reaonlyT('shareExport')}
+                  {generalReadOnlyT('shareExport')}
                 </ShareExportModalOpener>
               )}
             </div>

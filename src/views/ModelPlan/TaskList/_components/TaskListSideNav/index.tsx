@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button } from '@trussworks/react-uswds';
+import { Button, ModalRef } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import IconInitial from 'components/shared/IconInitial';
+import ShareExportModal, {
+  ShareExportModalOpener
+} from 'components/ShareExport/modal';
 import useMessage from 'hooks/useMessage';
 import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 import { TeamRole } from 'types/graphql-global-types';
-import CsvExportLink from 'utils/export/CsvExportLink';
 
 const TaskListSideNav = ({
   modelPlan,
@@ -25,10 +27,16 @@ const TaskListSideNav = ({
   collaborators: GetCollaboratorsType[];
 }) => {
   const { id: modelID } = modelPlan;
+
   const history = useHistory();
+
   const { t } = useTranslation('modelPlanTaskList');
+  const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
+
   const { showMessageOnNextPage } = useMessage();
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const shareExportModalRef = useRef<ModalRef>(null);
 
   const [update] = useMutation<ArchiveModelPlanVariables>(ArchiveModelPlan);
 
@@ -100,20 +108,28 @@ const TaskListSideNav = ({
   return (
     <>
       {renderModal()}
+
+      <ShareExportModal modalRef={shareExportModalRef} modelID={modelID} />
+
       <div
         className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"
       >
         <h4 className="margin-top-0 margin-bottom-1">{t('sideNav.actions')}</h4>
+
         <UswdsReactLink
           to={`/models/${modelID}/read-only`}
           className="display-block line-height-body-5"
         >
           {t('sideNav.readOnlyView')}
         </UswdsReactLink>
+
         <div className="flex-align-self-center margin-y-2">
-          <CsvExportLink modelPlanID={modelID} includeAll={false} />
+          <ShareExportModalOpener modalRef={shareExportModalRef} link>
+            {generalReadOnlyT('shareExport')}
+          </ShareExportModalOpener>
         </div>
+
         <Button
           className="line-height-body-5 test-withdraw-request text-red"
           type="button"
@@ -122,6 +138,7 @@ const TaskListSideNav = ({
         >
           {t('sideNav.remove')}
         </Button>
+
         <div className="margin-top-4 margin-bottom-7">
           <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
           <Button
@@ -136,6 +153,7 @@ const TaskListSideNav = ({
               <span aria-hidden /> indexTwo
             </Trans>
           </Button>
+
           <Button
             type="button"
             onClick={() =>
@@ -149,13 +167,16 @@ const TaskListSideNav = ({
             </Trans>
           </Button>
         </div>
+
         <div>
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
+
           <div className="margin-bottom-2">
             <UswdsReactLink to={`/models/${modelID}/collaborators`}>
               {t('sideNav.editTeam')}
             </UswdsReactLink>
           </div>
+
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
               {[

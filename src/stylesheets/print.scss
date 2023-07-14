@@ -1,3 +1,9 @@
+@media all {
+  .page-break {
+    display: none;
+  }
+}
+
 @media screen {
   .mint-only-print {
     display: none;
@@ -23,6 +29,12 @@
 
   .mint-only-print {
     display: block !important;
+  }
+
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: auto;
   }
 
   html * {
