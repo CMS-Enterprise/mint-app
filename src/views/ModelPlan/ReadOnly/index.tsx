@@ -4,7 +4,6 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
-  Alert,
   Grid,
   GridContainer,
   IconArrowBack,
@@ -19,10 +18,11 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import ShareExportModal, {
   ShareExportModalOpener
-} from 'components/ShareExportModal';
+} from 'components/ShareExport/modal';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
@@ -174,6 +174,15 @@ const isSubpage = (
   return listOfSubpageKey.includes(x);
 };
 
+export const filteredViewOutput = (value: string) => {
+  if (value === 'cmmi') {
+    return groupOptions.filter(n => n.value.includes(value))[0].label;
+  }
+  return groupOptions
+    .filter(n => n.value.includes(value))[0]
+    .value.toUpperCase();
+};
+
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
@@ -254,15 +263,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     !isMAC(groups) &&
     (isCollaborator || isAssessment(groups, flags));
 
-  const filteredViewOutput = (value: string) => {
-    if (value === 'cmmi') {
-      return groupOptions.filter(n => n.value.includes(value))[0].label;
-    }
-    return groupOptions
-      .filter(n => n.value.includes(value))[0]
-      .value.toUpperCase();
-  };
-
   const subComponents = ReadOnlyComponents(modelID, isHelpArticle);
 
   if (isHelpArticle) delete subComponents.discussions;
@@ -281,6 +281,86 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return <NotFound />;
   }
 
+  const Summary = (
+    <SummaryBox
+      heading=""
+      className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
+      data-testid="read-only-model-summary"
+    >
+      <GridContainer className="padding-x-0">
+        {!isHelpArticle && (
+          <div className="mint-no-print">
+            <div className="display-flex flex-justify">
+              <UswdsReactLink
+                to="/models"
+                className="display-flex flex-align-center margin-bottom-3"
+              >
+                <IconArrowBack className="text-primary margin-right-1" />
+                {h('back')}
+              </UswdsReactLink>
+
+              <FavoriteIcon
+                isFavorite={isFavorite}
+                modelPlanID={id}
+                updateFavorite={handleUpdateFavorite}
+              />
+            </div>
+          </div>
+        )}
+
+        <PageHeading
+          className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+          headingLevel={isHelpArticle ? 'h2' : 'h1'}
+        >
+          {modelName}{' '}
+          {abbreviation && (
+            <span className="font-sans-sm text-normal">({abbreviation})</span>
+          )}
+        </PageHeading>
+
+        <TaskListStatus
+          readOnly
+          modelID={modelID}
+          status={status}
+          statusLabel
+          modifiedOrCreateLabel={!!modifiedDts}
+          modifiedDts={modifiedDts ?? createdDts}
+        />
+
+        {!isViewingFilteredGroup && (
+          <div className="mint-no-print">
+            <ModelSummary
+              descriptionRef={descriptionRef}
+              goal={basics?.goal ?? ''}
+              loading={loading}
+              modelName={modelName}
+              isDescriptionExpandable={isDescriptionExpandable}
+              characteristics={generalCharacteristics}
+              performancePeriodStarts={basics?.performancePeriodStarts}
+              modelLeads={collaborators?.filter(
+                c => c.teamRole === TeamRole.MODEL_LEAD
+              )}
+              crTdls={crTdls}
+            />
+          </div>
+        )}
+      </GridContainer>
+    </SummaryBox>
+  );
+
+  const ModelWarning = (
+    <>
+      {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
+        <Alert
+          type="warning"
+          className="margin-top-2 margin-bottom-5 desktop:margin-y-3"
+        >
+          {h('alert')}
+        </Alert>
+      )}
+    </>
+  );
+
   return (
     <MainContent
       className="model-plan-read-only"
@@ -298,66 +378,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         />
       </Modal>
 
-      <SummaryBox
-        heading=""
-        className="padding-y-6 padding-x-2 border-0 bg-primary-lighter margin-top-0"
-        data-testid="read-only-model-summary"
-      >
-        <GridContainer className="padding-x-0">
-          {!isHelpArticle && (
-            <div className="display-flex flex-justify">
-              <UswdsReactLink
-                to="/models"
-                className="display-flex flex-align-center margin-bottom-3"
-              >
-                <IconArrowBack className="text-primary margin-right-1" />
-                {h('back')}
-              </UswdsReactLink>
-
-              <FavoriteIcon
-                isFavorite={isFavorite}
-                modelPlanID={id}
-                updateFavorite={handleUpdateFavorite}
-              />
-            </div>
-          )}
-
-          <PageHeading
-            className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-            headingLevel={isHelpArticle ? 'h2' : 'h1'}
-          >
-            {modelName}{' '}
-            {abbreviation && (
-              <span className="font-sans-sm text-normal">({abbreviation})</span>
-            )}
-          </PageHeading>
-
-          <TaskListStatus
-            readOnly
-            modelID={modelID}
-            status={status}
-            statusLabel
-            modifiedOrCreateLabel={!!modifiedDts}
-            modifiedDts={modifiedDts ?? createdDts}
-          />
-
-          {!isViewingFilteredGroup && (
-            <ModelSummary
-              descriptionRef={descriptionRef}
-              goal={basics?.goal ?? ''}
-              loading={loading}
-              modelName={modelName}
-              isDescriptionExpandable={isDescriptionExpandable}
-              characteristics={generalCharacteristics}
-              performancePeriodStarts={basics?.performancePeriodStarts}
-              modelLeads={collaborators?.filter(
-                c => c.teamRole === TeamRole.MODEL_LEAD
-              )}
-              crTdls={crTdls}
-            />
-          )}
-        </GridContainer>
-      </SummaryBox>
+      {Summary}
 
       <ShareExportModalOpener modalRef={shareExportModalRef}>
         EXPORT
@@ -383,14 +404,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       />
 
       <GridContainer className="model-plan-alert-wrapper">
-        {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
-          <Alert
-            type="warning"
-            className="margin-top-2 margin-bottom-5 desktop:margin-y-3"
-          >
-            {h('alert')}
-          </Alert>
-        )}
+        {ModelWarning}
       </GridContainer>
 
       <SectionWrapper className="model-plan__body-content margin-top-4">

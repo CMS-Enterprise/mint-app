@@ -4,17 +4,20 @@ import { useReactToPrint } from 'react-to-print';
 import {
   Button,
   ButtonGroup,
+  GridContainer,
   Modal,
   ModalFooter,
   ModalHeading,
   ModalRef,
   ModalToggleButton
 } from '@trussworks/react-uswds';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+
+import ShareExportHeader from '.';
 
 type ShareExportModalButtonProps = {
   modalRef: React.RefObject<ModalRef>;
@@ -30,7 +33,7 @@ export const ShareExportModalOpener = ({
     <button
       {...buttonProps}
       type="button"
-      className={classnames('usa-button', className)}
+      className={classNames('usa-button', className)}
       onClick={e => {
         modalRef.current?.toggleModal(e, true);
       }}
@@ -77,22 +80,29 @@ function ShareExportModal({
   ];
 
   const ComponentToPrint = (
-    <div className="display-none mint-only-print padding-8" ref={componentRef}>
-      {filteredView ? (
-        <BodyContent modelID={modelID} filteredView={filteredView} />
-      ) : (
-        <>
-          {Object.keys(AllReadonlyComponents)
-            .filter(
-              component => !excludedComponents.includes(component as string)
-            )
-            .map(component => (
-              <div className="margin-top-6">
-                {AllReadonlyComponents[component].component}
-              </div>
-            ))}
-        </>
-      )}
+    <div className="display-none mint-only-print" ref={componentRef}>
+      <ShareExportHeader filteredView={filteredView} />
+      <GridContainer className="padding-x-8">
+        {filteredView ? (
+          <BodyContent modelID={modelID} filteredView={filteredView} />
+        ) : (
+          <>
+            {Object.keys(AllReadonlyComponents)
+              .filter(
+                component => !excludedComponents.includes(component as string)
+              )
+              .map((component, index) => (
+                <div
+                  className={classNames({
+                    'margin-top-6': index !== 0
+                  })}
+                >
+                  {AllReadonlyComponents[component].component}
+                </div>
+              ))}
+          </>
+        )}
+      </GridContainer>
     </div>
   );
 

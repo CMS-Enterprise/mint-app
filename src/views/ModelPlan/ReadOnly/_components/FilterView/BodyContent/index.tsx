@@ -83,7 +83,7 @@ const BodyContent = ({
         );
       })}
 
-      <Alert type="info" noIcon>
+      <Alert type="info" noIcon className="mint-no-print">
         <span className="margin-y-0 font-body-sm text-bold display-block">
           {t('alert.bodyContentHeading')}
         </span>

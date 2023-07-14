@@ -13,7 +13,7 @@ import Tooltip from 'components/shared/Tooltip';
 import './index.scss';
 
 type FilterViewBannerProps = {
-  filteredView: string | null;
+  filteredView: string | null | undefined;
   openFilterModal: () => void;
 };
 
@@ -45,23 +45,25 @@ const FilterViewBanner = ({
               </Tooltip>
             )}
           </div>
-          <div
-            className="display-flex flex-justify flex-align-center flex-align-self-end"
-            style={{ gap: '1rem' }}
-          >
-            {filteredView && (
-              <Button
-                type="button"
-                unstyled
-                className="text-white text-no-wrap"
-                onClick={() => history.push(`${history.location.pathname}`)}
-              >
-                {t('clearFilter')}
+          <div className="mint-no-print">
+            <div
+              className="display-flex flex-justify flex-align-center flex-align-self-end"
+              style={{ gap: '1rem' }}
+            >
+              {filteredView && (
+                <Button
+                  type="button"
+                  unstyled
+                  className="text-white text-no-wrap"
+                  onClick={() => history.push(`${history.location.pathname}`)}
+                >
+                  {t('clearFilter')}
+                </Button>
+              )}
+              <Button type="button" onClick={openFilterModal}>
+                {t('filterButton')}
               </Button>
-            )}
-            <Button type="button" onClick={openFilterModal}>
-              {t('filterButton')}
-            </Button>
+            </div>
           </div>
         </div>
       </GridContainer>

@@ -53,7 +53,7 @@ const TaskListStatus = ({
           )}
 
           {!readOnly && (
-            <div>
+            <div className="mint-no-print">
               <UswdsReactLink
                 to={`/models/${modelID}/status`}
                 className="display-flex flex-align-center"
@@ -65,16 +65,18 @@ const TaskListStatus = ({
           )}
         </Grid>
         {readOnly && (
-          <div className="display-flex flex-align-center">
-            <div className="height-2 border-left-2px border-base-light margin-right-2 " />
-            <div>
-              <UswdsReactLink
-                to={`/models/${modelID}/task-list`}
-                className="display-flex flex-align-center"
-              >
-                <IconEdit className="margin-right-1" />
-                {t('edit')}
-              </UswdsReactLink>
+          <div className="mint-no-print">
+            <div className="display-flex flex-align-center">
+              <div className="height-2 border-left-2px border-base-light margin-right-2 " />
+              <div>
+                <UswdsReactLink
+                  to={`/models/${modelID}/task-list`}
+                  className="display-flex flex-align-center"
+                >
+                  <IconEdit className="margin-right-1" />
+                  {t('edit')}
+                </UswdsReactLink>
+              </div>
             </div>
           </div>
         )}

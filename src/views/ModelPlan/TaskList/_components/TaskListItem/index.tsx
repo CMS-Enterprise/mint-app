@@ -57,7 +57,7 @@ export const TaskListStatusTag = ({
   return (
     <span
       data-testid="tasklist-tag"
-      className={`model-plan-task-list__task-tag line-height-body-1 text-bold ${tagStyle}`}
+      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle}`}
     >
       {tagCopy}
     </span>
