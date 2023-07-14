@@ -10,14 +10,12 @@ concurrency:
 
 jobs:
   deploy_dev:
-    needs: build_application_images
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: dev
     secrets: inherit
 
   deploy_test:
-    needs: build_application_images
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: test
