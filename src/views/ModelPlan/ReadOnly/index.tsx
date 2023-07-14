@@ -103,6 +103,7 @@ const isSubpage = (
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+  const isTablet = useCheckResponsiveScreen('desktop', 'smaller');
 
   const history = useHistory();
 
@@ -303,7 +304,12 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         className="padding-y-6 padding-x-2 border-0 bg-primary-lighter margin-top-0"
         data-testid="read-only-model-summary"
       >
-        <GridContainer className="padding-x-0">
+        <GridContainer
+          className={classnames({
+            'padding-x-0': isMobile,
+            'padding-x-2': isTablet
+          })}
+        >
           {!isHelpArticle && (
             <div className="display-flex flex-justify">
               <UswdsReactLink
