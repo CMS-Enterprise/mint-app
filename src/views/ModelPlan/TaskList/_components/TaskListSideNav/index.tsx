@@ -9,9 +9,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import IconInitial from 'components/shared/IconInitial';
-import ShareExportModal, {
-  ShareExportModalOpener
-} from 'components/ShareExport/modal';
+import ShareExportModal from 'components/ShareExport/modal';
 import useMessage from 'hooks/useMessage';
 import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
@@ -32,6 +30,8 @@ const TaskListSideNav = ({
 
   const { t } = useTranslation('modelPlanTaskList');
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
+
+  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
   const { showMessageOnNextPage } = useMessage();
   const [isModalOpen, setModalOpen] = useState(false);
@@ -109,7 +109,16 @@ const TaskListSideNav = ({
     <>
       {renderModal()}
 
-      <ShareExportModal modalRef={shareExportModalRef} modelID={modelID} />
+      <Modal
+        isOpen={isExportModalOpen}
+        closeModal={() => setIsExportModalOpen(false)}
+        shouldCloseOnOverlayClick
+      >
+        <ShareExportModal
+          closeModal={() => setIsExportModalOpen(false)}
+          modelID={modelID}
+        />
+      </Modal>
 
       <div
         className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
@@ -125,9 +134,13 @@ const TaskListSideNav = ({
         </UswdsReactLink>
 
         <div className="flex-align-self-center margin-y-2">
-          <ShareExportModalOpener modalRef={shareExportModalRef} link>
+          <Button
+            type="button"
+            className="usa-button--unstyled"
+            onClick={() => setIsExportModalOpen(true)}
+          >
             {generalReadOnlyT('shareExport')}
-          </ShareExportModalOpener>
+          </Button>
         </div>
 
         <Button

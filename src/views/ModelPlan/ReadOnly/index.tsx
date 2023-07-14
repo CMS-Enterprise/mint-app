@@ -187,8 +187,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const flags = useFlags();
 
-  const shareExportModalRef = useRef<ModalRef>(null);
-
   const {
     modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
     subinfo
@@ -206,8 +204,17 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   const descriptionRef = React.createRef<HTMLElement>();
-  const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
-  const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
+
+  const [
+    isDescriptionExpandable,
+    setIsDescriptionExpandable
+  ] = useState<boolean>(false);
+
+  const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState<boolean>(
+    false
+  );
+
+  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
   // Enable the description toggle if it overflows
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -368,6 +375,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         isOpen={isFilterViewModalOpen}
         closeModal={() => setIsFilterViewModalOpen(false)}
         shouldCloseOnOverlayClick
+        className="radius-md"
         modalHeading={h('filterView.text')}
       >
         <FilterViewModal
@@ -376,22 +384,30 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         />
       </Modal>
 
-      <ShareExportModal
-        modalRef={shareExportModalRef}
-        modelID={modelID}
-        filteredView={filteredView}
-      />
+      <Modal
+        isOpen={isExportModalOpen}
+        closeModal={() => setIsExportModalOpen(false)}
+        className="padding-0 radius-md"
+        navigation
+        shouldCloseOnOverlayClick
+      >
+        <ShareExportModal
+          closeModal={() => setIsExportModalOpen(false)}
+          modelID={modelID}
+          filteredView={filteredView}
+        />
+      </Modal>
 
       {Summary}
 
       {!flags.hideGroupView && (
         <FilterViewBanner
-          shareExportModalRef={shareExportModalRef}
           filteredView={
             filteredView &&
             (filteredViewOutput(filteredView) as typeof filterGroups[number])
           }
           openFilterModal={() => setIsFilterViewModalOpen(true)}
+          openExportModal={() => setIsExportModalOpen(true)}
         />
       )}
 

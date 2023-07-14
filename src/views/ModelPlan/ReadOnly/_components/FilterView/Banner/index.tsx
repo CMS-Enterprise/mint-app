@@ -1,16 +1,14 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
   Button,
   GridContainer,
   IconInfo,
-  IconVisiblity,
-  ModalRef
+  IconVisiblity
 } from '@trussworks/react-uswds';
 
 import Tooltip from 'components/shared/Tooltip';
-import { ShareExportModalOpener } from 'components/ShareExport/modal';
 
 import { filterGroups } from '../BodyContent/_filterGroupMapping';
 
@@ -19,13 +17,13 @@ import './index.scss';
 type FilterViewBannerProps = {
   filteredView?: typeof filterGroups[number];
   openFilterModal: () => void;
-  shareExportModalRef?: RefObject<ModalRef>;
+  openExportModal: () => void;
 };
 
 const FilterViewBanner = ({
   filteredView,
   openFilterModal,
-  shareExportModalRef
+  openExportModal
 }: FilterViewBannerProps) => {
   const { t } = useTranslation('filterView');
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
@@ -73,11 +71,13 @@ const FilterViewBanner = ({
                 {t('filterButton')}
               </Button>
 
-              {shareExportModalRef && (
-                <ShareExportModalOpener modalRef={shareExportModalRef}>
-                  {generalReadOnlyT('shareExport')}
-                </ShareExportModalOpener>
-              )}
+              <Button
+                type="button"
+                className="usa-button--outline text-white shadow-none border-white border-2px"
+                onClick={openExportModal}
+              >
+                {generalReadOnlyT('shareExport')}
+              </Button>
             </div>
           </div>
         </div>

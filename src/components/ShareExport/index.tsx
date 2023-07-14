@@ -87,6 +87,7 @@ const ShareExportHeader = ({
             (filteredViewOutput(filteredView) as typeof filterGroups[number])
           }
           openFilterModal={() => null}
+          openExportModal={() => null}
         />
       )}
     </div>

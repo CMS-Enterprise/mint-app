@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useReactToPrint } from 'react-to-print';
 import {
@@ -8,17 +8,14 @@ import {
   ComboBoxRef,
   Form,
   GridContainer,
+  IconClose,
   Label,
-  Modal,
-  ModalFooter,
-  ModalHeading,
   ModalRef,
   ModalToggleButton,
   PrimaryNav
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import useDetectModalClose from 'hooks/useDetectModalClose';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
@@ -28,55 +25,22 @@ import ShareExportHeader from '.';
 
 import './index.scss';
 
-type ShareExportModalButtonProps = {
-  modalRef: React.RefObject<ModalRef>;
-  link?: boolean;
-} & JSX.IntrinsicElements['button'];
-
-export const ShareExportModalOpener = ({
-  modalRef,
-  link,
-  className,
-  children,
-  ...buttonProps
-}: ShareExportModalButtonProps) => {
-  return (
-    <Button
-      {...buttonProps}
-      type="button"
-      className={classNames(
-        {
-          'usa-button--outline text-white shadow-none border-white border-2px': !link
-        },
-        { 'usa-button--unstyled': link },
-        className
-      )}
-      onClick={e => {
-        modalRef.current?.toggleModal(e, true);
-      }}
-    >
-      {children}
-    </Button>
-  );
-};
-
 const navElement = ['share', 'export'] as const;
 
 type FitlerGroup = typeof filterGroups[number] | '';
 
 type ShareExportModalProps = {
-  modalRef: React.RefObject<ModalRef>;
   modelID: string;
+  closeModal: () => void;
   filteredView?: typeof filterGroups[number];
 } & JSX.IntrinsicElements['button'];
 
 /**
  * Modal for sharing/exporting a model plan
- * Used in conjuction with `<ShareExportModalOpener />`.
  */
 function ShareExportModal({
-  modalRef,
   modelID,
+  closeModal,
   filteredView
 }: ShareExportModalProps) {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
@@ -93,18 +57,17 @@ function ShareExportModal({
 
   const comboboxRef = useRef<ComboBoxRef>(null);
 
-  useDetectModalClose(modalElementId, () =>
-    comboboxRef.current?.clearSelection()
-  );
+  useEffect(() => {
+    setFilteredGroup(filteredView as FitlerGroup);
+  }, [filteredView]);
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'Model Plan',
-    onAfterPrint: () => {
-      comboboxRef.current?.clearSelection();
-      setFilteredGroup('');
-      modalRef.current?.toggleModal();
-    }
+    documentTitle: 'Model Plan'
+    // onAfterPrint: () => {
+    //   comboboxRef.current?.clearSelection();
+    //   setFilteredGroup('');
+    // }
   });
 
   const AllReadonlyComponents = ReadOnlyComponents(modelID, false);
@@ -171,64 +134,63 @@ function ShareExportModal({
 
   const ExportForm = (
     <div>
-      <ModalHeading
-        id={`${modalElementId}-heading`}
-        className={`margin-bottom-05 ${modalElementId}__heading`}
-      >
-        {generalReadOnlyT('modal.exportPlan')}
-      </ModalHeading>
+      <div data-testid="filter-view-modal">
+        <div className="filter-view__body">
+          <h3 className="margin-bottom-05 margin-top-0">
+            {generalReadOnlyT('modal.exportPlan')}
+          </h3>
+          <p className="margin-top-0 font-body-md text-base line-height-sans-2">
+            {generalReadOnlyT('modal.exportInfo')}
+          </p>
 
-      <p className="margin-top-0 text-base">
-        {generalReadOnlyT('modal.exportInfo')}
-      </p>
-
-      <Form
-        className="maxw-none margin-top-3"
-        onSubmit={e => {
-          e.preventDefault();
-          handlePrint();
-        }}
-      >
-        <Label htmlFor="export-filter-group" className="margin-y-0 text-normal">
-          {generalReadOnlyT('modal.exportSelectInfo')}
-        </Label>
-
-        <ComboBox
-          ref={comboboxRef}
-          id="export-filter-group"
-          name="filterGroup"
-          onChange={value => {
-            setFilteredGroup(value as FitlerGroup);
-          }}
-          defaultValue={filteredGroup || ''}
-          options={groupOptions}
-        />
-
-        <ModalFooter>
-          <ButtonGroup className="display-flex flex-justify">
-            <ModalToggleButton
-              modalRef={modalRef}
-              closer
-              unstyled
-              className="padding-105 text-center padding-x-0"
+          <Form
+            className="maxw-none margin-top-3"
+            onSubmit={e => {
+              e.preventDefault();
+              handlePrint();
+            }}
+          >
+            <Label
+              htmlFor="export-filter-group"
+              className="margin-y-0 text-normal"
             >
-              {generalReadOnlyT('modal.cancel')}
-            </ModalToggleButton>
+              {generalReadOnlyT('modal.exportSelectInfo')}
+            </Label>
 
-            <Button type="submit" disabled={false}>
-              {generalReadOnlyT('modal.export')}
-            </Button>
-          </ButtonGroup>
-        </ModalFooter>
-      </Form>
+            <ComboBox
+              ref={comboboxRef}
+              id="export-filter-group"
+              name="filterGroup"
+              onChange={value => {
+                setFilteredGroup(value as FitlerGroup);
+              }}
+              defaultValue={filteredGroup || ''}
+              options={groupOptions}
+            />
+
+            <ButtonGroup className="display-flex flex-justify">
+              <Button
+                type="button"
+                className="usa-button--unstyled"
+                onClick={() => closeModal()}
+              >
+                {generalReadOnlyT('modal.cancel')}
+              </Button>
+
+              <Button type="submit" disabled={false}>
+                {generalReadOnlyT('modal.export')}
+              </Button>
+            </ButtonGroup>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 
   return (
-    <Modal
-      ref={modalRef}
+    <div
       id={modalElementId}
-      className="share-export-modal radius-md maxw-tablet"
+      className="share-export-modal radius-md"
       aria-labelledby={`${modalElementId}-heading`}
       aria-describedby={`${modalElementId}-description`}
     >
@@ -237,16 +199,25 @@ function ShareExportModal({
       <nav
         aria-label={generalReadOnlyT('label')}
         data-testid="share-export-navigation-bar"
-        className="border-base-lighter display-flex width-full padding-x-3 border-bottom-2px"
+        className="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px"
       >
         <PrimaryNav
           aria-label={generalReadOnlyT('label')}
           items={primaryLinks}
         />
+
+        <button
+          type="button"
+          className="mint-modal__x-button text-base margin-right-0 margin-y-1"
+          aria-label="Close Modal"
+          onClick={closeModal}
+        >
+          <IconClose size={3} />
+        </button>
       </nav>
 
-      <div className="display-block padding-3">{ExportForm}</div>
-    </Modal>
+      <div className="display-block padding-3 padding-x-4">{ExportForm}</div>
+    </div>
   );
 }
 
