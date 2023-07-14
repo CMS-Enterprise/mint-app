@@ -1,11 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import {
   Button,
   ButtonGroup,
+  ComboBox,
+  ComboBoxRef,
+  Form,
   GridContainer,
+  Label,
   Modal,
   ModalFooter,
   ModalHeading,
@@ -15,9 +18,11 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import useDetectModalClose from 'hooks/useDetectModalClose';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import { groupOptions } from 'views/ModelPlan/ReadOnly/_components/FilterView/util';
 
 import ShareExportHeader from '.';
 
@@ -57,6 +62,8 @@ export const ShareExportModalOpener = ({
 
 const navElement = ['share', 'export'] as const;
 
+type FitlerGroup = typeof filterGroups[number] | '';
+
 type ShareExportModalProps = {
   modalRef: React.RefObject<ModalRef>;
   modelID: string;
@@ -74,15 +81,30 @@ function ShareExportModal({
 }: ShareExportModalProps) {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
+  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>(
+    filteredView as FitlerGroup
+  );
+
   const [isActive, setIsActive] = useState<typeof navElement[number]>('share');
 
   const modalElementId = 'share-export-modal';
 
-  const componentRef = useRef(null);
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  const comboboxRef = useRef<ComboBoxRef>(null);
+
+  useDetectModalClose(modalElementId, () =>
+    comboboxRef.current?.clearSelection()
+  );
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'Model Plan'
+    documentTitle: 'Model Plan',
+    onAfterPrint: () => {
+      comboboxRef.current?.clearSelection();
+      setFilteredGroup('');
+      modalRef.current?.toggleModal();
+    }
   });
 
   const AllReadonlyComponents = ReadOnlyComponents(modelID, false);
@@ -97,7 +119,9 @@ function ShareExportModal({
 
   const ComponentToPrint: JSX.Element = (
     <div className="display-none mint-only-print" ref={componentRef}>
-      <ShareExportHeader filteredView={filteredView} />
+      <ShareExportHeader
+        filteredView={filteredGroup === '' ? undefined : filteredGroup}
+      />
       <GridContainer className="padding-x-8 margin-top-4">
         {filteredView ? (
           <BodyContent modelID={modelID} filteredView={filteredView} />
@@ -109,6 +133,7 @@ function ShareExportModal({
               )
               .map((component, index) => (
                 <div
+                  key={component}
                   className={classNames('page-break', {
                     'margin-top-6': index !== 0
                   })}
@@ -148,7 +173,7 @@ function ShareExportModal({
     <div>
       <ModalHeading
         id={`${modalElementId}-heading`}
-        className={`margin-bottom-2 ${modalElementId}__heading`}
+        className={`margin-bottom-05 ${modalElementId}__heading`}
       >
         {generalReadOnlyT('modal.exportPlan')}
       </ModalHeading>
@@ -156,6 +181,46 @@ function ShareExportModal({
       <p className="margin-top-0 text-base">
         {generalReadOnlyT('modal.exportInfo')}
       </p>
+
+      <Form
+        className="maxw-none margin-top-3"
+        onSubmit={e => {
+          e.preventDefault();
+          handlePrint();
+        }}
+      >
+        <Label htmlFor="export-filter-group" className="margin-y-0 text-normal">
+          {generalReadOnlyT('modal.exportSelectInfo')}
+        </Label>
+
+        <ComboBox
+          ref={comboboxRef}
+          id="export-filter-group"
+          name="filterGroup"
+          onChange={value => {
+            setFilteredGroup(value as FitlerGroup);
+          }}
+          defaultValue={filteredGroup || ''}
+          options={groupOptions}
+        />
+
+        <ModalFooter>
+          <ButtonGroup className="display-flex flex-justify">
+            <ModalToggleButton
+              modalRef={modalRef}
+              closer
+              unstyled
+              className="padding-105 text-center padding-x-0"
+            >
+              {generalReadOnlyT('modal.cancel')}
+            </ModalToggleButton>
+
+            <Button type="submit" disabled={false}>
+              {generalReadOnlyT('modal.export')}
+            </Button>
+          </ButtonGroup>
+        </ModalFooter>
+      </Form>
     </div>
   );
 
@@ -180,31 +245,7 @@ function ShareExportModal({
         />
       </nav>
 
-      <div className="display-block padding-3">
-        {ExportForm}
-
-        <ModalFooter>
-          <ButtonGroup className="display-flex flex-justify">
-            <ModalToggleButton
-              modalRef={modalRef}
-              closer
-              unstyled
-              className="padding-105 text-center padding-x-0"
-            >
-              {generalReadOnlyT('modal.cancel')}
-            </ModalToggleButton>
-
-            <Button
-              type="button"
-              data-close-modal="true"
-              disabled={false}
-              onClick={handlePrint}
-            >
-              {generalReadOnlyT('modal.export')}
-            </Button>
-          </ButtonGroup>
-        </ModalFooter>
-      </div>
+      <div className="display-block padding-3">{ExportForm}</div>
     </Modal>
   );
 }
