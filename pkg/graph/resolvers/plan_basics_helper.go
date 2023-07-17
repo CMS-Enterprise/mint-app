@@ -120,9 +120,8 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
 	return dateChanges, nil
 }
 
-// checkDateFieldChanged checks if a date field has changed between the existing and new values
 // Returns:
-//	1) Boolean: true if the field has changed
+//  1) Boolean: true if the field has changed
 //  2) *time.Time: Old value of the field converted to a pointer to a time.Time
 //  3) *time.Time: New value of the field converted to a pointer to a time.Time
 func (dp *DateProcessor) checkDateFieldChanged(field string) (
@@ -156,6 +155,8 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 			return false, nil, nil
 		}
 		return true, nil, &newTimeVal
+	} else if oldExists {
+		return true, oldVal.(*time.Time), nil
 	}
 
 	return false, nil, nil
@@ -172,12 +173,14 @@ func getFieldDataMap() map[string]dateFieldData {
 			IsRange:           true,
 			IsRangeStart:      true,
 			OtherRangeKey:     "clearanceEnds",
+			CommonKey:         "clearance",
 		},
 		"clearanceEnds": {
 			HumanReadableName: "Clearance",
 			IsRange:           true,
 			IsRangeStart:      false,
 			OtherRangeKey:     "clearanceStarts",
+			CommonKey:         "clearance",
 		},
 		"announced": {
 			HumanReadableName: "Announce model",
@@ -188,24 +191,28 @@ func getFieldDataMap() map[string]dateFieldData {
 			IsRange:           true,
 			IsRangeStart:      true,
 			OtherRangeKey:     "applicationsEnd",
+			CommonKey:         "applications",
 		},
 		"applicationsEnd": {
 			HumanReadableName: "Application period",
 			IsRange:           true,
 			IsRangeStart:      false,
 			OtherRangeKey:     "applicationsStart",
+			CommonKey:         "applications",
 		},
 		"performancePeriodStarts": {
 			HumanReadableName: "Performance period",
 			IsRange:           true,
 			IsRangeStart:      true,
 			OtherRangeKey:     "performancePeriodEnds",
+			CommonKey:         "performancePeriod",
 		},
 		"performancePeriodEnds": {
 			HumanReadableName: "Performance period",
 			IsRange:           true,
 			IsRangeStart:      false,
 			OtherRangeKey:     "performancePeriodStarts",
+			CommonKey:         "performancePeriod",
 		},
 		"wrapUpEnds": {
 			HumanReadableName: "Model wrap-up end date",
