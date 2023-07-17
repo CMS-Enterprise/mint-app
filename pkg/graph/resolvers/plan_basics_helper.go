@@ -10,13 +10,14 @@ import (
 )
 
 type dateChange struct {
-	IsRange       bool
-	Old           *time.Time
-	New           *time.Time
-	OldRangeStart *time.Time
-	OldRangeEnd   *time.Time
-	NewRangeStart *time.Time
-	NewRangeEnd   *time.Time
+	HumanReadableFieldName string
+	IsRange                bool
+	Old                    *time.Time
+	New                    *time.Time
+	OldRangeStart          *time.Time
+	OldRangeEnd            *time.Time
+	NewRangeStart          *time.Time
+	NewRangeEnd            *time.Time
 }
 
 type dateFieldData struct {
@@ -59,46 +60,93 @@ func NewDateProcessor(changes map[string]interface{}, existing *models.PlanBasic
 	return &DateProcessor{changes: changes, existing: existingMap}, nil
 }
 
-func assignDateFieldIfValueNil(dateField **time.Time, existingValue *time.Time) {
-	if *dateField == nil {
-		*dateField = existingValue
-	}
-}
-
 // ExtractChangedDates extracts the changed dates from the DateProcessor
 func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
-	dataFieldMap := getFieldDataMap()
+	fieldDataMap := getFieldDataMap()
 
 	dateChanges := make(map[string]dateChange)
 
-	for fieldKey, fieldData := range dataFieldMap {
+	for fieldKey, fieldData := range fieldDataMap {
 
 		isFieldChanged, oldValue, newValue := dp.checkDateFieldChanged(fieldKey)
 		if isFieldChanged {
 			if fieldData.IsRange { // check if the field is a range
-				dateChangeValue := dateChange{
-					IsRange: true,
-					Old:     oldValue,
-					New:     newValue,
+				if _, foundExistingDCV := dateChanges[fieldData.CommonKey]; foundExistingDCV {
+					continue
 				}
 
-				existingData, existingDataFound := dp.existing[fieldData.OtherRangeKey]
+				dateChangeValue := &dateChange{
+					HumanReadableFieldName: fieldData.HumanReadableName,
+					IsRange:                true,
+				}
+
+				// Determine the values for the other end of the range
+				isOtherFieldChanged, otherOldValue, otherNewValue := dp.checkDateFieldChanged(fieldData.OtherRangeKey)
+				if !isOtherFieldChanged {
+					existingData, existingDataFound := dp.existing[fieldData.OtherRangeKey]
+					otherNewData, newFound := dp.changes[fieldData.OtherRangeKey]
+
+					if existingDataFound {
+						otherOldValue = existingData.(*time.Time)
+						if newFound {
+							otherNewValuePtr, _ := time.Parse(time.RFC3339, otherNewData.(string)) // Parse the new date from dp.changes
+							otherNewValue = &otherNewValuePtr
+						} else {
+							otherNewValue = otherOldValue
+						}
+					} else {
+						otherOldValue = nil
+						otherNewValue = nil
+					}
+				}
 
 				if fieldData.IsRangeStart {
-					dateChangeValue.OldRangeStart = oldValue
-					dateChangeValue.NewRangeStart = newValue
+					if oldValue != nil {
+						oldRangeStart := new(time.Time)
+						*oldRangeStart = *oldValue
+						dateChangeValue.OldRangeStart = oldRangeStart
+					}
 
-					if existingDataFound {
-						assignDateFieldIfValueNil(&dateChangeValue.OldRangeEnd, existingData.(*time.Time))
-						assignDateFieldIfValueNil(&dateChangeValue.NewRangeEnd, existingData.(*time.Time))
+					if newValue != nil {
+						newRangeStart := new(time.Time)
+						*newRangeStart = *newValue
+						dateChangeValue.NewRangeStart = newRangeStart
+					}
+
+					if otherOldValue != nil {
+						oldRangeEnd := new(time.Time)
+						*oldRangeEnd = *otherOldValue
+						dateChangeValue.OldRangeEnd = oldRangeEnd
+					}
+
+					if otherNewValue != nil {
+						newRangeEnd := new(time.Time)
+						*newRangeEnd = *otherNewValue
+						dateChangeValue.NewRangeEnd = newRangeEnd
 					}
 				} else {
-					dateChangeValue.OldRangeEnd = oldValue
-					dateChangeValue.NewRangeEnd = newValue
+					if oldValue != nil {
+						oldRangeEnd := new(time.Time)
+						*oldRangeEnd = *oldValue
+						dateChangeValue.OldRangeEnd = oldRangeEnd
+					}
 
-					if existingDataFound {
-						assignDateFieldIfValueNil(&dateChangeValue.OldRangeStart, existingData.(*time.Time))
-						assignDateFieldIfValueNil(&dateChangeValue.NewRangeStart, existingData.(*time.Time))
+					if newValue != nil {
+						newRangeEnd := new(time.Time)
+						*newRangeEnd = *newValue
+						dateChangeValue.NewRangeEnd = newRangeEnd
+					}
+
+					if otherOldValue != nil {
+						oldRangeStart := new(time.Time)
+						*oldRangeStart = *otherOldValue
+						dateChangeValue.OldRangeStart = oldRangeStart
+					}
+
+					if otherNewValue != nil {
+						newRangeStart := new(time.Time)
+						*newRangeStart = *otherNewValue
+						dateChangeValue.NewRangeStart = newRangeStart
 					}
 				}
 
@@ -106,12 +154,13 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
 					return nil, fmt.Errorf("CommonKey cannot be empty for range fields")
 				}
 
-				dateChanges[fieldKey] = dateChangeValue
+				dateChanges[fieldData.CommonKey] = *dateChangeValue
 			} else {
 				dateChanges[fieldKey] = dateChange{
-					IsRange: false,
-					Old:     oldValue,
-					New:     newValue,
+					HumanReadableFieldName: fieldData.HumanReadableName,
+					IsRange:                false,
+					Old:                    oldValue,
+					New:                    newValue,
 				}
 			}
 		}
@@ -154,9 +203,9 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 		if err != nil {
 			return false, nil, nil
 		}
+
+		// New value exists but old does not, so it is a new addition
 		return true, nil, &newTimeVal
-	} else if oldExists {
-		return true, oldVal.(*time.Time), nil
 	}
 
 	return false, nil, nil

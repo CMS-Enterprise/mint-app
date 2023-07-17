@@ -112,7 +112,10 @@
           {{end}} -
           {{if .NewRangeEnd}}
               {{.NewRangeEnd.Format "01/02/2006"}}
-          {{else if .OldRangeEnd}}
+          {{else}}
+              None
+          {{end}}
+          {{if .OldRangeEnd}}
               {{.OldRangeEnd.Format "01/02/2006"}}
           {{else}}
             None

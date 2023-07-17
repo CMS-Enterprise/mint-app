@@ -128,6 +128,7 @@ func sendDateChangedEmails(
 
 	dateChange := email.DateChange{}
 	for _, dateChangeValue := range dateChanges {
+		dateChange.Field = dateChangeValue.HumanReadableFieldName
 		dateChange.IsRange = dateChangeValue.IsRange
 
 		if dateChangeValue.IsRange {
