@@ -235,7 +235,7 @@ const ShareExportModal = ({
 
           <Button
             type="submit"
-            disabled={!filteredGroup}
+            disabled={!filteredGroup || (!exportCSV && !exportPDF)}
             className="margin-top-0"
           >
             {generalReadOnlyT('modal.export')}
