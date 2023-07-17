@@ -52,7 +52,7 @@ const OperationalSolutionsHelp = ({
         </CardGroup>
 
         <UswdsReactLink
-          to="/help-and-knowledge/operational-solutions"
+          to="/help-and-knowledge/operational-solutions?page=1"
           variant="unstyled"
           className="usa-button text-white"
         >

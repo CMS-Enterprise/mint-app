@@ -10,8 +10,6 @@ import {
   GridContainer,
   IconClose,
   Label,
-  ModalRef,
-  ModalToggleButton,
   PrimaryNav
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -63,11 +61,10 @@ function ShareExportModal({
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'Model Plan'
-    // onAfterPrint: () => {
-    //   comboboxRef.current?.clearSelection();
-    //   setFilteredGroup('');
-    // }
+    documentTitle: 'Model Plan',
+    onAfterPrint: () => {
+      closeModal();
+    }
   });
 
   const AllReadonlyComponents = ReadOnlyComponents(modelID, false);
@@ -208,11 +205,11 @@ function ShareExportModal({
 
         <button
           type="button"
-          className="mint-modal__x-button text-base margin-right-0 margin-y-1"
+          className="mint-modal__x-button text-base margin-right-0 margin-y-1 right-neg-1 position-relative"
           aria-label="Close Modal"
           onClick={closeModal}
         >
-          <IconClose size={3} />
+          <IconClose size={4} />
         </button>
       </nav>
 

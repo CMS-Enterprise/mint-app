@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Grid,
   GridContainer,
   IconArrowBack,
-  ModalRef,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -31,7 +30,7 @@ import {
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { isAssessment, isMAC } from 'utils/user';
-import NotFound, { NotFoundPartial } from 'views/NotFound';
+import NotFound from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -200,6 +199,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const filteredView = params.get('filter-view') as typeof filterGroups[number];
   const isViewingFilteredGroup = filteredView !== null;
 
+  const history = useHistory();
+
+  // If no subinfo param exists, default to first subpage key
+  const defaultSection: typeof listOfSubpageKey[number] = listOfSubpageKey[0];
+
   // Used to check if user is assessment for rendering subnav to task list
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
@@ -279,10 +283,14 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const subComponent = subComponents[subinfo];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFound />;
   }
 
-  if (!isSubpage(subinfo, flags, isHelpArticle)) {
+  if (!subinfo && !isViewingFilteredGroup) {
+    history.replace(`${location.pathname}/${defaultSection}`);
+  }
+
+  if (!isSubpage(subinfo, flags, isHelpArticle) && !isViewingFilteredGroup) {
     return <NotFound />;
   }
 

@@ -575,7 +575,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
       </ul>
       <a
         class="usa-button text-white"
-        href="/help-and-knowledge/operational-solutions"
+        href="/help-and-knowledge/operational-solutions?page=1"
       >
         View all operational solutions
       </a>

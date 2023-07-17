@@ -8,26 +8,10 @@
 
     &__nav {
         border-bottom: .25rem solid transparent !important;
-        bottom: -3px;     
+        bottom: -5px;     
     }
 
     &__active {
         border-bottom: .25rem solid color('primary') !important;
-    }
-
-    .usa-modal__content {
-        display: block;
-        padding-top: 0;
-    }
-
-    .usa-modal__main {
-        padding: 0;
-    }
-
-    .usa-modal__close {
-        position: absolute;
-        right: 0;
-        margin-right: 4px;
-        top: 36px;
     }
 }
