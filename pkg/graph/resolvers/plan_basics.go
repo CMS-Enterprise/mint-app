@@ -2,7 +2,8 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
+
+	"github.com/davecgh/go-spew/spew"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -15,21 +16,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
-
-func getFieldNameMap() map[string]string {
-	fieldNames := map[string]string{
-		"completeICIP":            "Complete ICIP",
-		"clearanceStarts":         "Clearance",
-		"clearanceEnds":           "Clearance",
-		"announced":               "Announce model",
-		"applicationsStart":       "Application period",
-		"applicationsEnd":         "Application period",
-		"performancePeriodStarts": "Performance period",
-		"performancePeriodEnds":   "Performance period",
-		"wrapUpEnds":              "Model wrap-up end date",
-	}
-	return fieldNames
-}
 
 // UpdatePlanBasics implements resolver logic to update a plan basics object
 func UpdatePlanBasics(
@@ -100,6 +86,7 @@ func processChangedDates(
 	}
 
 	dateChanges, err := dp.ExtractChangedDates()
+	print("len dateChanges: ", len(dateChanges))
 	if err != nil {
 		return err
 	}
@@ -114,14 +101,13 @@ func processChangedDates(
 		addressBook,
 		modelPlan,
 		dateChanges,
+		dp,
 	)
 	if err != nil {
 		logger.Error("Failed to send email notification", zap.Error(err))
-	}
-
-	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -131,65 +117,30 @@ func sendDateChangedEmails(
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
 	dateChanges map[string]dateChange,
+	dateProcessor *DateProcessor,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil || emailTemplateService == nil || dateProcessor == nil {
 		return nil
 	}
-
-	fieldNames := getFieldNameMap()
 
 	// Convert dateChanges map into []email.DateChange slice
 	var dateChangeSlice []email.DateChange
 
-	// Preparing a map to store date ranges separately
-	dateRangeMap := make(map[string]*email.DateChange)
+	dateChange := email.DateChange{}
+	for _, dateChangeValue := range dateChanges {
+		dateChange.IsRange = dateChangeValue.IsRange
 
-	for k, v := range dateChanges {
-		// Check if this key is part of a range
-		rangeKey := ""
-		switch k {
-		case "clearanceStarts", "applicationsStart", "performancePeriodStarts":
-			rangeKey = "start"
-		case "clearanceEnds", "applicationsEnd", "performancePeriodEnds":
-			rangeKey = "end"
-		}
-
-		if rangeKey != "" {
-			// This is part of a range, handle differently
-			name := fieldNames[k]
-			if dateRangeMap[name] == nil {
-				dateRangeMap[name] = &email.DateChange{
-					Field: name,
-				}
-			}
-			if rangeKey == "start" {
-				dateRangeMap[name].OldRangeStart = v.Old
-				dateRangeMap[name].NewRangeStart = v.New
-			} else {
-				dateRangeMap[name].OldRangeEnd = v.Old
-				dateRangeMap[name].NewRangeEnd = v.New
-			}
+		if dateChangeValue.IsRange {
+			dateChange.OldRangeStart = dateChangeValue.OldRangeStart
+			dateChange.NewRangeStart = dateChangeValue.NewRangeStart
+			dateChange.OldRangeEnd = dateChangeValue.OldRangeEnd
+			dateChange.NewRangeEnd = dateChangeValue.NewRangeEnd
 		} else {
-			// This is a single date, handle as before
-			dateChange := email.DateChange{
-				OldDate: v.Old,
-				NewDate: v.New,
-			}
-
-			// Map key to human-readable field name
-			if name, ok := fieldNames[k]; ok {
-				dateChange.Field = name
-			} else {
-				return fmt.Errorf("unknown date change field: %s", k)
-			}
-
-			dateChangeSlice = append(dateChangeSlice, dateChange)
+			dateChange.OldDate = dateChangeValue.Old
+			dateChange.NewDate = dateChangeValue.New
 		}
-	}
 
-	// Add the range changes to the slice
-	for _, dateChange := range dateRangeMap {
-		dateChangeSlice = append(dateChangeSlice, *dateChange)
+		dateChangeSlice = append(dateChangeSlice, dateChange)
 	}
 
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanDateChangedTemplateName)
@@ -203,6 +154,8 @@ func sendDateChangedEmails(
 	if err != nil {
 		return err
 	}
+
+	spew.Dump("dateChangeSlice: ", dateChangeSlice)
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),

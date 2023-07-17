@@ -11,6 +11,7 @@ type ModelPlanDateChangedSubjectContent struct {
 // If the OldRange and NewRange are both nil, then the change is singular
 type DateChange struct {
 	Field                                                  string
+	IsRange                                                bool
 	OldDate, NewDate                                       *time.Time
 	OldRangeStart, OldRangeEnd, NewRangeStart, NewRangeEnd *time.Time
 }

@@ -91,15 +91,32 @@
   <p>
     <b>{{.Field}}:</b>
     <br />
-      {{if .OldRangeStart}}
-        <span style="color: red; text-decoration: line-through;">
-      {{.OldRangeStart.Format "01/02/2006"}} - {{if .OldRangeEnd}}{{.OldRangeEnd.Format "01/02/2006"}}{{else}}None{{end}}
-    </span><br/>
-        {{if .NewRangeStart}}
-            {{.NewRangeStart.Format "01/02/2006"}} - {{if .NewRangeEnd}}{{.NewRangeEnd.Format "01/02/2006"}}{{else}}None{{end}}
-        {{else}}
-          None
-        {{end}}
+      {{if or .OldRangeStart .OldRangeEnd .NewRangeStart .NewRangeEnd}}
+          {{if .OldRangeStart}}
+            <span style="color: red; text-decoration: line-through;">{{.OldRangeStart.Format "01/02/2006"}}</span>
+          {{else}}
+            <span style="color: red; text-decoration: line-through;">None</span>
+          {{end}} -
+          {{if .OldRangeEnd}}
+            <span style="color: red; text-decoration: line-through;">{{.OldRangeEnd.Format "01/02/2006"}}</span>
+          {{else}}
+            <span style="color: red; text-decoration: line-through;">None</span>
+          {{end}}
+          <br/>
+          {{if .NewRangeStart}}
+              {{.NewRangeStart.Format "01/02/2006"}}
+          {{else if .OldRangeStart}}
+              {{.OldRangeStart.Format "01/02/2006"}}
+          {{else}}
+            None
+          {{end}} -
+          {{if .NewRangeEnd}}
+              {{.NewRangeEnd.Format "01/02/2006"}}
+          {{else if .OldRangeEnd}}
+              {{.OldRangeEnd.Format "01/02/2006"}}
+          {{else}}
+            None
+          {{end}}
       {{else}}
           {{if .OldDate}}
             <span style="color: red; text-decoration: line-through;">{{.OldDate.Format "01/02/2006"}}</span>
@@ -108,6 +125,8 @@
           {{end}}
           {{if .NewDate}}
               {{.NewDate.Format "01/02/2006"}}
+          {{else if .OldDate}}
+              {{.OldDate.Format "01/02/2006"}}
           {{else}}
             None
           {{end}}
