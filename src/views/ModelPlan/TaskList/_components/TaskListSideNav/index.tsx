@@ -112,6 +112,8 @@ const TaskListSideNav = ({
       <Modal
         isOpen={isExportModalOpen}
         closeModal={() => setIsExportModalOpen(false)}
+        className="padding-0 radius-md"
+        navigation
         shouldCloseOnOverlayClick
       >
         <ShareExportModal
@@ -119,7 +121,6 @@ const TaskListSideNav = ({
           modelID={modelID}
         />
       </Modal>
-
       <div
         className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"

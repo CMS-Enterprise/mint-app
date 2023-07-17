@@ -74,12 +74,10 @@ const downloadFile = (data: string) => {
 };
 
 type CsvExportLinkType = {
-  includeAll: boolean;
   modelPlanID?: string;
 };
 
 export const CsvExportLink = ({
-  includeAll,
   modelPlanID
 }: CsvExportLinkType): React.ReactElement => {
   const { t } = useTranslation('home');
