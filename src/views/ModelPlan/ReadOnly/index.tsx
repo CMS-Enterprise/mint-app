@@ -153,6 +153,7 @@ export const ReadOnlyComponents = (
 };
 
 export type SubpageKey = typeof listOfSubpageKey[number];
+
 const isSubpage = (
   x: SubpageKey,
   flags: any,
@@ -182,9 +183,6 @@ export const filteredViewOutput = (value: string) => {
 
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
-  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
-
-  const flags = useFlags();
 
   const {
     modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
@@ -193,6 +191,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     modelID: string;
     subinfo: SubpageKey;
   }>();
+
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
+  const flags = useFlags();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -300,7 +303,24 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
       data-testid="read-only-model-summary"
     >
-      <GridContainer className="padding-x-0">
+      <Modal
+        isOpen={isFilterViewModalOpen}
+        closeModal={() => setIsFilterViewModalOpen(false)}
+        shouldCloseOnOverlayClick
+        modalHeading={h('filterView.text')}
+      >
+        <FilterViewModal
+          closeModal={() => setIsFilterViewModalOpen(false)}
+          filteredView={filteredView}
+        />
+      </Modal>
+
+      <GridContainer
+        className={classnames({
+          'padding-x-0': isMobile,
+          'padding-x-2': isTablet
+        })}
+      >
         {!isHelpArticle && (
           <div className="mint-no-print">
             <div className="display-flex flex-justify">
