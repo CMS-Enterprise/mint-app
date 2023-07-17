@@ -19,7 +19,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
-import ShareExportModal from 'components/ShareExport/modal';
+import ShareExportModal from 'components/ShareExport';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';

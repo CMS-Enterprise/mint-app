@@ -9,7 +9,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import IconInitial from 'components/shared/IconInitial';
-import ShareExportModal from 'components/ShareExport/modal';
+import ShareExportModal from 'components/ShareExport';
 import useMessage from 'hooks/useMessage';
 import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
