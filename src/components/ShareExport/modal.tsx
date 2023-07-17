@@ -229,7 +229,7 @@ const ShareExportModal = ({
         <ButtonGroup className="display-flex flex-justify border-top-2px border-base-lighter padding-x-4 padding-y-105 margin-top-3 margin-x-0">
           <Button
             type="button"
-            className="usa-button--unstyled margin-top-0"
+            className="usa-button--unstyled margin-top-0 display-flex flex-justify-center"
             onClick={() => closeModal()}
           >
             {generalReadOnlyT('modal.cancel')}
