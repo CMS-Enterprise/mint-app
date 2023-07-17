@@ -9,8 +9,7 @@ import {
   Form,
   GridContainer,
   IconClose,
-  Label,
-  PrimaryNav
+  Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -34,7 +33,7 @@ const FileTypes = ['csv', 'pdf'] as const;
 type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
-  filteredView?: typeof filterGroups[number];
+  filteredView?: typeof filterGroups[number] | 'all';
 } & JSX.IntrinsicElements['button'];
 
 /**
@@ -47,7 +46,9 @@ const ShareExportModal = ({
 }: ShareExportModalProps) => {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
-  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>('all');
+  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>(
+    filteredView as typeof filterGroups[number]
+  );
 
   const [exportCSV, setExportCSV] = useState<boolean>(false);
   const [exportPDF, setExportPDF] = useState<boolean>(false);
@@ -64,7 +65,7 @@ const ShareExportModal = ({
 
   // Sets the default combobox option to a filter view if already on a filter view readonly page
   useEffect(() => {
-    if (filteredView) setFilteredGroup(filteredView as FitlerGroup);
+    if (filteredView) setFilteredGroup(filteredView);
   }, [filteredView]);
 
   const handlePrint = useReactToPrint({
@@ -94,9 +95,9 @@ const ShareExportModal = ({
         filteredView={filteredGroup === 'all' ? undefined : filteredGroup}
       />
       <GridContainer className="padding-x-8 margin-top-4">
-        {filteredView ? (
+        {filteredGroup && filteredGroup !== 'all' ? (
           // Filter view component
-          <BodyContent modelID={modelID} filteredView={filteredView} />
+          <BodyContent modelID={modelID} filteredView={filteredGroup} />
         ) : (
           // All model plan sections
           <>
