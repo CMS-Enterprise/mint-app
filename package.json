@@ -177,7 +177,9 @@
       "!src/**/*.stories.{jsx,tsx}",
       "!src/**/__snapshots__/*.test.tsx.snap"
     ],
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 50,
