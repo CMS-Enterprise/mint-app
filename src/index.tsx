@@ -111,7 +111,8 @@ const splitLink = split(
   authLink.concat(uploadLink)
 );
 
-const client = new ApolloClient({
+/* eslint-disable import/prefer-default-export */
+export const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache({
     typePolicies: {

@@ -14,4 +14,8 @@
     &__active {
         border-bottom: .25rem solid color('primary') !important;
     }
+
+    .mint-modal__x-button svg {
+        top: 2px;
+    }
 }

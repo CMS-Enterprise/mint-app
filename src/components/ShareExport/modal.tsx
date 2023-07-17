@@ -15,6 +15,7 @@ import {
 import classNames from 'classnames';
 
 import CheckboxField from 'components/shared/CheckboxField';
+import { fetchCSVData as handleCSV } from 'utils/export/CsvExportLink';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
@@ -154,7 +155,7 @@ const ShareExportModal = ({
             handlePrint();
           }
           if (exportCSV) {
-            // handleCSV();
+            handleCSV(modelID);
           }
         }}
       >
