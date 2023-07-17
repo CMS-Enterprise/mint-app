@@ -18,6 +18,7 @@ const generalReadOnly = {
     moreTeamMembers: 'More team members'
   },
   shareExport: 'Share or export',
+  shareExportLink: 'Share or export this model plan',
   modal: {
     share: 'Share',
     sharePlan: 'Share this Model Plan with others',

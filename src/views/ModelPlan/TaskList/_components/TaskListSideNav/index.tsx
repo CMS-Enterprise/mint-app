@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -16,6 +17,7 @@ import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType }
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 import { TeamRole } from 'types/graphql-global-types';
+import CsvExportLink from 'utils/export/CsvExportLink';
 
 const TaskListSideNav = ({
   modelPlan,
@@ -25,6 +27,8 @@ const TaskListSideNav = ({
   collaborators: GetCollaboratorsType[];
 }) => {
   const { id: modelID } = modelPlan;
+
+  const flags = useFlags();
 
   const history = useHistory();
 
@@ -132,15 +136,21 @@ const TaskListSideNav = ({
           {t('sideNav.readOnlyView')}
         </UswdsReactLink>
 
-        <div className="flex-align-self-center margin-y-2">
-          <Button
-            type="button"
-            className="usa-button--unstyled"
-            onClick={() => setIsExportModalOpen(true)}
-          >
-            {generalReadOnlyT('shareExport')}
-          </Button>
-        </div>
+        {flags.shareExportEnabled ? (
+          <div className="flex-align-self-center margin-y-2">
+            <Button
+              type="button"
+              className="usa-button--unstyled"
+              onClick={() => setIsExportModalOpen(true)}
+            >
+              {generalReadOnlyT('shareExportLink')}
+            </Button>
+          </div>
+        ) : (
+          <div className="flex-align-self-center margin-y-2">
+            <CsvExportLink modelPlanID={modelID} />
+          </div>
+        )}
 
         <Button
           className="line-height-body-5 test-withdraw-request text-red"

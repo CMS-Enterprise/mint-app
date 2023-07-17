@@ -7,6 +7,7 @@ import {
   IconInfo,
   IconVisiblity
 } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Tooltip from 'components/shared/Tooltip';
 
@@ -29,6 +30,8 @@ const FilterViewBanner = ({
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
   const history = useHistory();
+
+  const flags = useFlags();
 
   return (
     <div
@@ -71,13 +74,15 @@ const FilterViewBanner = ({
                 {t('filterButton')}
               </Button>
 
-              <Button
-                type="button"
-                className="usa-button--outline text-white shadow-none border-white border-2px"
-                onClick={openExportModal}
-              >
-                {generalReadOnlyT('shareExport')}
-              </Button>
+              {flags.shareExportEnabled && (
+                <Button
+                  type="button"
+                  className="usa-button--outline text-white shadow-none border-white border-2px"
+                  onClick={openExportModal}
+                >
+                  {generalReadOnlyT('shareExport')}
+                </Button>
+              )}
             </div>
           </div>
         </div>
