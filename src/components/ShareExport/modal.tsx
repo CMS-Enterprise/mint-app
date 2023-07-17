@@ -27,7 +27,7 @@ import './index.scss';
 
 const navElement = ['share', 'export'] as const;
 
-type FitlerGroup = typeof filterGroups[number] | '';
+type FitlerGroup = typeof filterGroups[number] | 'all';
 
 const FileTypes = ['csv', 'pdf'] as const;
 
@@ -47,9 +47,7 @@ const ShareExportModal = ({
 }: ShareExportModalProps) => {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
-  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>(
-    filteredView as FitlerGroup
-  );
+  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>('all');
 
   const [exportCSV, setExportCSV] = useState<boolean>(false);
   const [exportPDF, setExportPDF] = useState<boolean>(false);
@@ -66,7 +64,7 @@ const ShareExportModal = ({
 
   // Sets the default combobox option to a filter view if already on a filter view readonly page
   useEffect(() => {
-    setFilteredGroup(filteredView as FitlerGroup);
+    if (filteredView) setFilteredGroup(filteredView as FitlerGroup);
   }, [filteredView]);
 
   const handlePrint = useReactToPrint({
@@ -93,7 +91,7 @@ const ShareExportModal = ({
   const ComponentToPrint: JSX.Element = (
     <div className="display-none mint-only-print" ref={componentRef}>
       <ShareExportHeader
-        filteredView={filteredGroup === '' ? undefined : filteredGroup}
+        filteredView={filteredGroup === 'all' ? undefined : filteredGroup}
       />
       <GridContainer className="padding-x-8 margin-top-4">
         {filteredView ? (
@@ -181,10 +179,19 @@ const ShareExportModal = ({
             id={`${modalElementId}-filter-group`}
             name="filterGroup"
             onChange={value => {
+              if (value !== 'all') {
+                setExportCSV(false);
+              }
               setFilteredGroup(value as FitlerGroup);
             }}
-            defaultValue={filteredGroup || ''}
-            options={groupOptions}
+            defaultValue={filteredGroup || 'all'}
+            options={[
+              {
+                value: 'all',
+                label: generalReadOnlyT('modal.allModels')
+              },
+              ...groupOptions
+            ]}
           />
 
           {/* Checkbox File type select */}
@@ -204,6 +211,7 @@ const ShareExportModal = ({
               value={file}
               checked={file === 'csv' ? exportCSV : exportPDF}
               onBlur={() => null}
+              disabled={file === 'csv' && filteredGroup !== 'all'}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (file === 'csv') {
                   setExportCSV(!exportCSV);
@@ -225,7 +233,11 @@ const ShareExportModal = ({
             {generalReadOnlyT('modal.cancel')}
           </Button>
 
-          <Button type="submit" disabled={false} className="margin-top-0">
+          <Button
+            type="submit"
+            disabled={!filteredGroup}
+            className="margin-top-0"
+          >
             {generalReadOnlyT('modal.export')}
           </Button>
         </ButtonGroup>

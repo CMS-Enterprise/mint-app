@@ -42,7 +42,8 @@ const generalReadOnly = {
       csv: 'CSV',
       pdf: 'PDF'
     },
-    label: 'Share/export navigation'
+    label: 'Share/export navigation',
+    allModels: 'All model plan information'
   }
 };
 

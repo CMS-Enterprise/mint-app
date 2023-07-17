@@ -24,7 +24,7 @@ const ShareExportHeader = ({
   filteredView,
   className
 }: {
-  filteredView?: typeof filterGroups[number];
+  filteredView?: typeof filterGroups[number] | 'all';
   className?: string;
 }) => {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
