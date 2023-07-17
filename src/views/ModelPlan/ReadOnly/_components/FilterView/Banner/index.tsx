@@ -50,9 +50,11 @@ const FilterViewBanner = ({
               {filteredView !== null ? t('information') : t('allInformation')}
             </div>
             {filteredView === null && (
-              <Tooltip label={t('tooltip')} position="right">
-                <IconInfo />
-              </Tooltip>
+              <div className="mint-no-print">
+                <Tooltip label={t('tooltip')} position="right">
+                  <IconInfo />
+                </Tooltip>
+              </div>
             )}
           </div>
           <div className="mint-no-print">
