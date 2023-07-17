@@ -11,10 +11,6 @@
 }
 
 @media print {
-  
-}
-
-@media print {
   .mint-no-print {
     display: none;
   }
@@ -24,9 +20,9 @@
   }
 
   .page-break {
-    margin-top: 1rem;
-    display: block;
+    display: block !important;
     page-break-before: always;
+    clear: both;
   }
 
   html {

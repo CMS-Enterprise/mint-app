@@ -2,6 +2,14 @@
 
 .share-export-modal {
 
+    .usa-form {
+        max-width: none;
+    }
+
+    .usa-combo-box {
+        max-width: 35rem !important;
+    }
+
     .usa-button:not([disabled]):focus {
         outline-offset: -.25rem !important;
     }

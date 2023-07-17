@@ -147,7 +147,7 @@ const ShareExportModal = ({
   const ExportForm = (
     <div data-testid={`${modalElementId}-form`}>
       <Form
-        className="maxw-none"
+        className={`${modalElementId}__form`}
         onSubmit={e => {
           e.preventDefault();
           if (exportPDF) {
@@ -163,7 +163,7 @@ const ShareExportModal = ({
             {generalReadOnlyT('modal.exportPlan')}
           </h3>
 
-          <p className="margin-top-0 font-body-md text-base line-height-sans-2">
+          <p className="margin-top-0 margin-bottom-3 text-base line-height-sans-2">
             {generalReadOnlyT('modal.exportInfo')}
           </p>
 
@@ -227,7 +227,7 @@ const ShareExportModal = ({
         </div>
 
         {/* Cancel/Export */}
-        <ButtonGroup className="display-flex flex-justify border-top-2px border-base-lighter padding-x-4 padding-y-105 margin-top-3 margin-x-0">
+        <ButtonGroup className="display-flex flex-justify border-top-2px border-base-lighter padding-x-4 padding-y-105 margin-top-4 margin-x-0">
           <Button
             type="button"
             className="usa-button--unstyled margin-top-0 display-flex flex-justify-center"
