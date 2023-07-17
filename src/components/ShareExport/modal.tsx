@@ -69,7 +69,7 @@ const ShareExportModal = ({
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'Model Plan',
+    documentTitle: generalReadOnlyT('modal.documentTitle'),
     onAfterPrint: () => {
       closeModal();
     }
@@ -211,7 +211,9 @@ const ShareExportModal = ({
               value={file}
               checked={file === 'csv' ? exportCSV : exportPDF}
               onBlur={() => null}
-              disabled={file === 'csv' && filteredGroup !== 'all'}
+              disabled={
+                file === 'csv' && filteredGroup && filteredGroup !== 'all'
+              }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (file === 'csv') {
                   setExportCSV(!exportCSV);

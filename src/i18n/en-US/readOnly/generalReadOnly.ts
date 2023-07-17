@@ -43,7 +43,8 @@ const generalReadOnly = {
       pdf: 'PDF'
     },
     label: 'Share/export navigation',
-    allModels: 'All model plan information'
+    allModels: 'All model plan information',
+    documentTitle: 'MINT Model Plan'
   }
 };
 
