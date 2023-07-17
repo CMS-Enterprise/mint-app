@@ -14,6 +14,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import CheckboxField from 'components/shared/CheckboxField';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
@@ -27,6 +28,8 @@ const navElement = ['share', 'export'] as const;
 
 type FitlerGroup = typeof filterGroups[number] | '';
 
+const FileTypes = ['csv', 'pdf'] as const;
+
 type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
@@ -36,25 +39,31 @@ type ShareExportModalProps = {
 /**
  * Modal for sharing/exporting a model plan
  */
-function ShareExportModal({
+const ShareExportModal = ({
   modelID,
   closeModal,
   filteredView
-}: ShareExportModalProps) {
+}: ShareExportModalProps) => {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
   const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>(
     filteredView as FitlerGroup
   );
 
+  const [exportCSV, setExportCSV] = useState<boolean>(false);
+  const [exportPDF, setExportPDF] = useState<boolean>(false);
+
+  // State for modal navigation elements
   const [isActive, setIsActive] = useState<typeof navElement[number]>('share');
 
   const modalElementId = 'share-export-modal';
 
+  // Used for react-to-pdf to render pdf from component ref
   const componentRef = useRef<HTMLDivElement>(null);
 
   const comboboxRef = useRef<ComboBoxRef>(null);
 
+  // Sets the default combobox option to a filter view if already on a filter view readonly page
   useEffect(() => {
     setFilteredGroup(filteredView as FitlerGroup);
   }, [filteredView]);
@@ -69,6 +78,7 @@ function ShareExportModal({
 
   const AllReadonlyComponents = ReadOnlyComponents(modelID, false);
 
+  // Readonly section that do not need to be rendered in PDF
   const excludedComponents: string[] = [
     'team',
     'discussions',
@@ -77,6 +87,8 @@ function ShareExportModal({
     'it-solutions'
   ];
 
+  // Composes components to render to PDF
+  // Can either be all readonly sections, or individual filter group component views
   const ComponentToPrint: JSX.Element = (
     <div className="display-none mint-only-print" ref={componentRef}>
       <ShareExportHeader
@@ -84,8 +96,10 @@ function ShareExportModal({
       />
       <GridContainer className="padding-x-8 margin-top-4">
         {filteredView ? (
+          // Filter view component
           <BodyContent modelID={modelID} filteredView={filteredView} />
         ) : (
+          // All model plan sections
           <>
             {Object.keys(AllReadonlyComponents)
               .filter(
@@ -107,6 +121,7 @@ function ShareExportModal({
     </div>
   );
 
+  // Custom modal navigation for Share/Export
   const primaryLinks = navElement.map(route => (
     <div className="mint-nav" key={route}>
       <Button
@@ -130,57 +145,90 @@ function ShareExportModal({
   ));
 
   const ExportForm = (
-    <div>
-      <div data-testid="filter-view-modal">
-        <div className="filter-view__body">
+    <div data-testid={`${modalElementId}-form`}>
+      <Form
+        className="maxw-none"
+        onSubmit={e => {
+          e.preventDefault();
+          if (exportPDF) {
+            handlePrint();
+          }
+          if (exportCSV) {
+            // handleCSV();
+          }
+        }}
+      >
+        <div className="filter-view__body display-block padding-3 padding-x-4">
           <h3 className="margin-bottom-05 margin-top-0">
             {generalReadOnlyT('modal.exportPlan')}
           </h3>
+
           <p className="margin-top-0 font-body-md text-base line-height-sans-2">
             {generalReadOnlyT('modal.exportInfo')}
           </p>
 
-          <Form
-            className="maxw-none margin-top-3"
-            onSubmit={e => {
-              e.preventDefault();
-              handlePrint();
-            }}
+          {/* Filter group select */}
+          <Label
+            htmlFor={`${modalElementId}-filter-group`}
+            className="margin-y-0 text-normal"
           >
-            <Label
-              htmlFor="export-filter-group"
-              className="margin-y-0 text-normal"
-            >
-              {generalReadOnlyT('modal.exportSelectInfo')}
-            </Label>
+            {generalReadOnlyT('modal.exportSelectInfo')}
+          </Label>
 
-            <ComboBox
-              ref={comboboxRef}
-              id="export-filter-group"
-              name="filterGroup"
-              onChange={value => {
-                setFilteredGroup(value as FitlerGroup);
+          <ComboBox
+            ref={comboboxRef}
+            id={`${modalElementId}-filter-group`}
+            name="filterGroup"
+            onChange={value => {
+              setFilteredGroup(value as FitlerGroup);
+            }}
+            defaultValue={filteredGroup || ''}
+            options={groupOptions}
+          />
+
+          {/* Checkbox File type select */}
+          <Label
+            htmlFor={`${modalElementId}-file-type`}
+            className="margin-bottom-0 margin-top-3 text-normal"
+          >
+            {generalReadOnlyT('modal.exportSelectFormat')}
+          </Label>
+
+          {FileTypes.map((file: typeof FileTypes[number]) => (
+            <CheckboxField
+              key={file}
+              id={`${modalElementId}-file-type-${file}`}
+              name={file}
+              label={generalReadOnlyT(`modal.exportFormats.${file}`)}
+              value={file}
+              checked={file === 'csv' ? exportCSV : exportPDF}
+              onBlur={() => null}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (file === 'csv') {
+                  setExportCSV(!exportCSV);
+                } else {
+                  setExportPDF(!exportPDF);
+                }
               }}
-              defaultValue={filteredGroup || ''}
-              options={groupOptions}
             />
-
-            <ButtonGroup className="display-flex flex-justify">
-              <Button
-                type="button"
-                className="usa-button--unstyled"
-                onClick={() => closeModal()}
-              >
-                {generalReadOnlyT('modal.cancel')}
-              </Button>
-
-              <Button type="submit" disabled={false}>
-                {generalReadOnlyT('modal.export')}
-              </Button>
-            </ButtonGroup>
-          </Form>
+          ))}
         </div>
-      </div>
+
+        {/* Cancel/Export */}
+        <ButtonGroup className="display-flex flex-justify border-top-2px border-base-lighter padding-x-4 padding-y-105 margin-top-3 margin-x-0">
+          <Button
+            type="button"
+            className="usa-button--unstyled margin-top-0"
+            onClick={() => closeModal()}
+          >
+            {generalReadOnlyT('modal.cancel')}
+          </Button>
+
+          <Button type="submit" disabled={false} className="margin-top-0">
+            {generalReadOnlyT('modal.export')}
+          </Button>
+        </ButtonGroup>
+      </Form>
     </div>
   );
 
@@ -193,6 +241,7 @@ function ShareExportModal({
     >
       {ComponentToPrint}
 
+      {/* Modal Navigation */}
       <nav
         aria-label={generalReadOnlyT('label')}
         data-testid="share-export-navigation-bar"
@@ -213,9 +262,10 @@ function ShareExportModal({
         </button>
       </nav>
 
-      <div className="display-block padding-3 padding-x-4">{ExportForm}</div>
+      {/* Export from */}
+      <div>{ExportForm}</div>
     </div>
   );
-}
+};
 
 export default ShareExportModal;

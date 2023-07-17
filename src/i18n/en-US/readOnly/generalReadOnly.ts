@@ -38,6 +38,10 @@ const generalReadOnly = {
       'This will download the selected information, so you can share it with others.',
     exportSelectInfo: 'Select which information you want to export.',
     exportSelectFormat: 'Select format(s)',
+    exportFormats: {
+      csv: 'CSV',
+      pdf: 'PDF'
+    },
     label: 'Share/export navigation'
   }
 };
