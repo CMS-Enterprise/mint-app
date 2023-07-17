@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, ModalRef } from '@trussworks/react-uswds';
+import { Button } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -35,8 +35,6 @@ const TaskListSideNav = ({
 
   const { showMessageOnNextPage } = useMessage();
   const [isModalOpen, setModalOpen] = useState(false);
-
-  const shareExportModalRef = useRef<ModalRef>(null);
 
   const [update] = useMutation<ArchiveModelPlanVariables>(ArchiveModelPlan);
 

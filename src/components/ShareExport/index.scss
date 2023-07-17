@@ -8,7 +8,8 @@
 
     &__nav {
         border-bottom: .25rem solid transparent !important;
-        bottom: -5px;     
+        bottom: -5px;
+        text-decoration: none !important;
     }
 
     &__active {

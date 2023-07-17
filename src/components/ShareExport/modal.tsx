@@ -122,15 +122,15 @@ const ShareExportModal = ({
 
   // Custom modal navigation for Share/Export
   const primaryLinks = navElement.map(route => (
-    <div className="mint-nav" key={route}>
+    <div className="mint-nav margin-left-neg-2" key={route}>
       <Button
         type="button"
-        className="mint-nav__link padding-bottom-0 padding-top-2 share-export-modal__nav"
+        className="mint-nav__link padding-bottom-0 padding-top-2 margin-x-1 padding-x-1 share-export-modal__nav usa-button--unstyled position-relative width-auto"
         onClick={() => setIsActive(route)}
       >
         <em
           className={classNames(
-            'usa-logo__text mint-nav__label padding-bottom-2 share-export-modal__nav',
+            'usa-logo__text mint-nav__label padding-bottom-2',
             {
               'share-export-modal__active': isActive === route
             }
@@ -262,10 +262,7 @@ const ShareExportModal = ({
         data-testid="share-export-navigation-bar"
         className="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px"
       >
-        <PrimaryNav
-          aria-label={generalReadOnlyT('label')}
-          items={primaryLinks}
-        />
+        {primaryLinks}
 
         <button
           type="button"
