@@ -56,7 +56,7 @@ const ShareExportModal = ({
   // State for modal navigation elements
   const [isActive, setIsActive] = useState<typeof navElement[number]>('share');
 
-  const modalElementId = 'share-export-modal';
+  const modalElementId: string = 'share-export-modal';
 
   // Used for react-to-pdf to render pdf from component ref
   const componentRef = useRef<HTMLDivElement>(null);
@@ -68,6 +68,7 @@ const ShareExportModal = ({
     if (filteredView) setFilteredGroup(filteredView);
   }, [filteredView]);
 
+  // Submit handler for exporting PDF
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: generalReadOnlyT('modal.documentTitle'),
@@ -76,6 +77,7 @@ const ShareExportModal = ({
     }
   });
 
+  // Return an object containing the contents of all readonly task list sections
   const AllReadonlyComponents = ReadOnlyComponents(modelID, false);
 
   // Readonly section that do not need to be rendered in PDF

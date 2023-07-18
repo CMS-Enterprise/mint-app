@@ -15,8 +15,15 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
       />
     }
   />
+  <Portal
+    containerInfo={
+      <div
+        class="ReactModalPortal"
+      />
+    }
+  />
   <div
-    className="usa-summary-box padding-y-6 padding-x-2 border-0 bg-primary-lighter margin-top-0"
+    className="usa-summary-box padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
     data-testid="read-only-model-summary"
   >
     <div
@@ -28,48 +35,30 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
       <div
         className="usa-summary-box__text"
       >
+        <Portal
+          containerInfo={
+            <div
+              class="ReactModalPortal"
+            />
+          }
+        />
         <div
           className="grid-container"
           data-testid="gridContainer"
         >
           <div
-            className="display-flex flex-justify"
+            className="mint-no-print"
           >
-            <a
-              className="usa-link display-flex flex-align-center margin-bottom-3"
-              href="/models"
-              onClick={[Function]}
-            >
-              <svg
-                className="usa-icon text-primary margin-right-1"
-                focusable={false}
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                />
-              </svg>
-              View all models
-            </a>
             <div
-              className="pointer"
+              className="display-flex flex-justify"
             >
-              <span
-                className="usa-tag text-primary bg-white bookmark__tag padding-1 padding-x-105"
-                data-testid="tag"
+              <a
+                className="usa-link display-flex flex-align-center margin-bottom-3"
+                href="/models"
                 onClick={[Function]}
-                style={Object {}}
               >
                 <svg
-                  className="usa-icon margin-right-05 bookmark__tag__icon"
+                  className="usa-icon text-primary margin-right-1"
                   focusable={false}
                   height="1em"
                   role="img"
@@ -78,11 +67,40 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                   />
                 </svg>
-                Follow
-              </span>
+                View all models
+              </a>
+              <div
+                className="pointer"
+              >
+                <span
+                  className="usa-tag text-primary bg-white bookmark__tag padding-1 padding-x-105"
+                  data-testid="tag"
+                  onClick={[Function]}
+                  style={Object {}}
+                >
+                  <svg
+                    className="usa-icon margin-right-05 bookmark__tag__icon"
+                    focusable={false}
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                    />
+                  </svg>
+                  Follow
+                </span>
+              </div>
             </div>
           </div>
           <h1
@@ -130,70 +148,78 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 data-testid="grid"
               />
               <div
-                className="display-flex flex-align-center"
+                className="mint-no-print"
               >
                 <div
-                  className="height-2 border-left-2px border-base-light margin-right-2 "
-                />
-                <div>
-                  <a
-                    className="usa-link display-flex flex-align-center"
-                    href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
-                    onClick={[Function]}
-                  >
-                    <svg
-                      className="usa-icon margin-right-1"
-                      focusable={false}
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
+                  className="display-flex flex-align-center"
+                >
+                  <div
+                    className="height-2 border-left-2px border-base-light margin-right-2 "
+                  />
+                  <div>
+                    <a
+                      className="usa-link display-flex flex-align-center"
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+                      onClick={[Function]}
                     >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                      />
-                    </svg>
-                    Edit Model Plan
-                  </a>
+                      <svg
+                        className="usa-icon margin-right-1"
+                        focusable={false}
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                        />
+                      </svg>
+                      Edit Model Plan
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div
-            className="mint-collapsable-link"
+            className="mint-no-print"
           >
-            <button
-              aria-controls="undefined--description"
-              aria-expanded={false}
-              className="usa-button usa-button--unstyled margin-top-3 padding-0"
-              data-testid="collapsable-link"
-              onClick={[Function]}
-              type="button"
+            <div
+              className="mint-collapsable-link"
             >
-              Show model summary
-              <svg
-                className="usa-icon top-05"
-                focusable={false}
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+              <button
+                aria-controls="undefined--description"
+                aria-expanded={false}
+                className="usa-button usa-button--unstyled margin-top-3 padding-0"
+                data-testid="collapsable-link"
+                onClick={[Function]}
+                type="button"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                />
-              </svg>
-            </button>
+                Show model summary
+                <svg
+                  className="usa-icon top-05"
+                  focusable={false}
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -244,73 +270,81 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
              
             information about this model.
           </div>
-          <span
-            className="usa-tooltip"
-            data-testid="tooltipWrapper"
+          <div
+            className="mint-no-print"
           >
-            <div
-              aria-describedby="tooltip"
-              className="usa-tooltip__trigger"
-              data-testid="triggerElement"
-              id="mint-tooltip"
-              onBlur={[Function]}
-              onFocus={[Function]}
-              onKeyDown={[Function]}
-              onMouseEnter={[Function]}
-              onMouseLeave={[Function]}
-              onMouseOver={[Function]}
-              position="right"
-              tabIndex={0}
-              title=""
-            >
-              <svg
-                className="usa-icon"
-                focusable={false}
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                />
-              </svg>
-            </div>
             <span
-              aria-describedby="mint-tooltip"
-              aria-hidden={true}
-              className="usa-tooltip__body"
-              data-testid="tooltipBody"
-              id="mint-tooltip-body"
-              role="tooltip"
-              style={Object {}}
-              title="Filter to view the content specific groups at CMS care about."
+              className="usa-tooltip"
+              data-testid="tooltipWrapper"
             >
-              Filter to view the content specific groups at CMS care about.
+              <div
+                aria-describedby="tooltip"
+                className="usa-tooltip__trigger"
+                data-testid="triggerElement"
+                id="mint-tooltip"
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+                onMouseOver={[Function]}
+                position="right"
+                tabIndex={0}
+                title=""
+              >
+                <svg
+                  className="usa-icon"
+                  focusable={false}
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-describedby="mint-tooltip"
+                aria-hidden={true}
+                className="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="mint-tooltip-body"
+                role="tooltip"
+                style={Object {}}
+                title="Filter to view the content specific groups at CMS care about."
+              >
+                Filter to view the content specific groups at CMS care about.
+              </span>
             </span>
-          </span>
+          </div>
         </div>
         <div
-          className="display-flex flex-justify flex-align-center flex-align-self-end"
-          style={
-            Object {
-              "gap": "1rem",
-            }
-          }
+          className="mint-no-print"
         >
-          <button
-            className="usa-button"
-            data-testid="button"
-            onClick={[Function]}
-            type="button"
+          <div
+            className="display-flex flex-justify flex-align-center flex-align-self-end"
+            style={
+              Object {
+                "gap": "1rem",
+              }
+            }
           >
-            Filter
-          </button>
+            <button
+              className="usa-button"
+              data-testid="button"
+              onClick={[Function]}
+              type="button"
+            >
+              Filter
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -354,7 +388,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
     data-testid="gridContainer"
   >
     <div
-      className="usa-alert usa-alert--warning margin-top-2 margin-bottom-5 desktop:margin-y-3"
+      className="usa-alert usa-alert--warning flex margin-top-2 margin-bottom-5 desktop:margin-y-3"
       data-testid="alert"
     >
       <div
@@ -363,7 +397,9 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
         <p
           className="usa-alert__text"
         >
-          Information outlined in this Model Plan can change drastically until it’s been cleared.
+          <span>
+            Information outlined in this Model Plan can change drastically until it’s been cleared.
+          </span>
         </p>
       </div>
     </div>
@@ -399,7 +435,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current="page"
                   className="usa-current"
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/model-basics"
                   onClick={[Function]}
                   style={Object {}}
                 >
@@ -413,7 +449,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/general-characteristics"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/general-characteristics"
                   onClick={[Function]}
                 >
                   General characteristics
@@ -426,7 +462,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/participants-and-providers"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/participants-and-providers"
                   onClick={[Function]}
                 >
                   Participants and providers
@@ -439,7 +475,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/beneficiaries"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/beneficiaries"
                   onClick={[Function]}
                 >
                   Beneficiaries
@@ -452,7 +488,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/operations-evaluation-and-learning"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/operations-evaluation-and-learning"
                   onClick={[Function]}
                 >
                   Operations, evaluation, and learning
@@ -465,7 +501,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/payment"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/payment"
                   onClick={[Function]}
                 >
                   Payment
@@ -478,7 +514,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className="nav-group-border"
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/it-solutions"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/it-solutions"
                   onClick={[Function]}
                 >
                   IT solutions
@@ -491,7 +527,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/team"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/team"
                   onClick={[Function]}
                 >
                   Team
@@ -504,7 +540,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/discussions"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/discussions"
                   onClick={[Function]}
                 >
                   Discussions
@@ -517,7 +553,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/documents"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/documents"
                   onClick={[Function]}
                 >
                   Documents
@@ -530,7 +566,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 <a
                   aria-current={null}
                   className=""
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/crs-and-tdl"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/crs-and-tdl"
                   onClick={[Function]}
                 >
                   CRs and TDLs
@@ -1097,7 +1133,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                     <a
                       aria-label="More team members"
                       className="usa-link line-height-body-5 display-flex flex-align-center "
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/team"
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/team"
                       onClick={[Function]}
                     >
                       More team members
