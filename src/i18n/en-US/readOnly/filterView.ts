@@ -14,8 +14,11 @@ const filterView = {
   viewFiltered: 'View filtered content',
   youAreViewing: 'You are viewing',
   information: 'information.',
+  all: 'all',
+  allInformation: 'information about this model.',
   clearFilter: 'Clear filter',
-  filterButton: 'Filter'
+  filterButton: 'Filter',
+  tooltip: 'Filter to view the content specific groups at CMS care about.'
 };
 
 export default filterView;
