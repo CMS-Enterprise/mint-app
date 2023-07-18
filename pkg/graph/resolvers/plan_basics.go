@@ -3,8 +3,6 @@ package resolvers
 import (
 	"context"
 
-	"github.com/davecgh/go-spew/spew"
-
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -155,8 +153,6 @@ func sendDateChangedEmails(
 	if err != nil {
 		return err
 	}
-
-	spew.Dump("dateChangeSlice: ", dateChangeSlice)
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
