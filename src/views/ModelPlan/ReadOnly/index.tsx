@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Alert,
@@ -17,7 +17,6 @@ import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
-import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
@@ -30,7 +29,7 @@ import {
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { isAssessment, isMAC } from 'utils/user';
-import NotFound, { NotFoundPartial } from 'views/NotFound';
+import NotFound from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -38,7 +37,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
 import BodyContent from './_components/FilterView/BodyContent';
-import FilterButton from './_components/FilterView/FilterButton';
+import FilterGroupMap from './_components/FilterView/BodyContent/_filterGroupMapping';
 import FilterViewModal from './_components/FilterView/Modal';
 import { groupOptions } from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
@@ -104,6 +103,9 @@ const isSubpage = (
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+  const isTablet = useCheckResponsiveScreen('desktop', 'smaller');
+
+  const history = useHistory();
 
   const flags = useFlags();
 
@@ -126,6 +128,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const descriptionRef = React.createRef<HTMLElement>();
   const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
   const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
+
+  // If no subinfo param exists, default to first subpage key
+  const defaultSection: typeof listOfSubpageKey[number] = listOfSubpageKey[0];
 
   // Enable the description toggle if it overflows
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,6 +169,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     abbreviation,
     modelName,
     isFavorite,
+    createdDts,
     modifiedDts,
     status,
     basics,
@@ -172,6 +178,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     isCollaborator,
     crTdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
+
+  if (filteredView && !Object.keys(FilterGroupMap).includes(filteredView)) {
+    return <NotFound />;
+  }
 
   const hasEditAccess: boolean =
     !isHelpArticle &&
@@ -261,10 +271,14 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const subComponent = subComponents[subinfo];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFound />;
   }
 
-  if (!isSubpage(subinfo, flags, isHelpArticle)) {
+  if (!subinfo && !isViewingFilteredGroup) {
+    history.replace(`${location.pathname}/${defaultSection}`);
+  }
+
+  if (!isSubpage(subinfo, flags, isHelpArticle) && !isViewingFilteredGroup) {
     return <NotFound />;
   }
 
@@ -285,21 +299,17 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         />
       </Modal>
 
-      {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
-
-      {filteredView && (
-        <FilterViewBanner
-          filteredView={filteredViewOutput(filteredView)}
-          openFilterModal={() => setIsFilterViewModalOpen(true)}
-        />
-      )}
-
       <SummaryBox
         heading=""
-        className="padding-y-6 border-0 bg-primary-lighter margin-top-0"
+        className="padding-y-6 padding-x-2 border-0 bg-primary-lighter margin-top-0"
         data-testid="read-only-model-summary"
       >
-        <GridContainer>
+        <GridContainer
+          className={classnames({
+            'padding-x-0': isMobile,
+            'padding-x-2': isTablet
+          })}
+        >
           {!isHelpArticle && (
             <div className="display-flex flex-justify">
               <UswdsReactLink
@@ -319,7 +329,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           )}
 
           <PageHeading
-            className="margin-0 line-height-sans-2 minh-6"
+            className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
             headingLevel={isHelpArticle ? 'h2' : 'h1'}
           >
             {modelName}{' '}
@@ -327,6 +337,15 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               <span className="font-sans-sm text-normal">({abbreviation})</span>
             )}
           </PageHeading>
+
+          <TaskListStatus
+            readOnly
+            modelID={modelID}
+            status={status}
+            statusLabel
+            modifiedOrCreateLabel={!!modifiedDts}
+            modifiedDts={modifiedDts ?? createdDts}
+          />
 
           {!isViewingFilteredGroup && (
             <ModelSummary
@@ -345,19 +364,13 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           )}
         </GridContainer>
       </SummaryBox>
-      <SectionWrapper className="model-plan-status-bar bg-base-lightest">
-        <GridContainer>
-          <div className="padding-y-1 status-min-height">
-            <TaskListStatus
-              readOnly
-              modelID={modelID}
-              status={status}
-              statusLabel
-              modifiedDts={modifiedDts ?? ''}
-            />
-          </div>
-        </GridContainer>
-      </SectionWrapper>
+
+      {!flags.hideGroupView && (
+        <FilterViewBanner
+          filteredView={filteredView && filteredViewOutput(filteredView)}
+          openFilterModal={() => setIsFilterViewModalOpen(true)}
+        />
+      )}
 
       <MobileNav
         subComponents={subComponents}
@@ -365,17 +378,12 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         isHelpArticle={isHelpArticle}
       />
 
-      {isMobile && !flags.hideGroupView && (
-        <GridContainer className="padding-y-2">
-          <FilterButton
-            openFilterModal={() => setIsFilterViewModalOpen(true)}
-          />
-        </GridContainer>
-      )}
-
       <GridContainer className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
-          <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
+          <Alert
+            type="warning"
+            className="margin-top-2 margin-bottom-5 desktop:margin-y-3"
+          >
             {h('alert')}
           </Alert>
         )}
