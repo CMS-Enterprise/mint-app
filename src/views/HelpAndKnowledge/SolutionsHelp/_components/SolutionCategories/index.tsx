@@ -4,6 +4,7 @@ import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 import CategoryCard from '../CategoryCard';
@@ -34,11 +35,16 @@ const OperationalSolutionsHelp = ({
         <CardGroup className={className}>
           {Object.keys(operationalSolutionCategoryMap).map(key => {
             return (
-              <Grid tablet={{ col: 6 }} desktop={{ col: 3 }} key={key}>
+              <Grid
+                tablet={{ col: 6 }}
+                desktop={{ col: 3 }}
+                key={key}
+                className="display-flex flex-align-stretch"
+              >
                 <CategoryCard
                   key={key}
                   category={t(`categories.${key}.header`)}
-                  route={key}
+                  route={key as OperationalSolutionCategoryRoute}
                 />
               </Grid>
             );
@@ -46,7 +52,7 @@ const OperationalSolutionsHelp = ({
         </CardGroup>
 
         <UswdsReactLink
-          to="/help-and-knowledge/operational-solutions"
+          to="/help-and-knowledge/operational-solutions?page=1"
           variant="unstyled"
           className="usa-button text-white"
         >

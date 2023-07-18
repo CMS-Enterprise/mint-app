@@ -16,6 +16,7 @@ type TaskListStatusProps = {
   updateLabel?: boolean;
   modifiedDts?: string;
   readOnly?: boolean;
+  modifiedOrCreateLabel?: boolean;
 };
 
 const TaskListStatus = ({
@@ -25,17 +26,16 @@ const TaskListStatus = ({
   statusLabel = false,
   updateLabel = false,
   modifiedDts,
-  readOnly
+  readOnly,
+  modifiedOrCreateLabel
 }: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('generalReadOnly');
 
   return (
-    <div className="padding-0">
-      <Grid row style={{ gap: '10px' }}>
+    <div className="padding-0" data-testid="task-list-status">
+      <Grid row style={{ gap: '16px' }}>
         <Grid
-          col={modifiedDts ? 12 : 'auto'}
-          desktop={{ col: 'auto' }}
           className="display-flex flex-align-center"
           style={{ gap: '10px' }}
         >
@@ -44,15 +44,10 @@ const TaskListStatus = ({
             {translateModelPlanStatus(status)}
           </Tag>
         </Grid>
-        <Grid
-          col={modifiedDts ? 12 : 'auto'}
-          desktop={{ col: 'auto' }}
-          className="display-flex flex-align-center flex-wrap"
-          style={{ gap: '10px' }}
-        >
+        <Grid className="display-flex flex-align-center flex-wrap">
           {!!modifiedDts && (
             <p className="margin-y-0 text-normal">
-              {h('lastUpdate')}
+              {modifiedOrCreateLabel ? h('lastUpdate') : h('createdOn')}
               {formatDateLocal(modifiedDts, 'MM/dd/yyyy')}
             </p>
           )}
@@ -69,6 +64,20 @@ const TaskListStatus = ({
             </div>
           )}
         </Grid>
+        {readOnly && (
+          <div className="display-flex flex-align-center">
+            <div className="height-2 border-left-2px border-base-light margin-right-2 " />
+            <div>
+              <UswdsReactLink
+                to={`/models/${modelID}/task-list`}
+                className="display-flex flex-align-center"
+              >
+                <IconEdit className="margin-right-1" />
+                {t('edit')}
+              </UswdsReactLink>
+            </div>
+          </div>
+        )}
       </Grid>
     </div>
   );

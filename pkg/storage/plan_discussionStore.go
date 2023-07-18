@@ -1,7 +1,9 @@
 package storage
 
 import (
+	"database/sql"
 	_ "embed"
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -259,10 +261,15 @@ func (s *Store) GetMostRecentDiscussionRoleSelection(
 
 	var selection models.DiscussionRoleSelection
 	err = statement.Get(&selection, map[string]interface{}{"user_id": userID})
-	if err != nil {
-		logger.Error("failed to get latest role selection", zap.Error(err))
-		return nil, err
+
+	if err == nil {
+		return &selection, nil
 	}
 
-	return &selection, nil
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, nil
+	}
+
+	logger.Error("failed to get latest role selection", zap.Error(err))
+	return nil, err
 }

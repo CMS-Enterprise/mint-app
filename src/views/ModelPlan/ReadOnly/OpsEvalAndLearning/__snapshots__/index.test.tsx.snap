@@ -717,24 +717,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
       <h3>
         Chronic Conditions Warehouse (CCW)
       </h3>
-    </div>
-    <div
-      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
-    >
-      <h3>
-        Quality
-      </h3>
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--do-you-plan-to-develop-a-new-validated-quality-measure-for-your-model margin-bottom-3"
+          class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
         >
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Do you plan to develop a new validated quality measure for your model?
+            Will you need to send files between the CCW and other applications?
           </p>
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -748,16 +741,44 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         </div>
       </div>
       <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Do you know which applications will be on the other sides of the file transfers?
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
         class="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--does-quality-performance-impact-payment margin-bottom-3"
+          class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
         >
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Does quality performance impact payment?
+            Will you use the CCW to distribute files to and from model participants?
           </p>
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"

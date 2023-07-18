@@ -735,6 +735,155 @@ exports[`IT Solutions Points of Contact Components matches the snapshot: Automat
 </DocumentFragment>
 `;
 
+exports[`IT Solutions Points of Contact Components matches the snapshot: Beneficiary Claims Data API 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              BCDA Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="bcapi@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:bcapi@cms.hhs.gov"
+              target="_blank"
+            >
+              bcapi@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Nicole Pham
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="xuanphien.pham@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:xuanphien.pham@cms.hhs.gov"
+              target="_blank"
+            >
+              xuanphien.pham@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Product Manager
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Enterprise Data and Analytics
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Data Analytics and Strategy Group
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`IT Solutions Points of Contact Components matches the snapshot: CMS Box 1`] = `
 <DocumentFragment>
   <div>
@@ -2534,6 +2683,236 @@ exports[`IT Solutions Points of Contact Components matches the snapshot: Innovat
               class="margin-0 line-height-sans-2"
             >
               National Government Services (NGS)
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Innovation Support Platform 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Hung Van
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="hung.van@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:hung.van@cms.hhs.gov"
+              target="_blank"
+            >
+              hung.van@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Technical Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Joe Pusateri
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="joe.pusateri@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:joe.pusateri@cms.hhs.gov"
+              target="_blank"
+            >
+              joe.pusateri@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Contracting Officer Representative
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Prime
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Global Alliant
+            </h3>
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Subcontractor
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Acument
+            </h3>
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Subcontractor
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              ICF International
+            </h3>
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Subcontractor
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Tier 1 Consulting
             </h3>
           </div>
         </div>
@@ -4793,7 +5172,7 @@ exports[`IT Solutions Points of Contact Components matches the snapshot: Salesfo
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Points of Contact Components matches the snapshot: Salesforce Project Officer Support Tool or Portal 1`] = `
+exports[`IT Solutions Points of Contact Components matches the snapshot: Salesforce Project Officer Support Tool / Portal 1`] = `
 <DocumentFragment>
   <div>
     <h2
