@@ -1028,7 +1028,7 @@ The Model team will receive an implementation milestone schedule that identifies
           links: [
             {
               link:
-                'https://cmsbox.app.box.com/s/8rody63c7w6x2skkrchit43a7q4e7fa1',
+                'https://cmsbox.app.box.com/s/rc1koqoevslmern6r0hfoabj0zkcawoq',
               external: true
             }
           ],
