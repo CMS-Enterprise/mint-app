@@ -29,7 +29,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
         className="usa-summary-box__text"
       >
         <div
-          className="grid-container padding-x-0"
+          className="grid-container"
           data-testid="gridContainer"
         >
           <div
