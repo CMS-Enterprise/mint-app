@@ -236,6 +236,7 @@ const itSolutions = {
     existingCmsDataAndProcess: 'Existing CMS data and process',
     interalStaff: 'Internal staff',
     otherNewProcess: 'Other'
-  }
+  },
+  otherNewProcess: 'Other new process'
 };
 export default itSolutions;

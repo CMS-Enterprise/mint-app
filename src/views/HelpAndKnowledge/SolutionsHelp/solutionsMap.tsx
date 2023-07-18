@@ -1,6 +1,10 @@
 import React from 'react';
 
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+import {
+  OperationalSolutionCategories,
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
+} from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import GatheringInfoAlert from './SolutionDetails/_components/GatheringInfoAlert';
@@ -17,10 +21,6 @@ import RMADATimeline from './SolutionDetails/Solutions/RMADA';
 import SalesforceApplicationReviewTimeline from './SolutionDetails/Solutions/SalesforceApplicationReview';
 import SharedSystemsTimeLine from './SolutionDetails/Solutions/SharedSystems';
 
-type CategoryType = {
-  [key: string]: OperationalSolutionCategories;
-};
-
 export type SolutionDetailProps = {
   solution: HelpSolutionType;
 };
@@ -29,22 +29,52 @@ export const solutionHelpRoute: string =
   '/help-and-knowledge/operational-solutions';
 
 // Operational Solution categories
-export const operationalSolutionCategoryMap: CategoryType = {
-  applications: OperationalSolutionCategories.APPLICATIONS,
-  'communication-tools': OperationalSolutionCategories.COMMUNICATION_TOOLS,
-  'contractors-and-contract-vehicles':
-    OperationalSolutionCategories.CC_VEHICLES,
-  'database-and-data-management':
-    OperationalSolutionCategories.DATABASE_MANAGEMENT,
-  'data-exchange': OperationalSolutionCategories.DATA_EXCHANGE,
-  'data-reporting': OperationalSolutionCategories.DATA_REPORTING,
-  'help-desks': OperationalSolutionCategories.HELP_DESKS,
+export const operationalSolutionCategoryMap: Record<
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionCategories
+> = {
+  'applications-and-participation-interaction-aco-and-kidney':
+    OperationalSolutionCategories.APPLICATIONS_ACO,
+  'applications-and-participation-interaction-non-aco':
+    OperationalSolutionCategories.APPLICATIONS_NON_ACO,
+  'communication-tools-and-help-desk':
+    OperationalSolutionCategories.COMMUNICATION_TOOLS,
+  'contract-vehicles': OperationalSolutionCategories.CONTRACT_VEHICLES,
+  data: OperationalSolutionCategories.DATA,
   learning: OperationalSolutionCategories.LEARNING,
   legal: OperationalSolutionCategories.LEGAL,
   'medicare-advantage-and-part-d':
     OperationalSolutionCategories.MEDICARE_ADVANTAGE_D,
   'medicare-fee-for-service': OperationalSolutionCategories.MEDICARE_FFS,
+  'payments-and-financials': OperationalSolutionCategories.PAYMENT_FINANCIALS,
   quality: OperationalSolutionCategories.QUALITY
+};
+
+export const operationalSolutionSubCategoryMap: Record<
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories[] | null
+> = {
+  'applications-and-participation-interaction-aco-and-kidney': [
+    OperationalSolutionSubCategories.APPLICATIONS,
+    OperationalSolutionSubCategories.PARTICIPANT_INTERACTION
+  ],
+  'applications-and-participation-interaction-non-aco': [
+    OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS,
+    OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS,
+    OperationalSolutionSubCategories.PARTICIPANT_INTERACTION
+  ],
+  'communication-tools-and-help-desk': [
+    OperationalSolutionSubCategories.COMMUNICATION_TOOLS,
+    OperationalSolutionSubCategories.HELP_DESK
+  ],
+  'contract-vehicles': null,
+  data: null,
+  learning: null,
+  legal: null,
+  'medicare-advantage-and-part-d': null,
+  'medicare-fee-for-service': null,
+  'payments-and-financials': null,
+  quality: null
 };
 
 export type ContactRoles =
@@ -116,6 +146,7 @@ export interface HelpSolutionType {
   key: string; // used for translations
   route: string;
   categories: OperationalSolutionCategories[];
+  subCategories?: OperationalSolutionSubCategories[];
   acronym?: string;
   name: string;
   pointsOfContact: SolutionContactType[];
@@ -129,7 +160,8 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.INNOVATION,
     key: 'innovation',
     route: '4-innovation',
-    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: '4i',
     name: '4innovation',
     pointsOfContact: [
@@ -175,7 +207,8 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.ACO_OS,
     key: 'accountableCare',
     route: 'accountable-care-organization',
-    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: 'ACO-OS',
     name: 'Accountable Care Organization - Operational System',
     pointsOfContact: [
@@ -249,9 +282,9 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.BCDA,
     key: 'bcda',
     route: 'beneficiary-claims-data-api',
-    // TODO: add category here once its created
-    // OperationalSolutionCategories.APPLICATION_PARTICIPANT_INTERACTION
-    categories: [],
+    categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
+    acronym: 'BCDA',
     name: 'Beneficiary Claims Data API',
     pointsOfContact: [
       {
@@ -276,7 +309,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.CDX,
     key: 'centralizedDataExhange',
     route: 'centralized-data-exchange',
-    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    categories: [OperationalSolutionCategories.DATA],
     acronym: 'CDX',
     name: 'Centralized Data Exchange',
     pointsOfContact: [
@@ -311,7 +344,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.CCW,
     key: 'ccWarehouse',
     route: 'chronic-conditions-warehouse',
-    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    categories: [OperationalSolutionCategories.DATA],
     acronym: 'CCW',
     name: 'Chronic Conditions Warehouse',
     pointsOfContact: [
@@ -341,7 +374,8 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.CMS_BOX,
     key: 'cmsBox',
     route: 'cms-box',
-    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'CMS Box',
     pointsOfContact: [
       {
@@ -357,7 +391,8 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.CMS_QUALTRICS,
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
-    categories: [OperationalSolutionCategories.APPLICATIONS],
+    categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
+    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
     name: 'CMS Qualtrics',
     pointsOfContact: [
       {
@@ -375,7 +410,8 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.CBOSC,
     key: 'cbosc',
     route: 'consolidated-business-operations-support-center',
-    categories: [OperationalSolutionCategories.HELP_DESKS],
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.HELP_DESK],
     acronym: 'CBOSC',
     name: 'Consolidated Business Operations Support Center',
     pointsOfContact: [
@@ -406,7 +442,14 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.CPI_VETTING,
     key: 'cpiVetting',
     route: 'cpi-vetting',
-    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    categories: [
+      OperationalSolutionCategories.APPLICATIONS_ACO,
+      OperationalSolutionCategories.APPLICATIONS_NON_ACO
+    ],
+    subCategories: [
+      OperationalSolutionSubCategories.APPLICATIONS,
+      OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+    ],
     name: 'CPI Vetting',
     pointsOfContact: [
       {
@@ -424,7 +467,8 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.EFT,
     key: 'electronicFileTransfer',
     route: 'electronic-file-transfer',
-    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     acronym: 'EFT',
     name: 'Electronic File Transfer',
     pointsOfContact: [
@@ -443,7 +487,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.EDFR,
     key: 'expandedDataFeedback',
     route: 'expanded-data-feedback-reporting',
-    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    categories: [OperationalSolutionCategories.DATA],
     acronym: 'eDFR',
     name: 'Expanded Data Feedback Reporting',
     pointsOfContact: [
@@ -472,6 +516,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'govDelivery',
     route: 'gov-delivery',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'GovDelivery',
     pointsOfContact: [
       {
@@ -493,9 +538,9 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.GS,
     key: 'grantSolutions',
     route: 'grant-solutions',
-    categories: [
-      OperationalSolutionCategories.APPLICATIONS,
-      OperationalSolutionCategories.COMMUNICATION_TOOLS
+    categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
+    subCategories: [
+      OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS
     ],
     acronym: 'GS',
     name: 'GrantSolutions',
@@ -519,7 +564,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.HIGLAS,
     key: 'higlas',
     route: 'healthcare-integrated-general-kedger-accounting-system',
-    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    categories: [OperationalSolutionCategories.PAYMENT_FINANCIALS],
     acronym: 'HIGLAS',
     name: 'Healthcare Integrated General Ledger Accounting System',
     pointsOfContact: [
@@ -542,7 +587,10 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.HDR,
     key: 'healthDataReporting',
     route: 'health-data-reporting',
-    categories: [OperationalSolutionCategories.QUALITY],
+    categories: [
+      OperationalSolutionCategories.DATA,
+      OperationalSolutionCategories.QUALITY
+    ],
     acronym: 'HDR',
     name: 'Health Data Reporting',
     pointsOfContact: [
@@ -598,7 +646,10 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.IPC,
     key: 'innovationPayment',
     route: 'innovation-payment-contract',
-    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    categories: [
+      OperationalSolutionCategories.CONTRACT_VEHICLES,
+      OperationalSolutionCategories.PAYMENT_FINANCIALS
+    ],
     acronym: 'IPC',
     name: 'Innovation Payment Contractor',
     pointsOfContact: [
@@ -638,10 +689,55 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
+    enum: null,
+    key: 'innovationSupport',
+    route: 'innovation-support-platform',
+    categories: [
+      OperationalSolutionCategories.APPLICATIONS_NON_ACO,
+      OperationalSolutionCategories.CONTRACT_VEHICLES
+    ],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
+    acronym: 'ISP',
+    name: 'Innovation Support Platform',
+    pointsOfContact: [
+      {
+        name: 'Hung Van',
+        email: 'hung.van@cms.hhs.gov',
+        role: 'Technical Lead'
+      },
+      {
+        name: 'Joe Pusateri',
+        email: 'joe.pusateri@cms.hhs.gov',
+        role: 'Contracting Officer Representative'
+      }
+    ],
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Prime'
+      },
+      {
+        name: 'Acument',
+        system: 'Subcontractor'
+      },
+      {
+        name: 'ICF International',
+        system: 'Subcontractor'
+      },
+      {
+        name: 'Tier 1 Consulting',
+        system: 'Subcontractor'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
     enum: OperationalSolutionKey.IDR,
     key: 'integratedDataRepository',
     route: 'integrated-data-repository',
-    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    categories: [OperationalSolutionCategories.DATA],
     acronym: 'IDR',
     name: 'Integrated Data Repository',
     pointsOfContact: [
@@ -738,7 +834,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.MDM,
     key: 'masterDataManagement',
     route: 'master-data-management',
-    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    categories: [OperationalSolutionCategories.DATA],
     acronym: 'MDM',
     name: 'Master Data Management',
     pointsOfContact: [
@@ -781,7 +877,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',
     categories: [
-      OperationalSolutionCategories.CC_VEHICLES,
+      OperationalSolutionCategories.CONTRACT_VEHICLES,
       OperationalSolutionCategories.QUALITY
     ],
     acronym: 'MIDS',
@@ -841,6 +937,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'outlookMailbox',
     route: 'outlook-mailbox',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'Outlook Mailbox',
     pointsOfContact: [
       {
@@ -896,7 +993,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.RMADA,
     key: 'rmada',
     route: 'research-measurement-assessment-design-and-analysis',
-    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    categories: [OperationalSolutionCategories.CONTRACT_VEHICLES],
     acronym: 'RMADA',
     name: 'Research, Measurement, Assessment, Design, and Analysis',
     pointsOfContact: [
@@ -914,7 +1011,14 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.ARS,
     key: 'ars',
     route: 'salesforce-application-review-and-scoring',
-    categories: [OperationalSolutionCategories.APPLICATIONS],
+    categories: [
+      OperationalSolutionCategories.APPLICATIONS_ACO,
+      OperationalSolutionCategories.APPLICATIONS_NON_ACO
+    ],
+    subCategories: [
+      OperationalSolutionSubCategories.APPLICATIONS,
+      OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+    ],
     acronym: 'ARS',
     name: 'Salesforce Application Review and Scoring',
     pointsOfContact: [
@@ -986,7 +1090,14 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.LOI,
     key: 'salesforceLOI',
     route: 'salesforce-letter-of-intent',
-    categories: [OperationalSolutionCategories.APPLICATIONS],
+    categories: [
+      OperationalSolutionCategories.APPLICATIONS_ACO,
+      OperationalSolutionCategories.APPLICATIONS_NON_ACO
+    ],
+    subCategories: [
+      OperationalSolutionSubCategories.APPLICATIONS,
+      OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+    ],
     acronym: 'LOI',
     name: 'Salesforce Letter of Intent',
     pointsOfContact: [
@@ -1024,9 +1135,10 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.POST_PORTAL,
     key: 'salesforcePortal',
     route: 'salesforce-project-officer-support-tool-portal',
-    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-    acronym: 'POST',
-    name: 'Salesforce Project Officer Support Tool or Portal',
+    categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
+    acronym: 'POST / PORTAL',
+    name: 'Salesforce Project Officer Support Tool / Portal',
     pointsOfContact: [
       {
         name: 'Elia Cossis',
@@ -1062,7 +1174,14 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.RFA,
     key: 'salesforceRequestApplication',
     route: 'salesforce-request-for-application',
-    categories: [OperationalSolutionCategories.APPLICATIONS],
+    categories: [
+      OperationalSolutionCategories.APPLICATIONS_ACO,
+      OperationalSolutionCategories.APPLICATIONS_NON_ACO
+    ],
+    subCategories: [
+      OperationalSolutionSubCategories.APPLICATIONS,
+      OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+    ],
     acronym: 'RFA',
     name: 'Salesforce Request for Application',
     pointsOfContact: [

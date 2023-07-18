@@ -25,7 +25,6 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
@@ -191,7 +190,6 @@ const TaskList = () => {
       className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
-      <ModelSubNav modelID={modelID} link="read-only" />
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">

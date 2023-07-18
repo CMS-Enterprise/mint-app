@@ -9,13 +9,15 @@ import {
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
+import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
 
 import './index.scss';
 
 type CategoryCardProps = {
   className?: string;
   category: string;
-  route: string;
+  route: OperationalSolutionCategoryRoute;
 };
 
 const CategoryCard = ({ className, category, route }: CategoryCardProps) => {
@@ -24,14 +26,20 @@ const CategoryCard = ({ className, category, route }: CategoryCardProps) => {
     <Card
       className={classNames(
         className,
-        'radius-sm',
-        'operational-solution-help__category'
+        'radius-sm width-full operational-solution-help__category'
       )}
     >
       <CardHeader className="text-bold padding-y-0 flex-2">
         {category}
       </CardHeader>
-      <CardBody className="padding-y-0 flex-1">
+
+      {solutionCategories[route].subHeader && (
+        <span className="padding-x-3">
+          {t(`categories.${route}.subHeader`)}
+        </span>
+      )}
+
+      <CardBody className="padding-y-0 flex-1 operational-solution-help__fill-card-space">
         <UswdsReactLink
           className="display-flex flex-align-center"
           to={`/help-and-knowledge/operational-solutions?category=${route}`}

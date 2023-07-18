@@ -123,30 +123,64 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
       <h3>
         Claims-Based Payments
       </h3>
-    </div>
-    <div
-      class=""
-    >
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--what-is-the-intended-level-of-beneficiary-cost-sharing-and-how-will-it-be-handled margin-bottom-3"
+          class="read-only-section read-only-section--select-which-claims-based-payments-will-you-pay margin-bottom-3"
         >
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            What is the intended level of beneficiary cost-sharing and how will it be handled?
+            Select which claims-based payments will you pay.
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Adjustments to FFS payments
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--should-any-model-providers-be-excluded-from-existing-fee-for-service-payment-systems margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Should any model providers be excluded from existing Fee-for-Service payment systems?
           </p>
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Yes
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-the-model-change-the-medicare-physician-fee-schedule margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will the model change the Medicare Physician Fee Schedule?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
           </p>
         </div>
       </div>
@@ -163,12 +197,12 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             data-testid="grid"
           >
             <div
-              class="read-only-section read-only-section--will-you-waive-beneficiary-cost-sharing--coinsurance-and-or-deductible--for-any-services-in-the-model margin-bottom-3"
+              class="read-only-section read-only-section--does-the-model-affect-medicare-secondary-payer-claims margin-bottom-3"
             >
               <p
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?
+                Does the model affect Medicare Secondary Payer claims?
               </p>
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -187,12 +221,12 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             data-testid="grid"
           >
             <div
-              class="read-only-section read-only-section--please-specify-which-services margin-bottom-3"
+              class="read-only-section read-only-section--how-so margin-bottom-3"
             >
               <p
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                Please specify which services.
+                How so?
               </p>
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -212,12 +246,92 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--would-the-waiver-only-apply-for-part-of-the-payment margin-bottom-3"
+          class="read-only-section read-only-section--how-does-the-model-differ-from-current-policy--especially-in-terms-of-payment-rates-and-periodicity-of-payment margin-bottom-3"
         >
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Would the waiver only apply for part of the payment?
+            How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-you-anticipating-creating-dependencies-between-services margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Are you anticipating creating dependencies between services?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-any-additional-data-need-to-be-collected-for-claims margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will any additional data need to be collected for claims?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-your-contractor-be-providing-data--a-third-party-file--that-will-be-used-in-claims-processing margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will your contractor be providing data (a Third Party File) that will be used in claims processing?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-your-contractor-aware-that-test-data-will-be-needed--and-when-that-test-data-must-be-available margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Is your contractor aware that test data will be needed, and when that test data must be available? 
           </p>
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -229,138 +343,10 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
     </div>
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--select-which-non-claims-based-payments-will-you-pay margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Select which non-claims-based payments will you pay.
-          </p>
-          <ul
-            class="margin-y-0 padding-left-3"
-          >
-            <li
-              class="font-sans-md line-height-sans-4"
-            >
-              Advanced Payment
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--who-will-calculate-the-non-claims-based-payments margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Who will calculate the non-claims based payments?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
-          </p>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--number-of-payments-per-payment-cycle margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Number of payments per payment cycle
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
-          </p>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--will-the-shared-systems-be-involved-for-additional-payment-of-claims margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Will the Shared Systems be involved for additional payment of claims?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Yes
-          </p>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--are-you-planning-to-use-the-innovation-payment-contractor margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Are you planning to use the Innovation Payment Contractor?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            Yes
-          </p>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--what-is-the-funding-structure margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            What is the funding structure?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
-          </p>
-        </div>
-      </div>
-    </div>
+    />
+    <div
+      class=""
+    />
     <div
       class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
     >
