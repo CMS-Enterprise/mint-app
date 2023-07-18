@@ -36,7 +36,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
                   tabindex="-1"
                 >
-                   
+                  Testing Model Summary 
+                  <span
+                    class="font-sans-sm text-normal"
+                  >
+                    (TMS)
+                  </span>
                 </h1>
                 <div
                   class="padding-0"
@@ -60,12 +65,20 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       <span
                         class="mint-tag bg-base text-white margin-right-0"
                         data-testid="tag"
-                      />
+                      >
+                        Draft model plan
+                      </span>
                     </div>
                     <div
                       class="display-flex flex-align-center flex-wrap"
                       data-testid="grid"
-                    />
+                    >
+                      <p
+                        class="margin-y-0 text-normal"
+                      >
+                        Last updated on 08/27/2022
+                      </p>
+                    </div>
                     <div
                       class="mint-no-print"
                     >
@@ -78,7 +91,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                         <div>
                           <a
                             class="usa-link display-flex flex-align-center"
-                            href="/models/undefined/task-list"
+                            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
                           >
                             <svg
                               class="usa-icon margin-right-1"
@@ -208,6 +221,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               >
                 Model basics
               </h2>
+              <span
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                data-testid="tasklist-tag"
+              >
+                In progress
+              </span>
             </div>
             <div
               class="desktop:grid-col-12"
@@ -221,15 +240,20 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 >
                   Previous model names
                 </p>
-                <p
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                <ul
+                  class="margin-y-0 padding-left-3"
                 >
-                  <em
-                    class="text-base"
+                  <li
+                    class="font-sans-md line-height-sans-4"
                   >
-                    No answer entered
-                  </em>
-                </p>
+                    First Name
+                  </li>
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    Second Name
+                  </li>
+                </ul>
               </div>
             </div>
             <div
@@ -268,11 +292,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Model ID
                   </p>
-                  <div
-                    class="text-italic text-base"
-                  >
-                    None entered
-                  </div>
+                  43532323
                 </div>
                 <div
                   class="desktop:grid-col-6"
@@ -283,11 +303,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Demo code(s)
                   </p>
-                  <div
-                    class="text-italic text-base"
-                  >
-                    None entered
-                  </div>
+                  1234
                 </div>
               </div>
             </div>
@@ -306,11 +322,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  Primary Care Transformation
                 </p>
               </div>
             </div>
@@ -334,15 +346,29 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     >
                       CMS component
                     </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    <ul
+                      class="margin-y-0 padding-left-3"
                     >
-                      <em
-                        class="text-base"
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        No answer entered
-                      </em>
-                    </p>
+                        Center for Medicare (CM)
+                      </li>
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other
+                      </li>
+                      <ul
+                        data-testid="other-entry"
+                      >
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          The Center for Awesomeness
+                        </li>
+                      </ul>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -362,15 +388,20 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     >
                       CMMI Group
                     </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    <ul
+                      class="margin-y-0 padding-left-3"
                     >
-                      <em
-                        class="text-base"
+                      <li
+                        class="font-sans-md line-height-sans-4"
                       >
-                        No answer entered
-                      </em>
-                    </p>
+                        State and Population Health Group (SPHG)
+                      </li>
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Policy and Programs Group (PPG)
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -390,11 +421,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  Mandatory
                 </p>
               </div>
             </div>
@@ -413,11 +440,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  There is not enough candy
                 </p>
               </div>
             </div>
@@ -436,11 +459,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  To get more candy
                 </p>
               </div>
             </div>
@@ -459,11 +478,26 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  The great candy machine
+                </p>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--notes margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Notes
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  The machine doesn't work yet
                 </p>
               </div>
             </div>
@@ -491,11 +525,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    06/03/2022
                   </p>
                 </li>
                 <li
@@ -522,11 +552,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          No answer entered
-                        </em>
+                        06/03/2022
                       </p>
                     </div>
                     <div
@@ -541,11 +567,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          No answer entered
-                        </em>
+                        06/03/2022
                       </p>
                     </div>
                   </div>
@@ -562,11 +584,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    06/03/2022
                   </p>
                 </li>
                 <li
@@ -593,11 +611,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          No answer entered
-                        </em>
+                        06/03/2022
                       </p>
                     </div>
                     <div
@@ -612,11 +626,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          No answer entered
-                        </em>
+                        06/03/2022
                       </p>
                     </div>
                   </div>
@@ -645,11 +655,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          No answer entered
-                        </em>
+                        06/03/2022
                       </p>
                     </div>
                     <div
@@ -664,11 +670,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          No answer entered
-                        </em>
+                        06/03/2022
                       </p>
                     </div>
                   </div>
@@ -685,14 +687,29 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    06/03/2022
                   </p>
                 </li>
               </ol>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Theses are my best guess notes
+                  </p>
+                </div>
+              </div>
             </div>
             <div
               class="desktop:grid-col-12"
@@ -709,12 +726,27 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  No
                 </p>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    This can't be phased in
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -734,6 +766,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               >
                 General characteristics
               </h2>
+              <span
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                data-testid="tasklist-tag"
+              >
+                In progress
+              </span>
             </div>
             <div
               class="margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2"
@@ -753,11 +791,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    New track of an existing model
                   </p>
                 </div>
               </div>
@@ -776,11 +810,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Accountable Care Organizations (ACOs): General Information
                   </p>
                 </div>
               </div>
@@ -799,11 +829,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Yes
                   </p>
                 </div>
               </div>
@@ -852,6 +878,25 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     </em>
                   </p>
                 </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      THIS IS A NEW NOTE
+                    </p>
+                  </div>
+                </div>
               </div>
               <div
                 class="desktop:grid-col-12"
@@ -868,11 +913,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    No
                   </p>
                 </div>
               </div>
@@ -892,15 +933,39 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What type of Alternative Payment Model (APM) do you think the model could be?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Regular APM
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      MIPS APM
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      asdfasd
+                    </p>
+                  </div>
                 </div>
               </div>
               <div
@@ -915,15 +980,62 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What are the model key characteristics?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Population-based Model
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Payment Model
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Service Delivery Model
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      test
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -949,11 +1061,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      No
                     </p>
                   </div>
                 </div>
@@ -963,26 +1071,51 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-12"
+                  class="desktop:grid-col-6"
                   data-testid="grid"
                 >
                   <div
-                    class="read-only-section read-only-section--are-additional-services-involved margin-bottom-3"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="read-only-section read-only-section--are-additional-services-involved margin-bottom-3"
                     >
-                      Are additional services involved?
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      <em
-                        class="text-base"
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                       >
-                        No answer entered
-                      </em>
-                    </p>
+                        Are additional services involved?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Lots of additional services
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -991,27 +1124,73 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-12"
+                  class="desktop:grid-col-6"
                   data-testid="grid"
                 >
                   <div
-                    class="read-only-section read-only-section--are-community-partners-involved margin-bottom-3"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="read-only-section read-only-section--are-community-partners-involved margin-bottom-3"
                     >
-                      Are community partners involved?
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      <em
-                        class="text-base"
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                       >
-                        No answer entered
-                      </em>
-                    </p>
+                        Are community partners involved?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
                   </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Are community partners involved?
+
+
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    frwegqergqgrqwg planContractUpdatedNote
+                  </p>
                 </div>
               </div>
             </div>
@@ -1033,11 +1212,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    No
                   </p>
                 </div>
               </div>
@@ -1102,11 +1277,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    No
                   </p>
                 </div>
               </div>
@@ -1163,26 +1334,51 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-12"
+                  class="desktop:grid-col-6"
                   data-testid="grid"
                 >
                   <div
-                    class="read-only-section read-only-section--is-rulemaking-required margin-bottom-3"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="read-only-section read-only-section--is-rulemaking-required margin-bottom-3"
                     >
-                      Is rulemaking required?
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      <em
-                        class="text-base"
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                       >
-                        No answer entered
-                      </em>
-                    </p>
+                        Is rulemaking required?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--which-rule-do-you-anticipate-using-and-what-is-the-target-date-of-display-for-that-regulation margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Which rule do you anticipate using and what is the target date of display for that regulation?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Lots of rules
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1228,11 +1424,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      No
                     </p>
                   </div>
                 </div>
@@ -1255,6 +1447,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               >
                 Participants and Providers
               </h2>
+              <span
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                data-testid="tasklist-tag"
+              >
+                In progress
+              </span>
             </div>
             <div
               class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
@@ -1271,17 +1469,42 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Who are the particpants?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Medicaid providers
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      States
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      State Medicaid agencies
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        This is the other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
+              State
               <div
                 class="desktop:grid-col-12"
                 data-testid="grid"
@@ -1297,11 +1520,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Yes
                   </p>
                 </div>
               </div>
@@ -1320,11 +1539,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    ojnjklnmjknjkn
                   </p>
                 </div>
               </div>
@@ -1347,11 +1562,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    0
                   </p>
                 </div>
               </div>
@@ -1370,11 +1581,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Fairly confident
                   </p>
                 </div>
               </div>
@@ -1393,11 +1600,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Not applicable
                   </p>
                 </div>
               </div>
@@ -1413,15 +1616,20 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     How will you select participants?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Use an application review and scoring tool
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Another CMS component or process will provide support
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -1440,15 +1648,20 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     How will you communicate with participants?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Manage ongoing communications with participants using an IT tool
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Send mass emails to new participants
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1569,15 +1782,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Will you collect participant IDs? If so, select which types.
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      CCNs
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -1597,11 +1810,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Biannually
                   </p>
                 </div>
               </div>
@@ -1617,15 +1826,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     How will you decide to add providers?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Add retrospectively (once an interaction happens this year)
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1640,15 +1849,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Can providers leave the model?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Not applicable
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1666,34 +1875,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
-                  </p>
-                </div>
-              </div>
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <div
-                  class="read-only-section read-only-section--if-model-providers-can-be-in-multiple-models-that-may-interact--please-note-the-desired-hierarchy-of-how-any-payment-changes-or-edits-should-be-applied margin-bottom-3"
-                >
-                  <p
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                  >
-                    If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.
-                  </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    No
                   </p>
                 </div>
               </div>
@@ -1715,6 +1897,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               >
                 Beneficiaries
               </h2>
+              <span
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                data-testid="tasklist-tag"
+              >
+                In progress
+              </span>
             </div>
             <div
               class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
@@ -1731,15 +1919,20 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Who are the beneficiaries of this model?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Disease-specific
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Dually-eligible beneficiaries
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1747,26 +1940,51 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-12"
+                  class="desktop:grid-col-6"
                   data-testid="grid"
                 >
                   <div
-                    class="read-only-section read-only-section--should-dually-eligible-beneficiaries-be-treated-differently-than-non-dually-eligibles margin-bottom-3"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="read-only-section read-only-section--should-dually-eligible-beneficiaries-be-treated-differently-than-non-dually-eligibles margin-bottom-3"
                     >
-                      Should dually-eligible beneficiaries be treated differently than non-dually eligibles?
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      <em
-                        class="text-base"
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                       >
-                        No answer entered
-                      </em>
-                    </p>
+                        Should dually-eligible beneficiaries be treated differently than non-dually eligibles?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        null
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1789,11 +2007,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      No
                     </p>
                   </div>
                 </div>
@@ -1817,11 +2031,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    1234
                   </p>
                 </div>
               </div>
@@ -1840,11 +2050,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Completely confident
                   </p>
                 </div>
               </div>
@@ -1860,15 +2066,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     How will you choose beneficiaries?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Historical claims
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -1888,11 +2094,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Annually
                   </p>
                 </div>
               </div>
@@ -1911,11 +2113,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Yes, we expect to develop policies to manage the overlaps
                   </p>
                 </div>
               </div>
@@ -1960,6 +2158,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               >
                 Operations, evaluation, and learning
               </h2>
+              <span
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                data-testid="tasklist-tag"
+              >
+                In progress
+              </span>
             </div>
             <div
               class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
@@ -1976,15 +2180,33 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Will another Agency or State help design/operate the model?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Yes, we will partner with states
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1999,15 +2221,25 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What stakeholders do you plan to communicate with?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Beneficiaries
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Participants
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Providers
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2045,15 +2277,33 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What contractors will support your model?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      May have separate contractors for different implementation functions
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2419,15 +2669,33 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What type of evaluation approach are you considering?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Interrupted time series
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2442,15 +2710,33 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Is Chronic Conditions Warehouse (CCW) involved in the model?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Yes, for evaluation
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2465,15 +2751,38 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What data do you need to monitor the model?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Clinical data
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Medicare claims
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2488,15 +2797,38 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What data will you send to participants?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Baseline/historical data
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Beneficiary-level data
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2510,6 +2842,87 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
                     Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                Chronic Conditions Warehouse (CCW)
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you need to send files between the CCW and other applications?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Do you know which applications will be on the other sides of the file transfers?
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      <em
+                        class="text-base"
+                      >
+                        No answer entered
+                      </em>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you use the CCW to distribute files to and from model participants?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -2564,15 +2977,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     How often do you anticipate sharing data?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Daily
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2610,15 +3023,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     How often do you anticipate collecting data?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Monthly
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2658,15 +3071,38 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Will the model have a learning strategy?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      We plan to use an IT platform (Connect)
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      No, we will not have a learning strategy
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2710,6 +3146,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               >
                 Payment
               </h2>
+              <span
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                data-testid="tasklist-tag"
+              >
+                In progress
+              </span>
             </div>
             <div
               class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
@@ -2726,15 +3168,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What will be the funding source for payments?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Patient Protection Affordable Care Act (Sec 3021)
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2749,15 +3191,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What is the funding source for reconciliation or other expenditures?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Patient Protection Affordable Care Act (Sec 3021)
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
@@ -2772,6 +3214,177 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     Who will you pay?
                   </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Beneficiaries
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-will-you-pay margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What will you pay?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Claims-Based Payments
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                Claims-Based Payments
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--select-which-claims-based-payments-will-you-pay margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Select which claims-based payments will you pay.
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Adjustments to FFS payments
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--should-any-model-providers-be-excluded-from-existing-fee-for-service-payment-systems margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Should any model providers be excluded from existing Fee-for-Service payment systems?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-the-model-change-the-medicare-physician-fee-schedule margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the model change the Medicare Physician Fee Schedule?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--does-the-model-affect-medicare-secondary-payer-claims margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Does the model affect Medicare Secondary Payer claims?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No answer entered
+                        </em>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-does-the-model-differ-from-current-policy--especially-in-terms-of-payment-rates-and-periodicity-of-payment margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
+                  </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
@@ -2788,28 +3401,78 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--what-will-you-pay margin-bottom-3"
+                  class="read-only-section read-only-section--are-you-anticipating-creating-dependencies-between-services margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    What will you pay?
+                    Are you anticipating creating dependencies between services?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-any-additional-data-need-to-be-collected-for-claims margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will any additional data need to be collected for claims?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-your-contractor-be-providing-data--a-third-party-file--that-will-be-used-in-claims-processing margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will your contractor be providing data (a Third Party File) that will be used in claims processing?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--is-your-contractor-aware-that-test-data-will-be-needed--and-when-that-test-data-must-be-available margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Is your contractor aware that test data will be needed, and when that test data must be available? 
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
                   </p>
                 </div>
               </div>
             </div>
-            <div
-              class=""
-            />
             <div
               class=""
             />
@@ -2834,11 +3497,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    High level
                   </p>
                 </div>
               </div>
@@ -2847,26 +3506,55 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-12"
+                  class="desktop:grid-col-6"
                   data-testid="grid"
                 >
                   <div
-                    class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms margin-bottom-3"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms margin-bottom-3"
                     >
-                      Will participants be allowed to select between multiple payment mechanisms?
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      <em
-                        class="text-base"
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                       >
-                        No answer entered
-                      </em>
-                    </p>
+                        Will participants be allowed to select between multiple payment mechanisms?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No answer entered
+                        </em>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2882,15 +3570,15 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     How often do you anticipate making payments?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Biannually
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -2910,11 +3598,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Yes
                   </p>
                 </div>
               </div>
@@ -2933,11 +3617,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Yes
                   </p>
                 </div>
               </div>
@@ -2956,11 +3636,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    06/03/2022
                   </p>
                 </div>
               </div>
@@ -3344,6 +4020,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="share-export-modal-file-type-csv"
                 id="share-export-modal-file-type-csv"
                 name="csv"
                 type="checkbox"
@@ -3364,6 +4041,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="share-export-modal-file-type-pdf"
                 id="share-export-modal-file-type-pdf"
                 name="pdf"
                 type="checkbox"
@@ -3399,7 +4077,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
             >
               <button
                 class="usa-button margin-top-0"
-                data-testid="button"
+                data-testid="export-model-plan"
                 disabled=""
                 type="submit"
               >

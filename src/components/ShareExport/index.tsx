@@ -207,6 +207,7 @@ const ShareExportModal = ({
             <CheckboxField
               key={file}
               id={`${modalElementId}-file-type-${file}`}
+              testid={`${modalElementId}-file-type-${file}`}
               name={file}
               label={generalReadOnlyT(`modal.exportFormats.${file}`)}
               value={file}
@@ -238,6 +239,7 @@ const ShareExportModal = ({
 
           <Button
             type="submit"
+            data-testid="export-model-plan"
             disabled={!filteredGroup || (!exportCSV && !exportPDF)}
             className="margin-top-0"
           >

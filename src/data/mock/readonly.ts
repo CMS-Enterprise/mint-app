@@ -1,15 +1,56 @@
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
+import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import GetAllBeneficiaries from 'queries/ReadOnly/GetAllBeneficiaries';
+import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
+import GetAllParticipants from 'queries/ReadOnly/GetAllParticipants';
+import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
+import GetAllOpsEvalAndLearning from 'queries/ReadOnly/GettAllOpsEvalAndLearning';
+import { GetAllBasics_modelPlan_basics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
 import { GetAllBeneficiaries_modelPlan_beneficiaries as AllBeneficiariesTypes } from 'queries/ReadOnly/types/GetAllBeneficiaries';
+import { GetAllGeneralCharacteristics_modelPlan_generalCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
+import { GetAllOpsEvalAndLearning_modelPlan_opsEvalAndLearning as AllOpsEvalAndLearningTypes } from 'queries/ReadOnly/types/GetAllOpsEvalAndLearning';
+import { GetAllParticipants_modelPlan_participantsAndProviders as GetAllParticipantsTypes } from 'queries/ReadOnly/types/GetAllParticipants';
+import { GetAllPayments_modelPlan_payments as PaymentTypes } from 'queries/ReadOnly/types/GetAllPayments';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 import {
+  AgencyOrStateHelpType,
+  AlternativePaymentModelType,
+  AnticipatedPaymentFrequencyType,
   BeneficiariesType,
+  CcmInvolvmentType,
+  ClaimsBasedPayType,
+  CMMIGroup,
+  CMSCenter,
+  ComplexityCalculationLevelType,
   ConfidenceType,
+  ContractorSupportType,
+  DataForMonitoringType,
+  DataFrequencyType,
+  DataToSendParticipantsType,
+  EvaluationApproachType,
   FrequencyType,
+  FundingSource,
   KeyCharacteristic,
+  ModelCategory,
+  ModelLearningSystemType,
   ModelStatus,
+  ModelType,
+  MonitoringFileType,
+  NonClaimsBasedPayType,
   OverlapType,
+  ParticipantCommunicationType,
+  ParticipantSelectionType,
+  ParticipantsIDType,
+  ParticipantsType,
+  PayRecipient,
+  PayType,
+  ProviderAddType,
+  ProviderLeaveType,
+  RecruitmentType,
   SelectionMethodType,
+  StakeholdersType,
   TaskStatus,
   TeamRole,
   TriStateAnswer
@@ -57,8 +98,452 @@ export const benficiaryMocks = [
     result: {
       data: {
         modelPlan: {
+          __typename: 'ModelPlan',
           id: modelID,
           beneficiaries: beneficiaryData
+        }
+      }
+    }
+  }
+];
+
+const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
+  __typename: 'PlanGeneralCharacteristics',
+  id: '123',
+  isNewModel: false,
+  existingModel: 'Accountable Care Organizations (ACOs): General Information',
+  resemblesExistingModel: true,
+  resemblesExistingModelHow: null,
+  resemblesExistingModelNote: 'THIS IS A NEW NOTE',
+  hasComponentsOrTracks: false,
+  hasComponentsOrTracksDiffer: null,
+  hasComponentsOrTracksNote: null,
+  alternativePaymentModelTypes: [
+    AlternativePaymentModelType.REGULAR,
+    AlternativePaymentModelType.MIPS
+  ],
+  alternativePaymentModelNote: 'asdfasd',
+  keyCharacteristics: [
+    KeyCharacteristic.POPULATION_BASED,
+    KeyCharacteristic.PAYMENT,
+    KeyCharacteristic.SERVICE_DELIVERY,
+    KeyCharacteristic.OTHER
+  ],
+  keyCharacteristicsOther: null,
+  keyCharacteristicsNote: 'test',
+  collectPlanBids: null,
+  collectPlanBidsNote: null,
+  managePartCDEnrollment: null,
+  managePartCDEnrollmentNote: null,
+  planContractUpdated: null,
+  planContractUpdatedNote: null,
+  careCoordinationInvolved: false,
+  careCoordinationInvolvedDescription: null,
+  careCoordinationInvolvedNote: null,
+  additionalServicesInvolved: true,
+  additionalServicesInvolvedDescription: 'Lots of additional services',
+  additionalServicesInvolvedNote: null,
+  communityPartnersInvolved: true,
+  communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
+  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
+  geographiesTargeted: false,
+  geographiesTargetedTypes: [],
+  geographiesTargetedTypesOther: null,
+  geographiesTargetedAppliedTo: [],
+  geographiesTargetedAppliedToOther: null,
+  geographiesTargetedNote: null,
+  participationOptions: false,
+  participationOptionsNote: null,
+  agreementTypes: [],
+  agreementTypesOther: null,
+  multiplePatricipationAgreementsNeeded: null,
+  multiplePatricipationAgreementsNeededNote: null,
+  rulemakingRequired: true,
+  rulemakingRequiredDescription: 'Lots of rules',
+  rulemakingRequiredNote: null,
+  authorityAllowances: [],
+  authorityAllowancesOther: null,
+  authorityAllowancesNote: null,
+  waiversRequired: false,
+  waiversRequiredTypes: [],
+  waiversRequiredNote: null,
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const generalCharacteristicMocks = [
+  {
+    request: {
+      query: GetAllGeneralCharacteristics,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          existingModelLinks: [],
+          generalCharacteristics: generalCharacteristicData
+        }
+      }
+    }
+  }
+];
+
+const modelBasicsData: GetAllBasicsTypes = {
+  __typename: 'PlanBasics',
+  id: '123',
+  demoCode: '1234',
+  amsModelID: '43532323',
+  modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
+  cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
+  cmsOther: 'The Center for Awesomeness',
+  cmmiGroups: [
+    CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,
+    CMMIGroup.POLICY_AND_PROGRAMS_GROUP
+  ],
+  modelType: ModelType.MANDATORY,
+  problem: 'There is not enough candy',
+  goal: 'To get more candy',
+  testInterventions: 'The great candy machine',
+  note: "The machine doesn't work yet",
+  completeICIP: '2022-06-03T19:32:24.412662Z',
+  clearanceStarts: '2022-06-03T19:32:24.412662Z',
+  clearanceEnds: '2022-06-03T19:32:24.412662Z',
+  announced: '2022-06-03T19:32:24.412662Z',
+  applicationsStart: '2022-06-03T19:32:24.412662Z',
+  applicationsEnd: '2022-06-03T19:32:24.412662Z',
+  performancePeriodStarts: '2022-06-03T19:32:24.412662Z',
+  performancePeriodEnds: '2022-06-03T19:32:24.412662Z',
+  wrapUpEnds: '2022-06-03T19:32:24.412662Z',
+  highLevelNote: 'Theses are my best guess notes',
+  phasedIn: false,
+  phasedInNote: "This can't be phased in",
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const modelBasicsMocks = [
+  {
+    request: {
+      query: GetAllBasics,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          nameHistory: ['First Name', 'Second Name'],
+          basics: modelBasicsData
+        }
+      }
+    }
+  }
+];
+
+const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
+  __typename: 'PlanOpsEvalAndLearning',
+  id: '123',
+  modelPlanID: modelID,
+  status: TaskStatus.IN_PROGRESS,
+  agencyOrStateHelp: [
+    AgencyOrStateHelpType.YES_STATE,
+    AgencyOrStateHelpType.OTHER
+  ],
+  agencyOrStateHelpOther: null,
+  agencyOrStateHelpNote: null,
+  stakeholders: [
+    StakeholdersType.BENEFICIARIES,
+    StakeholdersType.PARTICIPANTS,
+    StakeholdersType.PROVIDERS
+  ],
+  stakeholdersOther: null,
+  stakeholdersNote: null,
+  helpdeskUse: null,
+  helpdeskUseNote: null,
+  contractorSupport: [
+    ContractorSupportType.MULTIPLE,
+    ContractorSupportType.OTHER
+  ],
+  contractorSupportOther: null,
+  contractorSupportHow: null,
+  contractorSupportNote: null,
+  iddocSupport: null,
+  iddocSupportNote: null,
+  technicalContactsIdentified: null,
+  technicalContactsIdentifiedDetail: null,
+  technicalContactsIdentifiedNote: null,
+  captureParticipantInfo: null,
+  captureParticipantInfoNote: null,
+  icdOwner: null,
+  draftIcdDueDate: null,
+  icdNote: null,
+  uatNeeds: null,
+  stcNeeds: null,
+  testingTimelines: null,
+  testingNote: null,
+  dataMonitoringFileTypes: [
+    MonitoringFileType.PART_A,
+    MonitoringFileType.PART_B
+  ],
+  dataMonitoringFileOther: null,
+  dataResponseType: null,
+  dataResponseFileFrequency: null,
+  dataFullTimeOrIncremental: null,
+  eftSetUp: null,
+  unsolicitedAdjustmentsIncluded: null,
+  dataFlowDiagramsNeeded: null,
+  produceBenefitEnhancementFiles: null,
+  fileNamingConventions: null,
+  dataMonitoringNote: null,
+  benchmarkForPerformance: null,
+  benchmarkForPerformanceNote: null,
+  computePerformanceScores: null,
+  computePerformanceScoresNote: null,
+  riskAdjustPerformance: null,
+  riskAdjustFeedback: null,
+  riskAdjustPayments: null,
+  riskAdjustOther: null,
+  riskAdjustNote: null,
+  appealPerformance: null,
+  appealFeedback: null,
+  appealPayments: null,
+  appealOther: null,
+  appealNote: null,
+  evaluationApproaches: [
+    EvaluationApproachType.INTERRUPTED_TIME,
+    EvaluationApproachType.OTHER
+  ],
+  evaluationApproachOther: null,
+  evalutaionApproachNote: null,
+  ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION, CcmInvolvmentType.OTHER],
+  ccmInvolvmentOther: null,
+  ccmInvolvmentNote: null,
+  dataNeededForMonitoring: [
+    DataForMonitoringType.CLINICAL_DATA,
+    DataForMonitoringType.MEDICARE_CLAIMS,
+    DataForMonitoringType.OTHER
+  ],
+  dataNeededForMonitoringOther: null,
+  dataNeededForMonitoringNote: null,
+  dataToSendParticicipants: [
+    DataToSendParticipantsType.BASELINE_HISTORICAL_DATA,
+    DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA,
+    DataToSendParticipantsType.OTHER_MIPS_DATA
+  ],
+  dataToSendParticicipantsOther: null,
+  dataToSendParticicipantsNote: null,
+  shareCclfData: null,
+  shareCclfDataNote: null,
+  sendFilesBetweenCcw: null,
+  sendFilesBetweenCcwNote: null,
+  appToSendFilesToKnown: null,
+  appToSendFilesToWhich: null,
+  appToSendFilesToNote: null,
+  useCcwForFileDistribiutionToParticipants: null,
+  useCcwForFileDistribiutionToParticipantsNote: null,
+  developNewQualityMeasures: null,
+  developNewQualityMeasuresNote: null,
+  qualityPerformanceImpactsPayment: null,
+  qualityPerformanceImpactsPaymentNote: null,
+  dataSharingStarts: null,
+  dataSharingStartsOther: null,
+  dataSharingFrequency: [DataFrequencyType.DAILY],
+  dataSharingFrequencyOther: null,
+  dataSharingStartsNote: null,
+  dataCollectionStarts: null,
+  dataCollectionStartsOther: null,
+  dataCollectionFrequency: [DataFrequencyType.MONTHLY],
+  dataCollectionFrequencyOther: null,
+  dataCollectionFrequencyNote: null,
+  qualityReportingStarts: null,
+  qualityReportingStartsOther: null,
+  qualityReportingStartsNote: null,
+  modelLearningSystems: [
+    ModelLearningSystemType.IT_PLATFORM_CONNECT,
+    ModelLearningSystemType.NO_LEARNING_SYSTEM,
+    ModelLearningSystemType.OTHER
+  ],
+  modelLearningSystemsOther: null,
+  modelLearningSystemsNote: null,
+  anticipatedChallenges: null
+};
+
+export const opsEvalAndLearningMocks = [
+  {
+    request: {
+      query: GetAllOpsEvalAndLearning,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          opsEvalAndLearning: opsEvalAndLearningData
+        }
+      }
+    }
+  }
+];
+
+const participantsAndProvidersData: GetAllParticipantsTypes = {
+  __typename: 'PlanParticipantsAndProviders',
+  id: '123',
+  participants: [
+    ParticipantsType.MEDICAID_PROVIDERS,
+    ParticipantsType.STATES,
+    ParticipantsType.STATE_MEDICAID_AGENCIES,
+    ParticipantsType.OTHER
+  ],
+  medicareProviderType: null,
+  statesEngagement: 'State',
+  participantsOther: 'This is the other',
+  participantsNote: null,
+  participantsCurrentlyInModels: true,
+  participantsCurrentlyInModelsNote: null,
+  modelApplicationLevel: 'ojnjklnmjknjkn',
+  expectedNumberOfParticipants: 0,
+  estimateConfidence: ConfidenceType.FAIRLY,
+  confidenceNote: null,
+  recruitmentMethod: RecruitmentType.NA,
+  recruitmentOther: null,
+  recruitmentNote: null,
+  selectionMethod: [
+    ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL,
+    ParticipantSelectionType.CMS_COMPONENT_OR_PROCESS
+  ],
+  selectionOther: null,
+  selectionNote: null,
+  communicationMethod: [
+    ParticipantCommunicationType.IT_TOOL,
+    ParticipantCommunicationType.MASS_EMAIL
+  ],
+  communicationMethodOther: null,
+  communicationNote: null,
+  participantAssumeRisk: null,
+  riskType: null,
+  riskOther: null,
+  riskNote: null,
+  willRiskChange: null,
+  willRiskChangeNote: null,
+  coordinateWork: null,
+  coordinateWorkNote: null,
+  gainsharePayments: null,
+  gainsharePaymentsTrack: null,
+  gainsharePaymentsNote: null,
+  participantsIds: [ParticipantsIDType.CCNS],
+  participantsIdsOther: null,
+  participantsIDSNote: null,
+  providerAdditionFrequency: FrequencyType.BIANNUALLY,
+  providerAdditionFrequencyOther: null,
+  providerAdditionFrequencyNote: null,
+  providerAddMethod: [ProviderAddType.RETROSPECTIVELY],
+  providerAddMethodOther: null,
+  providerAddMethodNote: null,
+  providerLeaveMethod: [ProviderLeaveType.NOT_APPLICABLE],
+  providerLeaveMethodOther: null,
+  providerLeaveMethodNote: null,
+  providerOverlap: OverlapType.NO,
+  providerOverlapHierarchy: null,
+  providerOverlapNote: null,
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const participantsAndProvidersMocks = [
+  {
+    request: {
+      query: GetAllParticipants,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          participantsAndProviders: participantsAndProvidersData
+        }
+      }
+    }
+  }
+];
+
+const paymentsData: PaymentTypes = {
+  __typename: 'PlanPayments',
+  fundingSource: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
+  fundingSourceTrustFund: null,
+  fundingSourceOther: null,
+  fundingSourceNote: null,
+  fundingSourceR: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
+  fundingSourceRTrustFund: null,
+  fundingSourceROther: null,
+  fundingSourceRNote: null,
+  payRecipients: [PayRecipient.BENEFICIARIES],
+  payRecipientsOtherSpecification: null,
+  payRecipientsNote: null,
+  payType: [PayType.CLAIMS_BASED_PAYMENTS],
+  payTypeNote: null,
+  payClaims: [ClaimsBasedPayType.ADJUSTMENTS_TO_FFS_PAYMENTS],
+  payClaimsOther: null,
+  payClaimsNote: null,
+  shouldAnyProvidersExcludedFFSSystems: true,
+  shouldAnyProviderExcludedFFSSystemsNote: null,
+  changesMedicarePhysicianFeeSchedule: true,
+  changesMedicarePhysicianFeeScheduleNote: null,
+  affectsMedicareSecondaryPayerClaims: true,
+  affectsMedicareSecondaryPayerClaimsHow: null,
+  affectsMedicareSecondaryPayerClaimsNote: null,
+  payModelDifferentiation: null,
+  creatingDependenciesBetweenServices: true,
+  creatingDependenciesBetweenServicesNote: null,
+  needsClaimsDataCollection: true,
+  needsClaimsDataCollectionNote: null,
+  providingThirdPartyFile: true,
+  isContractorAwareTestDataRequirements: true,
+  beneficiaryCostSharingLevelAndHandling: null,
+  waiveBeneficiaryCostSharingForAnyServices: true,
+  waiveBeneficiaryCostSharingServiceSpecification: null,
+  waiverOnlyAppliesPartOfPayment: true,
+  waiveBeneficiaryCostSharingNote: null,
+  nonClaimsPayments: [NonClaimsBasedPayType.ADVANCED_PAYMENT],
+  nonClaimsPaymentsNote: '',
+  nonClaimsPaymentOther: null,
+  paymentCalculationOwner: null,
+  numberPaymentsPerPayCycle: null,
+  numberPaymentsPerPayCycleNote: null,
+  sharedSystemsInvolvedAdditionalClaimPayment: true,
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: null,
+  planningToUseInnovationPaymentContractor: true,
+  planningToUseInnovationPaymentContractorNote: null,
+  fundingStructure: null,
+  expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
+  expectedCalculationComplexityLevelNote: null,
+  canParticipantsSelectBetweenPaymentMechanisms: true,
+  canParticipantsSelectBetweenPaymentMechanismsHow: null,
+  canParticipantsSelectBetweenPaymentMechanismsNote: null,
+  anticipatedPaymentFrequency: [AnticipatedPaymentFrequencyType.BIANNUALLY],
+  anticipatedPaymentFrequencyOther: null,
+  anticipatedPaymentFrequencyNote: null,
+  willRecoverPayments: true,
+  willRecoverPaymentsNote: null,
+  anticipateReconcilingPaymentsRetrospectively: true,
+  anticipateReconcilingPaymentsRetrospectivelyNote: null,
+  paymentStartDate: '2022-06-03T19:32:24.412662Z',
+  paymentStartDateNote: null,
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const paymentsMocks = [
+  {
+    request: {
+      query: GetAllPayments,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          payments: paymentsData
         }
       }
     }
@@ -122,4 +607,66 @@ export const summaryMock = [
   }
 ];
 
-export default summaryMock;
+const collaboratorsData: GetModelCollaboratorsType[] = [
+  {
+    id: '123',
+    userID: 'LUKE',
+    userAccount: {
+      __typename: 'UserAccount',
+      id: '890',
+      email: 'luke@skywalker.com',
+      username: '123',
+      commonName: 'Luke Skywalker'
+    },
+    modelPlanID: modelID,
+    teamRole: TeamRole.MODEL_LEAD,
+    createdDts: '2022-06-03T19:32:24.412662Z',
+    __typename: 'PlanCollaborator'
+  },
+  {
+    id: '456',
+    userID: 'BOBA',
+    userAccount: {
+      __typename: 'UserAccount',
+      id: '891',
+      email: 'boba@fett.com',
+      username: '321',
+      commonName: 'Boba Fett'
+    },
+    modelPlanID: modelID,
+    teamRole: TeamRole.LEADERSHIP,
+    createdDts: '2022-06-03T19:32:24.412662Z',
+    __typename: 'PlanCollaborator'
+  }
+];
+
+export const collaboratorsMocks = [
+  {
+    request: {
+      query: GetModelPlanCollaborators,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: 'My Model',
+          collaborators: collaboratorsData
+        }
+      }
+    }
+  }
+];
+
+const allMocks = [
+  ...benficiaryMocks,
+  ...generalCharacteristicMocks,
+  ...modelBasicsMocks,
+  ...opsEvalAndLearningMocks,
+  ...participantsAndProvidersMocks,
+  ...paymentsMocks,
+  ...collaboratorsMocks
+];
+
+export default allMocks;
