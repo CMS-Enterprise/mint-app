@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Title and Status component for Read Only Pages matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="display-flex flex-justify flex-align-start"
+  >
+    <h2
+      class="margin-top-0 margin-bottom-4"
+    >
+      Regular Heading
+    </h2>
+    <div>
+      <div
+        class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-warning"
+        data-testid="tasklist-tag"
+      >
+        <span>
+          In progress
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
