@@ -38,30 +38,3 @@ export const checkGroupMap = (
   // Return the component if it is NOT isViewingFilteredView
   return component;
 };
-
-export const claimsQuestions = [
-  'payClaims',
-  'shouldAnyProvidersExcludedFFSSystems',
-  'changesMedicarePhysicianFeeSchedule',
-  'affectsMedicareSecondaryPayerClaims',
-  'payModelDifferentiation',
-  'ancitipateCreatingDependencies',
-  'needsClaimsDataCollection',
-  'thirdParty',
-  'isContractorAwareTestDataRequirements'
-];
-
-export const beneficiaryCostSharingQuestions = [
-  'beneficiaryCostSharingLevelAndHandling',
-  'waiveBeneficiaryCostSharingForAnyServices',
-  'waiverOnlyAppliesPartOfPaymen'
-];
-
-export const nonClaimsQuestions = [
-  'nonClaimsPayments',
-  'paymentCalculationOwner',
-  'numberPaymentsPerPayCycle',
-  'sharedSystemsInvolvedAdditionalClaimPayment',
-  'planningToUseInnovationPaymentContractor',
-  'fundingStructure'
-];

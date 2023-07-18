@@ -21,12 +21,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
-import {
-  beneficiaryCostSharingQuestions,
-  checkGroupMap,
-  claimsQuestions,
-  nonClaimsQuestions
-} from '../_components/FilterView/util';
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -132,36 +127,6 @@ const ReadOnlyPayments = ({
 
   const isNonClaims: boolean =
     payType?.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) || false;
-
-  const hasClaimsQuestions = () => {
-    if (
-      filteredQuestions?.filter(question => claimsQuestions.includes(question))
-        .length === 0
-    ) {
-      return false;
-    }
-    return true;
-  };
-  const hasBeneficiaryCostSharingQuestions = () => {
-    if (
-      filteredQuestions?.filter(question =>
-        beneficiaryCostSharingQuestions.includes(question)
-      ).length === 0
-    ) {
-      return false;
-    }
-    return true;
-  };
-  const hasNonClaimsQuestions = () => {
-    if (
-      filteredQuestions?.filter(question =>
-        nonClaimsQuestions.includes(question)
-      ).length === 0
-    ) {
-      return false;
-    }
-    return true;
-  };
 
   return (
     <div
@@ -283,7 +248,7 @@ const ReadOnlyPayments = ({
             isClaims && !isViewingFilteredView
         })}
       >
-        {isClaims && hasClaimsQuestions() && (
+        {isClaims && !isViewingFilteredView && (
           <h3>{t('whatWillYouPayOptions.claims')}</h3>
         )}
 
@@ -425,7 +390,7 @@ const ReadOnlyPayments = ({
             isCostSharing && !isViewingFilteredView
         })}
       >
-        {isCostSharing && hasBeneficiaryCostSharingQuestions() && (
+        {isCostSharing && !isViewingFilteredView && (
           <h3>{t('beneficaryCostSharingQuestions')}</h3>
         )}
 
@@ -479,7 +444,7 @@ const ReadOnlyPayments = ({
             isNonClaims && !isViewingFilteredView
         })}
       >
-        {isNonClaims && hasNonClaimsQuestions() && (
+        {isNonClaims && !isViewingFilteredView && (
           <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>
         )}
 
