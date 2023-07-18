@@ -519,19 +519,18 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isNonClaims &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'sharedSystemsInvolvedAdditionalClaimPayment',
-            <ReadOnlySection
-              heading={t('sharedSystemsInvolvedAdditionalClaimPayment')}
-              copy={translateBooleanOrNull(
-                sharedSystemsInvolvedAdditionalClaimPayment
-              )}
-              notes={sharedSystemsInvolvedAdditionalClaimPaymentNote}
-            />
-          )}
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'sharedSystemsInvolvedAdditionalClaimPayment',
+          <ReadOnlySection
+            heading={t('sharedSystemsInvolvedAdditionalClaimPayment')}
+            copy={translateBooleanOrNull(
+              sharedSystemsInvolvedAdditionalClaimPayment
+            )}
+            notes={sharedSystemsInvolvedAdditionalClaimPaymentNote}
+          />
+        )}
 
         {isNonClaims &&
           checkGroupMap(
