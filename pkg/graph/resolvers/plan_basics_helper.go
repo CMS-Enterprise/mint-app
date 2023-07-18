@@ -60,6 +60,15 @@ func NewDateProcessor(changes map[string]interface{}, existing *models.PlanBasic
 	return &DateProcessor{changes: changes, existing: existingMap}, nil
 }
 
+func copyTime(t *time.Time) *time.Time {
+	if t != nil {
+		copy := new(time.Time)
+		*copy = *t
+		return copy
+	}
+	return nil
+}
+
 // ExtractChangedDates extracts the changed dates from the DateProcessor
 func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
 	fieldDataMap := getFieldDataMap()
@@ -101,53 +110,15 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
 				}
 
 				if fieldData.IsRangeStart {
-					if oldValue != nil {
-						oldRangeStart := new(time.Time)
-						*oldRangeStart = *oldValue
-						dateChangeValue.OldRangeStart = oldRangeStart
-					}
-
-					if newValue != nil {
-						newRangeStart := new(time.Time)
-						*newRangeStart = *newValue
-						dateChangeValue.NewRangeStart = newRangeStart
-					}
-
-					if otherOldValue != nil {
-						oldRangeEnd := new(time.Time)
-						*oldRangeEnd = *otherOldValue
-						dateChangeValue.OldRangeEnd = oldRangeEnd
-					}
-
-					if otherNewValue != nil {
-						newRangeEnd := new(time.Time)
-						*newRangeEnd = *otherNewValue
-						dateChangeValue.NewRangeEnd = newRangeEnd
-					}
+					dateChangeValue.OldRangeStart = copyTime(oldValue)
+					dateChangeValue.NewRangeStart = copyTime(newValue)
+					dateChangeValue.OldRangeEnd = copyTime(otherOldValue)
+					dateChangeValue.NewRangeEnd = copyTime(otherNewValue)
 				} else {
-					if oldValue != nil {
-						oldRangeEnd := new(time.Time)
-						*oldRangeEnd = *oldValue
-						dateChangeValue.OldRangeEnd = oldRangeEnd
-					}
-
-					if newValue != nil {
-						newRangeEnd := new(time.Time)
-						*newRangeEnd = *newValue
-						dateChangeValue.NewRangeEnd = newRangeEnd
-					}
-
-					if otherOldValue != nil {
-						oldRangeStart := new(time.Time)
-						*oldRangeStart = *otherOldValue
-						dateChangeValue.OldRangeStart = oldRangeStart
-					}
-
-					if otherNewValue != nil {
-						newRangeStart := new(time.Time)
-						*newRangeStart = *otherNewValue
-						dateChangeValue.NewRangeStart = newRangeStart
-					}
+					dateChangeValue.OldRangeEnd = copyTime(oldValue)
+					dateChangeValue.NewRangeEnd = copyTime(newValue)
+					dateChangeValue.OldRangeStart = copyTime(otherOldValue)
+					dateChangeValue.NewRangeStart = copyTime(otherNewValue)
 				}
 
 				if fieldData.CommonKey == "" {
