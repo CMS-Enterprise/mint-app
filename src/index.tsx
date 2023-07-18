@@ -131,6 +131,20 @@ export const client = new ApolloClient({
   }
 });
 
+let app: JSX.Element;
+const browser: any = detect();
+if (browser.name === 'ie') {
+  app = <UnsupportedBrowser />;
+} else {
+  app = (
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </Provider>
+  );
+}
+
 /**
  * expose store when run in Cypress
  */
@@ -169,23 +183,7 @@ if (typeof (window as any).TextEncoder === 'undefined') {
   (window as any).TextEncoder = TextEncoder;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  let app: JSX.Element;
-  const browser: any = detect();
-  if (browser.name === 'ie') {
-    app = <UnsupportedBrowser />;
-  } else {
-    app = (
-      <Provider store={store}>
-        <ApolloProvider client={client}>
-          <App />
-        </ApolloProvider>
-      </Provider>
-    );
-  }
-
-  ReactDOM.render(app, document.getElementById('root'));
-});
+ReactDOM.render(app, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
