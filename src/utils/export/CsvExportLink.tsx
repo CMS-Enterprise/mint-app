@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLazyQuery } from '@apollo/client';
 import { IconFileDownload } from '@trussworks/react-uswds';
 import { client } from 'index';
 import { Parser, transforms } from 'json2csv';
