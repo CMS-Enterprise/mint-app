@@ -347,7 +347,8 @@ const ReadOnlyPayments = ({
               }
             />
           )}
-        {(isClaims && affectsMedicareSecondaryPayerClaimsNote) ||
+        {isClaims &&
+          affectsMedicareSecondaryPayerClaimsNote &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
