@@ -23,9 +23,11 @@ const TitleAndStatus = ({
       <h2 className="margin-top-0 margin-bottom-4">
         {clearance ? clearanceTitle : heading}
       </h2>
-      {!isViewingFilteredView && status && (
-        <TaskListStatusTag status={status} />
-      )}
+      <div>
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
+      </div>
     </div>
   );
 };
