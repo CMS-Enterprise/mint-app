@@ -1,6 +1,6 @@
-import { TranslationPlanBasics } from 'types/translation';
+import { TranslationBasics } from 'types/translation';
 
-export const planBasics: TranslationPlanBasics = {
+export const basics: TranslationBasics = {
   modelCategory: {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
@@ -246,7 +246,7 @@ export const planBasics: TranslationPlanBasics = {
 };
 
 // Miscellaneous translations outside scope of individual questions
-export const planBasicsMisc: Record<string, string> = {
+export const basicsMisc: Record<string, string> = {
   heading: 'Model basics',
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
@@ -274,4 +274,4 @@ export const planBasicsMisc: Record<string, string> = {
     ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.'
 };
 
-export default planBasics;
+export default basics;

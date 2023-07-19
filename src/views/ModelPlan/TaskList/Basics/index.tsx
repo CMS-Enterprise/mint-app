@@ -53,15 +53,15 @@ type ModelPlanInfoFormType = Omit<ModelFormType, 'nameHistory'>;
 
 const BasicsContent = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
-  const { t: planBasicsT } = useTranslation('planBasics');
-  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
+  const { t: basicsT } = useTranslation('basics');
+  const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
 
   const {
     modelCategory: modelCategoryConfig,
     cmsCenters: modelCMSCenterConfig,
     cmmiGroups: modelCMSGroupsConfig
-  } = usePlanTranslation('planBasics');
+  } = usePlanTranslation('basics');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -203,19 +203,19 @@ const BasicsContent = () => {
             <span>{generalT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{planBasicsMiscT('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
 
       <PageHeading className="margin-top-4">
-        {planBasicsMiscT('heading')}
+        {basicsMiscT('heading')}
       </PageHeading>
 
       <AskAQuestion modelID={modelID} />
 
       <p className="margin-bottom-0 margin-top-6">
-        {planBasicsMiscT('required1')}
+        {basicsMiscT('required1')}
         <RequiredAsterisk />
-        {planBasicsMiscT('required2')}
+        {basicsMiscT('required2')}
       </p>
 
       <Formik
@@ -325,11 +325,11 @@ const BasicsContent = () => {
                           htmlFor="plan-basics-demo-code"
                           className="margin-top-0"
                         >
-                          {planBasicsMiscT('otherIdentifiers')}
+                          {basicsMiscT('otherIdentifiers')}
                         </Label>
 
                         <p className="line-height-mono-4">
-                          {planBasicsMiscT('otherIdentifiersInfo1')}
+                          {basicsMiscT('otherIdentifiersInfo1')}
 
                           <TrussLink
                             aria-label="Open AMS in a new tab"
@@ -338,10 +338,10 @@ const BasicsContent = () => {
                             rel="noopener noreferrer"
                             variant="external"
                           >
-                            {planBasicsMiscT('otherIdentifiersInfo2')}
+                            {basicsMiscT('otherIdentifiersInfo2')}
                           </TrussLink>
 
-                          {planBasicsMiscT('otherIdentifiersInfo3')}
+                          {basicsMiscT('otherIdentifiersInfo3')}
                         </p>
                         <Grid row gap>
                           <Grid desktop={{ col: 6 }}>
@@ -351,7 +351,7 @@ const BasicsContent = () => {
                               className="margin-top-0"
                             >
                               <Label htmlFor="plan-basics-ams-model-id">
-                                {planBasicsT('amsModelID.question')}
+                                {basicsT('amsModelID.question')}
                               </Label>
 
                               <FieldErrorMsg>
@@ -373,7 +373,7 @@ const BasicsContent = () => {
                               className="margin-top-0"
                             >
                               <Label htmlFor="plan-basics-demo-code">
-                                {planBasicsT('demoCode.question')}
+                                {basicsT('demoCode.question')}
                               </Label>
 
                               <FieldErrorMsg>
@@ -397,7 +397,7 @@ const BasicsContent = () => {
                         className="margin-top-4"
                       >
                         <Label htmlFor="plan-basics-model-category">
-                          {planBasicsT('modelCategory.question')}
+                          {basicsT('modelCategory.question')}
                           <RequiredAsterisk />
                         </Label>
 
@@ -439,13 +439,13 @@ const BasicsContent = () => {
                         error={!!flatErrors['basics.cmsCenters']}
                         className="margin-top-4"
                       >
-                        <Fieldset legend={planBasicsT('cmsCenters.question')}>
+                        <Fieldset legend={basicsT('cmsCenters.question')}>
                           <FieldArray
                             name="basics.cmsCenters"
                             render={arrayHelpers => (
                               <>
                                 <Label htmlFor="plan-basics-cmsCenters">
-                                  {planBasicsT('cmsCenters.question')}
+                                  {basicsT('cmsCenters.question')}
                                   <RequiredAsterisk />
                                 </Label>
 
@@ -532,11 +532,11 @@ const BasicsContent = () => {
                           htmlFor="basics.cmmiGroups"
                           className="text-normal"
                         >
-                          {planBasicsT('cmmiGroups.question')}
+                          {basicsT('cmmiGroups.question')}
                         </Label>
 
                         <p className="text-base margin-bottom-1 margin-top-1">
-                          {planBasicsT('cmmiGroups.hint')}
+                          {basicsT('cmmiGroups.hint')}
                         </p>
 
                         <FieldErrorMsg>
@@ -593,7 +593,7 @@ const BasicsContent = () => {
                         data-testid="summary-box--previous-name"
                       >
                         <p className="margin-y-0 text-bold">
-                          {planBasicsMiscT('previousNames')}
+                          {basicsMiscT('previousNames')}
                         </p>
                         <ul className="margin-top-1 margin-bottom-0 padding-left-2">
                           {filteredNameHistory.map(previousName => {

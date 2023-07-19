@@ -10,7 +10,9 @@ export type TranslationFieldProperties = {
   dbField: string;
   question: string;
   hint?: string;
+  multiSelectLabel?: string;
   dataType: 'string' | 'boolean' | 'date' | 'enum';
+  isArray?: boolean;
   formType:
     | 'text'
     | 'textarea'
@@ -38,8 +40,8 @@ export type TranslationModelPlan = {
   abbreviation: TranslationFieldProperties;
 };
 
-// Plan Basics
-export type TranslationPlanBasics = {
+// Basics
+export type TranslationBasics = {
   // Model Plan
   amsModelID: TranslationFieldProperties;
   demoCode: TranslationFieldProperties;
@@ -67,7 +69,21 @@ export type TranslationPlanBasics = {
   status: TranslationFieldPropertiesWithOptions;
 };
 
+// General Characteristics
+export type TranslationGeneralCharacteristics = {
+  isNewModel: TranslationFieldPropertiesWithOptions;
+  existingModel: TranslationFieldPropertiesWithOptions;
+  existingModelLinks: TranslationFieldProperties;
+  resemblesExistingModel: TranslationFieldPropertiesWithOptions;
+  resemblesExistingModelHow: TranslationFieldProperties;
+  resemblesExistingModelNote: TranslationFieldProperties;
+  hasComponentsOrTracks: TranslationFieldPropertiesWithOptions;
+  hasComponentsOrTracksDiffer: TranslationFieldProperties;
+  hasComponentsOrTracksNote: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
-  planBasics: TranslationPlanBasics;
+  basics: TranslationBasics;
+  generalCharacteristics: TranslationGeneralCharacteristics;
 };

@@ -66,8 +66,14 @@ interface GetGeneralCharacteristicsFormTypeWithLinks
 }
 
 export const CharacteristicsContent = () => {
-  const { t } = useTranslation('generalCharacteristics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: generalCharacteristicsT } = useTranslation(
+    'generalCharacteristicsT'
+  );
+  const { t: generalCharacteristicsMiscT } = useTranslation(
+    'generalCharacteristicsMisc'
+  );
+  const { t: generalT } = useTranslation('draftModelPlan');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<
@@ -209,28 +215,30 @@ export const CharacteristicsContent = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{generalT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{generalT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {generalCharacteristicsMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {generalCharacteristicsMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {generalT('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {generalT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -260,7 +268,7 @@ export const CharacteristicsContent = () => {
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={generalT('checkAndFix')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -286,7 +294,7 @@ export const CharacteristicsContent = () => {
                   className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="plan-characteristics-is-new-model">
-                    {t('isNewModel')}
+                    {generalCharacteristicsT('isNewModel.question')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
                   <Fieldset>
@@ -294,7 +302,7 @@ export const CharacteristicsContent = () => {
                       as={Radio}
                       id="plan-characteristics-is-new-model"
                       name="isNewModel"
-                      label={t('newModel')}
+                      label={generalCharacteristicsT('isNewModel.options.true')}
                       value="TRUE"
                       checked={values.isNewModel === true}
                       onChange={() => {
@@ -306,7 +314,9 @@ export const CharacteristicsContent = () => {
                       as={Radio}
                       id="plan-characteristics-is-new-model-no"
                       name="isNewModel"
-                      label={t('newTrack')}
+                      label={generalCharacteristicsT(
+                        'isNewModel.options.false'
+                      )}
                       value="FALSE"
                       checked={values.isNewModel === false}
                       onChange={() => {
@@ -323,9 +333,11 @@ export const CharacteristicsContent = () => {
                         htmlFor="plan-characteristics-existing-model"
                         className="margin-bottom-1 text-normal"
                       >
-                        {t('whichExistingModel')}
+                        {generalCharacteristicsT('existingModel.question')}
                       </Label>
-                      <p className="text-base margin-0">{t('startTypeing')}</p>
+                      <p className="text-base margin-0">
+                        {generalCharacteristicsT('existingModel.hint')}
+                      </p>
                       <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
 
                       <ComboBox
@@ -369,7 +381,7 @@ export const CharacteristicsContent = () => {
                   className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="plan-characteristics-resembles-existing-model">
-                    {t('resembleModel')}
+                    {generalCharacteristicsT('resemblesExistingModel.question')}
                   </Label>
                   <FieldErrorMsg>
                     {flatErrors.resemblesExistingModel}
@@ -379,7 +391,9 @@ export const CharacteristicsContent = () => {
                       as={Radio}
                       id="plan-characteristics-resembles-existing-model"
                       name="resemblesExistingModel"
-                      label={h('yes')}
+                      label={generalCharacteristicsT(
+                        'resemblesExistingModel.options.true'
+                      )}
                       value="TRUE"
                       checked={values.resemblesExistingModel === true}
                       onChange={() => {
@@ -390,7 +404,9 @@ export const CharacteristicsContent = () => {
                       as={Radio}
                       id="plan-characteristics-resembles-existing-model-no"
                       name="resemblesExistingModel"
-                      label={h('no')}
+                      label={generalCharacteristicsT(
+                        'resemblesExistingModel.options.false'
+                      )}
                       value="FALSE"
                       checked={values.resemblesExistingModel === false}
                       onChange={() => {
@@ -410,10 +426,12 @@ export const CharacteristicsContent = () => {
                           className="text-normal"
                           id="label-plan-characteristics-resembles-which-model"
                         >
-                          {t('modelResemblance')}
+                          {generalCharacteristicsT(
+                            'existingModelLinks.question'
+                          )}
                         </Label>
                         <p className="text-base margin-y-1">
-                          {t('startTypeing')}
+                          {generalCharacteristicsT('existingModelLinks.hint')}
                         </p>
                         <FieldErrorMsg>
                           {flatErrors.resemblesExistingModelWhich}
@@ -425,7 +443,9 @@ export const CharacteristicsContent = () => {
                           ariaLabel="label-plan-characteristics-resembles-which-model"
                           name="existingModelLinks"
                           options={modelPlanOptions}
-                          selectedLabel={t('selectedModels')}
+                          selectedLabel={generalCharacteristicsT(
+                            'existingModelLinks.multiSelectLabel'
+                          )}
                           onChange={(value: string[] | []) => {
                             setFieldValue('existingModelLinks', value);
                           }}
@@ -441,7 +461,9 @@ export const CharacteristicsContent = () => {
                           htmlFor="plan-characteristics-resembles-how-model"
                           className="text-normal"
                         >
-                          {t('waysResembleModel')}
+                          {generalCharacteristicsT(
+                            'resemblesExistingModelHow.question'
+                          )}
                         </Label>
                         <FieldErrorMsg>
                           {flatErrors.resemblesExistingModelHow}
@@ -469,7 +491,7 @@ export const CharacteristicsContent = () => {
                   className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="plan-characteristics-has-component-or-tracks">
-                    {t('differentComponents')}
+                    {generalCharacteristicsT('hasComponentsOrTracks.question')}
                   </Label>
                   <FieldErrorMsg>
                     {flatErrors.hasComponentsOrTracks}
@@ -479,7 +501,9 @@ export const CharacteristicsContent = () => {
                       as={Radio}
                       id="plan-characteristics-has-component-or-tracks"
                       name="hasComponentsOrTracks"
-                      label={h('yes')}
+                      label={generalCharacteristicsT(
+                        'hasComponentsOrTracks.options.true'
+                      )}
                       value="TRUE"
                       checked={values.hasComponentsOrTracks === true}
                       onChange={() => {
@@ -498,7 +522,9 @@ export const CharacteristicsContent = () => {
                             htmlFor="plan-characteristics-tracks-differ-how"
                             className="margin-bottom-1 text-normal"
                           >
-                            {t('tracksDiffer')}
+                            {generalCharacteristicsT(
+                              'hasComponentsOrTracksDiffer.question'
+                            )}
                           </Label>
                           <FieldErrorMsg>
                             {flatErrors.hasComponentsOrTracksDiffer}
@@ -518,7 +544,9 @@ export const CharacteristicsContent = () => {
                       as={Radio}
                       id="plan-characteristics-has-component-or-tracks-no"
                       name="hasComponentsOrTracks"
-                      label={h('no')}
+                      label={generalCharacteristicsT(
+                        'hasComponentsOrTracks.options.false'
+                      )}
                       value="FALSE"
                       checked={values.hasComponentsOrTracks === false}
                       onChange={() => {
@@ -535,7 +563,7 @@ export const CharacteristicsContent = () => {
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
+                    {generalT('next')}
                   </Button>
                 </div>
                 <Button
@@ -544,7 +572,7 @@ export const CharacteristicsContent = () => {
                   onClick={() => handleFormSubmit('back')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
+                  {generalT('saveAndReturn')}
                 </Button>
               </Form>
               {id && (

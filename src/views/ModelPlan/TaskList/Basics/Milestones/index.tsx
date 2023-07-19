@@ -47,11 +47,11 @@ import { NotFoundPartial } from 'views/NotFound';
 import './index.scss';
 
 const Milestones = () => {
-  const { t: planBasicsT } = useTranslation('planBasics');
-  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
+  const { t: basicsT } = useTranslation('basics');
+  const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
 
-  const { phasedIn: phasedInConfig } = usePlanTranslation('planBasics');
+  const { phasedIn: phasedInConfig } = usePlanTranslation('basics');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -164,10 +164,10 @@ const Milestones = () => {
             <span>{generalT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{planBasicsMiscT('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-1">
-        {planBasicsMiscT('heading')}
+        {basicsMiscT('heading')}
       </PageHeading>
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
@@ -247,7 +247,7 @@ const Milestones = () => {
                   }}
                 >
                   <PageHeading headingLevel="h3" className="margin-bottom-2">
-                    {planBasicsMiscT('highLevelTimeline')}
+                    {basicsMiscT('highLevelTimeline')}
                   </PageHeading>
 
                   <MINTAlert type="info" slim>
@@ -278,7 +278,7 @@ const Milestones = () => {
                             className="margin-top-0"
                             fieldName="completeICIP"
                             id="Milestone-completeICIP"
-                            label={planBasicsT('completeICIP.question')}
+                            label={basicsT('completeICIP.question')}
                             placeHolder
                             handleOnBlur={handleOnBlur}
                             formikValue={values.completeICIP}
@@ -296,20 +296,20 @@ const Milestones = () => {
                         className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label margin-bottom-05">
-                          {planBasicsMiscT('clearance')}
+                          {basicsMiscT('clearance')}
                         </legend>
 
                         <label
                           htmlFor="Milestone-clearanceStarts"
                           className="text-base"
                         >
-                          {planBasicsMiscT('clearanceInfo')}
+                          {basicsMiscT('clearanceInfo')}
                         </label>
                         <div className="datepicker__wrapper text-normal">
                           <MINTDatePicker
                             fieldName="clearanceStarts"
                             id="Milestone-clearanceStarts"
-                            label={planBasicsT('clearanceStarts.question')}
+                            label={basicsT('clearanceStarts.question')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -323,7 +323,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="clearanceEnds"
                             id="Milestone-clearanceEnds"
-                            label={planBasicsT('clearanceEnds.question')}
+                            label={basicsT('clearanceEnds.question')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -354,7 +354,7 @@ const Milestones = () => {
                           className="margin-top-0"
                           fieldName="announced"
                           id="Milestone-announced"
-                          label={planBasicsT('announced.question')}
+                          label={basicsT('announced.question')}
                           placeHolder
                           handleOnBlur={handleOnBlur}
                           formikValue={values.announced}
@@ -371,7 +371,7 @@ const Milestones = () => {
                         className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label margin-bottom-neg-2">
-                          {planBasicsMiscT('applicationPeriod')}
+                          {basicsMiscT('applicationPeriod')}
                         </legend>
                       </ProcessListHeading>
 
@@ -379,7 +379,7 @@ const Milestones = () => {
                         <MINTDatePicker
                           fieldName="applicationsStart"
                           id="Milestone-applicationsStart"
-                          label={planBasicsT('applicationsStart.question')}
+                          label={basicsT('applicationsStart.question')}
                           boldLabel={false}
                           placeHolder
                           handleOnBlur={handleOnBlur}
@@ -392,7 +392,7 @@ const Milestones = () => {
                         <MINTDatePicker
                           fieldName="applicationsEnd"
                           id="Milestone-applicationsEnd"
-                          label={planBasicsT('applicationsEnd.question')}
+                          label={basicsT('applicationsEnd.question')}
                           boldLabel={false}
                           placeHolder
                           handleOnBlur={handleOnBlur}
@@ -417,14 +417,14 @@ const Milestones = () => {
                         className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label">
-                          {planBasicsMiscT('demonstrationPerformance')}
+                          {basicsMiscT('demonstrationPerformance')}
                         </legend>
 
                         <label
                           htmlFor="Milestone-performancePeriodStarts"
                           className="text-base"
                         >
-                          {planBasicsMiscT('demonstrationPerformanceInfo')}
+                          {basicsMiscT('demonstrationPerformanceInfo')}
                         </label>
                       </ProcessListHeading>
 
@@ -432,9 +432,7 @@ const Milestones = () => {
                         <MINTDatePicker
                           fieldName="performancePeriodStarts"
                           id="Milestone-performancePeriodStarts"
-                          label={planBasicsT(
-                            'performancePeriodStarts.question'
-                          )}
+                          label={basicsT('performancePeriodStarts.question')}
                           boldLabel={false}
                           placeHolder
                           handleOnBlur={handleOnBlur}
@@ -448,7 +446,7 @@ const Milestones = () => {
                         <MINTDatePicker
                           fieldName="performancePeriodEnds"
                           id="Milestone-performancePeriodEnds"
-                          label={planBasicsT('performancePeriodEnds.question')}
+                          label={basicsT('performancePeriodEnds.question')}
                           boldLabel={false}
                           placeHolder
                           handleOnBlur={handleOnBlur}
@@ -478,7 +476,7 @@ const Milestones = () => {
                           fieldName="wrapUpEnds"
                           className="margin-top-0"
                           id="Milestone-wrapUpEnds"
-                          label={planBasicsT('wrapUpEnds.question')}
+                          label={basicsT('wrapUpEnds.question')}
                           placeHolder
                           handleOnBlur={handleOnBlur}
                           formikValue={values.wrapUpEnds}
@@ -498,10 +496,10 @@ const Milestones = () => {
                     className="margin-top-4"
                   >
                     <Label htmlFor="phasedIn">
-                      {planBasicsT('phasedIn.question')}
+                      {basicsT('phasedIn.question')}
                     </Label>
                     <span className="usa-hint display-block text-normal margin-top-1">
-                      {planBasicsT('phasedIn.hint')}
+                      {basicsT('phasedIn.hint')}
                     </span>
                     <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
                     <Fieldset>
@@ -536,7 +534,7 @@ const Milestones = () => {
                     <ReadyForReview
                       id="milestones-status"
                       field="status"
-                      sectionName={planBasicsMiscT('heading')}
+                      sectionName={basicsMiscT('heading')}
                       status={values.status}
                       setFieldValue={setFieldValue}
                       readyForReviewBy={readyForReviewByUserAccount?.commonName}

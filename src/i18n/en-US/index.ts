@@ -1,4 +1,3 @@
-import basics from './draftModelPlan/basics';
 import beneficiaries from './draftModelPlan/beneficiaries';
 import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
@@ -16,8 +15,12 @@ import getAccess from './helpAndKnowledge/Articles/getAccess';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
-import modelPlan from './modelPlan/plan';
-import { planBasics, planBasicsMisc } from './modelPlan/planBasics';
+import { basics, basicsMisc } from './modelPlan/basics';
+import {
+  generalCharacteristics as generalCharacteristicsT, // TODO: remove T once all complete
+  generalCharacteristicsMisc
+} from './modelPlan/generalCharacteristics';
+import modelPlan from './modelPlan/modelPlan';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -41,7 +44,6 @@ import termsAndConditions from './termsAndConditions';
 const enUS = {
   accessibilityStatement,
   auth,
-  basics,
   beneficiaries,
   cookies,
   crtdl,
@@ -71,8 +73,10 @@ const enUS = {
   payments,
   // New Translation
   modelPlan,
-  planBasics,
-  planBasicsMisc,
+  basics,
+  basicsMisc,
+  generalCharacteristicsT,
+  generalCharacteristicsMisc,
   // End new translation
   prepareForClearance,
   privacyPolicy,

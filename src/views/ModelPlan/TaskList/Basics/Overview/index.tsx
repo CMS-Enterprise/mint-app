@@ -31,7 +31,7 @@ import {
   GetBasicsVariables
 } from 'queries/Basics/types/GetBasics';
 import {
-  UpdatePlanBasics as UpdatePlanBasicsType,
+  UpdatePlanBasics as UpdatebasicsType,
   UpdatePlanBasicsVariables
 } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
@@ -40,11 +40,11 @@ import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Overview = () => {
-  const { t: planBasicsT } = useTranslation('planBasics');
-  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
+  const { t: basicsT } = useTranslation('basics');
+  const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
 
-  const { modelType: modelTypeConfig } = usePlanTranslation('planBasics');
+  const { modelType: modelTypeConfig } = usePlanTranslation('basics');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -65,7 +65,7 @@ const Overview = () => {
   const { id, modelType, problem, goal, testInterventions, note } =
     data?.modelPlan?.basics || ({} as BasicsFormType);
 
-  const [update] = useMutation<UpdatePlanBasicsType, UpdatePlanBasicsVariables>(
+  const [update] = useMutation<UpdatebasicsType, UpdatePlanBasicsVariables>(
     UpdatePlanBasics
   );
 
@@ -122,10 +122,10 @@ const Overview = () => {
             <span>{generalT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{planBasicsMiscT('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-1">
-        {planBasicsMiscT('heading')}
+        {basicsMiscT('heading')}
       </PageHeading>
 
       <p
@@ -193,7 +193,7 @@ const Overview = () => {
                   className="margin-top-4"
                 >
                   <Label htmlFor="modelType">
-                    {planBasicsT('modelType.question')}
+                    {basicsT('modelType.question')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
                   <Fieldset>
@@ -226,7 +226,7 @@ const Overview = () => {
                     error={flatErrors.problem}
                     id="ModelType-Problem"
                     name="problem"
-                    label={planBasicsT('problem.question')}
+                    label={basicsT('problem.question')}
                   />
                 </FieldGroup>
 
@@ -240,8 +240,8 @@ const Overview = () => {
                     error={flatErrors.goal}
                     id="ModelType-Goal"
                     name="goal"
-                    hint={planBasicsT('goal.hint')}
-                    label={planBasicsT('goal.question')}
+                    hint={basicsT('goal.hint')}
+                    label={basicsT('goal.question')}
                   />
                 </FieldGroup>
 
@@ -255,7 +255,7 @@ const Overview = () => {
                     error={flatErrors.testInterventions}
                     id="ModelType-testInterventions"
                     name="testInterventions"
-                    label={planBasicsT('testInterventions.question')}
+                    label={basicsT('testInterventions.question')}
                   />
                 </FieldGroup>
 
