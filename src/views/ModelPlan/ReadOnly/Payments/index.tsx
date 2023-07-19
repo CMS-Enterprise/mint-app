@@ -18,12 +18,12 @@ import {
   translateSourceOptions
 } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyPayments = ({
@@ -133,14 +133,13 @@ const ReadOnlyPayments = ({
       className="read-only-model-plan--payments"
       data-testid="read-only-model-plan--payments"
     >
-      <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">
-          {clearance ? t('clearanceHeading') : t('heading')}
-        </h2>
-        {!isViewingFilteredView && status && (
-          <TaskListStatusTag status={status} />
-        )}
-      </div>
+      <TitleAndStatus
+        clearance={clearance}
+        clearanceTitle={t('clearanceHeading')}
+        heading={t('heading')}
+        isViewingFilteredView={isViewingFilteredView}
+        status={status}
+      />
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
@@ -161,26 +160,22 @@ const ReadOnlyPayments = ({
           isViewingFilteredView,
           filteredQuestions,
           'fundingSource',
-          <ReadOnlySection
-            heading={t('fundingSourceQuestion')}
-            list
-            listItems={fundingSource?.map(translateSourceOptions)}
-            listOtherItem={fundingSourceOther}
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('fundingSourceQuestion'),
+              list: true,
+              listItems: fundingSource?.map(translateSourceOptions),
+              listOtherItem: fundingSourceOther
+            }}
+            secondSection={
+              !!fundingSourceTrustFund && {
+                heading: t('whichFundingType'),
+                copy: fundingSourceTrustFund
+              }
+            }
           />
         )}
-
-        {(isViewingFilteredView || fundingSourceTrustFund) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSourceTrustFund',
-            <ReadOnlySection
-              heading={t('whichFundingType')}
-              copy={fundingSourceTrustFund}
-            />
-          )}
-
-        {(isViewingFilteredView || fundingSourceNote) &&
+        {fundingSourceNote &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -195,25 +190,21 @@ const ReadOnlyPayments = ({
           isViewingFilteredView,
           filteredQuestions,
           'fundingSourceR',
-          <ReadOnlySection
-            heading={t('reconciliationQuestion')}
-            list
-            listItems={fundingSourceR?.map(translateSourceOptions)}
-            listOtherItem={fundingSourceROther}
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('reconciliationQuestion'),
+              list: true,
+              listItems: fundingSourceR?.map(translateSourceOptions),
+              listOtherItem: fundingSourceROther
+            }}
+            secondSection={
+              !!fundingSourceRTrustFund && {
+                heading: t('whichFundingType'),
+                copy: fundingSourceRTrustFund
+              }
+            }
           />
         )}
-
-        {(fundingSourceRTrustFund || isViewingFilteredView) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSourceRTrustFund',
-            <ReadOnlySection
-              heading={t('whichFundingType')}
-              copy={fundingSourceRTrustFund}
-            />
-          )}
-
         {fundingSourceRNote &&
           checkGroupMap(
             isViewingFilteredView,
@@ -237,7 +228,6 @@ const ReadOnlyPayments = ({
             notes={payRecipientsNote}
           />
         )}
-
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
@@ -257,7 +247,9 @@ const ReadOnlyPayments = ({
             isClaims && !isViewingFilteredView
         })}
       >
-        {isClaims && <h3>{t('whatWillYouPayOptions.claims')}</h3>}
+        {isClaims && !isViewingFilteredView && (
+          <h3>{t('whatWillYouPayOptions.claims')}</h3>
+        )}
 
         {isClaims &&
           checkGroupMap(
@@ -313,13 +305,14 @@ const ReadOnlyPayments = ({
               }}
               secondSection={
                 affectsMedicareSecondaryPayerClaims === true && {
-                  heading: h('howSo'),
+                  heading: h('pleaseDescribe'),
                   copy: affectsMedicareSecondaryPayerClaimsHow
                 }
               }
             />
           )}
-        {(isClaims && affectsMedicareSecondaryPayerClaimsNote) ||
+        {isClaims &&
+          affectsMedicareSecondaryPayerClaimsNote &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -396,7 +389,9 @@ const ReadOnlyPayments = ({
             isCostSharing && !isViewingFilteredView
         })}
       >
-        {isCostSharing && <h3>{t('beneficaryCostSharingQuestions')}</h3>}
+        {isCostSharing && !isViewingFilteredView && (
+          <h3>{t('beneficaryCostSharingQuestions')}</h3>
+        )}
 
         {isCostSharing &&
           checkGroupMap(
@@ -448,7 +443,9 @@ const ReadOnlyPayments = ({
             isNonClaims && !isViewingFilteredView
         })}
       >
-        {isNonClaims && <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>}
+        {isNonClaims && !isViewingFilteredView && (
+          <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>
+        )}
 
         {isNonClaims &&
           checkGroupMap(
@@ -487,19 +484,18 @@ const ReadOnlyPayments = ({
             />
           )}
 
-        {isNonClaims &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'sharedSystemsInvolvedAdditionalClaimPayment',
-            <ReadOnlySection
-              heading={t('sharedSystemsInvolvedAdditionalClaimPayment')}
-              copy={translateBooleanOrNull(
-                sharedSystemsInvolvedAdditionalClaimPayment
-              )}
-              notes={sharedSystemsInvolvedAdditionalClaimPaymentNote}
-            />
-          )}
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'sharedSystemsInvolvedAdditionalClaimPayment',
+          <ReadOnlySection
+            heading={t('sharedSystemsInvolvedAdditionalClaimPayment')}
+            copy={translateBooleanOrNull(
+              sharedSystemsInvolvedAdditionalClaimPayment
+            )}
+            notes={sharedSystemsInvolvedAdditionalClaimPaymentNote}
+          />
+        )}
 
         {isNonClaims &&
           checkGroupMap(
@@ -561,7 +557,7 @@ const ReadOnlyPayments = ({
             }}
             secondSection={
               canParticipantsSelectBetweenPaymentMechanisms === true && {
-                heading: h('howSo'),
+                heading: h('pleaseDescribe'),
                 copy: canParticipantsSelectBetweenPaymentMechanismsHow
               }
             }
