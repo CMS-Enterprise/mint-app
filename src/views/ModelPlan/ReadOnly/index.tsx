@@ -36,7 +36,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
-import BodyContent from './_components/FilterView/BodyContent';
+import FilteredViewBodyContent from './_components/FilterView/BodyContent';
 import FilterGroupMap from './_components/FilterView/BodyContent/_filterGroupMapping';
 import FilterViewModal from './_components/FilterView/Modal';
 import { groupOptions } from './_components/FilterView/util';
@@ -291,7 +291,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         isOpen={isFilterViewModalOpen}
         closeModal={() => setIsFilterViewModalOpen(false)}
         shouldCloseOnOverlayClick
-        modalHeading={h('filterView.text')}
+        modalHeading={h('filterView:filterView')}
       >
         <FilterViewModal
           closeModal={() => setIsFilterViewModalOpen(false)}
@@ -383,6 +383,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           <Alert
             type="warning"
             className="margin-top-2 margin-bottom-5 desktop:margin-y-3"
+            slim
           >
             {h('alert')}
           </Alert>
@@ -392,7 +393,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
           {isViewingFilteredGroup ? (
-            <BodyContent modelID={modelID} filteredView={filteredView} />
+            <FilteredViewBodyContent
+              modelID={modelID}
+              filteredView={filteredView}
+            />
           ) : (
             <Grid row gap>
               {!isMobile && (

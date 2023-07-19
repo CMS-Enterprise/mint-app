@@ -403,26 +403,22 @@ const ReadOnlyGeneralCharacteristics = ({
           isViewingFilteredView,
           filteredQuestions,
           'geographiesTargetedTypes',
-          <ReadOnlySection
-            heading={t('geographyType')}
-            list
-            listItems={geographiesTargetedTypes?.map(translateGeographyTypes)}
-            listOtherItem={geographiesTargetedTypesOther}
-          />
-        )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'geographiesTargetedAppliedTo',
-          <ReadOnlySection
-            heading={t('geographyApplied')}
-            list
-            listItems={geographiesTargetedAppliedTo?.map(
-              translateGeographyApplication
-            )}
-            listOtherItem={geographiesTargetedAppliedToOther}
-            notes={geographiesTargetedNote}
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('geographyType'),
+              list: true,
+              listItems: geographiesTargetedTypes?.map(translateGeographyTypes),
+              listOtherItem: geographiesTargetedTypesOther
+            }}
+            secondSection={{
+              heading: t('geographyApplied'),
+              list: true,
+              listItems: geographiesTargetedAppliedTo?.map(
+                translateGeographyApplication
+              ),
+              listOtherItem: geographiesTargetedAppliedToOther,
+              notes: geographiesTargetedNote
+            }}
           />
         )}
 

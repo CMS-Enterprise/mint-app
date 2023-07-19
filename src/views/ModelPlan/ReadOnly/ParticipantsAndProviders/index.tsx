@@ -7,6 +7,7 @@ import { GetAllParticipants as GetAllParticipantsTypes } from 'queries/ReadOnly/
 import {
   FrequencyType,
   OverlapType,
+  ParticipantsType,
   RecruitmentType
 } from 'types/graphql-global-types';
 import {
@@ -148,29 +149,27 @@ const ReadOnlyParticipantsAndProviders = ({
           />
         )}
 
-        {(!isViewingFilteredView && medicareProviderType) ||
-          (isViewingFilteredView &&
-            checkGroupMap(
-              isViewingFilteredView,
-              filteredQuestions,
-              'medicareProviderType',
-              <ReadOnlySection
-                heading={t('typeMedicateProvider')}
-                copy={medicareProviderType}
-              />
-            ))}
+        {participants?.includes(ParticipantsType.MEDICARE_PROVIDERS) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'medicareProviderType',
+            <ReadOnlySection
+              heading={t('typeMedicateProvider')}
+              copy={medicareProviderType}
+            />
+          )}
 
-        {(!isViewingFilteredView && statesEngagement) ||
-          (isViewingFilteredView &&
-            checkGroupMap(
-              isViewingFilteredView,
-              filteredQuestions,
-              'statesEngagement',
-              <ReadOnlySection
-                heading={t('describeStates')}
-                copy={statesEngagement}
-              />
-            ))}
+        {participants?.includes(ParticipantsType.STATES) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'statesEngagement',
+            <ReadOnlySection
+              heading={t('describeStates')}
+              copy={statesEngagement}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -201,43 +200,30 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        {isViewingFilteredView &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'expectedNumberOfParticipants',
-            <SideBySideReadOnlySection
-              firstSection={{
-                heading: t('howManyParticipants'),
-                copy: expectedNumberOfParticipants?.toString()
-              }}
-              secondSection={{
-                heading: t('estimateConfidence'),
-                copy:
-                  estimateConfidence &&
-                  translateConfidenceType(estimateConfidence),
-                listOtherItem: riskOther,
-                notes: confidenceNote
-              }}
-            />
-          )}
-
-        {!isViewingFilteredView && (
-          <>
-            <ReadOnlySection
-              heading={t('howManyParticipants')}
-              copy={expectedNumberOfParticipants?.toString()}
-            />
-
-            <ReadOnlySection
-              heading={t('estimateConfidence')}
-              copy={
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'expectedNumberOfParticipants',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('howManyParticipants'),
+              copy: expectedNumberOfParticipants?.toString()
+            }}
+            secondSection={{
+              heading: t('estimateConfidence'),
+              copy:
                 estimateConfidence &&
-                translateConfidenceType(estimateConfidence)
-              }
-              notes={confidenceNote}
-            />
-          </>
+                translateConfidenceType(estimateConfidence),
+              listOtherItem: riskOther
+            }}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'expectedNumberOfParticipants',
+          <ReadOnlySection heading={t('basics:notes')} copy={confidenceNote} />
         )}
 
         {/* If "Other", then display "Other — Lorem ipsum." */}
