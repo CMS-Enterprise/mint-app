@@ -251,7 +251,7 @@ const AddCRTDL = () => {
                       window.scrollTo(0, 0);
                     }}
                   >
-                    <Fieldset disabled={!!error}>
+                    <Fieldset disabled={!!error || loading}>
                       <Grid row>
                         <Grid desktop={{ col: 6 }}>
                           <FieldGroup
