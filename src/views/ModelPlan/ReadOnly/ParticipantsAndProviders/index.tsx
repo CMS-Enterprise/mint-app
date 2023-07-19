@@ -40,6 +40,7 @@ const ReadOnlyParticipantsAndProviders = ({
   filteredQuestions
 }: ReadOnlyProps) => {
   const { t } = useTranslation('participantsAndProviders');
+  const { t: h } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -222,7 +223,7 @@ const ReadOnlyParticipantsAndProviders = ({
           isViewingFilteredView,
           filteredQuestions,
           'expectedNumberOfParticipants',
-          <ReadOnlySection heading={t('basics:notes')} copy={confidenceNote} />
+          <ReadOnlySection heading={h('note')} copy={confidenceNote} />
         )}
 
         {/* If "Other", then display "Other — Lorem ipsum." */}
@@ -302,7 +303,7 @@ const ReadOnlyParticipantsAndProviders = ({
             isViewingFilteredView,
             filteredQuestions,
             'participantAssumeRisk',
-            <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
+            <ReadOnlySection heading={h('note')} copy={riskNote} />
           )}
 
         {checkGroupMap(
@@ -357,10 +358,7 @@ const ReadOnlyParticipantsAndProviders = ({
             isViewingFilteredView,
             filteredQuestions,
             'gainsharePayments',
-            <ReadOnlySection
-              heading={t('basics:notes')}
-              copy={gainsharePaymentsNote}
-            />
+            <ReadOnlySection heading={h('note')} copy={gainsharePaymentsNote} />
           )}
 
         {checkGroupMap(
@@ -450,10 +448,7 @@ const ReadOnlyParticipantsAndProviders = ({
             isViewingFilteredView,
             filteredQuestions,
             'providerOverlapHierarchy',
-            <ReadOnlySection
-              heading={t('basics:notes')}
-              copy={providerOverlapNote}
-            />
+            <ReadOnlySection heading={h('note')} copy={providerOverlapNote} />
           )}
       </div>
     </div>

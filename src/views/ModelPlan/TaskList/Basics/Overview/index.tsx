@@ -42,7 +42,7 @@ import { NotFoundPartial } from 'views/NotFound';
 const Overview = () => {
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
-  const { t: generalT } = useTranslation('draftModelPlan');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { modelType: modelTypeConfig } = usePlanTranslation('basics');
 
@@ -114,12 +114,12 @@ const Overview = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{generalT('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{generalT('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
@@ -132,10 +132,10 @@ const Overview = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {generalT('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {generalT('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -167,7 +167,7 @@ const Overview = () => {
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={generalT('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -267,7 +267,7 @@ const Overview = () => {
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => handleFormSubmit('back')}
                   >
-                    {generalT('back')}
+                    {miscellaneousT('back')}
                   </Button>
                   <Button
                     type="submit"
@@ -275,7 +275,7 @@ const Overview = () => {
                     className=""
                     onClick={() => setErrors({})}
                   >
-                    {generalT('next')}
+                    {miscellaneousT('next')}
                   </Button>
                 </div>
                 <Button
@@ -284,7 +284,7 @@ const Overview = () => {
                   onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
-                  {generalT('saveAndReturn')}
+                  {miscellaneousT('saveAndReturn')}
                 </Button>
               </Form>
               {id && (

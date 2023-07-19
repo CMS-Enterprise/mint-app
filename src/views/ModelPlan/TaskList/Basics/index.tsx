@@ -55,7 +55,7 @@ const BasicsContent = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
-  const { t: generalT } = useTranslation('draftModelPlan');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
     modelCategory: modelCategoryConfig,
@@ -195,12 +195,12 @@ const BasicsContent = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{generalT('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{generalT('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
@@ -247,7 +247,7 @@ const BasicsContent = () => {
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={generalT('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -420,7 +420,7 @@ const BasicsContent = () => {
                           }}
                         >
                           <option key="default-select" disabled value="">
-                            {`-${generalT('select')}-`}
+                            {`-${miscellaneousT('select')}-`}
                           </option>
                           {Object.keys(modelCategoryConfig.options).map(
                             category => {
@@ -505,7 +505,7 @@ const BasicsContent = () => {
                                     error={!!flatErrors['basics.cmsOther']}
                                   >
                                     <Label htmlFor="plan-basics-cmsCategory--Other">
-                                      {generalT('pleaseSpecify')}
+                                      {miscellaneousT('pleaseSpecify')}
                                     </Label>
                                     <FieldErrorMsg>
                                       {flatErrors['basics.cmsOther']}
@@ -571,7 +571,7 @@ const BasicsContent = () => {
                           disabled={!(dirty || isValid)}
                           onClick={() => setErrors({})}
                         >
-                          {generalT('next')}
+                          {miscellaneousT('next')}
                         </Button>
                       </div>
                       <Button
@@ -580,7 +580,7 @@ const BasicsContent = () => {
                         onClick={() => handleFormSubmit(values, 'back')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
-                        {generalT('saveAndReturn')}
+                        {miscellaneousT('saveAndReturn')}
                       </Button>
                     </Form>
                   </Grid>

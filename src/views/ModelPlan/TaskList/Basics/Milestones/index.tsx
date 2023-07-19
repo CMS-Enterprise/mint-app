@@ -49,7 +49,7 @@ import './index.scss';
 const Milestones = () => {
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
-  const { t: generalT } = useTranslation('draftModelPlan');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { phasedIn: phasedInConfig } = usePlanTranslation('basics');
 
@@ -156,12 +156,12 @@ const Milestones = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{generalT('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{generalT('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
@@ -173,10 +173,10 @@ const Milestones = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {generalT('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {generalT('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -216,7 +216,7 @@ const Milestones = () => {
                 setFieldValue(field, new Date(e.target.value).toISOString());
                 delete errors[field as keyof InitialValueType];
               } catch (err) {
-                setFieldError(field, generalT('validDate'));
+                setFieldError(field, miscellaneousT('validDate'));
               }
             };
             return (
@@ -225,7 +225,7 @@ const Milestones = () => {
                   <ErrorAlert
                     testId="formik-validation-errors"
                     classNames="margin-top-3"
-                    heading={generalT('checkAndFix')}
+                    heading={miscellaneousT('checkAndFix')}
                   >
                     {Object.keys(flatErrors).map(key => {
                       return (
@@ -338,7 +338,7 @@ const Milestones = () => {
                         {(isDateInPast(values.clearanceEnds) ||
                           isDateInPast(values.clearanceStarts)) && (
                           <Alert type="warning" className="margin-top-4">
-                            {generalT('dateWarning')}
+                            {miscellaneousT('dateWarning')}
                           </Alert>
                         )}
                       </ProcessListHeading>
@@ -406,7 +406,7 @@ const Milestones = () => {
                       {(isDateInPast(values.applicationsStart) ||
                         isDateInPast(values.applicationsEnd)) && (
                         <Alert type="warning" className="margin-top-4">
-                          {generalT('dateWarning')}
+                          {miscellaneousT('dateWarning')}
                         </Alert>
                       )}
                     </ProcessListItem>
@@ -461,7 +461,7 @@ const Milestones = () => {
                       {(isDateInPast(values.performancePeriodStarts) ||
                         isDateInPast(values.performancePeriodEnds)) && (
                         <Alert type="warning" className="margin-top-4">
-                          {generalT('dateWarning')}
+                          {miscellaneousT('dateWarning')}
                         </Alert>
                       )}
                     </ProcessListItem>
@@ -560,14 +560,14 @@ const Milestones = () => {
                         }
                       }}
                     >
-                      {generalT('back')}
+                      {miscellaneousT('back')}
                     </Button>
                     <Button
                       type="submit"
                       className=""
                       onClick={() => setErrors({})}
                     >
-                      {generalT('saveAndStartNext')}
+                      {miscellaneousT('saveAndStartNext')}
                     </Button>
                   </div>
                   <Button
@@ -576,7 +576,7 @@ const Milestones = () => {
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {generalT('saveAndReturn')}
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Form>
               </>

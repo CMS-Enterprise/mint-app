@@ -319,7 +319,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'careCoordinationInvolved',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={h('note')}
               copy={careCoordinationInvolvedNote}
             />
           )}
@@ -347,7 +347,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'additionalServicesInvolved',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={h('note')}
               copy={additionalServicesInvolvedNote}
             />
           )}
@@ -375,7 +375,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'communityPartnersInvolved',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={h('note')}
               copy={communityPartnersInvolvedNote}
             />
           )}
@@ -480,7 +480,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'rulemakingRequired',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={h('note')}
               copy={rulemakingRequiredNote}
             />
           )}
@@ -521,10 +521,7 @@ const ReadOnlyGeneralCharacteristics = ({
             isViewingFilteredView,
             filteredQuestions,
             'waiversRequired',
-            <ReadOnlySection
-              heading={t('basics:notes')}
-              copy={waiversRequiredNote}
-            />
+            <ReadOnlySection heading={h('note')} copy={waiversRequiredNote} />
           )}
       </div>
     </div>

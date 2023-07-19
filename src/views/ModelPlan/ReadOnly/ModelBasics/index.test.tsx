@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import i18next from 'i18next';
 
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics_modelPlan_basics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
@@ -12,7 +13,6 @@ import {
   ModelType,
   TaskStatus
 } from 'types/graphql-global-types';
-import { translateModelCategory } from 'utils/modelPlan';
 
 import ReadOnlyModelBasics from './index';
 
@@ -89,7 +89,9 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       expect(screen.getByText('Second Name')).toBeInTheDocument();
       expect(
         screen.getByText(
-          translateModelCategory(ModelCategory.PRIMARY_CARE_TRANSFORMATION)
+          i18next.t<string>(
+            `basics:modelCategory.options.${ModelCategory.PRIMARY_CARE_TRANSFORMATION}`
+          )
         )
       ).toBeInTheDocument();
     });

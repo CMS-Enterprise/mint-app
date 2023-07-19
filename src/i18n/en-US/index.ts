@@ -20,6 +20,7 @@ import {
   generalCharacteristics as generalCharacteristicsT, // TODO: remove T once all complete
   generalCharacteristicsMisc
 } from './modelPlan/generalCharacteristics';
+import miscellaneous from './modelPlan/miscellaneous';
 import modelPlan from './modelPlan/modelPlan';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
@@ -77,6 +78,7 @@ const enUS = {
   basicsMisc,
   generalCharacteristicsT,
   generalCharacteristicsMisc,
+  miscellaneous,
   // End new translation
   prepareForClearance,
   privacyPolicy,

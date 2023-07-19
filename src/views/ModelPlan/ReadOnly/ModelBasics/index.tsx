@@ -42,7 +42,7 @@ const ReadOnlyModelBasics = ({
 }: ReadOnlyProps) => {
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
-  const { t: generalT } = useTranslation('draftModelPlan');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
@@ -264,7 +264,7 @@ const ReadOnlyModelBasics = ({
         isViewingFilteredView,
         filteredQuestions,
         'note',
-        <ReadOnlySection heading={generalT('note')} copy={note} />
+        <ReadOnlySection heading={miscellaneousT('notes')} copy={note} />
       )}
 
       {isViewingFilteredView && filteredView !== 'ipc' ? (
@@ -358,7 +358,10 @@ const ReadOnlyModelBasics = ({
             />
           )}
 
-          <ReadOnlySection heading={generalT('note')} copy={highLevelNote} />
+          <ReadOnlySection
+            heading={miscellaneousT('notes')}
+            copy={highLevelNote}
+          />
         </>
       ) : (
         <SectionWrapper
@@ -518,7 +521,10 @@ const ReadOnlyModelBasics = ({
             </ProcessListItem>
           </ProcessList>
 
-          <ReadOnlySection heading={generalT('note')} copy={highLevelNote} />
+          <ReadOnlySection
+            heading={miscellaneousT('notes')}
+            copy={highLevelNote}
+          />
         </SectionWrapper>
       )}
 
