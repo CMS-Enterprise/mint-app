@@ -3,6 +3,8 @@ package resolvers
 import (
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -30,14 +32,14 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 		name     string
 		changes  map[string]interface{}
 		existing *models.PlanBasics
-		expected map[string]dateChange
+		expected map[string]email.DateChange
 	}{
 		// No fields changed
 		{
 			name:     "No fields changed",
 			changes:  map[string]interface{}{},
 			existing: defaultExisting,
-			expected: map[string]dateChange{},
+			expected: map[string]email.DateChange{},
 		},
 		// Single field changed
 		{
@@ -46,16 +48,16 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 				"performancePeriodStarts": t2.Format(time.RFC3339),
 			},
 			existing: defaultExisting,
-			expected: map[string]dateChange{
+			expected: map[string]email.DateChange{
 				"performancePeriod": {
-					HumanReadableFieldName: "Performance period",
-					IsRange:                true,
-					Old:                    nil,
-					New:                    nil,
-					OldRangeStart:          defaultExisting.PerformancePeriodStarts,
-					OldRangeEnd:            defaultExisting.PerformancePeriodEnds,
-					NewRangeStart:          &t2,
-					NewRangeEnd:            defaultExisting.PerformancePeriodEnds,
+					Field:         "Performance period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: defaultExisting.PerformancePeriodStarts,
+					OldRangeEnd:   defaultExisting.PerformancePeriodEnds,
+					NewRangeStart: &t2,
+					NewRangeEnd:   defaultExisting.PerformancePeriodEnds,
 				},
 			},
 		},
@@ -66,7 +68,7 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 				"wrongField": t2.Format(time.RFC3339),
 			},
 			existing: defaultExisting,
-			expected: map[string]dateChange{},
+			expected: map[string]email.DateChange{},
 		},
 		// All fields changed
 		{
@@ -83,66 +85,66 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 				"wrapUpEnds":              t2.Format(time.RFC3339),
 			},
 			existing: defaultExisting,
-			expected: map[string]dateChange{
+			expected: map[string]email.DateChange{
 				"completeICIP": {
-					HumanReadableFieldName: "Complete ICIP",
-					IsRange:                false,
-					Old:                    defaultExisting.CompleteICIP,
-					New:                    &t2,
-					OldRangeStart:          nil,
-					OldRangeEnd:            nil,
-					NewRangeStart:          nil,
-					NewRangeEnd:            nil,
+					Field:         "Complete ICIP",
+					IsRange:       false,
+					OldDate:       defaultExisting.CompleteICIP,
+					NewDate:       &t2,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: nil,
+					NewRangeEnd:   nil,
 				},
 				"clearance": {
-					HumanReadableFieldName: "Clearance",
-					IsRange:                true,
-					Old:                    nil,
-					New:                    nil,
-					OldRangeStart:          defaultExisting.ClearanceStarts,
-					OldRangeEnd:            defaultExisting.ClearanceEnds,
-					NewRangeStart:          &t2,
-					NewRangeEnd:            &t2,
+					Field:         "Clearance",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: defaultExisting.ClearanceStarts,
+					OldRangeEnd:   defaultExisting.ClearanceEnds,
+					NewRangeStart: &t2,
+					NewRangeEnd:   &t2,
 				},
 				"announced": {
-					HumanReadableFieldName: "Announce model",
-					IsRange:                false,
-					Old:                    defaultExisting.Announced,
-					New:                    &t2,
-					OldRangeStart:          nil,
-					OldRangeEnd:            nil,
-					NewRangeStart:          nil,
-					NewRangeEnd:            nil,
+					Field:         "Announce model",
+					IsRange:       false,
+					OldDate:       defaultExisting.Announced,
+					NewDate:       &t2,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: nil,
+					NewRangeEnd:   nil,
 				},
 				"applications": {
-					HumanReadableFieldName: "Application period",
-					IsRange:                true,
-					Old:                    nil,
-					New:                    nil,
-					OldRangeStart:          defaultExisting.ApplicationsStart,
-					OldRangeEnd:            defaultExisting.ApplicationsEnd,
-					NewRangeStart:          &t2,
-					NewRangeEnd:            &t2,
+					Field:         "Application period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: defaultExisting.ApplicationsStart,
+					OldRangeEnd:   defaultExisting.ApplicationsEnd,
+					NewRangeStart: &t2,
+					NewRangeEnd:   &t2,
 				},
 				"performancePeriod": {
-					HumanReadableFieldName: "Performance period",
-					IsRange:                true,
-					Old:                    nil,
-					New:                    nil,
-					OldRangeStart:          defaultExisting.PerformancePeriodStarts,
-					OldRangeEnd:            defaultExisting.PerformancePeriodEnds,
-					NewRangeStart:          &t2,
-					NewRangeEnd:            &t2,
+					Field:         "Performance period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: defaultExisting.PerformancePeriodStarts,
+					OldRangeEnd:   defaultExisting.PerformancePeriodEnds,
+					NewRangeStart: &t2,
+					NewRangeEnd:   &t2,
 				},
 				"wrapUpEnds": {
-					HumanReadableFieldName: "Model wrap-up end date",
-					IsRange:                false,
-					Old:                    defaultExisting.WrapUpEnds,
-					New:                    &t2,
-					OldRangeStart:          nil,
-					OldRangeEnd:            nil,
-					NewRangeStart:          nil,
-					NewRangeEnd:            nil,
+					Field:         "Model wrap-up end date",
+					IsRange:       false,
+					OldDate:       defaultExisting.WrapUpEnds,
+					NewDate:       &t2,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: nil,
+					NewRangeEnd:   nil,
 				},
 			},
 		},
@@ -163,16 +165,16 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 				PerformancePeriodEnds:   &t1,
 				WrapUpEnds:              nil,
 			},
-			expected: map[string]dateChange{
+			expected: map[string]email.DateChange{
 				"wrapUpEnds": {
-					HumanReadableFieldName: "Model wrap-up end date",
-					IsRange:                false,
-					Old:                    nil,
-					New:                    &t1,
-					OldRangeStart:          nil,
-					OldRangeEnd:            nil,
-					NewRangeStart:          nil,
-					NewRangeEnd:            nil,
+					Field:         "Model wrap-up end date",
+					IsRange:       false,
+					OldDate:       nil,
+					NewDate:       &t1,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: nil,
+					NewRangeEnd:   nil,
 				},
 			},
 		},

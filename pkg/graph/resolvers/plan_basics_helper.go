@@ -4,21 +4,12 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/mitchellh/mapstructure"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
-
-type dateChange struct {
-	HumanReadableFieldName string
-	IsRange                bool
-	Old                    *time.Time
-	New                    *time.Time
-	OldRangeStart          *time.Time
-	OldRangeEnd            *time.Time
-	NewRangeStart          *time.Time
-	NewRangeEnd            *time.Time
-}
 
 type dateFieldData struct {
 	IsRange           bool
@@ -62,18 +53,18 @@ func NewDateProcessor(changes map[string]interface{}, existing *models.PlanBasic
 
 func copyTime(t *time.Time) *time.Time {
 	if t != nil {
-		copy := new(time.Time)
-		*copy = *t
-		return copy
+		copyData := new(time.Time)
+		*copyData = *t
+		return copyData
 	}
 	return nil
 }
 
 // ExtractChangedDates extracts the changed dates from the DateProcessor
-func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
+func (dp *DateProcessor) ExtractChangedDates() (map[string]email.DateChange, error) {
 	fieldDataMap := getFieldDataMap()
 
-	dateChanges := make(map[string]dateChange)
+	dateChanges := make(map[string]email.DateChange)
 
 	for fieldKey, fieldData := range fieldDataMap {
 
@@ -84,9 +75,9 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
 					continue
 				}
 
-				dateChangeValue := &dateChange{
-					HumanReadableFieldName: fieldData.HumanReadableName,
-					IsRange:                true,
+				dateChangeValue := &email.DateChange{
+					Field:   fieldData.HumanReadableName,
+					IsRange: true,
 				}
 
 				// Determine the values for the other end of the range
@@ -127,11 +118,11 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
 
 				dateChanges[fieldData.CommonKey] = *dateChangeValue
 			} else {
-				dateChanges[fieldKey] = dateChange{
-					HumanReadableFieldName: fieldData.HumanReadableName,
-					IsRange:                false,
-					Old:                    oldValue,
-					New:                    newValue,
+				dateChanges[fieldKey] = email.DateChange{
+					Field:   fieldData.HumanReadableName,
+					IsRange: false,
+					OldDate: oldValue,
+					NewDate: newValue,
 				}
 			}
 		}
@@ -182,6 +173,7 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 	return false, nil, nil
 }
 
+// TODO: How can this be simplified using struct tags?
 func getFieldDataMap() map[string]dateFieldData {
 	fieldData := map[string]dateFieldData{
 		"completeICIP": {

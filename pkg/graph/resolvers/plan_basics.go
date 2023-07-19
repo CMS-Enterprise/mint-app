@@ -114,32 +114,11 @@ func sendDateChangedEmails(
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
-	dateChanges map[string]dateChange,
+	dateChanges map[string]email.DateChange,
 	dateProcessor *DateProcessor,
 ) error {
 	if emailService == nil || emailTemplateService == nil || dateProcessor == nil {
 		return nil
-	}
-
-	// Convert dateChanges map into []email.DateChange slice
-	var dateChangeSlice []email.DateChange
-
-	dateChange := email.DateChange{}
-	for _, dateChangeValue := range dateChanges {
-		dateChange.Field = dateChangeValue.HumanReadableFieldName
-		dateChange.IsRange = dateChangeValue.IsRange
-
-		if dateChangeValue.IsRange {
-			dateChange.OldRangeStart = dateChangeValue.OldRangeStart
-			dateChange.NewRangeStart = dateChangeValue.NewRangeStart
-			dateChange.OldRangeEnd = dateChangeValue.OldRangeEnd
-			dateChange.NewRangeEnd = dateChangeValue.NewRangeEnd
-		} else {
-			dateChange.OldDate = dateChangeValue.Old
-			dateChange.NewDate = dateChangeValue.New
-		}
-
-		dateChangeSlice = append(dateChangeSlice, dateChange)
 	}
 
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanDateChangedTemplateName)
@@ -152,6 +131,11 @@ func sendDateChangedEmails(
 	})
 	if err != nil {
 		return err
+	}
+
+	dateChangeSlice := make([]email.DateChange, 0, len(dateChanges))
+	for _, v := range dateChanges {
+		dateChangeSlice = append(dateChangeSlice, v)
 	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
