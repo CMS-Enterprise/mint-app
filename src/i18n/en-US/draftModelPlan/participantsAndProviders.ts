@@ -12,8 +12,8 @@ const participantsAndProviders = {
     'Participants are organizations/individuals that have contracts with CMMI to participate in a model or demonstration. Participants may or may not be Medicare-enrolled providers.',
   providerInfo:
     'Providers are organizations/indviduals that work with the Participants and deliver care or services to the beneficiaries impacted by our model.',
-  whoAreParticipants: 'Who are the particpants? Select all that apply.',
-  whoAreParticipantsQuestion: 'Who are the particpants?',
+  whoAreParticipants: 'Who are the participants? Select all that apply.',
+  whoAreParticipantsQuestion: 'Who are the participants?',
   participantTypes: {
     medicareProviders: 'Medicare providers',
     entities: 'Entities (e.g., ACO, Direct Contracting Entity)',

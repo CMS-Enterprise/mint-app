@@ -119,7 +119,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
               for="participants-and-providers-participants"
               id="label-participants-and-providers-participants"
             >
-              Who are the particpants? Select all that apply.
+              Who are the participants? Select all that apply.
             </label>
             <div>
               <div

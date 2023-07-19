@@ -82,9 +82,9 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     payments: [
       'fundingSource',
       'fundingSourceTrustFund',
+      'fundingSourceR',
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
-      'fundingStructure',
       'anticipatedPaymentFrequency',
       'paymentStartDate'
     ]
@@ -204,6 +204,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
       'nonClaimsPayments',
+      'waiverOnlyAppliesPartOfPayment',
       'planningToUseInnovationPaymentContractor',
       'anticipateReconcilingPaymentsRetrospectively'
     ]
@@ -251,6 +252,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'needsClaimsDataCollection',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
+      'waiverOnlyAppliesPartOfPayment',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
       'nonClaimsPayments',

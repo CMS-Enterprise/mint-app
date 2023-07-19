@@ -152,9 +152,19 @@ const TaskList = () => {
     return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
   };
 
+  const getLatestModifiedDate = (
+    operationalNeedsArray: OperationalNeedsType[]
+  ) => {
+    if (operationalNeedsArray.length !== 0) {
+      return operationalNeedsArray.reduce((a, b) =>
+        a.modifiedDts! > b.modifiedDts! ? a : b
+      ).modifiedDts;
+    }
+    return null;
+  };
+
   const itSolutions: ITSolutionsType = {
-    // modifiedDts: operationalNeeds?.modifiedDts,
-    modifiedDts: null, // TODO: Get most recently updated operational need
+    modifiedDts: getLatestModifiedDate(operationalNeeds),
     status: getITSolutionsStatus(operationalNeeds)
   };
 
