@@ -73,16 +73,20 @@ const FilteredViewGroupings = ({
   role
 }: {
   collaborators: CollaboratorsType[];
-  role: TeamRole.MODEL_LEAD;
-  // TODO: Add TeamRole.PAYMENT
+  role: TeamRole.MODEL_LEAD | TeamRole.PAYMENT;
 }) => {
   const { t } = useTranslation('generalReadOnly');
   return (
     <div className="margin-bottom-3">
       <h3 className="margin-top-0 margin-bottom-2">
-        {t('contactInfo.modelLeads')}
+        {role === TeamRole.MODEL_LEAD
+          ? t('contactInfo.modelLeads')
+          : t('contactInfo.payment')}
       </h3>
       <Grid row gap style={{ rowGap: '2rem' }}>
+        {collaborators.length === 0 && role === TeamRole.PAYMENT && (
+          <em className="text-base">{t('contactInfo.emptyState')}</em>
+        )}
         {collaborators
           .filter(c => c.teamRole === role)
           .map((collaborator, index) => {
@@ -113,10 +117,12 @@ const FilteredViewGroupings = ({
 
 const ReadOnlyTeamInfo = ({
   modelID,
-  isViewingFilteredView
+  isViewingFilteredView,
+  filteredView
 }: {
   modelID: string;
   isViewingFilteredView?: boolean;
+  filteredView?: string;
 }) => {
   const { data, loading, error } = useQuery<GetModelCollaborators>(
     GetModelPlanCollaborators,
@@ -145,12 +151,22 @@ const ReadOnlyTeamInfo = ({
       data-testid="read-only-model-plan--team-info"
     >
       {isViewingFilteredView ? (
-        <FilteredViewGroupings
-          role={TeamRole.MODEL_LEAD}
-          collaborators={collaborators.filter(
-            c => c.teamRole === TeamRole.MODEL_LEAD
+        <>
+          <FilteredViewGroupings
+            role={TeamRole.MODEL_LEAD}
+            collaborators={collaborators.filter(
+              c => c.teamRole === TeamRole.MODEL_LEAD
+            )}
+          />
+          {filteredView === 'ipc' && (
+            <FilteredViewGroupings
+              role={TeamRole.PAYMENT}
+              collaborators={collaborators.filter(
+                c => c.teamRole === TeamRole.PAYMENT
+              )}
+            />
           )}
-        />
+        </>
       ) : (
         sortModelLeadFirst.map((role, index) => {
           if (collaborators.filter(c => c.teamRole === role).length !== 0) {

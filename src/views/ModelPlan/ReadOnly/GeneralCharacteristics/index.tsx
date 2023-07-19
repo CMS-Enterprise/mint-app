@@ -17,12 +17,12 @@ import {
   translateWaiverTypes
 } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyGeneralCharacteristics = ({
@@ -117,14 +117,13 @@ const ReadOnlyGeneralCharacteristics = ({
       className="read-only-model-plan--general-characteristics"
       data-testid="read-only-model-plan--general-characteristics"
     >
-      <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">
-          {clearance ? t('clearanceHeading') : t('heading')}
-        </h2>
-        {!isViewingFilteredView && status && (
-          <TaskListStatusTag status={status} />
-        )}
-      </div>
+      <TitleAndStatus
+        clearance={clearance}
+        clearanceTitle={t('clearanceHeading')}
+        heading={t('heading')}
+        isViewingFilteredView={isViewingFilteredView}
+        status={status}
+      />
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
@@ -403,26 +402,22 @@ const ReadOnlyGeneralCharacteristics = ({
           isViewingFilteredView,
           filteredQuestions,
           'geographiesTargetedTypes',
-          <ReadOnlySection
-            heading={t('geographyType')}
-            list
-            listItems={geographiesTargetedTypes?.map(translateGeographyTypes)}
-            listOtherItem={geographiesTargetedTypesOther}
-          />
-        )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'geographiesTargetedAppliedTo',
-          <ReadOnlySection
-            heading={t('geographyApplied')}
-            list
-            listItems={geographiesTargetedAppliedTo?.map(
-              translateGeographyApplication
-            )}
-            listOtherItem={geographiesTargetedAppliedToOther}
-            notes={geographiesTargetedNote}
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('geographyType'),
+              list: true,
+              listItems: geographiesTargetedTypes?.map(translateGeographyTypes),
+              listOtherItem: geographiesTargetedTypesOther
+            }}
+            secondSection={{
+              heading: t('geographyApplied'),
+              list: true,
+              listItems: geographiesTargetedAppliedTo?.map(
+                translateGeographyApplication
+              ),
+              listOtherItem: geographiesTargetedAppliedToOther,
+              notes: geographiesTargetedNote
+            }}
           />
         )}
 

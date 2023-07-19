@@ -70,9 +70,9 @@ const FilterGroupMap = {
     payments: [
       'fundingSource',
       'fundingSourceTrustFund',
+      'fundingSourceR',
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
-      'fundingStructure',
       'anticipatedPaymentFrequency',
       'paymentStartDate'
     ]
@@ -192,6 +192,7 @@ const FilterGroupMap = {
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
       'nonClaimsPayments',
+      'waiverOnlyAppliesPartOfPayment',
       'planningToUseInnovationPaymentContractor',
       'anticipateReconcilingPaymentsRetrospectively'
     ]
@@ -239,6 +240,7 @@ const FilterGroupMap = {
       'needsClaimsDataCollection',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
+      'waiverOnlyAppliesPartOfPayment',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
       'nonClaimsPayments',

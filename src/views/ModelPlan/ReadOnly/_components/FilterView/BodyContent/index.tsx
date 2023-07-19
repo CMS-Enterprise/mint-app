@@ -59,7 +59,11 @@ const BodyContent = ({
     <Grid>
       <FitleredViewSection sectionName="model-team">
         <h2 className="margin-top-0 margin-bottom-4">{t('modelTeam')}</h2>
-        <ReadOnlyTeamInfo modelID={modelID} isViewingFilteredView />
+        <ReadOnlyTeamInfo
+          modelID={modelID}
+          isViewingFilteredView
+          filteredView={filteredView}
+        />
       </FitleredViewSection>
 
       {Object.keys(individualFilterView).map(task => {
