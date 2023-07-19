@@ -1118,8 +1118,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {
