@@ -8,7 +8,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'Is this a new track of an existing model or a new model?',
     dataType: 'boolean',
     formType: 'radio',
-    // filterGroups: ['iddoc', 'pbg'],
     options: {
       true: 'New model',
       false: 'New track of an existing model'
@@ -22,7 +21,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     hint: 'Start typing the name of the model',
     dataType: 'boolean',
     formType: 'radio',
-    // filterGroups: ['iddoc', 'pbg'],
     options: {
       true: 'New model',
       false: 'New track of an existing model'
@@ -35,7 +33,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'Does your proposed track/model resemble any existing models?',
     dataType: 'boolean',
     formType: 'radio',
-    // filterGroups: ['iddoc', 'pbg'],
     options: {
       true: 'Yes',
       false: 'No'
@@ -54,7 +51,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'multiSelect',
     isArray: true
-    // filterGroups: ['iddoc', 'pbg']
   },
   resemblesExistingModelHow: {
     gqlField: 'resemblesExistingModelHow',
@@ -63,7 +59,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'In what way does the new model resemble the selected model(s)?',
     dataType: 'string',
     formType: 'textarea'
-    // filterGroups: ['iddoc', 'pbg']
   },
   resemblesExistingModelNote: {
     gqlField: 'resemblesExistingModelNote',
@@ -72,7 +67,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'Note',
     dataType: 'string',
     formType: 'textarea'
-    // filterGroups: ['iddoc', 'pbg']
   },
   hasComponentsOrTracks: {
     gqlField: 'hasComponentsOrTracks',
@@ -81,7 +75,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'Are there different components/tracks?',
     dataType: 'boolean',
     formType: 'radio',
-    // filterGroups: ['iddoc', 'pbg'],
     options: {
       true: 'Yes',
       false: 'No'
@@ -94,7 +87,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'How do the tracks differ?',
     dataType: 'string',
     formType: 'textarea'
-    // filterGroups: ['iddoc', 'pbg']
   },
   hasComponentsOrTracksNote: {
     gqlField: 'hasComponentsOrTracksNote',
@@ -103,7 +95,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'Note',
     dataType: 'string',
     formType: 'textarea'
-    // filterGroups: ['iddoc', 'pbg']
   }
 };
 

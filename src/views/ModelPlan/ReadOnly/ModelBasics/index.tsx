@@ -40,8 +40,8 @@ const ReadOnlyModelBasics = ({
   isViewingFilteredView,
   filteredQuestions
 }: ReadOnlyProps) => {
-  const { t: planBasicsT } = useTranslation('planBasics');
-  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
+  const { t: basicsT } = useTranslation('basics');
+  const { t: basicsMiscT } = useTranslation('planBasicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
@@ -97,7 +97,7 @@ const ReadOnlyModelBasics = ({
       return formatDateUtc(value, 'MM/dd/yyyy');
     }
 
-    return <em className="text-base">{planBasicsMiscT('na')}</em>;
+    return <em className="text-base">{basicsMiscT('na')}</em>;
   };
 
   return (
@@ -107,8 +107,8 @@ const ReadOnlyModelBasics = ({
     >
       <TitleAndStatus
         clearance={clearance}
-        clearanceTitle={planBasicsMiscT('clearanceHeading')}
-        heading={planBasicsMiscT('heading')}
+        clearanceTitle={basicsMiscT('clearanceHeading')}
+        heading={basicsMiscT('heading')}
         isViewingFilteredView={isViewingFilteredView}
         status={status}
       />
@@ -126,7 +126,7 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'nameHistory',
         <ReadOnlySection
-          heading={planBasicsMiscT('previousNames')}
+          heading={basicsMiscT('previousNames')}
           list
           listItems={filteredNameHistory}
         />
@@ -143,11 +143,11 @@ const ReadOnlyModelBasics = ({
           )}
         >
           <p className="margin-top-0 text-bold">
-            {planBasicsMiscT('otherIdentifiers')}
+            {basicsMiscT('otherIdentifiers')}
           </p>
 
           <p className="line-height-mono-4">
-            {planBasicsMiscT('otherIdentifiersInfo1')}
+            {basicsMiscT('otherIdentifiersInfo1')}
             <TrussLink
               aria-label="Open AMS in a new tab"
               href="https://ams.cmmi.cms.gov"
@@ -155,10 +155,10 @@ const ReadOnlyModelBasics = ({
               rel="noopener noreferrer"
               variant="external"
             >
-              {planBasicsMiscT('otherIdentifiersInfo2')}
+              {basicsMiscT('otherIdentifiersInfo2')}
             </TrussLink>
 
-            {planBasicsMiscT('otherIdentifiersInfo3')}
+            {basicsMiscT('otherIdentifiersInfo3')}
           </p>
 
           <Grid row gap>
@@ -169,23 +169,23 @@ const ReadOnlyModelBasics = ({
               })}
             >
               <p className="text-bold margin-top-0 margin-bottom-1">
-                {planBasicsT('amsModelID.question')}
+                {basicsT('amsModelID.question')}
               </p>
 
               {amsModelID || (
                 <div className="text-italic text-base">
-                  {planBasicsMiscT('noneEntered')}
+                  {basicsMiscT('noneEntered')}
                 </div>
               )}
             </Grid>
             <Grid desktop={{ col: 6 }}>
               <p className="text-bold margin-top-0 margin-bottom-1">
-                {planBasicsT('demoCode.question')}
+                {basicsT('demoCode.question')}
               </p>
 
               {demoCode || (
                 <div className="text-italic text-base">
-                  {planBasicsMiscT('noneEntered')}
+                  {basicsMiscT('noneEntered')}
                 </div>
               )}
             </Grid>
@@ -198,8 +198,8 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'modelCategory',
         <ReadOnlySection
-          heading={planBasicsT('modelCategory.question')}
-          copy={planBasicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
+          heading={basicsT('modelCategory.question')}
+          copy={basicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
         />
       )}
 
@@ -209,18 +209,18 @@ const ReadOnlyModelBasics = ({
         'cmsCenters',
         <SideBySideReadOnlySection
           firstSection={{
-            heading: planBasicsT('cmsCenters.question'),
+            heading: basicsT('cmsCenters.question'),
             list: true,
             listItems: cmsCenters?.map((cmsCenter): string =>
-              planBasicsT(`cmsCenters.options.${cmsCenter}`)
+              basicsT(`cmsCenters.options.${cmsCenter}`)
             ),
             listOtherItem: cmsOther
           }}
           secondSection={{
-            heading: planBasicsT('cmmiGroups.question'),
+            heading: basicsT('cmmiGroups.question'),
             list: true,
             listItems: cmmiGroups?.map((cmmiGroup): string =>
-              planBasicsT(`cmmiGroups.options.${cmmiGroup}`)
+              basicsT(`cmmiGroups.options.${cmmiGroup}`)
             )
           }}
         />
@@ -231,8 +231,8 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'modelType',
         <ReadOnlySection
-          heading={planBasicsT('modelType.question')}
-          copy={planBasicsT(`modelType.options.${modelType}`, '')}
+          heading={basicsT('modelType.question')}
+          copy={basicsT(`modelType.options.${modelType}`, '')}
         />
       )}
 
@@ -240,17 +240,14 @@ const ReadOnlyModelBasics = ({
         isViewingFilteredView,
         filteredQuestions,
         'problem',
-        <ReadOnlySection
-          heading={planBasicsT('problem.question')}
-          copy={problem}
-        />
+        <ReadOnlySection heading={basicsT('problem.question')} copy={problem} />
       )}
 
       {checkGroupMap(
         isViewingFilteredView,
         filteredQuestions,
         'goal',
-        <ReadOnlySection heading={planBasicsT('goal.question')} copy={goal} />
+        <ReadOnlySection heading={basicsT('goal.question')} copy={goal} />
       )}
 
       {checkGroupMap(
@@ -258,7 +255,7 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'testInterventions',
         <ReadOnlySection
-          heading={planBasicsT('testInterventions.question')}
+          heading={basicsT('testInterventions.question')}
           copy={testInterventions}
         />
       )}
@@ -277,7 +274,7 @@ const ReadOnlyModelBasics = ({
             filteredQuestions,
             'completeICIP',
             <ReadOnlySection
-              heading={planBasicsT('completeICIP.question')}
+              heading={basicsT('completeICIP.question')}
               copy={completeICIP && formatDateUtc(completeICIP, 'MM/dd/yyyy')}
             />
           )}
@@ -288,13 +285,13 @@ const ReadOnlyModelBasics = ({
             'clearanceStarts',
             <SideBySideReadOnlySection
               firstSection={{
-                heading: planBasicsT('clearanceStarts.question'),
+                heading: basicsT('clearanceStarts.question'),
                 copy:
                   clearanceStarts &&
                   formatDateUtc(clearanceStarts, 'MM/dd/yyyy')
               }}
               secondSection={{
-                heading: planBasicsT('clearanceEnds.question'),
+                heading: basicsT('clearanceEnds.question'),
                 copy:
                   clearanceEnds && formatDateUtc(clearanceEnds, 'MM/dd/yyyy')
               }}
@@ -306,7 +303,7 @@ const ReadOnlyModelBasics = ({
             filteredQuestions,
             'announced',
             <ReadOnlySection
-              heading={planBasicsT('announced.question')}
+              heading={basicsT('announced.question')}
               copy={announced && formatDateUtc(announced, 'MM/dd/yyyy')}
             />
           )}
@@ -317,13 +314,13 @@ const ReadOnlyModelBasics = ({
             'applicationsStart',
             <SideBySideReadOnlySection
               firstSection={{
-                heading: planBasicsT('applicationsStart.question'),
+                heading: basicsT('applicationsStart.question'),
                 copy:
                   applicationsStart &&
                   formatDateUtc(applicationsStart, 'MM/dd/yyyy')
               }}
               secondSection={{
-                heading: planBasicsT('applicationsEnd.question'),
+                heading: basicsT('applicationsEnd.question'),
                 copy:
                   applicationsEnd &&
                   formatDateUtc(applicationsEnd, 'MM/dd/yyyy')
@@ -337,13 +334,13 @@ const ReadOnlyModelBasics = ({
             'performancePeriodStarts',
             <SideBySideReadOnlySection
               firstSection={{
-                heading: planBasicsT('performancePeriodStarts.question'),
+                heading: basicsT('performancePeriodStarts.question'),
                 copy:
                   performancePeriodStarts &&
                   formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy')
               }}
               secondSection={{
-                heading: planBasicsT('performancePeriodEnds.question'),
+                heading: basicsT('performancePeriodEnds.question'),
                 copy:
                   performancePeriodEnds &&
                   formatDateUtc(performancePeriodEnds, 'MM/dd/yyyy')
@@ -356,7 +353,7 @@ const ReadOnlyModelBasics = ({
             filteredQuestions,
             'wrapUpEnds',
             <ReadOnlySection
-              heading={planBasicsT('wrapUpEnds.question')}
+              heading={basicsT('wrapUpEnds.question')}
               copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}
             />
           )}
@@ -372,7 +369,7 @@ const ReadOnlyModelBasics = ({
             }
           )}
         >
-          <h3 className="margin-y-0">{planBasicsMiscT('highLevelTimeline')}</h3>
+          <h3 className="margin-y-0">{basicsMiscT('highLevelTimeline')}</h3>
 
           <ProcessList className="read-only-model-plan__timeline">
             <ProcessListItem className="read-only-model-plan__timeline__list-item">
@@ -380,7 +377,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {planBasicsT('completeICIP.question')}
+                {basicsT('completeICIP.question')}
               </ProcessListHeading>
 
               <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -393,7 +390,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {planBasicsMiscT('clearance')}
+                {basicsMiscT('clearance')}
               </ProcessListHeading>
 
               <div className="mobile-lg:display-flex">
@@ -402,7 +399,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {planBasicsT('clearanceStarts.question')}
+                    {basicsT('clearanceStarts.question')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -414,7 +411,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {planBasicsT('clearanceEnds.question')}
+                    {basicsT('clearanceEnds.question')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -428,7 +425,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {planBasicsT('announced.question')}
+                {basicsT('announced.question')}
               </ProcessListHeading>
 
               <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -441,7 +438,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {planBasicsMiscT('applicationPeriod')}
+                {basicsMiscT('applicationPeriod')}
               </ProcessListHeading>
 
               <div className="mobile-lg:display-flex">
@@ -450,7 +447,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {planBasicsT('applicationsStart.question')}
+                    {basicsT('applicationsStart.question')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -462,7 +459,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {planBasicsT('applicationsEnd.question')}
+                    {basicsT('applicationsEnd.question')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -477,7 +474,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {planBasicsMiscT('demonstrationPerformance')}
+                {basicsMiscT('demonstrationPerformance')}
               </ProcessListHeading>
               <div className="mobile-lg:display-flex">
                 <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
@@ -485,7 +482,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {planBasicsT('performancePeriodStarts.question')}
+                    {basicsT('performancePeriodStarts.question')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -497,7 +494,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {planBasicsT('performancePeriodEnds.question')}
+                    {basicsT('performancePeriodEnds.question')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -512,7 +509,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {planBasicsT('wrapUpEnds.question')}
+                {basicsT('wrapUpEnds.question')}
               </ProcessListHeading>
 
               <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -530,8 +527,8 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'phasedIn',
         <ReadOnlySection
-          heading={planBasicsT('phasedIn.question')}
-          copy={planBasicsT(`phasedIn.options.${phasedIn}`, '')} // Default to empty string if bool is null
+          heading={basicsT('phasedIn.question')}
+          copy={basicsT(`phasedIn.options.${phasedIn}`, '')} // Default to empty string if bool is null
           notes={phasedInNote}
         />
       )}
