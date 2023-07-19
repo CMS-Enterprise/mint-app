@@ -35,13 +35,6 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
       <div
         className="usa-summary-box__text"
       >
-        <Portal
-          containerInfo={
-            <div
-              class="ReactModalPortal"
-            />
-          }
-        />
         <div
           className="grid-container"
           data-testid="gridContainer"
