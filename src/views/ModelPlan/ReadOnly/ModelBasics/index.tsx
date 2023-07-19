@@ -41,7 +41,7 @@ const ReadOnlyModelBasics = ({
   filteredQuestions
 }: ReadOnlyProps) => {
   const { t: basicsT } = useTranslation('basics');
-  const { t: basicsMiscT } = useTranslation('planBasicsMisc');
+  const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 

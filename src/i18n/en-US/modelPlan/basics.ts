@@ -261,11 +261,12 @@ export const basicsMisc: Record<string, string> = {
   demonstrationPerformanceInfo:
     'When the model will be active beginning with the go-live date',
   na: 'No answer entered',
-  otherNotSpecificed: 'Other not specified',
+  otherNotSpecified: 'Other not specified',
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
   required1: 'All fields marked with ',
   required2: ' are required.',
+  notes: 'Notes',
   noneEntered: 'None entered',
   otherIdentifiers: 'Other identifiers',
   otherIdentifiersInfo1: 'These are created in ',
