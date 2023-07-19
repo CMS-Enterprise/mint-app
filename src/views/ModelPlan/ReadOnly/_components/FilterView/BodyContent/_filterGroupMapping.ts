@@ -1,3 +1,17 @@
+export const filterGroups = [
+  'cmmi',
+  'oact',
+  'dfsdm',
+  'ccw',
+  'ipc',
+  'iddoc',
+  'pbg',
+  'mdm',
+  'cbosc'
+] as const;
+
+export type FilterGroup = typeof filterGroups[number];
+
 const FilterGroupMap = {
   cmmi: {
     'general-characteristics': [

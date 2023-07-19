@@ -2,6 +2,7 @@
   Typed translation mappings for question centric architecture for a model plan
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
+import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 export type TranslationFieldProperties = {
   gqlField: string;
@@ -21,6 +22,7 @@ export type TranslationFieldProperties = {
     | 'multiSelect'
     | 'datePicker'
     | 'rangeInput';
+  filterGroups?: FilterGroup[]; // Used to render questions within Readonly filter group view (Also CSV/PDF export)
   tags?: string[];
 };
 

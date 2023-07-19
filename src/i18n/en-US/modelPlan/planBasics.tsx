@@ -8,6 +8,7 @@ export const planBasics: TranslationPlanBasics = {
     question: 'Model category',
     dataType: 'enum',
     formType: 'select',
+    filterGroups: ['ipc'],
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
       DEMONSTRATION: 'Demonstration',
@@ -47,6 +48,7 @@ export const planBasics: TranslationPlanBasics = {
     question: 'CMS component',
     dataType: 'enum',
     formType: 'checkbox',
+    filterGroups: ['ipc'],
     options: {
       CMMI: 'CMMI',
       CENTER_FOR_MEDICARE: 'Center for Medicare (CM)',
@@ -66,6 +68,7 @@ export const planBasics: TranslationPlanBasics = {
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: 'enum',
     formType: 'checkbox',
+    filterGroups: ['ipc'],
     options: {
       PATIENT_CARE_MODELS_GROUP: 'Patient Care Models Group (PCMG)',
       POLICY_AND_PROGRAMS_GROUP: 'Policy and Programs Group (PPG)',
@@ -82,6 +85,7 @@ export const planBasics: TranslationPlanBasics = {
     question: 'Model Type',
     dataType: 'enum',
     formType: 'radio',
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg'],
     options: {
       VOLUNTARY: 'Voluntary',
       MANDATORY: 'Mandatory'
@@ -100,6 +104,7 @@ export const planBasics: TranslationPlanBasics = {
     goField: 'Goal',
     dbField: 'goal',
     question: 'Goal',
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg'],
     hint:
       'Please include the high level goal of the program and a description of the project.',
     dataType: 'string',
@@ -143,7 +148,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'announced',
     question: 'Announce model',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc', 'iddoc', 'pbg']
   },
   applicationsStart: {
     gqlField: 'applicationsStart',
@@ -151,7 +157,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'applications_starts',
     question: 'Application start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc']
   },
   applicationsEnd: {
     gqlField: 'applicationsEnd',
@@ -167,7 +174,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'performance_period_starts',
     question: 'Performance start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'iddoc', 'pbg']
   },
   performancePeriodEnds: {
     gqlField: 'performancePeriodEnds',
@@ -203,6 +211,7 @@ export const planBasics: TranslationPlanBasics = {
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
     dataType: 'boolean',
     formType: 'radio',
+    filterGroups: ['iddoc', 'pbg'],
     options: {
       true: 'Yes',
       false: 'No'
