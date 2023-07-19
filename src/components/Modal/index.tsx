@@ -8,6 +8,7 @@ import './index.scss';
 
 type ModalProps = {
   children: ReactNode | ReactNodeArray;
+  navigation?: boolean;
   isOpen: boolean;
   className?: string;
   scroll?: boolean;
@@ -19,6 +20,7 @@ type ModalProps = {
 
 const Modal = ({
   children,
+  navigation,
   isOpen,
   className,
   scroll,
@@ -46,25 +48,31 @@ const Modal = ({
       shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       appElement={document.getElementById('root')!}
     >
-      <div
-        className={`mint-modal__top-section display-flex text-base ${
-          modalHeading ? 'border-bottom-1px border-base-lighter' : ''
-        }`}
-      >
-        <h4 className="margin-0 padding-left-4 padding-top-2">
-          {modalHeading}
-        </h4>
-        <button
-          type="button"
-          className="mint-modal__x-button text-base"
-          aria-label="Close Modal"
-          onClick={closeModal}
-        >
-          <IconClose />
-        </button>
-      </div>
+      {!navigation ? (
+        <>
+          <div
+            className={`mint-modal__top-section display-flex text-base ${
+              modalHeading ? 'border-bottom-1px border-base-lighter' : ''
+            }`}
+          >
+            <h4 className="margin-0 padding-left-4 padding-top-2">
+              {modalHeading}
+            </h4>
+            <button
+              type="button"
+              className="mint-modal__x-button text-base"
+              aria-label="Close Modal"
+              onClick={closeModal}
+            >
+              <IconClose />
+            </button>
+          </div>
 
-      <div className="mint-modal__body">{children}</div>
+          <div className="mint-modal__body">{children}</div>
+        </>
+      ) : (
+        <>{children}</>
+      )}
     </ReactModal>
   );
 };

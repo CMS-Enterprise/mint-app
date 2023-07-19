@@ -1,12 +1,21 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 
+import { filterGroups } from '../BodyContent/_filterGroupMapping';
+
 import Banner from './index';
 
 describe('Filter View Modal', () => {
+  const openFilterModal = jest.fn();
+  const openExportModal = jest.fn();
   it('renders without crashing', async () => {
-    const openFilterModal = jest.fn();
-    render(<Banner openFilterModal={openFilterModal} filteredView="CMMI" />);
+    render(
+      <Banner
+        openFilterModal={openFilterModal}
+        openExportModal={openExportModal}
+        filteredView={'CMMI' as typeof filterGroups[number]}
+      />
+    );
 
     await waitFor(() => {
       expect(screen.getByTestId('group-filter-banner')).toBeInTheDocument();
@@ -15,9 +24,12 @@ describe('Filter View Modal', () => {
   });
 
   it('matches snapshot', async () => {
-    const openFilterModal = jest.fn();
     const { asFragment } = render(
-      <Banner openFilterModal={openFilterModal} filteredView="CMMI" />
+      <Banner
+        openFilterModal={openFilterModal}
+        openExportModal={openExportModal}
+        filteredView={'CMMI' as typeof filterGroups[number]}
+      />
     );
 
     await waitFor(() => {
