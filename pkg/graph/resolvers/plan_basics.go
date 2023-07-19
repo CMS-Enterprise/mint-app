@@ -40,24 +40,21 @@ func UpdatePlanBasics(
 	if emailService != nil &&
 		emailTemplateService != nil &&
 		len(addressBook.ModelPlanDateChangedRecipients) > 0 {
-		go func() {
-			err = processChangedDates(
-				logger,
-				existing,
-				emailService,
-				emailTemplateService,
-				addressBook,
-				modelPlan,
-				changes,
+		err2 := processChangedDates(
+			logger,
+			changes,
+			existing,
+			emailService,
+			emailTemplateService,
+			addressBook,
+			modelPlan,
+		)
+		if err2 != nil {
+			logger.Info("Failed to process changed dates",
+				zap.String("modelPlanID", modelPlan.ID.String()),
+				zap.Error(err2),
 			)
-
-			if err != nil {
-				logger.Error("Error processing changed dates",
-					zap.Error(err),
-					zap.String("modelPlanID", modelPlan.ID.String()),
-				)
-			}
-		}()
+		}
 	}
 
 	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
@@ -71,42 +68,54 @@ func UpdatePlanBasics(
 
 func processChangedDates(
 	logger *zap.Logger,
+	changes map[string]interface{},
 	existing *models.PlanBasics,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
-	changes map[string]interface{},
 ) error {
-	dp, err := NewDateProcessor(changes, existing)
+	dateChanges, err := extractChangedDates(changes, existing)
 	if err != nil {
 		return err
+	}
+
+	if len(dateChanges) > 0 {
+		go func() {
+			err2 := sendDateChangedEmails(
+				emailService,
+				emailTemplateService,
+				addressBook,
+				modelPlan,
+				dateChanges,
+			)
+
+			if err2 != nil {
+				logger.Error("Failed to send email notification",
+					zap.Error(err),
+					zap.String("modelPlanID", modelPlan.ID.String()),
+				)
+			}
+		}()
+	}
+	return nil
+}
+
+func extractChangedDates(changes map[string]interface{}, existing *models.PlanBasics) (
+	map[string]email.DateChange,
+	error,
+) {
+	dp, err := NewDateProcessor(changes, existing)
+	if err != nil {
+		return nil, err
 	}
 
 	dateChanges, err := dp.ExtractChangedDates()
-	print("len dateChanges: ", len(dateChanges))
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	if len(dateChanges) == 0 {
-		return nil
-	}
-
-	err = sendDateChangedEmails(
-		emailService,
-		emailTemplateService,
-		addressBook,
-		modelPlan,
-		dateChanges,
-		dp,
-	)
-	if err != nil {
-		logger.Error("Failed to send email notification", zap.Error(err))
-		return err
-	}
-
-	return nil
+	return dateChanges, nil
 }
 
 func sendDateChangedEmails(
@@ -115,12 +124,7 @@ func sendDateChangedEmails(
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
 	dateChanges map[string]email.DateChange,
-	dateProcessor *DateProcessor,
 ) error {
-	if emailService == nil || emailTemplateService == nil || dateProcessor == nil {
-		return nil
-	}
-
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanDateChangedTemplateName)
 	if err != nil {
 		return err
