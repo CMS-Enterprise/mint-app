@@ -5153,7 +5153,7 @@ exports[`IT Solutions Points of Contact Components matches the snapshot: Salesfo
             class="usa-card__header font-body-xs padding-0"
             data-testid="CardHeader"
           >
-            Innovation Development and Operation Services (IDOS)
+            CMMI Technology Solution (CTS)
           </header>
           <div
             class="usa-card__footer padding-0"
@@ -5162,7 +5162,7 @@ exports[`IT Solutions Points of Contact Components matches the snapshot: Salesfo
             <h3
               class="margin-0 line-height-sans-2"
             >
-              NewWave
+              Softrams
             </h3>
           </div>
         </div>
