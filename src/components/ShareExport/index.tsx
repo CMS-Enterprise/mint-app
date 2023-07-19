@@ -14,7 +14,7 @@ import {
 import classNames from 'classnames';
 
 import CheckboxField from 'components/shared/CheckboxField';
-import { fetchCSVData as handleCSV } from 'utils/export/CsvExportLink';
+import useFetchCSVData from 'hooks/useFetchCSVData';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
@@ -55,6 +55,8 @@ const ShareExportModal = ({
 
   // State for modal navigation elements
   const [isActive, setIsActive] = useState<typeof navElement[number]>('share');
+
+  const { fetchSingleData } = useFetchCSVData();
 
   const modalElementId: string = 'share-export-modal';
 
@@ -156,7 +158,7 @@ const ShareExportModal = ({
             handlePrint();
           }
           if (exportCSV) {
-            handleCSV(modelID);
+            fetchSingleData(modelID);
           }
         }}
       >
