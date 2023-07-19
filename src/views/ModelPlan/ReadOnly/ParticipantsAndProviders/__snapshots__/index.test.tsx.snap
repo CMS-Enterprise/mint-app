@@ -14,12 +14,16 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
       >
         Participants and Providers
       </h2>
-      <span
-        class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
-        data-testid="tasklist-tag"
-      >
-        In progress
-      </span>
+      <div>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+      </div>
     </div>
     <div
       class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
