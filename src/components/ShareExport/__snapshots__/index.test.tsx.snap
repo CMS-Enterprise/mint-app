@@ -9,7 +9,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
     id="share-export-modal"
   >
     <div
-      class="display-none mint-only-print"
+      class="mint-only-print"
     >
       <div
         class=""

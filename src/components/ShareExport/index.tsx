@@ -94,7 +94,7 @@ const ShareExportModal = ({
   // Composes components to render to PDF
   // Can either be all readonly sections, or individual filter group component views
   const ComponentToPrint: JSX.Element = (
-    <div className="display-none mint-only-print" ref={componentRef}>
+    <div className="mint-only-print" ref={componentRef}>
       <PDFSummary
         filteredView={filteredGroup === 'all' ? undefined : filteredGroup}
       />

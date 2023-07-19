@@ -303,18 +303,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
       data-testid="read-only-model-summary"
     >
-      <Modal
-        isOpen={isFilterViewModalOpen}
-        closeModal={() => setIsFilterViewModalOpen(false)}
-        shouldCloseOnOverlayClick
-        modalHeading={h('filterView:filterView')}
-      >
-        <FilterViewModal
-          closeModal={() => setIsFilterViewModalOpen(false)}
-          filteredView={filteredView}
-        />
-      </Modal>
-
       <GridContainer
         className={classnames({
           'padding-x-0': isMobile,
