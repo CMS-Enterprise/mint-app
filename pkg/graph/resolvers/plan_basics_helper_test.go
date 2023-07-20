@@ -27,16 +27,6 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 		WrapUpEnds:              &t1,
 	}
 
-	// TODO: Add test for single date field from nil to non-nil
-	// TODO: Add test for single date field from non-nil to nil
-	// TODO: Add test for range begin date from nil to non-nil
-	// TODO: Add test for range end date from nil to non-nil
-	// TODO: Add test for range begin date from non-nil to nil
-	// TODO: Add test for range end date from non-nil to nil
-	// TODO: Add test for range both dates from nil to non-nil
-	// TODO: Add test for range both dates from non-nil to nil
-
-	// Test Cases
 	testCases := []struct {
 		name     string
 		changes  map[string]interface{}
@@ -157,7 +147,7 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 				},
 			},
 		},
-
+		// Field was nil initially
 		{
 			name: "Field was nil initially",
 			changes: map[string]interface{}{
@@ -182,6 +172,168 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 					NewDate:       &t1,
 					OldRangeStart: nil,
 					OldRangeEnd:   nil,
+					NewRangeStart: nil,
+					NewRangeEnd:   nil,
+				},
+			},
+		},
+		// Single date field from nil to non-nil
+		{
+			name: "Single date field from nil to non-nil",
+			changes: map[string]interface{}{
+				"announced": t2.Format(time.RFC3339),
+			},
+			existing: &models.PlanBasics{},
+			expected: map[string]email.DateChange{
+				"announced": {
+					Field:         "Announce model",
+					IsRange:       false,
+					OldDate:       nil,
+					NewDate:       &t2,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: nil,
+					NewRangeEnd:   nil,
+				},
+			},
+		},
+		// Single date field from non-nil to nil
+		{
+			name: "Single date field from non-nil to nil",
+			changes: map[string]interface{}{
+				"announced": nil,
+			},
+			existing: defaultExisting,
+			expected: map[string]email.DateChange{
+				"announced": {
+					Field:         "Announce model",
+					IsRange:       false,
+					OldDate:       &t1,
+					NewDate:       nil,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: nil,
+					NewRangeEnd:   nil,
+				},
+			},
+		},
+		// Range begin date from nil to non-nil
+		{
+			name: "Range begin date from nil to non-nil",
+			changes: map[string]interface{}{
+				"applicationsStart": t2.Format(time.RFC3339),
+			},
+			existing: &models.PlanBasics{},
+			expected: map[string]email.DateChange{
+				"applications": {
+					Field:         "Application period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: &t2,
+					NewRangeEnd:   nil,
+				},
+			},
+		},
+		// Range end date from nil to non-nil
+		{
+			name: "Range end date from nil to non-nil",
+			changes: map[string]interface{}{
+				"applicationsEnd": t2.Format(time.RFC3339),
+			},
+			existing: &models.PlanBasics{},
+			expected: map[string]email.DateChange{
+				"applications": {
+					Field:         "Application period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: nil,
+					NewRangeEnd:   &t2,
+				},
+			},
+		},
+		// Range begin date from non-nil to nil
+		{
+			name: "Range begin date from non-nil to nil",
+			changes: map[string]interface{}{
+				"applicationsStart": nil,
+			},
+			existing: defaultExisting,
+			expected: map[string]email.DateChange{
+				"applications": {
+					Field:         "Application period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: &t1,
+					OldRangeEnd:   &t1,
+					NewRangeStart: nil,
+					NewRangeEnd:   &t1,
+				},
+			},
+		},
+		// Range end date from non-nil to nil
+		{
+			name: "Range end date from non-nil to nil",
+			changes: map[string]interface{}{
+				"applicationsEnd": nil,
+			},
+			existing: defaultExisting,
+			expected: map[string]email.DateChange{
+				"applications": {
+					Field:         "Application period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: &t1,
+					OldRangeEnd:   &t1,
+					NewRangeStart: &t1,
+					NewRangeEnd:   nil,
+				},
+			},
+		},
+		// Range both dates from nil to non-nil
+		{
+			name: "Range both dates from nil to non-nil",
+			changes: map[string]interface{}{
+				"applicationsStart": t2.Format(time.RFC3339),
+				"applicationsEnd":   t2.Format(time.RFC3339),
+			},
+			existing: &models.PlanBasics{},
+			expected: map[string]email.DateChange{
+				"applications": {
+					Field:         "Application period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: nil,
+					OldRangeEnd:   nil,
+					NewRangeStart: &t2,
+					NewRangeEnd:   &t2,
+				},
+			},
+		},
+		// Range both dates from non-nil to nil
+		{
+			name: "Range both dates from non-nil to nil",
+			changes: map[string]interface{}{
+				"applicationsStart": nil,
+				"applicationsEnd":   nil,
+			},
+			existing: defaultExisting,
+			expected: map[string]email.DateChange{
+				"applications": {
+					Field:         "Application period",
+					IsRange:       true,
+					OldDate:       nil,
+					NewDate:       nil,
+					OldRangeStart: &t1,
+					OldRangeEnd:   &t1,
 					NewRangeStart: nil,
 					NewRangeEnd:   nil,
 				},
