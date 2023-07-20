@@ -72,7 +72,7 @@ export const CharacteristicsContent = () => {
   const { t: generalCharacteristicsMiscT } = useTranslation(
     'generalCharacteristicsMisc'
   );
-  const { t: generalT } = useTranslation('draftModelPlan');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -215,12 +215,12 @@ export const CharacteristicsContent = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{generalT('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{generalT('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb current>
@@ -235,10 +235,10 @@ export const CharacteristicsContent = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {generalT('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {generalT('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -268,7 +268,7 @@ export const CharacteristicsContent = () => {
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={generalT('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -563,7 +563,7 @@ export const CharacteristicsContent = () => {
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button type="submit" onClick={() => setErrors({})}>
-                    {generalT('next')}
+                    {miscellaneousT('next')}
                   </Button>
                 </div>
                 <Button
@@ -572,7 +572,7 @@ export const CharacteristicsContent = () => {
                   onClick={() => handleFormSubmit('back')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
-                  {generalT('saveAndReturn')}
+                  {miscellaneousT('saveAndReturn')}
                 </Button>
               </Form>
               {id && (

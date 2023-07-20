@@ -88,7 +88,8 @@ export const basics: TranslationBasics = {
     filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg'],
     options: {
       VOLUNTARY: 'Voluntary',
-      MANDATORY: 'Mandatory'
+      MANDATORY: 'Mandatory',
+      TBD: 'To be determined'
     }
   },
   problem: {

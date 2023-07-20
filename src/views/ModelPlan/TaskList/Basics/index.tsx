@@ -41,7 +41,7 @@ import {
 } from 'queries/Basics/types/GetModelPlanInfo';
 import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
 import UpdateModelPlanAndBasics from 'queries/UpdateModelPlanAndBasics';
-import { CMMIGroup, CMSCenter } from 'types/graphql-global-types';
+import { CMSCenter } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -59,8 +59,8 @@ const BasicsContent = () => {
 
   const {
     modelCategory: modelCategoryConfig,
-    cmsCenters: modelCMSCenterConfig,
-    cmmiGroups: modelCMSGroupsConfig
+    cmsCenters: cmsCentersConfig,
+    cmmiGroups: cmmiGroupsConfig
   } = usePlanTranslation('basics');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -424,9 +424,15 @@ const BasicsContent = () => {
                           </option>
                           {Object.keys(modelCategoryConfig.options).map(
                             category => {
+                              type KeyType = keyof typeof modelCategoryConfig.options;
+
                               return (
                                 <option key={category} value={category}>
-                                  {modelCategoryConfig.options[category]}
+                                  {
+                                    modelCategoryConfig.options[
+                                      category as KeyType
+                                    ]
+                                  }
                                 </option>
                               );
                             }
@@ -453,8 +459,10 @@ const BasicsContent = () => {
                                   {flatErrors['basics.cmsCenters']}
                                 </FieldErrorMsg>
 
-                                {Object.keys(modelCMSCenterConfig.options).map(
+                                {Object.keys(cmsCentersConfig.options).map(
                                   center => {
+                                    type KeyType = keyof typeof cmsCentersConfig.options;
+
                                     return (
                                       <Field
                                         key={center}
@@ -462,11 +470,13 @@ const BasicsContent = () => {
                                         id={`new-plan-cmsCenters-${center}`}
                                         name="basics.cmsCenters"
                                         label={
-                                          modelCMSCenterConfig.options[center]
+                                          cmsCentersConfig.options[
+                                            center as KeyType
+                                          ]
                                         }
                                         value={center}
                                         checked={values.basics.cmsCenters.includes(
-                                          center as CMSCenter
+                                          center as KeyType
                                         )}
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
@@ -475,7 +485,7 @@ const BasicsContent = () => {
                                             arrayHelpers.push(e.target.value);
                                           } else {
                                             const idx = values.basics.cmsCenters.indexOf(
-                                              e.target.value as CMSCenter
+                                              e.target.value as KeyType
                                             );
                                             arrayHelpers.remove(idx);
                                           }
@@ -542,7 +552,9 @@ const BasicsContent = () => {
                         <FieldErrorMsg>
                           {flatErrors['basics.cmmiGroups']}
                         </FieldErrorMsg>
-                        {Object.keys(CMMIGroup).map(group => {
+                        {Object.keys(cmmiGroupsConfig.options).map(group => {
+                          type KeyType = keyof typeof cmmiGroupsConfig.options;
+
                           return (
                             <Fragment key={group}>
                               <Field
@@ -554,10 +566,12 @@ const BasicsContent = () => {
                                 }
                                 id={`new-plan-cmmiGroup-${group}`}
                                 name="basics.cmmiGroups"
-                                label={modelCMSGroupsConfig.options[group]}
+                                label={
+                                  cmmiGroupsConfig.options[group as KeyType]
+                                }
                                 value={group}
                                 checked={values.basics.cmmiGroups.includes(
-                                  group as CMMIGroup
+                                  group as KeyType
                                 )}
                               />
                             </Fragment>

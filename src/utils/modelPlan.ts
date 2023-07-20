@@ -1255,6 +1255,18 @@ export const mapMultiSelectOptions = (
       label: translationMethod(key)
     }));
 
+// Used to map MultiSelect options from Enums
+export const mapMultiSelectOptionsFromObj = (
+  translationObject: Record<string, string>,
+  type: { [s: number]: string }
+) =>
+  Object.keys(type)
+    .sort(sortOtherEnum)
+    .map(key => ({
+      value: key,
+      label: translationObject[key]
+    }));
+
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
 export const sortOtherEnum = (a: string, b: string) => {
   if (

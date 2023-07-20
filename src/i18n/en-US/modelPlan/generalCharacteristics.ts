@@ -19,12 +19,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'existing_model',
     question: 'Which existing model?',
     hint: 'Start typing the name of the model',
-    dataType: 'boolean',
-    formType: 'radio',
-    options: {
-      true: 'New model',
-      false: 'New track of an existing model'
-    }
+    dataType: 'string',
+    formType: 'select'
   },
   resemblesExistingModel: {
     gqlField: 'resemblesExistingModel',
@@ -95,6 +91,127 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'Note',
     dataType: 'string',
     formType: 'textarea'
+  },
+  alternativePaymentModelTypes: {
+    gqlField: 'alternativePaymentModelTypes',
+    goField: 'AlternativePaymentModelTypes',
+    dbField: 'alternative_payment_model_types',
+    question:
+      'What type of Alternative Payment Model (APM) do you think the model could be?',
+    hint:
+      'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      REGULAR: 'Regular APM',
+      MIPS: 'MIPS APM',
+      ADVANCED: 'Advanced APM',
+      NOT_APM: 'It is not an APM'
+    }
+  },
+  alternativePaymentModelNote: {
+    gqlField: 'alternativePaymentModelNote',
+    goField: 'AlternativePaymentModelNote',
+    dbField: 'alternative_payment_model_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  keyCharacteristics: {
+    gqlField: 'keyCharacteristics',
+    goField: 'KeyCharacteristics',
+    dbField: 'key_characteristics',
+    question: 'What are the model key characteristics? Select all that apply.',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    multiSelectLabel: 'Selected key characteristics',
+    options: {
+      EPISODE_BASED: 'Episode-Based Model',
+      PART_C: 'Medicare-Advantage (Part C) Model',
+      PART_D: 'Part D Model',
+      PAYMENT: 'Payment Model',
+      POPULATION_BASED: 'Population-based Model',
+      PREVENTATIVE: 'Preventative Model',
+      SERVICE_DELIVERY: 'Service Delivery Model',
+      SHARED_SAVINGS: 'Shared Savings Model',
+      OTHER: 'Other'
+    }
+  },
+  keyCharacteristicsNote: {
+    gqlField: 'keyCharacteristicsNote',
+    goField: 'KeyCharacteristicsNote',
+    dbField: 'key_characteristics_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  keyCharacteristicsOther: {
+    gqlField: 'keyCharacteristicsOther',
+    goField: 'KeyCharacteristicsOther',
+    dbField: 'key_characteristics_other',
+    question: 'Please describe the other key characteristics',
+    dataType: 'string',
+    formType: 'text'
+  },
+  collectPlanBids: {
+    gqlField: 'collectPlanBids',
+    goField: 'CollectPlanBids',
+    dbField: 'collect_plan_bids',
+    question: 'Will you review and collect plan bids?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  collectPlanBidsNote: {
+    gqlField: 'collectPlanBidsNote',
+    goField: 'CollectPlanBidsNote',
+    dbField: 'collect_plan_bids_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  managePartCDEnrollment: {
+    gqlField: 'managePartCDEnrollment',
+    goField: 'ManagePartCDEnrollment',
+    dbField: 'manage_part_c_d_enrollment',
+    question: 'Will you manage Part C/D enrollment?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  managePartCDEnrollmentNote: {
+    gqlField: 'managePartCDEnrollmentNote',
+    goField: 'ManagePartCDEnrollmentNote',
+    dbField: 'manage_part_c_d_enrollment_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  planContractUpdated: {
+    gqlField: 'planContractUpdated',
+    goField: 'PlanContractUpdated',
+    dbField: 'plan_contract_updated',
+    question: 'Have you updated the plan’s contract?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  planContractUpdatedNote: {
+    gqlField: 'planContractUpdatedNote',
+    goField: 'PlanContractUpdatedNote',
+    dbField: 'plan_contract_updated_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
   }
 };
 
@@ -102,39 +219,7 @@ export const generalCharacteristicsMisc: Record<string, string> = {
   heading: 'General characteristics',
   clearanceHeading: 'Review general characteristics',
   breadcrumb: 'General characteristics',
-  newModel: 'New model',
-  selectedKeyCharacteristics: 'Selected key characteristics',
-  modelAPM:
-    'What type of Alternative Payment Model (APM) do you think the model could be?',
-  forQPP: 'For the Quality Payment Program (QPP)',
-  keyCharacteristics:
-    'What are the model key characteristics? Select all that apply.',
-  keyCharacteristicsQuestion: 'What are the model key characteristics?'
-  //   modelAPMType: 'What type of APM model?',
-  //   apmTypes: {
-  //     regularAPM: 'Regular APM',
-  //     MIPSAPM: 'MIPS APM',
-  //     advancedAPM: 'Advanced APM',
-  //     notAPM: 'It is not an APM'
-  //   },
-  //   MIPSInfo:
-  //     'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.',
-  //   keyCharacteristicsTypes: {
-  //     episodeBased: 'Episode-Based Model',
-  //     partC: 'Medicare-Advantage (Part C) Model',
-  //     partD: 'Part D Model',
-  //     payment: 'Payment Model',
-  //     population: 'Population-based Model',
-  //     preventative: 'Preventative Model',
-  //     service: 'Service Delivery Model',
-  //     shared: 'Shared Savings Model',
-  //     other: 'Other'
-  //   },
-  //   specificQuestions: 'Key characteristic specific questions',
-  //   pleaseDescribe: 'Please describe the other key characteristics',
-  //   reviewPlanBids: 'Will you review and collect plan bids?',
-  //   manageEnrollment: 'Will you manage Part C/D enrollment?',
-  //   updatedContract: 'Have you updated the plan’s contract?',
+  specificQuestions: 'Key characteristic specific questions'
   //   careCoordination: 'Is care coordination involved?',
   //   additionalServices: 'Are additional services involved?',
   //   communityInvolved: 'Are community partners involved?',

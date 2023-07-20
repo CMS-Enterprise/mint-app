@@ -4,6 +4,21 @@
 */
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
+import {
+  AlternativePaymentModelType,
+  CMMIGroup,
+  CMSCenter,
+  KeyCharacteristic,
+  ModelCategory,
+  ModelType,
+  TaskStatus
+} from './graphql-global-types';
+
+export enum Bool {
+  true = 'true',
+  false = 'false'
+}
+
 export type TranslationFieldProperties = {
   gqlField: string;
   goField: string;
@@ -29,8 +44,11 @@ export type TranslationFieldProperties = {
 };
 
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
-export type TranslationFieldPropertiesWithOptions = TranslationFieldProperties & {
-  options: Record<string, string>;
+// Takes in a enum parameter for translation key
+export type TranslationFieldPropertiesWithOptions<
+  T extends string
+> = TranslationFieldProperties & {
+  options: Record<T, string>;
 };
 
 // Model Plan
@@ -45,11 +63,11 @@ export type TranslationBasics = {
   // Model Plan
   amsModelID: TranslationFieldProperties;
   demoCode: TranslationFieldProperties;
-  modelCategory: TranslationFieldPropertiesWithOptions;
-  cmsCenters: TranslationFieldPropertiesWithOptions;
-  cmmiGroups: TranslationFieldPropertiesWithOptions;
+  modelCategory: TranslationFieldPropertiesWithOptions<ModelCategory>;
+  cmsCenters: TranslationFieldPropertiesWithOptions<CMSCenter>;
+  cmmiGroups: TranslationFieldPropertiesWithOptions<CMMIGroup>;
   // Overview
-  modelType: TranslationFieldPropertiesWithOptions;
+  modelType: TranslationFieldPropertiesWithOptions<ModelType>;
   problem: TranslationFieldProperties;
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
@@ -64,26 +82,38 @@ export type TranslationBasics = {
   performancePeriodEnds: TranslationFieldProperties;
   highLevelNote: TranslationFieldProperties;
   wrapUpEnds: TranslationFieldProperties;
-  phasedIn: TranslationFieldPropertiesWithOptions;
+  phasedIn: TranslationFieldPropertiesWithOptions<Bool>;
   phasedInNote: TranslationFieldProperties;
-  status: TranslationFieldPropertiesWithOptions;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 // General Characteristics
 export type TranslationGeneralCharacteristics = {
-  isNewModel: TranslationFieldPropertiesWithOptions;
-  existingModel: TranslationFieldPropertiesWithOptions;
+  isNewModel: TranslationFieldPropertiesWithOptions<Bool>;
+  existingModel: TranslationFieldProperties;
   existingModelLinks: TranslationFieldProperties;
-  resemblesExistingModel: TranslationFieldPropertiesWithOptions;
+  resemblesExistingModel: TranslationFieldPropertiesWithOptions<Bool>;
   resemblesExistingModelHow: TranslationFieldProperties;
   resemblesExistingModelNote: TranslationFieldProperties;
-  hasComponentsOrTracks: TranslationFieldPropertiesWithOptions;
+  hasComponentsOrTracks: TranslationFieldPropertiesWithOptions<Bool>;
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
+  // Key Characteristics
+  alternativePaymentModelTypes: TranslationFieldPropertiesWithOptions<AlternativePaymentModelType>;
+  alternativePaymentModelNote: TranslationFieldProperties;
+  keyCharacteristics: TranslationFieldPropertiesWithOptions<KeyCharacteristic>;
+  keyCharacteristicsNote: TranslationFieldProperties;
+  keyCharacteristicsOther: TranslationFieldProperties;
+  collectPlanBids: TranslationFieldPropertiesWithOptions<Bool>;
+  collectPlanBidsNote: TranslationFieldProperties;
+  managePartCDEnrollment: TranslationFieldPropertiesWithOptions<Bool>;
+  managePartCDEnrollmentNote: TranslationFieldProperties;
+  planContractUpdated: TranslationFieldPropertiesWithOptions<Bool>;
+  planContractUpdatedNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
-  generalCharacteristics: TranslationGeneralCharacteristics;
+  generalCharacteristicsT: TranslationGeneralCharacteristics; // TODO: remove T
 };
