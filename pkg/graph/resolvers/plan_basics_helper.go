@@ -46,8 +46,6 @@ func NewDateProcessor(changes map[string]interface{}, existing *models.PlanBasic
 		return nil, err
 	}
 
-	fmt.Printf("Existing map: %+v\n", existingMap)
-
 	return &DateProcessor{changes: changes, existing: existingMap}, nil
 }
 
@@ -89,8 +87,17 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]email.DateChange, err
 					if existingDataFound {
 						otherOldValue = existingData.(*time.Time)
 						if newFound {
-							otherNewValuePtr, _ := time.Parse(time.RFC3339, otherNewData.(string)) // Parse the new date from dp.changes
-							otherNewValue = &otherNewValuePtr
+							if otherNewData != nil {
+								otherNewValueParsed, err := time.Parse(time.RFC3339, otherNewData.(string))
+								otherNewValue = &otherNewValueParsed
+								if err != nil {
+									return nil, err
+								}
+
+								if otherNewValue.IsZero() {
+									otherNewValue = nil
+								}
+							}
 						} else {
 							otherNewValue = otherOldValue
 						}
@@ -142,35 +149,59 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 ) {
 	newVal, newExists := dp.changes[field]
 	oldVal, oldExists := dp.existing[field]
+	var newTimeVal, oldTimeVal *time.Time
+	hasAssignedNewValue := false
 
-	if newExists && oldExists {
-		var newTimeVal time.Time
-		var err error
+	println("field:", field)
 
-		newTimeVal, err = time.Parse(time.RFC3339, newVal.(string))
-		if err != nil {
-			return false, nil, nil
+	// If we are assigning a new value then we have a change
+	if newExists {
+		hasAssignedNewValue = true
+
+		if newVal != nil {
+			switch v := newVal.(type) {
+			case string:
+				newTimeParsed, err := time.Parse(time.RFC3339, v)
+				if err != nil {
+					fmt.Println("ERROR: Failed to parse time:", err)
+					return false, nil, nil
+				}
+
+				if !newTimeParsed.IsZero() {
+					newTimeVal = &newTimeParsed
+				}
+			default:
+				fmt.Println("ERROR: New date value is not a string")
+				return false, nil, nil
+			}
 		}
-
-		oldTimeVal, ok := oldVal.(*time.Time)
-		if !ok {
-			return false, nil, nil
-		}
-
-		if oldTimeVal == nil || oldTimeVal.IsZero() || !newTimeVal.Equal(*oldTimeVal) {
-			return true, oldTimeVal, &newTimeVal
-		}
-	} else if newExists {
-		newTimeVal, err := time.Parse(time.RFC3339, newVal.(string))
-		if err != nil {
-			return false, nil, nil
-		}
-
-		// New value exists but old does not, so it is a new addition
-		return true, nil, &newTimeVal
 	}
 
-	return false, nil, nil
+	println("newTimeVal:", newTimeVal)
+
+	var ok bool
+	if oldExists && oldVal != nil {
+		oldTimeVal, ok = oldVal.(*time.Time)
+		if !ok || (oldTimeVal != nil && oldTimeVal.IsZero()) {
+			oldTimeVal = nil
+		}
+	}
+	println("oldTimeVal:", oldTimeVal)
+
+	// If we have not assigned a new value then we should default to using the old value
+	if !hasAssignedNewValue {
+		return false, oldTimeVal, oldTimeVal
+	}
+
+	bothTimesAreNil := oldTimeVal == nil && newTimeVal == nil
+	neitherTimeIsNil := oldTimeVal != nil && newTimeVal != nil
+
+	// If we are assigning the same value as that which already exists we should not
+	if bothTimesAreNil || (neitherTimeIsNil && (*newTimeVal).Equal(*oldTimeVal)) {
+		return false, oldTimeVal, oldTimeVal
+	}
+
+	return true, oldTimeVal, newTimeVal
 }
 
 // TODO: How can this be simplified using struct tags?
