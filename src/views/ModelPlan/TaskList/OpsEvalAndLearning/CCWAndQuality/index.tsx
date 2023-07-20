@@ -226,272 +226,274 @@ const CCWAndQuality = () => {
                   handleSubmit(e);
                 }}
               >
-                {isCCWInvolvement(ccmInvolvment) && (
-                  <>
-                    <h3>{t('ccwSpecific')}</h3>
+                <Fieldset disabled={loading}>
+                  {isCCWInvolvement(ccmInvolvment) && (
+                    <>
+                      <h3>{t('ccwSpecific')}</h3>
 
-                    <FieldGroup
-                      scrollElement="sendFilesBetweenCcw"
-                      error={!!flatErrors.sendFilesBetweenCcw}
-                    >
-                      <Label
-                        htmlFor="ops-eval-and-learning-send-files"
-                        className="maxw-none"
+                      <FieldGroup
+                        scrollElement="sendFilesBetweenCcw"
+                        error={!!flatErrors.sendFilesBetweenCcw}
                       >
-                        {t('ccwSendFiles')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.sendFilesBetweenCcw}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        {[true, false].map(key => (
-                          <Field
-                            as={Radio}
-                            key={key}
-                            id={`ops-eval-and-learning-send-files-${key}`}
-                            name="sendFilesBetweenCcw"
-                            label={key ? h('yes') : h('no')}
-                            value={key ? 'YES' : 'NO'}
-                            checked={values.sendFilesBetweenCcw === key}
-                            onChange={() => {
-                              setFieldValue('sendFilesBetweenCcw', key);
-                            }}
-                          />
-                        ))}
-                      </Fieldset>
-
-                      <AddNote
-                        id="ops-eval-and-learning-send-files-note"
-                        field="sendFilesBetweenCcwNote"
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="appToSendFilesToKnown"
-                      error={!!flatErrors.appToSendFilesToKnown}
-                    >
-                      <Label
-                        htmlFor="ops-eval-and-learning-app-to-send-files"
-                        className="maxw-none"
-                      >
-                        {t('fileTransfers')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.appToSendFilesToKnown}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        {[true, false].map(key => (
-                          <Fragment key={key.toString()}>
+                        <Label
+                          htmlFor="ops-eval-and-learning-send-files"
+                          className="maxw-none"
+                        >
+                          {t('ccwSendFiles')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.sendFilesBetweenCcw}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          {[true, false].map(key => (
                             <Field
                               as={Radio}
                               key={key}
-                              id={`ops-eval-and-learning-app-to-send-files-${key}`}
-                              name="appToSendFilesToKnown"
+                              id={`ops-eval-and-learning-send-files-${key}`}
+                              name="sendFilesBetweenCcw"
                               label={key ? h('yes') : h('no')}
                               value={key ? 'YES' : 'NO'}
-                              checked={values.appToSendFilesToKnown === key}
+                              checked={values.sendFilesBetweenCcw === key}
                               onChange={() => {
-                                setFieldValue('appToSendFilesToKnown', key);
+                                setFieldValue('sendFilesBetweenCcw', key);
                               }}
                             />
-                            {key === true &&
-                              values.appToSendFilesToKnown === key && (
-                                <div className="margin-left-4 margin-top-1">
-                                  <Label
-                                    htmlFor="ops-eval-and-learning-app-to-send-files-which"
-                                    className="text-normal"
-                                  >
-                                    {h('pleaseSpecify')}
-                                  </Label>
-                                  <FieldErrorMsg>
-                                    {flatErrors.appToSendFilesToWhich}
-                                  </FieldErrorMsg>
-                                  <Field
-                                    as={TextAreaField}
-                                    className="maxw-none mint-textarea"
-                                    id="ops-eval-and-learning-app-to-send-files-which"
-                                    maxLength={5000}
-                                    name="appToSendFilesToWhich"
-                                  />
-                                </div>
-                              )}
-                          </Fragment>
-                        ))}
-                      </Fieldset>
+                          ))}
+                        </Fieldset>
 
-                      <AddNote
-                        id="ops-eval-and-learning-app-to-distribute-files-note"
-                        field="appToSendFilesToNote"
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="useCcwForFileDistribiutionToParticipants"
-                      error={
-                        !!flatErrors.useCcwForFileDistribiutionToParticipants
-                      }
-                    >
-                      <Label
-                        htmlFor="ops-eval-and-learning-distribute-files"
-                        className="maxw-none"
-                      >
-                        {t('distributeFiles')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.useCcwForFileDistribiutionToParticipants}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        {[true, false].map(key => (
-                          <Field
-                            as={Radio}
-                            key={key}
-                            id={`ops-eval-and-learning-distribute-files-${key}`}
-                            name="useCcwForFileDistribiutionToParticipants"
-                            label={key ? h('yes') : h('no')}
-                            value={key ? 'YES' : 'NO'}
-                            checked={
-                              values.useCcwForFileDistribiutionToParticipants ===
-                              key
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'useCcwForFileDistribiutionToParticipants',
-                                key
-                              );
-                            }}
-                          />
-                        ))}
-                      </Fieldset>
-
-                      <AddNote
-                        id="ops-eval-and-learning-distribute-files-note"
-                        field="useCcwForFileDistribiutionToParticipantsNote"
-                      />
-                    </FieldGroup>
-                  </>
-                )}
-
-                {isQualityMeasures(dataNeededForMonitoring) && (
-                  <>
-                    <h3>{t('qualityQuestions')}</h3>
-
-                    <FieldGroup
-                      scrollElement="developNewQualityMeasures"
-                      error={!!flatErrors.developNewQualityMeasures}
-                    >
-                      <Label
-                        htmlFor="ops-eval-and-learning-develop-measures"
-                        className="maxw-none"
-                      >
-                        {t('validatedQuality')}
-                      </Label>
-
-                      {itSolutionsStarted && (
-                        <ITSolutionsWarning
-                          id="ops-eval-and-learning-data-needed-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
+                        <AddNote
+                          id="ops-eval-and-learning-send-files-note"
+                          field="sendFilesBetweenCcwNote"
                         />
-                      )}
+                      </FieldGroup>
 
-                      <FieldErrorMsg>
-                        {flatErrors.developNewQualityMeasures}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        {[true, false].map(key => (
-                          <Field
-                            as={Radio}
-                            key={key}
-                            id={`ops-eval-and-learning-develop-measures-${key}`}
-                            name="developNewQualityMeasures"
-                            label={key ? h('yes') : h('no')}
-                            value={key ? 'YES' : 'NO'}
-                            checked={values.developNewQualityMeasures === key}
-                            onChange={() => {
-                              setFieldValue('developNewQualityMeasures', key);
-                            }}
-                          />
-                        ))}
-                      </Fieldset>
-
-                      <AddNote
-                        id="ops-eval-and-learning-develop-measures-note"
-                        field="developNewQualityMeasuresNote"
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="qualityPerformanceImpactsPayment"
-                      error={!!flatErrors.qualityPerformanceImpactsPayment}
-                    >
-                      <Label
-                        htmlFor="ops-eval-and-learning-performance-impact"
-                        className="maxw-none"
+                      <FieldGroup
+                        scrollElement="appToSendFilesToKnown"
+                        error={!!flatErrors.appToSendFilesToKnown}
                       >
-                        {t('impactPayment')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.qualityPerformanceImpactsPayment}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        {[true, false].map(key => (
-                          <Field
-                            as={Radio}
-                            key={key}
-                            id={`ops-eval-and-learning-performance-impact-${key}`}
-                            data-testid={`ops-eval-and-learning-performance-impact-${key}`}
-                            name="qualityPerformanceImpactsPayment"
-                            label={key ? h('yes') : h('no')}
-                            value={key ? 'YES' : 'NO'}
-                            checked={
-                              values.qualityPerformanceImpactsPayment === key
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'qualityPerformanceImpactsPayment',
+                        <Label
+                          htmlFor="ops-eval-and-learning-app-to-send-files"
+                          className="maxw-none"
+                        >
+                          {t('fileTransfers')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.appToSendFilesToKnown}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          {[true, false].map(key => (
+                            <Fragment key={key.toString()}>
+                              <Field
+                                as={Radio}
+                                key={key}
+                                id={`ops-eval-and-learning-app-to-send-files-${key}`}
+                                name="appToSendFilesToKnown"
+                                label={key ? h('yes') : h('no')}
+                                value={key ? 'YES' : 'NO'}
+                                checked={values.appToSendFilesToKnown === key}
+                                onChange={() => {
+                                  setFieldValue('appToSendFilesToKnown', key);
+                                }}
+                              />
+                              {key === true &&
+                                values.appToSendFilesToKnown === key && (
+                                  <div className="margin-left-4 margin-top-1">
+                                    <Label
+                                      htmlFor="ops-eval-and-learning-app-to-send-files-which"
+                                      className="text-normal"
+                                    >
+                                      {h('pleaseSpecify')}
+                                    </Label>
+                                    <FieldErrorMsg>
+                                      {flatErrors.appToSendFilesToWhich}
+                                    </FieldErrorMsg>
+                                    <Field
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
+                                      id="ops-eval-and-learning-app-to-send-files-which"
+                                      maxLength={5000}
+                                      name="appToSendFilesToWhich"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          ))}
+                        </Fieldset>
+
+                        <AddNote
+                          id="ops-eval-and-learning-app-to-distribute-files-note"
+                          field="appToSendFilesToNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="useCcwForFileDistribiutionToParticipants"
+                        error={
+                          !!flatErrors.useCcwForFileDistribiutionToParticipants
+                        }
+                      >
+                        <Label
+                          htmlFor="ops-eval-and-learning-distribute-files"
+                          className="maxw-none"
+                        >
+                          {t('distributeFiles')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.useCcwForFileDistribiutionToParticipants}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`ops-eval-and-learning-distribute-files-${key}`}
+                              name="useCcwForFileDistribiutionToParticipants"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.useCcwForFileDistribiutionToParticipants ===
                                 key
-                              );
-                            }}
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'useCcwForFileDistribiutionToParticipants',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
+                        </Fieldset>
+
+                        <AddNote
+                          id="ops-eval-and-learning-distribute-files-note"
+                          field="useCcwForFileDistribiutionToParticipantsNote"
+                        />
+                      </FieldGroup>
+                    </>
+                  )}
+
+                  {isQualityMeasures(dataNeededForMonitoring) && (
+                    <>
+                      <h3>{t('qualityQuestions')}</h3>
+
+                      <FieldGroup
+                        scrollElement="developNewQualityMeasures"
+                        error={!!flatErrors.developNewQualityMeasures}
+                      >
+                        <Label
+                          htmlFor="ops-eval-and-learning-develop-measures"
+                          className="maxw-none"
+                        >
+                          {t('validatedQuality')}
+                        </Label>
+
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="ops-eval-and-learning-data-needed-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
                           />
-                        ))}
-                      </Fieldset>
+                        )}
 
-                      <AddNote
-                        id="ops-eval-and-learning-performance-impact-note"
-                        field="qualityPerformanceImpactsPaymentNote"
-                      />
-                    </FieldGroup>
-                  </>
-                )}
+                        <FieldErrorMsg>
+                          {flatErrors.developNewQualityMeasures}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`ops-eval-and-learning-develop-measures-${key}`}
+                              name="developNewQualityMeasures"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={values.developNewQualityMeasures === key}
+                              onChange={() => {
+                                setFieldValue('developNewQualityMeasures', key);
+                              }}
+                            />
+                          ))}
+                        </Fieldset>
 
-                <div className="margin-top-6 margin-bottom-3">
+                        <AddNote
+                          id="ops-eval-and-learning-develop-measures-note"
+                          field="developNewQualityMeasuresNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="qualityPerformanceImpactsPayment"
+                        error={!!flatErrors.qualityPerformanceImpactsPayment}
+                      >
+                        <Label
+                          htmlFor="ops-eval-and-learning-performance-impact"
+                          className="maxw-none"
+                        >
+                          {t('impactPayment')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.qualityPerformanceImpactsPayment}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`ops-eval-and-learning-performance-impact-${key}`}
+                              data-testid={`ops-eval-and-learning-performance-impact-${key}`}
+                              name="qualityPerformanceImpactsPayment"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.qualityPerformanceImpactsPayment === key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'qualityPerformanceImpactsPayment',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
+                        </Fieldset>
+
+                        <AddNote
+                          id="ops-eval-and-learning-performance-impact-note"
+                          field="qualityPerformanceImpactsPaymentNote"
+                        />
+                      </FieldGroup>
+                    </>
+                  )}
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
-              {id && (
+              {id && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {

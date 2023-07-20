@@ -8,6 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   Dropdown,
+  Fieldset,
   IconArrowBack,
   Label
 } from '@trussworks/react-uswds';
@@ -255,330 +256,334 @@ const DataSharing = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="dataSharingStarts"
-                  error={!!flatErrors.dataSharingStarts}
-                >
-                  <strong>{t('reportingTiming')}</strong>
-                  <Label
-                    htmlFor="ops-eval-and-learning-data-sharing-starts"
-                    className="text-normal margin-top-2"
+                <Fieldset disabled={loading}>
+                  <FieldGroup
+                    scrollElement="dataSharingStarts"
+                    error={!!flatErrors.dataSharingStarts}
                   >
-                    {t('dataSharing')}
-                  </Label>
-                  <p className="text-base margin-y-1 line-height-body-4">
-                    {t('dataSharingInfo')}
-                  </p>
-                  <FieldErrorMsg>{flatErrors.dataSharingStarts}</FieldErrorMsg>
-                  <Field
-                    as={Dropdown}
-                    id="ops-eval-and-learning-data-sharing-starts"
-                    name="dataSharingStarts"
-                    value={values.dataSharingStarts || ''}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFieldValue('dataSharingStarts', e.target.value);
-                    }}
+                    <strong>{t('reportingTiming')}</strong>
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-sharing-starts"
+                      className="text-normal margin-top-2"
+                    >
+                      {t('dataSharing')}
+                    </Label>
+                    <p className="text-base margin-y-1 line-height-body-4">
+                      {t('dataSharingInfo')}
+                    </p>
+                    <FieldErrorMsg>
+                      {flatErrors.dataSharingStarts}
+                    </FieldErrorMsg>
+                    <Field
+                      as={Dropdown}
+                      id="ops-eval-and-learning-data-sharing-starts"
+                      name="dataSharingStarts"
+                      value={values.dataSharingStarts || ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('dataSharingStarts', e.target.value);
+                      }}
+                    >
+                      <option key="default-select" disabled value="">
+                        {`-${h('select')}-`}
+                      </option>
+                      {dataSharingOptions.map(type => {
+                        return (
+                          <option key={type} value={type || ''}>
+                            {translateDataStartsType(type)}
+                          </option>
+                        );
+                      })}
+                    </Field>
+
+                    {values.dataSharingStarts === 'OTHER' && (
+                      <div className="margin-top-3">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-sharing-starts-other"
+                          className="text-normal"
+                        >
+                          {h('pleaseSpecify')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.dataSharingStartsOther}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="maxw-none mint-textarea"
+                          id="ops-eval-and-learning-data-sharing-starts-other"
+                          maxLength={5000}
+                          name="dataSharingStartsOther"
+                        />
+                      </div>
+                    )}
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="dataSharingFrequency"
+                    error={!!flatErrors.dataSharingFrequency}
+                    className="margin-top-4"
                   >
-                    <option key="default-select" disabled value="">
-                      {`-${h('select')}-`}
-                    </option>
-                    {dataSharingOptions.map(type => {
-                      return (
-                        <option key={type} value={type || ''}>
-                          {translateDataStartsType(type)}
-                        </option>
-                      );
-                    })}
-                  </Field>
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-sharing-frequency"
+                      className="maxw-none text-normal"
+                      id="label-ops-eval-and-learning-data-sharing-frequency"
+                    >
+                      {t('dataSharingHowOften')}
+                    </Label>
 
-                  {values.dataSharingStarts === 'OTHER' && (
-                    <div className="margin-top-3">
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-sharing-starts-other"
-                        className="text-normal"
-                      >
-                        {h('pleaseSpecify')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.dataSharingStartsOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        className="maxw-none mint-textarea"
-                        id="ops-eval-and-learning-data-sharing-starts-other"
-                        maxLength={5000}
-                        name="dataSharingStartsOther"
-                      />
-                    </div>
-                  )}
-                </FieldGroup>
+                    <FieldErrorMsg>
+                      {flatErrors.dataSharingFrequency}
+                    </FieldErrorMsg>
+                    <Field
+                      as={MultiSelect}
+                      id="ops-eval-and-learning-data-sharing-frequency"
+                      name="dataSharingFrequency"
+                      ariaLabel="label-ops-eval-and-learning-data-sharing-frequency"
+                      options={dataFrequencyOptions.map(key => ({
+                        value: key,
+                        label: translateDataFrequencyType(key)
+                      }))}
+                      selectedLabel={t('dataSharingHowOftenSeleted')}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('dataSharingFrequency', value);
+                      }}
+                      initialValues={initialValues.dataSharingFrequency}
+                    />
+                    {(values?.dataSharingFrequency || []).includes(
+                      DataFrequencyType.OTHER
+                    ) && (
+                      <div className="margin-top-2">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-sharing-frequency-other"
+                          className="text-normal"
+                        >
+                          {h('pleaseSpecify')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.dataSharingFrequencyOther}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          maxLength={5000}
+                          className="mint-textarea"
+                          error={flatErrors.dataSharingFrequencyOther}
+                          id="ops-eval-and-learning-data-sharing-frequency-other"
+                          name="dataSharingFrequencyOther"
+                        />
+                      </div>
+                    )}
 
-                <FieldGroup
-                  scrollElement="dataSharingFrequency"
-                  error={!!flatErrors.dataSharingFrequency}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="ops-eval-and-learning-data-sharing-frequency"
-                    className="maxw-none text-normal"
-                    id="label-ops-eval-and-learning-data-sharing-frequency"
+                    <AddNote
+                      id="ops-eval-and-learning-data-sharing-frequency-note"
+                      field="dataSharingStartsNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="dataCollectionStarts"
+                    error={!!flatErrors.dataCollectionStarts}
                   >
-                    {t('dataSharingHowOften')}
-                  </Label>
+                    <strong>{t('dataCollectionTiming')}</strong>
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-collection-starts"
+                      className="text-normal margin-top-2"
+                    >
+                      {t('dataCollection')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.dataCollectionStarts}
+                    </FieldErrorMsg>
+                    <Field
+                      as={Dropdown}
+                      id="ops-eval-and-learning-data-collection-starts"
+                      name="dataCollectionStarts"
+                      value={values.dataCollectionStarts || ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('dataCollectionStarts', e.target.value);
+                      }}
+                    >
+                      <option key="default-select" disabled value="">
+                        {`-${h('select')}-`}
+                      </option>
+                      {dataSharingOptions.map(type => {
+                        return (
+                          <option key={type} value={type || ''}>
+                            {translateDataStartsType(type)}
+                          </option>
+                        );
+                      })}
+                    </Field>
 
-                  <FieldErrorMsg>
-                    {flatErrors.dataSharingFrequency}
-                  </FieldErrorMsg>
-                  <Field
-                    as={MultiSelect}
-                    id="ops-eval-and-learning-data-sharing-frequency"
-                    name="dataSharingFrequency"
-                    ariaLabel="label-ops-eval-and-learning-data-sharing-frequency"
-                    options={dataFrequencyOptions.map(key => ({
-                      value: key,
-                      label: translateDataFrequencyType(key)
-                    }))}
-                    selectedLabel={t('dataSharingHowOftenSeleted')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('dataSharingFrequency', value);
-                    }}
-                    initialValues={initialValues.dataSharingFrequency}
-                  />
-                  {(values?.dataSharingFrequency || []).includes(
-                    DataFrequencyType.OTHER
-                  ) && (
-                    <div className="margin-top-2">
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-sharing-frequency-other"
-                        className="text-normal"
-                      >
-                        {h('pleaseSpecify')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.dataSharingFrequencyOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        maxLength={5000}
-                        className="mint-textarea"
-                        error={flatErrors.dataSharingFrequencyOther}
-                        id="ops-eval-and-learning-data-sharing-frequency-other"
-                        name="dataSharingFrequencyOther"
-                      />
-                    </div>
-                  )}
+                    {values.dataCollectionStarts === 'OTHER' && (
+                      <div className="margin-top-3">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-collection-starts-other"
+                          className="text-normal"
+                        >
+                          {h('pleaseSpecify')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.dataCollectionStartsOther}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="maxw-none mint-textarea"
+                          id="ops-eval-and-learning-data-collection-starts-other"
+                          maxLength={5000}
+                          name="dataCollectionStartsOther"
+                        />
+                      </div>
+                    )}
+                  </FieldGroup>
 
-                  <AddNote
-                    id="ops-eval-and-learning-data-sharing-frequency-note"
-                    field="dataSharingStartsNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="dataCollectionStarts"
-                  error={!!flatErrors.dataCollectionStarts}
-                >
-                  <strong>{t('dataCollectionTiming')}</strong>
-                  <Label
-                    htmlFor="ops-eval-and-learning-data-collection-starts"
-                    className="text-normal margin-top-2"
+                  <FieldGroup
+                    scrollElement="dataCollectionFrequency"
+                    error={!!flatErrors.dataCollectionFrequency}
+                    className="margin-top-4"
                   >
-                    {t('dataCollection')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.dataCollectionStarts}
-                  </FieldErrorMsg>
-                  <Field
-                    as={Dropdown}
-                    id="ops-eval-and-learning-data-collection-starts"
-                    name="dataCollectionStarts"
-                    value={values.dataCollectionStarts || ''}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFieldValue('dataCollectionStarts', e.target.value);
-                    }}
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-collection-frequency"
+                      id="label-ops-eval-and-learning-data-collection-frequency"
+                      className="maxw-none text-normal"
+                    >
+                      {t('dataCollectionHowOften')}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.dataCollectionFrequency}
+                    </FieldErrorMsg>
+                    <Field
+                      as={MultiSelect}
+                      id="ops-eval-and-learning-data-collection-frequency"
+                      name="dataCollectionFrequency"
+                      ariaLabel="label-ops-eval-and-learning-data-collection-frequency"
+                      options={dataFrequencyOptions.map(key => ({
+                        value: key,
+                        label: translateDataFrequencyType(key)
+                      }))}
+                      selectedLabel={t('dataSharingHowOftenSeleted')}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('dataCollectionFrequency', value);
+                      }}
+                      initialValues={initialValues.dataCollectionFrequency}
+                    />
+                    {(values?.dataCollectionFrequency || []).includes(
+                      DataFrequencyType.OTHER
+                    ) && (
+                      <div className="margin-top-2">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-collection-frequency-other"
+                          className="text-normal"
+                        >
+                          {h('pleaseSpecify')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.dataCollectionFrequencyOther}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          maxLength={5000}
+                          className="mint-textarea"
+                          error={flatErrors.dataCollectionFrequencyOther}
+                          id="ops-eval-and-learning-data-collection-frequency-other"
+                          name="dataCollectionFrequencyOther"
+                        />
+                      </div>
+                    )}
+
+                    <AddNote
+                      id="ops-eval-and-learning-data-sharing-frequency-note"
+                      field="dataCollectionFrequencyNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="qualityReportingStarts"
+                    error={!!flatErrors.qualityReportingStarts}
                   >
-                    <option key="default-select" disabled value="">
-                      {`-${h('select')}-`}
-                    </option>
-                    {dataSharingOptions.map(type => {
-                      return (
-                        <option key={type} value={type || ''}>
-                          {translateDataStartsType(type)}
-                        </option>
-                      );
-                    })}
-                  </Field>
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-reporting-starts"
+                      className="margin-top-2"
+                    >
+                      {t('dataReporting')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.qualityReportingStarts}
+                    </FieldErrorMsg>
+                    <Field
+                      as={Dropdown}
+                      id="ops-eval-and-learning-data-reporting-starts"
+                      name="qualityReportingStarts"
+                      value={values.qualityReportingStarts || ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('qualityReportingStarts', e.target.value);
+                      }}
+                    >
+                      <option key="default-select" disabled value="">
+                        {`-${h('select')}-`}
+                      </option>
+                      {dataSharingOptions.map(type => {
+                        return (
+                          <option key={type} value={type || ''}>
+                            {translateDataStartsType(type)}
+                          </option>
+                        );
+                      })}
+                    </Field>
 
-                  {values.dataCollectionStarts === 'OTHER' && (
-                    <div className="margin-top-3">
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-collection-starts-other"
-                        className="text-normal"
-                      >
-                        {h('pleaseSpecify')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.dataCollectionStartsOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        className="maxw-none mint-textarea"
-                        id="ops-eval-and-learning-data-collection-starts-other"
-                        maxLength={5000}
-                        name="dataCollectionStartsOther"
-                      />
-                    </div>
-                  )}
-                </FieldGroup>
+                    {values.qualityReportingStarts === 'OTHER' && (
+                      <div className="margin-top-3">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-reporting-starts-other"
+                          className="text-normal"
+                        >
+                          {h('pleaseSpecify')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.qualityReportingStartsOther}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="maxw-none mint-textarea"
+                          id="ops-eval-and-learning-data-reporting-starts-other"
+                          data-testid="ops-eval-and-learning-data-reporting-starts-other"
+                          maxLength={5000}
+                          name="qualityReportingStartsOther"
+                        />
+                      </div>
+                    )}
 
-                <FieldGroup
-                  scrollElement="dataCollectionFrequency"
-                  error={!!flatErrors.dataCollectionFrequency}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="ops-eval-and-learning-data-collection-frequency"
-                    id="label-ops-eval-and-learning-data-collection-frequency"
-                    className="maxw-none text-normal"
-                  >
-                    {t('dataCollectionHowOften')}
-                  </Label>
+                    <AddNote
+                      id="ops-eval-and-learning-data-reporting-frequency-note"
+                      field="qualityReportingStartsNote"
+                    />
+                  </FieldGroup>
 
-                  <FieldErrorMsg>
-                    {flatErrors.dataCollectionFrequency}
-                  </FieldErrorMsg>
-                  <Field
-                    as={MultiSelect}
-                    id="ops-eval-and-learning-data-collection-frequency"
-                    name="dataCollectionFrequency"
-                    ariaLabel="label-ops-eval-and-learning-data-collection-frequency"
-                    options={dataFrequencyOptions.map(key => ({
-                      value: key,
-                      label: translateDataFrequencyType(key)
-                    }))}
-                    selectedLabel={t('dataSharingHowOftenSeleted')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('dataCollectionFrequency', value);
-                    }}
-                    initialValues={initialValues.dataCollectionFrequency}
-                  />
-                  {(values?.dataCollectionFrequency || []).includes(
-                    DataFrequencyType.OTHER
-                  ) && (
-                    <div className="margin-top-2">
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-collection-frequency-other"
-                        className="text-normal"
-                      >
-                        {h('pleaseSpecify')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.dataCollectionFrequencyOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        maxLength={5000}
-                        className="mint-textarea"
-                        error={flatErrors.dataCollectionFrequencyOther}
-                        id="ops-eval-and-learning-data-collection-frequency-other"
-                        name="dataCollectionFrequencyOther"
-                      />
-                    </div>
-                  )}
-
-                  <AddNote
-                    id="ops-eval-and-learning-data-sharing-frequency-note"
-                    field="dataCollectionFrequencyNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="qualityReportingStarts"
-                  error={!!flatErrors.qualityReportingStarts}
-                >
-                  <Label
-                    htmlFor="ops-eval-and-learning-data-reporting-starts"
-                    className="margin-top-2"
-                  >
-                    {t('dataReporting')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.qualityReportingStarts}
-                  </FieldErrorMsg>
-                  <Field
-                    as={Dropdown}
-                    id="ops-eval-and-learning-data-reporting-starts"
-                    name="qualityReportingStarts"
-                    value={values.qualityReportingStarts || ''}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFieldValue('qualityReportingStarts', e.target.value);
-                    }}
-                  >
-                    <option key="default-select" disabled value="">
-                      {`-${h('select')}-`}
-                    </option>
-                    {dataSharingOptions.map(type => {
-                      return (
-                        <option key={type} value={type || ''}>
-                          {translateDataStartsType(type)}
-                        </option>
-                      );
-                    })}
-                  </Field>
-
-                  {values.qualityReportingStarts === 'OTHER' && (
-                    <div className="margin-top-3">
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-reporting-starts-other"
-                        className="text-normal"
-                      >
-                        {h('pleaseSpecify')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.qualityReportingStartsOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        className="maxw-none mint-textarea"
-                        id="ops-eval-and-learning-data-reporting-starts-other"
-                        data-testid="ops-eval-and-learning-data-reporting-starts-other"
-                        maxLength={5000}
-                        name="qualityReportingStartsOther"
-                      />
-                    </div>
-                  )}
-
-                  <AddNote
-                    id="ops-eval-and-learning-data-reporting-frequency-note"
-                    field="qualityReportingStartsNote"
-                  />
-                </FieldGroup>
-
-                <div className="margin-top-6 margin-bottom-3">
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
-              {id && (
+              {id && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {
