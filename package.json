@@ -66,6 +66,7 @@
     "react-scripts": "^5.0.1",
     "react-select": "^5.4.0",
     "react-table": "^7.5.1",
+    "react-to-print": "^2.14.13",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.8",
@@ -176,7 +177,9 @@
       "!src/**/*.stories.{jsx,tsx}",
       "!src/**/__snapshots__/*.test.tsx.snap"
     ],
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 50,

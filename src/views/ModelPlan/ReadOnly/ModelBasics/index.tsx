@@ -18,7 +18,11 @@ import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { checkGroupMap } from '../_components/FilterView/util';
+import {
+  checkGroupMap,
+  hasQuestions,
+  highLevelTimelineQuestions
+} from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
@@ -361,7 +365,13 @@ const ReadOnlyModelBasics = ({
             />
           )}
 
-          <ReadOnlySection heading={generalT('note')} copy={highLevelNote} />
+          {filteredQuestions &&
+            hasQuestions(filteredQuestions, highLevelTimelineQuestions) && (
+              <ReadOnlySection
+                heading={generalT('note')}
+                copy={highLevelNote}
+              />
+            )}
         </>
       ) : (
         <SectionWrapper
