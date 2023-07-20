@@ -493,7 +493,7 @@ const CCWAndQuality = () => {
                 </Fieldset>
               </Form>
 
-              {id && !loading && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {

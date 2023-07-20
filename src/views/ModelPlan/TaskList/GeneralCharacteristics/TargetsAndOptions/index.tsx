@@ -652,7 +652,7 @@ const TargetsAndOptions = () => {
                   </Button>
                 </Fieldset>
               </Form>
-              {id && !loading && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {

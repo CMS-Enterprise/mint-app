@@ -642,7 +642,7 @@ export const OpsEvalAndLearningContent = () => {
                 </Fieldset>
               </Form>
 
-              {id && !loading && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {

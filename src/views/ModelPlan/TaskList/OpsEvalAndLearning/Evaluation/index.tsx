@@ -626,7 +626,7 @@ const Evaluation = () => {
                 </Fieldset>
               </Form>
 
-              {id && !loading && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {

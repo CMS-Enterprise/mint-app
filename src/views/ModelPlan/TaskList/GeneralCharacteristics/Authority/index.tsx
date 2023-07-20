@@ -490,7 +490,7 @@ const Authority = () => {
                   </Button>
                 </Fieldset>
               </Form>
-              {id && !loading && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {

@@ -563,7 +563,7 @@ const KeyCharacteristics = () => {
                   </Button>
                 </Fieldset>
               </Form>
-              {id && !loading && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {

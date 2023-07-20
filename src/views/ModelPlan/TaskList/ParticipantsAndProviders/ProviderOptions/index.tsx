@@ -246,315 +246,319 @@ export const ProviderOptions = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="providerAdditionFrequency"
-                  error={!!flatErrors.providerAdditionFrequency}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="participants-and-providers-additional-frequency">
-                    {t('frequency')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.providerAdditionFrequency}
-                  </FieldErrorMsg>
-
-                  <FieldErrorMsg>
-                    {flatErrors.providerAdditionFrequency}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    {Object.keys(FrequencyType)
-                      .sort(sortOtherEnum)
-                      .map(key => (
-                        <Fragment key={key}>
-                          <Field
-                            as={Radio}
-                            id={`participants-and-providers-additional-frequency-${key}`}
-                            name="providerAdditionFrequency"
-                            label={translateFrequencyType(key)}
-                            value={key}
-                            checked={values.providerAdditionFrequency === key}
-                            onChange={() => {
-                              setFieldValue('providerAdditionFrequency', key);
-                            }}
-                          />
-                          {key === 'OTHER' &&
-                            values.providerAdditionFrequency === key && (
-                              <div className="margin-left-4 margin-top-1">
-                                <Label
-                                  htmlFor="participants-and-providers-additional-frequency-other"
-                                  className="text-normal"
-                                >
-                                  {h('pleaseSpecify')}
-                                </Label>
-                                <FieldErrorMsg>
-                                  {flatErrors.providerAdditionFrequencyOther}
-                                </FieldErrorMsg>
-                                <Field
-                                  as={TextAreaField}
-                                  className="maxw-none mint-textarea"
-                                  id="participants-and-providers-additional-frequency-other"
-                                  maxLength={5000}
-                                  name="providerAdditionFrequencyOther"
-                                />
-                              </div>
-                            )}
-                        </Fragment>
-                      ))}
-                  </Fieldset>
-                  <AddNote
-                    id="participants-and-providers-additional-frequency-note"
-                    field="providerAdditionFrequencyNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="providerAddMethod"
-                  error={!!flatErrors.providerAddMethod}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="participants-and-providers-provider-add-method"
-                    id="label-participants-and-providers-provider-add-method"
+                <Fieldset disabled={loading}>
+                  <FieldGroup
+                    scrollElement="providerAdditionFrequency"
+                    error={!!flatErrors.providerAdditionFrequency}
+                    className="margin-y-4 margin-bottom-8"
                   >
-                    {t('decideProviders')}
-                  </Label>
-                  <p className="text-base margin-0 line-height-body-3">
-                    {t('decideProvidersInfo')}
-                  </p>
-                  <FieldErrorMsg>{flatErrors.providerAddMethod}</FieldErrorMsg>
+                    <Label htmlFor="participants-and-providers-additional-frequency">
+                      {t('frequency')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.providerAdditionFrequency}
+                    </FieldErrorMsg>
 
-                  <Field
-                    as={MultiSelect}
-                    id="participants-and-providers-provider-add-method"
-                    name="providerAddMethod"
-                    ariaLabel="label-participants-and-providers-provider-add-method"
-                    options={mapMultiSelectOptions(
-                      translateProviderAddType,
-                      ProviderAddType
-                    )}
-                    selectedLabel={t('selectedParticipants')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('providerAddMethod', value);
-                    }}
-                    initialValues={initialValues.providerAddMethod}
-                  />
-
-                  {(values?.providerAddMethod || []).includes(
-                    'OTHER' as ProviderAddType
-                  ) && (
-                    <FieldGroup
-                      scrollElement="providerAddMethodOther"
-                      error={!!flatErrors.providerAddMethodOther}
-                    >
-                      <Label
-                        htmlFor="participants-and-providers-provider-add-method-other"
-                        className="text-normal"
-                      >
-                        {t('decideProvidersDescribe')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.providerAddMethodOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        error={flatErrors.providerAddMethodOther}
-                        id="participants-and-providers-provider-add-method-other"
-                        data-testid="participants-and-providers-provider-add-method-other"
-                        name="providerAddMethodOther"
-                      />
-                    </FieldGroup>
-                  )}
-
-                  <AddNote
-                    id="participants-and-providers-provider-add-method-note"
-                    field="providerAddMethodNote"
-                  />
-                </FieldGroup>
-
-                <FieldArray
-                  name="providerLeaveMethod"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">
-                        {t('canProvidersLeave')}
-                      </legend>
-                      <p className="text-base margin-0 line-height-body-3">
-                        {t('canProvidersLeaveInfo')}
-                      </p>
-                      <FieldErrorMsg>
-                        {flatErrors.providerLeaveMethod}
-                      </FieldErrorMsg>
-
-                      {[
-                        ProviderLeaveType.VARIES_BY_TYPE_OF_PROVIDER,
-                        ProviderLeaveType.NOT_ALLOWED_TO_LEAVE,
-                        ProviderLeaveType.AFTER_A_CERTAIN_WITH_IMPLICATIONS,
-                        ProviderLeaveType.VOLUNTARILY_WITHOUT_IMPLICATIONS,
-                        ProviderLeaveType.OTHER,
-                        ProviderLeaveType.NOT_APPLICABLE
-                      ].map(type => {
-                        return (
-                          <Fragment key={type}>
+                    <FieldErrorMsg>
+                      {flatErrors.providerAdditionFrequency}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {Object.keys(FrequencyType)
+                        .sort(sortOtherEnum)
+                        .map(key => (
+                          <Fragment key={key}>
                             <Field
-                              as={CheckboxField}
-                              id={`participants-and-providers-leave-method-${type}`}
-                              name="providerLeaveMethod"
-                              label={translateProviderLeaveType(type)}
-                              value={type}
-                              checked={values?.providerLeaveMethod.includes(
-                                type as ProviderLeaveType
-                              )}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                if (e.target.checked) {
-                                  arrayHelpers.push(e.target.value);
-                                } else {
-                                  const idx = values.providerLeaveMethod.indexOf(
-                                    e.target.value as ProviderLeaveType
-                                  );
-                                  arrayHelpers.remove(idx);
-                                }
+                              as={Radio}
+                              id={`participants-and-providers-additional-frequency-${key}`}
+                              name="providerAdditionFrequency"
+                              label={translateFrequencyType(key)}
+                              value={key}
+                              checked={values.providerAdditionFrequency === key}
+                              onChange={() => {
+                                setFieldValue('providerAdditionFrequency', key);
                               }}
                             />
-                            {type === ('OTHER' as ProviderLeaveType) &&
-                              values.providerLeaveMethod.includes(type) && (
-                                <div className="margin-left-4 margin-top-neg-3">
+                            {key === 'OTHER' &&
+                              values.providerAdditionFrequency === key && (
+                                <div className="margin-left-4 margin-top-1">
                                   <Label
-                                    htmlFor="participants-and-providers-leave-method-other"
+                                    htmlFor="participants-and-providers-additional-frequency-other"
                                     className="text-normal"
                                   >
                                     {h('pleaseSpecify')}
                                   </Label>
                                   <FieldErrorMsg>
-                                    {flatErrors.providerLeaveMethodOther}
+                                    {flatErrors.providerAdditionFrequencyOther}
                                   </FieldErrorMsg>
                                   <Field
                                     as={TextAreaField}
                                     className="maxw-none mint-textarea"
-                                    id="participants-and-providers-leave-method-other"
+                                    id="participants-and-providers-additional-frequency-other"
                                     maxLength={5000}
-                                    name="providerLeaveMethodOther"
+                                    name="providerAdditionFrequencyOther"
                                   />
                                 </div>
                               )}
                           </Fragment>
-                        );
-                      })}
-                      <AddNote
-                        id="participants-and-providers-leave-method-note"
-                        field="providerLeaveMethodNote"
+                        ))}
+                    </Fieldset>
+                    <AddNote
+                      id="participants-and-providers-additional-frequency-note"
+                      field="providerAdditionFrequencyNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="providerAddMethod"
+                    error={!!flatErrors.providerAddMethod}
+                    className="margin-top-4"
+                  >
+                    <Label
+                      htmlFor="participants-and-providers-provider-add-method"
+                      id="label-participants-and-providers-provider-add-method"
+                    >
+                      {t('decideProviders')}
+                    </Label>
+                    <p className="text-base margin-0 line-height-body-3">
+                      {t('decideProvidersInfo')}
+                    </p>
+                    <FieldErrorMsg>
+                      {flatErrors.providerAddMethod}
+                    </FieldErrorMsg>
+
+                    <Field
+                      as={MultiSelect}
+                      id="participants-and-providers-provider-add-method"
+                      name="providerAddMethod"
+                      ariaLabel="label-participants-and-providers-provider-add-method"
+                      options={mapMultiSelectOptions(
+                        translateProviderAddType,
+                        ProviderAddType
+                      )}
+                      selectedLabel={t('selectedParticipants')}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('providerAddMethod', value);
+                      }}
+                      initialValues={initialValues.providerAddMethod}
+                    />
+
+                    {(values?.providerAddMethod || []).includes(
+                      'OTHER' as ProviderAddType
+                    ) && (
+                      <FieldGroup
+                        scrollElement="providerAddMethodOther"
+                        error={!!flatErrors.providerAddMethodOther}
+                      >
+                        <Label
+                          htmlFor="participants-and-providers-provider-add-method-other"
+                          className="text-normal"
+                        >
+                          {t('decideProvidersDescribe')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.providerAddMethodOther}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.providerAddMethodOther}
+                          id="participants-and-providers-provider-add-method-other"
+                          data-testid="participants-and-providers-provider-add-method-other"
+                          name="providerAddMethodOther"
+                        />
+                      </FieldGroup>
+                    )}
+
+                    <AddNote
+                      id="participants-and-providers-provider-add-method-note"
+                      field="providerAddMethodNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldArray
+                    name="providerLeaveMethod"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('canProvidersLeave')}
+                        </legend>
+                        <p className="text-base margin-0 line-height-body-3">
+                          {t('canProvidersLeaveInfo')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.providerLeaveMethod}
+                        </FieldErrorMsg>
+
+                        {[
+                          ProviderLeaveType.VARIES_BY_TYPE_OF_PROVIDER,
+                          ProviderLeaveType.NOT_ALLOWED_TO_LEAVE,
+                          ProviderLeaveType.AFTER_A_CERTAIN_WITH_IMPLICATIONS,
+                          ProviderLeaveType.VOLUNTARILY_WITHOUT_IMPLICATIONS,
+                          ProviderLeaveType.OTHER,
+                          ProviderLeaveType.NOT_APPLICABLE
+                        ].map(type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`participants-and-providers-leave-method-${type}`}
+                                name="providerLeaveMethod"
+                                label={translateProviderLeaveType(type)}
+                                value={type}
+                                checked={values?.providerLeaveMethod.includes(
+                                  type as ProviderLeaveType
+                                )}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                  if (e.target.checked) {
+                                    arrayHelpers.push(e.target.value);
+                                  } else {
+                                    const idx = values.providerLeaveMethod.indexOf(
+                                      e.target.value as ProviderLeaveType
+                                    );
+                                    arrayHelpers.remove(idx);
+                                  }
+                                }}
+                              />
+                              {type === ('OTHER' as ProviderLeaveType) &&
+                                values.providerLeaveMethod.includes(type) && (
+                                  <div className="margin-left-4 margin-top-neg-3">
+                                    <Label
+                                      htmlFor="participants-and-providers-leave-method-other"
+                                      className="text-normal"
+                                    >
+                                      {h('pleaseSpecify')}
+                                    </Label>
+                                    <FieldErrorMsg>
+                                      {flatErrors.providerLeaveMethodOther}
+                                    </FieldErrorMsg>
+                                    <Field
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
+                                      id="participants-and-providers-leave-method-other"
+                                      maxLength={5000}
+                                      name="providerLeaveMethodOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          );
+                        })}
+                        <AddNote
+                          id="participants-and-providers-leave-method-note"
+                          field="providerLeaveMethodNote"
+                        />
+                      </>
+                    )}
+                  />
+
+                  <FieldGroup
+                    scrollElement="providerOverlap"
+                    error={!!flatErrors.providerOverlap}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="participants-and-providers-provider-overlap">
+                      {t('overlap')}
+                    </Label>
+
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="participants-and-providers-provider-overlap-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
                       />
-                    </>
-                  )}
-                />
+                    )}
 
-                <FieldGroup
-                  scrollElement="providerOverlap"
-                  error={!!flatErrors.providerOverlap}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="participants-and-providers-provider-overlap">
-                    {t('overlap')}
-                  </Label>
+                    <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
 
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="participants-and-providers-provider-overlap-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
+                    <Fieldset>
+                      {Object.keys(OverlapType)
+                        .sort(sortOtherEnum)
+                        .map(key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`participants-and-providers-provider-overlap-${key}`}
+                              name="providerOverlap"
+                              label={translateOverlapType(key)}
+                              value={key}
+                              checked={values.providerOverlap === key}
+                              onChange={() => {
+                                setFieldValue('providerOverlap', key);
+                              }}
+                            />
+                          </Fragment>
+                        ))}
+                    </Fieldset>
+                    {(values.providerOverlap === 'YES_NEED_POLICIES' ||
+                      values.providerOverlap === 'YES_NO_ISSUES') && (
+                      <FieldGroup
+                        scrollElement="providerOverlapHierarchy"
+                        error={!!flatErrors.providerOverlapHierarchy}
+                      >
+                        <Label
+                          htmlFor="participants-and-providers-provider-overlap-hierarchy"
+                          className="text-normal margin-top-4"
+                        >
+                          {t('overlapInfo')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.providerOverlapHierarchy}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.providerOverlapHierarchy}
+                          id="participants-and-providers-provider-overlap-hierarchy"
+                          name="providerOverlapHierarchy"
+                        />
+                      </FieldGroup>
+                    )}
+                    <AddNote
+                      id="participants-and-providers-provider-overlap-note"
+                      field="providerOverlapNote"
+                    />
+                  </FieldGroup>
+
+                  {!loading && values.status && (
+                    <ReadyForReview
+                      id="participants-and-providers-provider-status"
+                      field="status"
+                      sectionName={t('heading')}
+                      status={values.status}
+                      setFieldValue={setFieldValue}
+                      readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                      readyForReviewDts={readyForReviewDts}
                     />
                   )}
 
-                  <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
-
-                  <Fieldset>
-                    {Object.keys(OverlapType)
-                      .sort(sortOtherEnum)
-                      .map(key => (
-                        <Fragment key={key}>
-                          <Field
-                            as={Radio}
-                            id={`participants-and-providers-provider-overlap-${key}`}
-                            name="providerOverlap"
-                            label={translateOverlapType(key)}
-                            value={key}
-                            checked={values.providerOverlap === key}
-                            onChange={() => {
-                              setFieldValue('providerOverlap', key);
-                            }}
-                          />
-                        </Fragment>
-                      ))}
-                  </Fieldset>
-                  {(values.providerOverlap === 'YES_NEED_POLICIES' ||
-                    values.providerOverlap === 'YES_NO_ISSUES') && (
-                    <FieldGroup
-                      scrollElement="providerOverlapHierarchy"
-                      error={!!flatErrors.providerOverlapHierarchy}
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
                     >
-                      <Label
-                        htmlFor="participants-and-providers-provider-overlap-hierarchy"
-                        className="text-normal margin-top-4"
-                      >
-                        {t('overlapInfo')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.providerOverlapHierarchy}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        error={flatErrors.providerOverlapHierarchy}
-                        id="participants-and-providers-provider-overlap-hierarchy"
-                        name="providerOverlapHierarchy"
-                      />
-                    </FieldGroup>
-                  )}
-                  <AddNote
-                    id="participants-and-providers-provider-overlap-note"
-                    field="providerOverlapNote"
-                  />
-                </FieldGroup>
-
-                {!loading && values.status && (
-                  <ReadyForReview
-                    id="participants-and-providers-provider-status"
-                    field="status"
-                    sectionName={t('heading')}
-                    status={values.status}
-                    setFieldValue={setFieldValue}
-                    readyForReviewBy={readyForReviewByUserAccount?.commonName}
-                    readyForReviewDts={readyForReviewDts}
-                  />
-                )}
-
-                <div className="margin-top-6 margin-bottom-3">
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('saveAndStartNext')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('saveAndStartNext')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
               {id && (
                 <AutoSave

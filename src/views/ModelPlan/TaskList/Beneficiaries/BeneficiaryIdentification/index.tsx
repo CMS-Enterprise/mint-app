@@ -509,7 +509,7 @@ const BeneficiaryIdentification = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-              {id && !loading && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {

@@ -403,7 +403,7 @@ const PeopleImpact = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-              {id && !loading && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {

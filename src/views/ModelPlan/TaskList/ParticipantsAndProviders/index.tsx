@@ -209,221 +209,228 @@ export const ParticipantsAndProvidersContent = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="participants"
-                        error={!!flatErrors.participants}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="participants-and-providers-participants"
-                          id="label-participants-and-providers-participants"
+                      <Fieldset disabled={loading}>
+                        <FieldGroup
+                          scrollElement="participants"
+                          error={!!flatErrors.participants}
+                          className="margin-top-4"
                         >
-                          {t('whoAreParticipants')}
-                        </Label>
-                        <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
+                          <Label
+                            htmlFor="participants-and-providers-participants"
+                            id="label-participants-and-providers-participants"
+                          >
+                            {t('whoAreParticipants')}
+                          </Label>
+                          <FieldErrorMsg>
+                            {flatErrors.participants}
+                          </FieldErrorMsg>
 
-                        <Field
-                          as={MultiSelect}
-                          id="participants-and-providers-participants"
-                          ariaLabel="label-participants-and-providers-participants"
-                          name="participants"
-                          options={mapMultiSelectOptions(
-                            translateParticipantsType,
-                            ParticipantsType
-                          )}
-                          selectedLabel={t('selectedParticipants')}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('participants', value);
-                          }}
-                          initialValues={initialValues.participants}
-                        />
+                          <Field
+                            as={MultiSelect}
+                            id="participants-and-providers-participants"
+                            ariaLabel="label-participants-and-providers-participants"
+                            name="participants"
+                            options={mapMultiSelectOptions(
+                              translateParticipantsType,
+                              ParticipantsType
+                            )}
+                            selectedLabel={t('selectedParticipants')}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue('participants', value);
+                            }}
+                            initialValues={initialValues.participants}
+                          />
 
-                        {((values?.participants || []).includes(
-                          ParticipantsType.MEDICARE_PROVIDERS
-                        ) ||
-                          (values?.participants || []).includes(
-                            ParticipantsType.STATES
+                          {((values?.participants || []).includes(
+                            ParticipantsType.MEDICARE_PROVIDERS
                           ) ||
-                          (values?.participants || []).includes(
+                            (values?.participants || []).includes(
+                              ParticipantsType.STATES
+                            ) ||
+                            (values?.participants || []).includes(
+                              ParticipantsType.OTHER
+                            )) && (
+                            <p className="margin-top-4 text-bold">
+                              {t('participantQuestions')}
+                            </p>
+                          )}
+
+                          {(values?.participants || []).includes(
+                            ParticipantsType.MEDICARE_PROVIDERS
+                          ) && (
+                            <FieldGroup
+                              scrollElement="medicareProviderType"
+                              error={!!flatErrors.medicareProviderType}
+                            >
+                              <Label
+                                htmlFor="participants-and-providers-medicare-type"
+                                className="text-normal"
+                              >
+                                {t('typeMedicateProvider')}
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors.medicareProviderType}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                error={flatErrors.medicareProviderType}
+                                id="participants-and-providers-medicare-type"
+                                data-testid="participants-and-providers-medicare-type"
+                                name="medicareProviderType"
+                              />
+                            </FieldGroup>
+                          )}
+
+                          {(values?.participants || []).includes(
+                            ParticipantsType.STATES
+                          ) && (
+                            <FieldGroup
+                              scrollElement="statesEngagement"
+                              error={!!flatErrors.statesEngagement}
+                            >
+                              <Label
+                                htmlFor="participants-and-providers-states-engagement"
+                                className="text-normal"
+                              >
+                                {t('describeStates')}
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors.statesEngagement}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                error={flatErrors.statesEngagement}
+                                id="participants-and-providers-states-engagement"
+                                data-testid="participants-and-providers-states-engagement"
+                                name="statesEngagement"
+                              />
+                            </FieldGroup>
+                          )}
+
+                          {(values?.participants || []).includes(
                             ParticipantsType.OTHER
-                          )) && (
-                          <p className="margin-top-4 text-bold">
-                            {t('participantQuestions')}
+                          ) && (
+                            <FieldGroup
+                              scrollElement="participantsOther"
+                              error={!!flatErrors.participantsOther}
+                            >
+                              <Label
+                                htmlFor="participants-and-providers-participants-other"
+                                className="text-normal"
+                              >
+                                {t('describeOther')}
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors.participantsOther}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                error={flatErrors.participantsOther}
+                                id="participants-and-providers-participants-other"
+                                data-testid="participants-and-providers-participants-other"
+                                name="participantsOther"
+                              />
+                            </FieldGroup>
+                          )}
+
+                          <AddNote
+                            id="participants-and-providers-participants-note"
+                            field="participantsNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="participantsCurrentlyInModels"
+                          error={!!flatErrors.participantsCurrentlyInModels}
+                          className="margin-y-4 margin-bottom-8"
+                        >
+                          <Label htmlFor="participants-and-providers-current-participants">
+                            {t('participantsCMMI')}
+                          </Label>
+                          <p className="text-base margin-0 line-height-body-3">
+                            {t('participantsCMMIInfo')}
                           </p>
-                        )}
-
-                        {(values?.participants || []).includes(
-                          ParticipantsType.MEDICARE_PROVIDERS
-                        ) && (
-                          <FieldGroup
-                            scrollElement="medicareProviderType"
-                            error={!!flatErrors.medicareProviderType}
-                          >
-                            <Label
-                              htmlFor="participants-and-providers-medicare-type"
-                              className="text-normal"
-                            >
-                              {t('typeMedicateProvider')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.medicareProviderType}
-                            </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors.participantsCurrentlyInModels}
+                          </FieldErrorMsg>
+                          <Fieldset>
                             <Field
-                              as={TextAreaField}
-                              error={flatErrors.medicareProviderType}
-                              id="participants-and-providers-medicare-type"
-                              data-testid="participants-and-providers-medicare-type"
-                              name="medicareProviderType"
+                              as={Radio}
+                              id="participants-and-providers-current-participants"
+                              name="participantsCurrentlyInModels"
+                              label={h('yes')}
+                              value="TRUE"
+                              checked={
+                                values.participantsCurrentlyInModels === true
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'participantsCurrentlyInModels',
+                                  true
+                                );
+                              }}
                             />
-                          </FieldGroup>
-                        )}
-
-                        {(values?.participants || []).includes(
-                          ParticipantsType.STATES
-                        ) && (
-                          <FieldGroup
-                            scrollElement="statesEngagement"
-                            error={!!flatErrors.statesEngagement}
-                          >
-                            <Label
-                              htmlFor="participants-and-providers-states-engagement"
-                              className="text-normal"
-                            >
-                              {t('describeStates')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.statesEngagement}
-                            </FieldErrorMsg>
                             <Field
-                              as={TextAreaField}
-                              error={flatErrors.statesEngagement}
-                              id="participants-and-providers-states-engagement"
-                              data-testid="participants-and-providers-states-engagement"
-                              name="statesEngagement"
+                              as={Radio}
+                              id="participants-and-providers-current-participants-no"
+                              name="participantsCurrentlyInModels"
+                              label={h('no')}
+                              value="FALSE"
+                              checked={
+                                values.participantsCurrentlyInModels === false
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'participantsCurrentlyInModels',
+                                  false
+                                );
+                              }}
                             />
-                          </FieldGroup>
-                        )}
-
-                        {(values?.participants || []).includes(
-                          ParticipantsType.OTHER
-                        ) && (
-                          <FieldGroup
-                            scrollElement="participantsOther"
-                            error={!!flatErrors.participantsOther}
-                          >
-                            <Label
-                              htmlFor="participants-and-providers-participants-other"
-                              className="text-normal"
-                            >
-                              {t('describeOther')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.participantsOther}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextAreaField}
-                              error={flatErrors.participantsOther}
-                              id="participants-and-providers-participants-other"
-                              data-testid="participants-and-providers-participants-other"
-                              name="participantsOther"
-                            />
-                          </FieldGroup>
-                        )}
-
-                        <AddNote
-                          id="participants-and-providers-participants-note"
-                          field="participantsNote"
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="participantsCurrentlyInModels"
-                        error={!!flatErrors.participantsCurrentlyInModels}
-                        className="margin-y-4 margin-bottom-8"
-                      >
-                        <Label htmlFor="participants-and-providers-current-participants">
-                          {t('participantsCMMI')}
-                        </Label>
-                        <p className="text-base margin-0 line-height-body-3">
-                          {t('participantsCMMIInfo')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.participantsCurrentlyInModels}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="participants-and-providers-current-participants"
-                            name="participantsCurrentlyInModels"
-                            label={h('yes')}
-                            value="TRUE"
-                            checked={
-                              values.participantsCurrentlyInModels === true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'participantsCurrentlyInModels',
-                                true
-                              );
-                            }}
+                          </Fieldset>
+                          <AddNote
+                            id="participants-and-providers-current-participants-note"
+                            field="participantsCurrentlyInModelsNote"
                           />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="modelApplicationLevel"
+                          error={!!flatErrors.modelApplicationLevel}
+                        >
+                          <Label htmlFor="participants-and-providers-application-level">
+                            {t('modelLevel')}
+                          </Label>
+                          <p className="text-base margin-0 line-height-body-3">
+                            {t('modelLevelInfo')}
+                          </p>
+                          <FieldErrorMsg>
+                            {flatErrors.modelApplicationLevel}
+                          </FieldErrorMsg>
                           <Field
-                            as={Radio}
-                            id="participants-and-providers-current-participants-no"
-                            name="participantsCurrentlyInModels"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.participantsCurrentlyInModels === false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'participantsCurrentlyInModels',
-                                false
-                              );
-                            }}
+                            as={TextAreaField}
+                            error={flatErrors.modelApplicationLevel}
+                            id="participants-and-providers-application-level"
+                            name="modelApplicationLevel"
                           />
-                        </Fieldset>
-                        <AddNote
-                          id="participants-and-providers-current-participants-note"
-                          field="participantsCurrentlyInModelsNote"
-                        />
-                      </FieldGroup>
+                        </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="modelApplicationLevel"
-                        error={!!flatErrors.modelApplicationLevel}
-                      >
-                        <Label htmlFor="participants-and-providers-application-level">
-                          {t('modelLevel')}
-                        </Label>
-                        <p className="text-base margin-0 line-height-body-3">
-                          {t('modelLevelInfo')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.modelApplicationLevel}
-                        </FieldErrorMsg>
-                        <Field
-                          as={TextAreaField}
-                          error={flatErrors.modelApplicationLevel}
-                          id="participants-and-providers-application-level"
-                          name="modelApplicationLevel"
-                        />
-                      </FieldGroup>
-
-                      <div className="margin-top-6 margin-bottom-3">
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {h('next')}
+                          </Button>
+                        </div>
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('back')}
+                        >
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+                          {h('saveAndReturn')}
                         </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('back')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                   <Grid desktop={{ col: 6 }}>
