@@ -38,3 +38,25 @@ export const checkGroupMap = (
   // Return the component if it is NOT isViewingFilteredView
   return component;
 };
+
+export const highLevelTimelineQuestions = [
+  'completeICIP',
+  'clearanceStarts',
+  'announced',
+  'applicationsStart',
+  'performancePeriodStarts',
+  'wrapUpEnds'
+];
+
+export const hasQuestions = (
+  allQuestions: string[],
+  questionsInQuestion: string[]
+) => {
+  if (
+    allQuestions?.filter(question => questionsInQuestion.includes(question))
+      .length === 0
+  ) {
+    return false;
+  }
+  return true;
+};
