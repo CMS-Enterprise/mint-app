@@ -92,6 +92,7 @@ const FilterViewModal = ({
           </Button>
           <Button
             type="button"
+            data-testid="filter-view-submit"
             disabled={filteredGroup === ''}
             className="margin-x-0"
             onClick={() => handleSubmit(filteredGroup)}

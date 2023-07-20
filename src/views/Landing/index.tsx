@@ -62,7 +62,7 @@ export const LandingHeader = () => {
           {t('description')}
         </p>
 
-        <span>
+        <span className="hide-print">
           <UswdsReactLink
             className="usa-button bg-mint-cool-vivid text-white width-auto"
             variant="unstyled"
@@ -189,36 +189,38 @@ export const LandingFooter = () => {
           ))}
         </Grid>
 
-        <div
-          className={classNames({
-            'display-block': isTablet,
-            'display-flex': !isTablet
-          })}
-        >
-          <div className="padding-top-4 padding-bottom-2 margin-right-2">
-            <span className="text-bold margin-right-1">{t('access')}</span>
-            <span>
-              <UswdsReactLink to="/how-to-get-access">
-                {t('learnHowtoGetAccess')}{' '}
-                <IconArrowForward className="margin-left-1 text-tbottom" />
-              </UswdsReactLink>
-              {!isTablet && <span className="margin-left-2 landing__vr" />}
-            </span>
-          </div>
-
+        <div className="hide-print">
           <div
-            className={classNames('padding-bottom-2', {
-              'padding-top-1': isTablet,
-              'padding-top-4': !isTablet
+            className={classNames({
+              'display-block': isTablet,
+              'display-flex': !isTablet
             })}
           >
-            <span className="text-bold margin-right-1">{t('questions')}</span>
-            <span>
-              <Link href="mailto:MINTTeam@cms.hhs.gov">
-                {t('email')}
-                <IconMailOutline className="margin-left-1 text-tbottom" />
-              </Link>
-            </span>
+            <div className="padding-top-4 padding-bottom-2 margin-right-2">
+              <span className="text-bold margin-right-1">{t('access')}</span>
+              <span>
+                <UswdsReactLink to="/how-to-get-access">
+                  {t('learnHowtoGetAccess')}{' '}
+                  <IconArrowForward className="margin-left-1 text-tbottom" />
+                </UswdsReactLink>
+                {!isTablet && <span className="margin-left-2 landing__vr" />}
+              </span>
+            </div>
+
+            <div
+              className={classNames('padding-bottom-2', {
+                'padding-top-1': isTablet,
+                'padding-top-4': !isTablet
+              })}
+            >
+              <span className="text-bold margin-right-1">{t('questions')}</span>
+              <span>
+                <Link href="mailto:MINTTeam@cms.hhs.gov">
+                  {t('email')}
+                  <IconMailOutline className="margin-left-1 text-tbottom" />
+                </Link>
+              </span>
+            </div>
           </div>
         </div>
       </GridContainer>

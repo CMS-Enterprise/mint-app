@@ -327,7 +327,7 @@ exports[`Filter View Modal matches snapshot 1`] = `
         </button>
         <button
           class="usa-button margin-x-0"
-          data-testid="button"
+          data-testid="filter-view-submit"
           disabled=""
           type="button"
         >

@@ -41,7 +41,8 @@ describe('user', () => {
           isAssessment(groups, {
             downgradeAssessmentTeam: true,
             hideITLeadExperience: false,
-            hideGroupView: true
+            hideGroupView: true,
+            shareExportEnabled: false
           })
         ).toBe(false);
       });

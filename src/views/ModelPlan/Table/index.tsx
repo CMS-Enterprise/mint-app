@@ -422,7 +422,7 @@ const DraftModelPlansTable = ({
 
         {isAssessment && !userModels && (
           <div className="flex-align-self-center">
-            <CsvExportLink includeAll />
+            <CsvExportLink />
           </div>
         )}
       </div>
