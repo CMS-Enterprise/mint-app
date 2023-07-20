@@ -10,13 +10,13 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -427,31 +427,13 @@ const KeyCharacteristics = () => {
                         {flatErrors.collectPlanBids}
                       </FieldErrorMsg>
 
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-collect-bids"
-                          name="collectPlanBids"
-                          label={collectPlanBidsConfig.options.true}
-                          value="TRUE"
-                          checked={values.collectPlanBids === true}
-                          onChange={() => {
-                            setFieldValue('collectPlanBids', true);
-                          }}
-                        />
-
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-collect-bids-no"
-                          name="collectPlanBids"
-                          label={collectPlanBidsConfig.options.false}
-                          value="FALSE"
-                          checked={values.collectPlanBids === false}
-                          onChange={() => {
-                            setFieldValue('collectPlanBids', false);
-                          }}
-                        />
-                      </Fieldset>
+                      <BooleanRadio
+                        field="collectPlanBids"
+                        id="plan-characteristics-collect-bids"
+                        value={values.collectPlanBids}
+                        setFieldValue={setFieldValue}
+                        options={collectPlanBidsConfig.options}
+                      />
                     </FieldGroup>
 
                     <AddNote
@@ -489,30 +471,13 @@ const KeyCharacteristics = () => {
                         {flatErrors.managePartCDEnrollment}
                       </FieldErrorMsg>
 
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-manage-enrollment"
-                          name="managePartCDEnrollment"
-                          label={managePartCDEnrollmentConfig.options.true}
-                          value="TRUE"
-                          checked={values.managePartCDEnrollment === true}
-                          onChange={() => {
-                            setFieldValue('managePartCDEnrollment', true);
-                          }}
-                        />
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-manage-enrollment-no"
-                          name="managePartCDEnrollment"
-                          label={managePartCDEnrollmentConfig.options.false}
-                          value="FALSE"
-                          checked={values.managePartCDEnrollment === false}
-                          onChange={() => {
-                            setFieldValue('managePartCDEnrollment', false);
-                          }}
-                        />
-                      </Fieldset>
+                      <BooleanRadio
+                        field="managePartCDEnrollment"
+                        id="plan-characteristics-manage-enrollment"
+                        value={values.managePartCDEnrollment}
+                        setFieldValue={setFieldValue}
+                        options={managePartCDEnrollmentConfig.options}
+                      />
                     </FieldGroup>
 
                     <AddNote
@@ -550,31 +515,13 @@ const KeyCharacteristics = () => {
                         {flatErrors.planContractUpdated}
                       </FieldErrorMsg>
 
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-contact-updated"
-                          name="planContractUpdated"
-                          label={planContractUpdatedConfig.options.true}
-                          value="TRUE"
-                          checked={values.planContractUpdated === true}
-                          onChange={() => {
-                            setFieldValue('planContractUpdated', true);
-                          }}
-                        />
-
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-contact-updated-no"
-                          name="planContractUpdated"
-                          label={planContractUpdatedConfig.options.false}
-                          value="FALSE"
-                          checked={values.planContractUpdated === false}
-                          onChange={() => {
-                            setFieldValue('planContractUpdated', false);
-                          }}
-                        />
-                      </Fieldset>
+                      <BooleanRadio
+                        field="planContractUpdated"
+                        id="plan-characteristics-contact-updated"
+                        value={values.planContractUpdated}
+                        setFieldValue={setFieldValue}
+                        options={planContractUpdatedConfig.options}
+                      />
                     </FieldGroup>
 
                     <AddNote

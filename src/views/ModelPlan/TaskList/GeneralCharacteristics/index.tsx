@@ -8,18 +8,17 @@ import {
   BreadcrumbLink,
   Button,
   ComboBox,
-  Fieldset,
   Grid,
   GridContainer,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -29,6 +28,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
 import {
   GetGeneralCharacteristics as GetGeneralCharacteristicsType,
@@ -73,6 +73,12 @@ export const CharacteristicsContent = () => {
     'generalCharacteristicsMisc'
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    isNewModel: isNewModelConfig,
+    resemblesExistingModel: resemblesExistingModelConfig,
+    hasComponentsOrTracks: hasComponentsOrTracksConfig
+  } = usePlanTranslation('generalCharacteristicsT');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -302,33 +308,14 @@ export const CharacteristicsContent = () => {
 
                   <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
 
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-is-new-model"
-                      name="isNewModel"
-                      label={generalCharacteristicsT('isNewModel.options.true')}
-                      value="TRUE"
-                      checked={values.isNewModel === true}
-                      onChange={() => {
-                        setFieldValue('isNewModel', true);
-                        setFieldValue('existingModel', '');
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-is-new-model-no"
-                      name="isNewModel"
-                      label={generalCharacteristicsT(
-                        'isNewModel.options.false'
-                      )}
-                      value="FALSE"
-                      checked={values.isNewModel === false}
-                      onChange={() => {
-                        setFieldValue('isNewModel', false);
-                      }}
-                    />
-                  </Fieldset>
+                  <BooleanRadio
+                    field="isNewModel"
+                    id="plan-characteristics-is-new-model"
+                    value={values.isNewModel}
+                    setFieldValue={setFieldValue}
+                    options={isNewModelConfig.options}
+                    childName="existingModel"
+                  />
 
                   {values.isNewModel === false && (
                     <FieldGroup
@@ -396,35 +383,13 @@ export const CharacteristicsContent = () => {
                     {flatErrors.resemblesExistingModel}
                   </FieldErrorMsg>
 
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-resembles-existing-model"
-                      name="resemblesExistingModel"
-                      label={generalCharacteristicsT(
-                        'resemblesExistingModel.options.true'
-                      )}
-                      value="TRUE"
-                      checked={values.resemblesExistingModel === true}
-                      onChange={() => {
-                        setFieldValue('resemblesExistingModel', true);
-                      }}
-                    />
-
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-resembles-existing-model-no"
-                      name="resemblesExistingModel"
-                      label={generalCharacteristicsT(
-                        'resemblesExistingModel.options.false'
-                      )}
-                      value="FALSE"
-                      checked={values.resemblesExistingModel === false}
-                      onChange={() => {
-                        setFieldValue('resemblesExistingModel', false);
-                      }}
-                    />
-                  </Fieldset>
+                  <BooleanRadio
+                    field="resemblesExistingModel"
+                    id="plan-characteristics-resembles-existing-model"
+                    value={values.resemblesExistingModel}
+                    setFieldValue={setFieldValue}
+                    options={resemblesExistingModelConfig.options}
+                  />
 
                   {values.resemblesExistingModel && (
                     <>
@@ -514,23 +479,15 @@ export const CharacteristicsContent = () => {
                     {flatErrors.hasComponentsOrTracks}
                   </FieldErrorMsg>
 
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-has-component-or-tracks"
-                      name="hasComponentsOrTracks"
-                      label={generalCharacteristicsT(
-                        'hasComponentsOrTracks.options.true'
-                      )}
-                      value="TRUE"
-                      checked={values.hasComponentsOrTracks === true}
-                      onChange={() => {
-                        setFieldValue('hasComponentsOrTracks', true);
-                        setFieldValue('hasComponentsOrTracksDiffer', '');
-                      }}
-                    />
-
-                    {values.hasComponentsOrTracks === true && (
+                  <BooleanRadio
+                    field="hasComponentsOrTracks"
+                    id="plan-characteristics-has-component-or-tracks"
+                    value={values.hasComponentsOrTracks}
+                    setFieldValue={setFieldValue}
+                    options={hasComponentsOrTracksConfig.options}
+                    childName="hasComponentsOrTracksDiffer"
+                  >
+                    {values.hasComponentsOrTracks === true ? (
                       <div className="display-flex margin-left-4 margin-bottom-1">
                         <FieldGroup
                           className="flex-1"
@@ -560,21 +517,10 @@ export const CharacteristicsContent = () => {
                           />
                         </FieldGroup>
                       </div>
+                    ) : (
+                      <></>
                     )}
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-has-component-or-tracks-no"
-                      name="hasComponentsOrTracks"
-                      label={generalCharacteristicsT(
-                        'hasComponentsOrTracks.options.false'
-                      )}
-                      value="FALSE"
-                      checked={values.hasComponentsOrTracks === false}
-                      onChange={() => {
-                        setFieldValue('hasComponentsOrTracks', false);
-                      }}
-                    />
-                  </Fieldset>
+                  </BooleanRadio>
 
                   <AddNote
                     id="plan-characteristics-has-component-or-tracks-note"

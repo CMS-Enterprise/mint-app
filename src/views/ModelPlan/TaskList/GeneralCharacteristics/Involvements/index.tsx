@@ -7,15 +7,14 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Fieldset,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -51,8 +50,6 @@ const Involvements = () => {
     communityPartnersInvolved: communityPartnersInvolvedConfig
   } = usePlanTranslation('generalCharacteristicsT');
 
-  // const { t } = useTranslation('generalCharacteristics');
-  // const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<InvolvementsFormType>>(null);
@@ -228,24 +225,15 @@ const Involvements = () => {
                     {flatErrors.careCoordinationInvolved}
                   </FieldErrorMsg>
 
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-care-coordination-involved"
-                      name="careCoordinationInvolved"
-                      label={careCoordinationInvolvedConfig.options.true}
-                      value="TRUE"
-                      checked={values.careCoordinationInvolved === true}
-                      onChange={() => {
-                        setFieldValue('careCoordinationInvolved', true);
-                        setFieldValue(
-                          'careCoordinationInvolvedDescription',
-                          ''
-                        );
-                      }}
-                    />
-
-                    {values.careCoordinationInvolved === true && (
+                  <BooleanRadio
+                    field="careCoordinationInvolved"
+                    id="plan-characteristics-care-coordination-involved"
+                    value={values.careCoordinationInvolved}
+                    setFieldValue={setFieldValue}
+                    options={careCoordinationInvolvedConfig.options}
+                    childName="careCoordinationInvolvedDescription"
+                  >
+                    {values.careCoordinationInvolved === true ? (
                       <div className="display-flex margin-left-4 margin-bottom-1">
                         <FieldGroup
                           className="flex-1"
@@ -278,20 +266,10 @@ const Involvements = () => {
                           />
                         </FieldGroup>
                       </div>
+                    ) : (
+                      <></>
                     )}
-
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-care-coordination-involved-no"
-                      name="careCoordinationInvolved"
-                      label={careCoordinationInvolvedConfig.options.false}
-                      value="FALSE"
-                      checked={values.careCoordinationInvolved === false}
-                      onChange={() => {
-                        setFieldValue('careCoordinationInvolved', false);
-                      }}
-                    />
-                  </Fieldset>
+                  </BooleanRadio>
                 </FieldGroup>
 
                 <AddNote
@@ -314,24 +292,15 @@ const Involvements = () => {
                     {flatErrors.additionalServicesInvolved}
                   </FieldErrorMsg>
 
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-additional-services"
-                      name="additionalServicesInvolved"
-                      label={additionalServicesInvolvedConfig.options.true}
-                      value="TRUE"
-                      checked={values.additionalServicesInvolved === true}
-                      onChange={() => {
-                        setFieldValue('additionalServicesInvolved', true);
-                        setFieldValue(
-                          'additionalServicesInvolvedDescription',
-                          ''
-                        );
-                      }}
-                    />
-
-                    {values.additionalServicesInvolved === true && (
+                  <BooleanRadio
+                    field="additionalServicesInvolved"
+                    id="plan-characteristics-additional-services"
+                    value={values.additionalServicesInvolved}
+                    setFieldValue={setFieldValue}
+                    options={additionalServicesInvolvedConfig.options}
+                    childName="additionalServicesInvolvedDescription"
+                  >
+                    {values.additionalServicesInvolved === true ? (
                       <div className="display-flex margin-left-4 margin-bottom-1">
                         <FieldGroup
                           className="flex-1"
@@ -365,20 +334,10 @@ const Involvements = () => {
                           />
                         </FieldGroup>
                       </div>
+                    ) : (
+                      <></>
                     )}
-
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-additional-services-no"
-                      name="additionalServicesInvolved"
-                      label={additionalServicesInvolvedConfig.options.false}
-                      value="FALSE"
-                      checked={values.additionalServicesInvolved === false}
-                      onChange={() => {
-                        setFieldValue('additionalServicesInvolved', false);
-                      }}
-                    />
-                  </Fieldset>
+                  </BooleanRadio>
                 </FieldGroup>
 
                 <AddNote
@@ -401,24 +360,15 @@ const Involvements = () => {
                     {flatErrors.communityPartnersInvolved}
                   </FieldErrorMsg>
 
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-community-partners-involved"
-                      name="communityPartnersInvolved"
-                      label={communityPartnersInvolvedConfig.options.true}
-                      value="TRUE"
-                      checked={values.communityPartnersInvolved === true}
-                      onChange={() => {
-                        setFieldValue('communityPartnersInvolved', true);
-                        setFieldValue(
-                          'communityPartnersInvolvedDescription',
-                          ''
-                        );
-                      }}
-                    />
-
-                    {values.communityPartnersInvolved === true && (
+                  <BooleanRadio
+                    field="communityPartnersInvolved"
+                    id="plan-characteristics-community-partners-involved"
+                    value={values.communityPartnersInvolved}
+                    setFieldValue={setFieldValue}
+                    options={communityPartnersInvolvedConfig.options}
+                    childName="communityPartnersInvolvedDescription"
+                  >
+                    {values.communityPartnersInvolved === true ? (
                       <div className="display-flex margin-left-4 margin-bottom-1">
                         <FieldGroup
                           className="flex-1"
@@ -451,20 +401,10 @@ const Involvements = () => {
                           />
                         </FieldGroup>
                       </div>
+                    ) : (
+                      <></>
                     )}
-
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-community-partners-no"
-                      name="communityPartnersInvolved"
-                      label={communityPartnersInvolvedConfig.options.false}
-                      value="FALSE"
-                      checked={values.communityPartnersInvolved === false}
-                      onChange={() => {
-                        setFieldValue('communityPartnersInvolved', false);
-                      }}
-                    />
-                  </Fieldset>
+                  </BooleanRadio>
                 </FieldGroup>
 
                 <AddNote
