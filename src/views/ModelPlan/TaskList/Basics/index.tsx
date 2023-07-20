@@ -241,6 +241,7 @@ const BasicsContent = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -281,6 +282,7 @@ const BasicsContent = () => {
                         </Label>
 
                         <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+
                         <Field
                           as={TextInput}
                           error={!!flatErrors.modelName}
@@ -343,6 +345,7 @@ const BasicsContent = () => {
 
                           {basicsMiscT('otherIdentifiersInfo3')}
                         </p>
+
                         <Grid row gap>
                           <Grid desktop={{ col: 6 }}>
                             <FieldGroup
@@ -357,6 +360,7 @@ const BasicsContent = () => {
                               <FieldErrorMsg>
                                 {flatErrors['basics.amsModelID']}
                               </FieldErrorMsg>
+
                               <Field
                                 as={TextInput}
                                 error={!!flatErrors['basics.amsModelID']}
@@ -366,6 +370,7 @@ const BasicsContent = () => {
                               />
                             </FieldGroup>
                           </Grid>
+
                           <Grid desktop={{ col: 6 }}>
                             <FieldGroup
                               scrollElement="basics.demoCode"
@@ -379,6 +384,7 @@ const BasicsContent = () => {
                               <FieldErrorMsg>
                                 {flatErrors['basics.demoCode']}
                               </FieldErrorMsg>
+
                               <Field
                                 as={TextInput}
                                 error={!!flatErrors['basics.demoCode']}
@@ -422,6 +428,7 @@ const BasicsContent = () => {
                           <option key="default-select" disabled value="">
                             {`-${miscellaneousT('select')}-`}
                           </option>
+
                           {Object.keys(modelCategoryConfig.options).map(
                             category => {
                               type KeyType = keyof typeof modelCategoryConfig.options;
@@ -517,9 +524,11 @@ const BasicsContent = () => {
                                     <Label htmlFor="plan-basics-cmsCategory--Other">
                                       {miscellaneousT('pleaseSpecify')}
                                     </Label>
+
                                     <FieldErrorMsg>
                                       {flatErrors['basics.cmsOther']}
                                     </FieldErrorMsg>
+
                                     <Field
                                       as={TextAreaField}
                                       id="plan-basics-cmsCategory--Other"
@@ -552,6 +561,7 @@ const BasicsContent = () => {
                         <FieldErrorMsg>
                           {flatErrors['basics.cmmiGroups']}
                         </FieldErrorMsg>
+
                         {Object.keys(cmmiGroupsConfig.options).map(group => {
                           type KeyType = keyof typeof cmmiGroupsConfig.options;
 
@@ -594,6 +604,7 @@ const BasicsContent = () => {
                         onClick={() => handleFormSubmit(values, 'back')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
+
                         {miscellaneousT('saveAndReturn')}
                       </Button>
                     </Form>
@@ -609,6 +620,7 @@ const BasicsContent = () => {
                         <p className="margin-y-0 text-bold">
                           {basicsMiscT('previousNames')}
                         </p>
+
                         <ul className="margin-top-1 margin-bottom-0 padding-left-2">
                           {filteredNameHistory.map(previousName => {
                             return (
@@ -623,6 +635,7 @@ const BasicsContent = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -637,6 +650,7 @@ const BasicsContent = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={1} totalPages={3} className="margin-bottom-10" />
     </>
   );

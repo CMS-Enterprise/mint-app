@@ -107,7 +107,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       MIPS: 'MIPS APM',
       ADVANCED: 'Advanced APM',
       NOT_APM: 'It is not an APM'
-    }
+    },
+    filterGroups: ['cmmi', 'oact']
   },
   alternativePaymentModelNote: {
     gqlField: 'alternativePaymentModelNote',
@@ -115,7 +116,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'alternative_payment_model_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'oact']
   },
   keyCharacteristics: {
     gqlField: 'keyCharacteristics',
@@ -135,7 +137,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       SERVICE_DELIVERY: 'Service Delivery Model',
       SHARED_SAVINGS: 'Shared Savings Model',
       OTHER: 'Other'
-    }
+    },
+    filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
   keyCharacteristicsNote: {
     gqlField: 'keyCharacteristicsNote',
@@ -143,7 +146,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'key_characteristics_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
   keyCharacteristicsOther: {
     gqlField: 'keyCharacteristicsOther',
@@ -163,7 +167,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
   collectPlanBidsNote: {
     gqlField: 'collectPlanBidsNote',
@@ -209,6 +214,90 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'planContractUpdatedNote',
     goField: 'PlanContractUpdatedNote',
     dbField: 'plan_contract_updated_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  careCoordinationInvolved: {
+    gqlField: 'careCoordinationInvolved',
+    goField: 'CareCoordinationInvolved',
+    dbField: 'care_coordination_involved',
+    question: 'Is care coordination involved?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  careCoordinationInvolvedDescription: {
+    gqlField: 'careCoordinationInvolvedDescription',
+    goField: 'CareCoordinationInvolvedDescription',
+    dbField: 'care_coordination_involved_description',
+    question: 'How so?',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  careCoordinationInvolvedNote: {
+    gqlField: 'careCoordinationInvolvedNote',
+    goField: 'CareCoordinationInvolvedNote',
+    dbField: 'care_coordination_involved_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  additionalServicesInvolved: {
+    gqlField: 'additionalServicesInvolved',
+    goField: 'AdditionalServicesInvolved',
+    dbField: 'additional_services_involved',
+    question: 'Are additional services involved?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  additionalServicesInvolvedDescription: {
+    gqlField: 'additionalServicesInvolvedDescription',
+    goField: 'AdditionalServicesInvolvedDescription',
+    dbField: 'additional_services_involved_description',
+    question: 'How so?',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  additionalServicesInvolvedNote: {
+    gqlField: 'additionalServicesInvolvedNote',
+    goField: 'AdditionalServicesInvolvedNote',
+    dbField: 'additional_services_involved_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  communityPartnersInvolved: {
+    gqlField: 'communityPartnersInvolved',
+    goField: 'CommunityPartnersInvolved',
+    dbField: 'community_partners_involved',
+    question: 'Are community partners involved?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  communityPartnersInvolvedDescription: {
+    gqlField: 'communityPartnersInvolvedDescription',
+    goField: 'CommunityPartnersInvolvedDescription',
+    dbField: 'community_partners_involved',
+    question: 'How so?',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  communityPartnersInvolvedNote: {
+    gqlField: 'communityPartnersInvolvedNote',
+    goField: 'CommunityPartnersInvolvedNote',
+    dbField: 'community_partners_involved_note',
     question: 'Notes',
     dataType: 'string',
     formType: 'textarea'

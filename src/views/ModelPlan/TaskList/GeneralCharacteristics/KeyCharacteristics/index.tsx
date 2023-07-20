@@ -43,7 +43,7 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import { mapMultiSelectOptionsFromObj } from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const KeyCharacteristics = () => {
@@ -186,6 +186,7 @@ const KeyCharacteristics = () => {
       >
         {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {miscellaneousT('helpText')}
       </p>
@@ -209,6 +210,7 @@ const KeyCharacteristics = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -245,6 +247,7 @@ const KeyCharacteristics = () => {
                       'alternativePaymentModelTypes.question'
                     )}
                   </legend>
+
                   <Alert type="info" slim data-testid="mandatory-fields-alert">
                     <span className="mandatory-fields-alert__text">
                       {generalCharacteristicsT(
@@ -285,6 +288,7 @@ const KeyCharacteristics = () => {
                           </Fragment>
                         );
                       })}
+
                     <Field
                       as={CheckboxField}
                       id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
@@ -328,6 +332,7 @@ const KeyCharacteristics = () => {
                   >
                     {generalCharacteristicsT('keyCharacteristics.question')}
                   </Label>
+
                   <FieldErrorMsg>{flatErrors.keyCharacteristics}</FieldErrorMsg>
 
                   <Field
@@ -336,7 +341,7 @@ const KeyCharacteristics = () => {
                     name="keyCharacteristics"
                     ariaLabel="label-plan-characteristics-key-characteristics"
                     role="combobox"
-                    options={mapMultiSelectOptionsFromObj(
+                    options={composeMultiSelectOptions(
                       keyCharacteristicsConfig.options,
                       KeyCharacteristic
                     )}
@@ -366,14 +371,17 @@ const KeyCharacteristics = () => {
                     <Label htmlFor="plan-characteristics-key-other">
                       {generalCharacteristicsMiscT('specificQuestions')}
                     </Label>
+
                     <p className="margin-y-1 margin-top-3">
                       {generalCharacteristicsT(
                         'keyCharacteristicsOther.question'
                       )}
                     </p>
+
                     <FieldErrorMsg>
                       {flatErrors.keyCharacteristicsOther}
                     </FieldErrorMsg>
+
                     <Field
                       as={TextInput}
                       data-testid="plan-characteristics-key-other"
@@ -403,6 +411,7 @@ const KeyCharacteristics = () => {
                       >
                         {generalCharacteristicsT('collectPlanBids.question')}
                       </Label>
+
                       {itSolutionsStarted && (
                         <ITSolutionsWarning
                           id="plan-characteristics-collect-bids-warning"
@@ -413,9 +422,11 @@ const KeyCharacteristics = () => {
                           }
                         />
                       )}
+
                       <FieldErrorMsg>
                         {flatErrors.collectPlanBids}
                       </FieldErrorMsg>
+
                       <Fieldset>
                         <Field
                           as={Radio}
@@ -428,6 +439,7 @@ const KeyCharacteristics = () => {
                             setFieldValue('collectPlanBids', true);
                           }}
                         />
+
                         <Field
                           as={Radio}
                           id="plan-characteristics-collect-bids-no"
@@ -461,6 +473,7 @@ const KeyCharacteristics = () => {
                           'managePartCDEnrollment.question'
                         )}
                       </Label>
+
                       {itSolutionsStarted && (
                         <ITSolutionsWarning
                           id="plan-characteristics-manage-enrollment-warning"
@@ -471,9 +484,11 @@ const KeyCharacteristics = () => {
                           }
                         />
                       )}
+
                       <FieldErrorMsg>
                         {flatErrors.managePartCDEnrollment}
                       </FieldErrorMsg>
+
                       <Fieldset>
                         <Field
                           as={Radio}
@@ -519,6 +534,7 @@ const KeyCharacteristics = () => {
                           'planContractUpdated.question'
                         )}
                       </Label>
+
                       {itSolutionsStarted && (
                         <ITSolutionsWarning
                           id="plan-characteristics-contact-updated-warning"
@@ -529,9 +545,11 @@ const KeyCharacteristics = () => {
                           }
                         />
                       )}
+
                       <FieldErrorMsg>
                         {flatErrors.planContractUpdated}
                       </FieldErrorMsg>
+
                       <Fieldset>
                         <Field
                           as={Radio}
@@ -544,6 +562,7 @@ const KeyCharacteristics = () => {
                             setFieldValue('planContractUpdated', true);
                           }}
                         />
+
                         <Field
                           as={Radio}
                           id="plan-characteristics-contact-updated-no"
@@ -575,6 +594,7 @@ const KeyCharacteristics = () => {
                   >
                     {miscellaneousT('back')}
                   </Button>
+
                   <Button type="submit" onClick={() => setErrors({})}>
                     {miscellaneousT('next')}
                   </Button>
@@ -585,9 +605,11 @@ const KeyCharacteristics = () => {
                   onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
+
                   {miscellaneousT('saveAndReturn')}
                 </Button>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -601,6 +623,7 @@ const KeyCharacteristics = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={2} totalPages={5} className="margin-y-6" />
     </>
   );

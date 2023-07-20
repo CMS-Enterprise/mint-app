@@ -1256,7 +1256,7 @@ export const mapMultiSelectOptions = (
     }));
 
 // Used to map MultiSelect options from Enums
-export const mapMultiSelectOptionsFromObj = (
+export const composeMultiSelectOptions = (
   translationObject: Record<string, string>,
   type: { [s: number]: string }
 ) =>

@@ -237,6 +237,7 @@ export const CharacteristicsContent = () => {
       >
         {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {miscellaneousT('helpText')}
       </p>
@@ -262,6 +263,7 @@ export const CharacteristicsContent = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -281,6 +283,7 @@ export const CharacteristicsContent = () => {
                   })}
                 </ErrorAlert>
               )}
+
               <Form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-form"
@@ -296,7 +299,9 @@ export const CharacteristicsContent = () => {
                   <Label htmlFor="plan-characteristics-is-new-model">
                     {generalCharacteristicsT('isNewModel.question')}
                   </Label>
+
                   <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
+
                   <Fieldset>
                     <Field
                       as={Radio}
@@ -324,6 +329,7 @@ export const CharacteristicsContent = () => {
                       }}
                     />
                   </Fieldset>
+
                   {values.isNewModel === false && (
                     <FieldGroup
                       scrollElement="existingModel"
@@ -335,9 +341,11 @@ export const CharacteristicsContent = () => {
                       >
                         {generalCharacteristicsT('existingModel.question')}
                       </Label>
+
                       <p className="text-base margin-0">
                         {generalCharacteristicsT('existingModel.hint')}
                       </p>
+
                       <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
 
                       <ComboBox
@@ -383,9 +391,11 @@ export const CharacteristicsContent = () => {
                   <Label htmlFor="plan-characteristics-resembles-existing-model">
                     {generalCharacteristicsT('resemblesExistingModel.question')}
                   </Label>
+
                   <FieldErrorMsg>
                     {flatErrors.resemblesExistingModel}
                   </FieldErrorMsg>
+
                   <Fieldset>
                     <Field
                       as={Radio}
@@ -400,6 +410,7 @@ export const CharacteristicsContent = () => {
                         setFieldValue('resemblesExistingModel', true);
                       }}
                     />
+
                     <Field
                       as={Radio}
                       id="plan-characteristics-resembles-existing-model-no"
@@ -414,6 +425,7 @@ export const CharacteristicsContent = () => {
                       }}
                     />
                   </Fieldset>
+
                   {values.resemblesExistingModel && (
                     <>
                       <FieldGroup
@@ -430,9 +442,11 @@ export const CharacteristicsContent = () => {
                             'existingModelLinks.question'
                           )}
                         </Label>
+
                         <p className="text-base margin-y-1">
                           {generalCharacteristicsT('existingModelLinks.hint')}
                         </p>
+
                         <FieldErrorMsg>
                           {flatErrors.resemblesExistingModelWhich}
                         </FieldErrorMsg>
@@ -465,9 +479,11 @@ export const CharacteristicsContent = () => {
                             'resemblesExistingModelHow.question'
                           )}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.resemblesExistingModelHow}
                         </FieldErrorMsg>
+
                         <Field
                           as={TextAreaField}
                           className="height-15"
@@ -493,9 +509,11 @@ export const CharacteristicsContent = () => {
                   <Label htmlFor="plan-characteristics-has-component-or-tracks">
                     {generalCharacteristicsT('hasComponentsOrTracks.question')}
                   </Label>
+
                   <FieldErrorMsg>
                     {flatErrors.hasComponentsOrTracks}
                   </FieldErrorMsg>
+
                   <Fieldset>
                     <Field
                       as={Radio}
@@ -511,6 +529,7 @@ export const CharacteristicsContent = () => {
                         setFieldValue('hasComponentsOrTracksDiffer', '');
                       }}
                     />
+
                     {values.hasComponentsOrTracks === true && (
                       <div className="display-flex margin-left-4 margin-bottom-1">
                         <FieldGroup
@@ -526,9 +545,11 @@ export const CharacteristicsContent = () => {
                               'hasComponentsOrTracksDiffer.question'
                             )}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.hasComponentsOrTracksDiffer}
                           </FieldErrorMsg>
+
                           <Field
                             as={TextAreaField}
                             error={!!flatErrors.hasComponentsOrTracksDiffer}
@@ -572,9 +593,11 @@ export const CharacteristicsContent = () => {
                   onClick={() => handleFormSubmit('back')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
+
                   {miscellaneousT('saveAndReturn')}
                 </Button>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -588,6 +611,7 @@ export const CharacteristicsContent = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={1} totalPages={5} className="margin-y-6" />
     </>
   );

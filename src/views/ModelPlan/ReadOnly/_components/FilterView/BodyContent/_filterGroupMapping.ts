@@ -16,7 +16,10 @@ const FilterGroupMap = {
   cmmi: {
     'general-characteristics': [
       'alternativePaymentModelTypes',
+      'alternativePaymentModelTypesNote',
       'keyCharacteristics',
+      'keyCharacteristicsNote',
+      'keyCharacteristicsOther',
       'participationOptions',
       'agreementTypes',
       'multiplePatricipationAgreementsNeeded',
@@ -57,7 +60,10 @@ const FilterGroupMap = {
   },
   oact: {
     basics: ['nameHistory'],
-    'general-characteristics': ['alternativePaymentModelTypes'],
+    'general-characteristics': [
+      'alternativePaymentModelTypes',
+      'alternativePaymentModelTypesNote'
+    ],
     'participants-and-providers': [
       'providerAdditionFrequency',
       'providerAddMethod',
@@ -112,7 +118,16 @@ const FilterGroupMap = {
       'cmsCenters',
       'cmmiGroups',
       'modelType',
-      'goal'
+      'goal',
+      'completeICIP',
+      'clearanceStarts',
+      'clearanceEnds',
+      'announced',
+      'applicationsStart',
+      'applicationsEnd',
+      'performancePeriodStarts',
+      'performancePeriodEnds',
+      'wrapUpEnds'
     ],
     'general-characteristics': ['rulemakingRequired'],
     'participants-and-providers': [
@@ -147,10 +162,13 @@ const FilterGroupMap = {
       'goal',
       'announced',
       'performancePeriodStarts',
-      'phasedIn'
+      'phasedIn',
+      'phasedInNote'
     ],
     'general-characteristics': [
       'keyCharacteristics',
+      'keyCharacteristicsNote',
+      'keyCharacteristicsOther',
       'geographiesTargeted',
       'geographiesTargetedTypes',
       'geographiesTargetedAppliedTo',
@@ -218,10 +236,13 @@ const FilterGroupMap = {
       'goal',
       'announced',
       'performancePeriodStarts',
-      'phasedIn'
+      'phasedIn',
+      'phasedInNote'
     ],
     'general-characteristics': [
       'keyCharacteristics',
+      'keyCharacteristicsNote',
+      'keyCharacteristicsOther',
       'geographiesTargeted',
       'geographiesTargetedTypes',
       'geographiesTargetedAppliedTo',

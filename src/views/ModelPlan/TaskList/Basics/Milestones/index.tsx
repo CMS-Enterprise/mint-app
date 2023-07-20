@@ -175,11 +175,13 @@ const Milestones = () => {
       >
         {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
+
       {!loading && (
         <Formik
           initialValues={initialValues}
@@ -219,6 +221,7 @@ const Milestones = () => {
                 setFieldError(field, miscellaneousT('validDate'));
               }
             };
+
             return (
               <>
                 {Object.keys(errors).length > 0 && (
@@ -305,6 +308,7 @@ const Milestones = () => {
                         >
                           {basicsMiscT('clearanceInfo')}
                         </label>
+
                         <div className="datepicker__wrapper text-normal">
                           <MINTDatePicker
                             fieldName="clearanceStarts"
@@ -349,6 +353,7 @@ const Milestones = () => {
                         type="h5"
                         className="font-body-sm line-height-sans-4 text-normal"
                       />
+
                       <div className="datepicker__wrapper display-block">
                         <MINTDatePicker
                           className="margin-top-0"
@@ -471,6 +476,7 @@ const Milestones = () => {
                         type="h5"
                         className="font-body-sm line-height-sans-4 text-normal"
                       />
+
                       <div className="datepicker__wrapper display-block">
                         <MINTDatePicker
                           fieldName="wrapUpEnds"
@@ -498,10 +504,13 @@ const Milestones = () => {
                     <Label htmlFor="phasedIn">
                       {basicsT('phasedIn.question')}
                     </Label>
+
                     <span className="usa-hint display-block text-normal margin-top-1">
                       {basicsT('phasedIn.hint')}
                     </span>
+
                     <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
+
                     <Fieldset>
                       <Field
                         as={Radio}
@@ -514,6 +523,7 @@ const Milestones = () => {
                           setFieldValue('phasedIn', true);
                         }}
                       />
+
                       <Field
                         as={Radio}
                         id="phasedIn-No"
@@ -562,6 +572,7 @@ const Milestones = () => {
                     >
                       {miscellaneousT('back')}
                     </Button>
+
                     <Button
                       type="submit"
                       className=""
@@ -576,6 +587,7 @@ const Milestones = () => {
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
+
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Form>
@@ -584,6 +596,7 @@ const Milestones = () => {
           }}
         </Formik>
       )}
+
       <PageNumber currentPage={3} totalPages={3} className="margin-bottom-10" />
     </div>
   );

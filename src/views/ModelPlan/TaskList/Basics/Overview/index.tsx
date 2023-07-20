@@ -134,6 +134,7 @@ const Overview = () => {
       >
         {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {miscellaneousT('helpText')}
       </p>
@@ -161,6 +162,7 @@ const Overview = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -180,6 +182,7 @@ const Overview = () => {
                   })}
                 </ErrorAlert>
               )}
+
               <Form
                 className="tablet:grid-col-6 margin-top-6"
                 onSubmit={e => {
@@ -195,7 +198,9 @@ const Overview = () => {
                   <Label htmlFor="modelType">
                     {basicsT('modelType.question')}
                   </Label>
+
                   <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
+
                   <Fieldset>
                     <Field
                       as={Radio}
@@ -205,6 +210,7 @@ const Overview = () => {
                       value="VOLUNTARY"
                       checked={values.modelType === 'VOLUNTARY'}
                     />
+
                     <Field
                       as={Radio}
                       id="ModelType-Mandatory"
@@ -269,6 +275,7 @@ const Overview = () => {
                   >
                     {miscellaneousT('back')}
                   </Button>
+
                   <Button
                     type="submit"
                     disabled={!(dirty || isValid)}
@@ -284,9 +291,11 @@ const Overview = () => {
                   onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
+
                   {miscellaneousT('saveAndReturn')}
                 </Button>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -302,6 +311,7 @@ const Overview = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={2} totalPages={3} className="margin-bottom-10" />
     </div>
   );

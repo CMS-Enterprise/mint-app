@@ -110,6 +110,16 @@ export type TranslationGeneralCharacteristics = {
   managePartCDEnrollmentNote: TranslationFieldProperties;
   planContractUpdated: TranslationFieldPropertiesWithOptions<Bool>;
   planContractUpdatedNote: TranslationFieldProperties;
+  // Involvements
+  careCoordinationInvolved: TranslationFieldPropertiesWithOptions<Bool>;
+  careCoordinationInvolvedDescription: TranslationFieldProperties;
+  careCoordinationInvolvedNote: TranslationFieldProperties;
+  additionalServicesInvolved: TranslationFieldPropertiesWithOptions<Bool>;
+  additionalServicesInvolvedDescription: TranslationFieldProperties;
+  additionalServicesInvolvedNote: TranslationFieldProperties;
+  communityPartnersInvolved: TranslationFieldPropertiesWithOptions<Bool>;
+  communityPartnersInvolvedDescription: TranslationFieldProperties;
+  communityPartnersInvolvedNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

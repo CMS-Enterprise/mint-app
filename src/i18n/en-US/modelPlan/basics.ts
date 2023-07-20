@@ -48,7 +48,6 @@ export const basics: TranslationBasics = {
     question: 'CMS component',
     dataType: 'enum',
     formType: 'checkbox',
-    filterGroups: ['ipc'],
     options: {
       CMMI: 'CMMI',
       CENTER_FOR_MEDICARE: 'Center for Medicare (CM)',
@@ -57,7 +56,8 @@ export const basics: TranslationBasics = {
         'Center for Clinical Standards and Quality (CCSQ)',
       CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)',
       OTHER: 'Other'
-    }
+    },
+    filterGroups: ['ipc']
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
@@ -68,7 +68,6 @@ export const basics: TranslationBasics = {
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: 'enum',
     formType: 'checkbox',
-    filterGroups: ['ipc'],
     options: {
       PATIENT_CARE_MODELS_GROUP: 'Patient Care Models Group (PCMG)',
       POLICY_AND_PROGRAMS_GROUP: 'Policy and Programs Group (PPG)',
@@ -76,7 +75,8 @@ export const basics: TranslationBasics = {
       STATE_AND_POPULATION_HEALTH_GROUP:
         'State and Population Health Group (SPHG)',
       TBD: 'To be determined'
-    }
+    },
+    filterGroups: ['ipc']
   },
   modelType: {
     gqlField: 'modelType',
@@ -85,12 +85,12 @@ export const basics: TranslationBasics = {
     question: 'Model Type',
     dataType: 'enum',
     formType: 'radio',
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg'],
     options: {
       VOLUNTARY: 'Voluntary',
       MANDATORY: 'Mandatory',
       TBD: 'To be determined'
-    }
+    },
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },
   problem: {
     gqlField: 'problem',
@@ -105,11 +105,11 @@ export const basics: TranslationBasics = {
     goField: 'Goal',
     dbField: 'goal',
     question: 'Goal',
-    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg'],
     hint:
       'Please include the high level goal of the program and a description of the project.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },
   testInterventions: {
     gqlField: 'testInterventions',
@@ -125,7 +125,8 @@ export const basics: TranslationBasics = {
     dbField: 'complete_icip',
     question: 'Complete ICIP',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   clearanceStarts: {
     gqlField: 'clearanceStarts',
@@ -133,7 +134,8 @@ export const basics: TranslationBasics = {
     dbField: 'clearance_starts',
     question: 'Clearance start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   clearanceEnds: {
     gqlField: 'clearanceEnds',
@@ -141,7 +143,8 @@ export const basics: TranslationBasics = {
     dbField: 'clearance_ends',
     question: 'Clearance end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   announced: {
     gqlField: 'announced',
@@ -150,7 +153,7 @@ export const basics: TranslationBasics = {
     question: 'Announce model',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc', 'iddoc', 'pbg']
+    filterGroups: ['cbosc', 'iddoc', 'ipc', 'pbg']
   },
   applicationsStart: {
     gqlField: 'applicationsStart',
@@ -159,7 +162,7 @@ export const basics: TranslationBasics = {
     question: 'Application start date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc']
+    filterGroups: ['cbosc', 'ipc']
   },
   applicationsEnd: {
     gqlField: 'applicationsEnd',
@@ -167,7 +170,8 @@ export const basics: TranslationBasics = {
     dbField: 'applications_ends',
     question: 'Application end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   performancePeriodStarts: {
     gqlField: 'performancePeriodStarts',
@@ -176,7 +180,7 @@ export const basics: TranslationBasics = {
     question: 'Performance start date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'iddoc', 'pbg']
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'iddoc', 'ipc', 'pbg']
   },
   performancePeriodEnds: {
     gqlField: 'performancePeriodEnds',
@@ -184,7 +188,8 @@ export const basics: TranslationBasics = {
     dbField: 'performance_period_ends',
     question: 'Performance end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   highLevelNote: {
     gqlField: 'highLevelNote',
@@ -200,7 +205,8 @@ export const basics: TranslationBasics = {
     dbField: 'wrap_up_ends',
     question: 'Model wrap-up end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   phasedIn: {
     gqlField: 'phasedIn',
@@ -212,11 +218,11 @@ export const basics: TranslationBasics = {
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
     dataType: 'boolean',
     formType: 'radio',
-    filterGroups: ['iddoc', 'pbg'],
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    filterGroups: ['iddoc', 'pbg']
   },
   phasedInNote: {
     gqlField: 'phasedInNote',
@@ -224,7 +230,8 @@ export const basics: TranslationBasics = {
     dbField: 'phased_in_note',
     question: 'Note',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   },
   status: {
     gqlField: 'status',
