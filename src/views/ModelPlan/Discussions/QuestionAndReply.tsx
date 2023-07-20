@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import {
   Button,
   Dropdown,
+  Fieldset,
   Label,
   Textarea,
   TextInput
@@ -172,132 +173,135 @@ const QuestionAndReply = ({
                   window.scrollTo(0, 0);
                 }}
               >
-                <FieldGroup
-                  scrollElement="user-role"
-                  error={!!flatErrors.userRole}
-                  className="margin-top-4"
-                >
-                  <Label htmlFor="user-role">
-                    {t('role')}
-                    <RequiredAsterisk />
-                  </Label>
-
-                  <p className="text-base margin-top-0">{t('roleInfo')}</p>
-
-                  <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
-
-                  <Field
-                    as={Dropdown}
-                    id="user-role"
-                    name="userRole"
-                    disabled={loading}
-                    value={values.userRole || ''}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFieldValue('userRole', e.target.value);
-                    }}
+                <Fieldset disabled={loading}>
+                  <FieldGroup
+                    scrollElement="user-role"
+                    error={!!flatErrors.userRole}
+                    className="margin-top-4"
                   >
-                    <option key="default-select" disabled value="">
-                      {`-${t('select')}-`}
-                    </option>
-                    {Object.keys(DiscussionUserRole)
-                      .sort(sortOtherEnum)
-                      .map(role => {
-                        return (
-                          <option key={role} value={role}>
-                            {t(`userRole.${role}`)}
-                          </option>
-                        );
-                      })}
-                  </Field>
+                    <Label htmlFor="user-role">
+                      {t('role')}
+                      <RequiredAsterisk />
+                    </Label>
 
-                  {values.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE && (
-                    <div className="margin-top-3">
-                      <Label
-                        htmlFor="user-role-description"
-                        className="text-normal"
-                      >
-                        {t('enterDescription')}
-                        <RequiredAsterisk />
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.userRoleDescription}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextInput}
-                        value={values.userRoleDescription || ''}
-                        id="user-role-description"
-                        name="userRoleDescription"
-                      />
-                    </div>
-                  )}
-                </FieldGroup>
+                    <p className="text-base margin-top-0">{t('roleInfo')}</p>
 
-                <FieldGroup
-                  scrollElement="content"
-                  error={!!flatErrors.content}
-                >
-                  <Label htmlFor="discussion-content" className="text-normal">
-                    {renderType === 'question'
-                      ? t('typeQuestion')
-                      : t('typeAnswer')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
-                  <Field
-                    className="height-card"
-                    as={Textarea}
+                    <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
+
+                    <Field
+                      as={Dropdown}
+                      id="user-role"
+                      name="userRole"
+                      disabled={loading}
+                      value={values.userRole || ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('userRole', e.target.value);
+                      }}
+                    >
+                      <option key="default-select" disabled value="">
+                        {`-${t('select')}-`}
+                      </option>
+                      {Object.keys(DiscussionUserRole)
+                        .sort(sortOtherEnum)
+                        .map(role => {
+                          return (
+                            <option key={role} value={role}>
+                              {t(`userRole.${role}`)}
+                            </option>
+                          );
+                        })}
+                    </Field>
+
+                    {values.userRole ===
+                      DiscussionUserRole.NONE_OF_THE_ABOVE && (
+                      <div className="margin-top-3">
+                        <Label
+                          htmlFor="user-role-description"
+                          className="text-normal"
+                        >
+                          {t('enterDescription')}
+                          <RequiredAsterisk />
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.userRoleDescription}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextInput}
+                          value={values.userRoleDescription || ''}
+                          id="user-role-description"
+                          name="userRoleDescription"
+                        />
+                      </div>
+                    )}
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="content"
                     error={!!flatErrors.content}
-                    id="discussion-content"
-                    name="content"
-                  />
-                </FieldGroup>
-                <div className="margin-y-5 display-block">
-                  <Button
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    type="button"
-                    onClick={() => {
-                      if (closeModal) {
-                        closeModal();
-                      }
-                      if (
-                        discussionReplyID &&
-                        setDiscussionReplyID &&
-                        queryParams &&
-                        setInitQuestion
-                      ) {
-                        setDiscussionReplyID(null);
-                        queryParams.delete('discussionID');
-                        history.replace({
-                          search: queryParams.toString()
-                        });
-                        setInitQuestion(false);
-                      }
-                      if (
-                        renderType &&
-                        setDiscussionStatusMessage &&
-                        setDiscussionType
-                      ) {
-                        setDiscussionStatusMessage('');
-                        setDiscussionType('discussion');
-                      }
-                    }}
                   >
-                    {h('cancel')}
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={
-                      isSubmitting ||
-                      !values.content ||
-                      !values.userRole ||
-                      (values.userRole ===
-                        DiscussionUserRole.NONE_OF_THE_ABOVE &&
-                        !values.userRoleDescription)
-                    }
-                    onClick={() => setErrors({})}
-                  >
-                    {renderType === 'question' ? t('save') : t('saveAnswer')}
-                  </Button>
-                </div>
+                    <Label htmlFor="discussion-content" className="text-normal">
+                      {renderType === 'question'
+                        ? t('typeQuestion')
+                        : t('typeAnswer')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
+                    <Field
+                      className="height-card"
+                      as={Textarea}
+                      error={!!flatErrors.content}
+                      id="discussion-content"
+                      name="content"
+                    />
+                  </FieldGroup>
+                  <div className="margin-y-5 display-block">
+                    <Button
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      type="button"
+                      onClick={() => {
+                        if (closeModal) {
+                          closeModal();
+                        }
+                        if (
+                          discussionReplyID &&
+                          setDiscussionReplyID &&
+                          queryParams &&
+                          setInitQuestion
+                        ) {
+                          setDiscussionReplyID(null);
+                          queryParams.delete('discussionID');
+                          history.replace({
+                            search: queryParams.toString()
+                          });
+                          setInitQuestion(false);
+                        }
+                        if (
+                          renderType &&
+                          setDiscussionStatusMessage &&
+                          setDiscussionType
+                        ) {
+                          setDiscussionStatusMessage('');
+                          setDiscussionType('discussion');
+                        }
+                      }}
+                    >
+                      {h('cancel')}
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={
+                        isSubmitting ||
+                        !values.content ||
+                        !values.userRole ||
+                        (values.userRole ===
+                          DiscussionUserRole.NONE_OF_THE_ABOVE &&
+                          !values.userRoleDescription)
+                      }
+                      onClick={() => setErrors({})}
+                    >
+                      {renderType === 'question' ? t('save') : t('saveAnswer')}
+                    </Button>
+                  </div>
+                </Fieldset>
               </Form>
             </>
           );
