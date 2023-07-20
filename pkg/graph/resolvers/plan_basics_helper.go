@@ -152,8 +152,6 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 	var newTimeVal, oldTimeVal *time.Time
 	hasAssignedNewValue := false
 
-	println("field:", field)
-
 	// If we are assigning a new value then we have a change
 	if newExists {
 		hasAssignedNewValue = true
@@ -163,7 +161,6 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 			case string:
 				newTimeParsed, err := time.Parse(time.RFC3339, v)
 				if err != nil {
-					fmt.Println("ERROR: Failed to parse time:", err)
 					return false, nil, nil
 				}
 
@@ -171,13 +168,10 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 					newTimeVal = &newTimeParsed
 				}
 			default:
-				fmt.Println("ERROR: New date value is not a string")
 				return false, nil, nil
 			}
 		}
 	}
-
-	println("newTimeVal:", newTimeVal)
 
 	var ok bool
 	if oldExists && oldVal != nil {
@@ -186,7 +180,6 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 			oldTimeVal = nil
 		}
 	}
-	println("oldTimeVal:", oldTimeVal)
 
 	// If we have not assigned a new value then we should default to using the old value
 	if !hasAssignedNewValue {

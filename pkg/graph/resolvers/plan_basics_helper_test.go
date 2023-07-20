@@ -27,6 +27,15 @@ func (suite *ResolverSuite) TestDateProcessorExtractChangedDates() {
 		WrapUpEnds:              &t1,
 	}
 
+	// TODO: Add test for single date field from nil to non-nil
+	// TODO: Add test for single date field from non-nil to nil
+	// TODO: Add test for range begin date from nil to non-nil
+	// TODO: Add test for range end date from nil to non-nil
+	// TODO: Add test for range begin date from non-nil to nil
+	// TODO: Add test for range end date from non-nil to nil
+	// TODO: Add test for range both dates from nil to non-nil
+	// TODO: Add test for range both dates from non-nil to nil
+
 	// Test Cases
 	testCases := []struct {
 		name     string
