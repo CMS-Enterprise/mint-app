@@ -12,7 +12,6 @@ exports[`The BooleanRadio component matches snapshot 1`] = `
     >
       <input
         class="usa-radio__input"
-        data-testid="care-coordination-involved"
         id="care-coordination-involved"
         name="careCoordinationInvolved"
         type="radio"
@@ -31,7 +30,6 @@ exports[`The BooleanRadio component matches snapshot 1`] = `
     >
       <input
         class="usa-radio__input"
-        data-testid="care-coordination-involved-no"
         id="care-coordination-involved-no"
         name="careCoordinationInvolved"
         type="radio"

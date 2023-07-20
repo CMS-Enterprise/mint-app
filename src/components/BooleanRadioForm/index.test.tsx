@@ -10,7 +10,7 @@ const onSubmit = (values: any) => {};
 describe('The BooleanRadio component', () => {
   it('adds input to field', async () => {
     await act(async () => {
-      const { getByTestId } = render(
+      const { getByRole } = render(
         <Formik
           initialValues={{ careCoordinationInvolved: null }}
           onSubmit={onSubmit}
@@ -34,8 +34,9 @@ describe('The BooleanRadio component', () => {
       );
 
       await waitFor(() => {
-        userEvent.click(getByTestId('care-coordination-involved'));
-        expect(getByTestId('care-coordination-involved')).toBeChecked();
+        const radioTrue = getByRole('radio', { name: 'Yes' });
+        userEvent.click(radioTrue);
+        expect(radioTrue).toBeChecked();
       });
     });
   });

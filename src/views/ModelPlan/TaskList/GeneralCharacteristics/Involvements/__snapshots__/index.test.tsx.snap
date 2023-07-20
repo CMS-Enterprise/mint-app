@@ -325,14 +325,14 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         >
           <input
             class="usa-radio__input"
-            id="plan-characteristics-community-partners-no"
+            id="plan-characteristics-community-partners-involved-no"
             name="communityPartnersInvolved"
             type="radio"
             value="FALSE"
           />
           <label
             class="usa-radio__label"
-            for="plan-characteristics-community-partners-no"
+            for="plan-characteristics-community-partners-involved-no"
           >
             No
           </label>
