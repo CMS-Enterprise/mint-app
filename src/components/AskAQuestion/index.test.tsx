@@ -109,14 +109,14 @@ describe('Ask a Question Component', () => {
       ).toBeInTheDocument();
 
       expect(getByText('Type your question')).toBeInTheDocument();
+
+      const feedbackField = screen.getByRole('textbox', {
+        name: /Type your question/i
+      });
+
+      userEvent.type(feedbackField, 'Test feedback');
+
+      expect(feedbackField).toHaveValue('Test feedback');
     });
-
-    const feedbackField = screen.getByRole('textbox', {
-      name: /Type your question/i
-    });
-
-    userEvent.type(feedbackField, 'Test feedback');
-
-    expect(feedbackField).toHaveValue('Test feedback');
   });
 });
