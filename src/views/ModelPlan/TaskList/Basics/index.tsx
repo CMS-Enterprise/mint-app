@@ -270,191 +270,195 @@ const BasicsContent = () => {
                         window.scrollTo(0, 0);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="modelName"
-                        error={!!flatErrors.modelName}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="plan-basics-model-name">
-                          {modelPlanT('modelName.question')}
-                          <RequiredAsterisk />
-                        </Label>
-
-                        <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
-                        <Field
-                          as={TextInput}
+                      <Fieldset disabled={loading}>
+                        <FieldGroup
+                          scrollElement="modelName"
                           error={!!flatErrors.modelName}
-                          id="plan-basics-model-name"
-                          maxLength={50}
-                          name="modelName"
-                        />
-                      </FieldGroup>
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="plan-basics-model-name">
+                            {modelPlanT('modelName.question')}
+                            <RequiredAsterisk />
+                          </Label>
 
-                      <FieldGroup
-                        scrollElement="abbreviation"
-                        error={!!flatErrors.abbreviation}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="plan-basics-model-name">
-                          {modelPlanT('abbreviation.question')}
-                        </Label>
+                          <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+                          <Field
+                            as={TextInput}
+                            error={!!flatErrors.modelName}
+                            id="plan-basics-model-name"
+                            maxLength={50}
+                            name="modelName"
+                          />
+                        </FieldGroup>
 
-                        <span className="usa-hint display-block text-normal margin-top-1">
-                          {modelPlanT('abbreviation.hint')}
-                        </span>
-
-                        <FieldErrorMsg>{flatErrors.abbreviation}</FieldErrorMsg>
-                        <Field
-                          as={TextInput}
+                        <FieldGroup
+                          scrollElement="abbreviation"
                           error={!!flatErrors.abbreviation}
-                          id="plan-basics-abbreviation"
-                          maxLength={50}
-                          name="abbreviation"
-                        />
-                      </FieldGroup>
-
-                      <div
-                        className={classNames(
-                          'bg-base-lightest padding-2 margin-top-4',
-                          {
-                            'maxw-mobile-lg': isTablet
-                          }
-                        )}
-                      >
-                        <Label
-                          htmlFor="plan-basics-demo-code"
-                          className="margin-top-0"
+                          className="margin-top-4"
                         >
-                          {planBasicsMiscT('otherIdentifiers')}
-                        </Label>
+                          <Label htmlFor="plan-basics-model-name">
+                            {modelPlanT('abbreviation.question')}
+                          </Label>
 
-                        <p className="line-height-mono-4">
-                          {planBasicsMiscT('otherIdentifiersInfo1')}
+                          <span className="usa-hint display-block text-normal margin-top-1">
+                            {modelPlanT('abbreviation.hint')}
+                          </span>
 
-                          <TrussLink
-                            aria-label="Open AMS in a new tab"
-                            href="https://ams.cmmi.cms.gov"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            variant="external"
-                          >
-                            {planBasicsMiscT('otherIdentifiersInfo2')}
-                          </TrussLink>
+                          <FieldErrorMsg>
+                            {flatErrors.abbreviation}
+                          </FieldErrorMsg>
+                          <Field
+                            as={TextInput}
+                            error={!!flatErrors.abbreviation}
+                            id="plan-basics-abbreviation"
+                            maxLength={50}
+                            name="abbreviation"
+                          />
+                        </FieldGroup>
 
-                          {planBasicsMiscT('otherIdentifiersInfo3')}
-                        </p>
-                        <Grid row gap>
-                          <Grid desktop={{ col: 6 }}>
-                            <FieldGroup
-                              scrollElement="basics.amsModelID"
-                              error={!!flatErrors['basics.amsModelID']}
-                              className="margin-top-0"
-                            >
-                              <Label htmlFor="plan-basics-ams-model-id">
-                                {planBasicsT('amsModelID.question')}
-                              </Label>
-
-                              <FieldErrorMsg>
-                                {flatErrors['basics.amsModelID']}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextInput}
-                                error={!!flatErrors['basics.amsModelID']}
-                                id="plan-basics-ams-model-id"
-                                maxLength={50}
-                                name="basics.amsModelID"
-                              />
-                            </FieldGroup>
-                          </Grid>
-                          <Grid desktop={{ col: 6 }}>
-                            <FieldGroup
-                              scrollElement="basics.demoCode"
-                              error={!!flatErrors['basics.demoCode']}
-                              className="margin-top-0"
-                            >
-                              <Label htmlFor="plan-basics-demo-code">
-                                {planBasicsT('demoCode.question')}
-                              </Label>
-
-                              <FieldErrorMsg>
-                                {flatErrors['basics.demoCode']}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextInput}
-                                error={!!flatErrors['basics.demoCode']}
-                                id="plan-basics-demo-code"
-                                maxLength={50}
-                                name="basics.demoCode"
-                              />
-                            </FieldGroup>
-                          </Grid>
-                        </Grid>
-                      </div>
-
-                      <FieldGroup
-                        scrollElement="modelCategory"
-                        error={!!flatErrors['basics.modelCategory']}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="plan-basics-model-category">
-                          {planBasicsT('modelCategory.question')}
-                          <RequiredAsterisk />
-                        </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors['basics.modelCategory']}
-                        </FieldErrorMsg>
-
-                        <Field
-                          as={Dropdown}
-                          id="plan-basics-model-category"
-                          name="basics.modelCategory"
-                          value={values.basics.modelCategory || ''}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            setFieldValue(
-                              'basics.modelCategory',
-                              e.target.value
-                            );
-                          }}
-                        >
-                          <option key="default-select" disabled value="">
-                            {`-${generalT('select')}-`}
-                          </option>
-                          {Object.keys(modelCategoryConfig.options).map(
-                            category => {
-                              return (
-                                <option key={category} value={category}>
-                                  {modelCategoryConfig.options[category]}
-                                </option>
-                              );
+                        <div
+                          className={classNames(
+                            'bg-base-lightest padding-2 margin-top-4',
+                            {
+                              'maxw-mobile-lg': isTablet
                             }
                           )}
-                        </Field>
-                      </FieldGroup>
+                        >
+                          <Label
+                            htmlFor="plan-basics-demo-code"
+                            className="margin-top-0"
+                          >
+                            {planBasicsMiscT('otherIdentifiers')}
+                          </Label>
 
-                      <FieldGroup
-                        scrollElement="cmsCenters"
-                        error={!!flatErrors['basics.cmsCenters']}
-                        className="margin-top-4"
-                      >
-                        <Fieldset legend={planBasicsT('cmsCenters.question')}>
-                          <FieldArray
-                            name="basics.cmsCenters"
-                            render={arrayHelpers => (
-                              <>
-                                <Label htmlFor="plan-basics-cmsCenters">
-                                  {planBasicsT('cmsCenters.question')}
-                                  <RequiredAsterisk />
+                          <p className="line-height-mono-4">
+                            {planBasicsMiscT('otherIdentifiersInfo1')}
+
+                            <TrussLink
+                              aria-label="Open AMS in a new tab"
+                              href="https://ams.cmmi.cms.gov"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              variant="external"
+                            >
+                              {planBasicsMiscT('otherIdentifiersInfo2')}
+                            </TrussLink>
+
+                            {planBasicsMiscT('otherIdentifiersInfo3')}
+                          </p>
+                          <Grid row gap>
+                            <Grid desktop={{ col: 6 }}>
+                              <FieldGroup
+                                scrollElement="basics.amsModelID"
+                                error={!!flatErrors['basics.amsModelID']}
+                                className="margin-top-0"
+                              >
+                                <Label htmlFor="plan-basics-ams-model-id">
+                                  {planBasicsT('amsModelID.question')}
                                 </Label>
 
                                 <FieldErrorMsg>
-                                  {flatErrors['basics.cmsCenters']}
+                                  {flatErrors['basics.amsModelID']}
                                 </FieldErrorMsg>
+                                <Field
+                                  as={TextInput}
+                                  error={!!flatErrors['basics.amsModelID']}
+                                  id="plan-basics-ams-model-id"
+                                  maxLength={50}
+                                  name="basics.amsModelID"
+                                />
+                              </FieldGroup>
+                            </Grid>
+                            <Grid desktop={{ col: 6 }}>
+                              <FieldGroup
+                                scrollElement="basics.demoCode"
+                                error={!!flatErrors['basics.demoCode']}
+                                className="margin-top-0"
+                              >
+                                <Label htmlFor="plan-basics-demo-code">
+                                  {planBasicsT('demoCode.question')}
+                                </Label>
 
-                                {Object.keys(modelCMSCenterConfig.options).map(
-                                  center => {
+                                <FieldErrorMsg>
+                                  {flatErrors['basics.demoCode']}
+                                </FieldErrorMsg>
+                                <Field
+                                  as={TextInput}
+                                  error={!!flatErrors['basics.demoCode']}
+                                  id="plan-basics-demo-code"
+                                  maxLength={50}
+                                  name="basics.demoCode"
+                                />
+                              </FieldGroup>
+                            </Grid>
+                          </Grid>
+                        </div>
+
+                        <FieldGroup
+                          scrollElement="modelCategory"
+                          error={!!flatErrors['basics.modelCategory']}
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="plan-basics-model-category">
+                            {planBasicsT('modelCategory.question')}
+                            <RequiredAsterisk />
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors['basics.modelCategory']}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={Dropdown}
+                            id="plan-basics-model-category"
+                            name="basics.modelCategory"
+                            value={values.basics.modelCategory || ''}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setFieldValue(
+                                'basics.modelCategory',
+                                e.target.value
+                              );
+                            }}
+                          >
+                            <option key="default-select" disabled value="">
+                              {`-${generalT('select')}-`}
+                            </option>
+                            {Object.keys(modelCategoryConfig.options).map(
+                              category => {
+                                return (
+                                  <option key={category} value={category}>
+                                    {modelCategoryConfig.options[category]}
+                                  </option>
+                                );
+                              }
+                            )}
+                          </Field>
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="cmsCenters"
+                          error={!!flatErrors['basics.cmsCenters']}
+                          className="margin-top-4"
+                        >
+                          <Fieldset legend={planBasicsT('cmsCenters.question')}>
+                            <FieldArray
+                              name="basics.cmsCenters"
+                              render={arrayHelpers => (
+                                <>
+                                  <Label htmlFor="plan-basics-cmsCenters">
+                                    {planBasicsT('cmsCenters.question')}
+                                    <RequiredAsterisk />
+                                  </Label>
+
+                                  <FieldErrorMsg>
+                                    {flatErrors['basics.cmsCenters']}
+                                  </FieldErrorMsg>
+
+                                  {Object.keys(
+                                    modelCMSCenterConfig.options
+                                  ).map(center => {
                                     return (
                                       <Field
                                         key={center}
@@ -494,94 +498,97 @@ const BasicsContent = () => {
                                         }}
                                       />
                                     );
+                                  })}
+
+                                  {values.basics.cmsCenters.includes(
+                                    CMSCenter.OTHER
+                                  ) && (
+                                    <FieldGroup
+                                      className="margin-top-4"
+                                      error={!!flatErrors['basics.cmsOther']}
+                                    >
+                                      <Label htmlFor="plan-basics-cmsCategory--Other">
+                                        {generalT('pleaseSpecify')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors['basics.cmsOther']}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        id="plan-basics-cmsCategory--Other"
+                                        maxLength={5000}
+                                        className="mint-textarea"
+                                        name="basics.cmsOther"
+                                      />
+                                    </FieldGroup>
+                                  )}
+                                </>
+                              )}
+                            />
+                          </Fieldset>
+                        </FieldGroup>
+                        <FieldGroup
+                          error={!!flatErrors['basics.cmmiGroups']}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="basics.cmmiGroups"
+                            className="text-normal"
+                          >
+                            {planBasicsT('cmmiGroups.question')}
+                          </Label>
+
+                          <p className="text-base margin-bottom-1 margin-top-1">
+                            {planBasicsT('cmmiGroups.hint')}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors['basics.cmmiGroups']}
+                          </FieldErrorMsg>
+                          {Object.keys(CMMIGroup).map(group => {
+                            return (
+                              <Fragment key={group}>
+                                <Field
+                                  as={CheckboxField}
+                                  disabled={
+                                    !values.basics.cmsCenters.includes(
+                                      CMSCenter.CMMI
+                                    )
                                   }
-                                )}
+                                  id={`new-plan-cmmiGroup-${group}`}
+                                  name="basics.cmmiGroups"
+                                  label={modelCMSGroupsConfig.options[group]}
+                                  value={group}
+                                  checked={values.basics.cmmiGroups.includes(
+                                    group as CMMIGroup
+                                  )}
+                                />
+                              </Fragment>
+                            );
+                          })}
+                        </FieldGroup>
 
-                                {values.basics.cmsCenters.includes(
-                                  CMSCenter.OTHER
-                                ) && (
-                                  <FieldGroup
-                                    className="margin-top-4"
-                                    error={!!flatErrors['basics.cmsOther']}
-                                  >
-                                    <Label htmlFor="plan-basics-cmsCategory--Other">
-                                      {generalT('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors['basics.cmsOther']}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextAreaField}
-                                      id="plan-basics-cmsCategory--Other"
-                                      maxLength={5000}
-                                      className="mint-textarea"
-                                      name="basics.cmsOther"
-                                    />
-                                  </FieldGroup>
-                                )}
-                              </>
-                            )}
-                          />
-                        </Fieldset>
-                      </FieldGroup>
-                      <FieldGroup
-                        error={!!flatErrors['basics.cmmiGroups']}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="basics.cmmiGroups"
-                          className="text-normal"
-                        >
-                          {planBasicsT('cmmiGroups.question')}
-                        </Label>
-
-                        <p className="text-base margin-bottom-1 margin-top-1">
-                          {planBasicsT('cmmiGroups.hint')}
-                        </p>
-
-                        <FieldErrorMsg>
-                          {flatErrors['basics.cmmiGroups']}
-                        </FieldErrorMsg>
-                        {Object.keys(CMMIGroup).map(group => {
-                          return (
-                            <Fragment key={group}>
-                              <Field
-                                as={CheckboxField}
-                                disabled={
-                                  !values.basics.cmsCenters.includes(
-                                    CMSCenter.CMMI
-                                  )
-                                }
-                                id={`new-plan-cmmiGroup-${group}`}
-                                name="basics.cmmiGroups"
-                                label={modelCMSGroupsConfig.options[group]}
-                                value={group}
-                                checked={values.basics.cmmiGroups.includes(
-                                  group as CMMIGroup
-                                )}
-                              />
-                            </Fragment>
-                          );
-                        })}
-                      </FieldGroup>
-
-                      <div className="margin-top-6 margin-bottom-3">
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="submit"
+                            disabled={!(dirty || isValid)}
+                            onClick={() => setErrors({})}
+                          >
+                            {generalT('next')}
+                          </Button>
+                        </div>
                         <Button
-                          type="submit"
-                          disabled={!(dirty || isValid)}
-                          onClick={() => setErrors({})}
+                          type="button"
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit(values, 'back')}
                         >
-                          {generalT('next')}
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+                          {generalT('saveAndReturn')}
                         </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'back')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {generalT('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
 
