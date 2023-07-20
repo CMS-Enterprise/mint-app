@@ -1,0 +1,30 @@
+@use 'uswds-core' as *;
+
+.share-export-modal {
+
+    .usa-form {
+        max-width: none;
+    }
+
+    .usa-combo-box {
+        max-width: 35rem !important;
+    }
+
+    .usa-button:not([disabled]):focus {
+        outline-offset: -.25rem !important;
+    }
+
+    &__nav {
+        border-bottom: .25rem solid transparent !important;
+        bottom: -5px;
+        text-decoration: none !important;
+    }
+
+    &__active {
+        border-bottom: .25rem solid color('primary') !important;
+    }
+
+    .mint-modal__x-button svg {
+        top: 2px;
+    }
+}

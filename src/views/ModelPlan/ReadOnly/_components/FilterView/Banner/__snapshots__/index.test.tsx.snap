@@ -43,23 +43,27 @@ exports[`Filter View Modal matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="display-flex flex-justify flex-align-center flex-align-self-end"
-          style="gap: 1rem;"
+          class="mint-no-print"
         >
-          <button
-            class="usa-button usa-button--unstyled text-white text-no-wrap"
-            data-testid="button"
-            type="button"
+          <div
+            class="display-flex flex-justify flex-align-center flex-align-self-end"
+            style="gap: 1rem;"
           >
-            Clear filter
-          </button>
-          <button
-            class="usa-button"
-            data-testid="button"
-            type="button"
-          >
-            Filter
-          </button>
+            <button
+              class="usa-button usa-button--unstyled text-white text-no-wrap"
+              data-testid="button"
+              type="button"
+            >
+              Clear filter
+            </button>
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="button"
+            >
+              Filter
+            </button>
+          </div>
         </div>
       </div>
     </div>

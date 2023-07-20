@@ -1,4 +1,16 @@
-const FilterGroupMap = {
+export const filterGroups = [
+  'cmmi',
+  'oact',
+  'dfsdm',
+  'ccw',
+  'ipc',
+  'iddoc',
+  'pbg',
+  'mdm',
+  'cbosc'
+] as const;
+
+const FilterGroupMap: Record<typeof filterGroups[number], any> = {
   cmmi: {
     'general-characteristics': [
       'alternativePaymentModelTypes',
