@@ -58,7 +58,7 @@ const AddOrUpdateOperationalNeed = () => {
 
   const isUpdating = !!operationalNeedID;
 
-  const { data } = useQuery<
+  const { data, loading } = useQuery<
     GetOperationalNeedType,
     GetOperationalNeedVariables
   >(GetOperationalNeed, {
@@ -226,7 +226,7 @@ const AddOrUpdateOperationalNeed = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset>
+                      <Fieldset disabled={loading}>
                         <FieldGroup
                           scrollElement="nameOther"
                           error={!!flatErrors.nameOther}

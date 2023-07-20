@@ -222,340 +222,348 @@ const KeyCharacteristics = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="alternativePaymentModelTypes"
-                  error={!!flatErrors.alternativePaymentModelTypes}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <legend className="usa-label maxw-none">
-                    {t('modelAPM')}
-                  </legend>
-                  <Alert type="info" slim data-testid="mandatory-fields-alert">
-                    <span className="mandatory-fields-alert__text">
-                      {t('MIPSInfo')}
-                    </span>
-                  </Alert>
-
-                  <FieldErrorMsg>
-                    {flatErrors.alternativePaymentModelTypes}
-                  </FieldErrorMsg>
-
-                  <Fieldset>
-                    {Object.keys(AlternativePaymentModelType)
-                      .filter(x => x !== AlternativePaymentModelType.NOT_APM)
-                      .map(type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`plan-characteristics-alternative-payment-${type}`}
-                              name="alternativePaymentModelTypes"
-                              label={translateAlternativePaymentTypes(type)}
-                              value={type}
-                              checked={values.alternativePaymentModelTypes.includes(
-                                type as AlternativePaymentModelType
-                              )}
-                              disabled={values.alternativePaymentModelTypes.includes(
-                                AlternativePaymentModelType.NOT_APM
-                              )}
-                            />
-                          </Fragment>
-                        );
-                      })}
-                    <Field
-                      as={CheckboxField}
-                      id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
-                      name="alternativePaymentModelTypes"
-                      label={translateAlternativePaymentTypes(
-                        AlternativePaymentModelType.NOT_APM
-                      )}
-                      value={AlternativePaymentModelType.NOT_APM}
-                      checked={values.alternativePaymentModelTypes.includes(
-                        AlternativePaymentModelType.NOT_APM
-                      )}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        if (e.target.checked) {
-                          setFieldValue(
-                            'alternativePaymentModelTypes',
-                            AlternativePaymentModelType.NOT_APM
-                          );
-                        } else {
-                          setFieldValue('alternativePaymentModelTypes', []);
-                        }
-                      }}
-                    />
-                  </Fieldset>
-
-                  <AddNote
-                    id="plan-characteristics-alternative-payment-note"
-                    field="alternativePaymentModelNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="keyCharacteristics"
-                  error={!!flatErrors.keyCharacteristics}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="plan-characteristics-key-characteristics"
-                    id="label-plan-characteristics-key-characteristics"
-                  >
-                    {t('keyCharacteristics')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.keyCharacteristics}</FieldErrorMsg>
-
-                  <Field
-                    as={MultiSelect}
-                    id="plan-characteristics-key-characteristics"
-                    name="keyCharacteristics"
-                    ariaLabel="label-plan-characteristics-key-characteristics"
-                    role="combobox"
-                    options={mapMultiSelectOptions(
-                      translateKeyCharacteristics,
-                      KeyCharacteristic
-                    )}
-                    selectedLabel={t('selectedKeyCharacteristics')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('keyCharacteristics', value);
-                    }}
-                    initialValues={initialValues.keyCharacteristics}
-                  />
-                </FieldGroup>
-
-                <AddNote
-                  id="plan-characteristics-key-characteristics-note"
-                  field="keyCharacteristicsNote"
-                />
-
-                {values.keyCharacteristics.includes(
-                  KeyCharacteristic.OTHER
-                ) && (
+                <Fieldset disabled={loading}>
                   <FieldGroup
-                    scrollElement="keyCharacteristicsOther"
-                    className="margin-top-neg-4"
-                    error={!!flatErrors.keyCharacteristicsOther}
+                    scrollElement="alternativePaymentModelTypes"
+                    error={!!flatErrors.alternativePaymentModelTypes}
+                    className="margin-y-4 margin-bottom-8"
                   >
-                    <Label htmlFor="plan-characteristics-key-other">
-                      {t('specificQuestions')}
-                    </Label>
-                    <p className="margin-y-1 margin-top-3">
-                      {t('pleaseDescribe')}
-                    </p>
+                    <legend className="usa-label maxw-none">
+                      {t('modelAPM')}
+                    </legend>
+                    <Alert
+                      type="info"
+                      slim
+                      data-testid="mandatory-fields-alert"
+                    >
+                      <span className="mandatory-fields-alert__text">
+                        {t('MIPSInfo')}
+                      </span>
+                    </Alert>
+
                     <FieldErrorMsg>
-                      {flatErrors.keyCharacteristicsOther}
+                      {flatErrors.alternativePaymentModelTypes}
                     </FieldErrorMsg>
-                    <Field
-                      as={TextInput}
-                      data-testid="plan-characteristics-key-other"
-                      error={!!flatErrors.keyCharacteristicsOther}
-                      id="plan-characteristics-key-other"
-                      maxLength={50}
-                      name="keyCharacteristicsOther"
+
+                    <Fieldset>
+                      {Object.keys(AlternativePaymentModelType)
+                        .filter(x => x !== AlternativePaymentModelType.NOT_APM)
+                        .map(type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`plan-characteristics-alternative-payment-${type}`}
+                                name="alternativePaymentModelTypes"
+                                label={translateAlternativePaymentTypes(type)}
+                                value={type}
+                                checked={values.alternativePaymentModelTypes.includes(
+                                  type as AlternativePaymentModelType
+                                )}
+                                disabled={values.alternativePaymentModelTypes.includes(
+                                  AlternativePaymentModelType.NOT_APM
+                                )}
+                              />
+                            </Fragment>
+                          );
+                        })}
+                      <Field
+                        as={CheckboxField}
+                        id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
+                        name="alternativePaymentModelTypes"
+                        label={translateAlternativePaymentTypes(
+                          AlternativePaymentModelType.NOT_APM
+                        )}
+                        value={AlternativePaymentModelType.NOT_APM}
+                        checked={values.alternativePaymentModelTypes.includes(
+                          AlternativePaymentModelType.NOT_APM
+                        )}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          if (e.target.checked) {
+                            setFieldValue(
+                              'alternativePaymentModelTypes',
+                              AlternativePaymentModelType.NOT_APM
+                            );
+                          } else {
+                            setFieldValue('alternativePaymentModelTypes', []);
+                          }
+                        }}
+                      />
+                    </Fieldset>
+
+                    <AddNote
+                      id="plan-characteristics-alternative-payment-note"
+                      field="alternativePaymentModelNote"
                     />
                   </FieldGroup>
-                )}
 
-                {(values.keyCharacteristics.includes(
-                  'PART_C' as KeyCharacteristic
-                ) ||
-                  values.keyCharacteristics.includes(
-                    'PART_D' as KeyCharacteristic
-                  )) && (
-                  <>
-                    <FieldGroup
-                      scrollElement="collectPlanBids"
-                      error={!!flatErrors.collectPlanBids}
-                      className="margin-y-4"
+                  <FieldGroup
+                    scrollElement="keyCharacteristics"
+                    error={!!flatErrors.keyCharacteristics}
+                    className="margin-top-4"
+                  >
+                    <Label
+                      htmlFor="plan-characteristics-key-characteristics"
+                      id="label-plan-characteristics-key-characteristics"
                     >
-                      <Label
-                        htmlFor="plan-characteristics-collect-bids"
-                        className="text-normal"
-                      >
-                        {t('reviewPlanBids')}
-                      </Label>
-                      {itSolutionsStarted && (
-                        <ITSolutionsWarning
-                          id="plan-characteristics-collect-bids-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        />
+                      {t('keyCharacteristics')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.keyCharacteristics}
+                    </FieldErrorMsg>
+
+                    <Field
+                      as={MultiSelect}
+                      id="plan-characteristics-key-characteristics"
+                      name="keyCharacteristics"
+                      ariaLabel="label-plan-characteristics-key-characteristics"
+                      role="combobox"
+                      options={mapMultiSelectOptions(
+                        translateKeyCharacteristics,
+                        KeyCharacteristic
                       )}
-                      <FieldErrorMsg>
-                        {flatErrors.collectPlanBids}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-collect-bids"
-                          name="collectPlanBids"
-                          label={h('yes')}
-                          value="TRUE"
-                          checked={values.collectPlanBids === true}
-                          onChange={() => {
-                            setFieldValue('collectPlanBids', true);
-                          }}
-                        />
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-collect-bids-no"
-                          name="collectPlanBids"
-                          label={h('no')}
-                          value="FALSE"
-                          checked={values.collectPlanBids === false}
-                          onChange={() => {
-                            setFieldValue('collectPlanBids', false);
-                          }}
-                        />
-                      </Fieldset>
-                    </FieldGroup>
-
-                    <AddNote
-                      id="plan-characteristics-collect-bids-note"
-                      field="collectPlanBidsNote"
-                      className="margin-bottom-0"
+                      selectedLabel={t('selectedKeyCharacteristics')}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('keyCharacteristics', value);
+                      }}
+                      initialValues={initialValues.keyCharacteristics}
                     />
+                  </FieldGroup>
 
+                  <AddNote
+                    id="plan-characteristics-key-characteristics-note"
+                    field="keyCharacteristicsNote"
+                  />
+
+                  {values.keyCharacteristics.includes(
+                    KeyCharacteristic.OTHER
+                  ) && (
                     <FieldGroup
-                      scrollElement="managePartCDEnrollment"
-                      error={!!flatErrors.managePartCDEnrollment}
-                      className="margin-y-4"
+                      scrollElement="keyCharacteristicsOther"
+                      className="margin-top-neg-4"
+                      error={!!flatErrors.keyCharacteristicsOther}
                     >
-                      <Label
-                        htmlFor="plan-characteristics-manage-enrollment"
-                        className="text-normal"
-                      >
-                        {t('manageEnrollment')}
+                      <Label htmlFor="plan-characteristics-key-other">
+                        {t('specificQuestions')}
                       </Label>
-                      {itSolutionsStarted && (
-                        <ITSolutionsWarning
-                          id="plan-characteristics-manage-enrollment-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        />
-                      )}
+                      <p className="margin-y-1 margin-top-3">
+                        {t('pleaseDescribe')}
+                      </p>
                       <FieldErrorMsg>
-                        {flatErrors.managePartCDEnrollment}
+                        {flatErrors.keyCharacteristicsOther}
                       </FieldErrorMsg>
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-manage-enrollment"
-                          name="managePartCDEnrollment"
-                          label={h('yes')}
-                          value="TRUE"
-                          checked={values.managePartCDEnrollment === true}
-                          onChange={() => {
-                            setFieldValue('managePartCDEnrollment', true);
-                          }}
-                        />
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-manage-enrollment-no"
-                          name="managePartCDEnrollment"
-                          label={h('no')}
-                          value="FALSE"
-                          checked={values.managePartCDEnrollment === false}
-                          onChange={() => {
-                            setFieldValue('managePartCDEnrollment', false);
-                          }}
-                        />
-                      </Fieldset>
+                      <Field
+                        as={TextInput}
+                        data-testid="plan-characteristics-key-other"
+                        error={!!flatErrors.keyCharacteristicsOther}
+                        id="plan-characteristics-key-other"
+                        maxLength={50}
+                        name="keyCharacteristicsOther"
+                      />
                     </FieldGroup>
+                  )}
 
-                    <AddNote
-                      id="plan-characteristics-manage-enrollment-note"
-                      field="managePartCDEnrollmentNote"
-                      className="margin-bottom-0"
-                    />
+                  {(values.keyCharacteristics.includes(
+                    'PART_C' as KeyCharacteristic
+                  ) ||
+                    values.keyCharacteristics.includes(
+                      'PART_D' as KeyCharacteristic
+                    )) && (
+                    <>
+                      <FieldGroup
+                        scrollElement="collectPlanBids"
+                        error={!!flatErrors.collectPlanBids}
+                        className="margin-y-4"
+                      >
+                        <Label
+                          htmlFor="plan-characteristics-collect-bids"
+                          className="text-normal"
+                        >
+                          {t('reviewPlanBids')}
+                        </Label>
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="plan-characteristics-collect-bids-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+                        <FieldErrorMsg>
+                          {flatErrors.collectPlanBids}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="plan-characteristics-collect-bids"
+                            name="collectPlanBids"
+                            label={h('yes')}
+                            value="TRUE"
+                            checked={values.collectPlanBids === true}
+                            onChange={() => {
+                              setFieldValue('collectPlanBids', true);
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="plan-characteristics-collect-bids-no"
+                            name="collectPlanBids"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={values.collectPlanBids === false}
+                            onChange={() => {
+                              setFieldValue('collectPlanBids', false);
+                            }}
+                          />
+                        </Fieldset>
+                      </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="planContractUpdated"
-                      error={!!flatErrors.planContractUpdated}
-                      className="margin-y-4"
+                      <AddNote
+                        id="plan-characteristics-collect-bids-note"
+                        field="collectPlanBidsNote"
+                        className="margin-bottom-0"
+                      />
+
+                      <FieldGroup
+                        scrollElement="managePartCDEnrollment"
+                        error={!!flatErrors.managePartCDEnrollment}
+                        className="margin-y-4"
+                      >
+                        <Label
+                          htmlFor="plan-characteristics-manage-enrollment"
+                          className="text-normal"
+                        >
+                          {t('manageEnrollment')}
+                        </Label>
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="plan-characteristics-manage-enrollment-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+                        <FieldErrorMsg>
+                          {flatErrors.managePartCDEnrollment}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="plan-characteristics-manage-enrollment"
+                            name="managePartCDEnrollment"
+                            label={h('yes')}
+                            value="TRUE"
+                            checked={values.managePartCDEnrollment === true}
+                            onChange={() => {
+                              setFieldValue('managePartCDEnrollment', true);
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="plan-characteristics-manage-enrollment-no"
+                            name="managePartCDEnrollment"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={values.managePartCDEnrollment === false}
+                            onChange={() => {
+                              setFieldValue('managePartCDEnrollment', false);
+                            }}
+                          />
+                        </Fieldset>
+                      </FieldGroup>
+
+                      <AddNote
+                        id="plan-characteristics-manage-enrollment-note"
+                        field="managePartCDEnrollmentNote"
+                        className="margin-bottom-0"
+                      />
+
+                      <FieldGroup
+                        scrollElement="planContractUpdated"
+                        error={!!flatErrors.planContractUpdated}
+                        className="margin-y-4"
+                      >
+                        <Label
+                          htmlFor="plan-characteristics-contact-updated"
+                          className="text-normal"
+                        >
+                          {t('updatedContract')}
+                        </Label>
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="plan-characteristics-contact-updated-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+                        <FieldErrorMsg>
+                          {flatErrors.planContractUpdated}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="plan-characteristics-contact-updated"
+                            name="planContractUpdated"
+                            label={h('yes')}
+                            value="TRUE"
+                            checked={values.planContractUpdated === true}
+                            onChange={() => {
+                              setFieldValue('planContractUpdated', true);
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="plan-characteristics-contact-updated-no"
+                            name="planContractUpdated"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={values.planContractUpdated === false}
+                            onChange={() => {
+                              setFieldValue('planContractUpdated', false);
+                            }}
+                          />
+                        </Fieldset>
+                      </FieldGroup>
+
+                      <AddNote
+                        id="plan-characteristics-contact-updated-note"
+                        field="planContractUpdatedNote"
+                      />
+                    </>
+                  )}
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
                     >
-                      <Label
-                        htmlFor="plan-characteristics-contact-updated"
-                        className="text-normal"
-                      >
-                        {t('updatedContract')}
-                      </Label>
-                      {itSolutionsStarted && (
-                        <ITSolutionsWarning
-                          id="plan-characteristics-contact-updated-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        />
-                      )}
-                      <FieldErrorMsg>
-                        {flatErrors.planContractUpdated}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-contact-updated"
-                          name="planContractUpdated"
-                          label={h('yes')}
-                          value="TRUE"
-                          checked={values.planContractUpdated === true}
-                          onChange={() => {
-                            setFieldValue('planContractUpdated', true);
-                          }}
-                        />
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-contact-updated-no"
-                          name="planContractUpdated"
-                          label={h('no')}
-                          value="FALSE"
-                          checked={values.planContractUpdated === false}
-                          onChange={() => {
-                            setFieldValue('planContractUpdated', false);
-                          }}
-                        />
-                      </Fieldset>
-                    </FieldGroup>
-
-                    <AddNote
-                      id="plan-characteristics-contact-updated-note"
-                      field="planContractUpdatedNote"
-                    />
-                  </>
-                )}
-
-                <div className="margin-top-6 margin-bottom-3">
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
-              {id && (
+              {id && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {
