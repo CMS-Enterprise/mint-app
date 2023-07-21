@@ -1,18 +1,12 @@
-@media screen {
-  .mint-only-print {
+@media all {
+  .page-break {
     display: none;
   }
 }
 
-@media print {
-  html {
-    font-size: 12px;
-  }
-
-  @page {
-    @bottom-left {
-      content: 'Page ' counter(page) ' of ' counter(pages);
-    }
+@media screen {
+  .mint-only-print {
+    display: none;
   }
 }
 
@@ -22,13 +16,23 @@
   }
 
   .mint-only-print {
-    display: block;
+    display: block !important;
   }
 
-  h1 {
-    border-bottom: solid 5px #009bc3;
-    padding-bottom: 1rem;
-    margin-bottom: 3rem;
+  .page-break {
+    display: block !important;
+    page-break-before: always;
+    clear: both;
+  }
+
+  html {
+    font-size: 12px;
+  }
+
+  html * {
+    font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif !important;
   }
 
   // prince doesn't support overflow: auto
@@ -37,39 +41,10 @@
     float: left;
     clear: both;
   }
+}
 
-  .mint-review-row {
-    break-inside: avoid;
-    display: flex;
-    & > div {
-      flex: 1;
-      margin-bottom: 1.25rem;
-    }
-  }
-
-  hr.system-intake__hr {
-    opacity: 1;
-    border-bottom: solid 5px black;
-  }
-
-  .mint-responsive-tabs__navigation {
-    display: none;
-  }
-
-  .mint-responsive-tabs {
-    border: 0;
-    box-shadow: none;
-  }
-
-  .mint-business-case__review-solutions-wrapper {
-    padding: 0;
-  }
-
-  .alternative-analysis-wrapper {
-    background: white;
-  }
-
-  .est-lifecycle-cost__total {
-    padding: 1rem;
+@page {
+  @bottom-left {
+    content: 'Page ' counter(page) ' of ' counter(pages);
   }
 }

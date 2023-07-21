@@ -8,7 +8,11 @@ type RequiredAsteriskType = {
 const RequiredAsterisk = ({ className }: RequiredAsteriskType) => {
   const classes = classnames('text-red margin-x-05', className);
 
-  return <span className={classes}>*</span>;
+  return (
+    <span aria-label="(Field required)" className={classes}>
+      *
+    </span>
+  );
 };
 
 export default RequiredAsterisk;

@@ -20,6 +20,9 @@ type DataLoaders struct {
 	OperationSolutionSubtaskLoader *WrappedDataLoader
 	UserAccountLoader              *WrappedDataLoader
 	DataReader                     *DataReader
+	ExistingModelLinkLoader        *WrappedDataLoader
+	ExistingModelLoader            *WrappedDataLoader
+	ModelPlanLoader                *WrappedDataLoader
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -44,6 +47,10 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.OperationSolutionLoader = newWrappedDataLoader(loaders.GetOperationalSolutionAndPossibleCollectionByOperationalNeedID)
 	loaders.OperationSolutionSubtaskLoader = newWrappedDataLoader(loaders.GetOperationalSolutionSubtaskByModelPlanID)
 	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)
+
+	loaders.ExistingModelLinkLoader = newWrappedDataLoader(loaders.GetExistingModelLinkByModelPlanID)
+	loaders.ExistingModelLoader = newWrappedDataLoader(loaders.GetExistingModelByModelPlanID)
+	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
 
 	return loaders
 }

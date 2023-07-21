@@ -30,13 +30,17 @@ const (
 	JobCodeProdUser       = "MINT_USER"
 	JobCodeProdAssessment = "MINT_ASSESSMENT"
 	JobCodeProdMACUser    = "MINT MAC Users"
+
+	// This represents the rename to the MAC user job code. Future work will likely rename the job code config, but for now will allow either
+	JobCodeMINTContractor = "MINT Contractor"
 )
 
 // JobCodesConfig contains a set of environment context-sensitive job codes
 type JobCodesConfig struct {
-	user       string
-	assessment string
-	macUser    string
+	user           string
+	assessment     string
+	macUser        string
+	mintContractor string
 }
 
 // NewJobCodesConfig is a constructor to generate a JobCodesConfig
@@ -44,11 +48,13 @@ func NewJobCodesConfig(
 	user string,
 	assessment string,
 	macUser string,
+	mintContractor string,
 ) *JobCodesConfig {
 	return &JobCodesConfig{
-		user:       user,
-		assessment: assessment,
-		macUser:    macUser,
+		user:           user,
+		assessment:     assessment,
+		macUser:        macUser,
+		mintContractor: mintContractor,
 	}
 }
 
@@ -58,6 +64,7 @@ func NewProductionJobCodesConfig() *JobCodesConfig {
 		JobCodeProdUser,
 		JobCodeProdAssessment,
 		JobCodeProdMACUser,
+		JobCodeMINTContractor,
 	)
 }
 
@@ -67,6 +74,7 @@ func NewTestJobCodesConfig() *JobCodesConfig {
 		JobCodeTestUser,
 		JobCodeTestAssessment,
 		JobCodeTestMACUser,
+		JobCodeMINTContractor,
 	)
 }
 
@@ -83,6 +91,11 @@ func (j *JobCodesConfig) GetAssessmentJobCode() string {
 // GetMACUserJobCode returns this JobCodesConfig's MAC user job code
 func (j *JobCodesConfig) GetMACUserJobCode() string {
 	return j.macUser
+}
+
+// GetMINTContractorJobCode returns this JobCodesConfig's MINT Contractor job code
+func (j *JobCodesConfig) GetMINTContractorJobCode() string {
+	return j.mintContractor
 }
 
 func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*authentication.EnhancedJwt, error) {
@@ -134,9 +147,16 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 	}
 
 	// Get job codes out of the JWT
-	jcUser := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetUserJobCode())
+	var jcUser bool
 	jcAssessment := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetAssessmentJobCode())
-	jcMAC := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMACUserJobCode())
+	if jcAssessment { //Assessment users automatically are granted the base user permissions
+		jcUser = true
+	} else {
+		jcUser = jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetUserJobCode())
+	}
+
+	//TODO: this should be updated once job codes are updated to only check for the MINTContractor job code.
+	jcMAC := (jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMACUserJobCode()) || jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMINTContractorJobCode()))
 
 	// Create a LaunchDarkly user
 	// NOTE: This is copied pkg flags.Principal(). That function couldn't be used here because it
@@ -260,7 +280,9 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware() transport.
 		// Parse auth header into JWT object
 		jwt, err := f.jwt(logger, token)
 		if err != nil {
-			logger.Warn("could not parse jwt from token", zap.Error(err))
+			// Should be safe to log, since we're logging a token that's invalid
+			logger.Info("could not parse jwt from token", zap.Error(err))
+			return nil, err
 		}
 		ctx = appcontext.WithEnhancedJWT(ctx, *jwt)
 

@@ -18,7 +18,9 @@ describe('Operation Solution Help Card', () => {
       </MemoryRouter>
     );
     expect(getByText('4innovation')).toBeInTheDocument();
-    expect(getByText('Data reporting')).toBeInTheDocument();
+    expect(
+      getByText('Applications and participant interaction')
+    ).toBeInTheDocument();
     expect(getByText('4i/ACO-OS Team')).toBeInTheDocument();
   });
 

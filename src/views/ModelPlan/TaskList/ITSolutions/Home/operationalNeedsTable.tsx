@@ -21,6 +21,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { IconArrowForward, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -30,6 +31,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import operationalNeedMap from 'data/operationalNeedMap';
 import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
 import {
   GetOperationalNeeds as GetOperationalNeedsType,
@@ -119,12 +121,18 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.solution'),
-        accessor: ({ name, nameOther }: any) => {
+        accessor: ({ name, nameOther, otherHeader }: any) => {
           if (!name && !nameOther) {
             return t('itSolutionsTable.selectSolution');
           }
-          // Resturn custom name if exists, otherwise return standard solution name
-          return nameOther || name;
+          // Resturn custom name if exists, otherwise return standard solution name plus custom name if exists
+          let solutionName = nameOther || name;
+
+          if (otherHeader) {
+            solutionName = `${solutionName} (${otherHeader})`;
+          }
+
+          return solutionName;
         },
         Cell: ({
           row,
@@ -139,14 +147,8 @@ const OperationalNeedsTable = ({
             }
             const selectSolutionHref =
               row.original.key !== null
-                ? {
-                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`,
-                    state: { isCustomNeed: false }
-                  }
-                : {
-                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution`,
-                    state: { isCustomNeed: true }
-                  };
+                ? `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`
+                : `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution?isCustomNeed=true`;
             return (
               <UswdsReactLink
                 to={selectSolutionHref}
@@ -171,7 +173,19 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.subtasks'),
-        accessor: 'subTasks'
+        accessor: 'operationalSolutionSubtasks',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          if (!row.original.name && !row.original.nameOther) {
+            return '';
+          }
+          return value.length.toString();
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),
@@ -213,7 +227,21 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.section'),
-        accessor: 'section'
+        accessor: 'section',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          if (row.original.key && operationalNeedMap[row.original.key]) {
+            return i18next.t(
+              `${operationalNeedMap[row.original.key].section}:heading`
+            );
+          }
+          return '';
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),
@@ -254,6 +282,7 @@ const OperationalNeedsTable = ({
     setPageSize,
     page,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -271,7 +300,10 @@ const OperationalNeedsTable = ({
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
+        sortBy: useMemo(
+          () => [{ id: type === 'needs' ? 'needName' : 'name', asc: true }],
+          [type]
+        ),
         pageIndex: 0
       }
     },
@@ -285,6 +317,11 @@ const OperationalNeedsTable = ({
     return <PageLoading />;
   }
 
+  // Temp fix for `globalFilterCellText` to work with `page` rows
+  // The filter function requires all rows to be prepped so that
+  // `Column.Cell` is available during filtering
+  rows.map(row => prepareRow(row));
+
   if (error) {
     return (
       <ErrorAlert
@@ -297,6 +334,16 @@ const OperationalNeedsTable = ({
           message={t('itSolutionsTable.error.body')}
         />
       </ErrorAlert>
+    );
+  }
+
+  if (readOnly && operationalNeeds.length === 0) {
+    return (
+      <Alert heading={t('itSolutionsTable.noNeedsReadonly')} type="info">
+        {readOnly
+          ? t('itSolutionsTable.noNeedsReadonlyEditInfo')
+          : t('itSolutionsTable.noNeedsReadonlyInfo')}
+      </Alert>
     );
   }
 
@@ -359,7 +406,6 @@ const OperationalNeedsTable = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells
@@ -396,6 +442,7 @@ const OperationalNeedsTable = ({
                         })}
                         style={{
                           paddingLeft: '0',
+                          maxWidth: i === 1 ? '275px' : 'auto',
                           borderBottom:
                             index === page.length - 1 ? 'none' : 'auto'
                         }}

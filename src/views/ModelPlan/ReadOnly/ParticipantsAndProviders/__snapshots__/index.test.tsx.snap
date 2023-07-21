@@ -14,201 +14,267 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
       >
         Participants and Providers
       </h2>
-      <span
-        class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-warning"
-        data-testid="tasklist-tag"
-      >
-        In progress
-      </span>
+      <div>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+      </div>
     </div>
     <div
       class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
     >
       <div
-        class="read-only-section read-only-section--who-are-the-particpants margin-bottom-3"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+        <div
+          class="read-only-section read-only-section--who-are-the-participants margin-bottom-3"
         >
-          Who are the particpants?
-        </p>
-        <ul
-          class="margin-y-0 padding-left-3"
-        >
-          <li
-            class="font-sans-md line-height-sans-4"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Medicaid providers
-          </li>
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            States
-          </li>
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            State Medicaid agencies
-          </li>
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            Other
-          </li>
+            Who are the participants?
+          </p>
           <ul
-            data-testid="other-entry"
+            class="margin-y-0 padding-left-3"
           >
             <li
               class="font-sans-md line-height-sans-4"
             >
-              This is the other
+              Medicaid providers
             </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              States
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              State Medicaid agencies
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul
+              data-testid="other-entry"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                This is the other
+              </li>
+            </ul>
           </ul>
-        </ul>
+        </div>
       </div>
       <div
-        class="read-only-section read-only-section--please-describe-how-states-will-engage-with-your-model margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Please describe how states will engage with your model.
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          State
-        </p>
-      </div>
-      <div
-        class="read-only-section read-only-section--are-the-participants-in-cmmi-models-now margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Are the participants in CMMI models now?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          Yes
-        </p>
-      </div>
-      <div
-        class="read-only-section read-only-section--at-what-level-will-the-model-apply margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          At what level will the model apply?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          ojnjklnmjknjkn
-        </p>
-      </div>
-    </div>
-    <div
-      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
-    >
-      <div
-        class="read-only-section read-only-section--how-many-participants-do-you-expect margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          How many participants do you expect?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          0
-        </p>
-      </div>
-      <div
-        class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          What is your level of confidence on this estimate?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          Fairly confident
-        </p>
-      </div>
-      <div
-        class="read-only-section read-only-section--how-will-you-recruit-the-participants margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          How will you recruit the participants?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          Not applicable
-        </p>
-      </div>
-      <div
-        class="read-only-section read-only-section--how-will-you-select-participants margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          How will you select participants?
-        </p>
-        <ul
-          class="margin-y-0 padding-left-3"
-        >
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            Use an application review and scoring tool
-          </li>
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            Another CMS component or process will provide support
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div
-      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
-    >
-      <div
-        class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          How will you communicate with participants?
-        </p>
-        <ul
-          class="margin-y-0 padding-left-3"
-        >
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            Manage ongoing communications with participants using an IT tool
-          </li>
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            Send mass emails to new participants
-          </li>
-        </ul>
-      </div>
-      <div
-        class="desktop:display-flex flex-justify"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
         <div
-          class="desktop:width-card-lg"
+          class="read-only-section read-only-section--please-describe-how-states-will-engage-with-your-model margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Please describe how states will engage with your model.
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            State
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-the-participants-in-cmmi-models-now margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Are the participants in CMMI models now?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--at-what-level-will-the-model-apply margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            At what level will the model apply?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            ojnjklnmjknjkn
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-many-participants-do-you-expect margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How many participants do you expect?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                0
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What is your level of confidence on this estimate?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Fairly confident
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-will-you-recruit-the-participants margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How will you recruit the participants?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Not applicable
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-will-you-select-participants margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How will you select participants?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Use an application review and scoring tool
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Another CMS component or process will provide support
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How will you communicate with participants?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Manage ongoing communications with participants using an IT tool
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Send mass emails to new participants
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
           <div
             class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
@@ -231,50 +297,62 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
         </div>
       </div>
       <div
-        class="read-only-section read-only-section--will-the-risk-arrangement-change-as-the-model-progresses margin-bottom-3"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+        <div
+          class="read-only-section read-only-section--will-the-risk-arrangement-change-as-the-model-progresses margin-bottom-3"
         >
-          Will the risk arrangement change as the model progresses?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          <em
-            class="text-base"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            No answer entered
-          </em>
-        </p>
+            Will the risk arrangement change as the model progresses?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </p>
+        </div>
       </div>
     </div>
     <div
       class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
     >
       <div
-        class="read-only-section read-only-section--will-the-participants-coordinate-the-work-of-others margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Will the participants coordinate the work of others?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          <em
-            class="text-base"
-          >
-            No answer entered
-          </em>
-        </p>
-      </div>
-      <div
-        class="desktop:display-flex flex-justify"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
         <div
-          class="desktop:width-card-lg"
+          class="read-only-section read-only-section--will-the-participants-coordinate-the-work-of-others margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will the participants coordinate the work of others?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </p>
+        </div>
+      </div>
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
           <div
             class="read-only-section read-only-section--will-there-be-gainsharing-payments margin-bottom-3"
@@ -297,90 +375,113 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
         </div>
       </div>
       <div
-        class="read-only-section read-only-section--will-you-collect-participant-ids--if-so--select-which-types margin-bottom-3"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+        <div
+          class="read-only-section read-only-section--will-you-collect-participant-ids--if-so--select-which-types margin-bottom-3"
         >
-          Will you collect participant IDs? If so, select which types.
-        </p>
-        <ul
-          class="margin-y-0 padding-left-3"
-        >
-          <li
-            class="font-sans-md line-height-sans-4"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            CCNs
-          </li>
-        </ul>
+            Will you collect participant IDs? If so, select which types.
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              CCNs
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div
-      class="margin-bottom-4 padding-bottom-2"
-    >
+    <div>
       <div
-        class="read-only-section read-only-section--how-frequently-are-providers-added margin-bottom-3"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+        <div
+          class="read-only-section read-only-section--how-frequently-are-providers-added margin-bottom-3"
         >
-          How frequently are providers added?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          Biannually
-        </p>
-      </div>
-      <div
-        class="read-only-section read-only-section--how-will-you-decide-to-add-providers margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          How will you decide to add providers?
-        </p>
-        <ul
-          class="margin-y-0 padding-left-3"
-        >
-          <li
-            class="font-sans-md line-height-sans-4"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Add retrospectively (once an interaction happens this year)
-          </li>
-        </ul>
-      </div>
-      <div
-        class="read-only-section read-only-section--can-providers-leave-the-model margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Can providers leave the model?
-        </p>
-        <ul
-          class="margin-y-0 padding-left-3"
-        >
-          <li
-            class="font-sans-md line-height-sans-4"
+            How frequently are providers added?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            Not applicable
-          </li>
-        </ul>
+            Biannually
+          </p>
+        </div>
       </div>
       <div
-        class="read-only-section read-only-section--will-the-providers-overlap-with-other-models margin-bottom-3"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+        <div
+          class="read-only-section read-only-section--how-will-you-decide-to-add-providers margin-bottom-3"
         >
-          Will the providers overlap with other models?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How will you decide to add providers?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Add retrospectively (once an interaction happens this year)
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--can-providers-leave-the-model margin-bottom-3"
         >
-          No
-        </p>
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Can providers leave the model?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Not applicable
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-the-providers-overlap-with-other-models margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will the providers overlap with other models?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            No
+          </p>
+        </div>
       </div>
     </div>
   </div>

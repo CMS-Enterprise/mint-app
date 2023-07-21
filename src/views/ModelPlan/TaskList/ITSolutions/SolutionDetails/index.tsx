@@ -21,6 +21,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
@@ -47,6 +48,8 @@ const SolutionDetails = () => {
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 
   const history = useHistory();
 
@@ -165,11 +168,13 @@ const SolutionDetails = () => {
 
           <p className="line-height-body-4">{t('solutionDetailsInfo')}</p>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
-            <AskAQuestion modelID={modelID} renderTextFor="need" />
-          </div>
-        </Grid>
+        {isDesktop && (
+          <Grid desktop={{ col: 3 }} className="padding-x-1">
+            <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
+              <AskAQuestion modelID={modelID} renderTextFor="need" />
+            </div>
+          </Grid>
+        )}
       </Grid>
 
       <Grid tablet={{ col: 12 }}>
@@ -238,6 +243,13 @@ const SolutionDetails = () => {
           </>
         )}
       </Grid>
+      {!isDesktop && (
+        <Grid desktop={{ col: 12 }} className="padding-x-1">
+          <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
+            <AskAQuestion modelID={modelID} renderTextFor="need" />
+          </div>
+        </Grid>
+      )}
     </>
   );
 };

@@ -213,14 +213,14 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const renderModal = (locked: boolean) => {
     return (
       <Modal
-        className="radius-lg"
+        className="confirmation-modal"
         isOpen={isModalOpen}
         scroll
         closeModal={() => setModalOpen(false)}
       >
         <PageHeading
-          headingLevel="h2"
-          className="margin-top-0 margin-bottom-0"
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
           data-testid="clearance-modal-header"
         >
           {!locked ? p('modal.heading') : i('modal.heading')}

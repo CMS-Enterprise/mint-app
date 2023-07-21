@@ -116,15 +116,17 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
           <p
             class="usa-alert__text"
           >
-            Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="button"
-              id="ops-eval-and-learning-learning-systems-warning"
-              type="button"
-            >
-              Go to IT solutions tracker.
-            </button>
+            <span>
+              Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="button"
+                id="ops-eval-and-learning-learning-systems-warning"
+                type="button"
+              >
+                Go to IT solutions tracker.
+              </button>
+            </span>
           </p>
         </div>
       </div>
@@ -295,6 +297,7 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
         Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.
       </p>
       <textarea
+        aria-labelledby="label-ops-eval-and-learning-learning-anticipated-challenges hint-ops-eval-and-learning-learning-anticipated-challenges"
         class="height-card usa-textarea"
         data-testid="ops-eval-and-learning-learning-anticipated-challenges"
         id="ops-eval-and-learning-learning-anticipated-challenges"

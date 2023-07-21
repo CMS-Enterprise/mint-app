@@ -26,7 +26,9 @@ services:
 
   db_migrate:
     image: mint-db-migrate:latest
-    platform: linux/amd64
+    build:
+      args:
+        TAG: '9.10' # Multi arch tag, rather than '9.10-alpine'
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword
@@ -118,8 +120,7 @@ services:
       "
 
   email:
-    image: dockage/mailcatcher:0.7.1
-    platform: linux/amd64
+    image: dockage/mailcatcher:0.8.2
     ports:
       - "1085:1080"
       - "1030:1025"
@@ -137,7 +138,8 @@ services:
     restart: always
 
   opensearch:
-    image: public.ecr.aws/opensearchproject/opensearch:latest
+    # As of 5/2/2023 - Latest available version in AWS Opensearch Service: 2.5.0
+    image: opensearchproject/opensearch:2.5.0
     container_name: opensearch
     environment:
       - cluster.name=opensearch-cluster
@@ -158,7 +160,8 @@ services:
       - "9400:9600" # Performance Analyzer
 
   opensearch-dashboards:
-    image: public.ecr.aws/opensearchproject/opensearch-dashboards:latest
+    # As of 5/2/2023 - Latest available version in AWS Opensearch Service: 2.5.0
+    image: opensearchproject/opensearch-dashboards:2.5.0
     container_name: opensearch-dashboards
     ports:
       - "5601:5601"
@@ -182,9 +185,9 @@ services:
         max-size: "100m"
         max-file: "3"
     volumes:
-      - ./config/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
-      - ./config/logstash/logstash.conf:/usr/share/logstash/logstash.config
-      - ./config/logstash/ingest_change_table.sql:/usr/share/logstash/ingest_change_table.sql
+      - ./logstash/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
+      - ./logstash/config/logstash.conf:/usr/share/logstash/logstash.config
+      - ./logstash/config/ingest_change_table.sql:/usr/share/logstash/ingest_change_table.sql
     ports:
       - "9600:9600"
     depends_on:

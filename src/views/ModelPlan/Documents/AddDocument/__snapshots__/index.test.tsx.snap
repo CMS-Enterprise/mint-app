@@ -97,6 +97,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
         >
           All fields marked with  
           <span
+            aria-label="(Field required)"
             class="text-red margin-x-05"
           >
             *
@@ -119,6 +120,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                 >
                   Document upload
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *
@@ -193,6 +195,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   >
                     What type of document are you uploading?
                     <span
+                      aria-label="(Field required)"
                       class="text-red margin-x-05"
                     >
                       *
@@ -213,6 +216,23 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                       for="FileUpload-CONCEPT_PAPER"
                     >
                       Concept Paper
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-DESIGN_PARAMETERS_MEMO"
+                      name="documentType"
+                      type="radio"
+                      value="DESIGN_PARAMETERS_MEMO"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-DESIGN_PARAMETERS_MEMO"
+                    >
+                      Design Parameter Memo
                     </label>
                   </div>
                   <div
@@ -247,6 +267,23 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                       for="FileUpload-MARKET_RESEARCH"
                     >
                       Market Research
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                      name="documentType"
+                      type="radio"
+                      value="OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                    >
+                      Office of the Administrator Presentation
                     </label>
                   </div>
                   <div
@@ -296,6 +333,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                 >
                   Does this document contain cost information?
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *
@@ -361,6 +399,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   Optional notes about the document
                 </label>
                 <textarea
+                  aria-labelledby="label-ModelPlanDocument-optionalNotes hint-ModelPlanDocument-optionalNotes"
                   class="model-plan-document__optional-notes height-10 usa-textarea"
                   id="ModelPlanDocument-optionalNotes"
                   maxlength="2000"
@@ -380,10 +419,12 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                     <p
                       class="usa-alert__text"
                     >
-                      <span
-                        class="mandatory-fields-alert__text"
-                      >
-                        To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
+                      <span>
+                        <span
+                          class="mandatory-fields-alert__text"
+                        >
+                          To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
+                        </span>
                       </span>
                     </p>
                   </div>

@@ -1,4 +1,5 @@
 @use 'colors' as *;
+@use 'viewports' as *;
 
 // Custom USWDS Button
 .mint-button {
@@ -110,4 +111,15 @@
 
 .bg-mint-cool-20 {
   background-color: $mint-cool-20 !important
+}
+
+.list-style-none {
+  list-style-type: none !important;
+}
+
+@media screen and (min-width: 15rem) {
+  .mobile\:grid-col-6 {
+    flex: 0 1 auto;
+      width: 50%;
+  }
 }

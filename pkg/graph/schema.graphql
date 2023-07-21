@@ -27,6 +27,12 @@ Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
 
+"""
+Any represents any GraphQL value.
+"""
+scalar Any
+
+
 enum SortDirection {
   ASC
   DESC
@@ -43,6 +49,7 @@ ModelPlan represent the data point for plans about a model. It is the central da
 type ModelPlan {
   id: UUID!
   modelName: String!
+  abbreviation: String
   archived: Boolean!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -66,6 +73,7 @@ type ModelPlan {
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
+  existingModelLinks: [ExistingModelLink!]!
 }
 
 type OperationalNeed {
@@ -123,6 +131,7 @@ https://gqlgen.com/reference/changesets/
 """
 input ModelPlanChanges @goModel(model: "map[string]interface{}") {
   modelName: String
+  abbreviation: String
   someNumbers: [Int!]
   archived: Boolean
   status: ModelStatus
@@ -148,7 +157,7 @@ type PlanCollaborator {
 ExistingModel represents a model that already exists outside of the scope of MINT
 """
 type ExistingModel {
-  id: String
+  id: Int
   modelName: String
   stage: String!
   numberOfParticipants: String
@@ -163,6 +172,22 @@ type ExistingModel {
   keywords: String
   url: String
   displayModelSummary: Boolean
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+type ExistingModelLink {
+  id: UUID
+  modelPlanID: UUID!
+  existingModelID: Int
+  existingModel: ExistingModel
+  currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -243,6 +268,9 @@ type PlanBasics {
   id: UUID!
   modelPlanID: UUID!
 
+  demoCode: String
+  amsModelID: String
+
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
   cmsOther: String
@@ -290,6 +318,9 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  demoCode: String
+  amsModelID: String
+
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]
   cmsOther: String
@@ -331,9 +362,11 @@ type UserInfo {
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
-	id:          UUID!
+	id: UUID!
 	modelPlanID: UUID!
 	content: String
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
@@ -353,6 +386,8 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
   content: String!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -363,6 +398,8 @@ https://gqlgen.com/reference/changesets/
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
   status: DiscussionStatus
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -372,6 +409,8 @@ type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
 	content: String
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 	resolution: Boolean
   isAssessment: Boolean!
 
@@ -389,6 +428,8 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 input DiscussionReplyCreateInput {
   discussionID: UUID!
   content: String!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
   resolution: Boolean! = false
 }
 
@@ -400,6 +441,8 @@ https://gqlgen.com/reference/changesets/
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
   content: String
   resolution: Boolean
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -413,7 +456,6 @@ type PlanGeneralCharacteristics {
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]!
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -497,7 +539,6 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -1289,6 +1330,7 @@ type OperationalSolution {
     mustStartDts: Time
     mustFinishDts: Time
     isOther: Boolean!
+    isCommonSolution: Boolean!
     otherHeader: String
     status: OpSolutionStatus!
 
@@ -1357,16 +1399,67 @@ type OperationalSolutionSubtask {
   modifiedDts: Time
 }
 
+type ChangedFields {
+  changes: [Field!]!
+}
+
+type Field {
+  name: String!
+  nameCamelCase: String!
+  value: FieldValue!
+}
+
+type FieldValue {
+  new: Any
+  old: Any
+}
+
 type ChangeTableRecord {
   guid: ID!
+  modelPlanID: UUID!
   tableID: Int!
+
+  """
+  Returns the table name in the format of the type returned in GraphQL
+  Example:  a table name of model_plan returns as ModelPlan
+  """
+  gqlTableName: GQLTableName!
+  tableName: String!
   primaryKey: UUID!
   foreignKey: UUID
   action: String!
-  fields: Map
+  fields: ChangedFields!
   modifiedDts: Time
   modifiedBy: UserAccount
 }
+
+# lint-disable enum-values-all-caps
+enum GQLTableName {
+  analyzedAudit
+  discussionReply
+  existingModel
+  existingModelLink
+  modelPlan
+  ndaAgreement
+  operationalNeed
+  operationalSolution
+  operationalSolutionSubtask
+  planBasics
+  planBeneficiaries
+  planCollaborator
+  planCrTdl
+  planDiscussion
+  planDocument
+  planDocumentSolutionLink
+  planGeneralCharacteristics
+  planOpsEvalAndLearning
+  planParticipantsAndProviders
+  planPayments
+  possibleOperationalNeed
+  possibleOperationalSolution
+  userAccount
+}
+# lint-enable enum-values-all-caps
 
 input SearchRequest {
   query: Map!
@@ -1377,6 +1470,26 @@ type DateHistogramAggregationBucket {
   docCount: Int!
   maxModifiedDts: Time!
   minModifiedDts: Time!
+}
+
+input SearchFilter {
+  type: SearchFilterType!
+  value: Any!
+}
+
+input ChangeHistorySortParams {
+  field: ChangeHistorySortKey!
+  order: SortDirection!
+}
+
+input PageParams {
+  offset: Int!
+  limit: Int!
+}
+
+type DiscussionRoleSelection {
+  userRole: DiscussionUserRole!
+  userRoleDescription: String
 }
 
 """
@@ -1418,6 +1531,10 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   userAccount(username: String!): UserAccount!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  existingModelLink(id: UUID!): ExistingModelLink!
+  @hasAnyRole(roles:[MINT_USER, MINT_MAC])
+  searchChanges(filters: [SearchFilter!], sortBy: ChangeHistorySortParams, page: PageParams): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
@@ -1426,11 +1543,15 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchModelPlanChangesByDateRange(modelPlanID: UUID!, startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
@@ -1481,19 +1602,19 @@ deletePlanDocument(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_USER)
 
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_USER)
@@ -1514,7 +1635,7 @@ agreeToNDA(agree: Boolean! = true): NDAInfo!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
@@ -1553,6 +1674,9 @@ updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput
 @hasRole(role: MINT_USER)
 
 deleteOperationalSolutionSubtask(id: UUID!): Int!
+@hasRole(role: MINT_USER)
+
+updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 }
 
@@ -1608,6 +1732,8 @@ enum TeamRole {
   EVALUATION
   IT_LEAD
   QUALITY
+  OACT
+  PAYMENT
 }
 
 enum ModelType
@@ -1641,6 +1767,8 @@ enum ModelStatus {
 	ANNOUNCED
   PAUSED
   CANCELED
+  ACTIVE
+  ENDED
 }
 
 enum CMSCenter {
@@ -1671,6 +1799,8 @@ enum DocumentType {
   POLICY_PAPER,
   ICIP_DRAFT,
   MARKET_RESEARCH,
+  DESIGN_PARAMETERS_MEMO,
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
   OTHER
 }
 
@@ -2106,6 +2236,7 @@ enum OperationalSolutionKey{
   POST_PORTAL
   RFA
   SHARED_SYSTEMS
+  BCDA
 }
 
 enum OperationalSolutionSubtaskStatus {
@@ -2168,4 +2299,119 @@ enum ActionType {
   An administrative action
   """
   ADMIN
+}
+
+enum SearchFilterType {
+  """
+  Filter search results to include changes on or after the specified date.
+  Expected value: A string in RFC3339 format representing the date and time.
+  Example: "2006-01-02T15:04:05Z07:00"
+  """
+  CHANGED_AFTER
+
+  """
+  Filter search results to include changes on or before the specified date.
+  Expected value: A string in RFC3339 format representing the date and time.
+  Example: "2006-01-02T15:04:05Z07:00"
+  """
+  CHANGED_BEFORE
+
+  """
+  Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
+  Expected value: A string representing the name or username of the actor.
+  Example: "MINT"
+  """
+  CHANGED_BY_ACTOR
+
+  """
+  Filter search results to include changes made to the specified object.
+  Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
+  Example: "BASICS"
+  """
+  MODEL_PLAN_SECTION
+
+  """
+  Filter search results to include changes made to the specified model plan by ID.
+  Expected value: A string representing the ID of the model plan.
+  Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
+  """
+  MODEL_PLAN_ID
+
+  """
+  Filter search results to include model plans with the specified status.
+  Expected value: A string representing the status of the model plan.
+  Example: "ACTIVE"
+  """
+  MODEL_PLAN_STATUS
+
+  """
+  Filter results with a free text search. This is a fuzzy search on the entire record.
+  Expected value: A string representing the free text search query.
+  Example: "Operational Need"
+  """
+  FREE_TEXT
+
+  """
+  Filter results by table id.
+  Expected value: An integer representing the table ID.
+  Example: 14
+  """
+  TABLE_ID
+
+  """
+  Filter results by table name.
+  Expected value: A string representing the table name.
+  Example: "plan_basics"
+  """
+  TABLE_NAME
+}
+
+enum ChangeHistorySortKey {
+  """
+  Sort by the date the change was made
+  """
+  CHANGE_DATE
+
+  """
+  Sort by the user who made the change
+  """
+  ACTOR
+
+  """
+  Sort by the model plan ID that was changed
+  """
+  MODEL_PLAN_ID
+
+  """
+  Sort by the table ID that was changed
+  """
+  TABLE_ID
+
+  """
+  Sort by the table name that was changed
+  """
+  TABLE_NAME
+}
+
+# lint-disable defined-types-are-used
+enum SearchableTaskListSection {
+  BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT
+}
+# lint-enable defined-types-are-used
+
+enum DiscussionUserRole {
+  CMS_SYSTEM_SERVICE_TEAM,
+  IT_ARCHITECT,
+  LEADERSHIP,
+  MEDICARE_ADMINISTRATIVE_CONTRACTOR,
+  MINT_TEAM,
+  MODEL_IT_LEAD,
+  MODEL_TEAM,
+  SHARED_SYSTEM_MAINTAINER,
+  NONE_OF_THE_ABOVE,
 }

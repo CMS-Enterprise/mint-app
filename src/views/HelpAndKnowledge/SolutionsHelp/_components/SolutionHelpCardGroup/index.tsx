@@ -6,8 +6,15 @@ import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/shared/Alert';
+import {
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
+} from 'data/operationalSolutionCategories';
 
-import { HelpSolutionType } from '../../solutionsMap';
+import {
+  HelpSolutionType,
+  operationalSolutionSubCategoryMap
+} from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
 
 import './index.scss';
@@ -15,7 +22,7 @@ import './index.scss';
 type SolutionHelpCardGroupProps = {
   className?: string;
   solutions: HelpSolutionType[];
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
   setResultsNum: (offset: number) => void;
 };
 
@@ -25,12 +32,64 @@ function Solutions({
   category
 }: {
   currentSolutions: HelpSolutionType[];
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
 }) {
+  const { t } = useTranslation('helpAndKnowledge');
+
+  if (category && operationalSolutionSubCategoryMap[category]) {
+    return (
+      <div className="margin-top-6">
+        {operationalSolutionSubCategoryMap[category]!.map(subCategory => {
+          let subCategorySolutions = currentSolutions.filter(solution =>
+            solution.subCategories?.includes(subCategory)
+          );
+
+          // Order of subcatery for APPLICATIONS is not alphabetical like other, needs a certain order
+          if (subCategory === OperationalSolutionSubCategories.APPLICATIONS) {
+            const setIndexes = [3, 4, 2, 0, 1];
+            subCategorySolutions = setIndexes.map(i => subCategorySolutions[i]);
+          }
+
+          // Order of subcatery for PARTICIPANT_AGREEMENT_APPS is not alphabetical like other, needs a certain order
+          if (
+            subCategory ===
+            OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+          ) {
+            const setIndexes = [2, 3, 1, 0];
+            subCategorySolutions = setIndexes.map(i => subCategorySolutions[i]);
+          }
+
+          return (
+            <React.Fragment key={subCategory}>
+              <h2>{t(`subCategories.${subCategory}`)}</h2>
+              <Grid row gap>
+                {subCategorySolutions.map(solution => (
+                  <Grid
+                    tablet={{ col: 6 }}
+                    desktop={{ col: 4 }}
+                    key={solution.key}
+                    className="display-flex flex-align-stretch"
+                  >
+                    <SolutionHelpCard solution={solution} category={category} />
+                  </Grid>
+                ))}
+              </Grid>
+            </React.Fragment>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
-    <Grid row gap={2} className="margin-bottom-2">
+    <Grid row gap={2} className="margin-bottom-2 margin-top-6">
       {currentSolutions.map(solution => (
-        <Grid tablet={{ col: 6 }} desktop={{ col: 4 }} key={solution.key}>
+        <Grid
+          tablet={{ col: 6 }}
+          desktop={{ col: 4 }}
+          key={solution.key}
+          className="display-flex flex-align-stretch"
+        >
           <SolutionHelpCard solution={solution} category={category} />
         </Grid>
       ))}

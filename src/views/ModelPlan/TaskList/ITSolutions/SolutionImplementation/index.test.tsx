@@ -35,6 +35,9 @@ const operationalNeed: GetOperationalNeedType = {
       key: OperationalSolutionKey.RMADA,
       mustStartDts: null,
       mustFinishDts: null,
+      isOther: false,
+      isCommonSolution: true,
+      otherHeader: null,
       status: OpSolutionStatus.AT_RISK,
       needed: true,
       pocName: 'John Doe',
@@ -66,8 +69,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`,
-            state: { fromSolutionDetails: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
           }
         ]}
       >
@@ -83,9 +85,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 
@@ -111,8 +111,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`,
-            state: { fromSolutionDetails: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
           }
         ]}
       >
@@ -128,9 +127,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 

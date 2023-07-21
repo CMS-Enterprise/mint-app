@@ -30,8 +30,8 @@ export const getTimeElapsed = (discussionCreated: string) => {
 
   Object.keys(timePassed).forEach(time => {
     if (Math.abs(timePassed[time as keyof typeof getTimeElapsed]) >= 1) {
-      const floatTime = Math.abs(
-        timePassed[time as keyof typeof getTimeElapsed]
+      const floatTime = Math.round(
+        Math.abs(timePassed[time as keyof typeof getTimeElapsed])
       );
 
       // Only show parent most level of time, rather than all increments

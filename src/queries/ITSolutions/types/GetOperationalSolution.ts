@@ -42,6 +42,9 @@ export interface GetOperationalSolution_operationalSolution {
   pocName: string | null;
   pocEmail: string | null;
   status: OpSolutionStatus;
+  isOther: boolean;
+  isCommonSolution: boolean;
+  otherHeader: string | null;
   mustFinishDts: Time | null;
   mustStartDts: Time | null;
   documents: GetOperationalSolution_operationalSolution_documents[];

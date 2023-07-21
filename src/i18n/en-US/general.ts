@@ -14,8 +14,13 @@ const general = {
   remove: 'Remove',
   pageLoading: 'Loading the page',
   oktaWidget: 'Sign in with your EUA or IDM credentials.',
+  oktaErrorMessage: {
+    noPermission:
+      "You don't have permission to access MINT. If you believe this is an error, please contact <1>MINTTeam@cms.hhs.gov</1> for assistance."
+  },
   taskListLockBanner:
-    'Model Plan sections can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.'
+    'Model Plan sections can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.',
+  noResults: 'No results'
 };
 
 export default general;

@@ -7,24 +7,15 @@ import {
   Accordion,
   Button,
   Grid,
-  IconAnnouncement,
-  Label,
-  Textarea
+  IconAnnouncement
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { Field, Form, Formik, FormikProps } from 'formik';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
-import AssessmentIcon from 'components/shared/AssessmentIcon';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import Expire from 'components/shared/Expire';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
-import FieldGroup from 'components/shared/FieldGroup';
-import IconInitial from 'components/shared/IconInitial';
 import CreateModelPlanReply from 'queries/CreateModelPlanReply';
 import CreateModelPlanDiscussion from 'queries/Discussions/CreateModelPlanDiscussion';
 import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
@@ -38,13 +29,17 @@ import {
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
-import { DiscussionStatus } from 'types/graphql-global-types';
-import { getTimeElapsed } from 'utils/date';
-import flattenErrors from 'utils/flattenErrors';
+import {
+  DiscussionStatus,
+  DiscussionUserRole,
+  PlanDiscussionCreateInput
+} from 'types/graphql-global-types';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
 
+import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
+import QuestionAndReply from './QuestionAndReply';
 
 import './index.scss';
 
@@ -55,9 +50,10 @@ export type DiscussionsProps = {
   askAQuestion?: boolean;
 };
 
-type DicussionFormPropTypes = {
-  content: string;
-};
+export type DicussionFormPropTypes = Omit<
+  PlanDiscussionCreateInput,
+  'modelPlanID'
+>;
 
 const Discussions = ({
   modelID,
@@ -66,7 +62,6 @@ const Discussions = ({
   readOnly
 }: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
-  const { t: h } = useTranslation('draftModelPlan');
 
   // Used to replace query params after reply has been asnwered from linked email
   const location = useLocation();
@@ -90,7 +85,7 @@ const Discussions = ({
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const hasEditAccess: boolean =
-    (isCollaborator || isAssessment(groups, flags)) && !isMAC(groups);
+    isCollaborator || isAssessment(groups, flags) || isMAC(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
@@ -113,6 +108,7 @@ const Discussions = ({
     reply: createReply
   };
 
+  const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
   const [discussionReplyID, setDiscussionReplyID] = useState<
     string | null | undefined
   >(discussionID);
@@ -140,9 +136,8 @@ const Discussions = ({
   // State and setter used for containing the related question when replying
   const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
 
-  const validationSchema = Yup.object().shape({
-    content: Yup.string().trim().required(`Please enter a ${discussionType}`)
-  });
+  // State used to manage alert rendering
+  const [alertClosed, closeAlert] = useState<boolean>(false);
 
   // Hook used to open reply form if discussionID present
   useEffect(() => {
@@ -190,23 +185,26 @@ const Discussions = ({
   };
 
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
-    let payload = {};
+    let payload: any = {};
 
     // Setting the mutation payload depending on discussionType
     if (discussionType === 'question') {
       payload = {
         modelPlanID: modelID,
-        content: formikValues.content
+        ...formikValues
       };
     } else if (discussionType === 'reply' && reply) {
       payload = {
         discussionID: reply.id,
-        content: formikValues.content,
+        ...formikValues,
         resolution: true
       };
     } else {
       return; // Currently we have no mutations when discussions is displayed
     }
+
+    if (payload.userRole !== DiscussionUserRole.NONE_OF_THE_ABOVE)
+      payload.userRoleDescription = null;
 
     createDiscussionMethods[discussionType]({
       variables: {
@@ -229,6 +227,9 @@ const Discussions = ({
             });
           }
 
+          if (readOnly) {
+            setIsDiscussionOpen(false);
+          }
           setDiscussionStatus('success');
           setDiscussionStatusMessage(
             discussionType === 'question' ? t('success') : t('successAnswer')
@@ -264,150 +265,6 @@ const Discussions = ({
         setDiscussionStatus('error');
         setDiscussionStatusMessage(t('error'));
       });
-  };
-
-  const renderQuestion = (renderType: 'question' | 'reply') => {
-    return (
-      <>
-        <PageHeading headingLevel="h1" className="margin-y-0">
-          {renderType === 'question' ? t('askAQuestion') : t('answer')}
-        </PageHeading>
-
-        <p className="margin-bottom-4">
-          {renderType === 'question'
-            ? t('description')
-            : t('answerDescription')}
-        </p>
-
-        {/* General error message for mutations that expires after 3 seconds */}
-        {discussionStatusMessage && (
-          <Expire delay={45000} callback={setDiscussionStatusMessage}>
-            <Alert className="margin-bottom-4" type={discussionStatus}>
-              {discussionStatusMessage}
-            </Alert>
-          </Expire>
-        )}
-
-        {/* If renderType is reply, render the related question that is being answered */}
-        {renderType === 'reply' && reply && (
-          <div>
-            <div className="display-flex flex-wrap flex-justify">
-              {reply.isAssessment ? (
-                <div className="display-flex flex-align-center">
-                  <AssessmentIcon size={3} />{' '}
-                  <span>
-                    {t('assessment')} | {reply.createdByUserAccount.commonName}
-                  </span>
-                </div>
-              ) : (
-                <IconInitial
-                  className="margin-bottom-1"
-                  user={reply.createdByUserAccount.commonName}
-                  index={0}
-                />
-              )}
-              <span className="margin-left-5 margin-top-05 text-base">
-                {getTimeElapsed(reply.createdDts)
-                  ? getTimeElapsed(reply.createdDts) + t('ago')
-                  : t('justNow')}
-              </span>
-            </div>
-            <div className="margin-left-5">
-              <p>{reply.content}</p>
-            </div>
-          </div>
-        )}
-
-        <Formik
-          initialValues={{ content: '' }}
-          onSubmit={handleCreateDiscussion}
-          validationSchema={validationSchema}
-          validateOnBlur={false}
-          validateOnChange={false}
-          validateOnMount={false}
-        >
-          {(formikProps: FormikProps<DicussionFormPropTypes>) => {
-            const { errors, setErrors, handleSubmit, dirty } = formikProps;
-            const flatErrors = flattenErrors(errors);
-            return (
-              <>
-                {Object.keys(errors).length > 0 && (
-                  <ErrorAlert
-                    testId="formik-validation-errors"
-                    classNames="margin-top-3"
-                    heading={h('checkAndFix')}
-                  >
-                    {Object.keys(flatErrors).map(key => {
-                      return (
-                        <ErrorAlertMessage
-                          key={`Error.${key}`}
-                          errorKey={key}
-                          message={flatErrors[key]}
-                        />
-                      );
-                    })}
-                  </ErrorAlert>
-                )}
-                <Form
-                  onSubmit={e => {
-                    handleSubmit(e);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <FieldGroup
-                    scrollElement="content"
-                    error={!!flatErrors.content}
-                  >
-                    <Label htmlFor="discussion-content" className="text-normal">
-                      {renderType === 'question'
-                        ? t('typeQuestion')
-                        : t('typeAnswer')}
-                    </Label>
-                    <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
-                    <Field
-                      className="height-card"
-                      as={Textarea}
-                      error={!!flatErrors.content}
-                      id="discussion-content"
-                      name="content"
-                    />
-                  </FieldGroup>
-                  <div className="margin-y-5 display-block">
-                    <Button
-                      className="usa-button usa-button--outline margin-bottom-1"
-                      type="button"
-                      onClick={() => {
-                        if (discussionReplyID) {
-                          setDiscussionReplyID(null);
-                          queryParams.delete('discussionID');
-                          history.replace({
-                            search: queryParams.toString()
-                          });
-                          setInitQuestion(false);
-                        }
-                        if (discussionType) {
-                          setDiscussionStatusMessage('');
-                          setDiscussionType('discussion');
-                        }
-                      }}
-                    >
-                      {h('cancel')}
-                    </Button>
-                    <Button
-                      type="submit"
-                      disabled={!dirty}
-                      onClick={() => setErrors({})}
-                    >
-                      {renderType === 'question' ? t('save') : t('saveAnswer')}
-                    </Button>
-                  </div>
-                </Form>
-              </>
-            );
-          }}
-        </Formik>
-      </>
-    );
   };
 
   // Two main discussion accordion types - "Unanswered" and "Answered" based on enum - DiscussionStatus
@@ -451,6 +308,7 @@ const Discussions = ({
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
                     setDiscussionType={setDiscussionType}
                     setReply={setReply}
+                    setIsDiscussionOpen={setIsDiscussionOpen}
                   />
                 ),
                 expanded: true,
@@ -503,9 +361,14 @@ const Discussions = ({
               type="button"
               unstyled
               onClick={() => {
-                setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
-                setDiscussionStatusMessage(''); // Clearing status before asking a new question
-                setDiscussionType('question');
+                if (readOnly) {
+                  setIsDiscussionOpen(true);
+                  setDiscussionType('question');
+                } else {
+                  setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
+                  setDiscussionStatusMessage(''); // Clearing status before asking a new question
+                  setDiscussionType('question');
+                }
               }}
             >
               {t('askAQuestionLink')}
@@ -513,10 +376,14 @@ const Discussions = ({
           </div>
         )}
 
-        {/* General error message for mutations that expires after 3 seconds */}
-        {discussionStatusMessage && (
+        {/* General error message for mutations that expires after 45 seconds */}
+        {discussionStatusMessage && !alertClosed && (
           <Expire delay={45000} callback={setDiscussionStatusMessage}>
-            <Alert type={discussionStatus} className="margin-bottom-4">
+            <Alert
+              type={discussionStatus}
+              className="margin-bottom-4"
+              closeAlert={closeAlert}
+            >
               {discussionStatusMessage}
             </Alert>
           </Expire>
@@ -534,10 +401,23 @@ const Discussions = ({
   };
 
   const chooseRenderMethod = () => {
-    if (error || discussionType === 'discussion') {
+    if (readOnly || error || discussionType === 'discussion') {
       return renderDiscussions();
     }
-    return renderQuestion(discussionType); // If discussionType === "question" or "reply"
+    // If discussionType === "question" or "reply"
+    return (
+      <QuestionAndReply
+        renderType={discussionType}
+        handleCreateDiscussion={handleCreateDiscussion}
+        reply={reply}
+        discussionReplyID={discussionReplyID}
+        setDiscussionReplyID={setDiscussionReplyID}
+        queryParams={queryParams}
+        setInitQuestion={setInitQuestion}
+        setDiscussionStatusMessage={setDiscussionStatusMessage}
+        setDiscussionType={setDiscussionType}
+      />
+    );
   };
 
   return (
@@ -545,7 +425,25 @@ const Discussions = ({
       {loading && !discussions ? (
         <PageLoading />
       ) : (
-        <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
+        <Grid desktop={{ col: 12 }}>
+          {/* Discussion modal to show only in Read Only Discussion Page */}
+          {readOnly && isDiscussionOpen && (
+            <DiscussionModalWrapper
+              isOpen={isDiscussionOpen}
+              closeModal={() => setIsDiscussionOpen(false)}
+            >
+              {discussionType !== 'discussion' && (
+                <QuestionAndReply
+                  renderType={discussionType}
+                  closeModal={() => setIsDiscussionOpen(false)}
+                  handleCreateDiscussion={handleCreateDiscussion}
+                  reply={reply}
+                />
+              )}
+            </DiscussionModalWrapper>
+          )}
+          {chooseRenderMethod()}
+        </Grid>
       )}
     </>
   );

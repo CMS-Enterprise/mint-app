@@ -20,26 +20,28 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions?category=applications"
+          href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
         >
-          Applications
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Applications and participant interaction (ACO and kidney models)
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -48,26 +50,28 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions?category=communication-tools"
+          href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-non-aco"
         >
-          Communication tools
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Applications and participant interaction (non-ACO models)
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -76,26 +80,28 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions?category=contractors-and-contract-vehicles"
+          href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
         >
-          Contractors and contract vehicles
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Communication tools and help desk 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -104,26 +110,28 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
+          href="/help-and-knowledge/operational-solutions?category=contract-vehicles"
         >
-          Databases and data management
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Contract vehicles 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -132,82 +140,28 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions?category=data-exchange"
+          href="/help-and-knowledge/operational-solutions?category=data"
         >
-          Data exchange
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
-        </a>
-      </div>
-      <div
-        class="tablet:grid-col-6"
-        data-testid="grid"
-      >
-        <a
-          class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions?category=data-reporting"
-        >
-          Data reporting
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
-        </a>
-      </div>
-      <div
-        class="tablet:grid-col-6"
-        data-testid="grid"
-      >
-        <a
-          class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions?category=help-desks"
-        >
-          Help desks
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Data 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -218,24 +172,26 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
           href="/help-and-knowledge/operational-solutions?category=learning"
         >
-          Learning
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Learning 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -246,24 +202,26 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
           href="/help-and-knowledge/operational-solutions?category=legal"
         >
-          Legal
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Legal 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -274,24 +232,26 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
           href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
         >
-          Medicare Advantage and Part D
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Medicare Advantage and Part D 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -302,24 +262,56 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
           href="/help-and-knowledge/operational-solutions?category=medicare-fee-for-service"
         >
-          Medicare Fee-for-Service
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Medicare Fee-for-Service 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions?category=payments-and-financials"
+        >
+          <span>
+            Payments and financials 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
       <div
@@ -330,24 +322,26 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
           href="/help-and-knowledge/operational-solutions?category=quality"
         >
-          Quality
-          <svg
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
+          <span>
+            Quality 
+            <svg
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
         </a>
       </div>
     </div>

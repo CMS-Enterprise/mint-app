@@ -535,7 +535,9 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           <p
             class="usa-alert__text"
           >
-            If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.
+            <span>
+              If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.
+            </span>
           </p>
         </div>
       </div>

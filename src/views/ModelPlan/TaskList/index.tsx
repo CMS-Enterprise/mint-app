@@ -25,7 +25,6 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
@@ -153,9 +152,19 @@ const TaskList = () => {
     return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
   };
 
+  const getLatestModifiedDate = (
+    operationalNeedsArray: OperationalNeedsType[]
+  ) => {
+    if (operationalNeedsArray.length !== 0) {
+      return operationalNeedsArray.reduce((a, b) =>
+        a.modifiedDts! > b.modifiedDts! ? a : b
+      ).modifiedDts;
+    }
+    return null;
+  };
+
   const itSolutions: ITSolutionsType = {
-    // modifiedDts: operationalNeeds?.modifiedDts,
-    modifiedDts: null, // TODO: Get most recently updated operational need
+    modifiedDts: getLatestModifiedDate(operationalNeeds),
     status: getITSolutionsStatus(operationalNeeds)
   };
 
@@ -191,7 +200,6 @@ const TaskList = () => {
       className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
-      <ModelSubNav modelID={modelID} link="read-only" />
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
@@ -314,6 +322,7 @@ const TaskList = () => {
                           </TaskListDescription>
                         </div>
                         <TaskListButton
+                          ariaLabel={t(`numberedList.${key}.heading`)}
                           path={t(`numberedList.${key}.path`)}
                           disabled={
                             !!getTaskListLockedStatus(key) &&

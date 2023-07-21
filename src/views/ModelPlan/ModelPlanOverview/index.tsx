@@ -109,7 +109,7 @@ const ModelPlan = () => {
           >
             {t('allModelsLink')}
           </Button>
-          {!isMAC && (
+          {!macUser && (
             <SummaryBox
               heading=""
               className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-3 "
@@ -128,20 +128,18 @@ const ModelPlan = () => {
           )}
         </Grid>
 
-        {!macUser && (
-          <Grid
-            desktop={{ col: 12 }}
-            className="padding-bottom-2 margin-bottom-4 border-bottom border-base-light"
-          >
-            <div className="margin-bottom-1 font-heading-xl text-bold">
-              {t('following.heading')}
-            </div>
-            <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0 margin-bottom-3">
-              {t('following.subheading')}
-            </p>
-            {loading ? <PageLoading /> : Favorites}
-          </Grid>
-        )}
+        <Grid
+          desktop={{ col: 12 }}
+          className="padding-bottom-2 margin-bottom-4 border-bottom border-base-light"
+        >
+          <div className="margin-bottom-1 font-heading-xl text-bold">
+            {t('following.heading')}
+          </div>
+          <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0 margin-bottom-3">
+            {t('following.subheading')}
+          </p>
+          {loading ? <PageLoading /> : Favorites}
+        </Grid>
 
         <Grid>
           <div
@@ -156,11 +154,7 @@ const ModelPlan = () => {
           {loading && <PageLoading />}
           {error && <Alert type="error">{h('fetchError')}</Alert>}
           {!loading && !error && (
-            <Table
-              data={modelPlans}
-              updateFavorite={handleUpdateFavorite}
-              hiddenColumns={macUser ? [0] : []}
-            />
+            <Table data={modelPlans} updateFavorite={handleUpdateFavorite} />
           )}
         </Grid>
       </GridContainer>

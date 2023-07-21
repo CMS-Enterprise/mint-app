@@ -35,13 +35,19 @@ import {
   GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsFormType,
   GetGeneralCharacteristicsVariables
 } from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
+import { UpdateExistingModelLinksVariables } from 'queries/GeneralCharacteristics/types/UpdateExistingModelLinks';
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
+import UpdateExistingModelLinks from 'queries/GeneralCharacteristics/UpdateExistingModelLinks';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import GetExistingModelPlans from 'queries/GetExistingModelPlans';
 import GetDraftModelPlans from 'queries/GetModelPlans';
-import { GetExistingModelPlans as ExistingModelPlanType } from 'queries/types/GetExistingModelPlans';
+import {
+  GetExistingModelPlans as ExistingModelPlanType,
+  GetExistingModelPlans_existingModelCollection as GetExistingModelPlansExistingModelCollectionType
+} from 'queries/types/GetExistingModelPlans';
 import {
   GetModelPlans as GetDraftModelPlansType,
+  GetModelPlans_modelPlanCollection as GetModelPlansModelPlanCollectionType,
   GetModelPlansVariables
 } from 'queries/types/GetModelPlans';
 import { ModelPlanFilter } from 'types/graphql-global-types';
@@ -54,14 +60,19 @@ import Involvements from './Involvements';
 import KeyCharacteristics from './KeyCharacteristics';
 import TargetsAndOptions from './TargetsAndOptions';
 
+interface GetGeneralCharacteristicsFormTypeWithLinks
+  extends GetGeneralCharacteristicsFormType {
+  existingModelLinks: (string | number)[];
+}
+
 export const CharacteristicsContent = () => {
   const { t } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetGeneralCharacteristicsFormType>>(
-    null
-  );
+  const formikRef = useRef<
+    FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
+  >(null);
   const history = useHistory();
 
   const { data: modelData, error: modelError } = useQuery<
@@ -107,7 +118,6 @@ export const CharacteristicsContent = () => {
     isNewModel,
     existingModel,
     resemblesExistingModel,
-    resemblesExistingModelWhich,
     resemblesExistingModelHow,
     resemblesExistingModelNote,
     hasComponentsOrTracks,
@@ -115,47 +125,74 @@ export const CharacteristicsContent = () => {
     hasComponentsOrTracksNote
   } =
     data?.modelPlan?.generalCharacteristics ||
-    ({} as GetGeneralCharacteristicsFormType);
+    ({} as GetGeneralCharacteristicsFormTypeWithLinks);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const existingModelLinks: (string | number)[] = useMemo(() => {
+    return (
+      data?.modelPlan.existingModelLinks?.map(
+        link => (link.existingModelID || link.currentModelPlanID)!
+      ) || []
+    );
+  }, [data?.modelPlan?.existingModelLinks]);
 
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (redirect?: 'next' | 'back') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/characteristics/key-characteristics`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
+  const [updateExistingLinks] = useMutation<UpdateExistingModelLinksVariables>(
+    UpdateExistingModelLinks
+  );
+
+  const handleFormSubmit = async (redirect?: 'next' | 'back') => {
+    const { existingModelLinks: existingLinksInitial, ...initialValues } =
+      formikRef?.current?.initialValues || {};
+
+    const { existingModelLinks: existingLinks, ...values } =
+      formikRef?.current?.values || {};
+
+    const linksToUpdate = separateLinksByType(
+      existingLinks || [],
+      modelData?.modelPlanCollection || [],
+      existingModelData?.existingModelCollection || []
+    );
+
+    await Promise.allSettled([
+      update({
+        variables: {
+          id,
+          changes: dirtyInput(initialValues, values)
+        }
+      }),
+      updateExistingLinks({
+        variables: {
+          modelPlanID: modelID,
+          ...linksToUpdate
         }
       })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
+    ])
+      .then(response => {
+        if (redirect === 'next') {
+          history.push(
+            `/models/${modelID}/task-list/characteristics/key-characteristics`
+          );
+        } else if (redirect === 'back') {
+          history.push(`/models/${modelID}/task-list/`);
+        }
+      })
+      .catch(err => {
+        formikRef?.current?.setErrors(err);
       });
   };
 
-  const initialValues: GetGeneralCharacteristicsFormType = {
+  const initialValues: GetGeneralCharacteristicsFormTypeWithLinks = {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
     isNewModel: isNewModel ?? null,
     existingModel: existingModel ?? null,
     resemblesExistingModel: resemblesExistingModel ?? null,
-    resemblesExistingModelWhich: resemblesExistingModelWhich ?? [],
+    existingModelLinks: existingModelLinks ?? [],
     resemblesExistingModelHow: resemblesExistingModelHow ?? '',
     resemblesExistingModelNote: resemblesExistingModelNote ?? '',
     hasComponentsOrTracks: hasComponentsOrTracks ?? null,
@@ -206,7 +243,9 @@ export const CharacteristicsContent = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetGeneralCharacteristicsFormType>) => {
+        {(
+          formikProps: FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
+        ) => {
           const {
             errors,
             handleSubmit,
@@ -369,6 +408,7 @@ export const CharacteristicsContent = () => {
                         <Label
                           htmlFor="plan-characteristics-resembles-which-model"
                           className="text-normal"
+                          id="label-plan-characteristics-resembles-which-model"
                         >
                           {t('modelResemblance')}
                         </Label>
@@ -382,15 +422,14 @@ export const CharacteristicsContent = () => {
                         <Field
                           as={MultiSelect}
                           id="plan-characteristics-resembles-which-model"
-                          name="resemblesExistingModelWhich"
+                          ariaLabel="label-plan-characteristics-resembles-which-model"
+                          name="existingModelLinks"
                           options={modelPlanOptions}
                           selectedLabel={t('selectedModels')}
                           onChange={(value: string[] | []) => {
-                            setFieldValue('resemblesExistingModelWhich', value);
+                            setFieldValue('existingModelLinks', value);
                           }}
-                          initialValues={
-                            initialValues.resemblesExistingModelWhich
-                          }
+                          initialValues={initialValues.existingModelLinks}
                         />
                       </FieldGroup>
                       <FieldGroup
@@ -563,6 +602,32 @@ export const Characteristics = () => {
       </GridContainer>
     </MainContent>
   );
+};
+
+type SeparateLinksType = {
+  existingModelIDs: number[];
+  currentModelPlanIDs: string[];
+};
+
+// Function to get a formatted object for the input payload of UpdateExistingModelLinks mutation
+// Separates all selected existingModelLinks values into a type of either draftModelPlans or existingModelPlans
+export const separateLinksByType = (
+  existingLinks: (string | number)[],
+  draftModelPlans: GetModelPlansModelPlanCollectionType[],
+  existingModelPlans: GetExistingModelPlansExistingModelCollectionType[]
+): SeparateLinksType => {
+  const existingModelIDs = [...existingLinks].filter(linkID =>
+    existingModelPlans.find(modelPlan => modelPlan.id === linkID)
+  ) as number[];
+
+  const currentModelPlanIDs = [...existingLinks].filter(linkID =>
+    draftModelPlans.find(modelPlan => modelPlan.id === linkID?.toString())
+  ) as string[];
+
+  return {
+    existingModelIDs,
+    currentModelPlanIDs
+  };
 };
 
 export default Characteristics;

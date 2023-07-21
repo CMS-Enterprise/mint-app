@@ -12,6 +12,8 @@ import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, Beneficiari
 export interface GetAllModelData_modelPlanCollection_basics {
   __typename: "PlanBasics";
   id: UUID;
+  amsModelID: string | null;
+  demoCode: string | null;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
   cmsOther: string | null;
@@ -127,7 +129,6 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   isNewModel: boolean | null;
   existingModel: string | null;
   resemblesExistingModel: boolean | null;
-  resemblesExistingModelWhich: string[];
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   hasComponentsOrTracks: boolean | null;
@@ -393,6 +394,8 @@ export interface GetAllModelData_modelPlanCollection {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
+  nameHistory: string[];
+  abbreviation: string | null;
   archived: boolean;
   createdBy: UUID;
   createdDts: Time;

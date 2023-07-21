@@ -286,6 +286,10 @@ const DraftModelPlansTable = ({
         }
       },
       {
+        Header: t('requestsTable.headers.demoCode'),
+        accessor: 'basics.demoCode'
+      },
+      {
         Header: t('requestsTable.headers.crTDLs'),
         accessor: 'crTdls',
         Cell: ({ value }: { value: CRTDLType[] }) => {
@@ -337,6 +341,7 @@ const DraftModelPlansTable = ({
     page,
     setGlobalFilter,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -384,6 +389,8 @@ const DraftModelPlansTable = ({
     return <Alert type="error">{t('fetchError')}</Alert>;
   }
 
+  rows.map(row => prepareRow(row));
+
   if (data.length === 0) {
     return (
       <Alert
@@ -415,7 +422,7 @@ const DraftModelPlansTable = ({
 
         {isAssessment && !userModels && (
           <div className="flex-align-self-center">
-            <CsvExportLink includeAll />
+            <CsvExportLink />
           </div>
         )}
       </div>
@@ -468,7 +475,6 @@ const DraftModelPlansTable = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells

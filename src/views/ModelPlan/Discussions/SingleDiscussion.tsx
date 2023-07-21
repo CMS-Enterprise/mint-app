@@ -9,6 +9,7 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 
 type SingleDiscussionProps = {
@@ -20,6 +21,8 @@ type SingleDiscussionProps = {
   setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
+  setIsDiscussionOpen?: (value: boolean) => void;
+  isLast: boolean;
 };
 
 const SingleDiscussion = ({
@@ -30,7 +33,9 @@ const SingleDiscussion = ({
   hasEditAccess,
   setDiscussionStatusMessage,
   setDiscussionType,
-  setReply
+  setReply,
+  setIsDiscussionOpen,
+  isLast
 }: SingleDiscussionProps) => {
   const { t } = useTranslation('discussions');
 
@@ -50,12 +55,25 @@ const SingleDiscussion = ({
             index={index}
           />
         )}
+
         <span className="margin-left-5 margin-top-05 text-base">
           {getTimeElapsed(discussion.createdDts)
             ? getTimeElapsed(discussion.createdDts) + t('ago')
             : t('justNow')}
         </span>
       </div>
+
+      {discussion.userRole && (
+        <p
+          className={classNames(
+            'text-base margin-top-0 position-absolute margin-left-5'
+          )}
+        >
+          {discussion.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
+            ? discussion.userRoleDescription
+            : t(`userRole.${discussion.userRole}`)}
+        </p>
+      )}
 
       <div
         className={classNames({
@@ -64,27 +82,39 @@ const SingleDiscussion = ({
           'mint-discussions__not-connected': !connected
         })}
       >
-        <p className="margin-y-0 padding-y-1">{discussion.content}</p>
-        <div className="display-flex margin-bottom-2">
-          {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
-          {hasEditAccess && answerQuestion && (
-            <>
-              <IconAnnouncement className="text-primary margin-right-1" />
-              <Button
-                type="button"
-                unstyled
-                role="button"
-                onClick={() => {
-                  setDiscussionStatusMessage('');
-                  setDiscussionType('reply');
-                  setReply(discussion);
-                }}
-              >
-                {t('answer')}
-              </Button>
-            </>
+        <p
+          className={classNames(
+            'margin-top-0 margin-bottom-1 padding-top-1 padding-bottom-2 text-pre-wrap',
+            {
+              'padding-top-5': !!discussion.userRole,
+              'margin-bottom-2': isLast
+            }
           )}
-        </div>
+        >
+          {discussion.content}
+        </p>
+
+        {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
+        {hasEditAccess && answerQuestion && (
+          <div className="display-flex margin-bottom-2">
+            <IconAnnouncement className="text-primary margin-right-1" />
+            <Button
+              type="button"
+              unstyled
+              role="button"
+              onClick={() => {
+                if (setIsDiscussionOpen) {
+                  setIsDiscussionOpen(true);
+                }
+                setDiscussionStatusMessage('');
+                setDiscussionType('reply');
+                setReply(discussion);
+              }}
+            >
+              {t('answer')}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

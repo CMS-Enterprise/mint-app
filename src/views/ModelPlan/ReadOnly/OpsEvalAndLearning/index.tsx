@@ -23,17 +23,24 @@ import {
   translateStakeholdersType
 } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import {
   isCCWInvolvement,
   isQualityMeasures
 } from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
+const ReadOnlyOpsEvalAndLearning = ({
+  modelID,
+  clearance,
+  isViewingFilteredView,
+  filteredQuestions
+}: ReadOnlyProps) => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: readOnly } = useTranslation('readOnlyModelPlan');
@@ -165,14 +172,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       className="read-only-model-plan--ops-eval-and-learning"
       data-testid="read-only-model-plan--ops-eval-and-learning"
     >
-      <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">
-          {clearance
-            ? t('operationsEvaluationAndLearningHeading')
-            : t('heading')}
-        </h2>
-        {status && <TaskListStatusTag status={status} />}
-      </div>
+      <TitleAndStatus
+        clearance={clearance}
+        clearanceTitle={t('operationsEvaluationAndLearningHeading')}
+        heading={t('heading')}
+        isViewingFilteredView={isViewingFilteredView}
+        status={status}
+      />
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
@@ -183,429 +189,738 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       )}
 
       {/* // OpsEvalAndLearningContent */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={readOnly('opsEvalAndLearning.anotherAgency')}
-          list
-          listItems={agencyOrStateHelp?.map(translateAgencyOrStateHelpType)}
-          listOtherItem={agencyOrStateHelpOther}
-          notes={agencyOrStateHelpNote}
-        />
-        <ReadOnlySection
-          heading={t('stakeholders')}
-          list
-          listItems={stakeholders?.map(translateStakeholdersType)}
-          listOtherItem={stakeholdersOther}
-          notes={stakeholdersNote}
-        />
-        <ReadOnlySection
-          heading={t('helpDesk')}
-          copy={translateBooleanOrNull(helpdeskUse)}
-          notes={helpdeskUseNote}
-        />
-        <ReadOnlySection
-          heading={t('whatContractors')}
-          list
-          listItems={contractorSupport?.map(translateContractorSupportType)}
-          listOtherItem={contractorSupportOther}
-          notes={contractorSupportNote}
-        />
-        <ReadOnlySection
-          heading={t('whatContractorsHow')}
-          copy={contractorSupportHow}
-        />
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'agencyOrStateHelp',
+          <ReadOnlySection
+            heading={readOnly('opsEvalAndLearning.anotherAgency')}
+            list
+            listItems={agencyOrStateHelp?.map(translateAgencyOrStateHelpType)}
+            listOtherItem={agencyOrStateHelpOther}
+            notes={agencyOrStateHelpNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'stakeholders',
+          <ReadOnlySection
+            heading={t('stakeholders')}
+            list
+            listItems={stakeholders?.map(translateStakeholdersType)}
+            listOtherItem={stakeholdersOther}
+            notes={stakeholdersNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'helpdeskUse',
+          <ReadOnlySection
+            heading={t('helpDesk')}
+            copy={translateBooleanOrNull(helpdeskUse)}
+            notes={helpdeskUseNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'contractorSupport',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('whatContractors'),
+              list: true,
+              listItems: contractorSupport?.map(translateContractorSupportType),
+              listOtherItem: contractorSupportOther
+            }}
+            secondSection={{
+              heading: t('whatContractorsHow'),
+              copy: contractorSupportHow
+            }}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'contractorSupport',
+          <ReadOnlySection heading={h('note')} copy={contractorSupportNote} />
+        )}
       </div>
 
       {/* IDDOC */}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
-        <ReadOnlySection
-          heading={t('iddocSupport')}
-          copy={translateBooleanOrNull(iddocSupport)}
-          notes={iddocSupportNote}
-        />
-        {iddocSupport && (
-          <div className="desktop:display-flex flex-justify">
-            <div
-              className={
-                technicalContactsIdentified ? 'desktop:width-card-lg' : ''
-              }
-            >
-              <ReadOnlySection
-                heading={t('technicalContacts')}
-                copy={translateBooleanOrNull(technicalContactsIdentified)}
-              />
-            </div>
-            {/* Only display specification div if "yes" was selected for technical contacts question above */}
-            {technicalContactsIdentified && (
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={h('pleaseSpecify')}
-                  copy={technicalContactsIdentifiedDetail}
-                />
-              </div>
-            )}
-          </div>
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {!isViewingFilteredView && (
+          <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
         )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'iddocSupport',
+          <ReadOnlySection
+            heading={t('iddocSupport')}
+            copy={translateBooleanOrNull(iddocSupport)}
+            notes={iddocSupportNote}
+          />
+        )}
+
+        {(isViewingFilteredView || iddocSupport) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'technicalContactsIdentified',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('technicalContacts'),
+                copy: translateBooleanOrNull(technicalContactsIdentified)
+              }}
+              secondSection={
+                technicalContactsIdentified === true && {
+                  heading: h('pleaseSpecify'),
+                  copy: technicalContactsIdentifiedDetail
+                }
+              }
+            />
+          )}
 
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
 
-        {iddocSupport && (
+        {(isViewingFilteredView || iddocSupport) && (
           <>
-            <ReadOnlySection
-              heading={h('note')}
-              copy={technicalContactsIdentifiedNote}
-            />
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'iddocSupport',
+              <ReadOnlySection
+                heading={h('note')}
+                copy={technicalContactsIdentifiedNote}
+              />
+            )}
 
-            <ReadOnlySection
-              heading={t('participantInformation')}
-              copy={translateBooleanOrNull(captureParticipantInfo)}
-              notes={captureParticipantInfoNote}
-            />
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'captureParticipantInfo',
+              <ReadOnlySection
+                heading={t('participantInformation')}
+                copy={translateBooleanOrNull(captureParticipantInfo)}
+                notes={captureParticipantInfoNote}
+              />
+            )}
           </>
         )}
       </div>
 
       {/* Interface Control Document - ICD */}
-      {iddocSupport && (
+      {(isViewingFilteredView || iddocSupport) && (
         <>
-          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-            <h3>{readOnly('opsEvalAndLearning.headings.icd')}</h3>
-            <ReadOnlySection heading={t('icdOwner')} copy={icdOwner} />
-            <ReadOnlySection
-              heading={t('draftIDC')}
-              copy={
-                draftIcdDueDate && formatDateUtc(draftIcdDueDate, 'MM/dd/yyyy')
-              }
-              notes={icdNote}
-            />
+          <div
+            className={`${
+              isViewingFilteredView
+                ? ''
+                : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+            }`}
+          >
+            {!isViewingFilteredView && (
+              <h3>{readOnly('opsEvalAndLearning.headings.icd')}</h3>
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'icdOwner',
+              <ReadOnlySection heading={t('icdOwner')} copy={icdOwner} />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'draftIcdDueDate',
+              <ReadOnlySection
+                heading={t('draftIDC')}
+                copy={
+                  draftIcdDueDate &&
+                  formatDateUtc(draftIcdDueDate, 'MM/dd/yyyy')
+                }
+                notes={icdNote}
+              />
+            )}
           </div>
 
           {/* IDDOCTesting */}
-          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-            <h3>{readOnly('opsEvalAndLearning.headings.testing')}</h3>
-            <ReadOnlySection heading={t('uatNeeds')} copy={uatNeeds} />
-            <ReadOnlySection heading={t('stcNeeds')} copy={stcNeeds} />
-            <ReadOnlySection
-              heading={t('testingTimelines')}
-              copy={testingTimelines}
-              notes={testingNote}
-            />
+          <div
+            className={`${
+              isViewingFilteredView
+                ? ''
+                : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+            }`}
+          >
+            {!isViewingFilteredView && (
+              <h3>{readOnly('opsEvalAndLearning.headings.testing')}</h3>
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'uatNeeds',
+              <ReadOnlySection heading={t('uatNeeds')} copy={uatNeeds} />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'stcNeeds',
+              <ReadOnlySection heading={t('stcNeeds')} copy={stcNeeds} />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'testingTimelines',
+              <ReadOnlySection
+                heading={t('testingTimelines')}
+                copy={testingTimelines}
+                notes={testingNote}
+              />
+            )}
           </div>
 
           {/* IDDOCMonitoring */}
-          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-            <h3>{readOnly('opsEvalAndLearning.headings.dataMonitoring')}</h3>
-            <ReadOnlySection
-              heading={t('fileTypes')}
-              list
-              listItems={dataMonitoringFileTypes?.map(
-                translateMonitoringFileType
-              )}
-              listOtherItem={dataMonitoringFileOther}
-            />
-            <ReadOnlySection
-              heading={t('responseTypes')}
-              copy={dataResponseType}
-            />
-            <ReadOnlySection
-              heading={t('fileFrequency')}
-              copy={dataResponseFileFrequency}
-            />
-            <div className="desktop:display-flex flex-justify">
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={t('timeFrequency')}
-                  copy={
+          <div
+            className={`${
+              isViewingFilteredView
+                ? ''
+                : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+            }`}
+          >
+            {!isViewingFilteredView && (
+              <h3>{readOnly('opsEvalAndLearning.headings.dataMonitoring')}</h3>
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'dataMonitoringFileTypes',
+              <ReadOnlySection
+                heading={t('fileTypes')}
+                list
+                listItems={dataMonitoringFileTypes?.map(
+                  translateMonitoringFileType
+                )}
+                listOtherItem={dataMonitoringFileOther}
+              />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'dataResponseType',
+              <ReadOnlySection
+                heading={t('responseTypes')}
+                copy={dataResponseType}
+              />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'dataResponseFileFrequency',
+              <ReadOnlySection
+                heading={t('fileFrequency')}
+                copy={dataResponseFileFrequency}
+              />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'dataFullTimeOrIncremental',
+              <SideBySideReadOnlySection
+                firstSection={{
+                  heading: t('timeFrequency'),
+                  copy:
                     dataFullTimeOrIncremental &&
                     translateDataFullTimeOrIncrementalType(
                       dataFullTimeOrIncremental
                     )
-                  }
-                />
-              </div>
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={t('eftAndConnectivity')}
-                  copy={translateBooleanOrNull(eftSetUp)}
-                />
-              </div>
-            </div>
-            <div className="desktop:display-flex flex-justify">
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={t('adjustments')}
-                  copy={translateBooleanOrNull(unsolicitedAdjustmentsIncluded)}
-                />
-              </div>
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={t('diagrams')}
-                  copy={translateBooleanOrNull(dataFlowDiagramsNeeded)}
-                />
-              </div>
-            </div>
-            <ReadOnlySection
-              heading={t('benefitEnhancement')}
-              copy={translateBooleanOrNull(produceBenefitEnhancementFiles)}
-            />
-            <ReadOnlySection
-              heading={t('namingConventions')}
-              copy={fileNamingConventions}
-              notes={dataMonitoringNote}
-            />
+                }}
+                secondSection={{
+                  heading: t('eftAndConnectivity'),
+                  copy: translateBooleanOrNull(eftSetUp)
+                }}
+              />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'unsolicitedAdjustmentsIncluded',
+              <SideBySideReadOnlySection
+                firstSection={{
+                  heading: t('adjustments'),
+                  copy: translateBooleanOrNull(unsolicitedAdjustmentsIncluded)
+                }}
+                secondSection={{
+                  heading: t('diagrams'),
+                  copy: translateBooleanOrNull(dataFlowDiagramsNeeded)
+                }}
+              />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'produceBenefitEnhancementFiles',
+              <ReadOnlySection
+                heading={t('benefitEnhancement')}
+                copy={translateBooleanOrNull(produceBenefitEnhancementFiles)}
+              />
+            )}
+
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'fileNamingConventions',
+              <ReadOnlySection
+                heading={t('namingConventions')}
+                copy={fileNamingConventions}
+                notes={dataMonitoringNote}
+              />
+            )}
           </div>
         </>
       )}
 
       {/* Performance */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('establishBenchmark')}
-          copy={
-            benchmarkForPerformance &&
-            translateBenchmarkForPerformanceType(benchmarkForPerformance)
-          }
-          notes={benchmarkForPerformanceNote}
-        />
-        <ReadOnlySection
-          heading={t('computeScores')}
-          copy={translateBooleanOrNull(computePerformanceScores)}
-          notes={computePerformanceScoresNote}
-        />
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'benchmarkForPerformance',
+          <ReadOnlySection
+            heading={t('establishBenchmark')}
+            copy={
+              benchmarkForPerformance &&
+              translateBenchmarkForPerformanceType(benchmarkForPerformance)
+            }
+            notes={benchmarkForPerformanceNote}
+          />
+        )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.riskAdj.performanceScores')}
-              copy={translateBooleanOrNull(riskAdjustPerformance)}
-            />
-          </div>
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.riskAdj.feedbackResults')}
-              copy={translateBooleanOrNull(riskAdjustFeedback)}
-            />
-          </div>
-        </div>
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.riskAdj.payments')}
-              copy={translateBooleanOrNull(riskAdjustPayments)}
-            />
-          </div>
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.riskAdj.others')}
-              copy={translateBooleanOrNull(riskAdjustOther)}
-            />
-          </div>
-        </div>
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'computePerformanceScores',
+          <ReadOnlySection
+            heading={t('computeScores')}
+            copy={translateBooleanOrNull(computePerformanceScores)}
+            notes={computePerformanceScoresNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'riskAdjustPerformance',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: readOnly('opsEvalAndLearning.riskAdj.performanceScores'),
+              copy: translateBooleanOrNull(riskAdjustPerformance)
+            }}
+            secondSection={{
+              heading: readOnly('opsEvalAndLearning.riskAdj.feedbackResults'),
+              copy: translateBooleanOrNull(riskAdjustFeedback)
+            }}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'riskAdjustPayments',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: readOnly('opsEvalAndLearning.riskAdj.payments'),
+              copy: translateBooleanOrNull(riskAdjustPayments)
+            }}
+            secondSection={{
+              heading: readOnly('opsEvalAndLearning.riskAdj.others'),
+              copy: translateBooleanOrNull(riskAdjustOther)
+            }}
+          />
+        )}
+
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
-        <ReadOnlySection heading={h('note')} copy={riskAdjustNote} />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'riskAdjustPayments',
+          <ReadOnlySection heading={h('note')} copy={riskAdjustNote} />
+        )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.appeal.performanceScores')}
-              copy={translateBooleanOrNull(appealPerformance)}
-            />
-          </div>
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.appeal.feedbackResults')}
-              copy={translateBooleanOrNull(appealFeedback)}
-            />
-          </div>
-        </div>
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'appealPerformance',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: readOnly('opsEvalAndLearning.appeal.performanceScores'),
+              copy: translateBooleanOrNull(appealPerformance)
+            }}
+            secondSection={{
+              heading: readOnly('opsEvalAndLearning.appeal.feedbackResults'),
+              copy: translateBooleanOrNull(appealFeedback)
+            }}
+          />
+        )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.appeal.payments')}
-              copy={translateBooleanOrNull(appealPayments)}
-            />
-          </div>
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.appeal.others')}
-              copy={translateBooleanOrNull(appealOther)}
-            />
-          </div>
-        </div>
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'appealPayments',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: readOnly('opsEvalAndLearning.appeal.payments'),
+              copy: translateBooleanOrNull(appealPayments)
+            }}
+            secondSection={{
+              heading: readOnly('opsEvalAndLearning.appeal.others'),
+              copy: translateBooleanOrNull(appealOther)
+            }}
+          />
+        )}
+
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
-        <ReadOnlySection heading={h('note')} copy={appealNote} />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'appealPayments',
+          <ReadOnlySection heading={h('note')} copy={appealNote} />
+        )}
       </div>
 
       {/* Evaluation */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={readOnly('opsEvalAndLearning.evaluationApproach')}
-          list
-          listItems={evaluationApproaches?.map(translateEvaluationApproachType)}
-          listOtherItem={evaluationApproachOther}
-          notes={evalutaionApproachNote}
-        />
-        <ReadOnlySection
-          heading={t('ccw')}
-          list
-          listItems={ccmInvolvment?.map(translateCcmInvolvmentType)}
-          listOtherItem={ccmInvolvmentOther}
-          notes={ccmInvolvmentNote}
-        />
-        <ReadOnlySection
-          heading={readOnly('opsEvalAndLearning.dataNeeded')}
-          list
-          listItems={dataNeededForMonitoring?.map(
-            translateDataForMonitoringType
-          )}
-          listOtherItem={dataNeededForMonitoringOther}
-          notes={dataNeededForMonitoringNote}
-        />
-        <ReadOnlySection
-          heading={readOnly('opsEvalAndLearning.dataToSend')}
-          list
-          listItems={dataToSendParticicipants?.map(
-            translateDataToSendParticipantsType
-          )}
-          listOtherItem={dataToSendParticicipantsOther}
-          notes={dataToSendParticicipantsNote}
-        />
-        <ReadOnlySection
-          heading={t('claimLineFeed')}
-          copy={translateBooleanOrNull(shareCclfData)}
-          notes={shareCclfDataNote}
-        />
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'evaluationApproaches',
+          <ReadOnlySection
+            heading={readOnly('opsEvalAndLearning.evaluationApproach')}
+            list
+            listItems={evaluationApproaches?.map(
+              translateEvaluationApproachType
+            )}
+            listOtherItem={evaluationApproachOther}
+            notes={evalutaionApproachNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'ccmInvolvment',
+          <ReadOnlySection
+            heading={t('ccw')}
+            list
+            listItems={ccmInvolvment?.map(translateCcmInvolvmentType)}
+            listOtherItem={ccmInvolvmentOther}
+            notes={ccmInvolvmentNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'dataNeededForMonitoring',
+          <ReadOnlySection
+            heading={readOnly('opsEvalAndLearning.dataNeeded')}
+            list
+            listItems={dataNeededForMonitoring?.map(
+              translateDataForMonitoringType
+            )}
+            listOtherItem={dataNeededForMonitoringOther}
+            notes={dataNeededForMonitoringNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'dataToSendParticicipants',
+          <ReadOnlySection
+            heading={readOnly('opsEvalAndLearning.dataToSend')}
+            list
+            listItems={dataToSendParticicipants?.map(
+              translateDataToSendParticipantsType
+            )}
+            listOtherItem={dataToSendParticicipantsOther}
+            notes={dataToSendParticicipantsNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'shareCclfData',
+          <ReadOnlySection
+            heading={t('claimLineFeed')}
+            copy={translateBooleanOrNull(shareCclfData)}
+            notes={shareCclfDataNote}
+          />
+        )}
       </div>
 
       {/* CCWAndQuality */}
       {isCCWInvolvement(ccmInvolvment) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-          <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
-          <ReadOnlySection
-            heading={t('ccwSendFiles')}
-            copy={translateBooleanOrNull(sendFilesBetweenCcw)}
-            notes={sendFilesBetweenCcwNote}
-          />
-          <div className="desktop:display-flex flex-justify">
-            <div
-              className={appToSendFilesToKnown ? 'desktop:width-card-lg' : ''}
-            >
-              <ReadOnlySection
-                heading={t('fileTransfers')}
-                copy={translateBooleanOrNull(appToSendFilesToKnown)}
-              />
-            </div>
-            {/* Only display specification div if "yes" was selected for file transfer question above */}
-            {appToSendFilesToKnown && (
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={h('pleaseSpecify')}
-                  copy={appToSendFilesToWhich}
-                />
-              </div>
-            )}
-          </div>
-          {/* This is a slight "hack" of this component in order to get around the heading being required */}
-          <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
+        <div
+          className={`${
+            isViewingFilteredView
+              ? ''
+              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+          }`}
+        >
+          {!isViewingFilteredView && (
+            <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
+          )}
 
-          <ReadOnlySection
-            heading={t('distributeFiles')}
-            copy={translateBooleanOrNull(
-              useCcwForFileDistribiutionToParticipants
-            )}
-            notes={useCcwForFileDistribiutionToParticipantsNote}
-          />
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'sendFilesBetweenCcw',
+            <ReadOnlySection
+              heading={t('ccwSendFiles')}
+              copy={translateBooleanOrNull(sendFilesBetweenCcw)}
+              notes={sendFilesBetweenCcwNote}
+            />
+          )}
+
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'appToSendFilesToKnown',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('fileTransfers'),
+                copy: translateBooleanOrNull(appToSendFilesToKnown)
+              }}
+              secondSection={
+                appToSendFilesToKnown === true && {
+                  heading: h('pleaseSpecify'),
+                  copy: appToSendFilesToWhich
+                }
+              }
+            />
+          )}
+
+          {/* This is a slight "hack" of this component in order to get around the heading being required */}
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'appToSendFilesToKnown',
+            <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
+          )}
+
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'useCcwForFileDistribiutionToParticipants',
+            <ReadOnlySection
+              heading={t('distributeFiles')}
+              copy={translateBooleanOrNull(
+                useCcwForFileDistribiutionToParticipants
+              )}
+              notes={useCcwForFileDistribiutionToParticipantsNote}
+            />
+          )}
         </div>
       )}
 
       {/* Quality */}
       {isQualityMeasures(dataNeededForMonitoring) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-          <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
-          <ReadOnlySection
-            heading={t('validatedQuality')}
-            copy={translateBooleanOrNull(developNewQualityMeasures)}
-            notes={developNewQualityMeasuresNote}
-          />
-          <ReadOnlySection
-            heading={t('impactPayment')}
-            copy={translateBooleanOrNull(qualityPerformanceImpactsPayment)}
-            notes={qualityPerformanceImpactsPaymentNote}
-          />
+        <div
+          className={`${
+            isViewingFilteredView
+              ? ''
+              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+          }`}
+        >
+          {!isViewingFilteredView && (
+            <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
+          )}
+
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'developNewQualityMeasures',
+            <ReadOnlySection
+              heading={t('validatedQuality')}
+              copy={translateBooleanOrNull(developNewQualityMeasures)}
+              notes={developNewQualityMeasuresNote}
+            />
+          )}
+
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'qualityPerformanceImpactsPayment',
+            <ReadOnlySection
+              heading={t('impactPayment')}
+              copy={translateBooleanOrNull(qualityPerformanceImpactsPayment)}
+              notes={qualityPerformanceImpactsPaymentNote}
+            />
+          )}
         </div>
       )}
 
       {/* DataSharing */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <h3>{readOnly('opsEvalAndLearning.headings.data')}</h3>
-        <ReadOnlySection
-          heading={t('dataSharing')}
-          copy={
-            dataSharingStarts &&
-            (dataSharingStarts === DataStartsType.OTHER
-              ? `${translateDataStartsType(
-                  dataSharingStarts
-                )} \u2014  ${dataSharingStartsOther}`
-              : translateDataStartsType(dataSharingStarts))
-          }
-        />
-        <ReadOnlySection
-          heading={t('dataSharingHowOften')}
-          list
-          listItems={dataSharingFrequency?.map(translateDataFrequencyType)}
-          listOtherItem={dataSharingFrequencyOther}
-          notes={dataSharingStartsNote}
-        />
-        <ReadOnlySection
-          heading={t('dataCollection')}
-          copy={
-            dataCollectionStarts &&
-            (dataCollectionStarts === DataStartsType.OTHER
-              ? `${translateDataStartsType(
-                  dataCollectionStarts
-                )} \u2014  ${dataCollectionStartsOther}`
-              : translateDataStartsType(dataCollectionStarts))
-          }
-        />
-        <ReadOnlySection
-          heading={t('dataCollectionHowOften')}
-          list
-          listItems={dataCollectionFrequency?.map(translateDataFrequencyType)}
-          listOtherItem={dataCollectionFrequencyOther}
-          notes={dataCollectionFrequencyNote}
-        />
-        <ReadOnlySection
-          heading={t('dataReporting')}
-          copy={
-            qualityReportingStarts &&
-            (qualityReportingStarts === DataStartsType.OTHER
-              ? `${translateDataStartsType(
-                  qualityReportingStarts
-                )} \u2014  ${qualityReportingStartsOther}`
-              : translateDataStartsType(qualityReportingStarts))
-          }
-          notes={qualityReportingStartsNote}
-        />
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {!isViewingFilteredView && (
+          <h3>{readOnly('opsEvalAndLearning.headings.data')}</h3>
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'dataSharingStarts',
+          <ReadOnlySection
+            heading={t('dataSharing')}
+            copy={
+              dataSharingStarts &&
+              (dataSharingStarts === DataStartsType.OTHER
+                ? `${translateDataStartsType(
+                    dataSharingStarts
+                  )} \u2014  ${dataSharingStartsOther}`
+                : translateDataStartsType(dataSharingStarts))
+            }
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'dataSharingFrequency',
+          <ReadOnlySection
+            heading={t('dataSharingHowOften')}
+            list
+            listItems={dataSharingFrequency?.map(translateDataFrequencyType)}
+            listOtherItem={dataSharingFrequencyOther}
+            notes={dataSharingStartsNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'dataCollectionStarts',
+          <ReadOnlySection
+            heading={t('dataCollection')}
+            copy={
+              dataCollectionStarts &&
+              (dataCollectionStarts === DataStartsType.OTHER
+                ? `${translateDataStartsType(
+                    dataCollectionStarts
+                  )} \u2014  ${dataCollectionStartsOther}`
+                : translateDataStartsType(dataCollectionStarts))
+            }
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'dataCollectionFrequency',
+          <ReadOnlySection
+            heading={t('dataCollectionHowOften')}
+            list
+            listItems={dataCollectionFrequency?.map(translateDataFrequencyType)}
+            listOtherItem={dataCollectionFrequencyOther}
+            notes={dataCollectionFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'qualityReportingStarts',
+          <ReadOnlySection
+            heading={t('dataReporting')}
+            copy={
+              qualityReportingStarts &&
+              (qualityReportingStarts === DataStartsType.OTHER
+                ? `${translateDataStartsType(
+                    qualityReportingStarts
+                  )} \u2014  ${qualityReportingStartsOther}`
+                : translateDataStartsType(qualityReportingStarts))
+            }
+            notes={qualityReportingStartsNote}
+          />
+        )}
       </div>
 
       {/* Learning */}
-      <div className="margin-bottom-4 padding-bottom-2">
-        <ReadOnlySection
-          heading={t('learningSystem')}
-          list
-          listItems={modelLearningSystems?.map(
-            translateModelLearningSystemType
-          )}
-          listOtherItem={modelLearningSystemsOther}
-          notes={modelLearningSystemsNote}
-        />
-        <ReadOnlySection
-          heading={t('obstacles')}
-          copy={anticipatedChallenges}
-        />
+      <div>
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'modelLearningSystems',
+          <ReadOnlySection
+            heading={t('learningSystem')}
+            list
+            listItems={modelLearningSystems?.map(
+              translateModelLearningSystemType
+            )}
+            listOtherItem={modelLearningSystemsOther}
+            notes={modelLearningSystemsNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'anticipatedChallenges',
+          <ReadOnlySection
+            heading={t('obstacles')}
+            copy={anticipatedChallenges}
+          />
+        )}
       </div>
     </div>
   );

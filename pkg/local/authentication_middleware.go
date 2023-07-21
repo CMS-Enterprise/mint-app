@@ -23,8 +23,9 @@ type DevUserConfig struct {
 	JobCodes []string `json:"jobCodes"`
 }
 
-func authenticateMiddleware(logger *zap.Logger, next http.Handler, store *storage.Store) http.Handler {
+func authenticateMiddleware(next http.Handler, store *storage.Store) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		logger := appcontext.ZLogger(r.Context())
 		logger.Info("Using local authorization middleware")
 
 		if len(r.Header["Authorization"]) == 0 {
@@ -73,11 +74,21 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	if parseErr := json.Unmarshal([]byte(devUserConfigJSON), &config); parseErr != nil {
 		return nil, errors.New("could not parse local auth JSON")
 	}
+	// Pull job codes from config
+	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
+	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
+	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT Contractor"))
+
+	// Always set assessment users to have base user permissions
+	if jcAssessment {
+		jcUser = true
+	}
+
 	princ := &authentication.ApplicationPrincipal{
 		Username:          strings.ToUpper(config.EUA),
-		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD"),
-		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD"),
-		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
+		JobCodeUSER:       jcUser,
+		JobCodeASSESSMENT: jcAssessment,
+		JobCodeMAC:        jcMAC,
 	}
 
 	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
@@ -112,8 +123,8 @@ func NewLocalWebSocketAuthenticationMiddleware(store *storage.Store) transport.W
 }
 
 // NewLocalAuthenticationMiddleware stubs out context info for local (non-Okta) authentication
-func NewLocalAuthenticationMiddleware(logger *zap.Logger, store *storage.Store) func(http.Handler) http.Handler {
+func NewLocalAuthenticationMiddleware(store *storage.Store) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
-		return authenticateMiddleware(logger, next, store)
+		return authenticateMiddleware(next, store)
 	}
 }

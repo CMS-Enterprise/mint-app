@@ -17,6 +17,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
@@ -72,7 +73,7 @@ func getResolverDependencies(config *viper.Viper) (
 		SSLMode:        config.GetString(appconfig.DBSSLModeConfigKey),
 		MaxConnections: config.GetInt(appconfig.DBMaxConnections),
 	}
-	store, err := storage.NewStore(logger, dbConfig, ldClient)
+	store, err := storage.NewStore(dbConfig, ldClient)
 	if err != nil {
 		fmt.Printf("Failed to get new database: %v", err)
 		panic(err)
@@ -100,6 +101,10 @@ func seed(config *viper.Viper) {
 // If you want to add more seeded data, or edit seeded data, this is the function to edit!
 // NOTE: Some of this data _is_ relied on by Cypress tests, but most of it is freely editable.
 func (s *Seeder) SeedData() {
+	links, err := resolvers.ExistingModelCollectionGet(s.Config.Logger, s.Config.Store)
+	if err != nil {
+		panic(err)
+	}
 
 	// Seed an empty plan
 	s.createModelPlan("Empty Plan", "MINT")
@@ -117,6 +122,7 @@ func (s *Seeder) SeedData() {
 		"clearanceStarts": time.Now(),
 		"highLevelNote":   "Some high level note",
 	})
+	s.existingModelLinkCreate(planWithBasics, []int{links[3].ID, links[4].ID}, nil)
 
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
@@ -129,6 +135,8 @@ func (s *Seeder) SeedData() {
 			UserName:    "BTAL",
 			TeamRole:    models.TeamRoleLeadership,
 		})
+
+	s.existingModelLinkCreate(planWithCollaborators, []int{links[4].ID}, nil)
 
 	// Seed a plan with CRs / TDLs
 	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs", "MINT")
@@ -147,11 +155,13 @@ func (s *Seeder) SeedData() {
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
+	s.existingModelLinkCreate(planWithCrTDLs, nil, []uuid.UUID{planWithCollaborators.ID, planWithBasics.ID})
 
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
-		"archived": true,
+		"archived":     true,
+		"abbreviation": "arch",
 	})
 
 	// Seed a plan with some documents
@@ -180,6 +190,8 @@ func (s *Seeder) SeedData() {
 			TeamRole:    models.TeamRoleLeadership,
 		})
 	s.updatePlanBasics(sampleModelPlan, map[string]interface{}{
+		"amsModelID":      "123",
+		"demoCode":        "1",
 		"modelType":       models.MTVoluntary,
 		"goal":            "Some goal",
 		"cmsCenters":      []string{"CMMI", "OTHER"},

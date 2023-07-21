@@ -22,12 +22,22 @@ $card-radius: 6px;
         background-position: bottom 10px right 0px;
     }
 
+    &__access-link {
+        text-underline-offset: 0.15rem;
+        color: white !important;
+    }
+
     &__description {
         font-size: 40px;
     }
 
     &__footer {
-        border-top: 1px solid $mint-cool-20
+        border-bottom: 1px solid $mint-cool-20
+    }
+
+    &__vr {
+        padding-bottom: 0.15em;
+        border-left: 1px solid $mint-cool-20;
     }
 
     &__content {
@@ -154,3 +164,14 @@ $card-radius: 6px;
         }
     }
 }
+
+@media print {
+    .page-break {
+      margin-top: 1rem !important;
+      display: block !important;
+      page-break-before: auto !important;
+    }
+    .hide-print {
+        display: none !important;
+    }
+  }

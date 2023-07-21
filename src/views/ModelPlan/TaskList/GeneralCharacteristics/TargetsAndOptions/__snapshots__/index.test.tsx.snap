@@ -226,6 +226,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           Please specify what the other geography type is.
         </label>
         <textarea
+          aria-labelledby="label-plan-characteristics-geographies-targeted-other hint-plan-characteristics-geographies-targeted-other"
           class="mint-textarea usa-textarea"
           data-testid="plan-characteristics-geographies-targeted-other"
           id="plan-characteristics-geographies-targeted-other"
@@ -451,15 +452,17 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           <p
             class="usa-alert__text"
           >
-            Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="button"
-              id="ops-eval-and-learning-data-needed-warning"
-              type="button"
-            >
-              Go to IT solutions tracker.
-            </button>
+            <span>
+              Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="button"
+                id="ops-eval-and-learning-data-needed-warning"
+                type="button"
+              >
+                Go to IT solutions tracker.
+              </button>
+            </span>
           </p>
         </div>
       </div>

@@ -1,0 +1,14 @@
+@use 'viewports' as *;
+
+.banner {
+  flex-direction: column;
+  gap: 1rem;
+
+  @media screen and (min-width: $desktop) {
+    flex-direction: row;
+  }
+
+  @media print {
+    padding-left: 1rem;
+  }
+}

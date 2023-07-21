@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { ComponentMeta } from '@storybook/react';
 
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+import { OperationalSolutionCategories } from 'data/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
@@ -18,8 +18,8 @@ export default {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
-            route={operationalSolutionCategoryMap.dataReporting}
-            category={OperationalSolutionCategories.DATA_REPORTING}
+            route={operationalSolutionCategoryMap.data}
+            category={OperationalSolutionCategories.DATA}
           />
         </Route>
       </MemoryRouter>
@@ -31,8 +31,8 @@ export const Default = () => (
   <MemoryRouter initialEntries={['/help-and-knowledge/operational-solutions']}>
     <Route path="/help-and-knowledge/operational-solutions">
       <SolutionsTag
-        route={operationalSolutionCategoryMap.dataReporting}
-        category={OperationalSolutionCategories.DATA_REPORTING}
+        route={operationalSolutionCategoryMap.data}
+        category={OperationalSolutionCategories.DATA}
       />
     </Route>
   </MemoryRouter>

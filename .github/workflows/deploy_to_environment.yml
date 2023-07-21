@@ -6,21 +6,6 @@ on:
       env:
         required: true
         type: string
-    secrets:
-      AWS_ROLE_TO_ASSUME:
-        required: true
-      SLACK_WEBHOOK_URL:
-        required: true
-      LD_CLIENT_ID:
-        required: true
-      OKTA_CLIENT_ID:
-        required: true
-      OKTA_SERVER_ID:
-        required: true
-      STATIC_S3_BUCKET:
-        required: true
-      ECR_REGISTRY:
-        required: true
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -50,10 +35,17 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@v2.1.0
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
+      - name: Clean Opensearch Domain
+        if: contains(inputs.env, 'dev')
+        env:
+          OPENSEARCH_ENDPOINT: ${{ vars.OPENSEARCH_ENDPOINT  }}
+          OPENSEARCH_PASSWORD: ${{ secrets.OPENSEARCH_PASSWORD  }}
+        run: |
+          ./scripts/opensearch_clean.sh $OPENSEARCH_ENDPOINT $OPENSEARCH_PASSWORD
       - name: Backup the database
         if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
         run: |

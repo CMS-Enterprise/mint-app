@@ -9,8 +9,11 @@ import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
-import usePrevLocation from 'hooks/usePrevious';
+import {
+  OperationalSolutionCategories,
+  OperationalSolutionCategoryRoute
+} from 'data/operationalSolutionCategories';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import CategoryFooter from './_components/CategoryFooter';
 import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
@@ -28,7 +31,7 @@ type OperationalSolutionsHelpProps = {
 
 // Return all solutions relevant to the current cateory
 export const findCategoryMapByRouteParam = (
-  route: string,
+  route: OperationalSolutionCategoryRoute,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
   const categoryKey: OperationalSolutionCategories | undefined =
@@ -70,12 +73,14 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const params = new URLSearchParams(location.search);
 
-  const category = params.get('category');
-  const solution = params.get('solution');
+  const category = params.get('category') as OperationalSolutionCategoryRoute;
   const page = params.get('page');
+  const modal = params.get('solution');
 
-  const prevLocation = usePrevLocation(location);
-  const prevPathname = prevLocation?.pathname + (prevLocation?.search || '');
+  // Get the solution map details from solution route param
+  const { prevPathname, selectedSolution: solution } = useModalSolutionState(
+    null
+  );
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
@@ -84,14 +89,19 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     helpSolutions
   );
 
+  const fromModal: boolean = prevPathname.includes('solution=');
+
   // Resets the query on route or category change
   // Also preserves the query/scroll when the modal is open/closed
   useEffect(() => {
-    if (!page && location.pathname) {
+    if (!page && location.pathname && (!category || (!modal && !fromModal))) {
       setQuery('');
       window.scrollTo(0, 0);
     }
-  }, [page, location.pathname, category]);
+    if (!query && !modal && !fromModal) {
+      window.scrollTo(0, 0);
+    }
+  }, [page, location.pathname, category, modal, query, fromModal]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
@@ -108,7 +118,10 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     : findCategoryMapByRouteParam(category, helpSolutions);
 
   // Solution to render in modal
-  const selectedSolution = findSolutionByRouteParam(solution, helpSolutions);
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.route || null,
+    helpSolutions
+  );
 
   return (
     <div className={classNames(className)}>
@@ -116,6 +129,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}
+          closeRoute="/help-and-knowledge/operational-solutions"
         />
       )}
 

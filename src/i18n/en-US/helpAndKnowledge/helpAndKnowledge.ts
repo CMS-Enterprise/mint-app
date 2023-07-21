@@ -1,3 +1,7 @@
+import {
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
+} from 'data/operationalSolutionCategories';
 import { AboutConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
 import { TimelineConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
 
@@ -10,36 +14,40 @@ type SolutionTType = {
   [key: string]: SolutionModelType;
 };
 
-const solutionCategoryies = {
-  applications: {
-    header: 'Applications',
-    description: 'Learn about the solutions available for applications.'
-  },
-  'communication-tools': {
-    header: 'Communication tools',
-    description: 'Learn about the solutions available for communication tools.'
-  },
-  'contractors-and-contract-vehicles': {
-    header: 'Contractors and contract vehicles',
+type SolutionCategoryType = {
+  header: string;
+  subHeader?: string;
+  description: string;
+};
+
+export const solutionCategories: Record<
+  OperationalSolutionCategoryRoute,
+  SolutionCategoryType
+> = {
+  'applications-and-participation-interaction-aco-and-kidney': {
+    header: 'Applications and participant interaction',
+    subHeader: '(ACO and kidney models)',
     description:
-      'Learn about the solutions available for contractors and contract vehicles.'
+      'Learn about the solutions available for applications and participant interaction for ACO and kidney models.'
   },
-  'database-and-data-management': {
-    header: 'Databases and data management',
+  'applications-and-participation-interaction-non-aco': {
+    header: 'Applications and participant interaction',
+    subHeader: '(non-ACO models)',
     description:
-      'Learn about the solutions available for databases and data management.'
+      'Learn about the solutions available for cooperative agreement applications, participant agreement applications, and participant interaction for non-ACO models.'
   },
-  'data-exchange': {
-    header: 'Data exchange',
-    description: 'Learn about the solutions available for data exchange.'
+  'communication-tools-and-help-desk': {
+    header: 'Communication tools and help desk',
+    description:
+      'Learn about the solutions available for communication tools and help desk.'
   },
-  'data-reporting': {
-    header: 'Data reporting',
-    description: 'Learn about the solutions available for data reporting.'
+  'contract-vehicles': {
+    header: 'Contract vehicles',
+    description: 'Learn about the solutions available for contract vehicles.'
   },
-  'help-desks': {
-    header: 'Help desks',
-    description: 'Learn about the solutions available for help desks.'
+  data: {
+    header: 'Data',
+    description: 'Learn about the solutions available for data.'
   },
   learning: {
     header: 'Learning',
@@ -51,12 +59,18 @@ const solutionCategoryies = {
   },
   'medicare-advantage-and-part-d': {
     header: 'Medicare Advantage and Part D',
-    description: 'Learn about the solutions available for legal.'
+    description:
+      'Learn about the solutions available for Medicare Advantage and Part D.'
   },
   'medicare-fee-for-service': {
     header: 'Medicare Fee-for-Service',
     description:
       'Learn about the solutions available for Medicare Fee-for-Service.'
+  },
+  'payments-and-financials': {
+    header: 'Payments and financials',
+    description:
+      'Learn about the solutions available for payments and financials.'
   },
   quality: {
     header: 'Quality',
@@ -64,49 +78,46 @@ const solutionCategoryies = {
   }
 };
 
+const solutionSubCategories: Record<
+  OperationalSolutionSubCategories,
+  string
+> = {
+  [OperationalSolutionSubCategories.APPLICATIONS]: 'Applications',
+  [OperationalSolutionSubCategories.COMMUNICATION_TOOLS]: 'Communication tools',
+  [OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS]:
+    'Cooperative agreement applications',
+  [OperationalSolutionSubCategories.HELP_DESK]: 'Help desk',
+  [OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS]:
+    'Participant agreement applications',
+  [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION]:
+    'Participant interaction'
+};
+
 const solutions: SolutionTType = {
   innovation: {
     about: {
       description:
-        'The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for CMS Innovation Center to onboard, support, and manage a variety of models and their participants to improve the quality of care and reduce service costs. The 4i platform is built using a modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.',
+        'The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for the CMS Innovation Center to onboard, support, and manage ACO and kidney models and their participants to improve the quality of care and reduce service costs. The 4i platform is built with modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.',
       components: [
         {
           header: 'Product capabilties',
-          itemHeaders: [
-            'Agreement management',
-            'Participant Management',
-            'Benefits Enhancements',
-            'Contact/User Management',
-            'Reports & Analytics',
-            'Data Hub & Data Exchange',
-            'Knowledge Library',
-            'Provider Overlap Check',
-            'Beneficiary Overlap Check',
-            'Beneficiary Lookup Feature',
-            'Data Exchange with downstream systems',
-            'Claim and Claim Line Feeds (CCLF)',
-            'Identity & Access Management',
-            'Application Programming Interface (API) Key Mgt',
-            '4i Command Line Interface (CLI) Tool',
-            'Tasks and Notifications'
-          ],
           items: [
-            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
-            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
-            'Add and manage Benefit Enhancements and Payment mechanisms.',
-            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
-            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
-            'Provide secure access to sensitive data such as claims and beneficiary reports,',
-            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
-            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
-            'Beneficiary overlap check across the models',
-            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
-            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
-            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
-            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
-            'Request and manage API keys and monitor API usage statistics',
-            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
-            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+            '<bold>Agreement management</bold> - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            '<bold>Participant Management</bold> - Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            '<bold>Benefits Enhancements</bold> - Add and manage Benefit Enhancements and Payment mechanisms.',
+            '<bold>Contact/User Management</bold> - Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            '<bold>Reports & Analytics</bold> - View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            '<bold>Data Hub & Data Exchange</bold> - Provide secure access to sensitive data such as claims and beneficiary reports,',
+            '<bold>Knowledge Library</bold> - Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            '<bold>Provider Overlap Check</bold> - Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            '<bold>Beneficiary Overlap Check</bold> - Beneficiary overlap check across the models',
+            '<bold>Beneficiary Lookup Feature</bold> - This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            '<bold>Data Exchange with downstream systems</bold> - Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            '<bold>Claim and Claim Line Feeds (CCLF)</bold> - CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            '<bold>Identity & Access Management</bold> - Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            '<bold>Application Programming Interface (API) Key Mgt</bold> - Request and manage API keys and monitor API usage statistics',
+            '<bold>4i Command Line Interface (CLI) Tool</bold> - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
         }
       ]
@@ -176,45 +187,27 @@ const solutions: SolutionTType = {
   accountableCare: {
     about: {
       description:
-        'The Accountable Care Organization – Operational System (ACO-OS) is the system of record for 4 CMMI models (VT APM, ACO REACH, KCC, PCF) and the Medicare Shared Savings Program in CM. The system stores and exchanges ACO/entity demographic, provider, claim, and beneficiary data with ACOs/entities and CMS systems such as Master Data Management (MDM), Enterprise Data Lake (EDL), and Fee-for-Service (FFS) Shared System Maintainers (SSMs). The ACO-OS generates and shares the claims data each month for over 14,000,000 Medicare beneficiaries. The claims data and reports generated by ACO-OS are shared through the Data Hub feature in the 4i platform for CMMI models and ACO-Management System (ACO-MS) for Medicare Shared Savings Program.',
+        'The Accountable Care Organization – Operational System (ACO-OS) is the system of record for ACO and kidney models (which includes VT APM, ACO REACH, KCC, PCF) and the Medicare Shared Savings Program in CM. The system stores and exchanges ACO/entity demographic, provider, claim, and beneficiary data with ACOs/entities and CMS systems such as Master Data Management (MDM), Enterprise Data Lake (EDL), and Fee-for-Service (FFS) Shared System Maintainers (SSMs). The ACO-OS generates and shares the claims data each month for over 14,000,000 Medicare beneficiaries. The claims data and reports generated by ACO-OS are shared through the Data Hub feature in the 4i platform for CMMI models and ACO-Management System (ACO-MS) for Medicare Shared Savings Program.',
       components: [
         {
           header: 'Product capabilties',
-          itemHeaders: [
-            'Agreement management',
-            'Participant Management',
-            'Benefits Enhancements',
-            'Contact/User Management',
-            'Reports & Analytics',
-            'Data Hub & Data Exchange',
-            'Knowledge Library',
-            'Provider Overlap Check',
-            'Beneficiary Overlap Check',
-            'Beneficiary Lookup Feature',
-            'Data Exchange with downstream systems',
-            'Claim and Claim Line Feeds (CCLF)',
-            'Identity & Access Management',
-            'Application Programming Interface (API) Key Mgt',
-            '4i Command Line Interface (CLI) Tool',
-            'Tasks and Notifications'
-          ],
           items: [
-            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
-            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
-            'Add and manage Benefit Enhancements and Payment mechanisms.',
-            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
-            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
-            'Provide secure access to sensitive data such as claims and beneficiary reports,',
-            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
-            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
-            'Beneficiary overlap check across the models',
-            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
-            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
-            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
-            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
-            'Request and manage API keys and monitor API usage statistics',
-            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
-            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+            '<bold>Agreement management</bold> - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            '<bold>Participant Management</bold> - Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            '<bold>Benefits Enhancements</bold> - Add and manage Benefit Enhancements and Payment mechanisms.',
+            '<bold>Contact/User Management</bold> - Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            '<bold>Reports & Analytics</bold> - View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            '<bold>Data Hub & Data Exchange</bold> - Provide secure access to sensitive data such as claims and beneficiary reports,',
+            '<bold>Knowledge Library</bold> - Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            '<bold>Provider Overlap Check</bold> - Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            '<bold>Beneficiary Overlap Check</bold> - Beneficiary overlap check across the models',
+            '<bold>Beneficiary Lookup Feature</bold> - This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            '<bold>Data Exchange with downstream systems</bold> - Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            '<bold>Claim and Claim Line Feeds (CCLF)</bold> - CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            '<bold>Identity & Access Management</bold> - Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            '<bold>Application Programming Interface (API) Key Mgt</bold> - Request and manage API keys and monitor API usage statistics',
+            '<bold>4i Command Line Interface (CLI) Tool</bold> - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
         }
       ]
@@ -252,13 +245,57 @@ const solutions: SolutionTType = {
       ]
     }
   },
+  bcda: {
+    about: {
+      description: `The Beneficiary Claims Data API (BCDA) gives organizations the insights they need to provide high quality, coordinated care. BCDA uses the FHIR® standard as a simple, flexible, and effective way for Medicare Shared Savings Program, ACO REACH, and other Alternative Payment Model participants to receive Medicare Part A, B, and D claims.`,
+      components: [
+        {
+          header: 'Capabilities',
+          items: [
+            'BCDA supplements ACOs’ insight into their assigned beneficiary populations with Medicare claims data.',
+            'BCDA enables ACOs to make claims data requests more often - once a week.',
+            'BCDA offers Medicare claims data in a format that is aligned with a healthcare interoperability standard and the CMS interoperability rule.'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'If a model is already using 4innovation (4i), it’s much quicker to onboard to BCDA (a few weeks versus several months). It’s best to involve BCDA during the development process, so they can help determine if it’s right for your model.',
+      items: [
+        {
+          header: 'Inquire about BCDA',
+          description:
+            'If you’re interested in using BCDA for your model or would like to learn more about the system, please contact the BCDA Team. They can give a demo and share information about the system.',
+          description2:
+            'Since BCDA leverages 4i, model teams are encouraged to learn more about the <0>timing and steps involved for using 4i</0>.'
+        },
+        {
+          header: 'Get approval from CMMI leadership',
+          description:
+            'If after talking with the BCDA Team, you feel BCDA is right for your model, CMMI leadership will need to approve this.'
+        },
+        {
+          header: 'Onboard to BCDA',
+          description:
+            'Once your model is approved to use BCDA by CMMI leadership, the BCDA Team can help guide you through the onboarding process.'
+        }
+      ]
+    }
+  },
   centralizedDataExhange: {
     about: {
-      description: `Enables CMMI-to-Participant Interoperability; and enables application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one, centralized file exchange.
+      description: `Centralized Data Exchange (CDX) is a part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it enables CMMI-to-Participant Interoperability and application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one centralized file exchange.
 
 CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
-
+      
 The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.`,
+      links: [
+        {
+          external: false,
+          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+        }
+      ],
       components: [
         {
           header: 'Functions',
@@ -527,7 +564,13 @@ CMMI works with CPI to screen participant and provider candidates prior to those
   expandedDataFeedback: {
     about: {
       description:
-        'Center For Medicare and Medicaid Innovation (CMMI) Expanded Data Feedback Reporting (eDFR) system will provide transparency to stakeholders including the primary care physicians participating in CMMI Alternative Payment Models (APM) in the form of feedback for healthcare being delivered from a utilization, cost, and quality perspective. The metrics will be calculated based on Medicare provider and claims data. The system will render the information visually on dashboards, and reports.',
+        'Expanded Data Feedback Reporting (eDFR) is part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it provides transparency to stakeholders including the primary care physicians participating in CMMI Alternative Payment Models (APM) in the form of feedback for healthcare delivered from a utilization, cost, and quality perspective. The metrics are calculated based on Medicare provider and claims data. The system renders the information visually on dashboards and reports.',
+      links: [
+        {
+          external: false,
+          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+        }
+      ],
       components: [
         {
           header: 'Functions',
@@ -544,8 +587,6 @@ CMMI works with CPI to screen participant and provider candidates prior to those
             'Each dashboard is specific to the exact practice, and will contain information about that practice’s patients.',
             'Dashboards are targeted at the Practice/Physician level, not at higher levels like hospital administrators or group administrators.',
             'Dashboards are not intended to be used by CMS or CMMI internally – they are for the participating practices.',
-            // Not sure why typescript isn't respecting the union type here - string[] | ListItemType
-            // @ts-ignore
             {
               header:
                 'Each dashboard will contain information that is sensitive to each practice, including:',
@@ -684,11 +725,17 @@ Specific to CMMI, HIGLAS has two integrated points:`,
   },
   healthDataReporting: {
     about: {
-      description: `Health Data Reporting (HDR) is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models. HDR is part of the Innovation Support Platform (ISP) Suite of tools that include Expanded Data Feedback Reporting (eDFR) for business analysis and Centralized Data Exchange (CDX) for data exchange within the Suite and across CMS.
+      description: `Health Data Reporting (HDR) is part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models. 
 
 HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
-
+      
 HDR’s Configuration Management allows model teams to define and modify performance and submission periods, change data elements to be collected across performance periods, and manage and monitor submissions.`,
+      links: [
+        {
+          external: false,
+          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+        }
+      ],
       components: [
         {
           header: 'Functions',
@@ -882,6 +929,175 @@ The Model team will receive an implementation milestone schedule that identifies
           header: 'Ready for payments',
           description:
             'After the Model has been successfully implemented to the IPC, payments can be made to the Model participants.'
+        }
+      ]
+    }
+  },
+  innovationSupport: {
+    about: {
+      description:
+        'The Innovation Support Platform (ISP) is a contract with three integrated IT systems that support the participant interaction that occurs after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.',
+      components: [
+        {
+          header: 'Product capabilities',
+          items: [],
+          links: [
+            {
+              link:
+                '/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about',
+              external: false
+            },
+            {
+              link:
+                '/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about',
+              external: false
+            },
+            {
+              link:
+                '/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about',
+              external: false
+            }
+          ],
+          description:
+            'ISP supplies the capabilities below through: <link1>Centralized Data Exchange (CDX)</link1>, <link2>Health Data Reporting (HDR)</link2>, and <link3>Expanded Data Feedback Reporting (eDFR)</link3>. You can work with BSG to configure the specific capabilities you need for your model.'
+        },
+        {
+          header: 'Access management',
+          items: [],
+          level: 'h4',
+          description:
+            'Participants can reuse existing CMS user accounts or create a new one.'
+        },
+        {
+          header: 'Configure model',
+          items: [
+            'Model year',
+            'Performance periods',
+            'Submission periods',
+            'Pre-load participant information',
+            'Pre-load beneficiary information'
+          ],
+          level: 'h4',
+          description: 'Setup the model in the system, including:'
+        },
+        {
+          header: 'Submission management',
+          items: [],
+          level: 'h4',
+          description: 'Establish and manage timeframes for data submission.'
+        },
+        {
+          header:
+            'Exchange data through Application Programming Interfaces (API)',
+          links: [{ link: 'https://nemsis.org/', external: true }],
+          items: [
+            'API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with Emergency Management Services software vendors using a <link1>data standard for emergency services.</link1>',
+            'Electronic Health Records integration (a Bulk FHIR API is coming soon)'
+          ],
+          level: 'h4',
+          description: 'Engage in interoperable data exchanges, including:'
+        },
+        {
+          header: 'Collect and process health-related data.',
+          items: [
+            'Expanded Demographics data that complies with United States Core Data for Interoperability (USCDI) standards.',
+            'Social Determinants of Health (SDOH) data using the PRAPARE, North Carolina, or AHC tools.',
+            'Quality Measures (i.e., numerators, denominators, exclusions, exceptions)',
+            'Clinical Data',
+            'Other model-defined metrics and qualitative data.'
+          ],
+          level: 'h4',
+          description:
+            'Collect data from participants through data entry on web pages, file uploads, or APIs, including:'
+        },
+        {
+          header: '',
+          items: [],
+          level: 'h4',
+          links: [
+            {
+              link:
+                'https://www.loom.com/share/ba9eec7f6a0b401a8a5ea102d9c433f1',
+              external: true
+            }
+          ],
+          description: '<link1>See a video sample.</link1>'
+        },
+        {
+          header: 'Produce reports and files for participants. ',
+          links: [
+            {
+              link:
+                'https://cmsbox.app.box.com/s/rc1koqoevslmern6r0hfoabj0zkcawoq',
+              external: true
+            }
+          ],
+          items: [
+            {
+              header:
+                'Participant feedback dashboards that supply curated reports to participants based on CMS data (<link1>see a video sample</link1>). Dashboards use the Looker commercial tool and can include information such as:',
+              items: [
+                'Multiple levels of reports (e.g., entity, practitioner, beneficiary)',
+                'Utilization information',
+                'Cost information',
+                'Claims-based quality measures',
+                'Model-specific metrics'
+              ]
+            },
+            'Quality measure results - aggregate quality measure calculation results report',
+            'Medicare FFS Claims and Part D raw data files.'
+          ],
+          level: 'h4'
+        },
+        {
+          header: 'Analytics',
+          items: [
+            'Computations and algorithms such as probabilistic matching and attribution.',
+            'Model Space (coming soon) – a workspace for model contractors, model teams, and BSG’s IT teams to create and share analytical tools using languages such as Python through Data Bricks.'
+          ],
+          level: 'h4',
+          description: 'Create analytics for model teams, including:'
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'The ISP systems (CDX, HDR, eDFR) vary in functionality. Therefore, onboarding and implementation times for the three systems vary. However, the onboarding typically takes months rather than years depending on capacity.',
+      items: [
+        {
+          header: 'Contact the ISP Team',
+          description:
+            'Contact Hung Van if you’re interested in using ISP or want to learn more.'
+        },
+        {
+          header: 'Initial discussion',
+          description:
+            'The ISP team will discuss your needs and demonstrate the features available in the systems in ISP.'
+        },
+        {
+          header: 'Commit to using ISP',
+          description:
+            'The ISP team will add your need to its backlog once you decide to use ISP. The backlog represents the work that ISP must deliver to CMMI model teams.'
+        },
+        {
+          header: 'Discovery, user research, and roadmap',
+          description:
+            'The ISP team will conduct user research to gain more insight into user behavior, to adjust the existing features, and design the user experience with the ISP systems. The ISP team will discuss requirements with you and identify the Minimal Viable Product (MVP) and a high-level roadmap for the initial go-live.'
+        },
+        {
+          header: 'Sprints',
+          description:
+            'Develop and test the product iteratively. The ISP team will demonstrate the software product to you iteratively during the sprints.'
+        },
+        {
+          header: 'Prepare for live system operations',
+          description:
+            'ISP will test the systems rigorously. The team will also work with you to onboard users, prepare the help desk, and to prepare any documentation that your participants may need.'
+        },
+        {
+          header: 'Monitor system performance',
+          description:
+            'After go-live, the ISP team will monitor how the system performance and design continuing updates to the features.'
         }
       ]
     }
@@ -1161,7 +1377,6 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
             'From the CMS Connect app on your desktop, search for “Create or manage a resource mailbox” or “Mailbox request.” You’ll need to provide the following information:',
           items: [
             'Request type (Create a new resource mailbox)',
-            // @ts-ignore
             {
               items: [
                 'Mailbox name (Please be specific. For example: CMS OP Feedback).',
@@ -1205,14 +1420,24 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Additional resources',
           links: [
-            'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
-            'https://mmshub.cms.gov/mms-tools',
-            'https://qpp.cms.gov/'
+            {
+              link:
+                'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
+              external: true
+            },
+            {
+              link: 'https://mmshub.cms.gov/mms-tools',
+              external: true
+            },
+            {
+              link: 'https://qpp.cms.gov/',
+              external: true
+            }
           ],
           items: [
-            'Quality Vertical Model Resources on SharePoint',
-            'Measure Management System (MMS) Tools',
-            'Quality Payment Program'
+            '<link1>Quality Vertical Model Resources on SharePoint</link1>',
+            '<link2>Measure Management System (MMS) Tools</link2>',
+            '<link3>Quality Payment Program</link3>'
           ]
         }
       ]
@@ -1272,37 +1497,20 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         'The Salesforce Application Review and Scoring (ARS) allows model teams to track a panel’s review and scoring of the submitted applications to a participation agreement model.',
       components: [
         {
-          header: 'Functions',
+          header: 'Product capabilities',
           items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
+            '<bold>Scoring Rubric</bold> - Establish a framework to score applications and set up the panel members.',
+            '<bold>Application Scoring</bold> - Score applications and track the input from each panel member.'
           ]
         },
         {
-          header: 'Product capabilities',
-          items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+          header: '',
+          items: ['<link1>View an ARS screenshot</link1>'],
+          links: [
+            {
+              link: `${window.location.origin}/help-center/salesforce-ars.png`,
+              external: true
+            }
           ]
         }
       ]
@@ -1347,27 +1555,31 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
   salesforceConnect: {
     about: {
       description:
-        'The Salesforce.com Connect Communities are configured applications that enable the exchange of information between model participants, model teams, and support contractors in a secure manner.',
+        'Salesforce CONNECT creates a social media-like environment to facilitate participant-to-participant and CMS-to-participant collaboration. ',
       components: [
-        {
-          header: 'Functions',
-          items: [
-            'Define groups',
-            'Communicate events',
-            'Live chat feed',
-            'Share Q&A',
-            'Share documents & links',
-            'Follow topics',
-            'Global search'
-          ]
-        },
         {
           header: 'Product capabilities',
           items: [
-            'Provide a secure community where model participants, practicioners (doctors and nurses), model teams, vendors, and experts can collaborate on model goals',
-            'Store, share and organize learning materials',
-            'Ask and answer questions, FAQs',
-            'Host and facilitate events'
+            '<bold>Group management</bold> - Define collaboration groups that can include participants, contractors, and CMS staff.',
+            '<bold>Engage</bold> - Members of a Group can interact through chat, Q&A, and information sharing.',
+            '<bold>Learn</bold> - Follow topics and search for information. Share and organize relevant materials.'
+          ]
+        },
+        {
+          header: 'Samples',
+          items: [
+            '<link1>View sample 1</link1>',
+            '<link2>View sample 2</link2>'
+          ],
+          links: [
+            {
+              link: `${window.location.origin}/help-center/salesforce-connect-1.png`,
+              external: true
+            },
+            {
+              link: `${window.location.origin}/help-center/salesforce-connect-2.png`,
+              external: true
+            }
           ]
         }
       ]
@@ -1379,37 +1591,32 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         'The Salesforce Letter of Intent (LOI) is a website that allows model teams to collect information to gauge the level of industry interest in a participation agreement model.',
       components: [
         {
-          header: 'Functions',
+          header: 'Product capabilities',
           items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
+            '<bold>Access management</bold> - candidate participants can access a web page without a CMS account.',
+            {
+              header:
+                '<bold>Data collection</bold> - collect data from candidate participants such as:',
+              items: [
+                'Indication of interest',
+                'Contact information',
+                'Organization information (e.g., demographics, type of organization)',
+                'Supporting documents'
+              ],
+              description:
+                'You can customize the data collection during the development process.'
+            },
+            '<bold>Track</bold> submissions'
           ]
         },
         {
-          header: 'Product capabilities',
-          items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+          header: '',
+          items: ['<link1>View an LOI sample</link1>'],
+          links: [
+            {
+              link: `${window.location.origin}/help-center/salesforce-loi.png`,
+              external: true
+            }
           ]
         }
       ]
@@ -1418,40 +1625,48 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
   salesforcePortal: {
     about: {
       description:
-        'The Salesforce Project Officer Support Tool/Portal (POST/PORTAL) enables the collection of data to monitor the model and support model evaluation. It also enables interaction with awardees and participants and the sending of reports/data to those participants.',
+        'The Project Officer Support Tool helps model teams manage participants after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.',
       components: [
         {
-          header: 'Functions',
+          header: 'Product capabilities',
+          description:
+            'The capabilities for POST vary between models. The following capabilities are common across models. The project team will create the capabilities that your model requires.',
           items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
+            '<bold>Access management</bold> - Participants can reuse existing CMS user accounts or create a new one.',
+            '<bold>Applications</bold> - Applications – View and edit applications submitted through the RFA.',
+            '<bold>Sign Participant Agreements</bold> - (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.',
+            '<bold>Participant Profile</bold> - Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.',
+            '<bold>Participant Documents</bold> - Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).',
+            '<bold>Submission Management</bold> - Submission Management – Establish and manage timeframes for data submission.',
+            {
+              header:
+                '<bold>Participant Engagement</bold> - Engage with your participants with features such as:',
+              items: [
+                'Post announcements, FAQs, and other information',
+                'Engage in chats, surveys, and polls',
+                'Manage events, tasks, and email templates',
+                'Manage Corrective Action Plans'
+              ]
+            },
+            '<bold>Case Management</bold> - Case Management – Manage requests, tickets, and questions from participants.',
+            '<bold>Reports and Dashboards</bold> - Reports and Dashboards – Produce standard and ad-hoc reports based on the data in the system.'
           ]
         },
         {
-          header: 'Product capabilities',
+          header: 'Samples',
           items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+            '<link1>View sample 1</link1>',
+            '<link2>View sample 2</link2>'
+          ],
+          links: [
+            {
+              link: `${window.location.origin}/help-center/salesforce-post-1.png`,
+              external: true
+            },
+            {
+              link: `${window.location.origin}/help-center/salesforce-post-2.png`,
+              external: true
+            }
           ]
         }
       ]
@@ -1463,37 +1678,35 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         'The Salesforce Request for Application (RFA) allows model teams to collect applications from organizations that want to participate in a participation agreement model.',
       components: [
         {
-          header: 'Functions',
+          header: 'Product capabilities',
           items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
+            '<bold>Access management</bold> - Access management – Candidate participants can reuse existing CMS user accounts or create a new one.',
+            {
+              header:
+                '<bold>Data collection</bold> - Collect the data you need to review and select participants such as:',
+              items: [
+                'Organization information',
+                'Contact information',
+                'Provider network'
+              ],
+              description:
+                'You can customize the data collection during the development process.'
+            },
+            '<bold>Conditional logic</bold> - Build logic into the questions you ask applicants (e.g., present new questions based on answers to prior questions)',
+            '<bold>Documents</bold> - Collect supporting documents from the candidate participants.',
+            '<bold>Vet Providers</bold> - (coming soon) – Determine if Medicare FFS providers are valid by checking against data from the Center for Program Integrity (CPI), such as PECOS.',
+            '<bold>Track</bold> - submissions',
+            '<bold>Sign Participant Agreements</bold> - (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.'
           ]
         },
         {
-          header: 'Product capabilities',
-          items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+          header: '',
+          items: ['<link1>View an RFA screenshot</link1>'],
+          links: [
+            {
+              link: `${window.location.origin}/help-center/salesforce-rfa.png`,
+              external: true
+            }
           ]
         }
       ]
@@ -1588,6 +1801,7 @@ There are two types of CRs:`,
 
 const helpAndKnowledge = {
   heading: 'Help and Knowledge Center',
+  home: 'Home',
   description:
     'Get help with the creation of your Model Plan and the implementation of IT solutions.',
   read: 'Read',
@@ -1611,6 +1825,7 @@ const helpAndKnowledge = {
   browseCategories: 'Browse solutions by category',
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
+  aboutSolutionAriaLabel: 'Click to learn more about this solution:',
   pageInfo: '{{-pageStart}} of {{-totalPages}} articles',
   resultsInfo:
     'Showing {{-resultsNum}} of {{-resultsMax}} operational solutions',
@@ -1640,7 +1855,10 @@ const helpAndKnowledge = {
     description2: 'if you have any questions.'
   },
 
-  categories: solutionCategoryies,
+  categories: solutionCategories,
+  subCategories: solutionSubCategories,
+  itLeadInfo:
+    'If your model has an IT lead, please make sure you work with them when expressing interest in solutions.',
   solutions
 };
 

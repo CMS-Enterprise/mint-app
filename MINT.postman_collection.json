@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "03dabeb1-ceb2-4b5e-9efa-e07ae3df43ee",
+		"_postman_id": "ce382eb2-e8bf-47fa-9020-5b7fb9aadfc4",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20435042"
@@ -31,7 +31,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"modelName\": \"Test\"\n}"
 							}
 						},
@@ -52,7 +52,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\",\n  \"changes\": {\n    \"modelName\": \"My Updated Model\",\n    \"archived\": true,\n    \"status\": \"PLAN_DRAFT\"\n  }\n}"
 							}
 						},
@@ -73,7 +73,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
 							}
 						},
@@ -94,7 +94,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -115,7 +115,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n    \"filter\": \"INCLUDE_ALL\"\n}"
 							}
 						},
@@ -183,8 +183,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanBasics ($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        modelCategory\n        cmsCenters\n        cmsOther\n        cmmiGroups\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        wrapUpEnds\n        highLevelNote\n        phasedIn\n        phasedInNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n    }\n}",
-								"variables": "{\n  \"id\": \"{{basicsID}}\",\n  \"changes\": {\n    \"modelCategory\": \"\",\n    \"cmsCenters\": [\n      \"\"\n    ],\n    \"cmsOther\": \"\",\n    \"cmmiGroups\": [\n      \"\"\n    ],\n    \"modelType\": \"\",\n    \"problem\": \"\",\n    \"goal\": \"\",\n    \"testInterventions\": \"\",\n    \"note\": \"\",\n    \"completeICIP\": \"\",\n    \"clearanceStarts\": \"\",\n    \"clearanceEnds\": \"\",\n    \"announced\": \"\",\n    \"applicationsStart\": \"\",\n    \"applicationsEnd\": \"\",\n    \"performancePeriodStarts\": \"\",\n    \"performancePeriodEnds\": \"\",\n    \"wrapUpEnds\": \"\",\n    \"highLevelNote\": \"\",\n    \"phasedIn\": true,\n    \"phasedInNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"query": "mutation updatePlanBasics ($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        demoCode\n        amsModelID\n        modelCategory\n        cmsCenters\n        cmsOther\n        cmmiGroups\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        wrapUpEnds\n        highLevelNote\n        phasedIn\n        phasedInNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n    }\n}",
+								"variables": "{\n  \"id\": \"{{basicsID}}\",\n  \"changes\": {\n    \"demoCode\": \"\",\n    \"amsModelID\": \"\",\n    \"modelCategory\": \"\",\n    \"cmsCenters\": [\n      \"\"\n    ],\n    \"cmsOther\": \"\",\n    \"cmmiGroups\": [\n      \"\"\n    ],\n    \"modelType\": \"\",\n    \"problem\": \"\",\n    \"goal\": \"\",\n    \"testInterventions\": \"\",\n    \"note\": \"\",\n    \"completeICIP\": \"\",\n    \"clearanceStarts\": \"\",\n    \"clearanceEnds\": \"\",\n    \"announced\": \"\",\n    \"applicationsStart\": \"\",\n    \"applicationsEnd\": \"\",\n    \"performancePeriodStarts\": \"\",\n    \"performancePeriodEnds\": \"\",\n    \"wrapUpEnds\": \"\",\n    \"highLevelNote\": \"\",\n    \"phasedIn\": true,\n    \"phasedInNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -461,8 +461,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"content\": \"This is a question\"\n  }\n}"
+								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        userRole\n        userRoleDescription\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"content\": \"This is a question\",\n    \"userRole\": \"NONE_OF_THE_ABOVE\",\n    \"userRoleDescription\": \"this is a test\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -482,8 +482,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {\n    updatePlanDiscussion (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"id\": \"{{discussionID}}\",\n  \"changes\": {\n    \"content\": \"Great Changes\",\n    \"status\": \"UNANSWERED\"\n  }\n}"
+								"query": "mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {\n    updatePlanDiscussion (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        content\n        userRole\n        userRoleDescription\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"variables": "{\n  \"id\": \"{{discussionID}}\",\n  \"changes\": {\n    \"content\": \"Great Changes\",\n    \"userRole\": \"none_of_the_above\",\n    \"status\": \"UNANSWERED\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -503,7 +503,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanDiscussion ($id: UUID!) {\n    deletePlanDiscussion (id: $id) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"query": "mutation deletePlanDiscussion ($id: UUID!) {\n    deletePlanDiscussion (id: $id) {\n        id\n        modelPlanID\n        content\n        userRole\n        userRoleDescription\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"id\": \"{{discussionID}}\"\n}"
 							}
 						},
@@ -541,7 +541,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation createDiscussionReply ($input: DiscussionReplyCreateInput!) {\n    createDiscussionReply (input: $input) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"discussionID\": \"{{discussionID}}\",\n    \"content\": \"This is a resolution\",\n    \"resolution\": true\n  }\n}"
+								"variables": "{\n  \"input\": {\n    \"discussionID\": \"{{discussionID}}\",\n    \"content\": \"This is not a resolution\",\n    \"resolution\": false,\n    \"userRole\": \"NONE_OF_THE_ABOVE\",\n    \"userRoleDescription\": \"this is a test\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -561,8 +561,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {\n    updateDiscussionReply (id: $id, changes: $changes) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"id\": \"{{discussionReplyID}}\",\n  \"changes\": {\n    \"content\": \"This is a resolution\",\n    \"resolution\": true\n  }\n}"
+								"query": "mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {\n    updateDiscussionReply (id: $id, changes: $changes) {\n        id\n        discussionID\n        content\n        userRole\n        userRoleDescription\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"variables": "{\n  \"id\": \"{{discussionReplyID}}\",\n  \"changes\": {\n    \"content\": \"This is a resolution\",\n    \"resolution\": true,\n    \"userRole\": \"NONE_OF_THE_ABOVE\",\n    \"userRoleDescription\": \"this is a test\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -582,8 +582,29 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deleteDiscussionReply ($id: UUID!) {\n    deleteDiscussionReply (id: $id) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"query": "mutation deleteDiscussionReply ($id: UUID!) {\n    deleteDiscussionReply (id: $id) {\n        id\n        discussionID\n        content\n        userRole\n        userRoleDescription\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"id\": \"{{discussionReplyID}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Most Recent Discussion Role Selection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\n    mostRecentDiscussionRoleSelection {\n        userRole\n        userRoleDescription\n    }\n}\n",
+								"variables": "{\n    \n}"
 							}
 						},
 						"url": {
@@ -1041,7 +1062,6 @@
 									"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
 									"modelLeadID = responseData.collaborators[0].id",
 									"paymentsID = responseData.payments.id",
-									"itToolsID = responseData.itTools.id",
 									"",
 									"",
 									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
@@ -1053,7 +1073,6 @@
 									"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
 									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
 									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
-									"pm.collectionVariables.set(\"itToolsID\", itToolsID);",
 									"",
 									"console.log(modelPlanID)"
 								],
@@ -1067,21 +1086,14 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      userID\n      teamRole\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    itTools {\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      userID\n      teamRole\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
 								"variables": ""
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
@@ -1363,7 +1375,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    solutionType:MARX,\n    changes: {\n      needed: true\n    #   nameOther: \"My special solution\"\n      otherHeader: \"The Happy Helper Team\"\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    solutionType:MARX,\n    changes: {\n      needed: true\n    #   nameOther: \"My special solution\"\n      otherHeader: \"The Happy Helper Team\"\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1399,7 +1411,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    # solutionType:MARX,\n    changes: {\n      needed: true\n      nameOther: \"My special solution\"\n    #   otherHeader: \"The Happy Helper Team\"\n      pocName: \"Mr. Clean\"\n      pocEmail: \"cleanClean@cleaning.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    # solutionType:MARX,\n    changes: {\n      needed: true\n      nameOther: \"My special solution\"\n    #   otherHeader: \"The Happy Helper Team\"\n      pocName: \"Mr. Clean\"\n      pocEmail: \"cleanClean@cleaning.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1431,7 +1443,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  updateOperationalSolution(id:\"{{operationalSolutionID}}\"\n  ,changes: {\n    #   nameOther: \"My Change I guess\"\n      needed: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    needed\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  updateOperationalSolution(id:\"{{operationalSolutionID}}\"\n  ,changes: {\n    #   nameOther: \"My Change I guess\"\n      needed: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    needed\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1463,7 +1475,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n}",
+								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        isCommonSolution\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n}",
 								"variables": "{\r\n  \"id\": \"{{operationalSolutionID}}\"\r\n}"
 							}
 						},
@@ -1495,7 +1507,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\",,includeNotNeeded:true){\n        id\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        needed\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n\n    \n  }\n}\n",
+								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\",,includeNotNeeded:true){\n        id\n        isCommonSolution\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        needed\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n\n    \n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -1694,6 +1706,27 @@
 			"name": "Search",
 			"item": [
 				{
+					"name": "SearchChanges",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchChanges($filters: [SearchFilter!], $sortBy: ChangeHistorySortParams, $page: PageParams) {\r\n  searchChanges(filters: $filters, sortBy: $sortBy, page: $page) {\r\n    guid\r\n    modelPlanID\r\n    tableID\r\n    tableName\r\n    primaryKey\r\n    foreignKey\r\n    fields {\r\n      changes {\r\n        name\r\n        value {\r\n          ... on FieldValue {\r\n            new\r\n            old\r\n          }\r\n        }\r\n      }\r\n    }\r\n    modifiedDts\r\n    modifiedBy {\r\n      id\r\n      username\r\n      isEUAID\r\n      commonName\r\n      locale\r\n      email\r\n      givenName\r\n      familyName\r\n      zoneInfo\r\n      hasLoggedIn\r\n    }\r\n  }\r\n}\r\n",
+								"variables": "{\r\n  \"filters\": [\r\n    {\r\n        \"type\": \"CHANGED_AFTER\",\r\n        \"value\": \"2023-01-01T00:00:00.000Z\"\r\n    },\r\n    {\r\n        \"type\": \"CHANGED_BEFORE\",\r\n        \"value\": \"2024-01-01T00:00:00.000Z\"\r\n    },\r\n    {\r\n        \"type\": \"MODEL_PLAN_SECTION\",\r\n        \"value\": \"BASICS\"\r\n    },\r\n    {\r\n        \"type\": \"CHANGED_BY_ACTOR\",\r\n        \"value\": \"MINT\"\r\n    },\r\n    {\r\n        \"type\": \"FREE_TEXT\",\r\n        \"value\": \"high level note\"\r\n    },\r\n    {\r\n        \"type\": \"MODEL_PLAN_ID\",\r\n        \"value\": \"b7dbeec2-bbd0-4097-9a0e-650f74e4c307\"\r\n    }\r\n  ],\r\n  \"sortBy\": {\r\n    \"field\": \"CHANGE_DATE\",\r\n    \"order\": \"DESC\"   \r\n  },\r\n  \"page\": {\r\n    \"limit\": 200,\r\n    \"offset\": 0\r\n  }\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "SearchChangeData",
 					"request": {
 						"method": "POST",
@@ -1701,71 +1734,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query searchChangeTable($request: SearchRequest!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTable(request: $request, limit: $limit, offset: $offset) {\r\n    guid\r\n    tableID\r\n    primaryKey\r\n    foreignKey\r\n    fields\r\n    modifiedDts\r\n    modifiedBy {\r\n      id\r\n      username\r\n      isEUAID\r\n      commonName\r\n      locale\r\n      email\r\n      givenName\r\n      familyName\r\n      zoneInfo\r\n      hasLoggedIn\r\n    }\r\n  }\r\n}",
+								"query": "query searchChangeTable($request: SearchRequest!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTable(request: $request, limit: $limit, offset: $offset) {\r\n        guid\r\n        modelPlanID\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
 								"variables": "{\r\n  \"request\": {\r\n    \"query\": {\r\n      \"query\": {\r\n        \"bool\": {\r\n          \"filter\": [\r\n            {\r\n              \"term\": {\r\n                \"table_id\": \"1\"\r\n              }\r\n            },\r\n            {\r\n              \"term\": {\r\n                \"primary_key.keyword\": \"{{modelPlanID}}\"\r\n              }\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeDataByModelPlanID",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableByModelPlanID($modelPlanID: UUID!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTableByModelPlanID(modelPlanID: $modelPlanID, limit: $limit, offset: $offset) {\r\n    guid\r\n    tableID\r\n    primaryKey\r\n    foreignKey\r\n    fields\r\n    modifiedDts\r\n    modifiedBy {\r\n      id\r\n      username\r\n      isEUAID\r\n      commonName\r\n      locale\r\n      email\r\n      givenName\r\n      familyName\r\n      zoneInfo\r\n      hasLoggedIn\r\n    }\r\n  }\r\n}",
-								"variables": "{\r\n  \"modelPlanID\": \"{{modelPlanID}}\",\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableWithFreeText",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableWithFreeText ($searchText: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableWithFreeText (searchText: $searchText, limit: $limit, offset: $offset) {\n    guid\n    tableID\n    primaryKey\n    foreignKey\n    fields\n    modifiedDts\n    modifiedBy {\n      id\n      username\n      isEUAID\n      commonName\n      locale\n      email\n      givenName\n      familyName\n      zoneInfo\n      hasLoggedIn\n    }\n  }\n}",
-								"variables": "{\n  \"searchText\": \"mint\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableByDateRange",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableByDateRange ($startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByDateRange (startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\n    guid\n    tableID\n    primaryKey\n    foreignKey\n    fields\n    modifiedDts\n    modifiedBy {\n      id\n      username\n      isEUAID\n      commonName\n      locale\n      email\n      givenName\n      familyName\n      zoneInfo\n      hasLoggedIn\n    }\n  }\n}",
-								"variables": "{\n  \"startDate\": \"2023-03-01T00:00:00Z\",\n  \"endDate\": \"2024-03-31T23:59:59Z\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
 							}
 						},
 						"url": {
@@ -1785,8 +1755,71 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query searchChangeTableByActor ($actor: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByActor (actor: $actor, limit: $limit, offset: $offset) {\n    guid\n    tableID\n    primaryKey\n    foreignKey\n    fields\n    modifiedDts\n    modifiedBy {\n      id\n      username\n      isEUAID\n      commonName\n      locale\n      email\n      givenName\n      familyName\n      zoneInfo\n      hasLoggedIn\n    }\n  }\n}",
-								"variables": "{\n  \"actor\": \"Doe\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
+								"query": "query searchChangeTableByActor ($actor: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByActor (actor: $actor, limit: $limit, offset: $offset) {\n        guid    \n        modelPlanID\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
+								"variables": "{\n  \"actor\": \"MINT\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchChangeTableByDateRange",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchChangeTableByDateRange ($startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByDateRange (startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\n        guid    \n        modelPlanID\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
+								"variables": "{\n  \"startDate\": \"2023-04-19T00:00:00Z\",\n  \"endDate\": \"2024-04-20T23:59:59Z\",\n  \"limit\": 2000,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchChangeDataByModelPlanID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchChangeTableByModelPlanID($modelPlanID: UUID!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTableByModelPlanID(modelPlanID: $modelPlanID, limit: $limit, offset: $offset) {\r\n        guid    \r\n        modelPlanID\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
+								"variables": "{\r\n  \"modelPlanID\": \"{{modelPlanID}}\",\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchChangeDataByModelPlanDateRange",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchModelPlanChangesByDateRange($modelPlanID: UUID!, $startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\r\n  searchModelPlanChangesByDateRange(modelPlanID: $modelPlanID, startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\r\n        guid    \r\n        modelPlanID\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
+								"variables": "{\r\n  \"modelPlanID\": \"{{modelPlanID}}\",\r\n  \"startDate\": \"2023-04-19T00:00:00Z\",\r\n  \"endDate\": \"2024-04-20T23:59:59Z\",\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
 							}
 						},
 						"url": {
@@ -1806,7 +1839,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query searchChangeTableByModelStatus ($modelStatus: ModelStatus!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByModelStatus (modelStatus: $modelStatus, limit: $limit, offset: $offset) {\n    guid\n    tableID\n    primaryKey\n    foreignKey\n    fields\n    modifiedDts\n    modifiedBy {\n      id\n      username\n      isEUAID\n      commonName\n      locale\n      email\n      givenName\n      familyName\n      zoneInfo\n      hasLoggedIn\n    }\n  }\n}",
+								"query": "query searchChangeTableByModelStatus ($modelStatus: ModelStatus!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByModelStatus (modelStatus: $modelStatus, limit: $limit, offset: $offset) {\n        guid    \n        modelPlanID\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}\n",
 								"variables": "{\n  \"modelStatus\": \"PLAN_DRAFT\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
 							}
 						},
@@ -1829,6 +1862,115 @@
 							"graphql": {
 								"query": "query searchChangeTableDateHistogramConsolidatedAggregations ($interval: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableDateHistogramConsolidatedAggregations (interval: $interval, limit: $limit, offset: $offset) {\n        key\n        docCount\n        maxModifiedDts\n        minModifiedDts\n    }\n}",
 								"variables": "{\n  \"interval\": \"5m\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchChangeTableWithFreeText",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchChangeTableWithFreeText ($searchText: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableWithFreeText (searchText: $searchText, limit: $limit, offset: $offset) {\n        guid    \n        modelPlanID\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
+								"variables": "{\n  \"searchText\": \"Do the hting~\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ExistingModelLink",
+			"item": [
+				{
+					"name": "ExistingModelLinksUpdate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.updateExistingModelLinks",
+									"",
+									"",
+									"if (responseData.length>0){",
+									"existingModelLinkID = responseData[0].id",
+									"",
+									"pm.collectionVariables.set(\"existingModelLinkID\", existingModelLinkID);",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateExistingModelLinks{\n  \n  updateExistingModelLinks(modelPlanID:\"{{modelPlanID}}\", existingModelIDs:\n#   null\n  [100014,100015] \n  currentModelPlanIDs: \n  null,\n#   [\"{{modelPlanID}}\"  ]\n  )\n  {\n      id\n\n        currentModelPlan {\n            id\n            modelName\n        }\n        existingModel{\n            id\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExistingModelLink GET",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query existingModelLink{\n  \n  existingModelLink(id:\"{{existingModelLinkID}}\"){\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModelPlanGetExisting ModelLinks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    nameHistory\n    existingModelLinks{\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n    }\n  }\n  \n  \n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -1927,10 +2069,6 @@
 			"value": ""
 		},
 		{
-			"key": "itToolsID",
-			"value": ""
-		},
-		{
 			"key": "operationalNeedID",
 			"value": ""
 		},
@@ -1958,6 +2096,10 @@
 			"key": "documentID",
 			"value": "0b188e43-21a6-45b4-8dc2-a09929d3402d",
 			"type": "string"
+		},
+		{
+			"key": "existingModelLinkID",
+			"value": ""
 		}
 	]
 }

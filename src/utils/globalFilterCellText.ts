@@ -59,7 +59,8 @@ export default function globalFilterCellText(
       } else {
         renderedValue = cell.value;
       }
-      return renderedValue.toLowerCase().includes(filterValueLower);
+
+      return renderedValue?.toLowerCase().includes(filterValueLower);
     })
   );
 }

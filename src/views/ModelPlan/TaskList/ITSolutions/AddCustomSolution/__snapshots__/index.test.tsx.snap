@@ -61,7 +61,9 @@ exports[`AddCustomSolution matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Add solution details
+        <span>
+          Add solution details
+        </span>
       </li>
     </ol>
   </nav>
@@ -140,7 +142,6 @@ exports[`AddCustomSolution matches snapshot 1`] = `
         >
           <form
             action="#"
-            class="margin-top-3"
             data-testid="it-solutions-add-solution"
           >
             <fieldset
@@ -156,8 +157,9 @@ exports[`AddCustomSolution matches snapshot 1`] = `
                   data-testid="label"
                   for="it-solution-custom-name-other"
                 >
-                  Please add a name for your solution
+                  Please add a name for your solution or contractor
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *

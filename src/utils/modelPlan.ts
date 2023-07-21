@@ -4,6 +4,7 @@ import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/ty
 import {
   ComplexityCalculationLevelType,
   DocumentType,
+  OperationalSolutionKey,
   OperationalSolutionSubtaskStatus
 } from 'types/graphql-global-types';
 
@@ -62,19 +63,23 @@ export const translateTriStateAnswer = (type: string) => {
 export const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'EVALUATION':
-      return i18next.t('modelPlan:teamRoles.evaluation');
+      return i18next.t('plan:teamRoles.evaluation');
     case 'IT_LEAD':
-      return i18next.t('modelPlan:teamRoles.itLead');
+      return i18next.t('plan:teamRoles.itLead');
     case 'LEADERSHIP':
-      return i18next.t('modelPlan:teamRoles.leadership');
+      return i18next.t('plan:teamRoles.leadership');
     case 'LEARNING':
-      return i18next.t('modelPlan:teamRoles.learning');
+      return i18next.t('plan:teamRoles.learning');
     case 'MODEL_LEAD':
-      return i18next.t('modelPlan:teamRoles.modelLead');
+      return i18next.t('plan:teamRoles.modelLead');
     case 'MODEL_TEAM':
-      return i18next.t('modelPlan:teamRoles.modelTeam');
+      return i18next.t('plan:teamRoles.modelTeam');
+    case 'OACT':
+      return i18next.t('plan:teamRoles.oact');
+    case 'PAYMENT':
+      return i18next.t('plan:teamRoles.payment');
     case 'QUALITY':
-      return i18next.t('modelPlan:teamRoles.quality');
+      return i18next.t('plan:teamRoles.quality');
     default:
       return '';
   }
@@ -120,66 +125,34 @@ export const translateModelCategory = (category: string) => {
   }
 };
 
-export const translateCmsCenter = (category: string) => {
-  switch (category) {
-    case 'CMMI':
-      return i18next.t('basics:cmsComponents.cmmi');
-    case 'CENTER_FOR_MEDICARE':
-      return i18next.t('basics:cmsComponents.cm');
-    case 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE':
-      return i18next.t('basics:cmsComponents.federalCoordinateHealthCare');
-    case 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY':
-      return i18next.t('basics:cmsComponents.ccsq');
-    case 'CENTER_FOR_PROGRAM_INTEGRITY':
-      return i18next.t('basics:cmsComponents.cpi');
-    case 'OTHER':
-      return i18next.t('basics:cmsComponents.other');
-    default:
-      return '';
-  }
-};
-
-export const translateCmmiGroups = (category: string) => {
-  switch (category) {
-    case 'PATIENT_CARE_MODELS_GROUP':
-      return i18next.t('basics:cmmiGroups.pcmg');
-    case 'POLICY_AND_PROGRAMS_GROUP':
-      return i18next.t('basics:cmmiGroups.ppg');
-    case 'SEAMLESS_CARE_MODELS_GROUP':
-      return i18next.t('basics:cmmiGroups.scmg');
-    case 'STATE_AND_POPULATION_HEALTH_GROUP':
-      return i18next.t('basics:cmmiGroups.sphg');
-    case 'TBD':
-      return i18next.t('basics:cmmiGroups.tbd');
-    default:
-      return '';
-  }
-};
-
 export const translateModelPlanStatus = (status: string) => {
   switch (status) {
     case 'PLAN_DRAFT':
-      return i18next.t('modelPlan:planStatuses.planDraft');
+      return i18next.t('plan:planStatuses.planDraft');
     case 'PLAN_COMPLETE':
-      return i18next.t('modelPlan:planStatuses.planComplete');
+      return i18next.t('plan:planStatuses.planComplete');
     case 'ICIP_COMPLETE':
-      return i18next.t('modelPlan:planStatuses.icipComplete');
+      return i18next.t('plan:planStatuses.icipComplete');
     case 'INTERNAL_CMMI_CLEARANCE':
-      return i18next.t('modelPlan:planStatuses.cmmiClearance');
+      return i18next.t('plan:planStatuses.cmmiClearance');
     case 'CMS_CLEARANCE':
-      return i18next.t('modelPlan:planStatuses.cmsClearance');
+      return i18next.t('plan:planStatuses.cmsClearance');
     case 'HHS_CLEARANCE':
-      return i18next.t('modelPlan:planStatuses.hhsClearance');
+      return i18next.t('plan:planStatuses.hhsClearance');
     case 'OMB_ASRF_CLEARANCE':
-      return i18next.t('modelPlan:planStatuses.ombASRFClearance');
+      return i18next.t('plan:planStatuses.ombASRFClearance');
     case 'CLEARED':
-      return i18next.t('modelPlan:planStatuses.cleared');
+      return i18next.t('plan:planStatuses.cleared');
     case 'ANNOUNCED':
-      return i18next.t('modelPlan:planStatuses.announced');
+      return i18next.t('plan:planStatuses.announced');
     case 'PAUSED':
-      return i18next.t('modelPlan:planStatuses.paused');
+      return i18next.t('plan:planStatuses.paused');
     case 'CANCELED':
-      return i18next.t('modelPlan:planStatuses.canceled');
+      return i18next.t('plan:planStatuses.canceled');
+    case 'ACTIVE':
+      return i18next.t('plan:planStatuses.active');
+    case 'ENDED':
+      return i18next.t('plan:planStatuses.ended');
     default:
       return '';
   }
@@ -422,17 +395,6 @@ export const translateSelectionMethodType = (type: string) => {
       return i18next.t('beneficiaries:selectionMethod.other');
     case 'NA':
       return i18next.t('beneficiaries:selectionMethod.na');
-    default:
-      return '';
-  }
-};
-
-export const translateModelType = (type: string) => {
-  switch (type) {
-    case 'VOLUNTARY':
-      return i18next.t('basics:voluntary');
-    case 'MANDATORY':
-      return i18next.t('basics:mandatory');
     default:
       return '';
   }
@@ -698,6 +660,27 @@ export const translateSubtasks = (status: string) => {
       return i18next.t('itSolutions:subtasks.inProgress');
     case OperationalSolutionSubtaskStatus.DONE:
       return i18next.t('itSolutions:subtasks.done');
+    default:
+      return '';
+  }
+};
+
+export const translateOperationalSolutionKey = (
+  key: OperationalSolutionKey
+) => {
+  switch (key) {
+    case OperationalSolutionKey.CONTRACTOR:
+      return i18next.t('itSolutions:operationalSolutionKey.contractor');
+    case OperationalSolutionKey.CROSS_MODEL_CONTRACT:
+      return i18next.t('itSolutions:operationalSolutionKey.crossModelContract');
+    case OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS:
+      return i18next.t(
+        'itSolutions:operationalSolutionKey.existingCmsDataAndProcess'
+      );
+    case OperationalSolutionKey.INTERNAL_STAFF:
+      return i18next.t('itSolutions:operationalSolutionKey.interalStaff');
+    case OperationalSolutionKey.OTHER_NEW_PROCESS:
+      return i18next.t('itSolutions:operationalSolutionKey.otherNewProcess');
     default:
       return '';
   }
@@ -1210,12 +1193,16 @@ export const translateDocumentType = (documentType: DocumentType) => {
   switch (documentType) {
     case 'CONCEPT_PAPER':
       return i18next.t('documents:documentTypes.concept');
+    case 'DESIGN_PARAMETERS_MEMO':
+      return i18next.t('documents:documentTypes.designParamMemo');
     case 'POLICY_PAPER':
       return i18next.t('documents:documentTypes.policy');
     case 'ICIP_DRAFT':
       return i18next.t('documents:documentTypes.icipDraft');
     case 'MARKET_RESEARCH':
       return i18next.t('documents:documentTypes.marketResearch');
+    case 'OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION':
+      return i18next.t('documents:documentTypes.adminOfficePresentation');
     case 'OTHER':
       return i18next.t('documents:documentTypes.other');
     default:
@@ -1280,7 +1267,8 @@ export const sortOtherEnum = (a: string, b: string) => {
     b === 'NOT_PLANNING_TO_COLLECT_DATA' ||
     b === 'NOT_PLANNING_TO_SEND_DATA' ||
     b === 'NO_LEARNING_SYSTEM' ||
-    b === 'NOT_APM'
+    b === 'NOT_APM' ||
+    b === 'NONE_OF_THE_ABOVE'
   )
     return -1;
   if (a < b || b === 'OTHER') {

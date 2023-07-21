@@ -13,13 +13,13 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Dropdown,
+  ComboBox,
   Fieldset,
   Grid,
   IconArrowBack,
   Label
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -28,6 +28,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import Spinner from 'components/Spinner';
 import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
@@ -69,11 +70,10 @@ const AddSolution = () => {
 
   const history = useHistory();
 
-  const {
-    state: { isCustomNeed }
-  } = useLocation<{
-    isCustomNeed: boolean;
-  }>();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const isCustomNeed = params.get('isCustomNeed') === 'true';
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -102,6 +102,15 @@ const AddSolution = () => {
     fetchPolicy: 'no-cache'
   });
 
+  const solutionOptions = [...possibleOperationalSolutions]
+    .sort(sortPossibleOperationalNeeds)
+    .map(solution => {
+      return {
+        label: solution.name === 'Other new process' ? 'Other' : solution.name,
+        value: solution.key
+      };
+    });
+
   // If operationalSolutionID present in url, will contain queried data for custom solution
   const customOperationalSolution =
     customData?.operationalSolution ||
@@ -121,6 +130,14 @@ const AddSolution = () => {
   ] = useMutation<UpdateOperationalSolutionVariables>(
     UpdateOperationalSolution
   );
+
+  const treatAsOtherSolutions = [
+    OperationalSolutionKey.CONTRACTOR,
+    OperationalSolutionKey.CROSS_MODEL_CONTRACT,
+    OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
+    OperationalSolutionKey.INTERNAL_STAFF,
+    OperationalSolutionKey.OTHER_NEW_PROCESS
+  ];
 
   const handleFormSubmit = async (
     formikValues: OperationalSolutionFormType
@@ -167,14 +184,13 @@ const AddSolution = () => {
           }
         });
       }
-    } catch {
+    } catch (e) {
       setMutationError(true);
     }
 
     if (updateMutation && !updateMutation.errors) {
       history.push(
-        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
-        { isCustomNeed }
+        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions?isCustomNeed=${isCustomNeed}`
       );
     } else if (!updateMutation || updateMutation.errors) {
       setMutationError(true);
@@ -251,7 +267,12 @@ const AddSolution = () => {
                 innerRef={formikRef}
               >
                 {(formikProps: FormikProps<OperationalSolutionFormType>) => {
-                  const { errors, handleSubmit, values } = formikProps;
+                  const {
+                    errors,
+                    handleSubmit,
+                    values,
+                    setFieldValue
+                  } = formikProps;
 
                   const flatErrors = flattenErrors(errors);
 
@@ -299,40 +320,58 @@ const AddSolution = () => {
 
                             <FieldErrorMsg>{flatErrors.key}</FieldErrorMsg>
 
-                            <Field
-                              as={Dropdown}
-                              id="it-solutions-key"
-                              name="key"
-                              value={values.key}
-                            >
-                              <option key="default-select" disabled value="" />
-                              {[...possibleOperationalSolutions]
-                                .sort(sortPossibleOperationalNeeds)
-                                .map(solution => {
-                                  return (
-                                    <option
-                                      key={solution.key}
-                                      value={solution.key || ''}
-                                    >
-                                      {solution.name === 'Other new process'
-                                        ? 'Other'
-                                        : solution.name}
-                                    </option>
+                            {loading ? (
+                              <Spinner />
+                            ) : (
+                              <ComboBox
+                                data-test-id="plan-characteristics-existing-model"
+                                id="it-solutions-key"
+                                name="key"
+                                inputProps={{
+                                  id: 'it-solutions-key',
+                                  name: 'key',
+                                  'aria-describedby': 'it-solutions-key'
+                                }}
+                                options={solutionOptions}
+                                defaultValue={
+                                  solutionOptions.find(
+                                    solution => solution.value === values.key
+                                  )?.label
+                                }
+                                onChange={solutionKey => {
+                                  const foundSolution = solutionOptions.find(
+                                    solution => solution.value === solutionKey
                                   );
-                                })}
-                            </Field>
+                                  if (foundSolution) {
+                                    setFieldValue('key', foundSolution.value);
+                                  } else {
+                                    setFieldValue('key', '');
+                                  }
+                                }}
+                              />
+                            )}
 
-                            {values.key ===
-                              OperationalSolutionKey.OTHER_NEW_PROCESS &&
+                            {treatAsOtherSolutions.includes(
+                              values.key as OperationalSolutionKey
+                            ) &&
                               !operationalSolutionID && (
                                 <Button
                                   type="button"
                                   id="add-custom-solution-button"
                                   className="usa-button usa-button--outline margin-top-3"
                                   onClick={() => {
-                                    history.push(
-                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
-                                    );
+                                    if (
+                                      values.key ===
+                                      OperationalSolutionKey.OTHER_NEW_PROCESS
+                                    ) {
+                                      history.push(
+                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                      );
+                                    } else {
+                                      history.push(
+                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution?selectedSolution=${values.key}`
+                                      );
+                                    }
                                   }}
                                 >
                                   {t('addSolutionDetails')}

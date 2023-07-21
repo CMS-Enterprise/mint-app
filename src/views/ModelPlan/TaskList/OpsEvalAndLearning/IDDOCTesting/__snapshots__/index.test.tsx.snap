@@ -110,10 +110,12 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         <p
           class="usa-alert__text"
         >
-          <span
-            class="mandatory-fields-alert__text"
-          >
-            SSM request to begin analysis at least 1 year before implementation
+          <span>
+            <span
+              class="mandatory-fields-alert__text"
+            >
+              SSM request to begin analysis at least 1 year before implementation
+            </span>
           </span>
         </p>
       </div>
@@ -130,6 +132,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         User Acceptance Testing (UAT) – test data needs
       </label>
       <textarea
+        aria-labelledby="label-ops-eval-and-learning-uat-needs hint-ops-eval-and-learning-uat-needs"
         class="height-15 usa-textarea"
         id="ops-eval-and-learning-uat-needs"
         name="uatNeeds"
@@ -147,6 +150,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         STC – test data needs
       </label>
       <textarea
+        aria-labelledby="label-ops-eval-and-learning-stc-needs hint-ops-eval-and-learning-stc-needs"
         class="height-15 usa-textarea"
         data-testid="ops-eval-and-learning-stc-needs"
         id="ops-eval-and-learning-stc-needs"
@@ -167,6 +171,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         Define the testing timelines
       </label>
       <textarea
+        aria-labelledby="label-ops-eval-and-learning-testing-timelines hint-ops-eval-and-learning-testing-timelines"
         class="height-15 usa-textarea"
         id="ops-eval-and-learning-testing-timelines"
         name="testingTimelines"

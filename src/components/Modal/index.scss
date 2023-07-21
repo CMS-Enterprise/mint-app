@@ -8,7 +8,7 @@
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 400;    
+    z-index: 400;
   }
 
   &__content {
@@ -46,6 +46,11 @@
   }
 
   &__body {
-    padding: 0 2rem 2rem;
+    padding: 0 2rem 1.5rem;
   }
+}
+
+.confirmation-modal {
+  font-size: 1rem;
+  width: 480px;
 }

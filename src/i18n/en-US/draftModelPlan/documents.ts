@@ -72,6 +72,7 @@ const documents = {
   documentUpload: 'Document upload',
   selectedFile: 'Selected file',
   changeFile: 'Change file',
+  ariaLabelChangeFile: '-- Click to change file',
   fileSelected: 'File <1>{{file}}</1> selected.',
   dragFile: 'Drag file here or ',
   chooseFromFolder: 'choose from folder',
@@ -79,9 +80,11 @@ const documents = {
   whatType: 'What type of document are you uploading?',
   documentTypes: {
     concept: 'Concept Paper',
+    designParamMemo: 'Design Parameter Memo',
     policy: 'Policy Paper',
     icipDraft: 'ICIP Draft',
     marketResearch: 'Market Research',
+    adminOfficePresentation: 'Office of the Administrator Presentation',
     other: 'Other'
   },
   whatKind: 'What kind of document is this?',

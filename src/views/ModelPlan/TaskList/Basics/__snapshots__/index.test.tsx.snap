@@ -96,24 +96,18 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             </button>
           </div>
         </div>
-        <div
-          class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
-          data-testid="mandatory-fields-alert"
+        <p
+          class="margin-bottom-0 margin-top-6"
         >
-          <div
-            class="usa-alert__body"
+          All fields marked with 
+          <span
+            aria-label="(Field required)"
+            class="text-red margin-x-05"
           >
-            <p
-              class="usa-alert__text"
-            >
-              <span
-                class="mandatory-fields-alert__text"
-              >
-                All fields are mandatory
-              </span>
-            </p>
-          </div>
-        </div>
+            *
+          </span>
+           are required.
+        </p>
         <div
           class="grid-container padding-x-0"
           data-testid="gridContainer"
@@ -128,7 +122,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <form
                 action="#"
-                class="margin-top-6"
+                class="margin-top-4"
               >
                 <div
                   class="usa-form-group margin-top-4"
@@ -140,6 +134,12 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                     for="plan-basics-model-name"
                   >
                     Model name
+                    <span
+                      aria-label="(Field required)"
+                      class="text-red margin-x-05"
+                    >
+                      *
+                    </span>
                   </label>
                   <input
                     class="usa-input"
@@ -152,6 +152,112 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                 </div>
                 <div
                   class="usa-form-group margin-top-4"
+                  data-scroll="abbreviation"
+                >
+                  <label
+                    class="usa-label"
+                    data-testid="label"
+                    for="plan-basics-model-name"
+                  >
+                    Short name
+                  </label>
+                  <span
+                    class="usa-hint display-block text-normal margin-top-1"
+                  >
+                    The abbreviation, acronym, or other common name used for the model.
+                  </span>
+                  <input
+                    class="usa-input"
+                    data-testid="textInput"
+                    id="plan-basics-abbreviation"
+                    maxlength="50"
+                    name="abbreviation"
+                    value="MEP"
+                  />
+                </div>
+                <div
+                  class="bg-base-lightest padding-2 margin-top-4"
+                >
+                  <label
+                    class="usa-label margin-top-0"
+                    data-testid="label"
+                    for="plan-basics-demo-code"
+                  >
+                    Other identifiers
+                  </label>
+                  <p
+                    class="line-height-mono-4"
+                  >
+                    These are created in 
+                    <a
+                      aria-label="Open AMS in a new tab"
+                      class="usa-link usa-link--external"
+                      href="https://ams.cmmi.cms.gov"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      CMMI Analysis & Management System (AMS).
+                    </a>
+                     Skip these fields until your model has been added to AMS. Not all models will have demo codes.
+                  </p>
+                  <div
+                    class="grid-row grid-gap"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="desktop:grid-col-6"
+                      data-testid="grid"
+                    >
+                      <div
+                        class="usa-form-group margin-top-0"
+                        data-scroll="basics.amsModelID"
+                      >
+                        <label
+                          class="usa-label"
+                          data-testid="label"
+                          for="plan-basics-ams-model-id"
+                        >
+                          Model ID
+                        </label>
+                        <input
+                          class="usa-input"
+                          data-testid="textInput"
+                          id="plan-basics-ams-model-id"
+                          maxlength="50"
+                          name="basics.amsModelID"
+                          value="2414213"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="desktop:grid-col-6"
+                      data-testid="grid"
+                    >
+                      <div
+                        class="usa-form-group margin-top-0"
+                        data-scroll="basics.demoCode"
+                      >
+                        <label
+                          class="usa-label"
+                          data-testid="label"
+                          for="plan-basics-demo-code"
+                        >
+                          Demo code(s)
+                        </label>
+                        <input
+                          class="usa-input"
+                          data-testid="textInput"
+                          id="plan-basics-demo-code"
+                          maxlength="50"
+                          name="basics.demoCode"
+                          value="123"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="usa-form-group margin-top-4"
                   data-scroll="modelCategory"
                 >
                   <label
@@ -160,6 +266,12 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                     for="plan-basics-model-category"
                   >
                     Model category
+                    <span
+                      aria-label="(Field required)"
+                      class="text-red margin-x-05"
+                    >
+                      *
+                    </span>
                   </label>
                   <select
                     class="usa-select"
@@ -224,150 +336,169 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                   class="usa-form-group margin-top-4"
                   data-scroll="cmsCenters"
                 >
-                  <legend
-                    class="usa-label"
+                  <fieldset
+                    class="usa-fieldset"
+                    data-testid="fieldset"
                   >
-                    CMS component
-                  </legend>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                    <legend
+                      class="usa-legend"
                     >
-                      Center for Clinical Standards and Quality (CCSQ)
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="CENTER_FOR_MEDICARE"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                    >
-                      Center for Medicare (CM)
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="CENTER_FOR_PROGRAM_INTEGRITY"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                    >
-                      Center for Program Integrity (CPI)
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-CMMI"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="CMMI"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-CMMI"
-                    >
-                      CMMI
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                    >
-                      Federal Coordinated Health Care
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-OTHER"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="OTHER"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-OTHER"
-                    >
-                      Other
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="usa-form-group margin-top-4"
-                  >
+                      CMS component
+                    </legend>
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="plan-basics-cmsCategory--Other"
+                      for="plan-basics-cmsCenters"
                     >
-                      Please specify
+                      CMS component
+                      <span
+                        aria-label="(Field required)"
+                        class="text-red margin-x-05"
+                      >
+                        *
+                      </span>
                     </label>
-                    <textarea
-                      class="mint-textarea usa-textarea"
-                      id="plan-basics-cmsCategory--Other"
-                      maxlength="5000"
-                      name="basics.cmsOther"
+                    <div
+                      class="mint-checkbox usa-checkbox"
                     >
-                      The Center for Awesomeness 
-                    </textarea>
-                  </div>
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CMMI"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CMMI"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CMMI"
+                      >
+                        CMMI
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICARE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                      >
+                        Center for Medicare (CM)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      >
+                        Federal Coordinated Health Care
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      >
+                        Center for Clinical Standards and Quality (CCSQ)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_PROGRAM_INTEGRITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                      >
+                        Center for Program Integrity (CPI)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-OTHER"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="OTHER"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-OTHER"
+                      >
+                        Other
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="usa-form-group margin-top-4"
+                    >
+                      <label
+                        class="usa-label"
+                        data-testid="label"
+                        for="plan-basics-cmsCategory--Other"
+                      >
+                        Please specify
+                      </label>
+                      <textarea
+                        aria-labelledby="label-plan-basics-cmsCategory--Other hint-plan-basics-cmsCategory--Other"
+                        class="mint-textarea usa-textarea"
+                        id="plan-basics-cmsCategory--Other"
+                        maxlength="5000"
+                        name="basics.cmsOther"
+                      >
+                        The Center for Awesomeness 
+                      </textarea>
+                    </div>
+                  </fieldset>
                 </div>
                 <div
                   class="usa-form-group margin-top-4"

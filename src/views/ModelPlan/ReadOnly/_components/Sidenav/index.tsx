@@ -12,13 +12,15 @@ interface SideNavProps {
   isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
   paramActive?: boolean;
+  openFilterModal?: () => void;
 }
 
 const SideNav = ({
   subComponents,
   isHelpArticle,
   solutionNavigation,
-  paramActive
+  paramActive,
+  openFilterModal
 }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('helpAndKnowledge');

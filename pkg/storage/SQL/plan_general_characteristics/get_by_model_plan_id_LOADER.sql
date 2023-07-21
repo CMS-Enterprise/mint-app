@@ -12,7 +12,6 @@ SELECT
     gc.is_new_model,
     gc.existing_model,
     gc.resembles_existing_model,
-    gc.resembles_existing_model_which,
     gc.resembles_existing_model_how,
     gc.resembles_existing_model_note,
     gc.has_components_or_tracks,

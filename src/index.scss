@@ -52,6 +52,7 @@
 @forward 'usa-tooltip';
 @forward 'uswds-global';
 @forward 'uswds-utilities';
+@forward "usa-in-page-navigation";
 
 // Vendor Styles
 @forward '../node_modules/font-awesome/css/font-awesome.min.css';
@@ -64,7 +65,7 @@
 // Print styles (used for PDF generation)
 @forward './stylesheets/print.scss';
 
-html,
+html
 body,
 #root {
   height: 100%;
@@ -75,7 +76,7 @@ body {
   margin: 0;
   font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
+    'Helvetica Neue', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: initial;
@@ -180,4 +181,8 @@ button:disabled {
 input[type="text"]:disabled {
   color: color('disabled-dark');
   border-color: color('disabled-dark');
+}
+
+.usa-legend {
+  font-weight: $theme-font-weight-bold;
 }

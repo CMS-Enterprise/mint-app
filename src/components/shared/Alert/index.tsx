@@ -2,7 +2,7 @@
 Wrapper for Truss' <Alert> component to allow for manually closing the component
 */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert as TrussAlert, Button } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
@@ -14,9 +14,11 @@ type AlertProps = {
   children?: React.ReactNode;
   'data-testid'?: string;
   slim?: boolean;
+  lessPadding?: boolean;
   noIcon?: boolean;
   inline?: boolean;
   isClosable?: boolean;
+  closeAlert?: (closed: boolean) => void;
 } & JSX.IntrinsicElements['div'];
 
 export const Alert = ({
@@ -24,23 +26,31 @@ export const Alert = ({
   heading,
   children,
   slim,
+  lessPadding, // reduces x-padding from 2rem to 1rem
   noIcon,
   className,
   inline,
   // Default to closable button if type = success or error
   isClosable = type === 'success' || type === 'error',
+  closeAlert,
   ...props
 }: AlertProps & React.HTMLAttributes<HTMLDivElement>): React.ReactElement => {
   const classes = classnames(
     {
       'mint-inline-alert': inline,
-      'mint-alert-text': isClosable
+      'mint-alert-text': isClosable,
+      'mint-alert-slim': lessPadding
     },
     'flex',
     className
   );
 
   const [isClosed, setClosed] = useState<boolean>(false);
+
+  // closeAlert is a state setter passed down to conditionally render alert component from parent
+  useEffect(() => {
+    if (closeAlert && isClosed) closeAlert(false);
+  }, [isClosed, closeAlert]);
 
   return (
     <>
@@ -53,7 +63,7 @@ export const Alert = ({
           className={classes}
           {...props}
         >
-          {children}
+          <span>{children}</span>
           {isClosable && (
             <Button
               type="button"

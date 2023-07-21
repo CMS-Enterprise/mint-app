@@ -34,7 +34,9 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
           },
           flags: {
             hideITLeadExperience: true,
-            downgradeAssessmentTeam: false
+            downgradeAssessmentTeam: false,
+            hideGroupView: true,
+            shareExportEnabled: false
           }
         });
 

@@ -1,4 +1,4 @@
-const modelPlan = {
+const plan = {
   home: 'Home',
   teamRoles: {
     modelLead: 'Model Lead',
@@ -7,6 +7,8 @@ const modelPlan = {
     learning: 'Learning',
     modelTeam: 'Model Team',
     itLead: 'IT Lead',
+    oact: 'OACT',
+    payment: 'Payment',
     quality: 'Quality'
   },
   planStatuses: {
@@ -20,7 +22,9 @@ const modelPlan = {
     cleared: 'Cleared',
     announced: 'Announced',
     paused: 'Paused',
-    canceled: 'Canceled'
+    canceled: 'Canceled',
+    active: 'Active',
+    ended: 'Ended'
   },
   status: {
     heading: 'Update status',
@@ -46,4 +50,4 @@ const modelPlan = {
   }
 };
 
-export default modelPlan;
+export default plan;

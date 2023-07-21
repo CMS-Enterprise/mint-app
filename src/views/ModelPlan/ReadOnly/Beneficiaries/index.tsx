@@ -14,13 +14,20 @@ import {
   translateTriStateAnswer
 } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyBeneficiaries = ({ modelID, clearance }: ReadOnlyProps) => {
+const ReadOnlyBeneficiaries = ({
+  modelID,
+  clearance,
+  isViewingFilteredView,
+  filteredQuestions
+}: ReadOnlyProps) => {
   const { t } = useTranslation('beneficiaries');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
@@ -67,15 +74,16 @@ const ReadOnlyBeneficiaries = ({ modelID, clearance }: ReadOnlyProps) => {
 
   return (
     <div
-      className="read-only-model-plan--participants-and-providers"
-      data-testid="read-only-model-plan--participants-and-providers"
+      className="read-only-model-plan--beneficiaries"
+      data-testid="read-only-model-plan--beneficiaries"
     >
-      <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">
-          {clearance ? t('clearanceHeading') : t('heading')}
-        </h2>
-        {status && <TaskListStatusTag status={status} />}
-      </div>
+      <TitleAndStatus
+        clearance={clearance}
+        clearanceTitle={t('clearanceHeading')}
+        heading={t('heading')}
+        isViewingFilteredView={isViewingFilteredView}
+        status={status}
+      />
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
@@ -85,131 +93,192 @@ const ReadOnlyBeneficiaries = ({ modelID, clearance }: ReadOnlyProps) => {
         </p>
       )}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('beneficiariesQuestion')}
-          list
-          listItems={beneficiaries?.map(translateBeneficiariesType)}
-          listOtherItem={beneficiariesOther}
-          notes={beneficiariesNote}
-        />
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiaries',
+          <ReadOnlySection
+            heading={t('beneficiariesQuestion')}
+            list
+            listItems={beneficiaries?.map(translateBeneficiariesType)}
+            listOtherItem={beneficiariesOther}
+            notes={beneficiariesNote}
+          />
+        )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div
-            className={
-              treatDualElligibleDifferent === TriStateAnswer.YES
-                ? 'desktop:width-card-lg'
-                : ''
-            }
-          >
-            <ReadOnlySection
-              heading={t('dualEligibility')}
-              copy={
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'treatDualElligibleDifferent',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('dualEligibility'),
+              copy:
                 treatDualElligibleDifferent &&
                 translateTriStateAnswer(treatDualElligibleDifferent)
+            }}
+            secondSection={
+              treatDualElligibleDifferent === TriStateAnswer.YES && {
+                heading: h('howSo'),
+                copy: treatDualElligibleDifferentHow
               }
-            />
-          </div>
-          {treatDualElligibleDifferent === TriStateAnswer.YES && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={treatDualElligibleDifferentHow}
-              />
-            </div>
-          )}
-        </div>
-        {treatDualElligibleDifferentNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={treatDualElligibleDifferentNote}
+            }
           />
         )}
-
-        <div className="desktop:display-flex flex-justify">
-          <div
-            className={
-              excludeCertainCharacteristics === TriStateAnswer.YES
-                ? 'desktop:width-card-lg'
-                : ''
-            }
-          >
+        {treatDualElligibleDifferentNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'treatDualElligibleDifferent',
             <ReadOnlySection
-              heading={t('excluded')}
-              copy={
+              heading={t('basics:notes')}
+              copy={treatDualElligibleDifferentNote}
+            />
+          )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'excludeCertainCharacteristics',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('excluded'),
+              copy:
                 excludeCertainCharacteristics &&
                 translateTriStateAnswer(excludeCertainCharacteristics)
+            }}
+            secondSection={
+              excludeCertainCharacteristics === TriStateAnswer.YES && {
+                heading: t('excludedNestedQuestion'),
+                copy: excludeCertainCharacteristicsCriteria
               }
+            }
+          />
+        )}
+
+        {excludeCertainCharacteristicsNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'excludeCertainCharacteristics',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={excludeCertainCharacteristicsNote}
             />
-          </div>
-          {excludeCertainCharacteristics === TriStateAnswer.YES && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={t('excludedNestedQuestion')}
-                copy={excludeCertainCharacteristicsCriteria}
-              />
-            </div>
           )}
-        </div>
-        {excludeCertainCharacteristicsNote && (
+      </div>
+
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {isViewingFilteredView &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'numberPeopleImpacted',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('howManyImpacted'),
+                copy: numberPeopleImpacted?.toString(),
+                notes: confidenceNote
+              }}
+              secondSection={{
+                heading: t('levelOfConfidence'),
+                copy:
+                  estimateConfidence &&
+                  translateConfidenceType(estimateConfidence)
+              }}
+            />
+          )}
+
+        {!isViewingFilteredView && (
+          <>
+            <ReadOnlySection
+              heading={t('howManyImpacted')}
+              copy={numberPeopleImpacted?.toString()}
+            />
+
+            <ReadOnlySection
+              heading={t('levelOfConfidence')}
+              copy={
+                estimateConfidence &&
+                translateConfidenceType(estimateConfidence)
+              }
+              notes={confidenceNote}
+            />
+          </>
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiarySelectionMethod',
           <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={excludeCertainCharacteristicsNote}
+            heading={t('chooseBeneficiariesQuestion')}
+            list
+            listItems={beneficiarySelectionMethod?.map(
+              translateSelectionMethodType
+            )}
+            listOtherItem={beneficiarySelectionOther}
+            notes={beneficiarySelectionNote}
           />
         )}
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('howManyImpacted')}
-          copy={numberPeopleImpacted?.toString()}
-        />
-
-        <ReadOnlySection
-          heading={t('levelOfConfidence')}
-          copy={
-            estimateConfidence && translateConfidenceType(estimateConfidence)
-          }
-          notes={confidenceNote}
-        />
-
-        <ReadOnlySection
-          heading={t('chooseBeneficiariesQuestion')}
-          list
-          listItems={beneficiarySelectionMethod?.map(
-            translateSelectionMethodType
-          )}
-          listOtherItem={beneficiarySelectionOther}
-          notes={beneficiarySelectionNote}
-        />
-      </div>
-
-      <div className="margin-bottom-4 padding-bottom-2">
+      <div>
         {/* If "Other", then display "Other — Lorem ipsum." */}
         {/* Else just display content, i.e. "LOI (Letter of interest)" */}
-        <ReadOnlySection
-          heading={t('beneficiaryFrequency')}
-          copy={
-            beneficiarySelectionFrequency &&
-            (beneficiarySelectionFrequency === FrequencyType.OTHER
-              ? `${translateFrequencyType(
-                  beneficiarySelectionFrequency
-                )} \u2014  ${beneficiarySelectionFrequencyOther}`
-              : translateFrequencyType(beneficiarySelectionFrequency))
-          }
-          notes={beneficiarySelectionFrequencyNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiarySelectionFrequency',
+          <ReadOnlySection
+            heading={t('beneficiaryFrequency')}
+            copy={
+              beneficiarySelectionFrequency &&
+              (beneficiarySelectionFrequency === FrequencyType.OTHER
+                ? `${translateFrequencyType(
+                    beneficiarySelectionFrequency
+                  )} \u2014  ${beneficiarySelectionFrequencyOther}`
+                : translateFrequencyType(beneficiarySelectionFrequency))
+            }
+            notes={beneficiarySelectionFrequencyNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('beneficiaryOverlap')}
-          copy={beneficiaryOverlap && translateOverlapType(beneficiaryOverlap)}
-          notes={beneficiaryOverlapNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiaryOverlap',
+          <ReadOnlySection
+            heading={t('beneficiaryOverlap')}
+            copy={
+              beneficiaryOverlap && translateOverlapType(beneficiaryOverlap)
+            }
+            notes={beneficiaryOverlapNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('benficiaryPrecedence')}
-          copy={precedenceRules}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'precedenceRules',
+          <ReadOnlySection
+            heading={t('benficiaryPrecedence')}
+            copy={precedenceRules}
+          />
+        )}
       </div>
     </div>
   );

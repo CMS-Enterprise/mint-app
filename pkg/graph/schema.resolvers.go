@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -24,6 +25,23 @@ import (
 // Fields is the resolver for the fields field.
 func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
 	return obj.Fields.ToInterface()
+}
+
+// ExistingModel is the resolver for the existingModel field.
+func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
+	if obj.ExistingModelID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
+}
+
+// CurrentModelPlan is the resolver for the currentModelPlan field.
+func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error) {
+	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
 }
 
 // Basics is the resolver for the basics field.
@@ -114,6 +132,11 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
 	return resolvers.OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// ExistingModelLinks is the resolver for the existingModelLinks field.
+func (r *modelPlanResolver) ExistingModelLinks(ctx context.Context, obj *models.ModelPlan) ([]*models.ExistingModelLink, error) {
+	return resolvers.ExistingModelLinkGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -424,6 +447,13 @@ func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context,
 	return resolvers.OperationalSolutionSubtaskDelete(logger, r.store, principal, id)
 }
 
+// UpdateExistingModelLinks is the resolver for the updateExistingModelLinks field.
+func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+	return resolvers.ExistingModelLinksUpdate(logger, r.store, principal, modelPlanID, existingModelIDs, currentModelPlanIDs)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
@@ -502,11 +532,6 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
-}
-
-// ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
-func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error) {
-	return obj.ResemblesExistingModelWhich, nil
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
@@ -831,8 +856,24 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 	return resolvers.UserAccountGetByUsername(logger, r.store, username)
 }
 
+// ExistingModelLink is the resolver for the existingModelLink field.
+func (r *queryResolver) ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ExistingModelLinkGetByID(logger, r.store, principal, id)
+}
+
+// SearchChanges is the resolver for the searchChanges field.
+func (r *queryResolver) SearchChanges(ctx context.Context, filters []*model.SearchFilter, sortBy *model.ChangeHistorySortParams, page *model.PageParams) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangesWithFilters(logger, r.searchClient, filters, sortBy, page)
+}
+
 // SearchChangeTable is the resolver for the searchChangeTable field.
 func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	return nil, fmt.Errorf("searchChangeTable is deprecated, use searchChanges instead")
+
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTable(logger, r.searchClient, request, limit, offset, "modified_dts:desc")
@@ -840,6 +881,8 @@ func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.Se
 
 // SearchChangeTableWithFreeText is the resolver for the searchChangeTableWithFreeText field.
 func (r *queryResolver) SearchChangeTableWithFreeText(ctx context.Context, searchText string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	return nil, fmt.Errorf("searchChangeTableWithFreeText is deprecated, use searchChanges instead")
+
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableWithFreeText(logger, r.searchClient, searchText, limit, offset)
@@ -847,6 +890,8 @@ func (r *queryResolver) SearchChangeTableWithFreeText(ctx context.Context, searc
 
 // SearchChangeTableByModelPlanID is the resolver for the searchChangeTableByModelPlanID field.
 func (r *queryResolver) SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	return nil, fmt.Errorf("searchChangeTableByModelPlanID is deprecated, use searchChanges instead")
+
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableByModelPlanID(logger, r.searchClient, modelPlanID, limit, offset)
@@ -854,13 +899,26 @@ func (r *queryResolver) SearchChangeTableByModelPlanID(ctx context.Context, mode
 
 // SearchChangeTableByDateRange is the resolver for the searchChangeTableByDateRange field.
 func (r *queryResolver) SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	return nil, fmt.Errorf("searchChangeTableByDateRange is deprecated, use searchChanges instead")
+
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableByDateRange(logger, r.searchClient, startDate, endDate, limit, offset)
 }
 
+// SearchModelPlanChangesByDateRange is the resolver for the searchModelPlanChangesByDateRange field.
+func (r *queryResolver) SearchModelPlanChangesByDateRange(ctx context.Context, modelPlanID uuid.UUID, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	return nil, fmt.Errorf("searchModelPlanChangesByDateRange is deprecated, use searchChanges instead")
+
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchModelPlanChangesByDateRange(logger, r.searchClient, modelPlanID, startDate, endDate, limit, offset)
+}
+
 // SearchChangeTableByActor is the resolver for the searchChangeTableByActor field.
 func (r *queryResolver) SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	return nil, fmt.Errorf("searchChangeTableByActor is deprecated, use searchChanges instead")
+
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableByActor(logger, r.searchClient, actor, limit, offset)
@@ -868,6 +926,8 @@ func (r *queryResolver) SearchChangeTableByActor(ctx context.Context, actor stri
 
 // SearchChangeTableByModelStatus is the resolver for the searchChangeTableByModelStatus field.
 func (r *queryResolver) SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	return nil, fmt.Errorf("searchChangeTableByModelStatus is deprecated, use searchChanges instead")
+
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableByModelStatus(logger, r.searchClient, modelStatus, limit, offset)
@@ -878,6 +938,14 @@ func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(c
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableDateHistogramConsolidatedAggregations(logger, r.searchClient, interval, limit, offset)
+}
+
+// MostRecentDiscussionRoleSelection is the resolver for the mostRecentDiscussionRoleSelection field.
+func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.GetMostRecentDiscussionRoleSelection(logger, r.store, principal)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
@@ -896,6 +964,11 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
+
+// ExistingModelLink returns generated.ExistingModelLinkResolver implementation.
+func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
+	return &existingModelLinkResolver{r}
+}
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
@@ -959,6 +1032,7 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
+type existingModelLinkResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
@@ -974,3 +1048,13 @@ type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planDiscussionResolver) UserRoleDescription(ctx context.Context, obj *models.PlanDiscussion) (*string, error) {
+	panic(fmt.Errorf("not implemented: UserRoleDescription - userRoleDescription"))
+}
