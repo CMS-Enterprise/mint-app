@@ -23,6 +23,10 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 """
 scalar Time
 """
+Date values are represented as strings using GoLang's "DateOnly" format, for example 2006-01-02
+"""
+scalar Date
+"""
 Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
@@ -1496,6 +1500,7 @@ type DiscussionRoleSelection {
 Query definition for the schema
 """
 type Query {
+  whatDateIsIt: Date!
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -1565,6 +1570,8 @@ enum ModelPlanFilter {
 Mutations definition for the schema
 """
 type Mutation {
+oneWeekFromNow(date: Date!): Date!
+
 createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_USER)
 

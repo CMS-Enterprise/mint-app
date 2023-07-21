@@ -233,6 +233,7 @@ type ComplexityRoot struct {
 		DeletePlanDocument                 func(childComplexity int, id uuid.UUID) int
 		DeletePlanFavorite                 func(childComplexity int, modelPlanID uuid.UUID) int
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
+		OneWeekFromNow                     func(childComplexity int, date models.Date) int
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
@@ -873,6 +874,7 @@ type ComplexityRoot struct {
 		SearchOktaUsers                                        func(childComplexity int, searchTerm string) int
 		TaskListSectionLocks                                   func(childComplexity int, modelPlanID uuid.UUID) int
 		UserAccount                                            func(childComplexity int, username string) int
+		WhatDateIsIt                                           func(childComplexity int) int
 	}
 
 	Subscription struct {
@@ -943,6 +945,7 @@ type ModelPlanResolver interface {
 	ExistingModelLinks(ctx context.Context, obj *models.ModelPlan) ([]*models.ExistingModelLink, error)
 }
 type MutationResolver interface {
+	OneWeekFromNow(ctx context.Context, date models.Date) (*models.Date, error)
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
@@ -1080,6 +1083,7 @@ type PossibleOperationalNeedResolver interface {
 	PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error)
 }
 type QueryResolver interface {
+	WhatDateIsIt(ctx context.Context) (*models.Date, error)
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
@@ -2118,6 +2122,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.LockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(models.TaskListSection)), true
+
+	case "Mutation.oneWeekFromNow":
+		if e.complexity.Mutation.OneWeekFromNow == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_oneWeekFromNow_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.OneWeekFromNow(childComplexity, args["date"].(models.Date)), true
 
 	case "Mutation.removePlanDocumentSolutionLinks":
 		if e.complexity.Mutation.RemovePlanDocumentSolutionLinks == nil {
@@ -6394,6 +6410,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.UserAccount(childComplexity, args["username"].(string)), true
 
+	case "Query.whatDateIsIt":
+		if e.complexity.Query.WhatDateIsIt == nil {
+			break
+		}
+
+		return e.complexity.Query.WhatDateIsIt(childComplexity), true
+
 	case "Subscription.onLockTaskListSectionContext":
 		if e.complexity.Subscription.OnLockTaskListSectionContext == nil {
 			break
@@ -6729,6 +6752,10 @@ scalar UUID
 Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
 """
 scalar Time
+"""
+Date values are represented as strings using GoLang's "DateOnly" format, for example 2006-01-02
+"""
+scalar Date
 """
 Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
@@ -8203,6 +8230,7 @@ type DiscussionRoleSelection {
 Query definition for the schema
 """
 type Query {
+  whatDateIsIt: Date!
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -8272,6 +8300,8 @@ enum ModelPlanFilter {
 Mutations definition for the schema
 """
 type Mutation {
+oneWeekFromNow(date: Date!): Date!
+
 createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_USER)
 
@@ -9519,6 +9549,21 @@ func (ec *executionContext) field_Mutation_lockTaskListSection_args(ctx context.
 		}
 	}
 	args["section"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_oneWeekFromNow_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 models.Date
+	if tmp, ok := rawArgs["date"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("date"))
+		arg0, err = ec.unmarshalNDate2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDate(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["date"] = arg0
 	return args, nil
 }
 
@@ -16548,6 +16593,61 @@ func (ec *executionContext) fieldContext_ModelPlan_existingModelLinks(ctx contex
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ExistingModelLink", field.Name)
 		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_oneWeekFromNow(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_oneWeekFromNow(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().OneWeekFromNow(rctx, fc.Args["date"].(models.Date))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.Date)
+	fc.Result = res
+	return ec.marshalNDate2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDate(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_oneWeekFromNow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Date does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_oneWeekFromNow_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
@@ -44640,6 +44740,50 @@ func (ec *executionContext) fieldContext_PrepareForClearance_latestClearanceDts(
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_whatDateIsIt(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_whatDateIsIt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().WhatDateIsIt(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.Date)
+	fc.Result = res
+	return ec.marshalNDate2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDate(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_whatDateIsIt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Date does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_currentUser(ctx, field)
 	if err != nil {
@@ -53089,6 +53233,15 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Mutation")
+		case "oneWeekFromNow":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_oneWeekFromNow(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createModelPlan":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createModelPlan(ctx, field)
@@ -58467,6 +58620,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
+		case "whatDateIsIt":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_whatDateIsIt(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "currentUser":
 			field := field
 
@@ -60960,6 +61136,32 @@ func (ec *executionContext) marshalNDataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNDate2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDate(ctx context.Context, v interface{}) (models.Date, error) {
+	var res models.Date
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDate2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDate(ctx context.Context, sel ast.SelectionSet, v models.Date) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNDate2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDate(ctx context.Context, v interface{}) (*models.Date, error) {
+	var res = new(models.Date)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDate2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDate(ctx context.Context, sel ast.SelectionSet, v *models.Date) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return v
 }
 
 func (ec *executionContext) marshalNDateHistogramAggregationBucket2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucketᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.DateHistogramAggregationBucket) graphql.Marshaler {
