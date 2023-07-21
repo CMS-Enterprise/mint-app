@@ -7,6 +7,7 @@ import GettingStarted from './Articles/GettingStarted';
 import ITImplementation from './Articles/ITImplementation';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import SampleModelPlan from './Articles/SampleModelPlan';
+import TwoPagerMeeting from './Articles/TwoPagerMeeting';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
 
@@ -23,6 +24,13 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/operational-solutions" exact>
         <SolutionsHelp />
+      </Route>
+
+      <Route
+        path="/help-and-knowledge/how-to-have-a-successful-2-pager-meeting"
+        exact
+      >
+        <TwoPagerMeeting />
       </Route>
 
       <Redirect
