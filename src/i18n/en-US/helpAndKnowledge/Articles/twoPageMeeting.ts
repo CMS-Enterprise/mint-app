@@ -102,7 +102,7 @@ const twoPageMeeting = {
   },
   reviewMeeting: {
     intro:
-      'After division and group leadership have reviewed and approved the 2-pager and the review meeting with CMMI FO is on the books, you may wonder,',
+      'After division and group leadership have reviewed and approved the 2-pager and the review meeting with CMMI FO is on the books, you may wonder, ',
     italicsNowWhat: 'now what?',
     subheading: {
       tip: {
@@ -121,6 +121,10 @@ const twoPageMeeting = {
         ]
       }
     }
+  },
+  footerSummaryBox: {
+    title: 'Need help?',
+    body: 'Contact the MINT team at <1>MINTTeam@cms.hhs.gov</1>'
   }
 };
 
