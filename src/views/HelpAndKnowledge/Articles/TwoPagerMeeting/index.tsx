@@ -83,7 +83,8 @@ const TwoPagerMeeting = () => {
             className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
           >
             <ul className="margin-y-0">
-              <li className="margin-bottom-1">
+              <li className="margin-top-05 margin-bottom-1">
+                {/* TODO: change the links */}
                 <Link to="asdf">
                   {twoPageMeetingT('summaryBox.listItem.draft')}
                 </Link>
@@ -93,7 +94,7 @@ const TwoPagerMeeting = () => {
                   {twoPageMeetingT('summaryBox.listItem.start')}
                 </Link>
               </li>
-              <li className="margin-bottom-1">
+              <li>
                 <Link to="asdf">
                   {twoPageMeetingT('summaryBox.listItem.review')}
                 </Link>
