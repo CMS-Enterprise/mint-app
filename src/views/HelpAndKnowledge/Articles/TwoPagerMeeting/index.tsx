@@ -45,6 +45,14 @@ const TwoPagerMeeting = () => {
     'conceptPaper.stepThree.impact.list',
     { returnObjects: true }
   );
+  const additionalResourcesListItems: string[] = twoPageMeetingT(
+    'additionalResources.list',
+    { returnObjects: true }
+  );
+  const additionalResourcesParagraphs: string[] = twoPageMeetingT(
+    'additionalResources.paragraph',
+    { returnObjects: true }
+  );
 
   return (
     <MainContent>
@@ -176,7 +184,7 @@ const TwoPagerMeeting = () => {
 
           <SummaryBox
             heading={twoPageMeetingT('conceptPaper.exampleSummaryBox.heading')}
-            className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
+            className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0"
           >
             <p className="margin-y-1">
               {twoPageMeetingT('conceptPaper.exampleSummaryBox.text')}
@@ -240,6 +248,35 @@ const TwoPagerMeeting = () => {
               </ExternalLink>
             </span>
           </SummaryBox>
+
+          <PageHeading className="margin-bottom-3" headingLevel="h2">
+            {twoPageMeetingT('summaryBox.listItem.start')}
+          </PageHeading>
+          <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+            {twoPageMeetingT('additionalResources.intro')}
+          </p>
+
+          <PageHeading
+            className="margin-top-0 margin-bottom-1"
+            headingLevel="h3"
+          >
+            {twoPageMeetingT('additionalResources.subheading')}
+          </PageHeading>
+          <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+            {additionalResourcesListItems.map(k => (
+              <li key={k} className="line-height-sans-4 margin-bottom-05">
+                {k}
+              </li>
+            ))}
+          </ul>
+          {additionalResourcesParagraphs.map(k => (
+            <p
+              key={k}
+              className="line-height-sans-4 margin-top-0 margin-bottom-3"
+            >
+              {k}
+            </p>
+          ))}
         </Grid>
       </GridContainer>
     </MainContent>
