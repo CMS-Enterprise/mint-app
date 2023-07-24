@@ -585,6 +585,11 @@ export enum TriStateAnswer {
   YES = "YES",
 }
 
+export enum TrustFundType {
+  MEDICARE_PART_A_HI_TRUST_FUND = "MEDICARE_PART_A_HI_TRUST_FUND",
+  MEDICARE_PART_B_SMI_TRUST_FUND = "MEDICARE_PART_B_SMI_TRUST_FUND",
+}
+
 export enum WaiverType {
   FRAUD_ABUSE = "FRAUD_ABUSE",
   MEDICAID = "MEDICAID",
@@ -967,10 +972,12 @@ export interface PlanParticipantsAndProvidersChanges {
 export interface PlanPaymentsChanges {
   fundingSource?: FundingSource[] | null;
   fundingSourceTrustFund?: string | null;
+  fundingSourceTrustFundType?: TrustFundType | null;
   fundingSourceOther?: string | null;
   fundingSourceNote?: string | null;
   fundingSourceR?: FundingSource[] | null;
   fundingSourceRTrustFund?: string | null;
+  fundingSourceRTrustFundType?: TrustFundType | null;
   fundingSourceROther?: string | null;
   fundingSourceRNote?: string | null;
   payRecipients?: PayRecipient[] | null;
@@ -1010,7 +1017,6 @@ export interface PlanPaymentsChanges {
   sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null;
   planningToUseInnovationPaymentContractor?: boolean | null;
   planningToUseInnovationPaymentContractorNote?: string | null;
-  fundingStructure?: string | null;
   expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote?: string | null;
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;

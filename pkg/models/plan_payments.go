@@ -129,6 +129,15 @@ const (
 	PayTypeGrants PayType = "GRANTS"
 )
 
+// TrustFundType is the enumeration of options for this category
+type TrustFundType string
+
+//goland:noinspection ALL
+const (
+	TrustFundTypeMedicarePartAHI  TrustFundType = "MEDICARE_PART_A_HI_TRUST_FUND"
+	TrustFundTypeMedicarePartBSMI TrustFundType = "MEDICARE_PART_B_TRUST_FUND"
+)
+
 // PlanPayments defines the data associated with a plan payments model
 type PlanPayments struct {
 	baseTaskListSection
@@ -136,10 +145,12 @@ type PlanPayments struct {
 	// Page 1
 	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
 	FundingSourceTrustFund          *string        `json:"fundingSourceTrustFund" db:"funding_source_trust_fund"`
+	FundingSourceTrustFundType      *TrustFundType `json:"fundingSourceTrustFundType" db:"funding_source_trust_fund_type"`
 	FundingSourceOther              *string        `json:"fundingSourceOther" db:"funding_source_other"`
 	FundingSourceNote               *string        `json:"fundingSourceNote" db:"funding_source_note"`
 	FundingSourceR                  pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
 	FundingSourceRTrustFund         *string        `json:"fundingSourceRTrustFund" db:"funding_source_r_trust_fund"`
+	FundingSourceRTrustFundType     *TrustFundType `json:"fundingSourceRTrustFundType" db:"funding_source_r_trust_fund_type"`
 	FundingSourceROther             *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
 	FundingSourceRNote              *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
 	PayRecipients                   pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
