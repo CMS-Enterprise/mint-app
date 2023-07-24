@@ -111,17 +111,23 @@ func (s *Seeder) SeedData() {
 
 	// Seed a plan with some information already in it
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT")
-	s.updatePlanBasics(planWithBasics, map[string]interface{}{
-		"modelType":       models.MTVoluntary,
-		"goal":            "Some goal",
-		"cmsCenters":      []string{"CMMI", "OTHER"},
-		"cmsOther":        "SOME OTHER CMS CENTER",
-		"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-		"completeICIP":    "2020-05-13T20:47:50.12Z",
-		"phasedIn":        true,
-		"clearanceStarts": time.Now(),
-		"highLevelNote":   "Some high level note",
-	})
+	s.updatePlanBasics(
+		nil,
+		nil,
+		email.AddressBook{},
+		planWithBasics,
+		map[string]interface{}{
+			"modelType":       models.MTVoluntary,
+			"goal":            "Some goal",
+			"cmsCenters":      []string{"CMMI", "OTHER"},
+			"cmsOther":        "SOME OTHER CMS CENTER",
+			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+			"completeICIP":    "2020-05-13T20:47:50.12Z",
+			"phasedIn":        true,
+			"clearanceStarts": time.Now(),
+			"highLevelNote":   "Some high level note",
+		},
+	)
 	s.existingModelLinkCreate(planWithBasics, []int{links[3].ID, links[4].ID}, nil)
 
 	// Seed a plan with collaborators
@@ -189,19 +195,25 @@ func (s *Seeder) SeedData() {
 			UserName:    "BTAL",
 			TeamRole:    models.TeamRoleLeadership,
 		})
-	s.updatePlanBasics(sampleModelPlan, map[string]interface{}{
-		"amsModelID":      "123",
-		"demoCode":        "1",
-		"modelType":       models.MTVoluntary,
-		"goal":            "Some goal",
-		"cmsCenters":      []string{"CMMI", "OTHER"},
-		"cmsOther":        "SOME OTHER CMS CENTER",
-		"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-		"completeICIP":    "2020-05-13T20:47:50.12Z",
-		"phasedIn":        true,
-		"clearanceStarts": time.Now(),
-		"highLevelNote":   "Some high level note",
-	})
+	s.updatePlanBasics(
+		nil,
+		nil,
+		email.AddressBook{},
+		sampleModelPlan,
+		map[string]interface{}{
+			"amsModelID":      "123",
+			"demoCode":        "1",
+			"modelType":       models.MTVoluntary,
+			"goal":            "Some goal",
+			"cmsCenters":      []string{"CMMI", "OTHER"},
+			"cmsOther":        "SOME OTHER CMS CENTER",
+			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+			"completeICIP":    "2020-05-13T20:47:50.12Z",
+			"phasedIn":        true,
+			"clearanceStarts": time.Now(),
+			"highLevelNote":   "Some high level note",
+		},
+	)
 
 	operationalNeeds := s.getOperationalNeedsByModelPlanID(planWithDocuments.ID)
 	if len(operationalNeeds) < 1 {
