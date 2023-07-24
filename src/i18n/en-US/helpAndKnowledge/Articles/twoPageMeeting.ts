@@ -23,7 +23,7 @@ const twoPageMeeting = {
     },
     stepTwo: {
       heading: '2. High-level description of model elements',
-      itemOne:
+      item:
         'Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement'
     },
     stepThree: {
@@ -32,39 +32,37 @@ const twoPageMeeting = {
       italics:
         'Not all of these may be answerable early in model development/consideration',
       alignment: {
-        bold: 'Alignment:',
+        bold: 'Alignment: ',
         text:
           'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level:',
-        numberedList: {
-          one: 'Drive accountable care',
-          two: 'Advance health equity',
-          three: 'Support Innovation ',
-          four: 'Address affordability ',
-          five: 'Partner to achieve system transformation'
-        }
+        numberedList: [
+          'Drive accountable care',
+          'Advance health equity',
+          'Support Innovation ',
+          'Address affordability ',
+          'Partner to achieve system transformation'
+        ]
       },
       impact: {
-        bold: 'Impact:',
+        bold: 'Impact: ',
         text: 'Potential for the model to impact the following dimensions:',
-        list: {
-          one:
-            'Participation – number of providers, beneficiaries, Medicare and Medicaid spending',
-          two:
-            'Transformation – cost reduction, quality and outcomes improvements, advancements in equity and reduction in disparities, and delivery system change'
-        }
+        list: [
+          'Participation – number of providers, beneficiaries, Medicare and Medicaid spending',
+          'Transformation – cost reduction, quality and outcomes improvements, advancements in equity and reduction in disparities, and delivery system change'
+        ]
       },
       feasibility: {
-        bold: 'Feasibility:',
+        bold: 'Feasibility: ',
         text:
           'Consider the likelihood of successful execution of the model including initial operational or feasibility limitations, and potential for scaling'
       },
       innovation: {
-        bold: 'Innovation:',
+        bold: 'Innovation: ',
         text:
           'The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation'
       },
       stakeholders: {
-        bold: 'Stakeholders:',
+        bold: 'Stakeholders: ',
         text:
           'Include a brief description of any stakeholder engagement in the model concept'
       }

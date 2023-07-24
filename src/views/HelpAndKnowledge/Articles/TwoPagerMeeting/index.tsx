@@ -35,6 +35,16 @@ const TwoPagerMeeting = () => {
     { returnObjects: true }
   );
 
+  const alignmentListItems: string[] = twoPageMeetingT(
+    'conceptPaper.stepThree.alignment.numberedList',
+    { returnObjects: true }
+  );
+
+  const impactListItems: string[] = twoPageMeetingT(
+    'conceptPaper.stepThree.impact.list',
+    { returnObjects: true }
+  );
+
   return (
     <MainContent>
       <GridContainer>
@@ -80,18 +90,87 @@ const TwoPagerMeeting = () => {
           <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
             {twoPageMeetingT('conceptPaper.introParagraph')}
           </p>
+
           <PageHeading
             className="margin-top-0 margin-bottom-1"
             headingLevel="h3"
           >
             {twoPageMeetingT('conceptPaper.stepOne.heading')}
           </PageHeading>
-          <ul className="margin-top-0 margin-bottom-3">
+          <ul className="margin-top-0 margin-bottom-3 padding-left-6">
             {modelOverviewAndGoals.map(k => (
               <li key={k} className="line-height-sans-4">
                 {k}
               </li>
             ))}
+          </ul>
+
+          <PageHeading
+            className="margin-top-0 margin-bottom-1"
+            headingLevel="h3"
+          >
+            {twoPageMeetingT('conceptPaper.stepTwo.heading')}
+          </PageHeading>
+          <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+            <li className="line-height-sans-4">
+              {twoPageMeetingT('conceptPaper.stepTwo.item')}
+            </li>
+          </ul>
+
+          <PageHeading
+            className="margin-top-0 margin-bottom-1"
+            headingLevel="h3"
+          >
+            {twoPageMeetingT('conceptPaper.stepThree.heading')}
+          </PageHeading>
+          <i className="margin-top-0 margin-bottom-1 padding-left-3">
+            {twoPageMeetingT('conceptPaper.stepThree.italics')}
+          </i>
+          <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+            <li className="line-height-sans-4 margin-bottom-05">
+              <strong>
+                {twoPageMeetingT('conceptPaper.stepThree.alignment.bold')}
+              </strong>
+              {twoPageMeetingT('conceptPaper.stepThree.alignment.text')}
+              <ol className="padding-left-3 margin-top-05">
+                {alignmentListItems.map(k => (
+                  <li key={k} className="line-height-sans-4">
+                    {k}
+                  </li>
+                ))}
+              </ol>
+            </li>
+            <li className="line-height-sans-4 margin-bottom-05">
+              <strong>
+                {twoPageMeetingT('conceptPaper.stepThree.impact.bold')}
+              </strong>
+              {twoPageMeetingT('conceptPaper.stepThree.impact.text')}
+              <ul className="padding-left-3 margin-top-05">
+                {impactListItems.map(k => (
+                  <li key={k} className="line-height-sans-4">
+                    {k}
+                  </li>
+                ))}
+              </ul>
+            </li>
+            <li className="line-height-sans-4 margin-bottom-05">
+              <strong>
+                {twoPageMeetingT('conceptPaper.stepThree.feasibility.bold')}
+              </strong>
+              {twoPageMeetingT('conceptPaper.stepThree.feasibility.text')}
+            </li>
+            <li className="line-height-sans-4 margin-bottom-05">
+              <strong>
+                {twoPageMeetingT('conceptPaper.stepThree.innovation.bold')}
+              </strong>
+              {twoPageMeetingT('conceptPaper.stepThree.innovation.text')}
+            </li>
+            <li className="line-height-sans-4 margin-bottom-05">
+              <strong>
+                {twoPageMeetingT('conceptPaper.stepThree.stakeholders.bold')}
+              </strong>
+              {twoPageMeetingT('conceptPaper.stepThree.stakeholders.text')}
+            </li>
           </ul>
         </Grid>
       </GridContainer>
