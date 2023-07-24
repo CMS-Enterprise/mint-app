@@ -85,23 +85,24 @@ const TwoPagerMeeting = () => {
             <ul className="margin-y-0">
               <li className="margin-top-05 margin-bottom-1">
                 {/* TODO: change the links */}
-                <Link to="asdf">
+                <Link to="#draft">
                   {twoPageMeetingT('summaryBox.listItem.draft')}
                 </Link>
               </li>
               <li className="margin-bottom-1">
-                <Link to="asdf">
+                <Link to="#start">
                   {twoPageMeetingT('summaryBox.listItem.start')}
                 </Link>
               </li>
               <li>
-                <Link to="asdf">
+                <Link to="#review">
                   {twoPageMeetingT('summaryBox.listItem.review')}
                 </Link>
               </li>
             </ul>
           </SummaryBox>
-          <div className="margin-bottom-6">
+
+          <div id="draft" className="margin-bottom-6">
             <PageHeading className="margin-bottom-3" headingLevel="h2">
               {twoPageMeetingT('summaryBox.listItem.draft')}
             </PageHeading>
@@ -259,7 +260,7 @@ const TwoPagerMeeting = () => {
             </span>
           </SummaryBox>
 
-          <div className="margin-bottom-6">
+          <div id="start" className="margin-bottom-6">
             <PageHeading className="margin-bottom-3" headingLevel="h2">
               {twoPageMeetingT('summaryBox.listItem.start')}
             </PageHeading>
@@ -290,7 +291,7 @@ const TwoPagerMeeting = () => {
             ))}
           </div>
 
-          <div className="margin-bottom-6">
+          <div id="review" className="margin-bottom-6">
             <PageHeading className="margin-bottom-3" headingLevel="h2">
               {twoPageMeetingT('summaryBox.listItem.review')}
             </PageHeading>
