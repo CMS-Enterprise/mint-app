@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query GetDate {\n    whatDateIsIt\n  }\n": types.GetDateDocument,
     "\n  query GetNDA {\n    ndaInfo {\n      agreed\n      agreedDts\n    }\n  }\n": types.GetNdaDocument,
 };
 
@@ -30,6 +31,10 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetDate {\n    whatDateIsIt\n  }\n"): (typeof documents)["\n  query GetDate {\n    whatDateIsIt\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

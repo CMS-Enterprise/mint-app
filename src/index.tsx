@@ -4,6 +4,7 @@ import ReactGA from 'react-ga4';
 import { Provider } from 'react-redux';
 import {
   ApolloClient,
+  ApolloLink,
   ApolloProvider,
   InMemoryCache,
   split
@@ -11,9 +12,12 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { withScalars } from 'apollo-link-scalars';
 import { createUploadLink } from 'apollo-upload-client';
 import axios from 'axios';
 import { detect } from 'detect-browser';
+import { buildClientSchema, IntrospectionQuery } from 'graphql';
+import { DateTime } from 'luxon';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { TextEncoder } from 'text-encoding';
 
@@ -21,6 +25,7 @@ import { localAuthStorageKey } from 'constants/localAuth';
 
 import './i18n';
 
+import introspectionResult from './gql/introspection.json';
 import App from './views/App';
 import UnsupportedBrowser from './views/UnsupportedBrowser';
 import * as serviceWorker from './serviceWorker';
@@ -94,6 +99,35 @@ const wsLink = new WebSocketLink(
   })
 );
 
+const schema = buildClientSchema(
+  (introspectionResult as unknown) as IntrospectionQuery
+);
+const scalarLink = ApolloLink.from([
+  withScalars({
+    schema,
+    typesMap: {
+      Date: {
+        serialize: (parsed: unknown): string | null => {
+          console.log('serialize', parsed);
+
+          return parsed instanceof DateTime
+            ? parsed.toFormat('YYYY-MM-DD')
+            : null;
+        },
+        parseValue: (raw: unknown): DateTime | null => {
+          console.log('parseValue', raw);
+          if (!raw) return null; // if for some reason we want to treat empty string as null, for example
+          if (typeof raw === 'string') {
+            return DateTime.fromISO(raw);
+          }
+
+          throw new Error('invalid value to parse');
+        }
+      }
+    }
+  })
+]);
+
 // The split function takes three parameters:
 //
 // * A function that's called for each operation to execute
@@ -108,7 +142,8 @@ const splitLink = split(
     );
   },
   wsLink,
-  authLink.concat(uploadLink)
+  ApolloLink.from([authLink, scalarLink, uploadLink])
+  // authLink.concat(uploadLink).concat(scalarLink)
 );
 
 const client = new ApolloClient({

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
+import getDateQuery from 'queriesCodegen/getDate';
 import getNDAQuery from 'queriesCodegen/getNDA';
 
 import { localAuthStorageKey } from 'constants/localAuth';
@@ -25,6 +26,9 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   const { data } = useQuery(getNDAQuery, {
     skip: !authState?.isAuthenticated
   });
+
+  const { data: dateData } = useQuery(getDateQuery);
+  console.log('DATE DATA:', dateData);
 
   const storeUserInfo = async () => {
     if (

@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { DateTime } from 'luxon';
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -12,6 +13,10 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Any represents any GraphQL value. */
+  Any: any;
+  /** Date values are represented as strings using GoLang's "DateOnly" format, for example 2006-01-02 */
+  Date: DateTime;
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: any;
   /** Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z */
@@ -125,16 +130,41 @@ export enum CcmInvolvmentType {
   YesImplementation = 'YES__IMPLEMENTATION'
 }
 
+export enum ChangeHistorySortKey {
+  /** Sort by the user who made the change */
+  Actor = 'ACTOR',
+  /** Sort by the date the change was made */
+  ChangeDate = 'CHANGE_DATE',
+  /** Sort by the model plan ID that was changed */
+  ModelPlanId = 'MODEL_PLAN_ID',
+  /** Sort by the table ID that was changed */
+  TableId = 'TABLE_ID',
+  /** Sort by the table name that was changed */
+  TableName = 'TABLE_NAME'
+}
+
+export type ChangeHistorySortParams = {
+  field: ChangeHistorySortKey;
+  order: SortDirection;
+};
+
 export type ChangeTableRecord = {
   __typename?: 'ChangeTableRecord';
   action: Scalars['String'];
-  fields?: Maybe<Scalars['Map']>;
+  fields: ChangedFields;
   foreignKey?: Maybe<Scalars['UUID']>;
+  /**
+   * Returns the table name in the format of the type returned in GraphQL
+   * Example:  a table name of model_plan returns as ModelPlan
+   */
+  gqlTableName: GqlTableName;
   guid: Scalars['ID'];
+  modelPlanID: Scalars['UUID'];
   modifiedBy?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']>;
   primaryKey: Scalars['UUID'];
   tableID: Scalars['Int'];
+  tableName: Scalars['String'];
 };
 
 export enum ChangeType {
@@ -142,6 +172,11 @@ export enum ChangeType {
   Removed = 'REMOVED',
   Updated = 'UPDATED'
 }
+
+export type ChangedFields = {
+  __typename?: 'ChangedFields';
+  changes: Array<Field>;
+};
 
 export enum ClaimsBasedPayType {
   AdjustmentsToFfsPayments = 'ADJUSTMENTS_TO_FFS_PAYMENTS',
@@ -259,6 +294,8 @@ export type DiscussionReply = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']>;
   resolution?: Maybe<Scalars['Boolean']>;
+  userRole?: Maybe<DiscussionUserRole>;
+  userRoleDescription?: Maybe<Scalars['String']>;
 };
 
 /**
@@ -269,6 +306,8 @@ export type DiscussionReply = {
 export type DiscussionReplyChanges = {
   content?: InputMaybe<Scalars['String']>;
   resolution?: InputMaybe<Scalars['Boolean']>;
+  userRole?: InputMaybe<DiscussionUserRole>;
+  userRoleDescription?: InputMaybe<Scalars['String']>;
 };
 
 /** DiscussionReplyCreateInput represents the necessary fields to create a discussion reply */
@@ -276,6 +315,14 @@ export type DiscussionReplyCreateInput = {
   content: Scalars['String'];
   discussionID: Scalars['UUID'];
   resolution?: Scalars['Boolean'];
+  userRole?: InputMaybe<DiscussionUserRole>;
+  userRoleDescription?: InputMaybe<Scalars['String']>;
+};
+
+export type DiscussionRoleSelection = {
+  __typename?: 'DiscussionRoleSelection';
+  userRole: DiscussionUserRole;
+  userRoleDescription?: Maybe<Scalars['String']>;
 };
 
 export enum DiscussionStatus {
@@ -284,10 +331,24 @@ export enum DiscussionStatus {
   WaitingForResponse = 'WAITING_FOR_RESPONSE'
 }
 
+export enum DiscussionUserRole {
+  CmsSystemServiceTeam = 'CMS_SYSTEM_SERVICE_TEAM',
+  ItArchitect = 'IT_ARCHITECT',
+  Leadership = 'LEADERSHIP',
+  MedicareAdministrativeContractor = 'MEDICARE_ADMINISTRATIVE_CONTRACTOR',
+  MintTeam = 'MINT_TEAM',
+  ModelItLead = 'MODEL_IT_LEAD',
+  ModelTeam = 'MODEL_TEAM',
+  NoneOfTheAbove = 'NONE_OF_THE_ABOVE',
+  SharedSystemMaintainer = 'SHARED_SYSTEM_MAINTAINER'
+}
+
 export enum DocumentType {
   ConceptPaper = 'CONCEPT_PAPER',
+  DesignParametersMemo = 'DESIGN_PARAMETERS_MEMO',
   IcipDraft = 'ICIP_DRAFT',
   MarketResearch = 'MARKET_RESEARCH',
+  OfficeOfTheAdministratorPresentation = 'OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION',
   Other = 'OTHER',
   PolicyPaper = 'POLICY_PAPER'
 }
@@ -312,7 +373,7 @@ export type ExistingModel = {
   dateEnded?: Maybe<Scalars['Time']>;
   description?: Maybe<Scalars['String']>;
   displayModelSummary?: Maybe<Scalars['Boolean']>;
-  id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
   keywords?: Maybe<Scalars['String']>;
   modelName?: Maybe<Scalars['String']>;
   modifiedBy?: Maybe<Scalars['UUID']>;
@@ -324,6 +385,35 @@ export type ExistingModel = {
   stage: Scalars['String'];
   states?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
+};
+
+export type ExistingModelLink = {
+  __typename?: 'ExistingModelLink';
+  createdBy: Scalars['UUID'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time'];
+  currentModelPlan?: Maybe<ModelPlan>;
+  currentModelPlanID?: Maybe<Scalars['UUID']>;
+  existingModel?: Maybe<ExistingModel>;
+  existingModelID?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['UUID']>;
+  modelPlanID: Scalars['UUID'];
+  modifiedBy?: Maybe<Scalars['UUID']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']>;
+};
+
+export type Field = {
+  __typename?: 'Field';
+  name: Scalars['String'];
+  nameCamelCase: Scalars['String'];
+  value: FieldValue;
+};
+
+export type FieldValue = {
+  __typename?: 'FieldValue';
+  new?: Maybe<Scalars['Any']>;
+  old?: Maybe<Scalars['Any']>;
 };
 
 export enum FrequencyType {
@@ -339,6 +429,32 @@ export enum FundingSource {
   Other = 'OTHER',
   PatientProtectionAffordableCareAct = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
   TrustFund = 'TRUST_FUND'
+}
+
+export enum GqlTableName {
+  AnalyzedAudit = 'analyzedAudit',
+  DiscussionReply = 'discussionReply',
+  ExistingModel = 'existingModel',
+  ExistingModelLink = 'existingModelLink',
+  ModelPlan = 'modelPlan',
+  NdaAgreement = 'ndaAgreement',
+  OperationalNeed = 'operationalNeed',
+  OperationalSolution = 'operationalSolution',
+  OperationalSolutionSubtask = 'operationalSolutionSubtask',
+  PlanBasics = 'planBasics',
+  PlanBeneficiaries = 'planBeneficiaries',
+  PlanCollaborator = 'planCollaborator',
+  PlanCrTdl = 'planCrTdl',
+  PlanDiscussion = 'planDiscussion',
+  PlanDocument = 'planDocument',
+  PlanDocumentSolutionLink = 'planDocumentSolutionLink',
+  PlanGeneralCharacteristics = 'planGeneralCharacteristics',
+  PlanOpsEvalAndLearning = 'planOpsEvalAndLearning',
+  PlanParticipantsAndProviders = 'planParticipantsAndProviders',
+  PlanPayments = 'planPayments',
+  PossibleOperationalNeed = 'possibleOperationalNeed',
+  PossibleOperationalSolution = 'possibleOperationalSolution',
+  UserAccount = 'userAccount'
 }
 
 export enum GeographyApplication {
@@ -397,6 +513,7 @@ export enum ModelLearningSystemType {
 /** ModelPlan represent the data point for plans about a model. It is the central data type in the application */
 export type ModelPlan = {
   __typename?: 'ModelPlan';
+  abbreviation?: Maybe<Scalars['String']>;
   archived: Scalars['Boolean'];
   basics: PlanBasics;
   beneficiaries: PlanBeneficiaries;
@@ -407,6 +524,7 @@ export type ModelPlan = {
   createdDts: Scalars['Time'];
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
+  existingModelLinks: Array<ExistingModelLink>;
   generalCharacteristics: PlanGeneralCharacteristics;
   id: Scalars['UUID'];
   isCollaborator: Scalars['Boolean'];
@@ -436,6 +554,7 @@ export type ModelPlanNameHistoryArgs = {
  * https://gqlgen.com/reference/changesets/
  */
 export type ModelPlanChanges = {
+  abbreviation?: InputMaybe<Scalars['String']>;
   archived?: InputMaybe<Scalars['Boolean']>;
   modelName?: InputMaybe<Scalars['String']>;
   someNumbers?: InputMaybe<Array<Scalars['Int']>>;
@@ -449,10 +568,12 @@ export enum ModelPlanFilter {
 }
 
 export enum ModelStatus {
+  Active = 'ACTIVE',
   Announced = 'ANNOUNCED',
   Canceled = 'CANCELED',
   Cleared = 'CLEARED',
   CmsClearance = 'CMS_CLEARANCE',
+  Ended = 'ENDED',
   HhsClearance = 'HHS_CLEARANCE',
   IcipComplete = 'ICIP_COMPLETE',
   InternalCmmiClearance = 'INTERNAL_CMMI_CLEARANCE',
@@ -498,11 +619,13 @@ export type Mutation = {
   deletePlanDocument: Scalars['Int'];
   deletePlanFavorite: PlanFavorite;
   lockTaskListSection: Scalars['Boolean'];
+  oneWeekFromNow: Scalars['Date'];
   removePlanDocumentSolutionLinks: Scalars['Boolean'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean'];
   updateCustomOperationalNeedByID: OperationalNeed;
   updateDiscussionReply: DiscussionReply;
+  updateExistingModelLinks: Array<ExistingModelLink>;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -641,6 +764,12 @@ export type MutationLockTaskListSectionArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationOneWeekFromNowArgs = {
+  date: Scalars['Date'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']>;
   solutionID: Scalars['UUID'];
@@ -672,6 +801,14 @@ export type MutationUpdateCustomOperationalNeedByIdArgs = {
 export type MutationUpdateDiscussionReplyArgs = {
   changes: DiscussionReplyChanges;
   id: Scalars['UUID'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateExistingModelLinksArgs = {
+  currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']>>;
+  existingModelIDs?: InputMaybe<Array<Scalars['Int']>>;
+  modelPlanID: Scalars['UUID'];
 };
 
 
@@ -857,6 +994,7 @@ export type OperationalSolution = {
   createdDts: Scalars['Time'];
   documents: Array<PlanDocument>;
   id: Scalars['UUID'];
+  isCommonSolution: Scalars['Boolean'];
   isOther: Scalars['Boolean'];
   key?: Maybe<OperationalSolutionKey>;
   modifiedBy?: Maybe<Scalars['UUID']>;
@@ -891,6 +1029,7 @@ export enum OperationalSolutionKey {
   AcoOs = 'ACO_OS',
   Apps = 'APPS',
   Ars = 'ARS',
+  Bcda = 'BCDA',
   Cbosc = 'CBOSC',
   Ccw = 'CCW',
   Cdx = 'CDX',
@@ -951,6 +1090,11 @@ export enum OverlapType {
   YesNeedPolicies = 'YES_NEED_POLICIES',
   YesNoIssues = 'YES_NO_ISSUES'
 }
+
+export type PageParams = {
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+};
 
 export enum ParticipantCommunicationType {
   ItTool = 'IT_TOOL',
@@ -1019,6 +1163,7 @@ export enum PayType {
 /** Represents plan basics */
 export type PlanBasics = {
   __typename?: 'PlanBasics';
+  amsModelID?: Maybe<Scalars['String']>;
   announced?: Maybe<Scalars['Time']>;
   applicationsEnd?: Maybe<Scalars['Time']>;
   applicationsStart?: Maybe<Scalars['Time']>;
@@ -1031,6 +1176,7 @@ export type PlanBasics = {
   createdBy: Scalars['UUID'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time'];
+  demoCode?: Maybe<Scalars['String']>;
   goal?: Maybe<Scalars['String']>;
   highLevelNote?: Maybe<Scalars['String']>;
   id: Scalars['UUID'];
@@ -1063,6 +1209,7 @@ export type PlanBasics = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanBasicsChanges = {
+  amsModelID?: InputMaybe<Scalars['String']>;
   announced?: InputMaybe<Scalars['Time']>;
   applicationsEnd?: InputMaybe<Scalars['Time']>;
   applicationsStart?: InputMaybe<Scalars['Time']>;
@@ -1072,6 +1219,7 @@ export type PlanBasicsChanges = {
   cmsCenters?: InputMaybe<Array<CmsCenter>>;
   cmsOther?: InputMaybe<Scalars['String']>;
   completeICIP?: InputMaybe<Scalars['Time']>;
+  demoCode?: InputMaybe<Scalars['String']>;
   goal?: InputMaybe<Scalars['String']>;
   highLevelNote?: InputMaybe<Scalars['String']>;
   modelCategory?: InputMaybe<ModelCategory>;
@@ -1222,6 +1370,8 @@ export type PlanDiscussion = {
   modifiedDts?: Maybe<Scalars['Time']>;
   replies: Array<DiscussionReply>;
   status: DiscussionStatus;
+  userRole?: Maybe<DiscussionUserRole>;
+  userRoleDescription?: Maybe<Scalars['String']>;
 };
 
 /**
@@ -1232,12 +1382,16 @@ export type PlanDiscussion = {
 export type PlanDiscussionChanges = {
   content?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<DiscussionStatus>;
+  userRole?: InputMaybe<DiscussionUserRole>;
+  userRoleDescription?: InputMaybe<Scalars['String']>;
 };
 
 /** PlanDiscussionCreateInput represents the necessary fields to create a plan discussion */
 export type PlanDiscussionCreateInput = {
   content: Scalars['String'];
   modelPlanID: Scalars['UUID'];
+  userRole?: InputMaybe<DiscussionUserRole>;
+  userRoleDescription?: InputMaybe<Scalars['String']>;
 };
 
 /** PlanDocument represents a document on a plan */
@@ -1364,7 +1518,6 @@ export type PlanGeneralCharacteristics = {
   resemblesExistingModel?: Maybe<Scalars['Boolean']>;
   resemblesExistingModelHow?: Maybe<Scalars['String']>;
   resemblesExistingModelNote?: Maybe<Scalars['String']>;
-  resemblesExistingModelWhich: Array<Scalars['String']>;
   rulemakingRequired?: Maybe<Scalars['Boolean']>;
   rulemakingRequiredDescription?: Maybe<Scalars['String']>;
   rulemakingRequiredNote?: Maybe<Scalars['String']>;
@@ -1424,7 +1577,6 @@ export type PlanGeneralCharacteristicsChanges = {
   resemblesExistingModel?: InputMaybe<Scalars['Boolean']>;
   resemblesExistingModelHow?: InputMaybe<Scalars['String']>;
   resemblesExistingModelNote?: InputMaybe<Scalars['String']>;
-  resemblesExistingModelWhich?: InputMaybe<Array<Scalars['String']>>;
   rulemakingRequired?: InputMaybe<Scalars['Boolean']>;
   rulemakingRequiredDescription?: InputMaybe<Scalars['String']>;
   rulemakingRequiredNote?: InputMaybe<Scalars['String']>;
@@ -1984,8 +2136,10 @@ export type Query = {
   crTdl: PlanCrTdl;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
+  existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
+  mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -2002,9 +2156,12 @@ export type Query = {
   searchChangeTableByModelStatus: Array<ChangeTableRecord>;
   searchChangeTableDateHistogramConsolidatedAggregations: Array<DateHistogramAggregationBucket>;
   searchChangeTableWithFreeText: Array<ChangeTableRecord>;
+  searchChanges: Array<ChangeTableRecord>;
+  searchModelPlanChangesByDateRange: Array<ChangeTableRecord>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
+  whatDateIsIt: Scalars['Date'];
 };
 
 
@@ -2017,6 +2174,12 @@ export type QueryAuditChangesArgs = {
 
 /** Query definition for the schema */
 export type QueryCrTdlArgs = {
+  id: Scalars['UUID'];
+};
+
+
+/** Query definition for the schema */
+export type QueryExistingModelLinkArgs = {
   id: Scalars['UUID'];
 };
 
@@ -2128,6 +2291,24 @@ export type QuerySearchChangeTableWithFreeTextArgs = {
 
 
 /** Query definition for the schema */
+export type QuerySearchChangesArgs = {
+  filters?: InputMaybe<Array<SearchFilter>>;
+  page?: InputMaybe<PageParams>;
+  sortBy?: InputMaybe<ChangeHistorySortParams>;
+};
+
+
+/** Query definition for the schema */
+export type QuerySearchModelPlanChangesByDateRangeArgs = {
+  endDate: Scalars['Time'];
+  limit: Scalars['Int'];
+  modelPlanID: Scalars['UUID'];
+  offset: Scalars['Int'];
+  startDate: Scalars['Time'];
+};
+
+
+/** Query definition for the schema */
 export type QuerySearchOktaUsersArgs = {
   searchTerm: Scalars['String'];
 };
@@ -2162,9 +2343,80 @@ export enum Role {
   MintUser = 'MINT_USER'
 }
 
+export type SearchFilter = {
+  type: SearchFilterType;
+  value: Scalars['Any'];
+};
+
+export enum SearchFilterType {
+  /**
+   * Filter search results to include changes on or after the specified date.
+   * Expected value: A string in RFC3339 format representing the date and time.
+   * Example: "2006-01-02T15:04:05Z07:00"
+   */
+  ChangedAfter = 'CHANGED_AFTER',
+  /**
+   * Filter search results to include changes on or before the specified date.
+   * Expected value: A string in RFC3339 format representing the date and time.
+   * Example: "2006-01-02T15:04:05Z07:00"
+   */
+  ChangedBefore = 'CHANGED_BEFORE',
+  /**
+   * Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
+   * Expected value: A string representing the name or username of the actor.
+   * Example: "MINT"
+   */
+  ChangedByActor = 'CHANGED_BY_ACTOR',
+  /**
+   * Filter results with a free text search. This is a fuzzy search on the entire record.
+   * Expected value: A string representing the free text search query.
+   * Example: "Operational Need"
+   */
+  FreeText = 'FREE_TEXT',
+  /**
+   * Filter search results to include changes made to the specified model plan by ID.
+   * Expected value: A string representing the ID of the model plan.
+   * Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
+   */
+  ModelPlanId = 'MODEL_PLAN_ID',
+  /**
+   * Filter search results to include changes made to the specified object.
+   * Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
+   * Example: "BASICS"
+   */
+  ModelPlanSection = 'MODEL_PLAN_SECTION',
+  /**
+   * Filter search results to include model plans with the specified status.
+   * Expected value: A string representing the status of the model plan.
+   * Example: "ACTIVE"
+   */
+  ModelPlanStatus = 'MODEL_PLAN_STATUS',
+  /**
+   * Filter results by table id.
+   * Expected value: An integer representing the table ID.
+   * Example: 14
+   */
+  TableId = 'TABLE_ID',
+  /**
+   * Filter results by table name.
+   * Expected value: A string representing the table name.
+   * Example: "plan_basics"
+   */
+  TableName = 'TABLE_NAME'
+}
+
 export type SearchRequest = {
   query: Scalars['Map'];
 };
+
+export enum SearchableTaskListSection {
+  Basics = 'BASICS',
+  Beneficiaries = 'BENEFICIARIES',
+  GeneralCharacteristics = 'GENERAL_CHARACTERISTICS',
+  OperationsEvaluationAndLearning = 'OPERATIONS_EVALUATION_AND_LEARNING',
+  ParticipantsAndProviders = 'PARTICIPANTS_AND_PROVIDERS',
+  Payment = 'PAYMENT'
+}
 
 export enum SelectionMethodType {
   Historical = 'HISTORICAL',
@@ -2252,6 +2504,8 @@ export enum TeamRole {
   Learning = 'LEARNING',
   ModelLead = 'MODEL_LEAD',
   ModelTeam = 'MODEL_TEAM',
+  Oact = 'OACT',
+  Payment = 'PAYMENT',
   Quality = 'QUALITY'
 }
 
@@ -2301,10 +2555,16 @@ export enum WaiverType {
   ProgramPayment = 'PROGRAM_PAYMENT'
 }
 
+export type GetDateQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDateQuery = { __typename?: 'Query', whatDateIsIt: DateTime };
+
 export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetNdaQuery = { __typename?: 'Query', ndaInfo: { __typename?: 'NDAInfo', agreed: boolean, agreedDts?: any | null } };
 
 
+export const GetDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"whatDateIsIt"}}]}}]} as unknown as DocumentNode<GetDateQuery, GetDateQueryVariables>;
 export const GetNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ndaInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<GetNdaQuery, GetNdaQueryVariables>;
