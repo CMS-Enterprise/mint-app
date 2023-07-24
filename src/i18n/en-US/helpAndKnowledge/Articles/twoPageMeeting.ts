@@ -77,7 +77,7 @@ const twoPageMeeting = {
         three: 'Innovation in Behavioral Health 2-pager',
         four: 'Making Care Primary 2-pager'
       },
-      footer: 'To view the links above, you will need access to the',
+      footer: 'To view the links above, you will need access to the ',
       footerLink: 'Model Resources area of SharePoint.'
     }
   },
