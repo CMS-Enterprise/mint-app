@@ -30,6 +30,11 @@ const Link = ({ to, children }: LinkProps) => {
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
 
+  const modelOverviewAndGoals: string[] = twoPageMeetingT(
+    'conceptPaper.stepOne.items',
+    { returnObjects: true }
+  );
+
   return (
     <MainContent>
       <GridContainer>
@@ -69,9 +74,25 @@ const TwoPagerMeeting = () => {
             </ul>
           </SummaryBox>
 
-          <PageHeading className="margin-bottom-1" headingLevel="h2">
+          <PageHeading className="margin-bottom-3" headingLevel="h2">
             {twoPageMeetingT('summaryBox.listItem.draft')}
           </PageHeading>
+          <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+            {twoPageMeetingT('conceptPaper.introParagraph')}
+          </p>
+          <PageHeading
+            className="margin-top-0 margin-bottom-1"
+            headingLevel="h3"
+          >
+            {twoPageMeetingT('conceptPaper.stepOne.heading')}
+          </PageHeading>
+          <ul className="margin-top-0 margin-bottom-3">
+            {modelOverviewAndGoals.map(k => (
+              <li key={k} className="line-height-sans-4">
+                {k}
+              </li>
+            ))}
+          </ul>
         </Grid>
       </GridContainer>
     </MainContent>
