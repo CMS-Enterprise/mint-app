@@ -7,4 +7,8 @@ type AddressBook struct {
 
 	// MINTTeamEmail is the email address of the MINT team
 	MINTTeamEmail string
+
+	// ModelPlanDateChangedRecipients is the list of email addresses that should
+	// receive notifications when one or more model plan dates are changed
+	ModelPlanDateChangedRecipients []string
 }
