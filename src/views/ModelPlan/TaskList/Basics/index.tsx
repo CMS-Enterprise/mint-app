@@ -42,6 +42,7 @@ import {
 import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
 import UpdateModelPlanAndBasics from 'queries/UpdateModelPlanAndBasics';
 import { CMSCenter } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -244,17 +245,17 @@ const BasicsContent = () => {
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
                   heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -429,17 +430,11 @@ const BasicsContent = () => {
                             {`-${miscellaneousT('select')}-`}
                           </option>
 
-                          {Object.keys(modelCategoryConfig.options).map(
+                          {getKeys(modelCategoryConfig.options).map(
                             category => {
-                              type KeyType = keyof typeof modelCategoryConfig.options;
-
                               return (
                                 <option key={category} value={category}>
-                                  {
-                                    modelCategoryConfig.options[
-                                      category as KeyType
-                                    ]
-                                  }
+                                  {modelCategoryConfig.options[category]}
                                 </option>
                               );
                             }
@@ -466,24 +461,18 @@ const BasicsContent = () => {
                                   {flatErrors['basics.cmsCenters']}
                                 </FieldErrorMsg>
 
-                                {Object.keys(cmsCentersConfig.options).map(
+                                {getKeys(cmsCentersConfig.options).map(
                                   center => {
-                                    type KeyType = keyof typeof cmsCentersConfig.options;
-
                                     return (
                                       <Field
                                         key={center}
                                         as={CheckboxField}
                                         id={`new-plan-cmsCenters-${center}`}
                                         name="basics.cmsCenters"
-                                        label={
-                                          cmsCentersConfig.options[
-                                            center as KeyType
-                                          ]
-                                        }
+                                        label={cmsCentersConfig.options[center]}
                                         value={center}
                                         checked={values.basics.cmsCenters.includes(
-                                          center as KeyType
+                                          center
                                         )}
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
@@ -492,7 +481,7 @@ const BasicsContent = () => {
                                             arrayHelpers.push(e.target.value);
                                           } else {
                                             const idx = values.basics.cmsCenters.indexOf(
-                                              e.target.value as KeyType
+                                              e.target.value as CMSCenter
                                             );
                                             arrayHelpers.remove(idx);
                                           }
@@ -562,9 +551,7 @@ const BasicsContent = () => {
                           {flatErrors['basics.cmmiGroups']}
                         </FieldErrorMsg>
 
-                        {Object.keys(cmmiGroupsConfig.options).map(group => {
-                          type KeyType = keyof typeof cmmiGroupsConfig.options;
-
+                        {getKeys(cmmiGroupsConfig.options).map(group => {
                           return (
                             <Fragment key={group}>
                               <Field
@@ -576,12 +563,10 @@ const BasicsContent = () => {
                                 }
                                 id={`new-plan-cmmiGroup-${group}`}
                                 name="basics.cmmiGroups"
-                                label={
-                                  cmmiGroupsConfig.options[group as KeyType]
-                                }
+                                label={cmmiGroupsConfig.options[group]}
                                 value={group}
                                 checked={values.basics.cmmiGroups.includes(
-                                  group as KeyType
+                                  group
                                 )}
                               />
                             </Fragment>

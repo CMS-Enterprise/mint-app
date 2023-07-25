@@ -41,6 +41,7 @@ import {
   AlternativePaymentModelType,
   KeyCharacteristic
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
@@ -213,17 +214,17 @@ const KeyCharacteristics = () => {
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
                   heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -261,11 +262,9 @@ const KeyCharacteristics = () => {
                   </FieldErrorMsg>
 
                   <Fieldset>
-                    {Object.keys(AlternativePaymentModelType)
+                    {getKeys(alternativePaymentModelTypesConfig.options)
                       .filter(x => x !== AlternativePaymentModelType.NOT_APM)
                       .map(type => {
-                        type KeyType = keyof typeof alternativePaymentModelTypesConfig.options;
-
                         return (
                           <Fragment key={type}>
                             <Field
@@ -273,16 +272,14 @@ const KeyCharacteristics = () => {
                               id={`plan-characteristics-alternative-payment-${type}`}
                               name="alternativePaymentModelTypes"
                               label={
-                                alternativePaymentModelTypesConfig.options[
-                                  type as KeyType
-                                ]
+                                alternativePaymentModelTypesConfig.options[type]
                               }
                               value={type}
                               checked={values.alternativePaymentModelTypes.includes(
-                                type as AlternativePaymentModelType
+                                type
                               )}
                               disabled={values.alternativePaymentModelTypes.includes(
-                                AlternativePaymentModelType.NOT_APM
+                                type
                               )}
                             />
                           </Fragment>

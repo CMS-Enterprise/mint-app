@@ -5,14 +5,23 @@
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 import {
+  AgreementType,
   AlternativePaymentModelType,
   CMMIGroup,
   CMSCenter,
+  GeographyApplication,
+  GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelType,
   TaskStatus
 } from './graphql-global-types';
+
+// Util used to preserve type defintions when mapping over keys of object
+// https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
+export const getKeys = Object.keys as <T extends object>(
+  obj: T
+) => Array<keyof T>;
 
 export enum Bool {
   true = 'true',
@@ -46,7 +55,7 @@ export type TranslationFieldProperties = {
 // Extended type for questions that have options - boolean, radio, checkbox, etc.
 // Takes in a enum parameter for translation key
 export type TranslationFieldPropertiesWithOptions<
-  T extends string
+  T extends keyof T | string
 > = TranslationFieldProperties & {
   options: Record<T, string>;
 };
@@ -120,6 +129,19 @@ export type TranslationGeneralCharacteristics = {
   communityPartnersInvolved: TranslationFieldPropertiesWithOptions<Bool>;
   communityPartnersInvolvedDescription: TranslationFieldProperties;
   communityPartnersInvolvedNote: TranslationFieldProperties;
+  // Targets and Options
+  geographiesTargeted: TranslationFieldPropertiesWithOptions<Bool>;
+  geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
+  geographiesTargetedTypesOther: TranslationFieldProperties;
+  geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;
+  geographiesTargetedAppliedToOther: TranslationFieldProperties;
+  geographiesTargetedNote: TranslationFieldProperties;
+  participationOptions: TranslationFieldPropertiesWithOptions<Bool>;
+  participationOptionsNote: TranslationFieldProperties;
+  agreementTypes: TranslationFieldPropertiesWithOptions<AgreementType>;
+  agreementTypesOther: TranslationFieldProperties;
+  multiplePatricipationAgreementsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
+  multiplePatricipationAgreementsNeededNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

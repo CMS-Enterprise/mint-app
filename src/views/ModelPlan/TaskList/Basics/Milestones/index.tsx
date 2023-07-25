@@ -38,6 +38,7 @@ import {
 } from 'queries/Basics/types/GetMilestones';
 import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
+import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -224,17 +225,17 @@ const Milestones = () => {
 
             return (
               <>
-                {Object.keys(errors).length > 0 && (
+                {getKeys(errors).length > 0 && (
                   <ErrorAlert
                     testId="formik-validation-errors"
                     classNames="margin-top-3"
                     heading={miscellaneousT('checkAndFix')}
                   >
-                    {Object.keys(flatErrors).map(key => {
+                    {getKeys(flatErrors).map(key => {
                       return (
                         <ErrorAlertMessage
                           key={`Error.${key}`}
-                          errorKey={key}
+                          errorKey={`${key}`}
                           message={flatErrors[key]}
                         />
                       );
@@ -557,11 +558,11 @@ const Milestones = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        if (Object.keys(errors).length > 0) {
+                        if (getKeys(errors).length > 0) {
                           window.scrollTo(0, 0);
                         } else {
                           validateForm().then(err => {
-                            if (Object.keys(err).length > 0) {
+                            if (getKeys(err).length > 0) {
                               window.scrollTo(0, 0);
                             } else {
                               handleFormSubmit('back');

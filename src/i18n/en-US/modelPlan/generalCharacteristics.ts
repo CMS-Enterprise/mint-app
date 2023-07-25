@@ -301,6 +301,132 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'Notes',
     dataType: 'string',
     formType: 'textarea'
+  },
+  geographiesTargeted: {
+    gqlField: 'geographiesTargeted',
+    goField: 'GeographiesTargeted',
+    dbField: 'geographies_targeted',
+    question: 'Is the model targeted at specific geographies?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  geographiesTargetedTypes: {
+    gqlField: 'geographiesTargetedTypes',
+    goField: 'GeographiesTargetedTypes',
+    dbField: 'geographies_targeted_types',
+    question: 'Geography type is',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      STATE: 'State',
+      REGION: 'Region (CBSA, MSA, HRR, etc.)',
+      OTHER: 'Other'
+    }
+  },
+  geographiesTargetedTypesOther: {
+    gqlField: 'geographiesTargetedTypesOther',
+    goField: 'GeographiesTargetedTypesOther',
+    dbField: 'geographies_targeted_types_other',
+    question: 'Please specify what the other geography type is.',
+    dataType: 'string',
+    formType: 'text'
+  },
+  geographiesTargetedAppliedTo: {
+    gqlField: 'geographiesTargetedAppliedTo',
+    goField: 'GeographiesTargetedAppliedTo',
+    dbField: 'geographies_targeted_applied_to',
+    question: 'Geographies are applied to',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      PARTICIPANTS: 'Participants',
+      PROVIDERS: 'Providers',
+      BENEFICIARIES: 'Beneficiaries',
+      OTHER: 'OTHER'
+    }
+  },
+  geographiesTargetedAppliedToOther: {
+    gqlField: 'geographiesTargetedAppliedToOther',
+    goField: 'GeographiesTargetedAppliedToOther',
+    dbField: 'geographies_targeted_applied_to_other',
+    question: 'Please specify what the geographies are applied to.',
+    dataType: 'string',
+    formType: 'text'
+  },
+  geographiesTargetedNote: {
+    gqlField: 'geographiesTargetedNote',
+    goField: 'GeographiesTargetedNote',
+    dbField: 'geographies_targeted_note',
+    question: 'Notes',
+    dataType: 'boolean',
+    formType: 'radio'
+  },
+  participationOptions: {
+    gqlField: 'participationOptions',
+    goField: 'ParticipationOptions',
+    dbField: 'participation_options',
+    question: 'Does the model offer different options for participation?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  participationOptionsNote: {
+    gqlField: 'participationOptionsNote',
+    goField: 'ParticipationOptionsNote',
+    dbField: 'participation_options_note',
+    question: 'Notes',
+    dataType: 'boolean',
+    formType: 'radio'
+  },
+  agreementTypes: {
+    gqlField: 'agreementTypes',
+    goField: 'AgreementTypes',
+    dbField: 'agreement_types',
+    question: 'Are community partners involved?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      PARTICIPATION: 'Participation Agreement',
+      COOPERATIVE: 'Co-Operative Agreement/Grant',
+      OTHER: 'Other'
+    }
+  },
+  agreementTypesOther: {
+    gqlField: 'agreementTypesOther',
+    goField: 'AgreementTypesOther',
+    dbField: 'agreement_types_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  multiplePatricipationAgreementsNeeded: {
+    gqlField: 'multiplePatricipationAgreementsNeeded',
+    goField: 'MultiplePatricipationAgreementsNeeded',
+    dbField: 'multiple_patricipation_agreements_needed',
+    question: 'Will more than one participation agreement be needed?',
+    hint:
+      'depending on awardee selections or characteristics such as risk/type/size',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  multiplePatricipationAgreementsNeededNote: {
+    gqlField: 'multiplePatricipationAgreementsNeededNote',
+    goField: 'MultiplePatricipationAgreementsNeededNote',
+    dbField: 'multiple_patricipation_agreements_needed_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
   }
 };
 

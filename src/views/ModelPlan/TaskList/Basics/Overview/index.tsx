@@ -35,6 +35,7 @@ import {
   UpdatePlanBasicsVariables
 } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
@@ -165,17 +166,17 @@ const Overview = () => {
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
                   heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -300,7 +301,7 @@ const Overview = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    if (Object.keys(formikRef.current!.touched).length !== 0) {
+                    if (getKeys(formikRef.current!.touched).length !== 0) {
                       handleFormSubmit();
                     }
                   }}
