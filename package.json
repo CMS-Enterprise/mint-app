@@ -44,7 +44,7 @@
     "enzyme-to-json": "^3.6.2",
     "font-awesome": "^4.7.0",
     "formik": "^2.1.6",
-    "graphql": "^16.7.1",
+    "graphql": "^15.8.0",
     "i18next": "^19.8.5",
     "i18next-browser-languagedetector": "^5.0.0",
     "istanbul-lib-coverage": "^3.0.0",
@@ -92,7 +92,7 @@
     "lint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "generate": "apollo client:codegen --passthroughCustomScalars --localSchemaFile=pkg/graph/schema.graphql --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
+    "generate": "graphql-codegen && apollo client:codegen --passthroughCustomScalars --localSchemaFile=pkg/graph/schema.graphql --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -175,7 +175,8 @@
     "lodash": "4.17.21",
     "axios": "0.21.1",
     "marked": "0.7.0",
-    "node-fetch": "2.6.1"
+    "node-fetch": "2.6.1",
+    "graphql": "15.8.0"
   },
   "jest": {
     "collectCoverageFrom": [
