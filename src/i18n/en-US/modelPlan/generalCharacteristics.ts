@@ -346,7 +346,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       PARTICIPANTS: 'Participants',
       PROVIDERS: 'Providers',
       BENEFICIARIES: 'Beneficiaries',
-      OTHER: 'OTHER'
+      OTHER: 'Other'
     }
   },
   geographiesTargetedAppliedToOther: {
@@ -390,11 +390,13 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'AgreementTypes',
     dbField: 'agreement_types',
     question: 'Are community partners involved?',
+    hint:
+      'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
     dataType: 'boolean',
     formType: 'radio',
     options: {
-      PARTICIPATION: 'Participation Agreement',
       COOPERATIVE: 'Co-Operative Agreement/Grant',
+      PARTICIPATION: 'Participation Agreement',
       OTHER: 'Other'
     }
   },
