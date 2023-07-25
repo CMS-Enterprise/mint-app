@@ -211,7 +211,7 @@ const PeopleImpact = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldGroup
                           scrollElement="numberPeopleImpacted"
                           error={!!flatErrors.numberPeopleImpacted}

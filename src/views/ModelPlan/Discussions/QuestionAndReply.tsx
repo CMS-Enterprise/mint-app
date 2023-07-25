@@ -67,7 +67,7 @@ const QuestionAndReply = ({
     content: Yup.string().trim().required(`Please enter a ${renderType}`)
   });
 
-  const { data, loading } = useQuery<GetMostRecentRoleSelectionType>(
+  const { data, loading, error } = useQuery<GetMostRecentRoleSelectionType>(
     GetMostRecentRoleSelection
   );
 
@@ -173,7 +173,7 @@ const QuestionAndReply = ({
                   window.scrollTo(0, 0);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="user-role"
                     error={!!flatErrors.userRole}

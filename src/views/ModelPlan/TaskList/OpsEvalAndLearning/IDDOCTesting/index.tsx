@@ -204,7 +204,7 @@ const IDDOCTesting = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <h3>{t('testingQuestions')}</h3>
 
                   <Alert

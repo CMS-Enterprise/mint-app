@@ -222,7 +222,7 @@ const KeyCharacteristics = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="alternativePaymentModelTypes"
                     error={!!flatErrors.alternativePaymentModelTypes}

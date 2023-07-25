@@ -223,7 +223,7 @@ const IDDOC = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <h3>{t('iddocHeading')}</h3>
                   <FieldGroup
                     scrollElement="technicalContactsIdentified"

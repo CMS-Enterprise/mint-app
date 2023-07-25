@@ -298,7 +298,7 @@ export const OpsEvalAndLearningContent = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldArray
                     name="agencyOrStateHelp"
                     render={arrayHelpers => (

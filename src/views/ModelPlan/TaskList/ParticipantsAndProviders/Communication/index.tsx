@@ -217,7 +217,7 @@ export const Communication = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="communicationMethod"
                     error={!!flatErrors.communicationMethod}

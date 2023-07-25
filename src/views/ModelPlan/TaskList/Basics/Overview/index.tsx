@@ -187,7 +187,7 @@ const Overview = () => {
                   window.scrollTo(0, 0);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="modelType"
                     error={!!flatErrors.modelType}

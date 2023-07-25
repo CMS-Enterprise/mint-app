@@ -238,7 +238,7 @@ const FundingSource = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldGroup
                           scrollElement="fundingSource"
                           error={!!flatErrors.fundingSource}

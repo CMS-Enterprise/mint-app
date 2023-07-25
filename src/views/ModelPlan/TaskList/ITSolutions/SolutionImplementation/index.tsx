@@ -336,7 +336,7 @@ const SolutionImplementation = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         {loading ? (
                           <PageLoading />
                         ) : (

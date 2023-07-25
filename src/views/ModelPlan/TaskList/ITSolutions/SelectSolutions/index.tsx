@@ -310,7 +310,7 @@ const SelectSolutions = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <Fieldset disabled={loading}>
+                    <Fieldset disabled={!!error || loading}>
                       <legend className="text-bold margin-bottom-2">
                         {t('chooseCommonSolution')}
                       </legend>

@@ -255,7 +255,7 @@ const Evaluation = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="evaluationApproaches"
                     error={!!flatErrors.evaluationApproaches}

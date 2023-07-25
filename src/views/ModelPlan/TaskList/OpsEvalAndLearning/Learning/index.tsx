@@ -233,7 +233,7 @@ const Learning = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="modelLearningSystems"
                     error={!!flatErrors.modelLearningSystems}

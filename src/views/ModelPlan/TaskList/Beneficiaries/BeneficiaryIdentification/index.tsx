@@ -214,7 +214,7 @@ const BeneficiaryIdentification = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldGroup
                           scrollElement="beneficiaries"
                           error={!!flatErrors.beneficiaries}

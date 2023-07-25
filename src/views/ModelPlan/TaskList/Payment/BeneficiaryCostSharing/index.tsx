@@ -208,7 +208,7 @@ const BeneficiaryCostSharing = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <PageHeading
                           headingLevel="h3"
                           className="margin-bottom-3"

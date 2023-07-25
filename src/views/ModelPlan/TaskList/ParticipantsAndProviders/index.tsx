@@ -209,7 +209,7 @@ export const ParticipantsAndProvidersContent = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldGroup
                           scrollElement="participants"
                           error={!!flatErrors.participants}

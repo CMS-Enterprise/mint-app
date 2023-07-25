@@ -270,7 +270,7 @@ const BasicsContent = () => {
                         window.scrollTo(0, 0);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldGroup
                           scrollElement="modelName"
                           error={!!flatErrors.modelName}

@@ -226,7 +226,7 @@ const CCWAndQuality = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   {isCCWInvolvement(ccmInvolvment) && (
                     <>
                       <h3>{t('ccwSpecific')}</h3>

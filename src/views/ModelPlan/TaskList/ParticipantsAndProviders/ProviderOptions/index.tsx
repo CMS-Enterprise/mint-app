@@ -246,7 +246,7 @@ export const ProviderOptions = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="providerAdditionFrequency"
                     error={!!flatErrors.providerAdditionFrequency}

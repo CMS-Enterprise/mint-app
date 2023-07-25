@@ -256,7 +256,7 @@ const DataSharing = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="dataSharingStarts"
                     error={!!flatErrors.dataSharingStarts}

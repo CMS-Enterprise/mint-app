@@ -196,7 +196,7 @@ const Involvements = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="careCoordinationInvolved"
                     error={!!flatErrors.careCoordinationInvolved}

@@ -251,7 +251,7 @@ const Recover = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldGroup
                           scrollElement="willRecoverPayments"
                           error={!!flatErrors.willRecoverPayments}

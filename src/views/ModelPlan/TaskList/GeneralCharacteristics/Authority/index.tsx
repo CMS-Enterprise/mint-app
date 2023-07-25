@@ -220,7 +220,7 @@ const Authority = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="rulemakingRequired"
                     error={!!flatErrors.rulemakingRequired}

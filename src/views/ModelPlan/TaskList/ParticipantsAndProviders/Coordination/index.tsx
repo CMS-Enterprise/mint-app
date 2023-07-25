@@ -205,7 +205,7 @@ export const Coordination = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
                     scrollElement="coordinateWork"
                     error={!!flatErrors.coordinateWork}

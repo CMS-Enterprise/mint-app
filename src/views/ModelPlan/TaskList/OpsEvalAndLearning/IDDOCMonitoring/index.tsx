@@ -206,7 +206,7 @@ const IDDOCMonitoring = () => {
                   handleSubmit(e);
                 }}
               >
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <h3>{t('dataMonitoringContinued')}</h3>
 
                   <FieldGroup
