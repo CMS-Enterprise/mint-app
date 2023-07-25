@@ -42,6 +42,7 @@ describe('Discussion Center', () => {
     cy.contains('button', 'Save answer').should('be.disabled');
 
     cy.get('#discussion-content')
+      .should('not.be.disabled')
       .type('Model characteristics is located within the task list.')
       .should(
         'have.value',
