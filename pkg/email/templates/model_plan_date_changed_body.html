@@ -85,39 +85,38 @@
 <br/>
 <br/>
 <h3>Anticipated high level timeline</h3>
-<br />
+<br/>
 
-{{define "oldDate"}}
-    {{if .}}
-      {{.Format "01/02/2006"}}
-    {{else}}
-      no date entered
-    {{end}}
-{{end}}
-
-{{define "newDate"}}
+{{define "date"}}
     {{if .}}
         {{.Format "01/02/2006"}}
     {{else}}
-      no date entered
+      <i>no date entered</i>
     {{end}}
 {{end}}
 
 {{range .DateChanges}}
   <p>
     <b>{{.Field}}:</b>
-    <br />
+    <br/>
       {{if .IsRange}}
-        <span style="color: red; text-decoration: line-through;">
-          {{template "oldDate" .OldRangeStart}} - {{template "oldDate" .OldRangeEnd}}<br/>
-        </span>
-        {{template "newDate" .NewRangeStart}} - {{template "newDate" .NewRangeEnd}}
+          {{if .IsChanged}}
+            <span style="color: #D54309; text-decoration: line-through;">
+              {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}<br/>
+            </span>
+            {{template "date" .NewRangeStart}} - {{template "date" .NewRangeEnd}}
+          {{else}}
+            {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}
+          {{end}}
       {{else}}
-        <span style="color: red; text-decoration: line-through;">{{template "oldDate" .OldDate}}</span><br/>
-          {{template "newDate" .NewDate}}
+          {{if .IsChanged}}
+            <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldDate}}</span> - {{template "date" .NewDate}}
+          {{else}}
+            {{template "date" .OldDate}}
+          {{end}}
       {{end}}
-    <br />
-    <br />
+    <br/>
+    <br/>
   </p>
 {{end}}
 

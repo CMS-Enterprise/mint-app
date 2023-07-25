@@ -65,7 +65,6 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]email.DateChange, err
 	dateChanges := make(map[string]email.DateChange)
 
 	for fieldKey, fieldData := range fieldDataMap {
-
 		isFieldChanged, oldValue, newValue := dp.checkDateFieldChanged(fieldKey)
 		if isFieldChanged {
 			if fieldData.IsRange { // check if the field is a range
@@ -74,8 +73,9 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]email.DateChange, err
 				}
 
 				dateChangeValue := &email.DateChange{
-					Field:   fieldData.HumanReadableName,
-					IsRange: true,
+					IsChanged: true,
+					Field:     fieldData.HumanReadableName,
+					IsRange:   true,
 				}
 
 				// Determine the values for the other end of the range
@@ -126,12 +126,54 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]email.DateChange, err
 				dateChanges[fieldData.CommonKey] = *dateChangeValue
 			} else {
 				dateChanges[fieldKey] = email.DateChange{
-					Field:   fieldData.HumanReadableName,
-					IsRange: false,
-					OldDate: oldValue,
-					NewDate: newValue,
+					IsChanged: true,
+					Field:     fieldData.HumanReadableName,
+					IsRange:   false,
+					OldDate:   oldValue,
+					NewDate:   newValue,
 				}
 			}
+		}
+	}
+
+	if len(dateChanges) == 0 {
+		return dateChanges, nil
+	}
+
+	for fieldKey, fieldData := range fieldDataMap {
+		if _, isChanged := dateChanges[fieldData.CommonKey]; !isChanged {
+			// Only handle start of range in range dates to simplify logic
+			if fieldData.IsRange && !fieldData.IsRangeStart {
+				continue
+			}
+
+			dateChange := email.DateChange{
+				IsChanged: false,
+				Field:     fieldData.HumanReadableName,
+				IsRange:   fieldData.IsRange,
+			}
+
+			if fieldData.IsRange {
+				if dp.existing[fieldKey] != nil {
+					dateChange.OldRangeStart = copyTime(dp.existing[fieldKey].(*time.Time))
+				} else {
+					dateChange.OldRangeStart = nil
+				}
+
+				if dp.existing[fieldKey] != nil {
+					dateChange.OldRangeEnd = copyTime(dp.existing[fieldData.OtherRangeKey].(*time.Time))
+				} else {
+					dateChange.OldRangeEnd = nil
+				}
+			} else {
+				if dp.existing[fieldKey] != nil {
+					dateChange.OldDate = copyTime(dp.existing[fieldKey].(*time.Time))
+				} else {
+					dateChange.OldDate = nil
+				}
+			}
+
+			dateChanges[fieldData.CommonKey] = dateChange
 		}
 	}
 
@@ -203,6 +245,7 @@ func getFieldDataMap() map[string]dateFieldData {
 		"completeICIP": {
 			HumanReadableName: "Complete ICIP",
 			IsRange:           false,
+			CommonKey:         "completeICIP",
 		},
 		"clearanceStarts": {
 			HumanReadableName: "Clearance",
@@ -221,6 +264,7 @@ func getFieldDataMap() map[string]dateFieldData {
 		"announced": {
 			HumanReadableName: "Announce model",
 			IsRange:           false,
+			CommonKey:         "announced",
 		},
 		"applicationsStart": {
 			HumanReadableName: "Application period",
@@ -253,7 +297,19 @@ func getFieldDataMap() map[string]dateFieldData {
 		"wrapUpEnds": {
 			HumanReadableName: "Model wrap-up end date",
 			IsRange:           false,
+			CommonKey:         "wrapUpEnds",
 		},
 	}
 	return fieldData
+}
+
+func getOrderedCommonKeys() []string {
+	return []string{
+		"completeICIP",
+		"clearance",
+		"announced",
+		"applications",
+		"performancePeriod",
+		"wrapUpEnds",
+	}
 }
