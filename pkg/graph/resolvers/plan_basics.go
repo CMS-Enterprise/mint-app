@@ -3,8 +3,6 @@ package resolvers
 import (
 	"context"
 
-	"github.com/davecgh/go-spew/spew"
-
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -141,15 +139,11 @@ func sendDateChangedEmails(
 
 	dateChangeSlice := make([]email.DateChange, 0, len(dateChanges))
 
-	spew.Dump(dateChanges)
-
 	// Loop over the field data map to ensure order of the date changes in the email
 	orderedCommonKeys := getOrderedCommonKeys()
 	for _, commonKey := range orderedCommonKeys {
 		dateChangeSlice = append(dateChangeSlice, dateChanges[commonKey])
 	}
-
-	spew.Dump(dateChangeSlice)
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
