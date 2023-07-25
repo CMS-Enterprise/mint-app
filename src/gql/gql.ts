@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  query GetDate {\n    whatDateIsIt\n  }\n": types.GetDateDocument,
     "\n  query GetNDA {\n    ndaInfo {\n      agreed\n      agreedDts\n    }\n  }\n": types.GetNdaDocument,
+    "\n  mutation GetWeekFromNow($date: Date!) {\n    oneWeekFromNow(date: $date)\n  }\n": types.GetWeekFromNowDocument,
 };
 
 /**
@@ -39,6 +40,10 @@ export function graphql(source: "\n  query GetDate {\n    whatDateIsIt\n  }\n"):
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query GetNDA {\n    ndaInfo {\n      agreed\n      agreedDts\n    }\n  }\n"): (typeof documents)["\n  query GetNDA {\n    ndaInfo {\n      agreed\n      agreedDts\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation GetWeekFromNow($date: Date!) {\n    oneWeekFromNow(date: $date)\n  }\n"): (typeof documents)["\n  mutation GetWeekFromNow($date: Date!) {\n    oneWeekFromNow(date: $date)\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

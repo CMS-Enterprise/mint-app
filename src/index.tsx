@@ -110,9 +110,10 @@ const scalarLink = ApolloLink.from([
         serialize: (parsed: unknown): string | null => {
           console.log('serialize', parsed);
 
-          return parsed instanceof DateTime
-            ? parsed.toFormat('YYYY-MM-DD')
-            : null;
+          if (parsed instanceof DateTime) {
+            return parsed.toISODate();
+          }
+          return null;
         },
         parseValue: (raw: unknown): DateTime | null => {
           console.log('parseValue', raw);

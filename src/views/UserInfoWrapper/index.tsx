@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
+import { DateTime } from 'luxon';
 import getDateQuery from 'queriesCodegen/getDate';
 import getNDAQuery from 'queriesCodegen/getNDA';
+import getWeekFromNowMutation from 'queriesCodegen/getWeekFromNow';
 
 import { localAuthStorageKey } from 'constants/localAuth';
 import { setUser } from 'reducers/authReducer';
@@ -29,6 +31,8 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
 
   const { data: dateData } = useQuery(getDateQuery);
   console.log('DATE DATA:', dateData);
+
+  const [createWeekData] = useMutation(getWeekFromNowMutation);
 
   const storeUserInfo = async () => {
     if (
@@ -63,7 +67,26 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState?.isAuthenticated, data]);
 
-  return <>{children}</>;
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => {
+          const someDate = DateTime.fromISO('2016-05-25T09:08:34.123');
+          createWeekData({
+            variables: {
+              date: someDate
+            }
+          }).then(weekData => {
+            console.log('WEEK DATA:', weekData);
+          });
+        }}
+      >
+        CLICK MEEEE
+      </button>
+      {children}
+    </>
+  );
 };
 
 export default UserInfoWrapper;
