@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { DateTime } from 'luxon';
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -16,7 +15,7 @@ export type Scalars = {
   /** Any represents any GraphQL value. */
   Any: any;
   /** Date values are represented as strings using GoLang's "DateOnly" format, for example 2006-01-02 */
-  Date: DateTime;
+  Date: Time;
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: any;
   /** Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z */
@@ -2558,7 +2557,7 @@ export enum WaiverType {
 export type GetDateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDateQuery = { __typename?: 'Query', whatDateIsIt: DateTime };
+export type GetDateQuery = { __typename?: 'Query', whatDateIsIt: Time };
 
 export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2570,7 +2569,7 @@ export type GetWeekFromNowMutationVariables = Exact<{
 }>;
 
 
-export type GetWeekFromNowMutation = { __typename?: 'Mutation', oneWeekFromNow: DateTime };
+export type GetWeekFromNowMutation = { __typename?: 'Mutation', oneWeekFromNow: Time };
 
 
 export const GetDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"whatDateIsIt"}}]}}]} as unknown as DocumentNode<GetDateQuery, GetDateQueryVariables>;

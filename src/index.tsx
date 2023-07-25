@@ -16,12 +16,12 @@ import { withScalars } from 'apollo-link-scalars';
 import { createUploadLink } from 'apollo-upload-client';
 import axios from 'axios';
 import { detect } from 'detect-browser';
-import { buildClientSchema, IntrospectionQuery } from 'graphql';
-import { DateTime } from 'luxon';
+import { buildClientSchema, IntrospectionQuery, parseValue } from 'graphql';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { TextEncoder } from 'text-encoding';
 
 import { localAuthStorageKey } from 'constants/localAuth';
+import DateTimeSerializers from 'utils/scalars';
 
 import './i18n';
 
@@ -106,25 +106,7 @@ const scalarLink = ApolloLink.from([
   withScalars({
     schema,
     typesMap: {
-      Date: {
-        serialize: (parsed: unknown): string | null => {
-          console.log('serialize', parsed);
-
-          if (parsed instanceof DateTime) {
-            return parsed.toISODate();
-          }
-          return null;
-        },
-        parseValue: (raw: unknown): DateTime | null => {
-          console.log('parseValue', raw);
-          if (!raw) return null; // if for some reason we want to treat empty string as null, for example
-          if (typeof raw === 'string') {
-            return DateTime.fromISO(raw);
-          }
-
-          throw new Error('invalid value to parse');
-        }
-      }
+      Date: DateTimeSerializers
     }
   })
 ]);

@@ -11,7 +11,7 @@ const config: CodegenConfig = {
       },
       config: {
         scalars: {
-          Date: 'luxon#DateTime'
+          Date: 'Time'
         }
       }
     },
