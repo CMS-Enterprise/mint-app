@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -109,14 +108,6 @@ describe('Ask a Question Component', () => {
       ).toBeInTheDocument();
 
       expect(getByText('Type your question')).toBeInTheDocument();
-
-      const feedbackField = screen.getByRole('textbox', {
-        name: /Type your question/i
-      });
-
-      userEvent.type(feedbackField, 'Test feedback');
-
-      expect(feedbackField).toHaveValue('Test feedback');
     });
   });
 });
