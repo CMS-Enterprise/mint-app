@@ -129,8 +129,8 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]email.DateChange, err
 					IsChanged: true,
 					Field:     fieldData.HumanReadableName,
 					IsRange:   false,
-					OldDate:   oldValue,
-					NewDate:   newValue,
+					OldDate:   copyTime(oldValue),
+					NewDate:   copyTime(newValue),
 				}
 			}
 		}

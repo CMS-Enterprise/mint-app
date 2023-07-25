@@ -415,9 +415,17 @@ const ReadOnlyGeneralCharacteristics = ({
               listItems: geographiesTargetedAppliedTo?.map(
                 translateGeographyApplication
               ),
-              listOtherItem: geographiesTargetedAppliedToOther,
-              notes: geographiesTargetedNote
+              listOtherItem: geographiesTargetedAppliedToOther
             }}
+          />
+        )}
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographiesTargetedTypes',
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={geographiesTargetedNote}
           />
         )}
 
