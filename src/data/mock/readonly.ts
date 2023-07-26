@@ -16,8 +16,10 @@ import { GetAllPayments_modelPlan_payments as PaymentTypes } from 'queries/ReadO
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 import {
   AgencyOrStateHelpType,
+  AgreementType,
   AlternativePaymentModelType,
   AnticipatedPaymentFrequencyType,
+  AuthorityAllowance,
   BeneficiariesType,
   CcmInvolvmentType,
   ClaimsBasedPayType,
@@ -32,6 +34,8 @@ import {
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
+  GeographyApplication,
+  GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -53,141 +57,11 @@ import {
   StakeholdersType,
   TaskStatus,
   TeamRole,
-  TriStateAnswer
+  TriStateAnswer,
+  WaiverType
 } from 'types/graphql-global-types';
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
-
-const beneficiaryData: AllBeneficiariesTypes = {
-  __typename: 'PlanBeneficiaries',
-  id: '123',
-  modelPlanID: modelID,
-  beneficiaries: [
-    BeneficiariesType.DISEASE_SPECIFIC,
-    BeneficiariesType.DUALLY_ELIGIBLE
-  ],
-  beneficiariesOther: null,
-  beneficiariesNote: null,
-  treatDualElligibleDifferent: TriStateAnswer.YES,
-  treatDualElligibleDifferentHow: 'null',
-  treatDualElligibleDifferentNote: null,
-  excludeCertainCharacteristics: TriStateAnswer.NO,
-  excludeCertainCharacteristicsCriteria: null,
-  excludeCertainCharacteristicsNote: null,
-  numberPeopleImpacted: 1234,
-  estimateConfidence: ConfidenceType.COMPLETELY,
-  confidenceNote: null,
-  beneficiarySelectionMethod: [SelectionMethodType.HISTORICAL],
-  beneficiarySelectionOther: null,
-  beneficiarySelectionNote: null,
-  beneficiarySelectionFrequency: FrequencyType.ANNUALLY,
-  beneficiarySelectionFrequencyOther: null,
-  beneficiarySelectionFrequencyNote: null,
-  beneficiaryOverlap: OverlapType.YES_NEED_POLICIES,
-  beneficiaryOverlapNote: null,
-  precedenceRules: null,
-  status: TaskStatus.IN_PROGRESS
-};
-
-export const benficiaryMocks = [
-  {
-    request: {
-      query: GetAllBeneficiaries,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          beneficiaries: beneficiaryData
-        }
-      }
-    }
-  }
-];
-
-const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
-  __typename: 'PlanGeneralCharacteristics',
-  id: '123',
-  isNewModel: false,
-  existingModel: 'Accountable Care Organizations (ACOs): General Information',
-  resemblesExistingModel: true,
-  resemblesExistingModelHow: null,
-  resemblesExistingModelNote: 'THIS IS A NEW NOTE',
-  hasComponentsOrTracks: false,
-  hasComponentsOrTracksDiffer: null,
-  hasComponentsOrTracksNote: null,
-  alternativePaymentModelTypes: [
-    AlternativePaymentModelType.REGULAR,
-    AlternativePaymentModelType.MIPS
-  ],
-  alternativePaymentModelNote: 'asdfasd',
-  keyCharacteristics: [
-    KeyCharacteristic.POPULATION_BASED,
-    KeyCharacteristic.PAYMENT,
-    KeyCharacteristic.SERVICE_DELIVERY,
-    KeyCharacteristic.OTHER
-  ],
-  keyCharacteristicsOther: null,
-  keyCharacteristicsNote: 'test',
-  collectPlanBids: null,
-  collectPlanBidsNote: null,
-  managePartCDEnrollment: null,
-  managePartCDEnrollmentNote: null,
-  planContractUpdated: null,
-  planContractUpdatedNote: null,
-  careCoordinationInvolved: false,
-  careCoordinationInvolvedDescription: null,
-  careCoordinationInvolvedNote: null,
-  additionalServicesInvolved: true,
-  additionalServicesInvolvedDescription: 'Lots of additional services',
-  additionalServicesInvolvedNote: null,
-  communityPartnersInvolved: true,
-  communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
-  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
-  geographiesTargeted: false,
-  geographiesTargetedTypes: [],
-  geographiesTargetedTypesOther: null,
-  geographiesTargetedAppliedTo: [],
-  geographiesTargetedAppliedToOther: null,
-  geographiesTargetedNote: null,
-  participationOptions: false,
-  participationOptionsNote: null,
-  agreementTypes: [],
-  agreementTypesOther: null,
-  multiplePatricipationAgreementsNeeded: null,
-  multiplePatricipationAgreementsNeededNote: null,
-  rulemakingRequired: true,
-  rulemakingRequiredDescription: 'Lots of rules',
-  rulemakingRequiredNote: null,
-  authorityAllowances: [],
-  authorityAllowancesOther: null,
-  authorityAllowancesNote: null,
-  waiversRequired: false,
-  waiversRequiredTypes: [],
-  waiversRequiredNote: null,
-  status: TaskStatus.IN_PROGRESS
-};
-
-export const generalCharacteristicMocks = [
-  {
-    request: {
-      query: GetAllGeneralCharacteristics,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          existingModelLinks: [],
-          generalCharacteristics: generalCharacteristicData
-        }
-      }
-    }
-  }
-];
 
 const modelBasicsData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
@@ -234,6 +108,221 @@ export const modelBasicsMocks = [
           id: modelID,
           nameHistory: ['First Name', 'Second Name'],
           basics: modelBasicsData
+        }
+      }
+    }
+  }
+];
+
+const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
+  __typename: 'PlanGeneralCharacteristics',
+  id: '123',
+  isNewModel: false,
+  existingModel: 'Accountable Care Organizations (ACOs): General Information',
+  resemblesExistingModel: true,
+  resemblesExistingModelHow: null,
+  resemblesExistingModelNote: 'THIS IS A NEW NOTE',
+  hasComponentsOrTracks: true,
+  hasComponentsOrTracksDiffer: 'In every way',
+  hasComponentsOrTracksNote: 'Tracks note',
+  alternativePaymentModelTypes: [
+    AlternativePaymentModelType.REGULAR,
+    AlternativePaymentModelType.MIPS
+  ],
+  alternativePaymentModelNote: 'asdfasd',
+  keyCharacteristics: [
+    KeyCharacteristic.POPULATION_BASED,
+    KeyCharacteristic.PAYMENT,
+    KeyCharacteristic.SERVICE_DELIVERY,
+    KeyCharacteristic.OTHER
+  ],
+  keyCharacteristicsOther: 'Custom characteristic',
+  keyCharacteristicsNote: 'test',
+  collectPlanBids: true,
+  collectPlanBidsNote: 'Collect bids note',
+  managePartCDEnrollment: true,
+  managePartCDEnrollmentNote: 'Manage enrollment note',
+  planContractUpdated: true,
+  planContractUpdatedNote: 'Contract updated note',
+  careCoordinationInvolved: true,
+  careCoordinationInvolvedDescription: 'Care description',
+  careCoordinationInvolvedNote: 'Care note',
+  additionalServicesInvolved: true,
+  additionalServicesInvolvedDescription: 'Lots of additional services',
+  additionalServicesInvolvedNote: 'Additional services note',
+  communityPartnersInvolved: true,
+  communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
+  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
+  geographiesTargeted: true,
+  geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesTargetedTypesOther: 'Geography type other',
+  geographiesTargetedAppliedTo: [
+    GeographyApplication.BENEFICIARIES,
+    GeographyApplication.OTHER
+  ],
+  geographiesTargetedAppliedToOther: 'Geography applied other',
+  geographiesTargetedNote: 'Geography note',
+  participationOptions: true,
+  participationOptionsNote: 'Participation options note',
+  agreementTypes: [AgreementType.OTHER],
+  agreementTypesOther: 'Other agreement',
+  multiplePatricipationAgreementsNeeded: true,
+  multiplePatricipationAgreementsNeededNote: 'We will need agreements',
+  rulemakingRequired: true,
+  rulemakingRequiredDescription: 'Lots of rules',
+  rulemakingRequiredNote: 'My rulemaking note',
+  authorityAllowances: [AuthorityAllowance.ACA, AuthorityAllowance.OTHER],
+  authorityAllowancesOther: 'Other allowance',
+  authorityAllowancesNote: 'Allowance note',
+  waiversRequired: true,
+  waiversRequiredTypes: [WaiverType.FRAUD_ABUSE, WaiverType.MEDICAID],
+  waiversRequiredNote: 'My waiver note',
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const generalCharacteristicMocks = [
+  {
+    request: {
+      query: GetAllGeneralCharacteristics,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          existingModelLinks: [],
+          generalCharacteristics: generalCharacteristicData
+        }
+      }
+    }
+  }
+];
+
+const participantsAndProvidersData: GetAllParticipantsTypes = {
+  __typename: 'PlanParticipantsAndProviders',
+  id: '123',
+  participants: [
+    ParticipantsType.MEDICAID_PROVIDERS,
+    ParticipantsType.STATES,
+    ParticipantsType.STATE_MEDICAID_AGENCIES,
+    ParticipantsType.OTHER
+  ],
+  medicareProviderType: null,
+  statesEngagement: 'State',
+  participantsOther: 'This is the other',
+  participantsNote: null,
+  participantsCurrentlyInModels: true,
+  participantsCurrentlyInModelsNote: null,
+  modelApplicationLevel: 'ojnjklnmjknjkn',
+  expectedNumberOfParticipants: 0,
+  estimateConfidence: ConfidenceType.FAIRLY,
+  confidenceNote: null,
+  recruitmentMethod: RecruitmentType.NA,
+  recruitmentOther: null,
+  recruitmentNote: null,
+  selectionMethod: [
+    ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL,
+    ParticipantSelectionType.CMS_COMPONENT_OR_PROCESS
+  ],
+  selectionOther: null,
+  selectionNote: null,
+  communicationMethod: [
+    ParticipantCommunicationType.IT_TOOL,
+    ParticipantCommunicationType.MASS_EMAIL
+  ],
+  communicationMethodOther: null,
+  communicationNote: null,
+  participantAssumeRisk: null,
+  riskType: null,
+  riskOther: null,
+  riskNote: null,
+  willRiskChange: null,
+  willRiskChangeNote: null,
+  coordinateWork: null,
+  coordinateWorkNote: null,
+  gainsharePayments: null,
+  gainsharePaymentsTrack: null,
+  gainsharePaymentsNote: null,
+  participantsIds: [ParticipantsIDType.CCNS],
+  participantsIdsOther: null,
+  participantsIDSNote: null,
+  providerAdditionFrequency: FrequencyType.BIANNUALLY,
+  providerAdditionFrequencyOther: null,
+  providerAdditionFrequencyNote: null,
+  providerAddMethod: [ProviderAddType.RETROSPECTIVELY],
+  providerAddMethodOther: null,
+  providerAddMethodNote: null,
+  providerLeaveMethod: [ProviderLeaveType.NOT_APPLICABLE],
+  providerLeaveMethodOther: null,
+  providerLeaveMethodNote: null,
+  providerOverlap: OverlapType.NO,
+  providerOverlapHierarchy: null,
+  providerOverlapNote: null,
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const participantsAndProvidersMocks = [
+  {
+    request: {
+      query: GetAllParticipants,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          participantsAndProviders: participantsAndProvidersData
+        }
+      }
+    }
+  }
+];
+
+const beneficiaryData: AllBeneficiariesTypes = {
+  __typename: 'PlanBeneficiaries',
+  id: '123',
+  modelPlanID: modelID,
+  beneficiaries: [
+    BeneficiariesType.DISEASE_SPECIFIC,
+    BeneficiariesType.DUALLY_ELIGIBLE
+  ],
+  beneficiariesOther: null,
+  beneficiariesNote: null,
+  treatDualElligibleDifferent: TriStateAnswer.YES,
+  treatDualElligibleDifferentHow: 'null',
+  treatDualElligibleDifferentNote: null,
+  excludeCertainCharacteristics: TriStateAnswer.NO,
+  excludeCertainCharacteristicsCriteria: null,
+  excludeCertainCharacteristicsNote: null,
+  numberPeopleImpacted: 1234,
+  estimateConfidence: ConfidenceType.COMPLETELY,
+  confidenceNote: null,
+  beneficiarySelectionMethod: [SelectionMethodType.HISTORICAL],
+  beneficiarySelectionOther: null,
+  beneficiarySelectionNote: null,
+  beneficiarySelectionFrequency: FrequencyType.ANNUALLY,
+  beneficiarySelectionFrequencyOther: null,
+  beneficiarySelectionFrequencyNote: null,
+  beneficiaryOverlap: OverlapType.YES_NEED_POLICIES,
+  beneficiaryOverlapNote: null,
+  precedenceRules: null,
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const benficiaryMocks = [
+  {
+    request: {
+      query: GetAllBeneficiaries,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          beneficiaries: beneficiaryData
         }
       }
     }
@@ -380,87 +469,6 @@ export const opsEvalAndLearningMocks = [
           __typename: 'ModelPlan',
           id: modelID,
           opsEvalAndLearning: opsEvalAndLearningData
-        }
-      }
-    }
-  }
-];
-
-const participantsAndProvidersData: GetAllParticipantsTypes = {
-  __typename: 'PlanParticipantsAndProviders',
-  id: '123',
-  participants: [
-    ParticipantsType.MEDICAID_PROVIDERS,
-    ParticipantsType.STATES,
-    ParticipantsType.STATE_MEDICAID_AGENCIES,
-    ParticipantsType.OTHER
-  ],
-  medicareProviderType: null,
-  statesEngagement: 'State',
-  participantsOther: 'This is the other',
-  participantsNote: null,
-  participantsCurrentlyInModels: true,
-  participantsCurrentlyInModelsNote: null,
-  modelApplicationLevel: 'ojnjklnmjknjkn',
-  expectedNumberOfParticipants: 0,
-  estimateConfidence: ConfidenceType.FAIRLY,
-  confidenceNote: null,
-  recruitmentMethod: RecruitmentType.NA,
-  recruitmentOther: null,
-  recruitmentNote: null,
-  selectionMethod: [
-    ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL,
-    ParticipantSelectionType.CMS_COMPONENT_OR_PROCESS
-  ],
-  selectionOther: null,
-  selectionNote: null,
-  communicationMethod: [
-    ParticipantCommunicationType.IT_TOOL,
-    ParticipantCommunicationType.MASS_EMAIL
-  ],
-  communicationMethodOther: null,
-  communicationNote: null,
-  participantAssumeRisk: null,
-  riskType: null,
-  riskOther: null,
-  riskNote: null,
-  willRiskChange: null,
-  willRiskChangeNote: null,
-  coordinateWork: null,
-  coordinateWorkNote: null,
-  gainsharePayments: null,
-  gainsharePaymentsTrack: null,
-  gainsharePaymentsNote: null,
-  participantsIds: [ParticipantsIDType.CCNS],
-  participantsIdsOther: null,
-  participantsIDSNote: null,
-  providerAdditionFrequency: FrequencyType.BIANNUALLY,
-  providerAdditionFrequencyOther: null,
-  providerAdditionFrequencyNote: null,
-  providerAddMethod: [ProviderAddType.RETROSPECTIVELY],
-  providerAddMethodOther: null,
-  providerAddMethodNote: null,
-  providerLeaveMethod: [ProviderLeaveType.NOT_APPLICABLE],
-  providerLeaveMethodOther: null,
-  providerLeaveMethodNote: null,
-  providerOverlap: OverlapType.NO,
-  providerOverlapHierarchy: null,
-  providerOverlapNote: null,
-  status: TaskStatus.IN_PROGRESS
-};
-
-export const participantsAndProvidersMocks = [
-  {
-    request: {
-      query: GetAllParticipants,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          participantsAndProviders: participantsAndProvidersData
         }
       }
     }

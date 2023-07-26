@@ -603,7 +603,7 @@ const ReadOnlyGeneralCharacteristics = ({
             secondSection={
               waiversRequired === true && {
                 heading: generalCharacteristicsT(
-                  'waiversRequiredTypes.question'
+                  'waiversRequiredTypes.readonlyQuestion'
                 ),
                 list: true,
                 listItems: waiversRequiredTypes?.map((type): string =>

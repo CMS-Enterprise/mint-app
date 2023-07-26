@@ -124,6 +124,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'KeyCharacteristics',
     dbField: 'key_characteristics',
     question: 'What are the model key characteristics? Select all that apply.',
+    readonlyQuestion: 'What are the model key characteristics?',
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected key characteristics',

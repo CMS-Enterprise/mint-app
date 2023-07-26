@@ -921,8 +921,46 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    No
+                    Yes
                   </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-do-the-tracks-differ margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How do the tracks differ?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    In every way
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Tracks note
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1017,11 +1055,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Custom characteristic
                       </li>
                     </ul>
                   </ul>
@@ -1055,23 +1089,71 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-12"
+                  class="desktop:grid-col-6"
                   data-testid="grid"
                 >
                   <div
-                    class="read-only-section read-only-section--is-care-coordination-involved margin-bottom-3"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="read-only-section read-only-section--is-care-coordination-involved margin-bottom-3"
                     >
-                      Is care coordination involved?
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      No
-                    </p>
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Is care coordination involved?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
                   </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Care description
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Care note
+                  </p>
                 </div>
               </div>
               <div
@@ -1125,6 +1207,25 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--are-additional-services-involved margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are additional services involved?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Additional services note
+                  </p>
                 </div>
               </div>
               <div
@@ -1220,7 +1321,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    No
+                    Yes
                   </p>
                 </div>
               </div>
@@ -1244,15 +1345,24 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       >
                         Geography type is
                       </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      <ul
+                        class="margin-y-0 padding-left-3"
                       >
-                        <em
-                          class="text-base"
+                        <li
+                          class="font-sans-md line-height-sans-4"
                         >
-                          No answer entered
-                        </em>
-                      </p>
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Geography type other
+                          </li>
+                        </ul>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -1272,15 +1382,29 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                       >
                         Geographies are applied to
                       </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      <ul
+                        class="margin-y-0 padding-left-3"
                       >
-                        <em
-                          class="text-base"
+                        <li
+                          class="font-sans-md line-height-sans-4"
                         >
-                          No answer entered
-                        </em>
-                      </p>
+                          Beneficiaries
+                        </li>
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Geography applied other
+                          </li>
+                        </ul>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -1295,16 +1419,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    notes
+                    Notes
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Geography note
                   </p>
                 </div>
               </div>
@@ -1323,8 +1443,27 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    No
+                    Yes
                   </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Participation options note
+                    </p>
+                  </div>
                 </div>
               </div>
               <div
@@ -1339,15 +1478,24 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What is the agreement type?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other agreement
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1365,12 +1513,27 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      No answer entered
-                    </em>
+                    Yes
                   </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      We will need agreements
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1433,6 +1596,25 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    My rulemaking note
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--what-authority-allows-cmmi-to-test-the-model margin-bottom-3"
                 >
                   <p
@@ -1440,15 +1622,48 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   >
                     What authority allows CMMI to test the model?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      3021 (ACA)
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other allowance
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Allowance note
+                    </p>
+                  </div>
                 </div>
               </div>
               <div
@@ -1456,23 +1671,80 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-12"
+                  class="desktop:grid-col-6"
                   data-testid="grid"
                 >
                   <div
-                    class="read-only-section read-only-section--are-waivers-required margin-bottom-3"
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
                   >
-                    <p
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    <div
+                      class="read-only-section read-only-section--are-waivers-required margin-bottom-3"
                     >
-                      Are waivers required?
-                    </p>
-                    <p
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                    >
-                      No
-                    </p>
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are waivers required?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
                   </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--which-types-of-waivers-are-required margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Which types of waivers are required?
+                      </p>
+                      <ul
+                        class="margin-y-0 padding-left-3"
+                      >
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Fraud and Abuse
+                        </li>
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Medicaid
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    My waiver note
+                  </p>
                 </div>
               </div>
             </div>
