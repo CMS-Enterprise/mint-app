@@ -49,7 +49,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 const KeyCharacteristics = () => {
   const { t: generalCharacteristicsT } = useTranslation(
-    'generalCharacteristicsT'
+    'generalCharacteristics'
   );
   const { t: generalCharacteristicsMiscT } = useTranslation(
     'generalCharacteristicsMisc'
@@ -62,7 +62,7 @@ const KeyCharacteristics = () => {
     collectPlanBids: collectPlanBidsConfig,
     managePartCDEnrollment: managePartCDEnrollmentConfig,
     planContractUpdated: planContractUpdatedConfig
-  } = usePlanTranslation('generalCharacteristicsT');
+  } = usePlanTranslation('generalCharacteristics');
 
   const { modelID } = useParams<{ modelID: string }>();
 

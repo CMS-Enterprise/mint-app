@@ -507,6 +507,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     goField: 'WaiversRequiredTypes',
     dbField: 'waivers_required_types',
     question: 'Which types of waivers are required? Select all that apply.',
+    readonlyQuestion: 'Which types of waivers are required?',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -554,48 +555,6 @@ export const generalCharacteristicsMisc: Record<string, string> = {
   clearanceHeading: 'Review general characteristics',
   breadcrumb: 'General characteristics',
   specificQuestions: 'Key characteristic specific questions'
-  //   careCoordination: 'Is care coordination involved?',
-  //   additionalServices: 'Are additional services involved?',
-  //   communityInvolved: 'Are community partners involved?',
-  //   specificGeographies: 'Is the model targeted at specific geographies?',
-  //   participationOptions:
-  //     'Does the model offer different options for participation?',
-  //   agreementType: 'What is the agreement type?',
-  //   agreementNote:
-  //     'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
-  //   moreParticipation: 'Will more than one participation agreement be needed?',
-  //   agreementDepending:
-  //     'depending on awardee selections or characteristics such as risk/type/size',
-  //   participationAgreement: 'Participation Agreement',
-  //   coopAgreement: 'Co-Operative Agreement/Grant',
-  //   other: 'Other',
-  //   geographyType: 'Geography type is',
-  //   geographySpecify: 'Please specify what the other geography type is.',
-  //   geoState: 'State',
-  //   geoRegion: 'Region (CBSA, MSA, HRR, etc.)',
-  //   geographyApplied: 'Geographies are applied to',
-  //   geographyAppliedSpecify:
-  //     'Please specify what the geographies are applied to.',
-  //   geoParticipants: 'Participants',
-  //   geoProviders: 'Providers',
-  //   geoBeneficiaries: 'Beneficiaries',
-  //   rulemakingRequired: 'Is rulemaking required?',
-  //   authorityAllowed: 'What authority allows CMMI to test the model?',
-  //   ACA3021: '3021 (ACA)',
-  //   mandatedDemonstration: 'Congressionally Mandated Demonstration',
-  //   section1833: 'Section 1833(e) (Part B services) of the Social Security Act',
-  //   waiversRequired: 'Are waivers required?',
-  //   ruleMakingInfo:
-  //     'Which rule do you anticipate using and what is the target date of display for that regulation?',
-  //   waiverTypes: 'Which types of waivers are required? Select all that apply.',
-  //   waiverTypesQuestion: 'Which types of waivers are required?',
-  //   fraudAndAbuse: 'Fraud and Abuse',
-  //   fraudAndAbuseNote: '(Note: Federal Waiver team writes)',
-  //   programPayment: 'Program/payment',
-  //   programPaymentNote:
-  //     '(Note: CMMI writes, Office of General Council (OGC) adivses, full clearance process is required)',
-  //   medicaid: 'Medicaid',
-  //   medicaidNote: '(1115, other)'
 };
 
 export default generalCharacteristics;

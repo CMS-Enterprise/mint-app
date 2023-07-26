@@ -3,7 +3,7 @@ import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
-import generalCharacteristics from './draftModelPlan/generalCharacteristics';
+// import generalCharacteristics from './draftModelPlan/generalCharacteristics';
 import itSolutions from './draftModelPlan/itSolutions';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
@@ -17,7 +17,7 @@ import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
 import {
-  generalCharacteristics as generalCharacteristicsT, // TODO: remove T once all complete
+  generalCharacteristics, // TODO: remove T once all complete
   generalCharacteristicsMisc
 } from './modelPlan/generalCharacteristics';
 import miscellaneous from './modelPlan/miscellaneous';
@@ -55,7 +55,7 @@ const enUS = {
   filterView,
   footer,
   general,
-  generalCharacteristics,
+  // generalCharacteristics,
   generalReadOnly,
   getAccess,
   header,
@@ -76,7 +76,7 @@ const enUS = {
   modelPlan,
   basics,
   basicsMisc,
-  generalCharacteristicsT,
+  generalCharacteristics,
   generalCharacteristicsMisc,
   miscellaneous,
   // End new translation

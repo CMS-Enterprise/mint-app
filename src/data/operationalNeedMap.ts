@@ -16,7 +16,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'characteristics/key-characteristics',
     fieldName: 'managePartCDEnrollment',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:manageEnrollment',
+    question: 'generalCharacteristics:managePartCDEnrollment.question',
     answer: 'translateBoolean',
     section: 'beneficiaries'
   },
@@ -24,7 +24,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'characteristics/key-characteristics',
     fieldName: 'collectPlanBids',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:reviewPlanBids',
+    question: 'generalCharacteristics:collectPlanBids.question',
     answer: 'translateBoolean',
     section: 'generalCharacteristics'
   },
@@ -32,7 +32,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'characteristics/key-characteristics',
     fieldName: 'planContractUpdated',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:updatedContract',
+    question: 'generalCharacteristics:planContractUpdated.question',
     answer: 'translateBoolean',
     section: 'generalCharacteristics'
   },
@@ -40,7 +40,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'characteristics/targets-and-options',
     fieldName: 'agreementTypes',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:agreementType',
+    question: 'generalCharacteristics:agreementTypes.question',
     answer: 'translateAgreementTypes',
     section: 'generalCharacteristics'
   },

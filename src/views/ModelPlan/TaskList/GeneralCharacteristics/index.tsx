@@ -68,7 +68,7 @@ interface GetGeneralCharacteristicsFormTypeWithLinks
 
 export const CharacteristicsContent = () => {
   const { t: generalCharacteristicsT } = useTranslation(
-    'generalCharacteristicsT'
+    'generalCharacteristics'
   );
   const { t: generalCharacteristicsMiscT } = useTranslation(
     'generalCharacteristicsMisc'
@@ -79,7 +79,7 @@ export const CharacteristicsContent = () => {
     isNewModel: isNewModelConfig,
     resemblesExistingModel: resemblesExistingModelConfig,
     hasComponentsOrTracks: hasComponentsOrTracksConfig
-  } = usePlanTranslation('generalCharacteristicsT');
+  } = usePlanTranslation('generalCharacteristics');
 
   const { modelID } = useParams<{ modelID: string }>();
 

@@ -35,6 +35,7 @@ export type TranslationFieldProperties = {
   goField: string;
   dbField: string;
   question: string;
+  readonlyQuestion?: string;
   hint?: string;
   multiSelectLabel?: string;
   dataType: 'string' | 'boolean' | 'date' | 'enum';
@@ -161,5 +162,5 @@ export type TranslationGeneralCharacteristics = {
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
-  generalCharacteristicsT: TranslationGeneralCharacteristics; // TODO: remove T
+  generalCharacteristics: TranslationGeneralCharacteristics;
 };

@@ -42,7 +42,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 const Authority = () => {
   const { t: generalCharacteristicsT } = useTranslation(
-    'generalCharacteristicsT'
+    'generalCharacteristics'
   );
   const { t: generalCharacteristicsMiscT } = useTranslation(
     'generalCharacteristicsMisc'
@@ -54,7 +54,7 @@ const Authority = () => {
     authorityAllowances: authorityAllowancesConfig,
     waiversRequired: waiversRequiredConfig,
     waiversRequiredTypes: waiversRequiredTypesConfig
-  } = usePlanTranslation('generalCharacteristicsT');
+  } = usePlanTranslation('generalCharacteristics');
 
   const { modelID } = useParams<{ modelID: string }>();
 

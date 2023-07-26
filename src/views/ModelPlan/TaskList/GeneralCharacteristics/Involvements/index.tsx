@@ -38,7 +38,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 const Involvements = () => {
   const { t: generalCharacteristicsT } = useTranslation(
-    'generalCharacteristicsT'
+    'generalCharacteristics'
   );
   const { t: generalCharacteristicsMiscT } = useTranslation(
     'generalCharacteristicsMisc'
@@ -49,7 +49,7 @@ const Involvements = () => {
     careCoordinationInvolved: careCoordinationInvolvedConfig,
     additionalServicesInvolved: additionalServicesInvolvedConfig,
     communityPartnersInvolved: communityPartnersInvolvedConfig
-  } = usePlanTranslation('generalCharacteristicsT');
+  } = usePlanTranslation('generalCharacteristics');
 
   const { modelID } = useParams<{ modelID: string }>();
 
