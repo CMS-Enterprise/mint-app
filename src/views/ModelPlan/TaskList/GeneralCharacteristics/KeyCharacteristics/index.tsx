@@ -279,7 +279,7 @@ const KeyCharacteristics = () => {
                                 type
                               )}
                               disabled={values.alternativePaymentModelTypes.includes(
-                                type
+                                AlternativePaymentModelType.NOT_APM
                               )}
                             />
                           </Fragment>

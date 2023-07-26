@@ -103,9 +103,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      REGULAR: 'Regular APM',
-      MIPS: 'MIPS APM',
       ADVANCED: 'Advanced APM',
+      MIPS: 'MIPS APM',
+      REGULAR: 'Regular APM',
       NOT_APM: 'It is not an APM'
     },
     filterGroups: ['cmmi', 'oact']
@@ -322,8 +322,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      STATE: 'State',
       REGION: 'Region (CBSA, MSA, HRR, etc.)',
+      STATE: 'State',
       OTHER: 'Other'
     }
   },
@@ -343,9 +343,9 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
+      BENEFICIARIES: 'Beneficiaries',
       PARTICIPANTS: 'Participants',
       PROVIDERS: 'Providers',
-      BENEFICIARIES: 'Beneficiaries',
       OTHER: 'Other'
     }
   },
@@ -389,7 +389,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'agreementTypes',
     goField: 'AgreementTypes',
     dbField: 'agreement_types',
-    question: 'Are community partners involved?',
+    question: 'What is the agreement type?',
     hint:
       'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
     dataType: 'boolean',

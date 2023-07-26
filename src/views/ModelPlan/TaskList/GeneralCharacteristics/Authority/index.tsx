@@ -384,7 +384,7 @@ const Authority = () => {
 
                   <BooleanRadio
                     field="waiversRequired"
-                    id="plan-characteristics-waivers-requiredd"
+                    id="plan-characteristics-waivers-required"
                     value={values.waiversRequired}
                     setFieldValue={setFieldValue}
                     options={waiversRequiredConfig.options}
