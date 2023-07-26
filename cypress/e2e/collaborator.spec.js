@@ -29,7 +29,6 @@ describe('The Collaborator/Team Member Form', () => {
     cy.get('#react-select-model-team-cedar-contact-input')
       .click()
       .type('Jerry', { delay: 1000 });
-    // .should('have.value', 'Jerry Seinfeld, SF13');
 
     cy.get('#react-select-model-team-cedar-contact-option-0')
       .contains('Jerry Seinfeld, SF13')
