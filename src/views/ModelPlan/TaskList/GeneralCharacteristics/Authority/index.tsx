@@ -7,15 +7,14 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Fieldset,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -25,6 +24,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetAuthority from 'queries/GeneralCharacteristics/GetAuthority';
 import {
   GetAuthority as GetAuthorityType,
@@ -34,20 +34,28 @@ import {
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import { AuthorityAllowance, WaiverType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  sortOtherEnum,
-  translateAuthorityAllowance,
-  translateWaiverTypes,
-  translateWaiverTypesLabel
-} from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Authority = () => {
-  const { t } = useTranslation('generalCharacteristics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: generalCharacteristicsT } = useTranslation(
+    'generalCharacteristicsT'
+  );
+  const { t: generalCharacteristicsMiscT } = useTranslation(
+    'generalCharacteristicsMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    rulemakingRequired: rulemakingRequiredConfig,
+    authorityAllowances: authorityAllowancesConfig,
+    waiversRequired: waiversRequiredConfig,
+    waiversRequiredTypes: waiversRequiredTypesConfig
+  } = usePlanTranslation('generalCharacteristicsT');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
@@ -151,28 +159,30 @@ const Authority = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {generalCharacteristicsMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {generalCharacteristicsMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -194,25 +204,27 @@ const Authority = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <Form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-authority-form"
@@ -226,22 +238,20 @@ const Authority = () => {
                   className="margin-y-4"
                 >
                   <Label htmlFor="plan-characteristics-rulemaking-required">
-                    {t('rulemakingRequired')}
+                    {generalCharacteristicsT('rulemakingRequired.question')}
                   </Label>
+
                   <FieldErrorMsg>{flatErrors.rulemakingRequired}</FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-rulemaking-required"
-                      name="rulemakingRequired"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.rulemakingRequired === true}
-                      onChange={() => {
-                        setFieldValue('rulemakingRequired', true);
-                      }}
-                    />
-                    {values.rulemakingRequired === true && (
+
+                  <BooleanRadio
+                    field="rulemakingRequired"
+                    id="plan-characteristics-rulemaking-required"
+                    value={values.rulemakingRequired}
+                    setFieldValue={setFieldValue}
+                    options={rulemakingRequiredConfig.options}
+                    childName="rulemakingRequiredDescription"
+                  >
+                    {values.rulemakingRequired === true ? (
                       <div className="display-flex margin-left-4 margin-bottom-1">
                         <FieldGroup
                           className="flex-1"
@@ -252,11 +262,15 @@ const Authority = () => {
                             htmlFor="plan-characteristics-rulemaking-required-description"
                             className="margin-bottom-1 text-normal"
                           >
-                            {t('ruleMakingInfo')}
+                            {generalCharacteristicsT(
+                              'rulemakingRequiredDescription.question'
+                            )}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.rulemakingRequiredDescription}
                           </FieldErrorMsg>
+
                           <Field
                             as={TextAreaField}
                             error={!!flatErrors.rulemakingRequiredDescription}
@@ -267,19 +281,10 @@ const Authority = () => {
                           />
                         </FieldGroup>
                       </div>
+                    ) : (
+                      <></>
                     )}
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-rulemaking-required-no"
-                      name="rulemakingRequired"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.rulemakingRequired === false}
-                      onChange={() => {
-                        setFieldValue('rulemakingRequired', false);
-                      }}
-                    />
-                  </Fieldset>
+                  </BooleanRadio>
                 </FieldGroup>
 
                 <AddNote
@@ -292,70 +297,71 @@ const Authority = () => {
                   render={arrayHelpers => (
                     <>
                       <legend className="usa-label">
-                        {t('authorityAllowed')}
+                        {generalCharacteristicsT(
+                          'authorityAllowances.question'
+                        )}
                       </legend>
+
                       <FieldErrorMsg>
                         {flatErrors.authorityAllowances}
                       </FieldErrorMsg>
 
-                      {Object.keys(AuthorityAllowance)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`plan-characteristics-authority-allowance-${type}`}
-                                name="authorityAllowances"
-                                label={translateAuthorityAllowance(type)}
-                                value={type}
-                                checked={values.authorityAllowances.includes(
-                                  type as AuthorityAllowance
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.authorityAllowances.indexOf(
-                                      e.target.value as AuthorityAllowance
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === 'OTHER' &&
-                                values.authorityAllowances.includes(
-                                  type as AuthorityAllowance
-                                ) && (
-                                  <FieldGroup
-                                    className="margin-left-4 margin-top-2 margin-bottom-4"
-                                    error={
-                                      !!flatErrors.authorityAllowancesOther
-                                    }
+                      {getKeys(authorityAllowancesConfig.options).map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`plan-characteristics-authority-allowance-${type}`}
+                              name="authorityAllowances"
+                              label={authorityAllowancesConfig.options[type]}
+                              value={type}
+                              checked={values.authorityAllowances.includes(
+                                type
+                              )}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                if (e.target.checked) {
+                                  arrayHelpers.push(e.target.value);
+                                } else {
+                                  const idx = values.authorityAllowances.indexOf(
+                                    e.target.value as AuthorityAllowance
+                                  );
+                                  arrayHelpers.remove(idx);
+                                }
+                              }}
+                            />
+                            {type === AuthorityAllowance.OTHER &&
+                              values.authorityAllowances.includes(type) && (
+                                <FieldGroup
+                                  className="margin-left-4 margin-top-2 margin-bottom-4"
+                                  error={!!flatErrors.authorityAllowancesOther}
+                                >
+                                  <Label
+                                    htmlFor="plan-characteristics-authority-allowance-other"
+                                    className="text-normal"
                                   >
-                                    <Label
-                                      htmlFor="plan-characteristics-authority-allowance-other"
-                                      className="text-normal"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.authorityAllowancesOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextAreaField}
-                                      className="mint-textarea"
-                                      id="plan-characteristics-authority-allowance-other"
-                                      maxLength={5000}
-                                      name="authorityAllowancesOther"
-                                    />
-                                  </FieldGroup>
-                                )}
-                            </Fragment>
-                          );
-                        })}
+                                    {generalCharacteristicsT(
+                                      'authorityAllowancesOther.question'
+                                    )}
+                                  </Label>
+
+                                  <FieldErrorMsg>
+                                    {flatErrors.authorityAllowancesOther}
+                                  </FieldErrorMsg>
+
+                                  <Field
+                                    as={TextAreaField}
+                                    className="mint-textarea"
+                                    id="plan-characteristics-authority-allowance-other"
+                                    maxLength={5000}
+                                    name="authorityAllowancesOther"
+                                  />
+                                </FieldGroup>
+                              )}
+                          </Fragment>
+                        );
+                      })}
                     </>
                   )}
                 />
@@ -371,33 +377,18 @@ const Authority = () => {
                   className="margin-y-4"
                 >
                   <Label htmlFor="plan-characteristics-waivers-required">
-                    {t('waiversRequired')}
+                    {generalCharacteristicsT('waiversRequired.question')}
                   </Label>
+
                   <FieldErrorMsg>{flatErrors.waiversRequired}</FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-waivers-required"
-                      name="waiversRequired"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.waiversRequired === true}
-                      onChange={() => {
-                        setFieldValue('waiversRequired', true);
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-waivers-required-no"
-                      name="waiversRequired"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.waiversRequired === false}
-                      onChange={() => {
-                        setFieldValue('waiversRequired', false);
-                      }}
-                    />
-                  </Fieldset>
+
+                  <BooleanRadio
+                    field="waiversRequired"
+                    id="plan-characteristics-waivers-requiredd"
+                    value={values.waiversRequired}
+                    setFieldValue={setFieldValue}
+                    options={waiversRequiredConfig.options}
+                  />
                 </FieldGroup>
 
                 {values.waiversRequired && (
@@ -406,41 +397,52 @@ const Authority = () => {
                     render={arrayHelpers => (
                       <>
                         <legend className="usa-label text-normal">
-                          {t('waiverTypes')}
+                          {generalCharacteristicsT(
+                            'waiversRequiredTypes.question'
+                          )}
                         </legend>
+
                         <FieldErrorMsg>
                           {flatErrors.waiversRequiredTypes}
                         </FieldErrorMsg>
 
-                        {Object.keys(WaiverType).map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`plan-characteristics-waiver-types-${type}`}
-                                name="waiversRequiredTypes"
-                                label={translateWaiverTypes(type)}
-                                subLabel={translateWaiverTypesLabel(type)}
-                                value={type}
-                                checked={values.waiversRequiredTypes.includes(
-                                  type as WaiverType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.waiversRequiredTypes.indexOf(
-                                      e.target.value as WaiverType
-                                    );
-                                    arrayHelpers.remove(idx);
+                        {getKeys(waiversRequiredTypesConfig.options).map(
+                          type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`plan-characteristics-waiver-types-${type}`}
+                                  name="waiversRequiredTypes"
+                                  label={
+                                    waiversRequiredTypesConfig.options[type]
                                   }
-                                }}
-                              />
-                            </Fragment>
-                          );
-                        })}
+                                  subLabel={
+                                    waiversRequiredTypesConfig.optionsLabels?.[
+                                      type
+                                    ]
+                                  }
+                                  value={type}
+                                  checked={values.waiversRequiredTypes.includes(
+                                    type
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.waiversRequiredTypes.indexOf(
+                                        e.target.value as WaiverType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                              </Fragment>
+                            );
+                          }
+                        )}
                       </>
                     )}
                   />
@@ -455,7 +457,7 @@ const Authority = () => {
                   <ReadyForReview
                     id="characteristics-status"
                     field="status"
-                    sectionName={t('heading')}
+                    sectionName={generalCharacteristicsMiscT('heading')}
                     status={values.status}
                     setFieldValue={setFieldValue}
                     readyForReviewBy={readyForReviewByUserAccount?.commonName}
@@ -471,10 +473,10 @@ const Authority = () => {
                       handleFormSubmit('back');
                     }}
                   >
-                    {h('back')}
+                    {miscellaneousT('back')}
                   </Button>
                   <Button type="submit" onClick={() => setErrors({})}>
-                    {h('saveAndStartNext')}
+                    {miscellaneousT('saveAndStartNext')}
                   </Button>
                 </div>
                 <Button
@@ -483,7 +485,7 @@ const Authority = () => {
                   onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
+                  {miscellaneousT('saveAndReturn')}
                 </Button>
               </Form>
               {id && (

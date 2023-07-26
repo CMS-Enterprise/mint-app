@@ -7,6 +7,7 @@ import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/Bod
 import {
   AgreementType,
   AlternativePaymentModelType,
+  AuthorityAllowance,
   CMMIGroup,
   CMSCenter,
   GeographyApplication,
@@ -14,7 +15,8 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelType,
-  TaskStatus
+  TaskStatus,
+  WaiverType
 } from './graphql-global-types';
 
 // Util used to preserve type defintions when mapping over keys of object
@@ -58,6 +60,7 @@ export type TranslationFieldPropertiesWithOptions<
   T extends keyof T | string
 > = TranslationFieldProperties & {
   options: Record<T, string>;
+  optionsLabels?: Record<T, string>;
 };
 
 // Model Plan
@@ -142,6 +145,17 @@ export type TranslationGeneralCharacteristics = {
   agreementTypesOther: TranslationFieldProperties;
   multiplePatricipationAgreementsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
   multiplePatricipationAgreementsNeededNote: TranslationFieldProperties;
+  // Authority
+  rulemakingRequired: TranslationFieldPropertiesWithOptions<Bool>;
+  rulemakingRequiredDescription: TranslationFieldProperties;
+  rulemakingRequiredNote: TranslationFieldProperties;
+  authorityAllowances: TranslationFieldPropertiesWithOptions<AuthorityAllowance>;
+  authorityAllowancesOther: TranslationFieldProperties;
+  authorityAllowancesNote: TranslationFieldProperties;
+  waiversRequired: TranslationFieldPropertiesWithOptions<Bool>;
+  waiversRequiredTypes: TranslationFieldPropertiesWithOptions<WaiverType>;
+  waiversRequiredNote: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 export type TranslationPlan = {

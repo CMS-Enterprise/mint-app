@@ -429,6 +429,123 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     question: 'Notes',
     dataType: 'string',
     formType: 'textarea'
+  },
+  rulemakingRequired: {
+    gqlField: 'rulemakingRequired',
+    goField: 'RulemakingRequired',
+    dbField: 'rulemaking_required',
+    question: 'Is rulemaking required?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  rulemakingRequiredDescription: {
+    gqlField: 'multiplePatricipationAgreementsNeeded',
+    goField: 'MultiplePatricipationAgreementsNeeded',
+    dbField: 'multiple_patricipation_agreements_needed',
+    question:
+      'Which rule do you anticipate using and what is the target date of display for that regulation?',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  rulemakingRequiredNote: {
+    gqlField: 'rulemakingRequiredNote',
+    goField: 'RulemakingRequiredNote',
+    dbField: 'rulemaking_required_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  authorityAllowances: {
+    gqlField: 'authorityAllowances',
+    goField: 'AuthorityAllowances',
+    dbField: 'authority_allowances',
+    question: 'What authority allows CMMI to test the model?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      ACA: '3021 (ACA)',
+      CONGRESSIONALLY_MANDATED: 'Congressionally Mandated Demonstration',
+      SSA_PART_B:
+        'Section 1833(e) (Part B services) of the Social Security Act',
+      OTHER: 'Other'
+    }
+  },
+  authorityAllowancesOther: {
+    gqlField: 'authorityAllowancesOther',
+    goField: 'AuthorityAllowancesOther',
+    dbField: 'authority_allowances_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  authorityAllowancesNote: {
+    gqlField: 'authorityAllowancesNote',
+    goField: 'AuthorityAllowancesNote',
+    dbField: 'authority_allowances_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  waiversRequired: {
+    gqlField: 'waiversRequired',
+    goField: 'WaiversRequired',
+    dbField: 'waivers_required',
+    question: 'Are waivers required?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  waiversRequiredTypes: {
+    gqlField: 'waiversRequiredTypes',
+    goField: 'WaiversRequiredTypes',
+    dbField: 'waivers_required_types',
+    question: 'Which types of waivers are required? Select all that apply.',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      FRAUD_ABUSE: 'Fraud and Abuse',
+      MEDICAID: 'Medicaid',
+      PROGRAM_PAYMENT: 'Program/payment'
+    },
+    optionsLabels: {
+      FRAUD_ABUSE: '(Note: Federal Waiver team writes)',
+      MEDICAID: '(1115, other)',
+      PROGRAM_PAYMENT:
+        '(Note: CMMI writes, Office of General Council (OGC) adivses, full clearance process is required)'
+    }
+  },
+  waiversRequiredNote: {
+    gqlField: 'waiversRequiredNote',
+    goField: 'WaiversRequiredNote',
+    dbField: 'waivers_required_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    question: 'Model Plan status',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      READY:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      IN_PROGRESS:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_REVIEW:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_CLEARANCE:
+        'This section of the Model Plan (Model basics) is ready for review.'
+    }
   }
 };
 
