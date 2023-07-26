@@ -1,19 +1,6 @@
-import { aliasQuery } from '../support/graphql-test-utils';
-
 describe('The Model Plan Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
-
-    cy.intercept('POST', '/api/graph/query', req => {
-      aliasQuery(req, 'GetModelPlan');
-      aliasQuery(req, 'GetIsCollaborator');
-      aliasQuery(req, 'GetModelPlanBase');
-      aliasQuery(req, 'GetModelCollaborators');
-      aliasQuery(req, 'GetModelPlanInfo');
-      aliasQuery(req, 'GetBasics');
-      aliasQuery(req, 'GetMilestones');
-      aliasQuery(req, 'GetAllModelPlans');
-    });
   });
 
   it('fills out model plan name and creates plan', () => {
