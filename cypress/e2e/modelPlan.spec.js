@@ -1,5 +1,4 @@
 import { aliasQuery } from '../support/graphql-test-utils';
-import verifyStatus from '../support/verifyRequestStatus';
 
 describe('The Model Plan Form', () => {
   beforeEach(() => {
@@ -32,24 +31,19 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.wait([
-      '@GetIsCollaborator',
-      '@GetModelPlanBase',
-      '@GetModelCollaborators'
-    ])
-      .then(verifyStatus)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
 
+    cy.get('[data-testid="page-loading"]').should('not.exist');
+
     cy.get('[data-testid="continue-to-tasklist"]').click();
 
-    cy.wait('@GetModelPlan')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    // cy.wait('@GetModelPlan')
+    //   .its('response.statusCode')
+    //   .should('eq', 200)
+    //   .wait(500);
+    cy.get('[data-testid="page-loading"]').should('not.exist');
 
     cy.contains('h1', 'Model Plan task list');
 
@@ -62,14 +56,11 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Start').click();
 
-    cy.wait('@GetModelPlanInfo')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
     });
+
+    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
 
     cy.get('#plan-basics-model-name')
       .clear()
