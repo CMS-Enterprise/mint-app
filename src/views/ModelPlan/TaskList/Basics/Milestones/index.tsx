@@ -180,72 +180,72 @@ const Milestones = () => {
       </p>
 
       <AskAQuestion modelID={modelID} />
-      {!loading && (
-        <Formik
-          initialValues={initialValues}
-          onSubmit={() => {
-            handleFormSubmit();
-          }}
-          enableReinitialize
-          validateOnBlur={false}
-          validateOnChange={false}
-          validateOnMount={false}
-          innerRef={formikRef}
-        >
-          {(formikProps: FormikProps<InitialValueType>) => {
-            const {
-              errors,
-              handleSubmit,
-              setErrors,
-              setFieldError,
-              setFieldValue,
-              validateForm,
-              values
-            } = formikProps;
-            const flatErrors = flattenErrors(errors);
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {
+          handleFormSubmit();
+        }}
+        enableReinitialize
+        validateOnBlur={false}
+        validateOnChange={false}
+        validateOnMount={false}
+        innerRef={formikRef}
+      >
+        {(formikProps: FormikProps<InitialValueType>) => {
+          const {
+            errors,
+            handleSubmit,
+            setErrors,
+            setFieldError,
+            setFieldValue,
+            validateForm,
+            values
+          } = formikProps;
+          const flatErrors = flattenErrors(errors);
 
-            const handleOnBlur = (
-              e: React.ChangeEvent<HTMLInputElement>,
-              field: string
-            ) => {
-              if (e.target.value === '') {
-                setFieldValue(field, null);
-                return;
-              }
-              try {
-                setFieldValue(field, new Date(e.target.value).toISOString());
-                delete errors[field as keyof InitialValueType];
-              } catch (err) {
-                setFieldError(field, generalT('validDate'));
-              }
-            };
-            return (
-              <>
-                {Object.keys(errors).length > 0 && (
-                  <ErrorAlert
-                    testId="formik-validation-errors"
-                    classNames="margin-top-3"
-                    heading={generalT('checkAndFix')}
-                  >
-                    {Object.keys(flatErrors).map(key => {
-                      return (
-                        <ErrorAlertMessage
-                          key={`Error.${key}`}
-                          errorKey={key}
-                          message={flatErrors[key]}
-                        />
-                      );
-                    })}
-                  </ErrorAlert>
-                )}
-
-                <Form
-                  className="desktop:grid-col-7 milestone-form margin-top-6"
-                  onSubmit={e => {
-                    handleSubmit(e);
-                    window.scrollTo(0, 0);
-                  }}
+          const handleOnBlur = (
+            e: React.ChangeEvent<HTMLInputElement>,
+            field: string
+          ) => {
+            if (e.target.value === '') {
+              setFieldValue(field, null);
+              return;
+            }
+            try {
+              setFieldValue(field, new Date(e.target.value).toISOString());
+              delete errors[field as keyof InitialValueType];
+            } catch (err) {
+              setFieldError(field, generalT('validDate'));
+            }
+          };
+          return (
+            <>
+              {Object.keys(errors).length > 0 && (
+                <ErrorAlert
+                  testId="formik-validation-errors"
+                  classNames="margin-top-3"
+                  heading={generalT('checkAndFix')}
                 >
+                  {Object.keys(flatErrors).map(key => {
+                    return (
+                      <ErrorAlertMessage
+                        key={`Error.${key}`}
+                        errorKey={key}
+                        message={flatErrors[key]}
+                      />
+                    );
+                  })}
+                </ErrorAlert>
+              )}
+
+              <Form
+                className="desktop:grid-col-7 milestone-form margin-top-6"
+                onSubmit={e => {
+                  handleSubmit(e);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                <Fieldset disabled={!!error || loading}>
                   <PageHeading headingLevel="h3" className="margin-bottom-2">
                     {planBasicsMiscT('highLevelTimeline')}
                   </PageHeading>
@@ -580,12 +580,12 @@ const Milestones = () => {
                     <IconArrowBack className="margin-right-1" aria-hidden />
                     {generalT('saveAndReturn')}
                   </Button>
-                </Form>
-              </>
-            );
-          }}
-        </Formik>
-      )}
+                </Fieldset>
+              </Form>
+            </>
+          );
+        }}
+      </Formik>
       <PageNumber currentPage={3} totalPages={3} className="margin-bottom-10" />
     </div>
   );
