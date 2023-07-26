@@ -3,6 +3,8 @@ package resolvers
 import (
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -40,9 +42,18 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// Update the basics to have a clearance date set that's too far out (more than 20 days)
 	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, map[string]interface{}{
-		"clearanceStarts": time.Now().Add(time.Hour * 24 * 21).Format(time.RFC3339), // 21 days from now
-	}, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, err = UpdatePlanBasics(
+		suite.testConfigs.Logger,
+		basics.ID,
+		map[string]interface{}{
+			"clearanceStarts": time.Now().Add(time.Hour * 24 * 21).Format(time.RFC3339), // 21 days from now
+		},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
 	suite.NoError(err)
 	// Clearance start date is 21 days out, still shouldn't be ready to start
 	planClearance, err = ReadyForClearanceRead(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
@@ -53,9 +64,18 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// Update the basics to have a clearance date set that's within the date range (15 days)
 	basics, err = PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, map[string]interface{}{
-		"clearanceStarts": time.Now().Add(time.Hour * 24 * 15).Format(time.RFC3339), // 15 days from now
-	}, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, err = UpdatePlanBasics(
+		suite.testConfigs.Logger,
+		basics.ID,
+		map[string]interface{}{
+			"clearanceStarts": time.Now().Add(time.Hour * 24 * 15).Format(time.RFC3339), // 15 days from now
+		},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
 	suite.NoError(err)
 	// Clearance start date is 15 days out - should be "Ready to Start"
 	planClearance, err = ReadyForClearanceRead(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
@@ -66,9 +86,18 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// Update the basics to be marked ready for clearance
 	basics, err = PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, map[string]interface{}{
-		"status": model.TaskStatusInputReadyForClearance,
-	}, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, err = UpdatePlanBasics(
+		suite.testConfigs.Logger,
+		basics.ID,
+		map[string]interface{}{
+			"status": model.TaskStatusInputReadyForClearance,
+		},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
 	suite.NoError(err)
 	// Clearance start date is 15 days out & we've started by marking Basics as ready for clearance - should be "In Progress"
 	planClearance, err = ReadyForClearanceRead(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)

@@ -12,7 +12,7 @@ export const filterGroups = [
 
 export type FilterGroup = typeof filterGroups[number];
 
-const FilterGroupMap = {
+const FilterGroupMap: Record<typeof filterGroups[number], any> = {
   cmmi: {
     'general-characteristics': [
       'alternativePaymentModelTypes',

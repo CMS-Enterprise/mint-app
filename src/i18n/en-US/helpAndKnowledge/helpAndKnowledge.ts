@@ -1591,37 +1591,22 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         'The Salesforce Letter of Intent (LOI) is a website that allows model teams to collect information to gauge the level of industry interest in a participation agreement model.',
       components: [
         {
-          header: 'Functions',
-          items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
-          ]
-        },
-        {
           header: 'Product capabilities',
           items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+            '<bold>Access management</bold> - candidate participants can access a web page without a CMS account.',
+            {
+              header:
+                '<bold>Data collection</bold> - collect data from candidate participants such as:',
+              items: [
+                'Indication of interest',
+                'Contact information',
+                'Organization information (e.g., demographics, type of organization)',
+                'Supporting documents'
+              ],
+              description:
+                'You can customize the data collection during the development process.'
+            },
+            '<bold>Track</bold> submissions'
           ]
         },
         {

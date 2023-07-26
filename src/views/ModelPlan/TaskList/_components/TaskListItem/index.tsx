@@ -57,8 +57,7 @@ export const TaskListStatusTag = ({
   return (
     <div
       data-testid="tasklist-tag"
-      className={`model-plan-task-list__task-tag line-height-body-1 text-bold ${tagStyle}`}
-      style={{ width: 'max-content' }}
+      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle}`}
     >
       <span>{tagCopy}</span>
     </div>
