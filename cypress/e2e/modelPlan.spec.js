@@ -39,18 +39,12 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="continue-to-tasklist"]').click();
 
-    // cy.wait('@GetModelPlan')
-    //   .its('response.statusCode')
-    //   .should('eq', 200)
-    //   .wait(500);
-    cy.get('[data-testid="page-loading"]').should('not.exist');
-
-    cy.contains('h1', 'Model Plan task list');
-
     // renames a model plan
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
+
+    cy.contains('h1', 'Model Plan task list');
 
     cy.contains('h3', 'Model basics');
 
@@ -69,11 +63,6 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.wait('@GetModelPlan')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
@@ -85,10 +74,7 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="basics"]').click();
 
-    cy.wait('@GetModelPlanInfo')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
 
     cy.get('#plan-basics-abbreviation').type('RMP').should('have.value', 'RMP');
 
@@ -110,16 +96,13 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.wait('@GetBasics')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/basics\/overview/
       );
     });
+
+    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
 
     cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
 
@@ -140,16 +123,13 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.wait('@GetMilestones')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/basics\/milestones/
       );
     });
+
+    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
 
     cy.contains('h3', 'Anticipated high level timeline');
 
@@ -193,11 +173,6 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.wait('@GetModelPlan')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
@@ -231,11 +206,6 @@ describe('The Model Plan Form', () => {
       .should('be.not.disabled')
       .click();
 
-    cy.wait('@GetModelPlan')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
@@ -245,10 +215,7 @@ describe('The Model Plan Form', () => {
     // favorites and unfavorites a model plan
     cy.visit('/models');
 
-    cy.wait('@GetAllModelPlans')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    cy.get('[data-testid="page-loading"]').should('not.exist');
 
     cy.contains('tr', 'Empty Plan').get('[data-cy="favorited"]');
 
