@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -118,6 +119,14 @@ func extractChangedDates(changes map[string]interface{}, existing *models.PlanBa
 	return dateChanges, nil
 }
 
+func sanitizeZeroDate(date *time.Time) *time.Time {
+	if date == nil || (date != nil && date.IsZero()) {
+		return nil
+	}
+
+	return date
+}
+
 func sendDateChangedEmails(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -142,7 +151,16 @@ func sendDateChangedEmails(
 	// Loop over the field data map to ensure order of the date changes in the email
 	orderedCommonKeys := getOrderedCommonKeys()
 	for _, commonKey := range orderedCommonKeys {
-		dateChangeSlice = append(dateChangeSlice, dateChanges[commonKey])
+		dateChange := dateChanges[commonKey]
+
+		dateChange.OldDate = sanitizeZeroDate(dateChange.OldDate)
+		dateChange.NewDate = sanitizeZeroDate(dateChange.NewDate)
+		dateChange.OldRangeStart = sanitizeZeroDate(dateChange.OldRangeStart)
+		dateChange.NewRangeStart = sanitizeZeroDate(dateChange.NewRangeStart)
+		dateChange.OldRangeEnd = sanitizeZeroDate(dateChange.OldRangeEnd)
+		dateChange.NewRangeEnd = sanitizeZeroDate(dateChange.NewRangeEnd)
+
+		dateChangeSlice = append(dateChangeSlice, dateChange)
 	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
