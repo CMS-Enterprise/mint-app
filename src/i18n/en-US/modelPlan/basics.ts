@@ -119,6 +119,14 @@ export const basics: TranslationBasics = {
     dataType: 'string',
     formType: 'textarea'
   },
+  note: {
+    gqlField: 'note',
+    goField: 'Note',
+    dbField: 'note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   completeICIP: {
     gqlField: 'completeICIP',
     goField: 'CompleteICIP',

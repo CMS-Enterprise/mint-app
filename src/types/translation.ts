@@ -84,6 +84,7 @@ export type TranslationBasics = {
   problem: TranslationFieldProperties;
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
+  note: TranslationFieldProperties;
   // Milestones
   completeICIP: TranslationFieldProperties;
   clearanceStarts: TranslationFieldProperties;

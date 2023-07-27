@@ -46,7 +46,6 @@ const ReadOnlyModelBasics = ({
 }: ReadOnlyProps) => {
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
@@ -268,7 +267,7 @@ const ReadOnlyModelBasics = ({
         isViewingFilteredView,
         filteredQuestions,
         'note',
-        <ReadOnlySection heading={miscellaneousT('notes')} copy={note} />
+        <ReadOnlySection heading={basicsT('note.question')} copy={note} />
       )}
 
       {isViewingFilteredView && filteredView !== 'ipc' ? (
