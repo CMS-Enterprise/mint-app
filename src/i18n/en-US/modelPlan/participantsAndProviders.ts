@@ -96,6 +96,118 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
+  },
+
+  expectedNumberOfParticipants: {
+    gqlField: 'expectedNumberOfParticipants',
+    goField: 'ExpectedNumberOfParticipants',
+    dbField: 'expected_number_of_participants',
+    question: 'How many participants do you expect?',
+    hint:
+      'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
+    dataType: 'number',
+    formType: 'rangeInput'
+  },
+  estimateConfidence: {
+    gqlField: 'estimateConfidence',
+    goField: 'EstimateConfidence',
+    dbField: 'estimate_confidence',
+    question: 'What is your level of confidence on this estimate?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      NOT_AT_ALL: 'Not at all confident',
+      SLIGHTLY: 'Slightly confident',
+      FAIRLY: 'Fairly confident',
+      COMPLETELY: 'Completely confident'
+    }
+  },
+  confidenceNote: {
+    gqlField: 'confidenceNote',
+    goField: 'ConfidenceNote',
+    dbField: 'confidence_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  recruitmentMethod: {
+    gqlField: 'recruitmentMethod',
+    goField: 'RecruitmentMethod',
+    dbField: 'recruitment_method',
+    question: 'How will you recruit the participants?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      APPLICATION_COLLECTION_TOOL: 'Use an application collection tool',
+      LOI: 'LOI (Letter of intent)',
+      NOFO:
+        'NOFO (Notice of funding opportunity for grants/cooperative agreements)',
+      OTHER: 'Other',
+      NA: 'Not applicable'
+    },
+    optionsLabels: {
+      APPLICATION_COLLECTION_TOOL: '',
+      LOI: '',
+      NOFO:
+        'NOFO (Notice of funding opportunity for grants/cooperative agreements)',
+      OTHER: '',
+      NA: ''
+    }
+  },
+  recruitmentOther: {
+    gqlField: 'recruitmentOther',
+    goField: 'RecruitmentOther',
+    dbField: 'recruitment_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  recruitmentNote: {
+    gqlField: 'recruitmentNote',
+    goField: 'RecruitmentNote',
+    dbField: 'recruitment_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  selectionMethod: {
+    gqlField: 'selectionMethod',
+    goField: 'SelectionMethod',
+    dbField: 'selection_method',
+    question: 'How will you select participants? Select all that appy.',
+    readonlyQuestion: 'How will you select participants?',
+    multiSelectLabel: 'Selected participants',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    options: {
+      APPLICATION_REVIEW_AND_SCORING_TOOL:
+        'Use an application review and scoring tool',
+      APPLICATION_SUPPORT_CONTRACTOR: 'Get an application support contractor',
+      BASIC_CRITERIA:
+        'We have a basic set of criteria and plan to accept any participant that meets them',
+      CMS_COMPONENT_OR_PROCESS:
+        'Another CMS component or process will provide support',
+      MODEL_TEAM_REVIEW_APPLICATIONS: 'Model team will review applications',
+      SUPPORT_FROM_CMMI: 'Solicit support for CMII staff',
+      OTHER: 'Other',
+      NO_SELECTING_PARTICIPANTS: 'We won’t be selecting participants'
+    }
+  },
+  selectionOther: {
+    gqlField: 'selectionOther',
+    goField: 'SelectionOther',
+    dbField: 'selection_other',
+    question: 'Please describe the other participants engaging with this model',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  selectionNote: {
+    gqlField: 'selectionNote',
+    goField: 'SelectionNote',
+    dbField: 'selection_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
   }
 };
 
@@ -113,7 +225,10 @@ export const participantsAndProvidersMisc: Record<string, string> = {
     'Participants are organizations/individuals that have contracts with CMMI to participate in a model or demonstration. Participants may or may not be Medicare-enrolled providers.',
   providerInfo:
     'Providers are organizations/indviduals that work with the Participants and deliver care or services to the beneficiaries impacted by our model.',
-  participantQuestions: 'Participant specific questions'
+  participantQuestions: 'Participant specific questions',
+  numberOfParticipants: 'Number of participants',
+  zero: '0',
+  tenThousand: '10,000+'
 };
 
 export default participantsAndProviders;

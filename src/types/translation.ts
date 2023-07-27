@@ -10,12 +10,15 @@ import {
   AuthorityAllowance,
   CMMIGroup,
   CMSCenter,
+  ConfidenceType,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  ParticipantSelectionType,
   ParticipantsType,
+  RecruitmentType,
   TaskStatus,
   WaiverType
 } from './graphql-global-types';
@@ -39,7 +42,7 @@ export type TranslationFieldProperties = {
   readonlyQuestion?: string;
   hint?: string;
   multiSelectLabel?: string;
-  dataType: 'string' | 'boolean' | 'date' | 'enum';
+  dataType: 'string' | 'number' | 'boolean' | 'date' | 'enum';
   isArray?: boolean;
   formType:
     | 'text'
@@ -171,6 +174,16 @@ export type TranslationParticipantsAndProviders = {
   participantsCurrentlyInModels: TranslationFieldPropertiesWithOptions<Bool>;
   participantsCurrentlyInModelsNote: TranslationFieldProperties;
   modelApplicationLevel: TranslationFieldProperties;
+  // Participant Options
+  expectedNumberOfParticipants: TranslationFieldProperties;
+  estimateConfidence: TranslationFieldPropertiesWithOptions<ConfidenceType>;
+  confidenceNote: TranslationFieldProperties;
+  recruitmentMethod: TranslationFieldPropertiesWithOptions<RecruitmentType>;
+  recruitmentOther: TranslationFieldProperties;
+  recruitmentNote: TranslationFieldProperties;
+  selectionMethod: TranslationFieldPropertiesWithOptions<ParticipantSelectionType>;
+  selectionOther: TranslationFieldProperties;
+  selectionNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {
