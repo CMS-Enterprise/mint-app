@@ -6,7 +6,7 @@ import draftModelPlan from './draftModelPlan/draftModelPlan';
 import itSolutions from './draftModelPlan/itSolutions';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
-import participantsAndProviders from './draftModelPlan/participantsAndProviders';
+// import participantsAndProviders from './draftModelPlan/participantsAndProviders';
 import payments from './draftModelPlan/payments';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import subtasks from './draftModelPlan/subtasks';
@@ -21,6 +21,10 @@ import {
 } from './modelPlan/generalCharacteristics';
 import miscellaneous from './modelPlan/miscellaneous';
 import modelPlan from './modelPlan/modelPlan';
+import {
+  participantsAndProviders,
+  participantsAndProvidersMisc
+} from './modelPlan/participantsAndProviders';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -68,7 +72,7 @@ const enUS = {
   nda,
   newModel,
   operationsEvaluationAndLearning,
-  participantsAndProviders,
+  // participantsAndProviders,
   payments,
   // New Translation
   modelPlan,
@@ -76,6 +80,8 @@ const enUS = {
   basicsMisc,
   generalCharacteristics,
   generalCharacteristicsMisc,
+  participantsAndProviders,
+  participantsAndProvidersMisc,
   miscellaneous,
   // End new translation
   prepareForClearance,

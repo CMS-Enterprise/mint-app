@@ -339,8 +339,7 @@ const KeyCharacteristics = () => {
                     ariaLabel="label-plan-characteristics-key-characteristics"
                     role="combobox"
                     options={composeMultiSelectOptions(
-                      keyCharacteristicsConfig.options,
-                      KeyCharacteristic
+                      keyCharacteristicsConfig.options
                     )}
                     selectedLabel={generalCharacteristicsT(
                       'keyCharacteristics.multiSelectLabel'

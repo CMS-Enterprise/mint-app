@@ -7,6 +7,7 @@ import {
   OperationalSolutionKey,
   OperationalSolutionSubtaskStatus
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 
 /**
  * Translate the API enum to a human readable string
@@ -1257,15 +1258,12 @@ export const mapMultiSelectOptions = (
 
 // Used to map MultiSelect options from Enums
 export const composeMultiSelectOptions = (
-  translationObject: Record<string, string>,
-  type: { [s: number]: string }
+  translationObject: Record<string, string>
 ) =>
-  Object.keys(type)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translationObject[key]
-    }));
+  getKeys(translationObject).map(key => ({
+    value: key,
+    label: translationObject[key]
+  }));
 
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
 export const sortOtherEnum = (a: string, b: string) => {

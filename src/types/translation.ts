@@ -15,6 +15,7 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  ParticipantsType,
   TaskStatus,
   WaiverType
 } from './graphql-global-types';
@@ -160,8 +161,21 @@ export type TranslationGeneralCharacteristics = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+// Participants and Providers
+export type TranslationParticipantsAndProviders = {
+  participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
+  medicareProviderType: TranslationFieldProperties;
+  statesEngagement: TranslationFieldProperties;
+  participantsOther: TranslationFieldProperties;
+  participantsNote: TranslationFieldProperties;
+  participantsCurrentlyInModels: TranslationFieldPropertiesWithOptions<Bool>;
+  participantsCurrentlyInModelsNote: TranslationFieldProperties;
+  modelApplicationLevel: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
   generalCharacteristics: TranslationGeneralCharacteristics;
+  participantsAndProviders: TranslationParticipantsAndProviders;
 };

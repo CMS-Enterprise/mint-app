@@ -19,7 +19,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:managePartCDEnrollment.question',
     answer: 'translateBoolean',
-    section: 'beneficiaries'
+    section: 'generalCharacteristics'
   },
   REV_COL_BIDS: {
     route: 'characteristics/key-characteristics',
