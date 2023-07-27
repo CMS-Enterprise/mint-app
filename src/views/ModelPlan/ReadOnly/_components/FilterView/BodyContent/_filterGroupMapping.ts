@@ -21,10 +21,17 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'keyCharacteristicsNote',
       'keyCharacteristicsOther',
       'participationOptions',
+      'participationOptionsNote',
       'agreementTypes',
+      'agreementTypesOther',
       'multiplePatricipationAgreementsNeeded',
+      'multiplePatricipationAgreementsNeededNote',
       'authorityAllowances',
-      'waiversRequired'
+      'authorityAllowancesOther',
+      'authorityAllowancesNote',
+      'waiversRequired',
+      'waiversRequiredTypes',
+      'waiversRequiredNote'
     ],
     'participants-and-providers': [
       'participants',
@@ -129,7 +136,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'performancePeriodEnds',
       'wrapUpEnds'
     ],
-    'general-characteristics': ['rulemakingRequired'],
+    'general-characteristics': [
+      'rulemakingRequired',
+      'rulemakingRequiredDescription',
+      'rulemakingRequiredNote'
+    ],
     'participants-and-providers': [
       'participants',
       'medicareProviderType',
@@ -170,9 +181,14 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'keyCharacteristicsNote',
       'keyCharacteristicsOther',
       'geographiesTargeted',
+      'geographiesTargetedNote',
       'geographiesTargetedTypes',
+      'geographiesTargetedTypesOther',
       'geographiesTargetedAppliedTo',
-      'rulemakingRequired'
+      'geographiesTargetedAppliedToOther',
+      'rulemakingRequired',
+      'rulemakingRequiredDescription',
+      'rulemakingRequiredNote'
     ],
     'participants-and-providers': [
       'participants',
@@ -244,9 +260,14 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'keyCharacteristicsNote',
       'keyCharacteristicsOther',
       'geographiesTargeted',
+      'geographiesTargetedNote',
       'geographiesTargetedTypes',
+      'geographiesTargetedTypesOther',
       'geographiesTargetedAppliedTo',
-      'rulemakingRequired'
+      'geographiesTargetedAppliedToOther',
+      'rulemakingRequired',
+      'rulemakingRequiredDescription',
+      'rulemakingRequiredNote'
     ],
     'participants-and-providers': [
       'participants',

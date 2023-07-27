@@ -8,7 +8,6 @@ export const basics: TranslationBasics = {
     question: 'Model category',
     dataType: 'enum',
     formType: 'select',
-    filterGroups: ['ipc'],
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
       DEMONSTRATION: 'Demonstration',
@@ -23,7 +22,8 @@ export const basics: TranslationBasics = {
         'Initiatives Focused on the Medicare and Medicaid Enrollees',
       PRIMARY_CARE_TRANSFORMATION: 'Primary Care Transformation',
       UNKNOWN: 'Unknown'
-    }
+    },
+    filterGroups: ['ipc']
   },
   amsModelID: {
     gqlField: 'amsModelID',

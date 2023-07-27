@@ -365,7 +365,7 @@ const ReadOnlyModelBasics = ({
           {filteredQuestions &&
             hasQuestions(filteredQuestions, highLevelTimelineQuestions) && (
               <ReadOnlySection
-                heading={miscellaneousT('notes')}
+                heading={basicsT('highLevelNote.question')}
                 copy={highLevelNote}
               />
             )}
@@ -529,7 +529,7 @@ const ReadOnlyModelBasics = ({
           </ProcessList>
 
           <ReadOnlySection
-            heading={miscellaneousT('notes')}
+            heading={basicsT('highLevelNote.question')}
             copy={highLevelNote}
           />
         </SectionWrapper>
