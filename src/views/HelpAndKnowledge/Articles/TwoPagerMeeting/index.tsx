@@ -369,8 +369,10 @@ const TwoPagerMeeting = () => {
         </GridContainer>
       </MainContent>
       <div className="margin-top-6">
-        <RelatedArticles currentArticle={twoPageMeetingT('title')} />
-        {/* TODO: need to change RelatedArticle component to match figma */}
+        <RelatedArticles
+          currentArticle={twoPageMeetingT('title')}
+          viewAllLink
+        />
       </div>
     </>
   );
