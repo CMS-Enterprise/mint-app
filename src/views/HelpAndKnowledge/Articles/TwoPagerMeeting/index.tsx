@@ -368,7 +368,7 @@ const TwoPagerMeeting = () => {
           </Grid>
         </GridContainer>
       </MainContent>
-      <div className="margin-top-6">
+      <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
           currentArticle={twoPageMeetingT('title')}
           viewAllLink
