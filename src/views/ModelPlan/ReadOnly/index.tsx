@@ -346,6 +346,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           statusLabel
           modifiedOrCreateLabel={!!modifiedDts}
           modifiedDts={modifiedDts ?? createdDts}
+          hasEditAccess={hasEditAccess}
         />
 
         {!isViewingFilteredGroup && (
