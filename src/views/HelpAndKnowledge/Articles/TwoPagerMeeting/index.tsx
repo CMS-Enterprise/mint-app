@@ -10,22 +10,22 @@ import {
 
 import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
-import UswdsReactLink, { LocationProps } from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
 
-type LinkProps = {
-  to: string | LocationProps;
-  children: React.ReactNode | string;
-};
+const covertToLowercaseAndDashes = (string: string) =>
+  string.toLowerCase().replace(/\s+/g, '-');
 
-const Link = ({ to, children }: LinkProps) => {
+const Link = ({ scrollTo }: { scrollTo: string }) => {
   return (
-    <UswdsReactLink to="asdf" className="display-flex flex-align-center">
-      {children}
+    <a
+      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
+      className="display-flex flex-align-center"
+    >
+      {scrollTo}
       <IconArrowForward />
-    </UswdsReactLink>
+    </a>
   );
 };
 
@@ -63,9 +63,6 @@ const TwoPagerMeeting = () => {
     { returnObjects: true }
   );
 
-  const covertToLowercaseAndDashes = (string: string) =>
-    string.toLowerCase().replace(/\s+/g, '-');
-
   return (
     <>
       <MainContent>
@@ -88,22 +85,23 @@ const TwoPagerMeeting = () => {
               className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
             >
               <ul className="margin-y-0">
+                {/* eslint-disable jsx-a11y/anchor-is-valid */}
                 <li className="margin-top-05 margin-bottom-1">
-                  {/* TODO: change the links */}
-                  <Link to="#draft">
-                    {twoPageMeetingT('summaryBox.listItem.draft')}
-                  </Link>
+                  <Link
+                    scrollTo={twoPageMeetingT('summaryBox.listItem.draft')}
+                  />
                 </li>
                 <li className="margin-bottom-1">
-                  <Link to="#start">
-                    {twoPageMeetingT('summaryBox.listItem.start')}
-                  </Link>
+                  <Link
+                    scrollTo={twoPageMeetingT('summaryBox.listItem.start')}
+                  />
                 </li>
                 <li>
-                  <Link to="#review">
-                    {twoPageMeetingT('summaryBox.listItem.review')}
-                  </Link>
+                  <Link
+                    scrollTo={twoPageMeetingT('summaryBox.listItem.review')}
+                  />
                 </li>
+                {/* eslint-enable jsx-a11y/anchor-is-valid */}
               </ul>
             </SummaryBox>
 
