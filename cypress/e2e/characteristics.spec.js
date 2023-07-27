@@ -17,8 +17,6 @@ describe('The Model Plan General Characteristics Form', () => {
       );
     });
 
-    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
-
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
     cy.get('#plan-characteristics-is-new-model-no')
@@ -61,10 +59,8 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/key-charactertics
 
-    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
-
     cy.get('#plan-characteristics-alternative-payment-MIPS')
-      .check({ force: true })
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
@@ -74,6 +70,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.get('#plan-characteristics-key-characteristics').within(() => {
       cy.get("input[type='text']")
+        .should('not.be.disabled')
         .type('payment')
         .should('have.value', 'payment');
     });
@@ -92,10 +89,8 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/involvements
 
-    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
-
     cy.get('#plan-characteristics-care-coordination-involved')
-      .check({ force: true })
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
@@ -129,9 +124,8 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/targets-and-options
 
-    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
-
     cy.get('#plan-characteristics-geographies-targeted')
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
@@ -167,9 +161,8 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/authority
 
-    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
-
     cy.get('#plan-characteristics-rulemaking-required')
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
