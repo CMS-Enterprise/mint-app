@@ -59,7 +59,13 @@ func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]interf
 // updatePlanBasics is a wrapper for resolvers.PlanBasicsGetByModelPlanID and resolvers.UpdatePlanBasics
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
-func (s *Seeder) updatePlanBasics(mp *models.ModelPlan, changes map[string]interface{}) *models.PlanBasics {
+func (s *Seeder) updatePlanBasics(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	mp *models.ModelPlan,
+	changes map[string]interface{},
+) *models.PlanBasics {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
 	basics, err := resolvers.PlanBasicsGetByModelPlanIDLOADER(s.Config.Context, mp.ID)
@@ -67,7 +73,16 @@ func (s *Seeder) updatePlanBasics(mp *models.ModelPlan, changes map[string]inter
 		panic(err)
 	}
 
-	updated, err := resolvers.UpdatePlanBasics(s.Config.Logger, basics.ID, changes, princ, s.Config.Store)
+	updated, err := resolvers.UpdatePlanBasics(
+		s.Config.Logger,
+		basics.ID,
+		changes,
+		princ,
+		s.Config.Store,
+		emailService,
+		emailTemplateService,
+		addressBook,
+	)
 	if err != nil {
 		panic(err)
 	}

@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
@@ -67,7 +69,16 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	clearanceChanges := map[string]interface{}{
 		"status": "READY_FOR_CLEARANCE",
 	}
-	_, basicsErr := resolvers.UpdatePlanBasics(worker.Logger, basics.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
+	_, basicsErr := resolvers.UpdatePlanBasics(
+		worker.Logger,
+		basics.ID,
+		clearanceChanges,
+		suite.testConfigs.Principal,
+		worker.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
 	suite.NoError(basicsErr)
 	_, charErr := resolvers.UpdatePlanGeneralCharacteristics(worker.Logger, genChar.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(charErr)

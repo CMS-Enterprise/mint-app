@@ -168,9 +168,12 @@ func (s *Server) routes(
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
 
+	dateChangedRecipientEmails := strings.Split(s.Config.GetString(appconfig.DateChangedRecipientEmailsKey), ",")
+
 	addressBook := email.AddressBook{
-		DefaultSender: s.Config.GetString(appconfig.EmailSenderKey),
-		MINTTeamEmail: s.Config.GetString(appconfig.MINTTeamEmailKey),
+		DefaultSender:                  s.Config.GetString(appconfig.EmailSenderKey),
+		MINTTeamEmail:                  s.Config.GetString(appconfig.MINTTeamEmailKey),
+		ModelPlanDateChangedRecipients: dateChangedRecipientEmails,
 	}
 
 	var emailService *oddmail.GoSimpleMailService

@@ -12,6 +12,7 @@ type TaskListStatusProps = {
   icon?: boolean;
   modelID: string;
   status: ModelStatus;
+  hasEditAccess?: boolean;
   statusLabel?: boolean;
   updateLabel?: boolean;
   modifiedDts?: string;
@@ -23,6 +24,7 @@ const TaskListStatus = ({
   icon,
   modelID,
   status,
+  hasEditAccess = false,
   statusLabel = false,
   updateLabel = false,
   modifiedDts,
@@ -66,18 +68,21 @@ const TaskListStatus = ({
         </Grid>
         {readOnly && (
           <div className="mint-no-print">
-            <div className="display-flex flex-align-center">
-              <div className="height-2 border-left-2px border-base-light margin-right-2 " />
-              <div>
-                <UswdsReactLink
-                  to={`/models/${modelID}/task-list`}
-                  className="display-flex flex-align-center"
-                >
-                  <IconEdit className="margin-right-1" />
-                  {t('edit')}
-                </UswdsReactLink>
+            {hasEditAccess && (
+              <div className="display-flex flex-align-center">
+                <div className="height-2 border-left-2px border-base-light margin-right-2 " />
+
+                <div>
+                  <UswdsReactLink
+                    to={`/models/${modelID}/task-list`}
+                    className="display-flex flex-align-center"
+                  >
+                    <IconEdit className="margin-right-1" />
+                    {t('edit')}
+                  </UswdsReactLink>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         )}
       </Grid>
