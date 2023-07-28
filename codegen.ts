@@ -2,12 +2,21 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: 'pkg/graph/schema.graphql',
-  documents: ['src/queriesCodegen/**/*.tsx'],
+  documents: ['src/queriesCodegen/**/*.ts'],
   generates: {
     './src/gql/': {
       preset: 'client',
-      presetConfig: {
-        fragmentMasking: false // Disabled until https://github.com/dotansimha/graphql-code-generator/issues/9293 is fixed
+      config: {
+        scalars: {
+          // old codegen mappings from global.d.ts
+          // maintain until we add better scalar mapping with graphql-codegen
+          //
+          // These currently just need to map to aliased types there
+          // Hopefully in the future we can use custom/useful types!
+          Time: 'Time',
+          UUID: 'UUID',
+          Upload: 'Upload'
+        }
       }
     }
   }

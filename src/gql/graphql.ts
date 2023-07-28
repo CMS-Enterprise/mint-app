@@ -5,24 +5,28 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  /** Any represents any GraphQL value. */
+  Any: { input: any; output: any; }
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
-  Map: any;
+  Map: { input: any; output: any; }
   /** Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z */
-  Time: any;
+  Time: { input: Time; output: Time; }
   /** UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A */
-  UUID: any;
+  UUID: { input: UUID; output: UUID; }
   /**
    * https://gqlgen.com/reference/file-upload/
    * Represents a multipart file upload
    */
-  Upload: any;
+  Upload: { input: Upload; output: Upload; }
 };
 
 export enum ActionType {
@@ -66,15 +70,15 @@ export enum AnticipatedPaymentFrequencyType {
 
 export type AuditChange = {
   __typename?: 'AuditChange';
-  action: Scalars['String'];
-  fields: Scalars['Map'];
-  foreignKey?: Maybe<Scalars['UUID']>;
-  id: Scalars['Int'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  action: Scalars['String']['output'];
+  fields: Scalars['Map']['output'];
+  foreignKey?: Maybe<Scalars['UUID']['output']>;
+  id: Scalars['Int']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  primaryKey: Scalars['UUID'];
-  tableName: Scalars['String'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  primaryKey: Scalars['UUID']['output'];
+  tableName: Scalars['String']['output'];
 };
 
 export enum AuthorityAllowance {
@@ -125,16 +129,41 @@ export enum CcmInvolvmentType {
   YesImplementation = 'YES__IMPLEMENTATION'
 }
 
+export enum ChangeHistorySortKey {
+  /** Sort by the user who made the change */
+  Actor = 'ACTOR',
+  /** Sort by the date the change was made */
+  ChangeDate = 'CHANGE_DATE',
+  /** Sort by the model plan ID that was changed */
+  ModelPlanId = 'MODEL_PLAN_ID',
+  /** Sort by the table ID that was changed */
+  TableId = 'TABLE_ID',
+  /** Sort by the table name that was changed */
+  TableName = 'TABLE_NAME'
+}
+
+export type ChangeHistorySortParams = {
+  field: ChangeHistorySortKey;
+  order: SortDirection;
+};
+
 export type ChangeTableRecord = {
   __typename?: 'ChangeTableRecord';
-  action: Scalars['String'];
-  fields?: Maybe<Scalars['Map']>;
-  foreignKey?: Maybe<Scalars['UUID']>;
-  guid: Scalars['ID'];
+  action: Scalars['String']['output'];
+  fields: ChangedFields;
+  foreignKey?: Maybe<Scalars['UUID']['output']>;
+  /**
+   * Returns the table name in the format of the type returned in GraphQL
+   * Example:  a table name of model_plan returns as ModelPlan
+   */
+  gqlTableName: GqlTableName;
+  guid: Scalars['ID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  primaryKey: Scalars['UUID'];
-  tableID: Scalars['Int'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  primaryKey: Scalars['UUID']['output'];
+  tableID: Scalars['Int']['output'];
+  tableName: Scalars['String']['output'];
 };
 
 export enum ChangeType {
@@ -142,6 +171,11 @@ export enum ChangeType {
   Removed = 'REMOVED',
   Updated = 'UPDATED'
 }
+
+export type ChangedFields = {
+  __typename?: 'ChangedFields';
+  changes: Array<Field>;
+};
 
 export enum ClaimsBasedPayType {
   AdjustmentsToFfsPayments = 'ADJUSTMENTS_TO_FFS_PAYMENTS',
@@ -174,7 +208,7 @@ export enum ContractorSupportType {
 }
 
 export type CreateOperationalSolutionSubtaskInput = {
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   status: OperationalSolutionSubtaskStatus;
 };
 
@@ -239,26 +273,28 @@ export enum DataToSendParticipantsType {
 
 export type DateHistogramAggregationBucket = {
   __typename?: 'DateHistogramAggregationBucket';
-  docCount: Scalars['Int'];
-  key: Scalars['String'];
-  maxModifiedDts: Scalars['Time'];
-  minModifiedDts: Scalars['Time'];
+  docCount: Scalars['Int']['output'];
+  key: Scalars['String']['output'];
+  maxModifiedDts: Scalars['Time']['output'];
+  minModifiedDts: Scalars['Time']['output'];
 };
 
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
   __typename?: 'DiscussionReply';
-  content?: Maybe<Scalars['String']>;
-  createdBy: Scalars['UUID'];
+  content?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  discussionID: Scalars['UUID'];
-  id: Scalars['UUID'];
-  isAssessment: Scalars['Boolean'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  createdDts: Scalars['Time']['output'];
+  discussionID: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  isAssessment: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  resolution?: Maybe<Scalars['Boolean']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  resolution?: Maybe<Scalars['Boolean']['output']>;
+  userRole?: Maybe<DiscussionUserRole>;
+  userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
 /**
@@ -267,15 +303,25 @@ export type DiscussionReply = {
  * https://gqlgen.com/reference/changesets/
  */
 export type DiscussionReplyChanges = {
-  content?: InputMaybe<Scalars['String']>;
-  resolution?: InputMaybe<Scalars['Boolean']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  resolution?: InputMaybe<Scalars['Boolean']['input']>;
+  userRole?: InputMaybe<DiscussionUserRole>;
+  userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** DiscussionReplyCreateInput represents the necessary fields to create a discussion reply */
 export type DiscussionReplyCreateInput = {
-  content: Scalars['String'];
-  discussionID: Scalars['UUID'];
-  resolution?: Scalars['Boolean'];
+  content: Scalars['String']['input'];
+  discussionID: Scalars['UUID']['input'];
+  resolution?: Scalars['Boolean']['input'];
+  userRole?: InputMaybe<DiscussionUserRole>;
+  userRoleDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DiscussionRoleSelection = {
+  __typename?: 'DiscussionRoleSelection';
+  userRole: DiscussionUserRole;
+  userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
 export enum DiscussionStatus {
@@ -284,10 +330,24 @@ export enum DiscussionStatus {
   WaitingForResponse = 'WAITING_FOR_RESPONSE'
 }
 
+export enum DiscussionUserRole {
+  CmsSystemServiceTeam = 'CMS_SYSTEM_SERVICE_TEAM',
+  ItArchitect = 'IT_ARCHITECT',
+  Leadership = 'LEADERSHIP',
+  MedicareAdministrativeContractor = 'MEDICARE_ADMINISTRATIVE_CONTRACTOR',
+  MintTeam = 'MINT_TEAM',
+  ModelItLead = 'MODEL_IT_LEAD',
+  ModelTeam = 'MODEL_TEAM',
+  NoneOfTheAbove = 'NONE_OF_THE_ABOVE',
+  SharedSystemMaintainer = 'SHARED_SYSTEM_MAINTAINER'
+}
+
 export enum DocumentType {
   ConceptPaper = 'CONCEPT_PAPER',
+  DesignParametersMemo = 'DESIGN_PARAMETERS_MEMO',
   IcipDraft = 'ICIP_DRAFT',
   MarketResearch = 'MARKET_RESEARCH',
+  OfficeOfTheAdministratorPresentation = 'OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION',
   Other = 'OTHER',
   PolicyPaper = 'POLICY_PAPER'
 }
@@ -303,27 +363,56 @@ export enum EvaluationApproachType {
 /** ExistingModel represents a model that already exists outside of the scope of MINT */
 export type ExistingModel = {
   __typename?: 'ExistingModel';
-  authority?: Maybe<Scalars['String']>;
-  category?: Maybe<Scalars['String']>;
-  createdBy: Scalars['UUID'];
+  authority?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  dateBegan?: Maybe<Scalars['Time']>;
-  dateEnded?: Maybe<Scalars['Time']>;
-  description?: Maybe<Scalars['String']>;
-  displayModelSummary?: Maybe<Scalars['Boolean']>;
-  id?: Maybe<Scalars['String']>;
-  keywords?: Maybe<Scalars['String']>;
-  modelName?: Maybe<Scalars['String']>;
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  createdDts: Scalars['Time']['output'];
+  dateBegan?: Maybe<Scalars['Time']['output']>;
+  dateEnded?: Maybe<Scalars['Time']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  displayModelSummary?: Maybe<Scalars['Boolean']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  keywords?: Maybe<Scalars['String']['output']>;
+  modelName?: Maybe<Scalars['String']['output']>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  numberOfBeneficiariesImpacted?: Maybe<Scalars['Int']>;
-  numberOfParticipants?: Maybe<Scalars['String']>;
-  numberOfPhysiciansImpacted?: Maybe<Scalars['Int']>;
-  stage: Scalars['String'];
-  states?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  numberOfBeneficiariesImpacted?: Maybe<Scalars['Int']['output']>;
+  numberOfParticipants?: Maybe<Scalars['String']['output']>;
+  numberOfPhysiciansImpacted?: Maybe<Scalars['Int']['output']>;
+  stage: Scalars['String']['output'];
+  states?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type ExistingModelLink = {
+  __typename?: 'ExistingModelLink';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  currentModelPlan?: Maybe<ModelPlan>;
+  currentModelPlanID?: Maybe<Scalars['UUID']['output']>;
+  existingModel?: Maybe<ExistingModel>;
+  existingModelID?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['UUID']['output']>;
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type Field = {
+  __typename?: 'Field';
+  name: Scalars['String']['output'];
+  nameCamelCase: Scalars['String']['output'];
+  value: FieldValue;
+};
+
+export type FieldValue = {
+  __typename?: 'FieldValue';
+  new?: Maybe<Scalars['Any']['output']>;
+  old?: Maybe<Scalars['Any']['output']>;
 };
 
 export enum FrequencyType {
@@ -339,6 +428,32 @@ export enum FundingSource {
   Other = 'OTHER',
   PatientProtectionAffordableCareAct = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
   TrustFund = 'TRUST_FUND'
+}
+
+export enum GqlTableName {
+  AnalyzedAudit = 'analyzedAudit',
+  DiscussionReply = 'discussionReply',
+  ExistingModel = 'existingModel',
+  ExistingModelLink = 'existingModelLink',
+  ModelPlan = 'modelPlan',
+  NdaAgreement = 'ndaAgreement',
+  OperationalNeed = 'operationalNeed',
+  OperationalSolution = 'operationalSolution',
+  OperationalSolutionSubtask = 'operationalSolutionSubtask',
+  PlanBasics = 'planBasics',
+  PlanBeneficiaries = 'planBeneficiaries',
+  PlanCollaborator = 'planCollaborator',
+  PlanCrTdl = 'planCrTdl',
+  PlanDiscussion = 'planDiscussion',
+  PlanDocument = 'planDocument',
+  PlanDocumentSolutionLink = 'planDocumentSolutionLink',
+  PlanGeneralCharacteristics = 'planGeneralCharacteristics',
+  PlanOpsEvalAndLearning = 'planOpsEvalAndLearning',
+  PlanParticipantsAndProviders = 'planParticipantsAndProviders',
+  PlanPayments = 'planPayments',
+  PossibleOperationalNeed = 'possibleOperationalNeed',
+  PossibleOperationalSolution = 'possibleOperationalSolution',
+  UserAccount = 'userAccount'
 }
 
 export enum GeographyApplication {
@@ -369,8 +484,8 @@ export enum KeyCharacteristic {
 /** The current user's Launch Darkly key */
 export type LaunchDarklySettings = {
   __typename?: 'LaunchDarklySettings';
-  signedHash: Scalars['String'];
-  userKey: Scalars['String'];
+  signedHash: Scalars['String']['output'];
+  userKey: Scalars['String']['output'];
 };
 
 export enum ModelCategory {
@@ -397,25 +512,27 @@ export enum ModelLearningSystemType {
 /** ModelPlan represent the data point for plans about a model. It is the central data type in the application */
 export type ModelPlan = {
   __typename?: 'ModelPlan';
-  archived: Scalars['Boolean'];
+  abbreviation?: Maybe<Scalars['String']['output']>;
+  archived: Scalars['Boolean']['output'];
   basics: PlanBasics;
   beneficiaries: PlanBeneficiaries;
   collaborators: Array<PlanCollaborator>;
   crTdls: Array<PlanCrTdl>;
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
+  createdDts: Scalars['Time']['output'];
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
+  existingModelLinks: Array<ExistingModelLink>;
   generalCharacteristics: PlanGeneralCharacteristics;
-  id: Scalars['UUID'];
-  isCollaborator: Scalars['Boolean'];
-  isFavorite: Scalars['Boolean'];
-  modelName: Scalars['String'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  id: Scalars['UUID']['output'];
+  isCollaborator: Scalars['Boolean']['output'];
+  isFavorite: Scalars['Boolean']['output'];
+  modelName: Scalars['String']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  nameHistory: Array<Scalars['String']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  nameHistory: Array<Scalars['String']['output']>;
   operationalNeeds: Array<OperationalNeed>;
   opsEvalAndLearning: PlanOpsEvalAndLearning;
   participantsAndProviders: PlanParticipantsAndProviders;
@@ -436,9 +553,10 @@ export type ModelPlanNameHistoryArgs = {
  * https://gqlgen.com/reference/changesets/
  */
 export type ModelPlanChanges = {
-  archived?: InputMaybe<Scalars['Boolean']>;
-  modelName?: InputMaybe<Scalars['String']>;
-  someNumbers?: InputMaybe<Array<Scalars['Int']>>;
+  abbreviation?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  modelName?: InputMaybe<Scalars['String']['input']>;
+  someNumbers?: InputMaybe<Array<Scalars['Int']['input']>>;
   status?: InputMaybe<ModelStatus>;
 };
 
@@ -449,10 +567,12 @@ export enum ModelPlanFilter {
 }
 
 export enum ModelStatus {
+  Active = 'ACTIVE',
   Announced = 'ANNOUNCED',
   Canceled = 'CANCELED',
   Cleared = 'CLEARED',
   CmsClearance = 'CMS_CLEARANCE',
+  Ended = 'ENDED',
   HhsClearance = 'HHS_CLEARANCE',
   IcipComplete = 'ICIP_COMPLETE',
   InternalCmmiClearance = 'INTERNAL_CMMI_CLEARANCE',
@@ -491,18 +611,19 @@ export type Mutation = {
   createPlanDiscussion: PlanDiscussion;
   createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
   deleteDiscussionReply: DiscussionReply;
-  deleteOperationalSolutionSubtask: Scalars['Int'];
+  deleteOperationalSolutionSubtask: Scalars['Int']['output'];
   deletePlanCollaborator: PlanCollaborator;
   deletePlanCrTdl: PlanCrTdl;
   deletePlanDiscussion: PlanDiscussion;
-  deletePlanDocument: Scalars['Int'];
+  deletePlanDocument: Scalars['Int']['output'];
   deletePlanFavorite: PlanFavorite;
-  lockTaskListSection: Scalars['Boolean'];
-  removePlanDocumentSolutionLinks: Scalars['Boolean'];
+  lockTaskListSection: Scalars['Boolean']['output'];
+  removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
-  unlockTaskListSection: Scalars['Boolean'];
+  unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
   updateDiscussionReply: DiscussionReply;
+  updateExistingModelLinks: Array<ExistingModelLink>;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -521,21 +642,21 @@ export type Mutation = {
 
 /** Mutations definition for the schema */
 export type MutationAddOrUpdateCustomOperationalNeedArgs = {
-  customNeedType: Scalars['String'];
-  modelPlanID: Scalars['UUID'];
-  needed: Scalars['Boolean'];
+  customNeedType: Scalars['String']['input'];
+  modelPlanID: Scalars['UUID']['input'];
+  needed: Scalars['Boolean']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationAddPlanFavoriteArgs = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
-  agree?: Scalars['Boolean'];
+  agree?: Scalars['Boolean']['input'];
 };
 
 
@@ -547,14 +668,14 @@ export type MutationCreateDiscussionReplyArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateModelPlanArgs = {
-  modelName: Scalars['String'];
+  modelName: Scalars['String']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationCreateOperationalSolutionArgs = {
   changes: OperationalSolutionChanges;
-  operationalNeedID: Scalars['UUID'];
+  operationalNeedID: Scalars['UUID']['input'];
   solutionType?: InputMaybe<OperationalSolutionKey>;
 };
 
@@ -562,7 +683,7 @@ export type MutationCreateOperationalSolutionArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateOperationalSolutionSubtasksArgs = {
   inputs: Array<CreateOperationalSolutionSubtaskInput>;
-  solutionID: Scalars['UUID'];
+  solutionID: Scalars['UUID']['input'];
 };
 
 
@@ -586,106 +707,114 @@ export type MutationCreatePlanDiscussionArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreatePlanDocumentSolutionLinksArgs = {
-  documentIDs: Array<Scalars['UUID']>;
-  solutionID: Scalars['UUID'];
+  documentIDs: Array<Scalars['UUID']['input']>;
+  solutionID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationDeleteDiscussionReplyArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationDeleteOperationalSolutionSubtaskArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationDeletePlanCollaboratorArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationDeletePlanCrTdlArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationDeletePlanDiscussionArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationDeletePlanDocumentArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationDeletePlanFavoriteArgs = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationLockTaskListSectionArgs = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
   section: TaskListSection;
 };
 
 
 /** Mutations definition for the schema */
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
-  documentIDs: Array<Scalars['UUID']>;
-  solutionID: Scalars['UUID'];
+  documentIDs: Array<Scalars['UUID']['input']>;
+  solutionID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUnlockAllTaskListSectionsArgs = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUnlockTaskListSectionArgs = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
   section: TaskListSection;
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdateCustomOperationalNeedByIdArgs = {
-  customNeedType?: InputMaybe<Scalars['String']>;
-  id: Scalars['UUID'];
-  needed: Scalars['Boolean'];
+  customNeedType?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['UUID']['input'];
+  needed: Scalars['Boolean']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdateDiscussionReplyArgs = {
   changes: DiscussionReplyChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateExistingModelLinksArgs = {
+  currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
+  existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdateModelPlanArgs = {
   changes: ModelPlanChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdateOperationalSolutionArgs = {
   changes: OperationalSolutionChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -698,20 +827,20 @@ export type MutationUpdateOperationalSolutionSubtasksArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdatePlanBasicsArgs = {
   changes: PlanBasicsChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdatePlanBeneficiariesArgs = {
   changes: PlanBeneficiariesChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdatePlanCollaboratorArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
   newRole: TeamRole;
 };
 
@@ -719,42 +848,42 @@ export type MutationUpdatePlanCollaboratorArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdatePlanCrTdlArgs = {
   changes: PlanCrTdlChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdatePlanDiscussionArgs = {
   changes: PlanDiscussionChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdatePlanGeneralCharacteristicsArgs = {
   changes: PlanGeneralCharacteristicsChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdatePlanOpsEvalAndLearningArgs = {
   changes: PlanOpsEvalAndLearningChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdatePlanParticipantsAndProvidersArgs = {
   changes: PlanParticipantsAndProvidersChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationUpdatePlanPaymentsArgs = {
   changes: PlanPaymentsChanges;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -766,8 +895,8 @@ export type MutationUploadNewPlanDocumentArgs = {
 /** NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible */
 export type NdaInfo = {
   __typename?: 'NDAInfo';
-  agreed: Scalars['Boolean'];
-  agreedDts?: Maybe<Scalars['Time']>;
+  agreed: Scalars['Boolean']['output'];
+  agreedDts?: Maybe<Scalars['Time']['output']>;
 };
 
 export enum NonClaimsBasedPayType {
@@ -795,25 +924,25 @@ export enum OpSolutionStatus {
 
 export type OperationalNeed = {
   __typename?: 'OperationalNeed';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  id: Scalars['UUID'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
   key?: Maybe<OperationalNeedKey>;
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  name?: Maybe<Scalars['String']>;
-  nameOther?: Maybe<Scalars['String']>;
-  needed?: Maybe<Scalars['Boolean']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  nameOther?: Maybe<Scalars['String']['output']>;
+  needed?: Maybe<Scalars['Boolean']['output']>;
   section?: Maybe<TaskListSection>;
   solutions: Array<OperationalSolution>;
 };
 
 
 export type OperationalNeedSolutionsArgs = {
-  includeNotNeeded?: Scalars['Boolean'];
+  includeNotNeeded?: Scalars['Boolean']['input'];
 };
 
 export enum OperationalNeedKey {
@@ -852,38 +981,39 @@ export enum OperationalNeedKey {
 
 export type OperationalSolution = {
   __typename?: 'OperationalSolution';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
+  createdDts: Scalars['Time']['output'];
   documents: Array<PlanDocument>;
-  id: Scalars['UUID'];
-  isOther: Scalars['Boolean'];
+  id: Scalars['UUID']['output'];
+  isCommonSolution: Scalars['Boolean']['output'];
+  isOther: Scalars['Boolean']['output'];
   key?: Maybe<OperationalSolutionKey>;
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  mustFinishDts?: Maybe<Scalars['Time']>;
-  mustStartDts?: Maybe<Scalars['Time']>;
-  name?: Maybe<Scalars['String']>;
-  nameOther?: Maybe<Scalars['String']>;
-  needed?: Maybe<Scalars['Boolean']>;
-  operationalNeedID: Scalars['UUID'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mustFinishDts?: Maybe<Scalars['Time']['output']>;
+  mustStartDts?: Maybe<Scalars['Time']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  nameOther?: Maybe<Scalars['String']['output']>;
+  needed?: Maybe<Scalars['Boolean']['output']>;
+  operationalNeedID: Scalars['UUID']['output'];
   operationalSolutionSubtasks: Array<OperationalSolutionSubtask>;
-  otherHeader?: Maybe<Scalars['String']>;
-  pocEmail?: Maybe<Scalars['String']>;
-  pocName?: Maybe<Scalars['String']>;
-  solutionType?: Maybe<Scalars['Int']>;
+  otherHeader?: Maybe<Scalars['String']['output']>;
+  pocEmail?: Maybe<Scalars['String']['output']>;
+  pocName?: Maybe<Scalars['String']['output']>;
+  solutionType?: Maybe<Scalars['Int']['output']>;
   status: OpSolutionStatus;
 };
 
 export type OperationalSolutionChanges = {
-  mustFinishDts?: InputMaybe<Scalars['Time']>;
-  mustStartDts?: InputMaybe<Scalars['Time']>;
-  nameOther?: InputMaybe<Scalars['String']>;
-  needed?: InputMaybe<Scalars['Boolean']>;
-  otherHeader?: InputMaybe<Scalars['String']>;
-  pocEmail?: InputMaybe<Scalars['String']>;
-  pocName?: InputMaybe<Scalars['String']>;
+  mustFinishDts?: InputMaybe<Scalars['Time']['input']>;
+  mustStartDts?: InputMaybe<Scalars['Time']['input']>;
+  nameOther?: InputMaybe<Scalars['String']['input']>;
+  needed?: InputMaybe<Scalars['Boolean']['input']>;
+  otherHeader?: InputMaybe<Scalars['String']['input']>;
+  pocEmail?: InputMaybe<Scalars['String']['input']>;
+  pocName?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<OpSolutionStatus>;
 };
 
@@ -891,6 +1021,7 @@ export enum OperationalSolutionKey {
   AcoOs = 'ACO_OS',
   Apps = 'APPS',
   Ars = 'ARS',
+  Bcda = 'BCDA',
   Cbosc = 'CBOSC',
   Ccw = 'CCW',
   Cdx = 'CDX',
@@ -928,15 +1059,15 @@ export enum OperationalSolutionKey {
 
 export type OperationalSolutionSubtask = {
   __typename?: 'OperationalSolutionSubtask';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  id: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  name: Scalars['String'];
-  solutionID: Scalars['UUID'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  solutionID: Scalars['UUID']['output'];
   status: OperationalSolutionSubtaskStatus;
 };
 
@@ -951,6 +1082,11 @@ export enum OverlapType {
   YesNeedPolicies = 'YES_NEED_POLICIES',
   YesNoIssues = 'YES_NO_ISSUES'
 }
+
+export type PageParams = {
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+};
 
 export enum ParticipantCommunicationType {
   ItTool = 'IT_TOOL',
@@ -1019,42 +1155,44 @@ export enum PayType {
 /** Represents plan basics */
 export type PlanBasics = {
   __typename?: 'PlanBasics';
-  announced?: Maybe<Scalars['Time']>;
-  applicationsEnd?: Maybe<Scalars['Time']>;
-  applicationsStart?: Maybe<Scalars['Time']>;
-  clearanceEnds?: Maybe<Scalars['Time']>;
-  clearanceStarts?: Maybe<Scalars['Time']>;
+  amsModelID?: Maybe<Scalars['String']['output']>;
+  announced?: Maybe<Scalars['Time']['output']>;
+  applicationsEnd?: Maybe<Scalars['Time']['output']>;
+  applicationsStart?: Maybe<Scalars['Time']['output']>;
+  clearanceEnds?: Maybe<Scalars['Time']['output']>;
+  clearanceStarts?: Maybe<Scalars['Time']['output']>;
   cmmiGroups: Array<CmmiGroup>;
   cmsCenters: Array<CmsCenter>;
-  cmsOther?: Maybe<Scalars['String']>;
-  completeICIP?: Maybe<Scalars['Time']>;
-  createdBy: Scalars['UUID'];
+  cmsOther?: Maybe<Scalars['String']['output']>;
+  completeICIP?: Maybe<Scalars['Time']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  goal?: Maybe<Scalars['String']>;
-  highLevelNote?: Maybe<Scalars['String']>;
-  id: Scalars['UUID'];
+  createdDts: Scalars['Time']['output'];
+  demoCode?: Maybe<Scalars['String']['output']>;
+  goal?: Maybe<Scalars['String']['output']>;
+  highLevelNote?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
   modelCategory?: Maybe<ModelCategory>;
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['output'];
   modelType?: Maybe<ModelType>;
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  note?: Maybe<Scalars['String']>;
-  performancePeriodEnds?: Maybe<Scalars['Time']>;
-  performancePeriodStarts?: Maybe<Scalars['Time']>;
-  phasedIn?: Maybe<Scalars['Boolean']>;
-  phasedInNote?: Maybe<Scalars['String']>;
-  problem?: Maybe<Scalars['String']>;
-  readyForClearanceBy?: Maybe<Scalars['UUID']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  performancePeriodEnds?: Maybe<Scalars['Time']['output']>;
+  performancePeriodStarts?: Maybe<Scalars['Time']['output']>;
+  phasedIn?: Maybe<Scalars['Boolean']['output']>;
+  phasedInNote?: Maybe<Scalars['String']['output']>;
+  problem?: Maybe<Scalars['String']['output']>;
+  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
   readyForClearanceByUserAccount?: Maybe<UserAccount>;
-  readyForClearanceDts?: Maybe<Scalars['Time']>;
-  readyForReviewBy?: Maybe<Scalars['UUID']>;
+  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
   readyForReviewByUserAccount?: Maybe<UserAccount>;
-  readyForReviewDts?: Maybe<Scalars['Time']>;
+  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
   status: TaskStatus;
-  testInterventions?: Maybe<Scalars['String']>;
-  wrapUpEnds?: Maybe<Scalars['Time']>;
+  testInterventions?: Maybe<Scalars['String']['output']>;
+  wrapUpEnds?: Maybe<Scalars['Time']['output']>;
 };
 
 /**
@@ -1063,165 +1201,169 @@ export type PlanBasics = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanBasicsChanges = {
-  announced?: InputMaybe<Scalars['Time']>;
-  applicationsEnd?: InputMaybe<Scalars['Time']>;
-  applicationsStart?: InputMaybe<Scalars['Time']>;
-  clearanceEnds?: InputMaybe<Scalars['Time']>;
-  clearanceStarts?: InputMaybe<Scalars['Time']>;
+  amsModelID?: InputMaybe<Scalars['String']['input']>;
+  announced?: InputMaybe<Scalars['Time']['input']>;
+  applicationsEnd?: InputMaybe<Scalars['Time']['input']>;
+  applicationsStart?: InputMaybe<Scalars['Time']['input']>;
+  clearanceEnds?: InputMaybe<Scalars['Time']['input']>;
+  clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   cmmiGroups?: InputMaybe<Array<CmmiGroup>>;
   cmsCenters?: InputMaybe<Array<CmsCenter>>;
-  cmsOther?: InputMaybe<Scalars['String']>;
-  completeICIP?: InputMaybe<Scalars['Time']>;
-  goal?: InputMaybe<Scalars['String']>;
-  highLevelNote?: InputMaybe<Scalars['String']>;
+  cmsOther?: InputMaybe<Scalars['String']['input']>;
+  completeICIP?: InputMaybe<Scalars['Time']['input']>;
+  demoCode?: InputMaybe<Scalars['String']['input']>;
+  goal?: InputMaybe<Scalars['String']['input']>;
+  highLevelNote?: InputMaybe<Scalars['String']['input']>;
   modelCategory?: InputMaybe<ModelCategory>;
   modelType?: InputMaybe<ModelType>;
-  note?: InputMaybe<Scalars['String']>;
-  performancePeriodEnds?: InputMaybe<Scalars['Time']>;
-  performancePeriodStarts?: InputMaybe<Scalars['Time']>;
-  phasedIn?: InputMaybe<Scalars['Boolean']>;
-  phasedInNote?: InputMaybe<Scalars['String']>;
-  problem?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
+  performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;
+  phasedIn?: InputMaybe<Scalars['Boolean']['input']>;
+  phasedInNote?: InputMaybe<Scalars['String']['input']>;
+  problem?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<TaskStatusInput>;
-  testInterventions?: InputMaybe<Scalars['String']>;
-  wrapUpEnds?: InputMaybe<Scalars['Time']>;
+  testInterventions?: InputMaybe<Scalars['String']['input']>;
+  wrapUpEnds?: InputMaybe<Scalars['Time']['input']>;
 };
 
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
 export type PlanBeneficiaries = {
   __typename?: 'PlanBeneficiaries';
   beneficiaries: Array<BeneficiariesType>;
-  beneficiariesNote?: Maybe<Scalars['String']>;
-  beneficiariesOther?: Maybe<Scalars['String']>;
+  beneficiariesNote?: Maybe<Scalars['String']['output']>;
+  beneficiariesOther?: Maybe<Scalars['String']['output']>;
   beneficiaryOverlap?: Maybe<OverlapType>;
-  beneficiaryOverlapNote?: Maybe<Scalars['String']>;
+  beneficiaryOverlapNote?: Maybe<Scalars['String']['output']>;
   beneficiarySelectionFrequency?: Maybe<FrequencyType>;
-  beneficiarySelectionFrequencyNote?: Maybe<Scalars['String']>;
-  beneficiarySelectionFrequencyOther?: Maybe<Scalars['String']>;
+  beneficiarySelectionFrequencyNote?: Maybe<Scalars['String']['output']>;
+  beneficiarySelectionFrequencyOther?: Maybe<Scalars['String']['output']>;
   beneficiarySelectionMethod: Array<SelectionMethodType>;
-  beneficiarySelectionNote?: Maybe<Scalars['String']>;
-  beneficiarySelectionOther?: Maybe<Scalars['String']>;
-  confidenceNote?: Maybe<Scalars['String']>;
-  createdBy: Scalars['UUID'];
+  beneficiarySelectionNote?: Maybe<Scalars['String']['output']>;
+  beneficiarySelectionOther?: Maybe<Scalars['String']['output']>;
+  confidenceNote?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
+  createdDts: Scalars['Time']['output'];
   estimateConfidence?: Maybe<ConfidenceType>;
   excludeCertainCharacteristics?: Maybe<TriStateAnswer>;
-  excludeCertainCharacteristicsCriteria?: Maybe<Scalars['String']>;
-  excludeCertainCharacteristicsNote?: Maybe<Scalars['String']>;
-  id: Scalars['UUID'];
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  excludeCertainCharacteristicsCriteria?: Maybe<Scalars['String']['output']>;
+  excludeCertainCharacteristicsNote?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  numberPeopleImpacted?: Maybe<Scalars['Int']>;
-  precedenceRules?: Maybe<Scalars['String']>;
-  readyForClearanceBy?: Maybe<Scalars['UUID']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  numberPeopleImpacted?: Maybe<Scalars['Int']['output']>;
+  precedenceRules?: Maybe<Scalars['String']['output']>;
+  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
   readyForClearanceByUserAccount?: Maybe<UserAccount>;
-  readyForClearanceDts?: Maybe<Scalars['Time']>;
-  readyForReviewBy?: Maybe<Scalars['UUID']>;
+  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
   readyForReviewByUserAccount?: Maybe<UserAccount>;
-  readyForReviewDts?: Maybe<Scalars['Time']>;
+  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
   status: TaskStatus;
   treatDualElligibleDifferent?: Maybe<TriStateAnswer>;
-  treatDualElligibleDifferentHow?: Maybe<Scalars['String']>;
-  treatDualElligibleDifferentNote?: Maybe<Scalars['String']>;
+  treatDualElligibleDifferentHow?: Maybe<Scalars['String']['output']>;
+  treatDualElligibleDifferentNote?: Maybe<Scalars['String']['output']>;
 };
 
 export type PlanBeneficiariesChanges = {
   beneficiaries?: InputMaybe<Array<BeneficiariesType>>;
-  beneficiariesNote?: InputMaybe<Scalars['String']>;
-  beneficiariesOther?: InputMaybe<Scalars['String']>;
+  beneficiariesNote?: InputMaybe<Scalars['String']['input']>;
+  beneficiariesOther?: InputMaybe<Scalars['String']['input']>;
   beneficiaryOverlap?: InputMaybe<OverlapType>;
-  beneficiaryOverlapNote?: InputMaybe<Scalars['String']>;
+  beneficiaryOverlapNote?: InputMaybe<Scalars['String']['input']>;
   beneficiarySelectionFrequency?: InputMaybe<FrequencyType>;
-  beneficiarySelectionFrequencyNote?: InputMaybe<Scalars['String']>;
-  beneficiarySelectionFrequencyOther?: InputMaybe<Scalars['String']>;
+  beneficiarySelectionFrequencyNote?: InputMaybe<Scalars['String']['input']>;
+  beneficiarySelectionFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   beneficiarySelectionMethod?: InputMaybe<Array<SelectionMethodType>>;
-  beneficiarySelectionNote?: InputMaybe<Scalars['String']>;
-  beneficiarySelectionOther?: InputMaybe<Scalars['String']>;
-  confidenceNote?: InputMaybe<Scalars['String']>;
+  beneficiarySelectionNote?: InputMaybe<Scalars['String']['input']>;
+  beneficiarySelectionOther?: InputMaybe<Scalars['String']['input']>;
+  confidenceNote?: InputMaybe<Scalars['String']['input']>;
   estimateConfidence?: InputMaybe<ConfidenceType>;
   excludeCertainCharacteristics?: InputMaybe<TriStateAnswer>;
-  excludeCertainCharacteristicsCriteria?: InputMaybe<Scalars['String']>;
-  excludeCertainCharacteristicsNote?: InputMaybe<Scalars['String']>;
-  numberPeopleImpacted?: InputMaybe<Scalars['Int']>;
-  precedenceRules?: InputMaybe<Scalars['String']>;
+  excludeCertainCharacteristicsCriteria?: InputMaybe<Scalars['String']['input']>;
+  excludeCertainCharacteristicsNote?: InputMaybe<Scalars['String']['input']>;
+  numberPeopleImpacted?: InputMaybe<Scalars['Int']['input']>;
+  precedenceRules?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<TaskStatusInput>;
   treatDualElligibleDifferent?: InputMaybe<TriStateAnswer>;
-  treatDualElligibleDifferentHow?: InputMaybe<Scalars['String']>;
-  treatDualElligibleDifferentNote?: InputMaybe<Scalars['String']>;
+  treatDualElligibleDifferentHow?: InputMaybe<Scalars['String']['input']>;
+  treatDualElligibleDifferentNote?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** PlanCollaborator represents a collaborator on a plan */
 export type PlanCollaborator = {
   __typename?: 'PlanCollaborator';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  id: Scalars['UUID'];
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
   teamRole: TeamRole;
   userAccount: UserAccount;
-  userID: Scalars['UUID'];
+  userID: Scalars['UUID']['output'];
 };
 
 /** PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan */
 export type PlanCollaboratorCreateInput = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
   teamRole: TeamRole;
-  userName: Scalars['String'];
+  userName: Scalars['String']['input'];
 };
 
 export type PlanCrTdl = {
   __typename?: 'PlanCrTdl';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  dateInitiated: Scalars['Time'];
-  id: Scalars['UUID'];
-  idNumber: Scalars['String'];
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  createdDts: Scalars['Time']['output'];
+  dateInitiated: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  idNumber: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  note?: Maybe<Scalars['String']>;
-  title: Scalars['String'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 export type PlanCrTdlChanges = {
-  dateInitiated?: InputMaybe<Scalars['Time']>;
-  idNumber?: InputMaybe<Scalars['String']>;
-  note?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
+  dateInitiated?: InputMaybe<Scalars['Time']['input']>;
+  idNumber?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PlanCrTdlCreateInput = {
-  dateInitiated: Scalars['Time'];
-  idNumber: Scalars['String'];
-  modelPlanID: Scalars['UUID'];
-  note?: InputMaybe<Scalars['String']>;
-  title: Scalars['String'];
+  dateInitiated: Scalars['Time']['input'];
+  idNumber: Scalars['String']['input'];
+  modelPlanID: Scalars['UUID']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
 };
 
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
   __typename?: 'PlanDiscussion';
-  content?: Maybe<Scalars['String']>;
-  createdBy: Scalars['UUID'];
+  content?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  id: Scalars['UUID'];
-  isAssessment: Scalars['Boolean'];
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  isAssessment: Scalars['Boolean']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
   replies: Array<DiscussionReply>;
   status: DiscussionStatus;
+  userRole?: Maybe<DiscussionUserRole>;
+  userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
 /**
@@ -1230,147 +1372,150 @@ export type PlanDiscussion = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanDiscussionChanges = {
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<DiscussionStatus>;
+  userRole?: InputMaybe<DiscussionUserRole>;
+  userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** PlanDiscussionCreateInput represents the necessary fields to create a plan discussion */
 export type PlanDiscussionCreateInput = {
-  content: Scalars['String'];
-  modelPlanID: Scalars['UUID'];
+  content: Scalars['String']['input'];
+  modelPlanID: Scalars['UUID']['input'];
+  userRole?: InputMaybe<DiscussionUserRole>;
+  userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** PlanDocument represents a document on a plan */
 export type PlanDocument = {
   __typename?: 'PlanDocument';
-  bucket: Scalars['String'];
-  createdBy: Scalars['UUID'];
+  bucket: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  deletedAt?: Maybe<Scalars['Time']>;
+  createdDts: Scalars['Time']['output'];
+  deletedAt?: Maybe<Scalars['Time']['output']>;
   documentType: DocumentType;
-  downloadUrl?: Maybe<Scalars['String']>;
-  fileKey: Scalars['String'];
-  fileName: Scalars['String'];
-  fileSize: Scalars['Int'];
-  fileType: Scalars['String'];
-  id: Scalars['UUID'];
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  downloadUrl?: Maybe<Scalars['String']['output']>;
+  fileKey: Scalars['String']['output'];
+  fileName: Scalars['String']['output'];
+  fileSize: Scalars['Int']['output'];
+  fileType: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  numLinkedSolutions: Scalars['Int'];
-  optionalNotes?: Maybe<Scalars['String']>;
-  otherType?: Maybe<Scalars['String']>;
-  restricted: Scalars['Boolean'];
-  virusClean: Scalars['Boolean'];
-  virusScanned: Scalars['Boolean'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  numLinkedSolutions: Scalars['Int']['output'];
+  optionalNotes?: Maybe<Scalars['String']['output']>;
+  otherType?: Maybe<Scalars['String']['output']>;
+  restricted: Scalars['Boolean']['output'];
+  virusClean: Scalars['Boolean']['output'];
+  virusScanned: Scalars['Boolean']['output'];
 };
 
 /** PlanDocumentInput */
 export type PlanDocumentInput = {
   documentType: DocumentType;
-  fileData: Scalars['Upload'];
-  modelPlanID: Scalars['UUID'];
-  optionalNotes?: InputMaybe<Scalars['String']>;
-  otherTypeDescription?: InputMaybe<Scalars['String']>;
-  restricted: Scalars['Boolean'];
+  fileData: Scalars['Upload']['input'];
+  modelPlanID: Scalars['UUID']['input'];
+  optionalNotes?: InputMaybe<Scalars['String']['input']>;
+  otherTypeDescription?: InputMaybe<Scalars['String']['input']>;
+  restricted: Scalars['Boolean']['input'];
 };
 
 export type PlanDocumentSolutionLink = {
   __typename?: 'PlanDocumentSolutionLink';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  documentID: Scalars['UUID'];
-  id: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  createdDts: Scalars['Time']['output'];
+  documentID: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  solutionID: Scalars['UUID'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  solutionID: Scalars['UUID']['output'];
 };
 
 export type PlanFavorite = {
   __typename?: 'PlanFavorite';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  id: Scalars['UUID'];
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
   userAccount: UserAccount;
-  userID: Scalars['UUID'];
+  userID: Scalars['UUID']['output'];
 };
 
 /** PlanGeneralCharacteristics represents a plan general characteristics object */
 export type PlanGeneralCharacteristics = {
   __typename?: 'PlanGeneralCharacteristics';
-  additionalServicesInvolved?: Maybe<Scalars['Boolean']>;
-  additionalServicesInvolvedDescription?: Maybe<Scalars['String']>;
-  additionalServicesInvolvedNote?: Maybe<Scalars['String']>;
+  additionalServicesInvolved?: Maybe<Scalars['Boolean']['output']>;
+  additionalServicesInvolvedDescription?: Maybe<Scalars['String']['output']>;
+  additionalServicesInvolvedNote?: Maybe<Scalars['String']['output']>;
   agreementTypes: Array<AgreementType>;
-  agreementTypesOther?: Maybe<Scalars['String']>;
-  alternativePaymentModelNote?: Maybe<Scalars['String']>;
+  agreementTypesOther?: Maybe<Scalars['String']['output']>;
+  alternativePaymentModelNote?: Maybe<Scalars['String']['output']>;
   alternativePaymentModelTypes: Array<AlternativePaymentModelType>;
   authorityAllowances: Array<AuthorityAllowance>;
-  authorityAllowancesNote?: Maybe<Scalars['String']>;
-  authorityAllowancesOther?: Maybe<Scalars['String']>;
-  careCoordinationInvolved?: Maybe<Scalars['Boolean']>;
-  careCoordinationInvolvedDescription?: Maybe<Scalars['String']>;
-  careCoordinationInvolvedNote?: Maybe<Scalars['String']>;
-  collectPlanBids?: Maybe<Scalars['Boolean']>;
-  collectPlanBidsNote?: Maybe<Scalars['String']>;
-  communityPartnersInvolved?: Maybe<Scalars['Boolean']>;
-  communityPartnersInvolvedDescription?: Maybe<Scalars['String']>;
-  communityPartnersInvolvedNote?: Maybe<Scalars['String']>;
-  createdBy: Scalars['UUID'];
+  authorityAllowancesNote?: Maybe<Scalars['String']['output']>;
+  authorityAllowancesOther?: Maybe<Scalars['String']['output']>;
+  careCoordinationInvolved?: Maybe<Scalars['Boolean']['output']>;
+  careCoordinationInvolvedDescription?: Maybe<Scalars['String']['output']>;
+  careCoordinationInvolvedNote?: Maybe<Scalars['String']['output']>;
+  collectPlanBids?: Maybe<Scalars['Boolean']['output']>;
+  collectPlanBidsNote?: Maybe<Scalars['String']['output']>;
+  communityPartnersInvolved?: Maybe<Scalars['Boolean']['output']>;
+  communityPartnersInvolvedDescription?: Maybe<Scalars['String']['output']>;
+  communityPartnersInvolvedNote?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  existingModel?: Maybe<Scalars['String']>;
-  geographiesTargeted?: Maybe<Scalars['Boolean']>;
+  createdDts: Scalars['Time']['output'];
+  existingModel?: Maybe<Scalars['String']['output']>;
+  geographiesTargeted?: Maybe<Scalars['Boolean']['output']>;
   geographiesTargetedAppliedTo: Array<GeographyApplication>;
-  geographiesTargetedAppliedToOther?: Maybe<Scalars['String']>;
-  geographiesTargetedNote?: Maybe<Scalars['String']>;
+  geographiesTargetedAppliedToOther?: Maybe<Scalars['String']['output']>;
+  geographiesTargetedNote?: Maybe<Scalars['String']['output']>;
   geographiesTargetedTypes: Array<GeographyType>;
-  geographiesTargetedTypesOther?: Maybe<Scalars['String']>;
-  hasComponentsOrTracks?: Maybe<Scalars['Boolean']>;
-  hasComponentsOrTracksDiffer?: Maybe<Scalars['String']>;
-  hasComponentsOrTracksNote?: Maybe<Scalars['String']>;
-  id: Scalars['UUID'];
-  isNewModel?: Maybe<Scalars['Boolean']>;
+  geographiesTargetedTypesOther?: Maybe<Scalars['String']['output']>;
+  hasComponentsOrTracks?: Maybe<Scalars['Boolean']['output']>;
+  hasComponentsOrTracksDiffer?: Maybe<Scalars['String']['output']>;
+  hasComponentsOrTracksNote?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  isNewModel?: Maybe<Scalars['Boolean']['output']>;
   keyCharacteristics: Array<KeyCharacteristic>;
-  keyCharacteristicsNote?: Maybe<Scalars['String']>;
-  keyCharacteristicsOther?: Maybe<Scalars['String']>;
-  managePartCDEnrollment?: Maybe<Scalars['Boolean']>;
-  managePartCDEnrollmentNote?: Maybe<Scalars['String']>;
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  keyCharacteristicsNote?: Maybe<Scalars['String']['output']>;
+  keyCharacteristicsOther?: Maybe<Scalars['String']['output']>;
+  managePartCDEnrollment?: Maybe<Scalars['Boolean']['output']>;
+  managePartCDEnrollmentNote?: Maybe<Scalars['String']['output']>;
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  multiplePatricipationAgreementsNeeded?: Maybe<Scalars['Boolean']>;
-  multiplePatricipationAgreementsNeededNote?: Maybe<Scalars['String']>;
-  participationOptions?: Maybe<Scalars['Boolean']>;
-  participationOptionsNote?: Maybe<Scalars['String']>;
-  planContractUpdated?: Maybe<Scalars['Boolean']>;
-  planContractUpdatedNote?: Maybe<Scalars['String']>;
-  readyForClearanceBy?: Maybe<Scalars['UUID']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  multiplePatricipationAgreementsNeeded?: Maybe<Scalars['Boolean']['output']>;
+  multiplePatricipationAgreementsNeededNote?: Maybe<Scalars['String']['output']>;
+  participationOptions?: Maybe<Scalars['Boolean']['output']>;
+  participationOptionsNote?: Maybe<Scalars['String']['output']>;
+  planContractUpdated?: Maybe<Scalars['Boolean']['output']>;
+  planContractUpdatedNote?: Maybe<Scalars['String']['output']>;
+  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
   readyForClearanceByUserAccount?: Maybe<UserAccount>;
-  readyForClearanceDts?: Maybe<Scalars['Time']>;
-  readyForReviewBy?: Maybe<Scalars['UUID']>;
+  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
   readyForReviewByUserAccount?: Maybe<UserAccount>;
-  readyForReviewDts?: Maybe<Scalars['Time']>;
-  resemblesExistingModel?: Maybe<Scalars['Boolean']>;
-  resemblesExistingModelHow?: Maybe<Scalars['String']>;
-  resemblesExistingModelNote?: Maybe<Scalars['String']>;
-  resemblesExistingModelWhich: Array<Scalars['String']>;
-  rulemakingRequired?: Maybe<Scalars['Boolean']>;
-  rulemakingRequiredDescription?: Maybe<Scalars['String']>;
-  rulemakingRequiredNote?: Maybe<Scalars['String']>;
+  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
+  resemblesExistingModel?: Maybe<Scalars['Boolean']['output']>;
+  resemblesExistingModelHow?: Maybe<Scalars['String']['output']>;
+  resemblesExistingModelNote?: Maybe<Scalars['String']['output']>;
+  rulemakingRequired?: Maybe<Scalars['Boolean']['output']>;
+  rulemakingRequiredDescription?: Maybe<Scalars['String']['output']>;
+  rulemakingRequiredNote?: Maybe<Scalars['String']['output']>;
   status: TaskStatus;
-  waiversRequired?: Maybe<Scalars['Boolean']>;
-  waiversRequiredNote?: Maybe<Scalars['String']>;
+  waiversRequired?: Maybe<Scalars['Boolean']['output']>;
+  waiversRequiredNote?: Maybe<Scalars['String']['output']>;
   waiversRequiredTypes: Array<WaiverType>;
 };
 
@@ -1381,56 +1526,55 @@ export type PlanGeneralCharacteristics = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanGeneralCharacteristicsChanges = {
-  additionalServicesInvolved?: InputMaybe<Scalars['Boolean']>;
-  additionalServicesInvolvedDescription?: InputMaybe<Scalars['String']>;
-  additionalServicesInvolvedNote?: InputMaybe<Scalars['String']>;
+  additionalServicesInvolved?: InputMaybe<Scalars['Boolean']['input']>;
+  additionalServicesInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
+  additionalServicesInvolvedNote?: InputMaybe<Scalars['String']['input']>;
   agreementTypes?: InputMaybe<Array<AgreementType>>;
-  agreementTypesOther?: InputMaybe<Scalars['String']>;
-  alternativePaymentModelNote?: InputMaybe<Scalars['String']>;
+  agreementTypesOther?: InputMaybe<Scalars['String']['input']>;
+  alternativePaymentModelNote?: InputMaybe<Scalars['String']['input']>;
   alternativePaymentModelTypes?: InputMaybe<Array<AlternativePaymentModelType>>;
   authorityAllowances?: InputMaybe<Array<AuthorityAllowance>>;
-  authorityAllowancesNote?: InputMaybe<Scalars['String']>;
-  authorityAllowancesOther?: InputMaybe<Scalars['String']>;
-  careCoordinationInvolved?: InputMaybe<Scalars['Boolean']>;
-  careCoordinationInvolvedDescription?: InputMaybe<Scalars['String']>;
-  careCoordinationInvolvedNote?: InputMaybe<Scalars['String']>;
-  collectPlanBids?: InputMaybe<Scalars['Boolean']>;
-  collectPlanBidsNote?: InputMaybe<Scalars['String']>;
-  communityPartnersInvolved?: InputMaybe<Scalars['Boolean']>;
-  communityPartnersInvolvedDescription?: InputMaybe<Scalars['String']>;
-  communityPartnersInvolvedNote?: InputMaybe<Scalars['String']>;
-  existingModel?: InputMaybe<Scalars['String']>;
-  geographiesTargeted?: InputMaybe<Scalars['Boolean']>;
+  authorityAllowancesNote?: InputMaybe<Scalars['String']['input']>;
+  authorityAllowancesOther?: InputMaybe<Scalars['String']['input']>;
+  careCoordinationInvolved?: InputMaybe<Scalars['Boolean']['input']>;
+  careCoordinationInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
+  careCoordinationInvolvedNote?: InputMaybe<Scalars['String']['input']>;
+  collectPlanBids?: InputMaybe<Scalars['Boolean']['input']>;
+  collectPlanBidsNote?: InputMaybe<Scalars['String']['input']>;
+  communityPartnersInvolved?: InputMaybe<Scalars['Boolean']['input']>;
+  communityPartnersInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
+  communityPartnersInvolvedNote?: InputMaybe<Scalars['String']['input']>;
+  existingModel?: InputMaybe<Scalars['String']['input']>;
+  geographiesTargeted?: InputMaybe<Scalars['Boolean']['input']>;
   geographiesTargetedAppliedTo?: InputMaybe<Array<GeographyApplication>>;
-  geographiesTargetedAppliedToOther?: InputMaybe<Scalars['String']>;
-  geographiesTargetedNote?: InputMaybe<Scalars['String']>;
+  geographiesTargetedAppliedToOther?: InputMaybe<Scalars['String']['input']>;
+  geographiesTargetedNote?: InputMaybe<Scalars['String']['input']>;
   geographiesTargetedTypes?: InputMaybe<Array<GeographyType>>;
-  geographiesTargetedTypesOther?: InputMaybe<Scalars['String']>;
-  hasComponentsOrTracks?: InputMaybe<Scalars['Boolean']>;
-  hasComponentsOrTracksDiffer?: InputMaybe<Scalars['String']>;
-  hasComponentsOrTracksNote?: InputMaybe<Scalars['String']>;
-  isNewModel?: InputMaybe<Scalars['Boolean']>;
+  geographiesTargetedTypesOther?: InputMaybe<Scalars['String']['input']>;
+  hasComponentsOrTracks?: InputMaybe<Scalars['Boolean']['input']>;
+  hasComponentsOrTracksDiffer?: InputMaybe<Scalars['String']['input']>;
+  hasComponentsOrTracksNote?: InputMaybe<Scalars['String']['input']>;
+  isNewModel?: InputMaybe<Scalars['Boolean']['input']>;
   keyCharacteristics?: InputMaybe<Array<KeyCharacteristic>>;
-  keyCharacteristicsNote?: InputMaybe<Scalars['String']>;
-  keyCharacteristicsOther?: InputMaybe<Scalars['String']>;
-  managePartCDEnrollment?: InputMaybe<Scalars['Boolean']>;
-  managePartCDEnrollmentNote?: InputMaybe<Scalars['String']>;
-  multiplePatricipationAgreementsNeeded?: InputMaybe<Scalars['Boolean']>;
-  multiplePatricipationAgreementsNeededNote?: InputMaybe<Scalars['String']>;
-  participationOptions?: InputMaybe<Scalars['Boolean']>;
-  participationOptionsNote?: InputMaybe<Scalars['String']>;
-  planContractUpdated?: InputMaybe<Scalars['Boolean']>;
-  planContractUpdatedNote?: InputMaybe<Scalars['String']>;
-  resemblesExistingModel?: InputMaybe<Scalars['Boolean']>;
-  resemblesExistingModelHow?: InputMaybe<Scalars['String']>;
-  resemblesExistingModelNote?: InputMaybe<Scalars['String']>;
-  resemblesExistingModelWhich?: InputMaybe<Array<Scalars['String']>>;
-  rulemakingRequired?: InputMaybe<Scalars['Boolean']>;
-  rulemakingRequiredDescription?: InputMaybe<Scalars['String']>;
-  rulemakingRequiredNote?: InputMaybe<Scalars['String']>;
+  keyCharacteristicsNote?: InputMaybe<Scalars['String']['input']>;
+  keyCharacteristicsOther?: InputMaybe<Scalars['String']['input']>;
+  managePartCDEnrollment?: InputMaybe<Scalars['Boolean']['input']>;
+  managePartCDEnrollmentNote?: InputMaybe<Scalars['String']['input']>;
+  multiplePatricipationAgreementsNeeded?: InputMaybe<Scalars['Boolean']['input']>;
+  multiplePatricipationAgreementsNeededNote?: InputMaybe<Scalars['String']['input']>;
+  participationOptions?: InputMaybe<Scalars['Boolean']['input']>;
+  participationOptionsNote?: InputMaybe<Scalars['String']['input']>;
+  planContractUpdated?: InputMaybe<Scalars['Boolean']['input']>;
+  planContractUpdatedNote?: InputMaybe<Scalars['String']['input']>;
+  resemblesExistingModel?: InputMaybe<Scalars['Boolean']['input']>;
+  resemblesExistingModelHow?: InputMaybe<Scalars['String']['input']>;
+  resemblesExistingModelNote?: InputMaybe<Scalars['String']['input']>;
+  rulemakingRequired?: InputMaybe<Scalars['Boolean']['input']>;
+  rulemakingRequiredDescription?: InputMaybe<Scalars['String']['input']>;
+  rulemakingRequiredNote?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<TaskStatusInput>;
-  waiversRequired?: InputMaybe<Scalars['Boolean']>;
-  waiversRequiredNote?: InputMaybe<Scalars['String']>;
+  waiversRequired?: InputMaybe<Scalars['Boolean']['input']>;
+  waiversRequiredNote?: InputMaybe<Scalars['String']['input']>;
   waiversRequiredTypes?: InputMaybe<Array<WaiverType>>;
 };
 
@@ -1438,113 +1582,113 @@ export type PlanGeneralCharacteristicsChanges = {
 export type PlanOpsEvalAndLearning = {
   __typename?: 'PlanOpsEvalAndLearning';
   agencyOrStateHelp: Array<AgencyOrStateHelpType>;
-  agencyOrStateHelpNote?: Maybe<Scalars['String']>;
-  agencyOrStateHelpOther?: Maybe<Scalars['String']>;
-  anticipatedChallenges?: Maybe<Scalars['String']>;
-  appToSendFilesToKnown?: Maybe<Scalars['Boolean']>;
-  appToSendFilesToNote?: Maybe<Scalars['String']>;
-  appToSendFilesToWhich?: Maybe<Scalars['String']>;
-  appealFeedback?: Maybe<Scalars['Boolean']>;
-  appealNote?: Maybe<Scalars['String']>;
-  appealOther?: Maybe<Scalars['Boolean']>;
-  appealPayments?: Maybe<Scalars['Boolean']>;
-  appealPerformance?: Maybe<Scalars['Boolean']>;
+  agencyOrStateHelpNote?: Maybe<Scalars['String']['output']>;
+  agencyOrStateHelpOther?: Maybe<Scalars['String']['output']>;
+  anticipatedChallenges?: Maybe<Scalars['String']['output']>;
+  appToSendFilesToKnown?: Maybe<Scalars['Boolean']['output']>;
+  appToSendFilesToNote?: Maybe<Scalars['String']['output']>;
+  appToSendFilesToWhich?: Maybe<Scalars['String']['output']>;
+  appealFeedback?: Maybe<Scalars['Boolean']['output']>;
+  appealNote?: Maybe<Scalars['String']['output']>;
+  appealOther?: Maybe<Scalars['Boolean']['output']>;
+  appealPayments?: Maybe<Scalars['Boolean']['output']>;
+  appealPerformance?: Maybe<Scalars['Boolean']['output']>;
   benchmarkForPerformance?: Maybe<BenchmarkForPerformanceType>;
-  benchmarkForPerformanceNote?: Maybe<Scalars['String']>;
-  captureParticipantInfo?: Maybe<Scalars['Boolean']>;
-  captureParticipantInfoNote?: Maybe<Scalars['String']>;
+  benchmarkForPerformanceNote?: Maybe<Scalars['String']['output']>;
+  captureParticipantInfo?: Maybe<Scalars['Boolean']['output']>;
+  captureParticipantInfoNote?: Maybe<Scalars['String']['output']>;
   ccmInvolvment: Array<CcmInvolvmentType>;
-  ccmInvolvmentNote?: Maybe<Scalars['String']>;
-  ccmInvolvmentOther?: Maybe<Scalars['String']>;
-  computePerformanceScores?: Maybe<Scalars['Boolean']>;
-  computePerformanceScoresNote?: Maybe<Scalars['String']>;
+  ccmInvolvmentNote?: Maybe<Scalars['String']['output']>;
+  ccmInvolvmentOther?: Maybe<Scalars['String']['output']>;
+  computePerformanceScores?: Maybe<Scalars['Boolean']['output']>;
+  computePerformanceScoresNote?: Maybe<Scalars['String']['output']>;
   contractorSupport: Array<ContractorSupportType>;
-  contractorSupportHow?: Maybe<Scalars['String']>;
-  contractorSupportNote?: Maybe<Scalars['String']>;
-  contractorSupportOther?: Maybe<Scalars['String']>;
-  createdBy: Scalars['UUID'];
+  contractorSupportHow?: Maybe<Scalars['String']['output']>;
+  contractorSupportNote?: Maybe<Scalars['String']['output']>;
+  contractorSupportOther?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
+  createdDts: Scalars['Time']['output'];
   dataCollectionFrequency: Array<DataFrequencyType>;
-  dataCollectionFrequencyNote?: Maybe<Scalars['String']>;
-  dataCollectionFrequencyOther?: Maybe<Scalars['String']>;
+  dataCollectionFrequencyNote?: Maybe<Scalars['String']['output']>;
+  dataCollectionFrequencyOther?: Maybe<Scalars['String']['output']>;
   dataCollectionStarts?: Maybe<DataStartsType>;
-  dataCollectionStartsOther?: Maybe<Scalars['String']>;
-  dataFlowDiagramsNeeded?: Maybe<Scalars['Boolean']>;
+  dataCollectionStartsOther?: Maybe<Scalars['String']['output']>;
+  dataFlowDiagramsNeeded?: Maybe<Scalars['Boolean']['output']>;
   dataFullTimeOrIncremental?: Maybe<DataFullTimeOrIncrementalType>;
-  dataMonitoringFileOther?: Maybe<Scalars['String']>;
+  dataMonitoringFileOther?: Maybe<Scalars['String']['output']>;
   dataMonitoringFileTypes: Array<MonitoringFileType>;
-  dataMonitoringNote?: Maybe<Scalars['String']>;
+  dataMonitoringNote?: Maybe<Scalars['String']['output']>;
   dataNeededForMonitoring: Array<DataForMonitoringType>;
-  dataNeededForMonitoringNote?: Maybe<Scalars['String']>;
-  dataNeededForMonitoringOther?: Maybe<Scalars['String']>;
-  dataResponseFileFrequency?: Maybe<Scalars['String']>;
-  dataResponseType?: Maybe<Scalars['String']>;
+  dataNeededForMonitoringNote?: Maybe<Scalars['String']['output']>;
+  dataNeededForMonitoringOther?: Maybe<Scalars['String']['output']>;
+  dataResponseFileFrequency?: Maybe<Scalars['String']['output']>;
+  dataResponseType?: Maybe<Scalars['String']['output']>;
   dataSharingFrequency: Array<DataFrequencyType>;
-  dataSharingFrequencyOther?: Maybe<Scalars['String']>;
+  dataSharingFrequencyOther?: Maybe<Scalars['String']['output']>;
   dataSharingStarts?: Maybe<DataStartsType>;
-  dataSharingStartsNote?: Maybe<Scalars['String']>;
-  dataSharingStartsOther?: Maybe<Scalars['String']>;
+  dataSharingStartsNote?: Maybe<Scalars['String']['output']>;
+  dataSharingStartsOther?: Maybe<Scalars['String']['output']>;
   dataToSendParticicipants: Array<DataToSendParticipantsType>;
-  dataToSendParticicipantsNote?: Maybe<Scalars['String']>;
-  dataToSendParticicipantsOther?: Maybe<Scalars['String']>;
-  developNewQualityMeasures?: Maybe<Scalars['Boolean']>;
-  developNewQualityMeasuresNote?: Maybe<Scalars['String']>;
-  draftIcdDueDate?: Maybe<Scalars['Time']>;
-  eftSetUp?: Maybe<Scalars['Boolean']>;
-  evaluationApproachOther?: Maybe<Scalars['String']>;
+  dataToSendParticicipantsNote?: Maybe<Scalars['String']['output']>;
+  dataToSendParticicipantsOther?: Maybe<Scalars['String']['output']>;
+  developNewQualityMeasures?: Maybe<Scalars['Boolean']['output']>;
+  developNewQualityMeasuresNote?: Maybe<Scalars['String']['output']>;
+  draftIcdDueDate?: Maybe<Scalars['Time']['output']>;
+  eftSetUp?: Maybe<Scalars['Boolean']['output']>;
+  evaluationApproachOther?: Maybe<Scalars['String']['output']>;
   evaluationApproaches: Array<EvaluationApproachType>;
-  evalutaionApproachNote?: Maybe<Scalars['String']>;
-  fileNamingConventions?: Maybe<Scalars['String']>;
-  helpdeskUse?: Maybe<Scalars['Boolean']>;
-  helpdeskUseNote?: Maybe<Scalars['String']>;
-  icdNote?: Maybe<Scalars['String']>;
-  icdOwner?: Maybe<Scalars['String']>;
-  id: Scalars['UUID'];
-  iddocSupport?: Maybe<Scalars['Boolean']>;
-  iddocSupportNote?: Maybe<Scalars['String']>;
+  evalutaionApproachNote?: Maybe<Scalars['String']['output']>;
+  fileNamingConventions?: Maybe<Scalars['String']['output']>;
+  helpdeskUse?: Maybe<Scalars['Boolean']['output']>;
+  helpdeskUseNote?: Maybe<Scalars['String']['output']>;
+  icdNote?: Maybe<Scalars['String']['output']>;
+  icdOwner?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  iddocSupport?: Maybe<Scalars['Boolean']['output']>;
+  iddocSupportNote?: Maybe<Scalars['String']['output']>;
   modelLearningSystems: Array<ModelLearningSystemType>;
-  modelLearningSystemsNote?: Maybe<Scalars['String']>;
-  modelLearningSystemsOther?: Maybe<Scalars['String']>;
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  modelLearningSystemsNote?: Maybe<Scalars['String']['output']>;
+  modelLearningSystemsOther?: Maybe<Scalars['String']['output']>;
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  produceBenefitEnhancementFiles?: Maybe<Scalars['Boolean']>;
-  qualityPerformanceImpactsPayment?: Maybe<Scalars['Boolean']>;
-  qualityPerformanceImpactsPaymentNote?: Maybe<Scalars['String']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  produceBenefitEnhancementFiles?: Maybe<Scalars['Boolean']['output']>;
+  qualityPerformanceImpactsPayment?: Maybe<Scalars['Boolean']['output']>;
+  qualityPerformanceImpactsPaymentNote?: Maybe<Scalars['String']['output']>;
   qualityReportingStarts?: Maybe<DataStartsType>;
-  qualityReportingStartsNote?: Maybe<Scalars['String']>;
-  qualityReportingStartsOther?: Maybe<Scalars['String']>;
-  readyForClearanceBy?: Maybe<Scalars['UUID']>;
+  qualityReportingStartsNote?: Maybe<Scalars['String']['output']>;
+  qualityReportingStartsOther?: Maybe<Scalars['String']['output']>;
+  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
   readyForClearanceByUserAccount?: Maybe<UserAccount>;
-  readyForClearanceDts?: Maybe<Scalars['Time']>;
-  readyForReviewBy?: Maybe<Scalars['UUID']>;
+  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
   readyForReviewByUserAccount?: Maybe<UserAccount>;
-  readyForReviewDts?: Maybe<Scalars['Time']>;
-  riskAdjustFeedback?: Maybe<Scalars['Boolean']>;
-  riskAdjustNote?: Maybe<Scalars['String']>;
-  riskAdjustOther?: Maybe<Scalars['Boolean']>;
-  riskAdjustPayments?: Maybe<Scalars['Boolean']>;
-  riskAdjustPerformance?: Maybe<Scalars['Boolean']>;
-  sendFilesBetweenCcw?: Maybe<Scalars['Boolean']>;
-  sendFilesBetweenCcwNote?: Maybe<Scalars['String']>;
-  shareCclfData?: Maybe<Scalars['Boolean']>;
-  shareCclfDataNote?: Maybe<Scalars['String']>;
+  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
+  riskAdjustFeedback?: Maybe<Scalars['Boolean']['output']>;
+  riskAdjustNote?: Maybe<Scalars['String']['output']>;
+  riskAdjustOther?: Maybe<Scalars['Boolean']['output']>;
+  riskAdjustPayments?: Maybe<Scalars['Boolean']['output']>;
+  riskAdjustPerformance?: Maybe<Scalars['Boolean']['output']>;
+  sendFilesBetweenCcw?: Maybe<Scalars['Boolean']['output']>;
+  sendFilesBetweenCcwNote?: Maybe<Scalars['String']['output']>;
+  shareCclfData?: Maybe<Scalars['Boolean']['output']>;
+  shareCclfDataNote?: Maybe<Scalars['String']['output']>;
   stakeholders: Array<StakeholdersType>;
-  stakeholdersNote?: Maybe<Scalars['String']>;
-  stakeholdersOther?: Maybe<Scalars['String']>;
+  stakeholdersNote?: Maybe<Scalars['String']['output']>;
+  stakeholdersOther?: Maybe<Scalars['String']['output']>;
   status: TaskStatus;
-  stcNeeds?: Maybe<Scalars['String']>;
-  technicalContactsIdentified?: Maybe<Scalars['Boolean']>;
-  technicalContactsIdentifiedDetail?: Maybe<Scalars['String']>;
-  technicalContactsIdentifiedNote?: Maybe<Scalars['String']>;
-  testingNote?: Maybe<Scalars['String']>;
-  testingTimelines?: Maybe<Scalars['String']>;
-  uatNeeds?: Maybe<Scalars['String']>;
-  unsolicitedAdjustmentsIncluded?: Maybe<Scalars['Boolean']>;
-  useCcwForFileDistribiutionToParticipants?: Maybe<Scalars['Boolean']>;
-  useCcwForFileDistribiutionToParticipantsNote?: Maybe<Scalars['String']>;
+  stcNeeds?: Maybe<Scalars['String']['output']>;
+  technicalContactsIdentified?: Maybe<Scalars['Boolean']['output']>;
+  technicalContactsIdentifiedDetail?: Maybe<Scalars['String']['output']>;
+  technicalContactsIdentifiedNote?: Maybe<Scalars['String']['output']>;
+  testingNote?: Maybe<Scalars['String']['output']>;
+  testingTimelines?: Maybe<Scalars['String']['output']>;
+  uatNeeds?: Maybe<Scalars['String']['output']>;
+  unsolicitedAdjustmentsIncluded?: Maybe<Scalars['Boolean']['output']>;
+  useCcwForFileDistribiutionToParticipants?: Maybe<Scalars['Boolean']['output']>;
+  useCcwForFileDistribiutionToParticipantsNote?: Maybe<Scalars['String']['output']>;
 };
 
 /**
@@ -1555,165 +1699,165 @@ export type PlanOpsEvalAndLearning = {
  */
 export type PlanOpsEvalAndLearningChanges = {
   agencyOrStateHelp?: InputMaybe<Array<AgencyOrStateHelpType>>;
-  agencyOrStateHelpNote?: InputMaybe<Scalars['String']>;
-  agencyOrStateHelpOther?: InputMaybe<Scalars['String']>;
-  anticipatedChallenges?: InputMaybe<Scalars['String']>;
-  appToSendFilesToKnown?: InputMaybe<Scalars['Boolean']>;
-  appToSendFilesToNote?: InputMaybe<Scalars['String']>;
-  appToSendFilesToWhich?: InputMaybe<Scalars['String']>;
-  appealFeedback?: InputMaybe<Scalars['Boolean']>;
-  appealNote?: InputMaybe<Scalars['String']>;
-  appealOther?: InputMaybe<Scalars['Boolean']>;
-  appealPayments?: InputMaybe<Scalars['Boolean']>;
-  appealPerformance?: InputMaybe<Scalars['Boolean']>;
+  agencyOrStateHelpNote?: InputMaybe<Scalars['String']['input']>;
+  agencyOrStateHelpOther?: InputMaybe<Scalars['String']['input']>;
+  anticipatedChallenges?: InputMaybe<Scalars['String']['input']>;
+  appToSendFilesToKnown?: InputMaybe<Scalars['Boolean']['input']>;
+  appToSendFilesToNote?: InputMaybe<Scalars['String']['input']>;
+  appToSendFilesToWhich?: InputMaybe<Scalars['String']['input']>;
+  appealFeedback?: InputMaybe<Scalars['Boolean']['input']>;
+  appealNote?: InputMaybe<Scalars['String']['input']>;
+  appealOther?: InputMaybe<Scalars['Boolean']['input']>;
+  appealPayments?: InputMaybe<Scalars['Boolean']['input']>;
+  appealPerformance?: InputMaybe<Scalars['Boolean']['input']>;
   benchmarkForPerformance?: InputMaybe<BenchmarkForPerformanceType>;
-  benchmarkForPerformanceNote?: InputMaybe<Scalars['String']>;
-  captureParticipantInfo?: InputMaybe<Scalars['Boolean']>;
-  captureParticipantInfoNote?: InputMaybe<Scalars['String']>;
+  benchmarkForPerformanceNote?: InputMaybe<Scalars['String']['input']>;
+  captureParticipantInfo?: InputMaybe<Scalars['Boolean']['input']>;
+  captureParticipantInfoNote?: InputMaybe<Scalars['String']['input']>;
   ccmInvolvment?: InputMaybe<Array<CcmInvolvmentType>>;
-  ccmInvolvmentNote?: InputMaybe<Scalars['String']>;
-  ccmInvolvmentOther?: InputMaybe<Scalars['String']>;
-  computePerformanceScores?: InputMaybe<Scalars['Boolean']>;
-  computePerformanceScoresNote?: InputMaybe<Scalars['String']>;
+  ccmInvolvmentNote?: InputMaybe<Scalars['String']['input']>;
+  ccmInvolvmentOther?: InputMaybe<Scalars['String']['input']>;
+  computePerformanceScores?: InputMaybe<Scalars['Boolean']['input']>;
+  computePerformanceScoresNote?: InputMaybe<Scalars['String']['input']>;
   contractorSupport?: InputMaybe<Array<ContractorSupportType>>;
-  contractorSupportHow?: InputMaybe<Scalars['String']>;
-  contractorSupportNote?: InputMaybe<Scalars['String']>;
-  contractorSupportOther?: InputMaybe<Scalars['String']>;
+  contractorSupportHow?: InputMaybe<Scalars['String']['input']>;
+  contractorSupportNote?: InputMaybe<Scalars['String']['input']>;
+  contractorSupportOther?: InputMaybe<Scalars['String']['input']>;
   dataCollectionFrequency?: InputMaybe<Array<DataFrequencyType>>;
-  dataCollectionFrequencyNote?: InputMaybe<Scalars['String']>;
-  dataCollectionFrequencyOther?: InputMaybe<Scalars['String']>;
+  dataCollectionFrequencyNote?: InputMaybe<Scalars['String']['input']>;
+  dataCollectionFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   dataCollectionStarts?: InputMaybe<DataStartsType>;
-  dataCollectionStartsOther?: InputMaybe<Scalars['String']>;
-  dataFlowDiagramsNeeded?: InputMaybe<Scalars['Boolean']>;
+  dataCollectionStartsOther?: InputMaybe<Scalars['String']['input']>;
+  dataFlowDiagramsNeeded?: InputMaybe<Scalars['Boolean']['input']>;
   dataFullTimeOrIncremental?: InputMaybe<DataFullTimeOrIncrementalType>;
-  dataMonitoringFileOther?: InputMaybe<Scalars['String']>;
+  dataMonitoringFileOther?: InputMaybe<Scalars['String']['input']>;
   dataMonitoringFileTypes?: InputMaybe<Array<MonitoringFileType>>;
-  dataMonitoringNote?: InputMaybe<Scalars['String']>;
+  dataMonitoringNote?: InputMaybe<Scalars['String']['input']>;
   dataNeededForMonitoring?: InputMaybe<Array<DataForMonitoringType>>;
-  dataNeededForMonitoringNote?: InputMaybe<Scalars['String']>;
-  dataNeededForMonitoringOther?: InputMaybe<Scalars['String']>;
-  dataResponseFileFrequency?: InputMaybe<Scalars['String']>;
-  dataResponseType?: InputMaybe<Scalars['String']>;
+  dataNeededForMonitoringNote?: InputMaybe<Scalars['String']['input']>;
+  dataNeededForMonitoringOther?: InputMaybe<Scalars['String']['input']>;
+  dataResponseFileFrequency?: InputMaybe<Scalars['String']['input']>;
+  dataResponseType?: InputMaybe<Scalars['String']['input']>;
   dataSharingFrequency?: InputMaybe<Array<DataFrequencyType>>;
-  dataSharingFrequencyOther?: InputMaybe<Scalars['String']>;
+  dataSharingFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   dataSharingStarts?: InputMaybe<DataStartsType>;
-  dataSharingStartsNote?: InputMaybe<Scalars['String']>;
-  dataSharingStartsOther?: InputMaybe<Scalars['String']>;
+  dataSharingStartsNote?: InputMaybe<Scalars['String']['input']>;
+  dataSharingStartsOther?: InputMaybe<Scalars['String']['input']>;
   dataToSendParticicipants?: InputMaybe<Array<DataToSendParticipantsType>>;
-  dataToSendParticicipantsNote?: InputMaybe<Scalars['String']>;
-  dataToSendParticicipantsOther?: InputMaybe<Scalars['String']>;
-  developNewQualityMeasures?: InputMaybe<Scalars['Boolean']>;
-  developNewQualityMeasuresNote?: InputMaybe<Scalars['String']>;
-  draftIcdDueDate?: InputMaybe<Scalars['Time']>;
-  eftSetUp?: InputMaybe<Scalars['Boolean']>;
-  evaluationApproachOther?: InputMaybe<Scalars['String']>;
+  dataToSendParticicipantsNote?: InputMaybe<Scalars['String']['input']>;
+  dataToSendParticicipantsOther?: InputMaybe<Scalars['String']['input']>;
+  developNewQualityMeasures?: InputMaybe<Scalars['Boolean']['input']>;
+  developNewQualityMeasuresNote?: InputMaybe<Scalars['String']['input']>;
+  draftIcdDueDate?: InputMaybe<Scalars['Time']['input']>;
+  eftSetUp?: InputMaybe<Scalars['Boolean']['input']>;
+  evaluationApproachOther?: InputMaybe<Scalars['String']['input']>;
   evaluationApproaches?: InputMaybe<Array<EvaluationApproachType>>;
-  evalutaionApproachNote?: InputMaybe<Scalars['String']>;
-  fileNamingConventions?: InputMaybe<Scalars['String']>;
-  helpdeskUse?: InputMaybe<Scalars['Boolean']>;
-  helpdeskUseNote?: InputMaybe<Scalars['String']>;
-  icdNote?: InputMaybe<Scalars['String']>;
-  icdOwner?: InputMaybe<Scalars['String']>;
-  iddocSupport?: InputMaybe<Scalars['Boolean']>;
-  iddocSupportNote?: InputMaybe<Scalars['String']>;
+  evalutaionApproachNote?: InputMaybe<Scalars['String']['input']>;
+  fileNamingConventions?: InputMaybe<Scalars['String']['input']>;
+  helpdeskUse?: InputMaybe<Scalars['Boolean']['input']>;
+  helpdeskUseNote?: InputMaybe<Scalars['String']['input']>;
+  icdNote?: InputMaybe<Scalars['String']['input']>;
+  icdOwner?: InputMaybe<Scalars['String']['input']>;
+  iddocSupport?: InputMaybe<Scalars['Boolean']['input']>;
+  iddocSupportNote?: InputMaybe<Scalars['String']['input']>;
   modelLearningSystems?: InputMaybe<Array<ModelLearningSystemType>>;
-  modelLearningSystemsNote?: InputMaybe<Scalars['String']>;
-  modelLearningSystemsOther?: InputMaybe<Scalars['String']>;
-  produceBenefitEnhancementFiles?: InputMaybe<Scalars['Boolean']>;
-  qualityPerformanceImpactsPayment?: InputMaybe<Scalars['Boolean']>;
-  qualityPerformanceImpactsPaymentNote?: InputMaybe<Scalars['String']>;
+  modelLearningSystemsNote?: InputMaybe<Scalars['String']['input']>;
+  modelLearningSystemsOther?: InputMaybe<Scalars['String']['input']>;
+  produceBenefitEnhancementFiles?: InputMaybe<Scalars['Boolean']['input']>;
+  qualityPerformanceImpactsPayment?: InputMaybe<Scalars['Boolean']['input']>;
+  qualityPerformanceImpactsPaymentNote?: InputMaybe<Scalars['String']['input']>;
   qualityReportingStarts?: InputMaybe<DataStartsType>;
-  qualityReportingStartsNote?: InputMaybe<Scalars['String']>;
-  qualityReportingStartsOther?: InputMaybe<Scalars['String']>;
-  riskAdjustFeedback?: InputMaybe<Scalars['Boolean']>;
-  riskAdjustNote?: InputMaybe<Scalars['String']>;
-  riskAdjustOther?: InputMaybe<Scalars['Boolean']>;
-  riskAdjustPayments?: InputMaybe<Scalars['Boolean']>;
-  riskAdjustPerformance?: InputMaybe<Scalars['Boolean']>;
-  sendFilesBetweenCcw?: InputMaybe<Scalars['Boolean']>;
-  sendFilesBetweenCcwNote?: InputMaybe<Scalars['String']>;
-  shareCclfData?: InputMaybe<Scalars['Boolean']>;
-  shareCclfDataNote?: InputMaybe<Scalars['String']>;
+  qualityReportingStartsNote?: InputMaybe<Scalars['String']['input']>;
+  qualityReportingStartsOther?: InputMaybe<Scalars['String']['input']>;
+  riskAdjustFeedback?: InputMaybe<Scalars['Boolean']['input']>;
+  riskAdjustNote?: InputMaybe<Scalars['String']['input']>;
+  riskAdjustOther?: InputMaybe<Scalars['Boolean']['input']>;
+  riskAdjustPayments?: InputMaybe<Scalars['Boolean']['input']>;
+  riskAdjustPerformance?: InputMaybe<Scalars['Boolean']['input']>;
+  sendFilesBetweenCcw?: InputMaybe<Scalars['Boolean']['input']>;
+  sendFilesBetweenCcwNote?: InputMaybe<Scalars['String']['input']>;
+  shareCclfData?: InputMaybe<Scalars['Boolean']['input']>;
+  shareCclfDataNote?: InputMaybe<Scalars['String']['input']>;
   stakeholders?: InputMaybe<Array<StakeholdersType>>;
-  stakeholdersNote?: InputMaybe<Scalars['String']>;
-  stakeholdersOther?: InputMaybe<Scalars['String']>;
+  stakeholdersNote?: InputMaybe<Scalars['String']['input']>;
+  stakeholdersOther?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<TaskStatusInput>;
-  stcNeeds?: InputMaybe<Scalars['String']>;
-  technicalContactsIdentified?: InputMaybe<Scalars['Boolean']>;
-  technicalContactsIdentifiedDetail?: InputMaybe<Scalars['String']>;
-  technicalContactsIdentifiedNote?: InputMaybe<Scalars['String']>;
-  testingNote?: InputMaybe<Scalars['String']>;
-  testingTimelines?: InputMaybe<Scalars['String']>;
-  uatNeeds?: InputMaybe<Scalars['String']>;
-  unsolicitedAdjustmentsIncluded?: InputMaybe<Scalars['Boolean']>;
-  useCcwForFileDistribiutionToParticipants?: InputMaybe<Scalars['Boolean']>;
-  useCcwForFileDistribiutionToParticipantsNote?: InputMaybe<Scalars['String']>;
+  stcNeeds?: InputMaybe<Scalars['String']['input']>;
+  technicalContactsIdentified?: InputMaybe<Scalars['Boolean']['input']>;
+  technicalContactsIdentifiedDetail?: InputMaybe<Scalars['String']['input']>;
+  technicalContactsIdentifiedNote?: InputMaybe<Scalars['String']['input']>;
+  testingNote?: InputMaybe<Scalars['String']['input']>;
+  testingTimelines?: InputMaybe<Scalars['String']['input']>;
+  uatNeeds?: InputMaybe<Scalars['String']['input']>;
+  unsolicitedAdjustmentsIncluded?: InputMaybe<Scalars['Boolean']['input']>;
+  useCcwForFileDistribiutionToParticipants?: InputMaybe<Scalars['Boolean']['input']>;
+  useCcwForFileDistribiutionToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants */
 export type PlanParticipantsAndProviders = {
   __typename?: 'PlanParticipantsAndProviders';
   communicationMethod: Array<ParticipantCommunicationType>;
-  communicationMethodOther?: Maybe<Scalars['String']>;
-  communicationNote?: Maybe<Scalars['String']>;
-  confidenceNote?: Maybe<Scalars['String']>;
-  coordinateWork?: Maybe<Scalars['Boolean']>;
-  coordinateWorkNote?: Maybe<Scalars['String']>;
-  createdBy: Scalars['UUID'];
+  communicationMethodOther?: Maybe<Scalars['String']['output']>;
+  communicationNote?: Maybe<Scalars['String']['output']>;
+  confidenceNote?: Maybe<Scalars['String']['output']>;
+  coordinateWork?: Maybe<Scalars['Boolean']['output']>;
+  coordinateWorkNote?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
+  createdDts: Scalars['Time']['output'];
   estimateConfidence?: Maybe<ConfidenceType>;
-  expectedNumberOfParticipants?: Maybe<Scalars['Int']>;
-  gainsharePayments?: Maybe<Scalars['Boolean']>;
-  gainsharePaymentsNote?: Maybe<Scalars['String']>;
-  gainsharePaymentsTrack?: Maybe<Scalars['Boolean']>;
-  id: Scalars['UUID'];
-  medicareProviderType?: Maybe<Scalars['String']>;
-  modelApplicationLevel?: Maybe<Scalars['String']>;
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  expectedNumberOfParticipants?: Maybe<Scalars['Int']['output']>;
+  gainsharePayments?: Maybe<Scalars['Boolean']['output']>;
+  gainsharePaymentsNote?: Maybe<Scalars['String']['output']>;
+  gainsharePaymentsTrack?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['UUID']['output'];
+  medicareProviderType?: Maybe<Scalars['String']['output']>;
+  modelApplicationLevel?: Maybe<Scalars['String']['output']>;
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  participantAssumeRisk?: Maybe<Scalars['Boolean']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  participantAssumeRisk?: Maybe<Scalars['Boolean']['output']>;
   participants: Array<ParticipantsType>;
-  participantsCurrentlyInModels?: Maybe<Scalars['Boolean']>;
-  participantsCurrentlyInModelsNote?: Maybe<Scalars['String']>;
-  participantsIDSNote?: Maybe<Scalars['String']>;
+  participantsCurrentlyInModels?: Maybe<Scalars['Boolean']['output']>;
+  participantsCurrentlyInModelsNote?: Maybe<Scalars['String']['output']>;
+  participantsIDSNote?: Maybe<Scalars['String']['output']>;
   participantsIds: Array<ParticipantsIdType>;
-  participantsIdsOther?: Maybe<Scalars['String']>;
-  participantsNote?: Maybe<Scalars['String']>;
-  participantsOther?: Maybe<Scalars['String']>;
+  participantsIdsOther?: Maybe<Scalars['String']['output']>;
+  participantsNote?: Maybe<Scalars['String']['output']>;
+  participantsOther?: Maybe<Scalars['String']['output']>;
   providerAddMethod: Array<ProviderAddType>;
-  providerAddMethodNote?: Maybe<Scalars['String']>;
-  providerAddMethodOther?: Maybe<Scalars['String']>;
+  providerAddMethodNote?: Maybe<Scalars['String']['output']>;
+  providerAddMethodOther?: Maybe<Scalars['String']['output']>;
   providerAdditionFrequency?: Maybe<FrequencyType>;
-  providerAdditionFrequencyNote?: Maybe<Scalars['String']>;
-  providerAdditionFrequencyOther?: Maybe<Scalars['String']>;
+  providerAdditionFrequencyNote?: Maybe<Scalars['String']['output']>;
+  providerAdditionFrequencyOther?: Maybe<Scalars['String']['output']>;
   providerLeaveMethod: Array<ProviderLeaveType>;
-  providerLeaveMethodNote?: Maybe<Scalars['String']>;
-  providerLeaveMethodOther?: Maybe<Scalars['String']>;
+  providerLeaveMethodNote?: Maybe<Scalars['String']['output']>;
+  providerLeaveMethodOther?: Maybe<Scalars['String']['output']>;
   providerOverlap?: Maybe<OverlapType>;
-  providerOverlapHierarchy?: Maybe<Scalars['String']>;
-  providerOverlapNote?: Maybe<Scalars['String']>;
-  readyForClearanceBy?: Maybe<Scalars['UUID']>;
+  providerOverlapHierarchy?: Maybe<Scalars['String']['output']>;
+  providerOverlapNote?: Maybe<Scalars['String']['output']>;
+  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
   readyForClearanceByUserAccount?: Maybe<UserAccount>;
-  readyForClearanceDts?: Maybe<Scalars['Time']>;
-  readyForReviewBy?: Maybe<Scalars['UUID']>;
+  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
   readyForReviewByUserAccount?: Maybe<UserAccount>;
-  readyForReviewDts?: Maybe<Scalars['Time']>;
+  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
   recruitmentMethod?: Maybe<RecruitmentType>;
-  recruitmentNote?: Maybe<Scalars['String']>;
-  recruitmentOther?: Maybe<Scalars['String']>;
-  riskNote?: Maybe<Scalars['String']>;
-  riskOther?: Maybe<Scalars['String']>;
+  recruitmentNote?: Maybe<Scalars['String']['output']>;
+  recruitmentOther?: Maybe<Scalars['String']['output']>;
+  riskNote?: Maybe<Scalars['String']['output']>;
+  riskOther?: Maybe<Scalars['String']['output']>;
   riskType?: Maybe<ParticipantRiskType>;
   selectionMethod: Array<ParticipantSelectionType>;
-  selectionNote?: Maybe<Scalars['String']>;
-  selectionOther?: Maybe<Scalars['String']>;
-  statesEngagement?: Maybe<Scalars['String']>;
+  selectionNote?: Maybe<Scalars['String']['output']>;
+  selectionOther?: Maybe<Scalars['String']['output']>;
+  statesEngagement?: Maybe<Scalars['String']['output']>;
   status: TaskStatus;
-  willRiskChange?: Maybe<Scalars['Boolean']>;
-  willRiskChangeNote?: Maybe<Scalars['String']>;
+  willRiskChange?: Maybe<Scalars['Boolean']['output']>;
+  willRiskChangeNote?: Maybe<Scalars['String']['output']>;
 };
 
 /**
@@ -1724,230 +1868,230 @@ export type PlanParticipantsAndProviders = {
  */
 export type PlanParticipantsAndProvidersChanges = {
   communicationMethod?: InputMaybe<Array<ParticipantCommunicationType>>;
-  communicationMethodOther?: InputMaybe<Scalars['String']>;
-  communicationNote?: InputMaybe<Scalars['String']>;
-  confidenceNote?: InputMaybe<Scalars['String']>;
-  coordinateWork?: InputMaybe<Scalars['Boolean']>;
-  coordinateWorkNote?: InputMaybe<Scalars['String']>;
+  communicationMethodOther?: InputMaybe<Scalars['String']['input']>;
+  communicationNote?: InputMaybe<Scalars['String']['input']>;
+  confidenceNote?: InputMaybe<Scalars['String']['input']>;
+  coordinateWork?: InputMaybe<Scalars['Boolean']['input']>;
+  coordinateWorkNote?: InputMaybe<Scalars['String']['input']>;
   estimateConfidence?: InputMaybe<ConfidenceType>;
-  expectedNumberOfParticipants?: InputMaybe<Scalars['Int']>;
-  gainsharePayments?: InputMaybe<Scalars['Boolean']>;
-  gainsharePaymentsNote?: InputMaybe<Scalars['String']>;
-  gainsharePaymentsTrack?: InputMaybe<Scalars['Boolean']>;
-  medicareProviderType?: InputMaybe<Scalars['String']>;
-  modelApplicationLevel?: InputMaybe<Scalars['String']>;
-  participantAssumeRisk?: InputMaybe<Scalars['Boolean']>;
+  expectedNumberOfParticipants?: InputMaybe<Scalars['Int']['input']>;
+  gainsharePayments?: InputMaybe<Scalars['Boolean']['input']>;
+  gainsharePaymentsNote?: InputMaybe<Scalars['String']['input']>;
+  gainsharePaymentsTrack?: InputMaybe<Scalars['Boolean']['input']>;
+  medicareProviderType?: InputMaybe<Scalars['String']['input']>;
+  modelApplicationLevel?: InputMaybe<Scalars['String']['input']>;
+  participantAssumeRisk?: InputMaybe<Scalars['Boolean']['input']>;
   participants?: InputMaybe<Array<ParticipantsType>>;
-  participantsCurrentlyInModels?: InputMaybe<Scalars['Boolean']>;
-  participantsCurrentlyInModelsNote?: InputMaybe<Scalars['String']>;
-  participantsIDSNote?: InputMaybe<Scalars['String']>;
+  participantsCurrentlyInModels?: InputMaybe<Scalars['Boolean']['input']>;
+  participantsCurrentlyInModelsNote?: InputMaybe<Scalars['String']['input']>;
+  participantsIDSNote?: InputMaybe<Scalars['String']['input']>;
   participantsIds?: InputMaybe<Array<ParticipantsIdType>>;
-  participantsIdsOther?: InputMaybe<Scalars['String']>;
-  participantsNote?: InputMaybe<Scalars['String']>;
-  participantsOther?: InputMaybe<Scalars['String']>;
+  participantsIdsOther?: InputMaybe<Scalars['String']['input']>;
+  participantsNote?: InputMaybe<Scalars['String']['input']>;
+  participantsOther?: InputMaybe<Scalars['String']['input']>;
   providerAddMethod?: InputMaybe<Array<ProviderAddType>>;
-  providerAddMethodNote?: InputMaybe<Scalars['String']>;
-  providerAddMethodOther?: InputMaybe<Scalars['String']>;
+  providerAddMethodNote?: InputMaybe<Scalars['String']['input']>;
+  providerAddMethodOther?: InputMaybe<Scalars['String']['input']>;
   providerAdditionFrequency?: InputMaybe<FrequencyType>;
-  providerAdditionFrequencyNote?: InputMaybe<Scalars['String']>;
-  providerAdditionFrequencyOther?: InputMaybe<Scalars['String']>;
+  providerAdditionFrequencyNote?: InputMaybe<Scalars['String']['input']>;
+  providerAdditionFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   providerLeaveMethod?: InputMaybe<Array<ProviderLeaveType>>;
-  providerLeaveMethodNote?: InputMaybe<Scalars['String']>;
-  providerLeaveMethodOther?: InputMaybe<Scalars['String']>;
+  providerLeaveMethodNote?: InputMaybe<Scalars['String']['input']>;
+  providerLeaveMethodOther?: InputMaybe<Scalars['String']['input']>;
   providerOverlap?: InputMaybe<OverlapType>;
-  providerOverlapHierarchy?: InputMaybe<Scalars['String']>;
-  providerOverlapNote?: InputMaybe<Scalars['String']>;
+  providerOverlapHierarchy?: InputMaybe<Scalars['String']['input']>;
+  providerOverlapNote?: InputMaybe<Scalars['String']['input']>;
   recruitmentMethod?: InputMaybe<RecruitmentType>;
-  recruitmentNote?: InputMaybe<Scalars['String']>;
-  recruitmentOther?: InputMaybe<Scalars['String']>;
-  riskNote?: InputMaybe<Scalars['String']>;
-  riskOther?: InputMaybe<Scalars['String']>;
+  recruitmentNote?: InputMaybe<Scalars['String']['input']>;
+  recruitmentOther?: InputMaybe<Scalars['String']['input']>;
+  riskNote?: InputMaybe<Scalars['String']['input']>;
+  riskOther?: InputMaybe<Scalars['String']['input']>;
   riskType?: InputMaybe<ParticipantRiskType>;
   selectionMethod?: InputMaybe<Array<ParticipantSelectionType>>;
-  selectionNote?: InputMaybe<Scalars['String']>;
-  selectionOther?: InputMaybe<Scalars['String']>;
-  statesEngagement?: InputMaybe<Scalars['String']>;
+  selectionNote?: InputMaybe<Scalars['String']['input']>;
+  selectionOther?: InputMaybe<Scalars['String']['input']>;
+  statesEngagement?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<TaskStatusInput>;
-  willRiskChange?: InputMaybe<Scalars['Boolean']>;
-  willRiskChangeNote?: InputMaybe<Scalars['String']>;
+  willRiskChange?: InputMaybe<Scalars['Boolean']['input']>;
+  willRiskChangeNote?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** PlanPayments is the task list section that deals with information regarding Payments */
 export type PlanPayments = {
   __typename?: 'PlanPayments';
-  affectsMedicareSecondaryPayerClaims?: Maybe<Scalars['Boolean']>;
-  affectsMedicareSecondaryPayerClaimsHow?: Maybe<Scalars['String']>;
-  affectsMedicareSecondaryPayerClaimsNote?: Maybe<Scalars['String']>;
-  anticipateReconcilingPaymentsRetrospectively?: Maybe<Scalars['Boolean']>;
-  anticipateReconcilingPaymentsRetrospectivelyNote?: Maybe<Scalars['String']>;
+  affectsMedicareSecondaryPayerClaims?: Maybe<Scalars['Boolean']['output']>;
+  affectsMedicareSecondaryPayerClaimsHow?: Maybe<Scalars['String']['output']>;
+  affectsMedicareSecondaryPayerClaimsNote?: Maybe<Scalars['String']['output']>;
+  anticipateReconcilingPaymentsRetrospectively?: Maybe<Scalars['Boolean']['output']>;
+  anticipateReconcilingPaymentsRetrospectivelyNote?: Maybe<Scalars['String']['output']>;
   anticipatedPaymentFrequency: Array<AnticipatedPaymentFrequencyType>;
-  anticipatedPaymentFrequencyNote?: Maybe<Scalars['String']>;
-  anticipatedPaymentFrequencyOther?: Maybe<Scalars['String']>;
-  beneficiaryCostSharingLevelAndHandling?: Maybe<Scalars['String']>;
-  canParticipantsSelectBetweenPaymentMechanisms?: Maybe<Scalars['Boolean']>;
-  canParticipantsSelectBetweenPaymentMechanismsHow?: Maybe<Scalars['String']>;
-  canParticipantsSelectBetweenPaymentMechanismsNote?: Maybe<Scalars['String']>;
-  changesMedicarePhysicianFeeSchedule?: Maybe<Scalars['Boolean']>;
-  changesMedicarePhysicianFeeScheduleNote?: Maybe<Scalars['String']>;
-  createdBy: Scalars['UUID'];
+  anticipatedPaymentFrequencyNote?: Maybe<Scalars['String']['output']>;
+  anticipatedPaymentFrequencyOther?: Maybe<Scalars['String']['output']>;
+  beneficiaryCostSharingLevelAndHandling?: Maybe<Scalars['String']['output']>;
+  canParticipantsSelectBetweenPaymentMechanisms?: Maybe<Scalars['Boolean']['output']>;
+  canParticipantsSelectBetweenPaymentMechanismsHow?: Maybe<Scalars['String']['output']>;
+  canParticipantsSelectBetweenPaymentMechanismsNote?: Maybe<Scalars['String']['output']>;
+  changesMedicarePhysicianFeeSchedule?: Maybe<Scalars['Boolean']['output']>;
+  changesMedicarePhysicianFeeScheduleNote?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  creatingDependenciesBetweenServices?: Maybe<Scalars['Boolean']>;
-  creatingDependenciesBetweenServicesNote?: Maybe<Scalars['String']>;
+  createdDts: Scalars['Time']['output'];
+  creatingDependenciesBetweenServices?: Maybe<Scalars['Boolean']['output']>;
+  creatingDependenciesBetweenServicesNote?: Maybe<Scalars['String']['output']>;
   expectedCalculationComplexityLevel?: Maybe<ComplexityCalculationLevelType>;
-  expectedCalculationComplexityLevelNote?: Maybe<Scalars['String']>;
+  expectedCalculationComplexityLevelNote?: Maybe<Scalars['String']['output']>;
   fundingSource: Array<FundingSource>;
-  fundingSourceNote?: Maybe<Scalars['String']>;
-  fundingSourceOther?: Maybe<Scalars['String']>;
+  fundingSourceNote?: Maybe<Scalars['String']['output']>;
+  fundingSourceOther?: Maybe<Scalars['String']['output']>;
   fundingSourceR: Array<FundingSource>;
-  fundingSourceRNote?: Maybe<Scalars['String']>;
-  fundingSourceROther?: Maybe<Scalars['String']>;
-  fundingSourceRTrustFund?: Maybe<Scalars['String']>;
-  fundingSourceTrustFund?: Maybe<Scalars['String']>;
-  fundingStructure?: Maybe<Scalars['String']>;
-  id: Scalars['UUID'];
-  isContractorAwareTestDataRequirements?: Maybe<Scalars['Boolean']>;
-  modelPlanID: Scalars['UUID'];
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  fundingSourceRNote?: Maybe<Scalars['String']['output']>;
+  fundingSourceROther?: Maybe<Scalars['String']['output']>;
+  fundingSourceRTrustFund?: Maybe<Scalars['String']['output']>;
+  fundingSourceTrustFund?: Maybe<Scalars['String']['output']>;
+  fundingStructure?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  isContractorAwareTestDataRequirements?: Maybe<Scalars['Boolean']['output']>;
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  needsClaimsDataCollection?: Maybe<Scalars['Boolean']>;
-  needsClaimsDataCollectionNote?: Maybe<Scalars['String']>;
-  nonClaimsPaymentOther?: Maybe<Scalars['String']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  needsClaimsDataCollection?: Maybe<Scalars['Boolean']['output']>;
+  needsClaimsDataCollectionNote?: Maybe<Scalars['String']['output']>;
+  nonClaimsPaymentOther?: Maybe<Scalars['String']['output']>;
   nonClaimsPayments: Array<NonClaimsBasedPayType>;
-  nonClaimsPaymentsNote?: Maybe<Scalars['String']>;
-  numberPaymentsPerPayCycle?: Maybe<Scalars['String']>;
-  numberPaymentsPerPayCycleNote?: Maybe<Scalars['String']>;
+  nonClaimsPaymentsNote?: Maybe<Scalars['String']['output']>;
+  numberPaymentsPerPayCycle?: Maybe<Scalars['String']['output']>;
+  numberPaymentsPerPayCycleNote?: Maybe<Scalars['String']['output']>;
   payClaims: Array<ClaimsBasedPayType>;
-  payClaimsNote?: Maybe<Scalars['String']>;
-  payClaimsOther?: Maybe<Scalars['String']>;
-  payModelDifferentiation?: Maybe<Scalars['String']>;
+  payClaimsNote?: Maybe<Scalars['String']['output']>;
+  payClaimsOther?: Maybe<Scalars['String']['output']>;
+  payModelDifferentiation?: Maybe<Scalars['String']['output']>;
   payRecipients: Array<PayRecipient>;
-  payRecipientsNote?: Maybe<Scalars['String']>;
-  payRecipientsOtherSpecification?: Maybe<Scalars['String']>;
+  payRecipientsNote?: Maybe<Scalars['String']['output']>;
+  payRecipientsOtherSpecification?: Maybe<Scalars['String']['output']>;
   payType: Array<PayType>;
-  payTypeNote?: Maybe<Scalars['String']>;
-  paymentCalculationOwner?: Maybe<Scalars['String']>;
-  paymentStartDate?: Maybe<Scalars['Time']>;
-  paymentStartDateNote?: Maybe<Scalars['String']>;
-  planningToUseInnovationPaymentContractor?: Maybe<Scalars['Boolean']>;
-  planningToUseInnovationPaymentContractorNote?: Maybe<Scalars['String']>;
-  providingThirdPartyFile?: Maybe<Scalars['Boolean']>;
-  readyForClearanceBy?: Maybe<Scalars['UUID']>;
+  payTypeNote?: Maybe<Scalars['String']['output']>;
+  paymentCalculationOwner?: Maybe<Scalars['String']['output']>;
+  paymentStartDate?: Maybe<Scalars['Time']['output']>;
+  paymentStartDateNote?: Maybe<Scalars['String']['output']>;
+  planningToUseInnovationPaymentContractor?: Maybe<Scalars['Boolean']['output']>;
+  planningToUseInnovationPaymentContractorNote?: Maybe<Scalars['String']['output']>;
+  providingThirdPartyFile?: Maybe<Scalars['Boolean']['output']>;
+  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
   readyForClearanceByUserAccount?: Maybe<UserAccount>;
-  readyForClearanceDts?: Maybe<Scalars['Time']>;
-  readyForReviewBy?: Maybe<Scalars['UUID']>;
+  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
   readyForReviewByUserAccount?: Maybe<UserAccount>;
-  readyForReviewDts?: Maybe<Scalars['Time']>;
-  sharedSystemsInvolvedAdditionalClaimPayment?: Maybe<Scalars['Boolean']>;
-  sharedSystemsInvolvedAdditionalClaimPaymentNote?: Maybe<Scalars['String']>;
-  shouldAnyProviderExcludedFFSSystemsNote?: Maybe<Scalars['String']>;
-  shouldAnyProvidersExcludedFFSSystems?: Maybe<Scalars['Boolean']>;
+  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
+  sharedSystemsInvolvedAdditionalClaimPayment?: Maybe<Scalars['Boolean']['output']>;
+  sharedSystemsInvolvedAdditionalClaimPaymentNote?: Maybe<Scalars['String']['output']>;
+  shouldAnyProviderExcludedFFSSystemsNote?: Maybe<Scalars['String']['output']>;
+  shouldAnyProvidersExcludedFFSSystems?: Maybe<Scalars['Boolean']['output']>;
   status: TaskStatus;
-  waiveBeneficiaryCostSharingForAnyServices?: Maybe<Scalars['Boolean']>;
-  waiveBeneficiaryCostSharingNote?: Maybe<Scalars['String']>;
-  waiveBeneficiaryCostSharingServiceSpecification?: Maybe<Scalars['String']>;
-  waiverOnlyAppliesPartOfPayment?: Maybe<Scalars['Boolean']>;
-  willRecoverPayments?: Maybe<Scalars['Boolean']>;
-  willRecoverPaymentsNote?: Maybe<Scalars['String']>;
+  waiveBeneficiaryCostSharingForAnyServices?: Maybe<Scalars['Boolean']['output']>;
+  waiveBeneficiaryCostSharingNote?: Maybe<Scalars['String']['output']>;
+  waiveBeneficiaryCostSharingServiceSpecification?: Maybe<Scalars['String']['output']>;
+  waiverOnlyAppliesPartOfPayment?: Maybe<Scalars['Boolean']['output']>;
+  willRecoverPayments?: Maybe<Scalars['Boolean']['output']>;
+  willRecoverPaymentsNote?: Maybe<Scalars['String']['output']>;
 };
 
 export type PlanPaymentsChanges = {
-  affectsMedicareSecondaryPayerClaims?: InputMaybe<Scalars['Boolean']>;
-  affectsMedicareSecondaryPayerClaimsHow?: InputMaybe<Scalars['String']>;
-  affectsMedicareSecondaryPayerClaimsNote?: InputMaybe<Scalars['String']>;
-  anticipateReconcilingPaymentsRetrospectively?: InputMaybe<Scalars['Boolean']>;
-  anticipateReconcilingPaymentsRetrospectivelyNote?: InputMaybe<Scalars['String']>;
+  affectsMedicareSecondaryPayerClaims?: InputMaybe<Scalars['Boolean']['input']>;
+  affectsMedicareSecondaryPayerClaimsHow?: InputMaybe<Scalars['String']['input']>;
+  affectsMedicareSecondaryPayerClaimsNote?: InputMaybe<Scalars['String']['input']>;
+  anticipateReconcilingPaymentsRetrospectively?: InputMaybe<Scalars['Boolean']['input']>;
+  anticipateReconcilingPaymentsRetrospectivelyNote?: InputMaybe<Scalars['String']['input']>;
   anticipatedPaymentFrequency?: InputMaybe<Array<AnticipatedPaymentFrequencyType>>;
-  anticipatedPaymentFrequencyNote?: InputMaybe<Scalars['String']>;
-  anticipatedPaymentFrequencyOther?: InputMaybe<Scalars['String']>;
-  beneficiaryCostSharingLevelAndHandling?: InputMaybe<Scalars['String']>;
-  canParticipantsSelectBetweenPaymentMechanisms?: InputMaybe<Scalars['Boolean']>;
-  canParticipantsSelectBetweenPaymentMechanismsHow?: InputMaybe<Scalars['String']>;
-  canParticipantsSelectBetweenPaymentMechanismsNote?: InputMaybe<Scalars['String']>;
-  changesMedicarePhysicianFeeSchedule?: InputMaybe<Scalars['Boolean']>;
-  changesMedicarePhysicianFeeScheduleNote?: InputMaybe<Scalars['String']>;
-  creatingDependenciesBetweenServices?: InputMaybe<Scalars['Boolean']>;
-  creatingDependenciesBetweenServicesNote?: InputMaybe<Scalars['String']>;
+  anticipatedPaymentFrequencyNote?: InputMaybe<Scalars['String']['input']>;
+  anticipatedPaymentFrequencyOther?: InputMaybe<Scalars['String']['input']>;
+  beneficiaryCostSharingLevelAndHandling?: InputMaybe<Scalars['String']['input']>;
+  canParticipantsSelectBetweenPaymentMechanisms?: InputMaybe<Scalars['Boolean']['input']>;
+  canParticipantsSelectBetweenPaymentMechanismsHow?: InputMaybe<Scalars['String']['input']>;
+  canParticipantsSelectBetweenPaymentMechanismsNote?: InputMaybe<Scalars['String']['input']>;
+  changesMedicarePhysicianFeeSchedule?: InputMaybe<Scalars['Boolean']['input']>;
+  changesMedicarePhysicianFeeScheduleNote?: InputMaybe<Scalars['String']['input']>;
+  creatingDependenciesBetweenServices?: InputMaybe<Scalars['Boolean']['input']>;
+  creatingDependenciesBetweenServicesNote?: InputMaybe<Scalars['String']['input']>;
   expectedCalculationComplexityLevel?: InputMaybe<ComplexityCalculationLevelType>;
-  expectedCalculationComplexityLevelNote?: InputMaybe<Scalars['String']>;
+  expectedCalculationComplexityLevelNote?: InputMaybe<Scalars['String']['input']>;
   fundingSource?: InputMaybe<Array<FundingSource>>;
-  fundingSourceNote?: InputMaybe<Scalars['String']>;
-  fundingSourceOther?: InputMaybe<Scalars['String']>;
+  fundingSourceNote?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceOther?: InputMaybe<Scalars['String']['input']>;
   fundingSourceR?: InputMaybe<Array<FundingSource>>;
-  fundingSourceRNote?: InputMaybe<Scalars['String']>;
-  fundingSourceROther?: InputMaybe<Scalars['String']>;
-  fundingSourceRTrustFund?: InputMaybe<Scalars['String']>;
-  fundingSourceTrustFund?: InputMaybe<Scalars['String']>;
-  fundingStructure?: InputMaybe<Scalars['String']>;
-  isContractorAwareTestDataRequirements?: InputMaybe<Scalars['Boolean']>;
-  needsClaimsDataCollection?: InputMaybe<Scalars['Boolean']>;
-  needsClaimsDataCollectionNote?: InputMaybe<Scalars['String']>;
-  nonClaimsPaymentOther?: InputMaybe<Scalars['String']>;
+  fundingSourceRNote?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceROther?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceRTrustFund?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceTrustFund?: InputMaybe<Scalars['String']['input']>;
+  fundingStructure?: InputMaybe<Scalars['String']['input']>;
+  isContractorAwareTestDataRequirements?: InputMaybe<Scalars['Boolean']['input']>;
+  needsClaimsDataCollection?: InputMaybe<Scalars['Boolean']['input']>;
+  needsClaimsDataCollectionNote?: InputMaybe<Scalars['String']['input']>;
+  nonClaimsPaymentOther?: InputMaybe<Scalars['String']['input']>;
   nonClaimsPayments?: InputMaybe<Array<NonClaimsBasedPayType>>;
-  nonClaimsPaymentsNote?: InputMaybe<Scalars['String']>;
-  numberPaymentsPerPayCycle?: InputMaybe<Scalars['String']>;
-  numberPaymentsPerPayCycleNote?: InputMaybe<Scalars['String']>;
+  nonClaimsPaymentsNote?: InputMaybe<Scalars['String']['input']>;
+  numberPaymentsPerPayCycle?: InputMaybe<Scalars['String']['input']>;
+  numberPaymentsPerPayCycleNote?: InputMaybe<Scalars['String']['input']>;
   payClaims?: InputMaybe<Array<ClaimsBasedPayType>>;
-  payClaimsNote?: InputMaybe<Scalars['String']>;
-  payClaimsOther?: InputMaybe<Scalars['String']>;
-  payModelDifferentiation?: InputMaybe<Scalars['String']>;
+  payClaimsNote?: InputMaybe<Scalars['String']['input']>;
+  payClaimsOther?: InputMaybe<Scalars['String']['input']>;
+  payModelDifferentiation?: InputMaybe<Scalars['String']['input']>;
   payRecipients?: InputMaybe<Array<PayRecipient>>;
-  payRecipientsNote?: InputMaybe<Scalars['String']>;
-  payRecipientsOtherSpecification?: InputMaybe<Scalars['String']>;
+  payRecipientsNote?: InputMaybe<Scalars['String']['input']>;
+  payRecipientsOtherSpecification?: InputMaybe<Scalars['String']['input']>;
   payType?: InputMaybe<Array<PayType>>;
-  payTypeNote?: InputMaybe<Scalars['String']>;
-  paymentCalculationOwner?: InputMaybe<Scalars['String']>;
-  paymentStartDate?: InputMaybe<Scalars['Time']>;
-  paymentStartDateNote?: InputMaybe<Scalars['String']>;
-  planningToUseInnovationPaymentContractor?: InputMaybe<Scalars['Boolean']>;
-  planningToUseInnovationPaymentContractorNote?: InputMaybe<Scalars['String']>;
-  providingThirdPartyFile?: InputMaybe<Scalars['Boolean']>;
-  sharedSystemsInvolvedAdditionalClaimPayment?: InputMaybe<Scalars['Boolean']>;
-  sharedSystemsInvolvedAdditionalClaimPaymentNote?: InputMaybe<Scalars['String']>;
-  shouldAnyProviderExcludedFFSSystemsNote?: InputMaybe<Scalars['String']>;
-  shouldAnyProvidersExcludedFFSSystems?: InputMaybe<Scalars['Boolean']>;
+  payTypeNote?: InputMaybe<Scalars['String']['input']>;
+  paymentCalculationOwner?: InputMaybe<Scalars['String']['input']>;
+  paymentStartDate?: InputMaybe<Scalars['Time']['input']>;
+  paymentStartDateNote?: InputMaybe<Scalars['String']['input']>;
+  planningToUseInnovationPaymentContractor?: InputMaybe<Scalars['Boolean']['input']>;
+  planningToUseInnovationPaymentContractorNote?: InputMaybe<Scalars['String']['input']>;
+  providingThirdPartyFile?: InputMaybe<Scalars['Boolean']['input']>;
+  sharedSystemsInvolvedAdditionalClaimPayment?: InputMaybe<Scalars['Boolean']['input']>;
+  sharedSystemsInvolvedAdditionalClaimPaymentNote?: InputMaybe<Scalars['String']['input']>;
+  shouldAnyProviderExcludedFFSSystemsNote?: InputMaybe<Scalars['String']['input']>;
+  shouldAnyProvidersExcludedFFSSystems?: InputMaybe<Scalars['Boolean']['input']>;
   status?: InputMaybe<TaskStatusInput>;
-  waiveBeneficiaryCostSharingForAnyServices?: InputMaybe<Scalars['Boolean']>;
-  waiveBeneficiaryCostSharingNote?: InputMaybe<Scalars['String']>;
-  waiveBeneficiaryCostSharingServiceSpecification?: InputMaybe<Scalars['String']>;
-  waiverOnlyAppliesPartOfPayment?: InputMaybe<Scalars['Boolean']>;
-  willRecoverPayments?: InputMaybe<Scalars['Boolean']>;
-  willRecoverPaymentsNote?: InputMaybe<Scalars['String']>;
+  waiveBeneficiaryCostSharingForAnyServices?: InputMaybe<Scalars['Boolean']['input']>;
+  waiveBeneficiaryCostSharingNote?: InputMaybe<Scalars['String']['input']>;
+  waiveBeneficiaryCostSharingServiceSpecification?: InputMaybe<Scalars['String']['input']>;
+  waiverOnlyAppliesPartOfPayment?: InputMaybe<Scalars['Boolean']['input']>;
+  willRecoverPayments?: InputMaybe<Scalars['Boolean']['input']>;
+  willRecoverPaymentsNote?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PossibleOperationalNeed = {
   __typename?: 'PossibleOperationalNeed';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  id: Scalars['Int'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['Int']['output'];
   key: OperationalNeedKey;
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  name: Scalars['String'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
   possibleSolutions: Array<PossibleOperationalSolution>;
   section?: Maybe<TaskListSection>;
 };
 
 export type PossibleOperationalSolution = {
   __typename?: 'PossibleOperationalSolution';
-  createdBy: Scalars['UUID'];
+  createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time'];
-  id: Scalars['Int'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['Int']['output'];
   key: OperationalSolutionKey;
-  modifiedBy?: Maybe<Scalars['UUID']>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']>;
-  name: Scalars['String'];
-  treatAsOther: Scalars['Boolean'];
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  treatAsOther: Scalars['Boolean']['output'];
 };
 
 export type PrepareForClearance = {
   __typename?: 'PrepareForClearance';
-  latestClearanceDts?: Maybe<Scalars['Time']>;
+  latestClearanceDts?: Maybe<Scalars['Time']['output']>;
   status: PrepareForClearanceStatus;
 };
 
@@ -1984,8 +2128,10 @@ export type Query = {
   crTdl: PlanCrTdl;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
+  existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
+  mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -2002,6 +2148,8 @@ export type Query = {
   searchChangeTableByModelStatus: Array<ChangeTableRecord>;
   searchChangeTableDateHistogramConsolidatedAggregations: Array<DateHistogramAggregationBucket>;
   searchChangeTableWithFreeText: Array<ChangeTableRecord>;
+  searchChanges: Array<ChangeTableRecord>;
+  searchModelPlanChangesByDateRange: Array<ChangeTableRecord>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
@@ -2010,20 +2158,26 @@ export type Query = {
 
 /** Query definition for the schema */
 export type QueryAuditChangesArgs = {
-  primaryKey: Scalars['UUID'];
-  tableName: Scalars['String'];
+  primaryKey: Scalars['UUID']['input'];
+  tableName: Scalars['String']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryCrTdlArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryExistingModelLinkArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryModelPlanArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -2035,113 +2189,131 @@ export type QueryModelPlanCollectionArgs = {
 
 /** Query definition for the schema */
 export type QueryOperationalNeedArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryOperationalSolutionArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryOperationalSolutionsArgs = {
-  includeNotNeeded?: Scalars['Boolean'];
-  operationalNeedID: Scalars['UUID'];
+  includeNotNeeded?: Scalars['Boolean']['input'];
+  operationalNeedID: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryPlanCollaboratorByIdArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryPlanDocumentArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryPlanPaymentsArgs = {
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QuerySearchChangeTableArgs = {
-  limit: Scalars['Int'];
-  offset: Scalars['Int'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
   request: SearchRequest;
 };
 
 
 /** Query definition for the schema */
 export type QuerySearchChangeTableByActorArgs = {
-  actor: Scalars['String'];
-  limit: Scalars['Int'];
-  offset: Scalars['Int'];
+  actor: Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QuerySearchChangeTableByDateRangeArgs = {
-  endDate: Scalars['Time'];
-  limit: Scalars['Int'];
-  offset: Scalars['Int'];
-  startDate: Scalars['Time'];
+  endDate: Scalars['Time']['input'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+  startDate: Scalars['Time']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QuerySearchChangeTableByModelPlanIdArgs = {
-  limit: Scalars['Int'];
-  modelPlanID: Scalars['UUID'];
-  offset: Scalars['Int'];
+  limit: Scalars['Int']['input'];
+  modelPlanID: Scalars['UUID']['input'];
+  offset: Scalars['Int']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QuerySearchChangeTableByModelStatusArgs = {
-  limit: Scalars['Int'];
+  limit: Scalars['Int']['input'];
   modelStatus: ModelStatus;
-  offset: Scalars['Int'];
+  offset: Scalars['Int']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QuerySearchChangeTableDateHistogramConsolidatedAggregationsArgs = {
-  interval: Scalars['String'];
-  limit: Scalars['Int'];
-  offset: Scalars['Int'];
+  interval: Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QuerySearchChangeTableWithFreeTextArgs = {
-  limit: Scalars['Int'];
-  offset: Scalars['Int'];
-  searchText: Scalars['String'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+  searchText: Scalars['String']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QuerySearchChangesArgs = {
+  filters?: InputMaybe<Array<SearchFilter>>;
+  page?: InputMaybe<PageParams>;
+  sortBy?: InputMaybe<ChangeHistorySortParams>;
+};
+
+
+/** Query definition for the schema */
+export type QuerySearchModelPlanChangesByDateRangeArgs = {
+  endDate: Scalars['Time']['input'];
+  limit: Scalars['Int']['input'];
+  modelPlanID: Scalars['UUID']['input'];
+  offset: Scalars['Int']['input'];
+  startDate: Scalars['Time']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QuerySearchOktaUsersArgs = {
-  searchTerm: Scalars['String'];
+  searchTerm: Scalars['String']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryTaskListSectionLocksArgs = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
 export type QueryUserAccountArgs = {
-  username: Scalars['String'];
+  username: Scalars['String']['input'];
 };
 
 export enum RecruitmentType {
@@ -2162,9 +2334,80 @@ export enum Role {
   MintUser = 'MINT_USER'
 }
 
-export type SearchRequest = {
-  query: Scalars['Map'];
+export type SearchFilter = {
+  type: SearchFilterType;
+  value: Scalars['Any']['input'];
 };
+
+export enum SearchFilterType {
+  /**
+   * Filter search results to include changes on or after the specified date.
+   * Expected value: A string in RFC3339 format representing the date and time.
+   * Example: "2006-01-02T15:04:05Z07:00"
+   */
+  ChangedAfter = 'CHANGED_AFTER',
+  /**
+   * Filter search results to include changes on or before the specified date.
+   * Expected value: A string in RFC3339 format representing the date and time.
+   * Example: "2006-01-02T15:04:05Z07:00"
+   */
+  ChangedBefore = 'CHANGED_BEFORE',
+  /**
+   * Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
+   * Expected value: A string representing the name or username of the actor.
+   * Example: "MINT"
+   */
+  ChangedByActor = 'CHANGED_BY_ACTOR',
+  /**
+   * Filter results with a free text search. This is a fuzzy search on the entire record.
+   * Expected value: A string representing the free text search query.
+   * Example: "Operational Need"
+   */
+  FreeText = 'FREE_TEXT',
+  /**
+   * Filter search results to include changes made to the specified model plan by ID.
+   * Expected value: A string representing the ID of the model plan.
+   * Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
+   */
+  ModelPlanId = 'MODEL_PLAN_ID',
+  /**
+   * Filter search results to include changes made to the specified object.
+   * Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
+   * Example: "BASICS"
+   */
+  ModelPlanSection = 'MODEL_PLAN_SECTION',
+  /**
+   * Filter search results to include model plans with the specified status.
+   * Expected value: A string representing the status of the model plan.
+   * Example: "ACTIVE"
+   */
+  ModelPlanStatus = 'MODEL_PLAN_STATUS',
+  /**
+   * Filter results by table id.
+   * Expected value: An integer representing the table ID.
+   * Example: 14
+   */
+  TableId = 'TABLE_ID',
+  /**
+   * Filter results by table name.
+   * Expected value: A string representing the table name.
+   * Example: "plan_basics"
+   */
+  TableName = 'TABLE_NAME'
+}
+
+export type SearchRequest = {
+  query: Scalars['Map']['input'];
+};
+
+export enum SearchableTaskListSection {
+  Basics = 'BASICS',
+  Beneficiaries = 'BENEFICIARIES',
+  GeneralCharacteristics = 'GENERAL_CHARACTERISTICS',
+  OperationsEvaluationAndLearning = 'OPERATIONS_EVALUATION_AND_LEARNING',
+  ParticipantsAndProviders = 'PARTICIPANTS_AND_PROVIDERS',
+  Payment = 'PAYMENT'
+}
 
 export enum SelectionMethodType {
   Historical = 'HISTORICAL',
@@ -2199,12 +2442,12 @@ export type Subscription = {
 
 
 export type SubscriptionOnLockTaskListSectionContextArgs = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
 export type SubscriptionOnTaskListSectionLocksChangedArgs = {
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 export enum TaskListSection {
@@ -2219,9 +2462,9 @@ export enum TaskListSection {
 
 export type TaskListSectionLockStatus = {
   __typename?: 'TaskListSectionLockStatus';
-  isAssessment: Scalars['Boolean'];
+  isAssessment: Scalars['Boolean']['output'];
   lockedByUserAccount: UserAccount;
-  modelPlanID: Scalars['UUID'];
+  modelPlanID: Scalars['UUID']['output'];
   section: TaskListSection;
 };
 
@@ -2252,6 +2495,8 @@ export enum TeamRole {
   Learning = 'LEARNING',
   ModelLead = 'MODEL_LEAD',
   ModelTeam = 'MODEL_TEAM',
+  Oact = 'OACT',
+  Payment = 'PAYMENT',
   Quality = 'QUALITY'
 }
 
@@ -2262,37 +2507,37 @@ export enum TriStateAnswer {
 }
 
 export type UpdateOperationalSolutionSubtaskChangesInput = {
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   status: OperationalSolutionSubtaskStatus;
 };
 
 export type UpdateOperationalSolutionSubtaskInput = {
   changes: UpdateOperationalSolutionSubtaskChangesInput;
-  id: Scalars['UUID'];
+  id: Scalars['UUID']['input'];
 };
 
 export type UserAccount = {
   __typename?: 'UserAccount';
-  commonName: Scalars['String'];
-  email: Scalars['String'];
-  familyName: Scalars['String'];
-  givenName: Scalars['String'];
-  hasLoggedIn?: Maybe<Scalars['Boolean']>;
-  id: Scalars['UUID'];
-  isEUAID?: Maybe<Scalars['Boolean']>;
-  locale: Scalars['String'];
-  username: Scalars['String'];
-  zoneInfo: Scalars['String'];
+  commonName: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  familyName: Scalars['String']['output'];
+  givenName: Scalars['String']['output'];
+  hasLoggedIn?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['UUID']['output'];
+  isEUAID?: Maybe<Scalars['Boolean']['output']>;
+  locale: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+  zoneInfo: Scalars['String']['output'];
 };
 
 /** Represents a person response from the Okta API */
 export type UserInfo = {
   __typename?: 'UserInfo';
-  displayName: Scalars['String'];
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  username: Scalars['String'];
+  displayName: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export enum WaiverType {
@@ -2304,7 +2549,7 @@ export enum WaiverType {
 export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNdaQuery = { __typename?: 'Query', ndaInfo: { __typename?: 'NDAInfo', agreed: boolean, agreedDts?: any | null } };
+export type GetNdaQuery = { __typename?: 'Query', ndaInfo: { __typename?: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
 
 export const GetNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ndaInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<GetNdaQuery, GetNdaQueryVariables>;
