@@ -387,6 +387,162 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     question: 'Notes',
     dataType: 'string',
     formType: 'textarea'
+  },
+  providerAdditionFrequency: {
+    gqlField: 'providerAdditionFrequency',
+    goField: 'ProviderAdditionFrequency',
+    dbField: 'provider_addition_frequency',
+    question: 'How frequently are providers added?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      ANNUALLY: 'Annually',
+      BIANNUALLY: 'Biannually',
+      QUARTERLY: 'Quarterly',
+      MONTHLY: 'Monthly',
+      ROLLING: 'Rolling',
+      OTHER: 'Other'
+    }
+  },
+  providerAdditionFrequencyOther: {
+    gqlField: 'providerAdditionFrequencyOther',
+    goField: 'ProviderAdditionFrequencyOther',
+    dbField: 'provider_addition_frequency_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  providerAdditionFrequencyNote: {
+    gqlField: 'providerAdditionFrequencyNote',
+    goField: 'ProviderAdditionFrequencyNote',
+    dbField: 'provider_addition_frequency_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  providerAddMethod: {
+    gqlField: 'providerAddMethod',
+    goField: 'ProviderAddMethod',
+    dbField: 'provider_add_method',
+    question: 'How will you decide to add providers? Select all that apply.',
+    readonlyQuestion: 'How will you decide to add providers?',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    multiSelectLabel: 'How will you add providers?',
+    options: {
+      PROSPECTIVELY:
+        'Add prospectively (based on previous year’s interactions)',
+      RETROSPECTIVELY:
+        'Add retrospectively (once an interaction happens this year)',
+      VOLUNTARILY: 'Add voluntarily',
+      MANDATORILY: 'Add mandatorily',
+      ONLINE_TOOLS:
+        'Use online tools to view what types of participant files and data have been uploaded and downloaded',
+      OTHER: 'Other',
+      NA: 'Not applicable'
+    }
+  },
+  providerAddMethodOther: {
+    gqlField: 'providerAddMethodOther',
+    goField: 'ProviderAddMethodOther',
+    dbField: 'provider_add_method_other',
+    question:
+      'Please describe the other method for deciding which providers to add.',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  providerAddMethodNote: {
+    gqlField: 'providerAddMethodNote',
+    goField: 'ProviderAddMethodNote',
+    dbField: 'provider_add_method_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  providerLeaveMethod: {
+    gqlField: 'providerLeaveMethod',
+    goField: 'ProviderLeaveMethod',
+    dbField: 'provider_leave_method',
+    question: 'Will you track gainsharing payments?',
+    hint:
+      'Please include details on decision points, timing, and implications of leaving the model in an additional note.',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      VOLUNTARILY_WITHOUT_IMPLICATIONS:
+        'They can leave voluntarily at any time without implications',
+      AFTER_A_CERTAIN_WITH_IMPLICATIONS:
+        'They can leave after a certain date but there are implications',
+      VARIES_BY_TYPE_OF_PROVIDER: 'It varies by type of provider',
+      NOT_ALLOWED_TO_LEAVE: 'They are not allowed to leave',
+      OTHER: 'Other',
+      NOT_APPLICABLE: 'Not applicable'
+    }
+  },
+  providerLeaveMethodOther: {
+    gqlField: 'providerLeaveMethodOther',
+    goField: 'ProviderLeaveMethodOther',
+    dbField: 'provider_leave_method_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  providerLeaveMethodNote: {
+    gqlField: 'providerLeaveMethodNote',
+    goField: 'ProviderLeaveMethodNote',
+    dbField: 'provider_leave_method_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  providerOverlap: {
+    gqlField: 'providerOverlap',
+    goField: 'ProviderOverlap',
+    dbField: 'provider_overlap',
+    question: 'Will you track gainsharing payments?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      YES_NEED_POLICIES:
+        'Yes, we expect to develop policies to manage the overlaps',
+      YES_NO_ISSUES: 'Yes, and the overlaps would not be an issue',
+      NO: 'No'
+    }
+  },
+  providerOverlapHierarchy: {
+    gqlField: 'providerOverlapHierarchy',
+    goField: 'ProviderOverlapHierarchy',
+    dbField: 'provider_overlap_hierarchy',
+    question:
+      'If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  providerOverlapNote: {
+    gqlField: 'providerOverlapNote',
+    goField: 'ProviderOverlapNote',
+    dbField: 'provider_overlap_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    question: 'Model Plan status',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      READY:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      IN_PROGRESS:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_REVIEW:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_CLEARANCE:
+        'This section of the Model Plan (Model basics) is ready for review.'
+    }
   }
 };
 

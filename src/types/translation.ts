@@ -11,16 +11,20 @@ import {
   CMMIGroup,
   CMSCenter,
   ConfidenceType,
+  FrequencyType,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  OverlapType,
   ParticipantCommunicationType,
   ParticipantRiskType,
   ParticipantSelectionType,
   ParticipantsIDType,
   ParticipantsType,
+  ProviderAddType,
+  ProviderLeaveType,
   RecruitmentType,
   TaskStatus,
   WaiverType
@@ -206,6 +210,20 @@ export type TranslationParticipantsAndProviders = {
   participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
+  // Provider Options
+  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerAdditionFrequencyOther: TranslationFieldProperties;
+  providerAdditionFrequencyNote: TranslationFieldProperties;
+  providerAddMethod: TranslationFieldPropertiesWithOptions<ProviderAddType>;
+  providerAddMethodOther: TranslationFieldProperties;
+  providerAddMethodNote: TranslationFieldProperties;
+  providerLeaveMethod: TranslationFieldPropertiesWithOptions<ProviderLeaveType>;
+  providerLeaveMethodOther: TranslationFieldProperties;
+  providerLeaveMethodNote: TranslationFieldProperties;
+  providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
+  providerOverlapHierarchy: TranslationFieldProperties;
+  providerOverlapNote: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 export type TranslationPlan = {
