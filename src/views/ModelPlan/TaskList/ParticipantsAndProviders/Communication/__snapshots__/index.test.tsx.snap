@@ -97,438 +97,443 @@ exports[`Model Plan Communication matches snapshot 1`] = `
     class="desktop:grid-col-6 margin-top-6"
     data-testid="participants-and-providers-communication-form"
   >
-    <div
-      class="usa-form-group"
-      data-scroll="communicationMethod"
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
     >
-      <legend
-        class="usa-label"
-      >
-        How will you communicate with participants?
-      </legend>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group"
+        data-scroll="communicationMethod"
       >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-communication-method-IT_TOOL"
-          name="communicationMethod"
-          type="checkbox"
-          value="IT_TOOL"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-communication-method-IT_TOOL"
+        <legend
+          class="usa-label"
         >
-          Manage ongoing communications with participants using an IT tool
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-communication-method-MASS_EMAIL"
-          name="communicationMethod"
-          type="checkbox"
-          value="MASS_EMAIL"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-communication-method-MASS_EMAIL"
-        >
-          Send mass emails to new participants
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-communication-method-OTHER"
-          name="communicationMethod"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-communication-method-OTHER"
-        >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-communication-method-NO_COMMUNICATION"
-          name="communicationMethod"
-          type="checkbox"
-          value="NO_COMMUNICATION"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-communication-method-NO_COMMUNICATION"
-        >
-          We are not planning to communicate
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
-      </div>
-    </div>
-    <div
-      class="usa-form-group margin-y-4 margin-bottom-8"
-      data-scroll="participantAssumeRisk"
-    >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="participants-and-providers-risk"
-      >
-        Will the participants assume risk?
-      </label>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
-      >
+          How will you communicate with participants?
+        </legend>
         <div
-          class="usa-radio"
-          data-testid="radio"
+          class="mint-checkbox usa-checkbox"
         >
           <input
-            class="usa-radio__input"
-            id="participants-and-providers-risk"
-            name="participantAssumeRisk"
-            type="radio"
-            value="TRUE"
+            class="usa-checkbox__input"
+            id="participants-and-providers-communication-method-IT_TOOL"
+            name="communicationMethod"
+            type="checkbox"
+            value="IT_TOOL"
           />
           <label
-            class="usa-radio__label"
-            for="participants-and-providers-risk"
+            class="usa-checkbox__label"
+            for="participants-and-providers-communication-method-IT_TOOL"
           >
-            Yes
+            Manage ongoing communications with participants using an IT tool
           </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
         </div>
         <div
-          class="usa-radio"
-          data-testid="radio"
+          class="mint-checkbox usa-checkbox"
         >
           <input
-            class="usa-radio__input"
-            id="participants-and-providers-risk-no"
-            name="participantAssumeRisk"
-            type="radio"
-            value="FALSE"
+            class="usa-checkbox__input"
+            id="participants-and-providers-communication-method-MASS_EMAIL"
+            name="communicationMethod"
+            type="checkbox"
+            value="MASS_EMAIL"
           />
           <label
-            class="usa-radio__label"
-            for="participants-and-providers-risk-no"
+            class="usa-checkbox__label"
+            for="participants-and-providers-communication-method-MASS_EMAIL"
           >
-            No
+            Send mass emails to new participants
           </label>
-        </div>
-      </fieldset>
-      <label
-        class="usa-label text-normal"
-        data-testid="label"
-        for="participants-and-providers-risk-type"
-      >
-        What type of risk will the participant assume?
-      </label>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
-      >
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="participants-and-providers-risk-type-CAPITATION"
-            name="riskType"
-            type="radio"
-            value="CAPITATION"
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
           />
-          <label
-            class="usa-radio__label"
-            for="participants-and-providers-risk-type-CAPITATION"
-          >
-            Capitalization
-          </label>
         </div>
         <div
-          class="usa-radio"
-          data-testid="radio"
+          class="mint-checkbox usa-checkbox"
         >
           <input
-            class="usa-radio__input"
-            id="participants-and-providers-risk-type-ONE_SIDED"
-            name="riskType"
-            type="radio"
-            value="ONE_SIDED"
-          />
-          <label
-            class="usa-radio__label"
-            for="participants-and-providers-risk-type-ONE_SIDED"
-          >
-            One-sided
-          </label>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="participants-and-providers-risk-type-TWO_SIDED"
-            name="riskType"
-            type="radio"
-            value="TWO_SIDED"
-          />
-          <label
-            class="usa-radio__label"
-            for="participants-and-providers-risk-type-TWO_SIDED"
-          >
-            Two-sided
-          </label>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            checked=""
-            class="usa-radio__input"
-            id="participants-and-providers-risk-type-OTHER"
-            name="riskType"
-            type="radio"
+            class="usa-checkbox__input"
+            id="participants-and-providers-communication-method-OTHER"
+            name="communicationMethod"
+            type="checkbox"
             value="OTHER"
           />
           <label
-            class="usa-radio__label"
-            for="participants-and-providers-risk-type-OTHER"
+            class="usa-checkbox__label"
+            for="participants-and-providers-communication-method-OTHER"
           >
             Other
           </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
         </div>
         <div
-          class="margin-left-4 margin-top-2"
-        >
-          <label
-            class="usa-label text-normal"
-            data-testid="label"
-            for="participants-and-providers-risk-type-other"
-          >
-            Please specify
-          </label>
-          <textarea
-            aria-labelledby="label-participants-and-providers-risk-type-other hint-participants-and-providers-risk-type-other"
-            class="maxw-none mint-textarea usa-textarea"
-            data-testid="participants-and-providers-risk-type-other"
-            id="participants-and-providers-risk-type-other"
-            maxlength="5000"
-            name="riskOther"
-          >
-            Programmatic Risk
-          </textarea>
-        </div>
-      </fieldset>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
-      </div>
-    </div>
-    <div
-      class="usa-form-group margin-y-4 margin-bottom-8"
-      data-scroll="willRiskChange"
-    >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="participants-and-providers-risk-change"
-      >
-        Will the risk arrangement change as the model progresses?
-      </label>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
-      >
-        <div
-          class="usa-radio"
-          data-testid="radio"
+          class="mint-checkbox usa-checkbox"
         >
           <input
-            class="usa-radio__input"
-            id="participants-and-providers-risk-change"
-            name="willRiskChange"
-            type="radio"
-            value="TRUE"
+            class="usa-checkbox__input"
+            id="participants-and-providers-communication-method-NO_COMMUNICATION"
+            name="communicationMethod"
+            type="checkbox"
+            value="NO_COMMUNICATION"
           />
           <label
-            class="usa-radio__label"
-            for="participants-and-providers-risk-change"
+            class="usa-checkbox__label"
+            for="participants-and-providers-communication-method-NO_COMMUNICATION"
           >
-            Yes
+            We are not planning to communicate
           </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
         </div>
         <div
-          class="usa-radio"
-          data-testid="radio"
+          class="margin-top-4 margin-bottom-8"
         >
-          <input
-            class="usa-radio__input"
-            id="participants-and-providers-risk-change-no"
-            name="willRiskChange"
-            type="radio"
-            value="FALSE"
-          />
-          <label
-            class="usa-radio__label"
-            for="participants-and-providers-risk-change-no"
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
           >
-            No
-          </label>
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
         </div>
-      </fieldset>
+      </div>
       <div
-        class="margin-top-4 margin-bottom-8"
+        class="usa-form-group margin-y-4 margin-bottom-8"
+        data-scroll="participantAssumeRisk"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-risk"
+        >
+          Will the participants assume risk?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="participants-and-providers-risk"
+              name="participantAssumeRisk"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="participants-and-providers-risk-no"
+              name="participantAssumeRisk"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-no"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <label
+          class="usa-label text-normal"
+          data-testid="label"
+          for="participants-and-providers-risk-type"
+        >
+          What type of risk will the participant assume?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="participants-and-providers-risk-type-CAPITATION"
+              name="riskType"
+              type="radio"
+              value="CAPITATION"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-type-CAPITATION"
+            >
+              Capitalization
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="participants-and-providers-risk-type-ONE_SIDED"
+              name="riskType"
+              type="radio"
+              value="ONE_SIDED"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-type-ONE_SIDED"
+            >
+              One-sided
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="participants-and-providers-risk-type-TWO_SIDED"
+              name="riskType"
+              type="radio"
+              value="TWO_SIDED"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-type-TWO_SIDED"
+            >
+              Two-sided
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              checked=""
+              class="usa-radio__input"
+              id="participants-and-providers-risk-type-OTHER"
+              name="riskType"
+              type="radio"
+              value="OTHER"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-type-OTHER"
+            >
+              Other
+            </label>
+          </div>
+          <div
+            class="margin-left-4 margin-top-2"
+          >
+            <label
+              class="usa-label text-normal"
+              data-testid="label"
+              for="participants-and-providers-risk-type-other"
+            >
+              Please specify
+            </label>
+            <textarea
+              aria-labelledby="label-participants-and-providers-risk-type-other hint-participants-and-providers-risk-type-other"
+              class="maxw-none mint-textarea usa-textarea"
+              data-testid="participants-and-providers-risk-type-other"
+              id="participants-and-providers-risk-type-other"
+              maxlength="5000"
+              name="riskOther"
+            >
+              Programmatic Risk
+            </textarea>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-y-4 margin-bottom-8"
+        data-scroll="willRiskChange"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-risk-change"
+        >
+          Will the risk arrangement change as the model progresses?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="participants-and-providers-risk-change"
+              name="willRiskChange"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-change"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="participants-and-providers-risk-change-no"
+              name="willRiskChange"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-change-no"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="margin-top-6 margin-bottom-3"
       >
         <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
+          class="usa-button usa-button usa-button--outline margin-bottom-1"
+          data-testid="button"
           type="button"
         >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
+          Back
+        </button>
+        <button
+          class="usa-button"
+          data-testid="button"
+          type="submit"
+        >
+          Next
         </button>
       </div>
-    </div>
-    <div
-      class="margin-top-6 margin-bottom-3"
-    >
       <button
-        class="usa-button usa-button usa-button--outline margin-bottom-1"
+        class="usa-button usa-button usa-button--unstyled"
         data-testid="button"
         type="button"
       >
-        Back
+        <svg
+          aria-hidden="true"
+          class="usa-icon margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          />
+        </svg>
+        Save and return to task list
       </button>
-      <button
-        class="usa-button"
-        data-testid="button"
-        type="submit"
-      >
-        Next
-      </button>
-    </div>
-    <button
-      class="usa-button usa-button usa-button--unstyled"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon margin-right-1"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-        />
-      </svg>
-      Save and return to task list
-    </button>
+    </fieldset>
   </form>
   <div
     class="mint-page-number margin-y-6"

@@ -97,398 +97,403 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     class="desktop:grid-col-6 margin-top-6"
     data-testid="plan-characteristics-authority-form"
   >
-    <div
-      class="usa-form-group margin-y-4"
-      data-scroll="rulemakingRequired"
-    >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="plan-characteristics-rulemaking-required"
-      >
-        Is rulemaking required?
-      </label>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
-      >
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-rulemaking-required"
-            name="rulemakingRequired"
-            type="radio"
-            value="TRUE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-rulemaking-required"
-          >
-            Yes
-          </label>
-        </div>
-        <div
-          class="display-flex margin-left-4 margin-bottom-1"
-        >
-          <div
-            class="usa-form-group flex-1"
-            data-scroll="rulemakingRequiredDescription"
-          >
-            <label
-              class="usa-label margin-bottom-1 text-normal"
-              data-testid="label"
-              for="plan-characteristics-rulemaking-required-description"
-            >
-              Which rule do you anticipate using and what is the target date of display for that regulation?
-            </label>
-            <textarea
-              aria-labelledby="label-plan-characteristics-rulemaking-required-description hint-plan-characteristics-rulemaking-required-description"
-              class="margin-top-0 height-15 usa-textarea"
-              data-testid="plan-characteristics-rulemaking-required-description"
-              id="plan-characteristics-rulemaking-required-description"
-              name="rulemakingRequiredDescription"
-            >
-              Yes rulemaking is required
-            </textarea>
-          </div>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-rulemaking-required-no"
-            name="rulemakingRequired"
-            type="radio"
-            value="FALSE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-rulemaking-required-no"
-          >
-            No
-          </label>
-        </div>
-      </fieldset>
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
-    </div>
-    <legend
-      class="usa-label"
-    >
-      What authority allows CMMI to test the model?
-    </legend>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="plan-characteristics-authority-allowance-ACA"
-        name="authorityAllowances"
-        type="checkbox"
-        value="ACA"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="plan-characteristics-authority-allowance-ACA"
-      >
-        3021 (ACA)
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
-        name="authorityAllowances"
-        type="checkbox"
-        value="CONGRESSIONALLY_MANDATED"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
-      >
-        Congressionally Mandated Demonstration
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="plan-characteristics-authority-allowance-SSA_PART_B"
-        name="authorityAllowances"
-        type="checkbox"
-        value="SSA_PART_B"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="plan-characteristics-authority-allowance-SSA_PART_B"
-      >
-        Section 1833(e) (Part B services) of the Social Security Act
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="plan-characteristics-authority-allowance-OTHER"
-        name="authorityAllowances"
-        type="checkbox"
-        value="OTHER"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="plan-characteristics-authority-allowance-OTHER"
-      >
-        Other
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
-    </div>
-    <div
-      class="usa-form-group margin-y-4"
-      data-scroll="waiversRequired"
-    >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="plan-characteristics-waivers-required"
-      >
-        Are waivers required?
-      </label>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
-      >
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-waivers-required"
-            name="waiversRequired"
-            type="radio"
-            value="TRUE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-waivers-required"
-          >
-            Yes
-          </label>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-waivers-required-no"
-            name="waiversRequired"
-            type="radio"
-            value="FALSE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-waivers-required-no"
-          >
-            No
-          </label>
-        </div>
-      </fieldset>
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
-    </div>
-    <div
-      class="usa-form-group margin-top-8 margin-bottom-3"
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
     >
       <div
-        class="usa-summary-box bg-white border-base-light padding-2"
-        data-testid="summary-box"
+        class="usa-form-group margin-y-4"
+        data-scroll="rulemakingRequired"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-rulemaking-required"
+        >
+          Is rulemaking required?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-rulemaking-required"
+              name="rulemakingRequired"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-rulemaking-required"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="display-flex margin-left-4 margin-bottom-1"
+          >
+            <div
+              class="usa-form-group flex-1"
+              data-scroll="rulemakingRequiredDescription"
+            >
+              <label
+                class="usa-label margin-bottom-1 text-normal"
+                data-testid="label"
+                for="plan-characteristics-rulemaking-required-description"
+              >
+                Which rule do you anticipate using and what is the target date of display for that regulation?
+              </label>
+              <textarea
+                aria-labelledby="label-plan-characteristics-rulemaking-required-description hint-plan-characteristics-rulemaking-required-description"
+                class="margin-top-0 height-15 usa-textarea"
+                data-testid="plan-characteristics-rulemaking-required-description"
+                id="plan-characteristics-rulemaking-required-description"
+                name="rulemakingRequiredDescription"
+              >
+                Yes rulemaking is required
+              </textarea>
+            </div>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-rulemaking-required-no"
+              name="rulemakingRequired"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-rulemaking-required-no"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <legend
+        class="usa-label"
+      >
+        What authority allows CMMI to test the model?
+      </legend>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="plan-characteristics-authority-allowance-ACA"
+          name="authorityAllowances"
+          type="checkbox"
+          value="ACA"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="plan-characteristics-authority-allowance-ACA"
+        >
+          3021 (ACA)
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+          name="authorityAllowances"
+          type="checkbox"
+          value="CONGRESSIONALLY_MANDATED"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+        >
+          Congressionally Mandated Demonstration
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="plan-characteristics-authority-allowance-SSA_PART_B"
+          name="authorityAllowances"
+          type="checkbox"
+          value="SSA_PART_B"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="plan-characteristics-authority-allowance-SSA_PART_B"
+        >
+          Section 1833(e) (Part B services) of the Social Security Act
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="plan-characteristics-authority-allowance-OTHER"
+          name="authorityAllowances"
+          type="checkbox"
+          value="OTHER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="plan-characteristics-authority-allowance-OTHER"
+        >
+          Other
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        class="usa-form-group margin-y-4"
+        data-scroll="waiversRequired"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-waivers-required"
+        >
+          Are waivers required?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-waivers-required"
+              name="waiversRequired"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-waivers-required"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-waivers-required-no"
+              name="waiversRequired"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-waivers-required-no"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        class="usa-form-group margin-top-8 margin-bottom-3"
       >
         <div
-          class="usa-summary-box__body"
+          class="usa-summary-box bg-white border-base-light padding-2"
+          data-testid="summary-box"
         >
-          <h3
-            class="usa-summary-box__heading"
-          />
           <div
-            class="usa-summary-box__text"
+            class="usa-summary-box__body"
           >
-            <p
-              class="margin-0"
-            >
-              Model Plan status
-            </p>
+            <h3
+              class="usa-summary-box__heading"
+            />
             <div
-              class="mint-checkbox usa-checkbox"
+              class="usa-summary-box__text"
             >
-              <input
-                class="usa-checkbox__input"
-                data-testid="characteristics-status"
-                id="characteristics-status"
-                name="status"
-                type="checkbox"
-                value="IN_PROGRESS"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="characteristics-status"
-              >
-                This section of the Model Plan (General characteristics) is ready for review.
-              </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
+                class="margin-0"
+              >
+                Model Plan status
+              </p>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  data-testid="characteristics-status"
+                  id="characteristics-status"
+                  name="status"
+                  type="checkbox"
+                  value="IN_PROGRESS"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="characteristics-status"
+                >
+                  This section of the Model Plan (General characteristics) is ready for review.
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="margin-top-6 margin-bottom-3"
-    >
+      <div
+        class="margin-top-6 margin-bottom-3"
+      >
+        <button
+          class="usa-button usa-button usa-button--outline margin-bottom-1"
+          data-testid="button"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          class="usa-button"
+          data-testid="button"
+          type="submit"
+        >
+          Save and start next Model Plan section
+        </button>
+      </div>
       <button
-        class="usa-button usa-button usa-button--outline margin-bottom-1"
+        class="usa-button usa-button usa-button--unstyled"
         data-testid="button"
         type="button"
       >
-        Back
+        <svg
+          aria-hidden="true"
+          class="usa-icon margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          />
+        </svg>
+        Save and return to task list
       </button>
-      <button
-        class="usa-button"
-        data-testid="button"
-        type="submit"
-      >
-        Save and start next Model Plan section
-      </button>
-    </div>
-    <button
-      class="usa-button usa-button usa-button--unstyled"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon margin-right-1"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-        />
-      </svg>
-      Save and return to task list
-    </button>
+    </fieldset>
   </form>
   <div
     class="mint-page-number margin-y-6"

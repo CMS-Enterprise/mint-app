@@ -16,6 +16,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
@@ -88,7 +89,7 @@ export const CollaboratorsContent = () => {
     DeleteModelPlanCollaborator
   );
 
-  const { error, data, refetch } = useQuery<GetModelCollaborators>(
+  const { error, data, refetch, loading } = useQuery<GetModelCollaborators>(
     GetModelPlanCollaborators,
     {
       variables: {
@@ -209,16 +210,18 @@ export const CollaboratorsContent = () => {
               {t('addTeamMemberButton')}
             </UswdsReactLink>
 
-            {collaborators.length === 0 ? (
-              <Alert type="info" heading={t('table.noCollaborators')} />
-            ) : (
-              <CollaboratorsTable
-                collaborators={collaborators}
-                setModalOpen={setModalOpen}
-                setRemoveCollaborator={setRemoveCollaborator}
-                isLastLead={isLastLead}
-              />
-            )}
+            {loading && <PageLoading />}
+            {!loading &&
+              (collaborators.length === 0 ? (
+                <Alert type="info" heading={t('table.noCollaborators')} />
+              ) : (
+                <CollaboratorsTable
+                  collaborators={collaborators}
+                  setModalOpen={setModalOpen}
+                  setRemoveCollaborator={setRemoveCollaborator}
+                  isLastLead={isLastLead}
+                />
+              ))}
 
             <div className="margin-top-5 display-block">
               <UswdsReactLink
