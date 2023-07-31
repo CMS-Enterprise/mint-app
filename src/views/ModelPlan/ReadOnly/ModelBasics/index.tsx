@@ -152,15 +152,22 @@ const ReadOnlyModelBasics = ({
 
           <p className="line-height-mono-4">
             {planBasicsMiscT('otherIdentifiersInfo1')}
-            <TrussLink
-              aria-label="Open AMS in a new tab"
-              href="https://ams.cmmi.cms.gov"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="external"
-            >
+
+            <span className="mint-no-print">
+              <TrussLink
+                aria-label="Open AMS in a new tab"
+                href="https://ams.cmmi.cms.gov"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="external"
+              >
+                {planBasicsMiscT('otherIdentifiersInfo2')}
+              </TrussLink>
+            </span>
+
+            <span className="mint-only-print-inline">
               {planBasicsMiscT('otherIdentifiersInfo2')}
-            </TrussLink>
+            </span>
 
             {planBasicsMiscT('otherIdentifiersInfo3')}
           </p>

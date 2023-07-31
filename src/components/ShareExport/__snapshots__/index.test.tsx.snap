@@ -239,15 +239,24 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 class="line-height-mono-4"
               >
                 These are created in 
-                <a
-                  aria-label="Open AMS in a new tab"
-                  class="usa-link usa-link--external"
-                  href="https://ams.cmmi.cms.gov"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <span
+                  class="mint-no-print"
+                >
+                  <a
+                    aria-label="Open AMS in a new tab"
+                    class="usa-link usa-link--external"
+                    href="https://ams.cmmi.cms.gov"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    CMMI Analysis & Management System (AMS).
+                  </a>
+                </span>
+                <span
+                  class="mint-only-print-inline"
                 >
                   CMMI Analysis & Management System (AMS).
-                </a>
+                </span>
                  Skip these fields until your model has been added to AMS. Not all models will have demo codes.
               </p>
               <div
