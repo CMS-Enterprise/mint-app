@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
-import getNDAQuery from 'queriesCodegen/getNDA';
+import getNDAQuery from 'gql/apolloGQL/getNDA';
 
 import { localAuthStorageKey } from 'constants/localAuth';
 import { setUser } from 'reducers/authReducer';

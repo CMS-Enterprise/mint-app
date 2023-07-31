@@ -2,9 +2,9 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: 'pkg/graph/schema.graphql',
-  documents: ['src/queriesCodegen/**/*.ts'],
+  documents: ['src/gql/apolloGQL/**/*.ts'],
   generates: {
-    './src/gql/': {
+    './src/gql/gen/': {
       preset: 'client',
       config: {
         scalars: {
