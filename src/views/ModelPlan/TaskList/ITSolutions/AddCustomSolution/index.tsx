@@ -101,7 +101,7 @@ const AddCustomSolution = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
-  const { data, loading } = useQuery<
+  const { data, loading, error } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
   >(GetOperationalSolution, {
@@ -291,7 +291,7 @@ const AddCustomSolution = () => {
                               )}
                             </h3>
                           )}
-                          <Fieldset disabled={loading}>
+                          <Fieldset disabled={!!error || loading}>
                             {selectedSolution === null ? (
                               <FieldGroup
                                 scrollElement="nameOther"

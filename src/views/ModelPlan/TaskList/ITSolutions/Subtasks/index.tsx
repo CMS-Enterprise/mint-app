@@ -387,7 +387,7 @@ const Subtasks = ({
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldArray name="subtasks">
                           {({ push, remove }) => {
                             const { subtasks } = formValues;

@@ -303,7 +303,7 @@ const AddSolution = () => {
                           handleSubmit(e);
                         }}
                       >
-                        <Fieldset disabled={loading}>
+                        <Fieldset disabled={!!error || loading}>
                           <FieldGroup
                             scrollElement="key"
                             error={!!flatErrors.key}

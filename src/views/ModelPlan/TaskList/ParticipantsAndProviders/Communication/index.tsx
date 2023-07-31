@@ -217,248 +217,250 @@ export const Communication = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="communicationMethod"
-                  error={!!flatErrors.communicationMethod}
-                >
-                  <FieldArray
-                    name="communicationMethod"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label">
-                          {t('participantCommunication')}
-                        </legend>
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="participants-and-providers-communication-method-warning"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
-                        <FieldErrorMsg>
-                          {flatErrors.communicationMethod}
-                        </FieldErrorMsg>
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="communicationMethod"
+                    error={!!flatErrors.communicationMethod}
+                  >
+                    <FieldArray
+                      name="communicationMethod"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label">
+                            {t('participantCommunication')}
+                          </legend>
+                          {itSolutionsStarted && (
+                            <ITSolutionsWarning
+                              id="participants-and-providers-communication-method-warning"
+                              onClick={() =>
+                                handleFormSubmit(
+                                  `/models/${modelID}/task-list/it-solutions`
+                                )
+                              }
+                            />
+                          )}
+                          <FieldErrorMsg>
+                            {flatErrors.communicationMethod}
+                          </FieldErrorMsg>
 
-                        {Object.keys(ParticipantCommunicationType)
-                          .sort(sortOtherEnum)
-                          .map(type => {
-                            return (
-                              <Fragment key={type}>
+                          {Object.keys(ParticipantCommunicationType)
+                            .sort(sortOtherEnum)
+                            .map(type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`participants-and-providers-communication-method-${type}`}
+                                    name="communicationMethod"
+                                    label={translateCommunicationType(type)}
+                                    value={type}
+                                    checked={values?.communicationMethod.includes(
+                                      type as ParticipantCommunicationType
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.communicationMethod.indexOf(
+                                          e.target
+                                            .value as ParticipantCommunicationType
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
+                                  {type === 'OTHER' &&
+                                    values.communicationMethod.includes(
+                                      'OTHER' as ParticipantCommunicationType
+                                    ) && (
+                                      <div className="margin-left-4 margin-top-neg-3">
+                                        <Label
+                                          htmlFor="participants-and-providers-communication-method-other"
+                                          className="text-normal"
+                                        >
+                                          {h('pleaseSpecify')}
+                                        </Label>
+                                        <FieldErrorMsg>
+                                          {flatErrors.communicationMethodOther}
+                                        </FieldErrorMsg>
+                                        <Field
+                                          as={TextAreaField}
+                                          className="maxw-none mint-textarea"
+                                          id="participants-and-providers-communication-method-other"
+                                          maxLength={5000}
+                                          name="communicationMethodOther"
+                                        />
+                                      </div>
+                                    )}
+                                </Fragment>
+                              );
+                            })}
+                          <AddNote
+                            id="participants-and-providers-communication-method-note"
+                            field="communicationNote"
+                          />
+                        </>
+                      )}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="participantAssumeRisk"
+                    error={!!flatErrors.participantAssumeRisk}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="participants-and-providers-risk">
+                      {t('assumeRisk')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.participantAssumeRisk}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="participants-and-providers-risk"
+                        name="participantAssumeRisk"
+                        label={h('yes')}
+                        value="TRUE"
+                        checked={values.participantAssumeRisk === true}
+                        onChange={() => {
+                          setFieldValue('participantAssumeRisk', true);
+                        }}
+                      />
+                      <Field
+                        as={Radio}
+                        id="participants-and-providers-risk-no"
+                        name="participantAssumeRisk"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.participantAssumeRisk === false}
+                        onChange={() => {
+                          setFieldValue('participantAssumeRisk', false);
+                        }}
+                      />
+                    </Fieldset>
+
+                    {values.participantAssumeRisk && (
+                      <>
+                        <Label
+                          htmlFor="participants-and-providers-risk-type"
+                          className="text-normal"
+                        >
+                          {t('riskType')}
+                        </Label>
+                        <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
+                        <Fieldset>
+                          {Object.keys(ParticipantRiskType)
+                            .sort(sortOtherEnum)
+                            .map(key => (
+                              <Fragment key={key}>
                                 <Field
-                                  as={CheckboxField}
-                                  id={`participants-and-providers-communication-method-${type}`}
-                                  name="communicationMethod"
-                                  label={translateCommunicationType(type)}
-                                  value={type}
-                                  checked={values?.communicationMethod.includes(
-                                    type as ParticipantCommunicationType
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.communicationMethod.indexOf(
-                                        e.target
-                                          .value as ParticipantCommunicationType
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
+                                  as={Radio}
+                                  id={`participants-and-providers-risk-type-${key}`}
+                                  name="riskType"
+                                  label={translateRiskType(key)}
+                                  value={key}
+                                  checked={values.riskType === key}
+                                  onChange={() => {
+                                    setFieldValue('riskType', key);
                                   }}
                                 />
-                                {type === 'OTHER' &&
-                                  values.communicationMethod.includes(
-                                    'OTHER' as ParticipantCommunicationType
-                                  ) && (
-                                    <div className="margin-left-4 margin-top-neg-3">
-                                      <Label
-                                        htmlFor="participants-and-providers-communication-method-other"
-                                        className="text-normal"
-                                      >
-                                        {h('pleaseSpecify')}
-                                      </Label>
-                                      <FieldErrorMsg>
-                                        {flatErrors.communicationMethodOther}
-                                      </FieldErrorMsg>
-                                      <Field
-                                        as={TextAreaField}
-                                        className="maxw-none mint-textarea"
-                                        id="participants-and-providers-communication-method-other"
-                                        maxLength={5000}
-                                        name="communicationMethodOther"
-                                      />
-                                    </div>
-                                  )}
+                                {key === 'OTHER' && values.riskType === key && (
+                                  <div className="margin-left-4 margin-top-2">
+                                    <Label
+                                      htmlFor="participants-and-providers-risk-type-other"
+                                      className="text-normal"
+                                    >
+                                      {h('pleaseSpecify')}
+                                    </Label>
+                                    <FieldErrorMsg>
+                                      {flatErrors.riskOther}
+                                    </FieldErrorMsg>
+                                    <Field
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
+                                      id="participants-and-providers-risk-type-other"
+                                      data-testid="participants-and-providers-risk-type-other"
+                                      maxLength={5000}
+                                      name="riskOther"
+                                    />
+                                  </div>
+                                )}
                               </Fragment>
-                            );
-                          })}
-                        <AddNote
-                          id="participants-and-providers-communication-method-note"
-                          field="communicationNote"
-                        />
+                            ))}
+                        </Fieldset>
                       </>
                     )}
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="participantAssumeRisk"
-                  error={!!flatErrors.participantAssumeRisk}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="participants-and-providers-risk">
-                    {t('assumeRisk')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.participantAssumeRisk}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="participants-and-providers-risk"
-                      name="participantAssumeRisk"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.participantAssumeRisk === true}
-                      onChange={() => {
-                        setFieldValue('participantAssumeRisk', true);
-                      }}
+                    <AddNote
+                      id="participants-and-providers-risk-note"
+                      field="riskNote"
                     />
-                    <Field
-                      as={Radio}
-                      id="participants-and-providers-risk-no"
-                      name="participantAssumeRisk"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.participantAssumeRisk === false}
-                      onChange={() => {
-                        setFieldValue('participantAssumeRisk', false);
-                      }}
-                    />
-                  </Fieldset>
+                  </FieldGroup>
 
-                  {values.participantAssumeRisk && (
-                    <>
-                      <Label
-                        htmlFor="participants-and-providers-risk-type"
-                        className="text-normal"
-                      >
-                        {t('riskType')}
-                      </Label>
-                      <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
-                      <Fieldset>
-                        {Object.keys(ParticipantRiskType)
-                          .sort(sortOtherEnum)
-                          .map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`participants-and-providers-risk-type-${key}`}
-                                name="riskType"
-                                label={translateRiskType(key)}
-                                value={key}
-                                checked={values.riskType === key}
-                                onChange={() => {
-                                  setFieldValue('riskType', key);
-                                }}
-                              />
-                              {key === 'OTHER' && values.riskType === key && (
-                                <div className="margin-left-4 margin-top-2">
-                                  <Label
-                                    htmlFor="participants-and-providers-risk-type-other"
-                                    className="text-normal"
-                                  >
-                                    {h('pleaseSpecify')}
-                                  </Label>
-                                  <FieldErrorMsg>
-                                    {flatErrors.riskOther}
-                                  </FieldErrorMsg>
-                                  <Field
-                                    as={TextAreaField}
-                                    className="maxw-none mint-textarea"
-                                    id="participants-and-providers-risk-type-other"
-                                    data-testid="participants-and-providers-risk-type-other"
-                                    maxLength={5000}
-                                    name="riskOther"
-                                  />
-                                </div>
-                              )}
-                            </Fragment>
-                          ))}
-                      </Fieldset>
-                    </>
-                  )}
-                  <AddNote
-                    id="participants-and-providers-risk-note"
-                    field="riskNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="willRiskChange"
-                  error={!!flatErrors.willRiskChange}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="participants-and-providers-risk-change">
-                    {t('changeRisk')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.willRiskChange}</FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="participants-and-providers-risk-change"
-                      name="willRiskChange"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.willRiskChange === true}
-                      onChange={() => {
-                        setFieldValue('willRiskChange', true);
-                      }}
+                  <FieldGroup
+                    scrollElement="willRiskChange"
+                    error={!!flatErrors.willRiskChange}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="participants-and-providers-risk-change">
+                      {t('changeRisk')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.willRiskChange}</FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="participants-and-providers-risk-change"
+                        name="willRiskChange"
+                        label={h('yes')}
+                        value="TRUE"
+                        checked={values.willRiskChange === true}
+                        onChange={() => {
+                          setFieldValue('willRiskChange', true);
+                        }}
+                      />
+                      <Field
+                        as={Radio}
+                        id="participants-and-providers-risk-change-no"
+                        name="willRiskChange"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.willRiskChange === false}
+                        onChange={() => {
+                          setFieldValue('willRiskChange', false);
+                        }}
+                      />
+                    </Fieldset>
+                    <AddNote
+                      id="participants-and-providers-risk-change-note"
+                      field="willRiskChangeNote"
                     />
-                    <Field
-                      as={Radio}
-                      id="participants-and-providers-risk-change-no"
-                      name="willRiskChange"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.willRiskChange === false}
-                      onChange={() => {
-                        setFieldValue('willRiskChange', false);
-                      }}
-                    />
-                  </Fieldset>
-                  <AddNote
-                    id="participants-and-providers-risk-change-note"
-                    field="willRiskChangeNote"
-                  />
-                </FieldGroup>
+                  </FieldGroup>
 
-                <div className="margin-top-6 margin-bottom-3">
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
               {id && (
                 <AutoSave
