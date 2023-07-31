@@ -141,7 +141,7 @@ const TwoPagerMeeting = () => {
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('conceptPaper.stepThree.heading')}
               </h3>
-              <i className="margin-top-0 margin-bottom-1 padding-left-3">
+              <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
                 {twoPageMeetingT('conceptPaper.stepThree.italics')}
               </i>
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
