@@ -497,7 +497,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                      Suite of tools for non-ACO models; it enables CMMI-to-Participant Interoperability and application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one centralized file exchange.
 
 CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
-      
+
 The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.
                   </p>
                   <div
