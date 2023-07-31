@@ -148,8 +148,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     optionsLabels: {
       APPLICATION_COLLECTION_TOOL: '',
       LOI: '',
-      NOFO:
-        'NOFO (Notice of funding opportunity for grants/cooperative agreements)',
+      NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves',
       OTHER: '',
       NA: ''
     }
