@@ -251,162 +251,167 @@ const Recover = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="willRecoverPayments"
-                        error={!!flatErrors.willRecoverPayments}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="payment-recover-payment"
-                          className="maxw-none"
+                      <Fieldset disabled={!!error || loading}>
+                        <FieldGroup
+                          scrollElement="willRecoverPayments"
+                          error={!!flatErrors.willRecoverPayments}
+                          className="margin-top-4"
                         >
-                          {t('willRecoverPayments')}
-                        </Label>
+                          <Label
+                            htmlFor="payment-recover-payment"
+                            className="maxw-none"
+                          >
+                            {t('willRecoverPayments')}
+                          </Label>
 
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="payment-recover-payment-warning"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
+                          {itSolutionsStarted && (
+                            <ITSolutionsWarning
+                              id="payment-recover-payment-warning"
+                              onClick={() =>
+                                handleFormSubmit(
+                                  `/models/${modelID}/task-list/it-solutions`
+                                )
+                              }
+                            />
+                          )}
+
+                          <FieldErrorMsg>
+                            {flatErrors.willRecoverPayments}
+                          </FieldErrorMsg>
+                          <Fieldset>
+                            {[true, false].map(key => (
+                              <Field
+                                as={Radio}
+                                key={key}
+                                id={`payment-recover-payment-${key}`}
+                                data-testid={`payment-recover-payment-${key}`}
+                                name="willRecoverPayments"
+                                label={key ? h('yes') : h('no')}
+                                value={key ? 'YES' : 'NO'}
+                                checked={values.willRecoverPayments === key}
+                                onChange={() => {
+                                  setFieldValue('willRecoverPayments', key);
+                                }}
+                              />
+                            ))}
+                          </Fieldset>
+                          <AddNote
+                            id="payment-recover-payment-note"
+                            field="willRecoverPaymentsNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="payment-anticipate-reconciling-payment-retro"
+                          error={
+                            !!flatErrors.anticipateReconcilingPaymentsRetrospectively
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="payment-anticipate-reconciling-payment-retro"
+                            className="maxw-none"
+                          >
+                            {t('anticipateReconcilingPaymentsRetrospectively')}
+                          </Label>
+                          <FieldErrorMsg>
+                            {
+                              flatErrors.anticipateReconcilingPaymentsRetrospectively
                             }
+                          </FieldErrorMsg>
+                          <Fieldset>
+                            {[true, false].map(key => (
+                              <Field
+                                as={Radio}
+                                key={key}
+                                id={`payment-anticipate-reconciling-payment-retro-${key}`}
+                                data-testid={`payment-anticipate-reconciling-payment-retro-${key}`}
+                                name="anticipateReconcilingPaymentsRetrospectively"
+                                label={key ? h('yes') : h('no')}
+                                value={key ? 'YES' : 'NO'}
+                                checked={
+                                  values.anticipateReconcilingPaymentsRetrospectively ===
+                                  key
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'anticipateReconcilingPaymentsRetrospectively',
+                                    key
+                                  );
+                                }}
+                              />
+                            ))}
+                          </Fieldset>
+                          <AddNote
+                            id="payment-anticipate-reconciling-payment-retro-note"
+                            field="anticipateReconcilingPaymentsRetrospectivelyNote"
+                          />
+                        </FieldGroup>
+
+                        {!loading && (
+                          <>
+                            <MINTDatePicker
+                              fieldName="paymentStartDate"
+                              id="payment-payment-start-date"
+                              className="margin-top-6"
+                              label={t('paymentStartDate')}
+                              subLabel={t('paymentStartDateSubcopy')}
+                              placeHolder
+                              handleOnBlur={handleOnBlur}
+                              formikValue={values.paymentStartDate}
+                              value={paymentStartDate}
+                              error={flatErrors.paymentStartDate}
+                            />
+
+                            <AddNote
+                              id="payment-payment-start-date-note"
+                              field="paymentStartDateNote"
+                            />
+                          </>
+                        )}
+
+                        {!loading && values.status && (
+                          <ReadyForReview
+                            id="payment-status"
+                            field="status"
+                            sectionName={t('heading')}
+                            status={values.status}
+                            setFieldValue={setFieldValue}
+                            readyForReviewBy={
+                              readyForReviewByUserAccount?.commonName
+                            }
+                            readyForReviewDts={readyForReviewDts}
                           />
                         )}
 
-                        <FieldErrorMsg>
-                          {flatErrors.willRecoverPayments}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-recover-payment-${key}`}
-                              data-testid={`payment-recover-payment-${key}`}
-                              name="willRecoverPayments"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={values.willRecoverPayments === key}
-                              onChange={() => {
-                                setFieldValue('willRecoverPayments', key);
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-recover-payment-note"
-                          field="willRecoverPaymentsNote"
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="payment-anticipate-reconciling-payment-retro"
-                        error={
-                          !!flatErrors.anticipateReconcilingPaymentsRetrospectively
-                        }
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="payment-anticipate-reconciling-payment-retro"
-                          className="maxw-none"
-                        >
-                          {t('anticipateReconcilingPaymentsRetrospectively')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {
-                            flatErrors.anticipateReconcilingPaymentsRetrospectively
-                          }
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-anticipate-reconciling-payment-retro-${key}`}
-                              data-testid={`payment-anticipate-reconciling-payment-retro-${key}`}
-                              name="anticipateReconcilingPaymentsRetrospectively"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={
-                                values.anticipateReconcilingPaymentsRetrospectively ===
-                                key
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'anticipateReconcilingPaymentsRetrospectively',
-                                  key
-                                );
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-anticipate-reconciling-payment-retro-note"
-                          field="anticipateReconcilingPaymentsRetrospectivelyNote"
-                        />
-                      </FieldGroup>
-
-                      {!loading && (
-                        <>
-                          <MINTDatePicker
-                            fieldName="paymentStartDate"
-                            id="payment-payment-start-date"
-                            className="margin-top-6"
-                            label={t('paymentStartDate')}
-                            subLabel={t('paymentStartDateSubcopy')}
-                            placeHolder
-                            handleOnBlur={handleOnBlur}
-                            formikValue={values.paymentStartDate}
-                            value={paymentStartDate}
-                            error={flatErrors.paymentStartDate}
-                          />
-
-                          <AddNote
-                            id="payment-payment-start-date-note"
-                            field="paymentStartDateNote"
-                          />
-                        </>
-                      )}
-
-                      {!loading && values.status && (
-                        <ReadyForReview
-                          id="payment-status"
-                          field="status"
-                          sectionName={t('heading')}
-                          status={values.status}
-                          setFieldValue={setFieldValue}
-                          readyForReviewBy={
-                            readyForReviewByUserAccount?.commonName
-                          }
-                          readyForReviewDts={readyForReviewDts}
-                        />
-                      )}
-
-                      <div className="margin-top-6 margin-bottom-3">
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--outline margin-bottom-1"
+                            onClick={() => {
+                              handleFormSubmit('back');
+                            }}
+                          >
+                            {h('back')}
+                          </Button>
+                          {!flags.hideITLeadExperience && (
+                            <Button type="submit" onClick={() => setErrors({})}>
+                              {t('continueToITSolutions')}
+                            </Button>
+                          )}
+                        </div>
                         <Button
                           type="button"
-                          className="usa-button usa-button--outline margin-bottom-1"
-                          onClick={() => {
-                            handleFormSubmit('back');
-                          }}
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('task-list')}
                         >
-                          {h('back')}
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+                          {h('saveAndReturn')}
                         </Button>
-                        {!flags.hideITLeadExperience && (
-                          <Button type="submit" onClick={() => setErrors({})}>
-                            {t('continueToITSolutions')}
-                          </Button>
-                        )}
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('task-list')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
