@@ -207,6 +207,186 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     question: 'Notes',
     dataType: 'string',
     formType: 'textarea'
+  },
+  communicationMethod: {
+    gqlField: 'communicationMethod',
+    goField: 'CommunicationMethod',
+    dbField: 'communication_method',
+    question: 'How will you communicate with participants?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      MASS_EMAIL: 'Send mass emails to new participants',
+      IT_TOOL:
+        'Manage ongoing communications with participants using an IT tool',
+      OTHER: 'Other',
+      NO_COMMUNICATION: 'We are not planning to communicate'
+    }
+  },
+  communicationMethodOther: {
+    gqlField: 'communicationMethodOther',
+    goField: 'CommunicationMethodOther',
+    dbField: 'communication_method',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  communicationNote: {
+    gqlField: 'communicationNote',
+    goField: 'CommunicationNote',
+    dbField: 'communication_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  participantAssumeRisk: {
+    gqlField: 'participantAssumeRisk',
+    goField: 'ParticipantAssumeRisk',
+    dbField: 'participant_assume_risk',
+    question: 'Will the participants assume risk?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  riskType: {
+    gqlField: 'riskType',
+    goField: 'RiskType',
+    dbField: 'risk_type',
+    question: 'What type of risk will the participant assume?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      TWO_SIDED: 'Two-sided',
+      ONE_SIDED: 'One-sided',
+      CAPITATION: 'Capitalization',
+      OTHER: 'Other'
+    }
+  },
+  riskOther: {
+    gqlField: 'riskOther',
+    goField: 'RiskOther',
+    dbField: 'risk_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  riskNote: {
+    gqlField: 'riskNote',
+    goField: 'RiskNote',
+    dbField: 'risk_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  willRiskChange: {
+    gqlField: 'willRiskChange',
+    goField: 'WillRiskChange',
+    dbField: 'will_risk_change',
+    question: 'Will the risk arrangement change as the model progresses?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  willRiskChangeNote: {
+    gqlField: 'willRiskChangeNote',
+    goField: 'WillRiskChangeNote',
+    dbField: 'will_risk_change_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  coordinateWork: {
+    gqlField: 'coordinateWork',
+    goField: 'CoordinateWork',
+    dbField: 'coordinate_work',
+    question: 'Will the participants coordinate the work of others?',
+    hint: '(e.g. conveners)',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  coordinateWorkNote: {
+    gqlField: 'coordinateWorkNote',
+    goField: 'CoordinateWorkNote',
+    dbField: 'coordinate_work_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  gainsharePayments: {
+    gqlField: 'gainsharePayments',
+    goField: 'GainsharePayments',
+    dbField: 'gainshare_payments',
+    question: 'Will there be gainsharing payments?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  gainsharePaymentsTrack: {
+    gqlField: 'gainsharePaymentsTrack',
+    goField: 'GainsharePaymentsTrack',
+    dbField: 'gainshare_payments_track',
+    question: 'Will you track gainsharing payments?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  gainsharePaymentsNote: {
+    gqlField: 'gainsharePaymentsNote',
+    goField: 'GainsharePaymentsNote',
+    dbField: 'gainshare_payments_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  participantsIds: {
+    gqlField: 'participantsIds',
+    goField: 'ParticipantsIds',
+    dbField: 'participants_ids',
+    question: 'Will you collect participant IDs? If so, select which types.',
+    hint:
+      'Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.',
+    readonlyQuestion: 'Will you collect participant IDs?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      TINS: 'TINs',
+      NPIS: 'NPIs',
+      CCNS: 'CCNs',
+      OTHER: 'Other',
+      NO_IDENTIFIERS: 'No, we will not collect provider identifiers'
+    }
+  },
+  participantsIdsOther: {
+    gqlField: 'participantsIdsOther',
+    goField: 'ParticipantsIdsOther',
+    dbField: 'participants_ids_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  participantsIDSNote: {
+    gqlField: 'participantsIDSNote',
+    goField: 'ParticipantsIDSNote',
+    dbField: 'participants_ids_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
   }
 };
 

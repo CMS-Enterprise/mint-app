@@ -16,7 +16,10 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  ParticipantCommunicationType,
+  ParticipantRiskType,
   ParticipantSelectionType,
+  ParticipantsIDType,
   ParticipantsType,
   RecruitmentType,
   TaskStatus,
@@ -184,6 +187,25 @@ export type TranslationParticipantsAndProviders = {
   selectionMethod: TranslationFieldPropertiesWithOptions<ParticipantSelectionType>;
   selectionOther: TranslationFieldProperties;
   selectionNote: TranslationFieldProperties;
+  // Communication
+  communicationMethod: TranslationFieldPropertiesWithOptions<ParticipantCommunicationType>;
+  communicationMethodOther: TranslationFieldProperties;
+  communicationNote: TranslationFieldProperties;
+  participantAssumeRisk: TranslationFieldPropertiesWithOptions<Bool>;
+  riskType: TranslationFieldPropertiesWithOptions<ParticipantRiskType>;
+  riskOther: TranslationFieldProperties;
+  riskNote: TranslationFieldProperties;
+  willRiskChange: TranslationFieldPropertiesWithOptions<Bool>;
+  willRiskChangeNote: TranslationFieldProperties;
+  // Coordination
+  coordinateWork: TranslationFieldPropertiesWithOptions<Bool>;
+  coordinateWorkNote: TranslationFieldProperties;
+  gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
+  gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
+  gainsharePaymentsNote: TranslationFieldProperties;
+  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
+  participantsIdsOther: TranslationFieldProperties;
+  participantsIDSNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

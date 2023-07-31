@@ -388,7 +388,9 @@ export const ParticipantOptions = () => {
                                 htmlFor="participants-and-providers-recruitment-other"
                                 className="text-normal"
                               >
-                                {miscellaneousT('pleaseSpecify')}
+                                {participantsAndProvidersT(
+                                  'recruitmentOther.question'
+                                )}
                               </Label>
                               <FieldErrorMsg>
                                 {flatErrors.recruitmentOther}
