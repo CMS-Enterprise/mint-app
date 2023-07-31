@@ -206,7 +206,16 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, c
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanBasics(logger, id, changes, principal, r.store)
+	return resolvers.UpdatePlanBasics(
+		logger,
+		id,
+		changes,
+		principal,
+		r.store,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+	)
 }
 
 // UpdatePlanGeneralCharacteristics is the resolver for the updatePlanGeneralCharacteristics field.
@@ -1048,13 +1057,3 @@ type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planDiscussionResolver) UserRoleDescription(ctx context.Context, obj *models.PlanDiscussion) (*string, error) {
-	panic(fmt.Errorf("not implemented: UserRoleDescription - userRoleDescription"))
-}

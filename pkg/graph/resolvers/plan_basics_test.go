@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
@@ -96,7 +98,16 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 		"highLevelNote": "Some high level note",
 	}
 
-	updatedBasics, err := UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	updatedBasics, err := UpdatePlanBasics(
+		suite.testConfigs.Logger,
+		basics.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
 
 	suite.NoError(err)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedBasics.ModifiedBy)
