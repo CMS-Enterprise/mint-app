@@ -386,7 +386,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
             <h4
               class="text-normal margin-bottom-1"
             >
-              Selected participants
+              How will you add providers?
             </h4>
             <ul
               class="usa-list--unstyled"
@@ -434,11 +434,14 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
             data-testid="label"
             for="participants-and-providers-provider-add-method-other"
           >
-            How will you add providers?
-          </h4>
-          <ul
-            class="usa-list--unstyled"
-            id="participants-and-providers-provider-add-method-tags"
+            Please describe the other method for deciding which providers to add.
+          </label>
+          <textarea
+            aria-labelledby="label-participants-and-providers-provider-add-method-other hint-participants-and-providers-provider-add-method-other"
+            class="height-15 usa-textarea"
+            data-testid="participants-and-providers-provider-add-method-other"
+            id="participants-and-providers-provider-add-method-other"
+            name="providerAddMethodOther"
           >
             Competitive ball-room dancing, free for all
           </textarea>

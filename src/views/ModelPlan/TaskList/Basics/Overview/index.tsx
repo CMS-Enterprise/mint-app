@@ -271,7 +271,7 @@ const Overview = () => {
                   <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
-                      className="usa-button usa-button--unstyled"
+                      className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => handleFormSubmit('task-list')}
                     >
                       {miscellaneousT('back')}
