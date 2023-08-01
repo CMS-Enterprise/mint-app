@@ -19,7 +19,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:managePartCDEnrollment.question',
     answer: 'translateBoolean',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   REV_COL_BIDS: {
     route: 'characteristics/key-characteristics',
@@ -27,7 +27,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:collectPlanBids.question',
     answer: 'translateBoolean',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   UPDATE_CONTRACT: {
     route: 'characteristics/key-characteristics',
@@ -35,7 +35,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:planContractUpdated.question',
     answer: 'translateBoolean',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   SIGN_PARTICIPATION_AGREEMENTS: {
     route: 'characteristics/targets-and-options',
@@ -43,7 +43,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:agreementTypes.question',
     answer: 'translateAgreementTypes',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   RECRUIT_PARTICIPANTS: {
     route: 'participants-and-providers/participants-options',
@@ -51,7 +51,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:recruitmentMethod.question',
     answer: 'translateRecruitmentType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   APP_SUPPORT_CON: {
     route: 'participants-and-providers/participants-options',
@@ -59,7 +59,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:selectionMethod.question',
     answer: 'translateParticipantSelectiontType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   REV_SCORE_APP: {
     route: 'participants-and-providers/participants-options',
@@ -67,7 +67,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:selectionMethod.question',
     answer: 'translateParticipantSelectiontType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   COMM_W_PART: {
     route: 'participants-and-providers/communication',
@@ -75,7 +75,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:communicationMethod.question',
     answer: 'translateCommunicationType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   MANAGE_PROV_OVERLAP: {
     route: 'participants-and-providers/provider-options',
@@ -83,7 +83,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:providerOverlap.question',
     answer: 'translateOverlapType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   VET_PROVIDERS_FOR_PROGRAM_INTEGRITY: {
     route: 'participants-and-providers/coordination',
@@ -91,7 +91,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:participantsIds.question',
     answer: 'translateParticipantIDType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   MANAGE_BEN_OVERLAP: {
     route: 'beneficiaries/beneficiary-frequency',

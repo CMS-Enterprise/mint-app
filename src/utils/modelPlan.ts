@@ -515,13 +515,13 @@ export const translateAnticipatedPaymentFrequencyType = (type: string) => {
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':
-      return i18next.t('participantsAndProviders:estimateOptions.notAtAll');
+      return i18next.t('beneficiaries:estimateOptions.notAtAll');
     case 'SLIGHTLY':
-      return i18next.t('participantsAndProviders:estimateOptions.slightly');
+      return i18next.t('beneficiaries:estimateOptions.slightly');
     case 'FAIRLY':
-      return i18next.t('participantsAndProviders:estimateOptions.fairly');
+      return i18next.t('beneficiaries:estimateOptions.fairly');
     case 'COMPLETELY':
-      return i18next.t('participantsAndProviders:estimateOptions.completely');
+      return i18next.t('beneficiaries:estimateOptions.completely');
     default:
       return '';
   }
@@ -637,17 +637,17 @@ export const translateParticipantIDType = (type: string) => {
 export const translateFrequencyType = (type: string) => {
   switch (type) {
     case 'ANNUALLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.annually');
+      return i18next.t('beneficiaries:frequencyOptions.annually');
     case 'BIANNUALLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.biannually');
+      return i18next.t('beneficiaries:frequencyOptions.biannually');
     case 'QUARTERLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.quarterly');
+      return i18next.t('beneficiaries:frequencyOptions.quarterly');
     case 'MONTHLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.monthly');
+      return i18next.t('beneficiaries:frequencyOptions.monthly');
     case 'ROLLING':
-      return i18next.t('participantsAndProviders:frequencyOptions.rolling');
+      return i18next.t('beneficiaries:frequencyOptions.rolling');
     case 'OTHER':
-      return i18next.t('participantsAndProviders:frequencyOptions.other');
+      return i18next.t('beneficiaries:frequencyOptions.other');
     default:
       return '';
   }
@@ -752,11 +752,11 @@ export const translateProviderLeaveType = (type: string) => {
 export const translateOverlapType = (type: string) => {
   switch (type) {
     case 'YES_NEED_POLICIES':
-      return i18next.t('participantsAndProviders:overlapOptions.yes');
+      return i18next.t('beneficiaries:overlapOptions.yes');
     case 'YES_NO_ISSUES':
-      return i18next.t('participantsAndProviders:overlapOptions.yesNoIssue');
+      return i18next.t('beneficiaries:overlapOptions.yesNoIssue');
     case 'NO':
-      return i18next.t('participantsAndProviders:overlapOptions.no');
+      return i18next.t('beneficiaries:overlapOptions.no');
     default:
       return '';
   }

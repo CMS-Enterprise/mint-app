@@ -203,7 +203,7 @@ export const basics: TranslationBasics = {
     gqlField: 'highLevelNote',
     goField: 'HighLevelNote',
     dbField: 'high_level_note',
-    question: 'Note',
+    question: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -236,7 +236,7 @@ export const basics: TranslationBasics = {
     gqlField: 'phasedInNote',
     goField: 'PhasedInNote',
     dbField: 'phased_in_note',
-    question: 'Note',
+    question: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
