@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
+import getNDAQuery from 'gql/apolloGQL/getNDA';
 
 import { localAuthStorageKey } from 'constants/localAuth';
-import GetNDA from 'queries/NDA/GetNDA';
-import { GetNDA as GetNDAType } from 'queries/NDA/types/GetNDA';
 import { setUser } from 'reducers/authReducer';
 import { isLocalAuthEnabled } from 'utils/auth';
 
@@ -23,7 +22,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   const dispatch = useDispatch();
   const { authState, oktaAuth } = useOktaAuth();
 
-  const { data } = useQuery<GetNDAType>(GetNDA, {
+  const { data } = useQuery(getNDAQuery, {
     skip: !authState?.isAuthenticated
   });
 

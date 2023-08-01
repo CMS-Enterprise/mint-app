@@ -223,177 +223,179 @@ const IDDOC = () => {
                   handleSubmit(e);
                 }}
               >
-                <h3>{t('iddocHeading')}</h3>
-                <FieldGroup
-                  scrollElement="technicalContactsIdentified"
-                  error={!!flatErrors.technicalContactsIdentified}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
-                    {t('technicalContacts')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.technicalContactsIdentified}
-                  </FieldErrorMsg>
+                <Fieldset disabled={!!error || loading}>
+                  <h3>{t('iddocHeading')}</h3>
+                  <FieldGroup
+                    scrollElement="technicalContactsIdentified"
+                    error={!!flatErrors.technicalContactsIdentified}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
+                      {t('technicalContacts')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.technicalContactsIdentified}
+                    </FieldErrorMsg>
 
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Fragment key={key.toString()}>
-                        <Field
-                          as={Radio}
-                          id={`ops-eval-and-learning-technical-contacts-identified-use-${key}`}
-                          name="technicalContactsIdentified"
-                          label={key ? h('yes') : h('no')}
-                          value={key ? 'YES' : 'NO'}
-                          checked={values.technicalContactsIdentified === key}
-                          onChange={() => {
-                            setFieldValue('technicalContactsIdentified', key);
-                          }}
-                        />
-                        {values.technicalContactsIdentified === true &&
-                          key === true && (
-                            <div className="margin-left-4 margin-top-1">
-                              <Label
-                                htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
-                                className="text-normal"
-                              >
-                                {h('pleaseSpecify')}
-                              </Label>
-                              <FieldErrorMsg>
-                                {flatErrors.technicalContactsIdentifiedDetail}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextAreaField}
-                                id="ops-eval-and-learning-technical-contacts-identified-detail"
-                                maxLength={5000}
-                                className="mint-textarea"
-                                name="technicalContactsIdentifiedDetail"
-                              />
-                            </div>
-                          )}
-                      </Fragment>
-                    ))}
-                  </Fieldset>
-
-                  <AddNote
-                    id="ops-eval-and-learning-technical-contacts-identified-use-note"
-                    field="technicalContactsIdentifiedNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="captureParticipantInfo"
-                  error={!!flatErrors.captureParticipantInfo}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="ops-eval-and-learning-capture-participant-info">
-                    {t('participantInformation')}
-                  </Label>
-                  <p className="text-base margin-bottom-1 margin-top-1">
-                    {t('participantInformationInfo')}
-                  </p>
-                  <FieldErrorMsg>
-                    {flatErrors.captureParticipantInfo}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="ops-eval-and-learning-capture-participant-info"
-                      name="captureParticipantInfo"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.captureParticipantInfo === true}
-                      onChange={() => {
-                        setFieldValue('captureParticipantInfo', true);
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="ops-eval-and-learning-capture-participant-info-no"
-                      name="captureParticipantInfo"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.captureParticipantInfo === false}
-                      onChange={() => {
-                        setFieldValue('captureParticipantInfo', false);
-                      }}
-                    />
-                  </Fieldset>
-
-                  <AddNote
-                    id="ops-eval-and-learning-capture-participant-info-note"
-                    field="captureParticipantInfoNote"
-                  />
-                </FieldGroup>
-
-                <h3>{t('icdHeading')}</h3>
-
-                <p className="margin-y-1 margin-top-2 line-height-body-4">
-                  {t('icdSubheading')}
-                </p>
-
-                <FieldGroup
-                  scrollElement="icdOwner"
-                  className="margin-top-4"
-                  error={!!flatErrors.icdOwner}
-                >
-                  <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
-                    {t('icdOwner')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.icdOwner}</FieldErrorMsg>
-                  <Field
-                    as={TextInput}
-                    error={!!flatErrors.icdOwner}
-                    id="ops-eval-and-learning-capture-icd-owner"
-                    data-testid="ops-eval-and-learning-capture-icd-owner"
-                    maxLength={50}
-                    name="icdOwner"
-                  />
-                </FieldGroup>
-
-                {!loading && (
-                  <>
-                    <MINTDatePicker
-                      fieldName="draftIcdDueDate"
-                      id="ops-eval-and-learning-icd-due-date"
-                      className="margin-top-6"
-                      label={t('draftIDC')}
-                      placeHolder
-                      handleOnBlur={handleOnBlur}
-                      formikValue={values.draftIcdDueDate}
-                      value={draftIcdDueDate}
-                      error={flatErrors.draftIcdDueDate}
-                    />
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Fragment key={key.toString()}>
+                          <Field
+                            as={Radio}
+                            id={`ops-eval-and-learning-technical-contacts-identified-use-${key}`}
+                            name="technicalContactsIdentified"
+                            label={key ? h('yes') : h('no')}
+                            value={key ? 'YES' : 'NO'}
+                            checked={values.technicalContactsIdentified === key}
+                            onChange={() => {
+                              setFieldValue('technicalContactsIdentified', key);
+                            }}
+                          />
+                          {values.technicalContactsIdentified === true &&
+                            key === true && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Label
+                                  htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
+                                  className="text-normal"
+                                >
+                                  {h('pleaseSpecify')}
+                                </Label>
+                                <FieldErrorMsg>
+                                  {flatErrors.technicalContactsIdentifiedDetail}
+                                </FieldErrorMsg>
+                                <Field
+                                  as={TextAreaField}
+                                  id="ops-eval-and-learning-technical-contacts-identified-detail"
+                                  maxLength={5000}
+                                  className="mint-textarea"
+                                  name="technicalContactsIdentifiedDetail"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      ))}
+                    </Fieldset>
 
                     <AddNote
-                      id="ops-eval-and-learning-icd-due-date-note"
-                      field="icdNote"
+                      id="ops-eval-and-learning-technical-contacts-identified-use-note"
+                      field="technicalContactsIdentifiedNote"
                     />
-                  </>
-                )}
+                  </FieldGroup>
 
-                <div className="margin-top-6 margin-bottom-3">
+                  <FieldGroup
+                    scrollElement="captureParticipantInfo"
+                    error={!!flatErrors.captureParticipantInfo}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-capture-participant-info">
+                      {t('participantInformation')}
+                    </Label>
+                    <p className="text-base margin-bottom-1 margin-top-1">
+                      {t('participantInformationInfo')}
+                    </p>
+                    <FieldErrorMsg>
+                      {flatErrors.captureParticipantInfo}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="ops-eval-and-learning-capture-participant-info"
+                        name="captureParticipantInfo"
+                        label={h('yes')}
+                        value="TRUE"
+                        checked={values.captureParticipantInfo === true}
+                        onChange={() => {
+                          setFieldValue('captureParticipantInfo', true);
+                        }}
+                      />
+                      <Field
+                        as={Radio}
+                        id="ops-eval-and-learning-capture-participant-info-no"
+                        name="captureParticipantInfo"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.captureParticipantInfo === false}
+                        onChange={() => {
+                          setFieldValue('captureParticipantInfo', false);
+                        }}
+                      />
+                    </Fieldset>
+
+                    <AddNote
+                      id="ops-eval-and-learning-capture-participant-info-note"
+                      field="captureParticipantInfoNote"
+                    />
+                  </FieldGroup>
+
+                  <h3>{t('icdHeading')}</h3>
+
+                  <p className="margin-y-1 margin-top-2 line-height-body-4">
+                    {t('icdSubheading')}
+                  </p>
+
+                  <FieldGroup
+                    scrollElement="icdOwner"
+                    className="margin-top-4"
+                    error={!!flatErrors.icdOwner}
+                  >
+                    <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
+                      {t('icdOwner')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.icdOwner}</FieldErrorMsg>
+                    <Field
+                      as={TextInput}
+                      error={!!flatErrors.icdOwner}
+                      id="ops-eval-and-learning-capture-icd-owner"
+                      data-testid="ops-eval-and-learning-capture-icd-owner"
+                      maxLength={50}
+                      name="icdOwner"
+                    />
+                  </FieldGroup>
+
+                  {!loading && (
+                    <>
+                      <MINTDatePicker
+                        fieldName="draftIcdDueDate"
+                        id="ops-eval-and-learning-icd-due-date"
+                        className="margin-top-6"
+                        label={t('draftIDC')}
+                        placeHolder
+                        handleOnBlur={handleOnBlur}
+                        formikValue={values.draftIcdDueDate}
+                        value={draftIcdDueDate}
+                        error={flatErrors.draftIcdDueDate}
+                      />
+
+                      <AddNote
+                        id="ops-eval-and-learning-icd-due-date-note"
+                        field="icdNote"
+                      />
+                    </>
+                  )}
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (

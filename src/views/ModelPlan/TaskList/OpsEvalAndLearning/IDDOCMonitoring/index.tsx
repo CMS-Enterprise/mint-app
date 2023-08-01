@@ -206,201 +206,213 @@ const IDDOCMonitoring = () => {
                   handleSubmit(e);
                 }}
               >
-                <h3>{t('dataMonitoringContinued')}</h3>
+                <Fieldset disabled={!!error || loading}>
+                  <h3>{t('dataMonitoringContinued')}</h3>
 
-                <FieldGroup
-                  scrollElement="dataFullTimeOrIncremental"
-                  error={!!flatErrors.dataFullTimeOrIncremental}
-                >
-                  <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
-                    {t('timeFrequency')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.dataFullTimeOrIncremental}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    {Object.keys(DataFullTimeOrIncrementalType).map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-fulltime-or-incremental-${key}`}
-                        name="dataFullTimeOrIncremental"
-                        label={translateDataFullTimeOrIncrementalType(key)}
-                        value={key}
-                        checked={values.dataFullTimeOrIncremental === key}
-                        onChange={() => {
-                          setFieldValue('dataFullTimeOrIncremental', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="dataFullTimeOrIncremental"
+                    error={!!flatErrors.dataFullTimeOrIncremental}
+                  >
+                    <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
+                      {t('timeFrequency')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.dataFullTimeOrIncremental}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {Object.keys(DataFullTimeOrIncrementalType).map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-fulltime-or-incremental-${key}`}
+                          name="dataFullTimeOrIncremental"
+                          label={translateDataFullTimeOrIncrementalType(key)}
+                          value={key}
+                          checked={values.dataFullTimeOrIncremental === key}
+                          onChange={() => {
+                            setFieldValue('dataFullTimeOrIncremental', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="eftSetUp"
-                  error={!!flatErrors.eftSetUp}
-                  className="margin-top-6"
-                >
-                  <Label htmlFor="ops-eval-and-learning-eft-setup">
-                    {t('eftAndConnectivity')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.eftSetUp}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-eft-setup-${key}`}
-                        name="eftSetUp"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.eftSetUp === key}
-                        onChange={() => {
-                          setFieldValue('eftSetUp', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="eftSetUp"
+                    error={!!flatErrors.eftSetUp}
+                    className="margin-top-6"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-eft-setup">
+                      {t('eftAndConnectivity')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.eftSetUp}</FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-eft-setup-${key}`}
+                          name="eftSetUp"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.eftSetUp === key}
+                          onChange={() => {
+                            setFieldValue('eftSetUp', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="unsolicitedAdjustmentsIncluded"
-                  error={!!flatErrors.unsolicitedAdjustmentsIncluded}
-                  className="margin-top-6"
-                >
-                  <Label htmlFor="ops-eval-and-learning-unsolicted-adjustment-included">
-                    {t('adjustments')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.unsolicitedAdjustmentsIncluded}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-unsolicted-adjustment-included-${key}`}
-                        name="unsolicitedAdjustmentsIncluded"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.unsolicitedAdjustmentsIncluded === key}
-                        onChange={() => {
-                          setFieldValue('unsolicitedAdjustmentsIncluded', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="unsolicitedAdjustmentsIncluded"
+                    error={!!flatErrors.unsolicitedAdjustmentsIncluded}
+                    className="margin-top-6"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-unsolicted-adjustment-included">
+                      {t('adjustments')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.unsolicitedAdjustmentsIncluded}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-unsolicted-adjustment-included-${key}`}
+                          name="unsolicitedAdjustmentsIncluded"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={
+                            values.unsolicitedAdjustmentsIncluded === key
+                          }
+                          onChange={() => {
+                            setFieldValue(
+                              'unsolicitedAdjustmentsIncluded',
+                              key
+                            );
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="dataFlowDiagramsNeeded"
-                  error={!!flatErrors.dataFlowDiagramsNeeded}
-                  className="margin-top-6"
-                >
-                  <Label htmlFor="ops-eval-and-learning-diagrams-needed">
-                    {t('diagrams')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.dataFlowDiagramsNeeded}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-diagrams-needed-${key}`}
-                        name="dataFlowDiagramsNeeded"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.dataFlowDiagramsNeeded === key}
-                        onChange={() => {
-                          setFieldValue('dataFlowDiagramsNeeded', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="dataFlowDiagramsNeeded"
+                    error={!!flatErrors.dataFlowDiagramsNeeded}
+                    className="margin-top-6"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-diagrams-needed">
+                      {t('diagrams')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.dataFlowDiagramsNeeded}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-diagrams-needed-${key}`}
+                          name="dataFlowDiagramsNeeded"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.dataFlowDiagramsNeeded === key}
+                          onChange={() => {
+                            setFieldValue('dataFlowDiagramsNeeded', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="produceBenefitEnhancementFiles"
-                  error={!!flatErrors.produceBenefitEnhancementFiles}
-                  className="margin-top-6"
-                >
-                  <Label htmlFor="ops-eval-and-learning-produce-benefit-files">
-                    {t('benefitEnhancement')}
-                  </Label>
-                  <p className="text-base margin-y-1">
-                    {t('benefitEnhancementInfo')}
-                  </p>
-                  <FieldErrorMsg>
-                    {flatErrors.produceBenefitEnhancementFiles}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-produce-benefit-files-${key}`}
-                        name="produceBenefitEnhancementFiles"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.produceBenefitEnhancementFiles === key}
-                        onChange={() => {
-                          setFieldValue('produceBenefitEnhancementFiles', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="produceBenefitEnhancementFiles"
+                    error={!!flatErrors.produceBenefitEnhancementFiles}
+                    className="margin-top-6"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-produce-benefit-files">
+                      {t('benefitEnhancement')}
+                    </Label>
+                    <p className="text-base margin-y-1">
+                      {t('benefitEnhancementInfo')}
+                    </p>
+                    <FieldErrorMsg>
+                      {flatErrors.produceBenefitEnhancementFiles}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-produce-benefit-files-${key}`}
+                          name="produceBenefitEnhancementFiles"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={
+                            values.produceBenefitEnhancementFiles === key
+                          }
+                          onChange={() => {
+                            setFieldValue(
+                              'produceBenefitEnhancementFiles',
+                              key
+                            );
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="fileNamingConventions"
-                  className="margin-top-6"
-                  error={!!flatErrors.fileNamingConventions}
-                >
-                  <Label htmlFor="ops-eval-and-learning-file-naming-convention">
-                    {t('namingConventions')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.fileNamingConventions}
-                  </FieldErrorMsg>
-                  <Field
-                    as={TextInput}
+                  <FieldGroup
+                    scrollElement="fileNamingConventions"
+                    className="margin-top-6"
                     error={!!flatErrors.fileNamingConventions}
-                    id="ops-eval-and-learning-file-naming-convention"
-                    data-testid="ops-eval-and-learning-file-naming-convention"
-                    maxLength={50}
-                    name="fileNamingConventions"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-file-naming-convention">
+                      {t('namingConventions')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.fileNamingConventions}
+                    </FieldErrorMsg>
+                    <Field
+                      as={TextInput}
+                      error={!!flatErrors.fileNamingConventions}
+                      id="ops-eval-and-learning-file-naming-convention"
+                      data-testid="ops-eval-and-learning-file-naming-convention"
+                      maxLength={50}
+                      name="fileNamingConventions"
+                    />
+                  </FieldGroup>
+
+                  <AddNote
+                    id="ops-eval-and-learning-data-monitoring-note"
+                    field="dataMonitoringNote"
                   />
-                </FieldGroup>
 
-                <AddNote
-                  id="ops-eval-and-learning-data-monitoring-note"
-                  field="dataMonitoringNote"
-                />
-
-                <div className="margin-top-6 margin-bottom-3">
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (

@@ -250,347 +250,355 @@ const Milestones = () => {
                     window.scrollTo(0, 0);
                   }}
                 >
-                  <PageHeading headingLevel="h3" className="margin-bottom-2">
-                    {basicsMiscT('highLevelTimeline')}
-                  </PageHeading>
+                  <Fieldset disabled={!!error || loading}>
+                    <PageHeading headingLevel="h3" className="margin-bottom-2">
+                      {basicsMiscT('highLevelTimeline')}
+                    </PageHeading>
 
-                  <MINTAlert type="info" slim>
-                    <Trans i18nKey="milestonesInfo">
-                      Please be sure that the dates listed here are updated in
-                      the clearance calendar, if applicable. Contact the MINT
-                      Team at{' '}
-                      <TrussLink
-                        aria-label="Open in a new tab"
-                        href="mailto:MINTTeam@cms.hhs.gov"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        MINTTeam@cms.hhs.gov
-                      </TrussLink>{' '}
-                      if you have any questions.
-                    </Trans>
-                  </MINTAlert>
+                    <MINTAlert type="info" slim>
+                      <Trans i18nKey="milestonesInfo">
+                        Please be sure that the dates listed here are updated in
+                        the clearance calendar, if applicable. Contact the MINT
+                        Team at{' '}
+                        <TrussLink
+                          aria-label="Open in a new tab"
+                          href="mailto:MINTTeam@cms.hhs.gov"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          MINTTeam@cms.hhs.gov
+                        </TrussLink>{' '}
+                        if you have any questions.
+                      </Trans>
+                    </MINTAlert>
 
-                  <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105  ">
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
-                      <ProcessListHeading
-                        type="h5"
-                        className="font-body-sm line-height-sans-4 text-normal"
-                      >
+                    <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105  ">
+                      <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
+                        <ProcessListHeading
+                          type="h5"
+                          className="font-body-sm line-height-sans-4 text-normal"
+                        >
+                          <div className="datepicker__wrapper display-block">
+                            <MINTDatePicker
+                              className="margin-top-0"
+                              fieldName="completeICIP"
+                              id="Milestone-completeICIP"
+                              label={basicsT('completeICIP.question')}
+                              placeHolder
+                              handleOnBlur={handleOnBlur}
+                              formikValue={values.completeICIP}
+                              value={completeICIP}
+                              error={flatErrors.completeICIP}
+                              half
+                            />
+                          </div>
+                        </ProcessListHeading>
+                      </ProcessListItem>
+
+                      <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
+                        <ProcessListHeading
+                          type="h5"
+                          className="font-body-sm line-height-sans-4 text-normal"
+                        >
+                          <legend className="usa-label margin-bottom-05">
+                            {basicsMiscT('clearance')}
+                          </legend>
+
+                          <label
+                            htmlFor="Milestone-clearanceStarts"
+                            className="text-base"
+                          >
+                            {basicsMiscT('clearanceInfo')}
+                          </label>
+
+                          <div className="datepicker__wrapper text-normal">
+                            <MINTDatePicker
+                              fieldName="clearanceStarts"
+                              id="Milestone-clearanceStarts"
+                              label={basicsT('clearanceStarts.question')}
+                              boldLabel={false}
+                              placeHolder
+                              handleOnBlur={handleOnBlur}
+                              formikValue={values.clearanceStarts}
+                              value={clearanceStarts}
+                              error={flatErrors.clearanceStarts}
+                              warning={false}
+                              className="margin-top-1"
+                            />
+
+                            <MINTDatePicker
+                              fieldName="clearanceEnds"
+                              id="Milestone-clearanceEnds"
+                              label={basicsT('clearanceEnds.question')}
+                              boldLabel={false}
+                              placeHolder
+                              handleOnBlur={handleOnBlur}
+                              formikValue={values.clearanceEnds}
+                              value={clearanceEnds}
+                              error={flatErrors.clearanceEnds}
+                              warning={false}
+                              className="margin-top-1"
+                            />
+                          </div>
+
+                          {(isDateInPast(values.clearanceEnds) ||
+                            isDateInPast(values.clearanceStarts)) && (
+                            <Alert type="warning" className="margin-top-4">
+                              {miscellaneousT('dateWarning')}
+                            </Alert>
+                          )}
+                        </ProcessListHeading>
+                      </ProcessListItem>
+
+                      <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
+                        <ProcessListHeading
+                          type="h5"
+                          className="font-body-sm line-height-sans-4 text-normal"
+                        />
+
                         <div className="datepicker__wrapper display-block">
                           <MINTDatePicker
                             className="margin-top-0"
-                            fieldName="completeICIP"
-                            id="Milestone-completeICIP"
-                            label={basicsT('completeICIP.question')}
+                            fieldName="announced"
+                            id="Milestone-announced"
+                            label={basicsT('announced.question')}
                             placeHolder
                             handleOnBlur={handleOnBlur}
-                            formikValue={values.completeICIP}
-                            value={completeICIP}
-                            error={flatErrors.completeICIP}
+                            formikValue={values.announced}
+                            value={announced}
+                            error={flatErrors.announced}
                             half
                           />
                         </div>
-                      </ProcessListHeading>
-                    </ProcessListItem>
+                      </ProcessListItem>
 
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
-                      <ProcessListHeading
-                        type="h5"
-                        className="font-body-sm line-height-sans-4 text-normal"
-                      >
-                        <legend className="usa-label margin-bottom-05">
-                          {basicsMiscT('clearance')}
-                        </legend>
-
-                        <label
-                          htmlFor="Milestone-clearanceStarts"
-                          className="text-base"
+                      <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
+                        <ProcessListHeading
+                          type="h5"
+                          className="font-body-sm line-height-sans-4 text-normal"
                         >
-                          {basicsMiscT('clearanceInfo')}
-                        </label>
+                          <legend className="usa-label margin-bottom-neg-2">
+                            {basicsMiscT('applicationPeriod')}
+                          </legend>
+                        </ProcessListHeading>
 
-                        <div className="datepicker__wrapper text-normal">
+                        <div className="datepicker__wrapper">
                           <MINTDatePicker
-                            fieldName="clearanceStarts"
-                            id="Milestone-clearanceStarts"
-                            label={basicsT('clearanceStarts.question')}
+                            fieldName="applicationsStart"
+                            id="Milestone-applicationsStart"
+                            label={basicsT('applicationsStart.question')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
-                            formikValue={values.clearanceStarts}
-                            value={clearanceStarts}
-                            error={flatErrors.clearanceStarts}
+                            formikValue={values.applicationsStart}
+                            value={applicationsStart}
+                            error={flatErrors.applicationsStart}
                             warning={false}
-                            className="margin-top-1"
                           />
 
                           <MINTDatePicker
-                            fieldName="clearanceEnds"
-                            id="Milestone-clearanceEnds"
-                            label={basicsT('clearanceEnds.question')}
+                            fieldName="applicationsEnd"
+                            id="Milestone-applicationsEnd"
+                            label={basicsT('applicationsEnd.question')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
-                            formikValue={values.clearanceEnds}
-                            value={clearanceEnds}
-                            error={flatErrors.clearanceEnds}
+                            formikValue={values.applicationsEnd}
+                            value={applicationsEnd}
+                            error={flatErrors.applicationsEnd}
                             warning={false}
-                            className="margin-top-1"
                           />
                         </div>
 
-                        {(isDateInPast(values.clearanceEnds) ||
-                          isDateInPast(values.clearanceStarts)) && (
+                        {(isDateInPast(values.applicationsStart) ||
+                          isDateInPast(values.applicationsEnd)) && (
                           <Alert type="warning" className="margin-top-4">
                             {miscellaneousT('dateWarning')}
                           </Alert>
                         )}
-                      </ProcessListHeading>
-                    </ProcessListItem>
+                      </ProcessListItem>
 
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
-                      <ProcessListHeading
-                        type="h5"
-                        className="font-body-sm line-height-sans-4 text-normal"
-                      />
-
-                      <div className="datepicker__wrapper display-block">
-                        <MINTDatePicker
-                          className="margin-top-0"
-                          fieldName="announced"
-                          id="Milestone-announced"
-                          label={basicsT('announced.question')}
-                          placeHolder
-                          handleOnBlur={handleOnBlur}
-                          formikValue={values.announced}
-                          value={announced}
-                          error={flatErrors.announced}
-                          half
-                        />
-                      </div>
-                    </ProcessListItem>
-
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
-                      <ProcessListHeading
-                        type="h5"
-                        className="font-body-sm line-height-sans-4 text-normal"
-                      >
-                        <legend className="usa-label margin-bottom-neg-2">
-                          {basicsMiscT('applicationPeriod')}
-                        </legend>
-                      </ProcessListHeading>
-
-                      <div className="datepicker__wrapper">
-                        <MINTDatePicker
-                          fieldName="applicationsStart"
-                          id="Milestone-applicationsStart"
-                          label={basicsT('applicationsStart.question')}
-                          boldLabel={false}
-                          placeHolder
-                          handleOnBlur={handleOnBlur}
-                          formikValue={values.applicationsStart}
-                          value={applicationsStart}
-                          error={flatErrors.applicationsStart}
-                          warning={false}
-                        />
-
-                        <MINTDatePicker
-                          fieldName="applicationsEnd"
-                          id="Milestone-applicationsEnd"
-                          label={basicsT('applicationsEnd.question')}
-                          boldLabel={false}
-                          placeHolder
-                          handleOnBlur={handleOnBlur}
-                          formikValue={values.applicationsEnd}
-                          value={applicationsEnd}
-                          error={flatErrors.applicationsEnd}
-                          warning={false}
-                        />
-                      </div>
-
-                      {(isDateInPast(values.applicationsStart) ||
-                        isDateInPast(values.applicationsEnd)) && (
-                        <Alert type="warning" className="margin-top-4">
-                          {miscellaneousT('dateWarning')}
-                        </Alert>
-                      )}
-                    </ProcessListItem>
-
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
-                      <ProcessListHeading
-                        type="h5"
-                        className="font-body-sm line-height-sans-4 text-normal"
-                      >
-                        <legend className="usa-label">
-                          {basicsMiscT('demonstrationPerformance')}
-                        </legend>
-
-                        <label
-                          htmlFor="Milestone-performancePeriodStarts"
-                          className="text-base"
+                      <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
+                        <ProcessListHeading
+                          type="h5"
+                          className="font-body-sm line-height-sans-4 text-normal"
                         >
-                          {basicsMiscT('demonstrationPerformanceInfo')}
-                        </label>
-                      </ProcessListHeading>
+                          <legend className="usa-label">
+                            {basicsMiscT('demonstrationPerformance')}
+                          </legend>
 
-                      <div className="datepicker__wrapper">
-                        <MINTDatePicker
-                          fieldName="performancePeriodStarts"
-                          id="Milestone-performancePeriodStarts"
-                          label={basicsT('performancePeriodStarts.question')}
-                          boldLabel={false}
-                          placeHolder
-                          handleOnBlur={handleOnBlur}
-                          formikValue={values.performancePeriodStarts}
-                          value={performancePeriodStarts}
-                          error={flatErrors.performancePeriodStarts}
-                          warning={false}
-                          className="margin-top-0"
+                          <label
+                            htmlFor="Milestone-performancePeriodStarts"
+                            className="text-base"
+                          >
+                            {basicsMiscT('demonstrationPerformanceInfo')}
+                          </label>
+                        </ProcessListHeading>
+
+                        <div className="datepicker__wrapper">
+                          <MINTDatePicker
+                            fieldName="performancePeriodStarts"
+                            id="Milestone-performancePeriodStarts"
+                            label={basicsT('performancePeriodStarts.question')}
+                            boldLabel={false}
+                            placeHolder
+                            handleOnBlur={handleOnBlur}
+                            formikValue={values.performancePeriodStarts}
+                            value={performancePeriodStarts}
+                            error={flatErrors.performancePeriodStarts}
+                            warning={false}
+                            className="margin-top-0"
+                          />
+
+                          <MINTDatePicker
+                            fieldName="performancePeriodEnds"
+                            id="Milestone-performancePeriodEnds"
+                            label={basicsT('performancePeriodEnds.question')}
+                            boldLabel={false}
+                            placeHolder
+                            handleOnBlur={handleOnBlur}
+                            formikValue={values.performancePeriodEnds}
+                            value={performancePeriodEnds}
+                            error={flatErrors.performancePeriodEnds}
+                            warning={false}
+                            className="margin-top-0"
+                          />
+                        </div>
+
+                        {(isDateInPast(values.performancePeriodStarts) ||
+                          isDateInPast(values.performancePeriodEnds)) && (
+                          <Alert type="warning" className="margin-top-4">
+                            {miscellaneousT('dateWarning')}
+                          </Alert>
+                        )}
+                      </ProcessListItem>
+
+                      <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
+                        <ProcessListHeading
+                          type="h5"
+                          className="font-body-sm line-height-sans-4 text-normal"
                         />
 
-                        <MINTDatePicker
-                          fieldName="performancePeriodEnds"
-                          id="Milestone-performancePeriodEnds"
-                          label={basicsT('performancePeriodEnds.question')}
-                          boldLabel={false}
-                          placeHolder
-                          handleOnBlur={handleOnBlur}
-                          formikValue={values.performancePeriodEnds}
-                          value={performancePeriodEnds}
-                          error={flatErrors.performancePeriodEnds}
-                          warning={false}
-                          className="margin-top-0"
-                        />
-                      </div>
+                        <div className="datepicker__wrapper display-block">
+                          <MINTDatePicker
+                            fieldName="wrapUpEnds"
+                            className="margin-top-0"
+                            id="Milestone-wrapUpEnds"
+                            label={basicsT('wrapUpEnds.question')}
+                            placeHolder
+                            handleOnBlur={handleOnBlur}
+                            formikValue={values.wrapUpEnds}
+                            value={wrapUpEnds}
+                            error={flatErrors.wrapUpEnds}
+                            half
+                          />
+                        </div>
+                      </ProcessListItem>
+                    </ProcessList>
 
-                      {(isDateInPast(values.performancePeriodStarts) ||
-                        isDateInPast(values.performancePeriodEnds)) && (
-                        <Alert type="warning" className="margin-top-4">
-                          {miscellaneousT('dateWarning')}
-                        </Alert>
-                      )}
-                    </ProcessListItem>
-
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
-                      <ProcessListHeading
-                        type="h5"
-                        className="font-body-sm line-height-sans-4 text-normal"
-                      />
-
-                      <div className="datepicker__wrapper display-block">
-                        <MINTDatePicker
-                          fieldName="wrapUpEnds"
-                          className="margin-top-0"
-                          id="Milestone-wrapUpEnds"
-                          label={basicsT('wrapUpEnds.question')}
-                          placeHolder
-                          handleOnBlur={handleOnBlur}
-                          formikValue={values.wrapUpEnds}
-                          value={wrapUpEnds}
-                          error={flatErrors.wrapUpEnds}
-                          half
-                        />
-                      </div>
-                    </ProcessListItem>
-                  </ProcessList>
-
-                  <AddNote id="ModelType-HighLevelNote" field="highLevelNote" />
-
-                  <FieldGroup
-                    scrollElement="phasedIn"
-                    error={!!flatErrors.phasedIn}
-                    className="margin-top-4"
-                  >
-                    <Label htmlFor="phasedIn">
-                      {basicsT('phasedIn.question')}
-                    </Label>
-
-                    <span className="usa-hint display-block text-normal margin-top-1">
-                      {basicsT('phasedIn.hint')}
-                    </span>
-
-                    <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
-
-                    <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="phasedIn-Yes"
-                        name="phasedIn"
-                        label={phasedInConfig.options.true}
-                        value="YES"
-                        checked={values.phasedIn === true}
-                        onChange={() => {
-                          setFieldValue('phasedIn', true);
-                        }}
-                      />
-
-                      <Field
-                        as={Radio}
-                        id="phasedIn-No"
-                        name="phasedIn"
-                        label={phasedInConfig.options.false}
-                        value="FALSE"
-                        checked={values.phasedIn === false}
-                        onChange={() => {
-                          setFieldValue('phasedIn', false);
-                        }}
-                      />
-                    </Fieldset>
-                  </FieldGroup>
-
-                  <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
-
-                  {!loading && values.status && (
-                    <ReadyForReview
-                      id="milestones-status"
-                      field="status"
-                      sectionName={basicsMiscT('heading')}
-                      status={values.status}
-                      setFieldValue={setFieldValue}
-                      readyForReviewBy={readyForReviewByUserAccount?.commonName}
-                      readyForReviewDts={readyForReviewDts}
+                    <AddNote
+                      id="ModelType-HighLevelNote"
+                      field="highLevelNote"
                     />
-                  )}
 
-                  <div className="margin-top-6 margin-bottom-3">
+                    <FieldGroup
+                      scrollElement="phasedIn"
+                      error={!!flatErrors.phasedIn}
+                      className="margin-top-4"
+                    >
+                      <Label htmlFor="phasedIn">
+                        {basicsT('phasedIn.question')}
+                      </Label>
+
+                      <span className="usa-hint display-block text-normal margin-top-1">
+                        {basicsT('phasedIn.hint')}
+                      </span>
+
+                      <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
+
+                      <Fieldset>
+                        <Field
+                          as={Radio}
+                          id="phasedIn-Yes"
+                          name="phasedIn"
+                          label={phasedInConfig.options.true}
+                          value="YES"
+                          checked={values.phasedIn === true}
+                          onChange={() => {
+                            setFieldValue('phasedIn', true);
+                          }}
+                        />
+
+                        <Field
+                          as={Radio}
+                          id="phasedIn-No"
+                          name="phasedIn"
+                          label={phasedInConfig.options.false}
+                          value="FALSE"
+                          checked={values.phasedIn === false}
+                          onChange={() => {
+                            setFieldValue('phasedIn', false);
+                          }}
+                        />
+                      </Fieldset>
+                    </FieldGroup>
+
+                    <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
+
+                    {!loading && values.status && (
+                      <ReadyForReview
+                        id="milestones-status"
+                        field="status"
+                        sectionName={basicsMiscT('heading')}
+                        status={values.status}
+                        setFieldValue={setFieldValue}
+                        readyForReviewBy={
+                          readyForReviewByUserAccount?.commonName
+                        }
+                        readyForReviewDts={readyForReviewDts}
+                      />
+                    )}
+
+                    <div className="margin-top-6 margin-bottom-3">
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--outline margin-bottom-1"
+                        onClick={() => {
+                          if (getKeys(errors).length > 0) {
+                            window.scrollTo(0, 0);
+                          } else {
+                            validateForm().then(err => {
+                              if (getKeys(err).length > 0) {
+                                window.scrollTo(0, 0);
+                              } else {
+                                handleFormSubmit('back');
+                              }
+                            });
+                          }
+                        }}
+                      >
+                        {miscellaneousT('back')}
+                      </Button>
+
+                      <Button
+                        type="submit"
+                        className=""
+                        onClick={() => setErrors({})}
+                      >
+                        {miscellaneousT('saveAndStartNext')}
+                      </Button>
+                    </div>
+
                     <Button
                       type="button"
-                      className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => {
-                        if (getKeys(errors).length > 0) {
-                          window.scrollTo(0, 0);
-                        } else {
-                          validateForm().then(err => {
-                            if (getKeys(err).length > 0) {
-                              window.scrollTo(0, 0);
-                            } else {
-                              handleFormSubmit('back');
-                            }
-                          });
-                        }
-                      }}
+                      className="usa-button usa-button--unstyled"
+                      onClick={() => handleFormSubmit('task-list')}
                     >
-                      {miscellaneousT('back')}
-                    </Button>
+                      <IconArrowBack className="margin-right-1" aria-hidden />
 
-                    <Button
-                      type="submit"
-                      className=""
-                      onClick={() => setErrors({})}
-                    >
-                      {miscellaneousT('saveAndStartNext')}
+                      {miscellaneousT('saveAndReturn')}
                     </Button>
-                  </div>
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
-                  >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
-
-                    {miscellaneousT('saveAndReturn')}
-                  </Button>
+                  </Fieldset>
                 </Form>
               </>
             );

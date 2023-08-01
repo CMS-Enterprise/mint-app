@@ -2,10 +2,15 @@
   .page-break {
     display: none;
   }
+
 }
 
 @media screen {
   .mint-only-print {
+    display: none;
+  }
+
+  .mint-only-print-inline {
     display: none;
   }
 }
@@ -17,6 +22,10 @@
 
   .mint-only-print {
     display: block !important;
+  }
+
+  .mint-only-print-inline {
+    display: inline-block !important;
   }
 
   .page-break {

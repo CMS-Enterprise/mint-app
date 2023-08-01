@@ -42,6 +42,8 @@ describe('Filter Group in Read Only Sections', () => {
     cy.get('#read-only-side-nav__wrapper').should('not.exist');
     cy.get('.filtered-view-section--model-team').should('exist');
 
+    // Clear filter after viewing the CCW filtered group view
+
     cy.get('[data-testid="group-filter-banner"]').within(() => {
       cy.get('button').contains('Clear filter').click();
     });

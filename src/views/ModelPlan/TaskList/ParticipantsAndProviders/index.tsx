@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   Grid,
   GridContainer,
   IconArrowBack,
@@ -158,6 +159,7 @@ export const ParticipantsAndProvidersContent = () => {
           {participantsAndProvidersMiscT('breadcrumb')}
         </Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {participantsAndProvidersMiscT('heading')}
       </PageHeading>
@@ -168,6 +170,7 @@ export const ParticipantsAndProvidersContent = () => {
       >
         {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {miscellaneousT('helpText')}
       </p>
@@ -191,6 +194,7 @@ export const ParticipantsAndProvidersContent = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -220,220 +224,229 @@ export const ParticipantsAndProvidersContent = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="participants"
-                        error={!!flatErrors.participants}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="participants-and-providers-participants"
-                          id="label-participants-and-providers-participants"
+                      <Fieldset disabled={!!error || loading}>
+                        <FieldGroup
+                          scrollElement="participants"
+                          error={!!flatErrors.participants}
+                          className="margin-top-4"
                         >
-                          {participantsAndProvidersT('participants.question')}
-                        </Label>
+                          <Label
+                            htmlFor="participants-and-providers-participants"
+                            id="label-participants-and-providers-participants"
+                          >
+                            {participantsAndProvidersT('participants.question')}
+                          </Label>
 
-                        <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors.participants}
+                          </FieldErrorMsg>
 
-                        <Field
-                          as={MultiSelect}
-                          id="participants-and-providers-participants"
-                          ariaLabel="label-participants-and-providers-participants"
-                          name="participants"
-                          options={composeMultiSelectOptions(
-                            participantsConfig.options
-                          )}
-                          selectedLabel={participantsAndProvidersT(
-                            'participants.multiSelectLabel'
-                          )}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('participants', value);
-                          }}
-                          initialValues={initialValues.participants}
-                        />
+                          <Field
+                            as={MultiSelect}
+                            id="participants-and-providers-participants"
+                            ariaLabel="label-participants-and-providers-participants"
+                            name="participants"
+                            options={composeMultiSelectOptions(
+                              participantsConfig.options
+                            )}
+                            selectedLabel={participantsAndProvidersT(
+                              'participants.multiSelectLabel'
+                            )}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue('participants', value);
+                            }}
+                            initialValues={initialValues.participants}
+                          />
 
-                        {((values?.participants || []).includes(
-                          ParticipantsType.MEDICARE_PROVIDERS
-                        ) ||
-                          (values?.participants || []).includes(
-                            ParticipantsType.STATES
+                          {((values?.participants || []).includes(
+                            ParticipantsType.MEDICARE_PROVIDERS
                           ) ||
-                          (values?.participants || []).includes(
+                            (values?.participants || []).includes(
+                              ParticipantsType.STATES
+                            ) ||
+                            (values?.participants || []).includes(
+                              ParticipantsType.OTHER
+                            )) && (
+                            <p className="margin-top-4 text-bold">
+                              {participantsAndProvidersMiscT(
+                                'participantQuestions'
+                              )}
+                            </p>
+                          )}
+
+                          {(values?.participants || []).includes(
+                            ParticipantsType.MEDICARE_PROVIDERS
+                          ) && (
+                            <FieldGroup
+                              scrollElement="medicareProviderType"
+                              error={!!flatErrors.medicareProviderType}
+                            >
+                              <Label
+                                htmlFor="participants-and-providers-medicare-type"
+                                className="text-normal"
+                              >
+                                {participantsAndProvidersT(
+                                  'medicareProviderType.question'
+                                )}
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors.medicareProviderType}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                error={flatErrors.medicareProviderType}
+                                id="participants-and-providers-medicare-type"
+                                data-testid="participants-and-providers-medicare-type"
+                                name="medicareProviderType"
+                              />
+                            </FieldGroup>
+                          )}
+
+                          {(values?.participants || []).includes(
+                            ParticipantsType.STATES
+                          ) && (
+                            <FieldGroup
+                              scrollElement="statesEngagement"
+                              error={!!flatErrors.statesEngagement}
+                            >
+                              <Label
+                                htmlFor="participants-and-providers-states-engagement"
+                                className="text-normal"
+                              >
+                                {participantsAndProvidersT(
+                                  'statesEngagement.question'
+                                )}
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors.statesEngagement}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                error={flatErrors.statesEngagement}
+                                id="participants-and-providers-states-engagement"
+                                data-testid="participants-and-providers-states-engagement"
+                                name="statesEngagement"
+                              />
+                            </FieldGroup>
+                          )}
+
+                          {(values?.participants || []).includes(
                             ParticipantsType.OTHER
-                          )) && (
-                          <p className="margin-top-4 text-bold">
-                            {participantsAndProvidersMiscT(
-                              'participantQuestions'
+                          ) && (
+                            <FieldGroup
+                              scrollElement="participantsOther"
+                              error={!!flatErrors.participantsOther}
+                            >
+                              <Label
+                                htmlFor="participants-and-providers-participants-other"
+                                className="text-normal"
+                              >
+                                {participantsAndProvidersT(
+                                  'participantsOther.question'
+                                )}
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors.participantsOther}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                error={flatErrors.participantsOther}
+                                id="participants-and-providers-participants-other"
+                                data-testid="participants-and-providers-participants-other"
+                                name="participantsOther"
+                              />
+                            </FieldGroup>
+                          )}
+
+                          <AddNote
+                            id="participants-and-providers-participants-note"
+                            field="participantsNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="participantsCurrentlyInModels"
+                          error={!!flatErrors.participantsCurrentlyInModels}
+                          className="margin-y-4 margin-bottom-8"
+                        >
+                          <Label htmlFor="participants-and-providers-current-participants">
+                            {participantsAndProvidersT(
+                              'participantsCurrentlyInModels.question'
+                            )}
+                          </Label>
+
+                          <p className="text-base margin-0 line-height-body-3">
+                            {participantsAndProvidersT(
+                              'participantsCurrentlyInModels.hint'
                             )}
                           </p>
-                        )}
 
-                        {(values?.participants || []).includes(
-                          ParticipantsType.MEDICARE_PROVIDERS
-                        ) && (
-                          <FieldGroup
-                            scrollElement="medicareProviderType"
-                            error={!!flatErrors.medicareProviderType}
-                          >
-                            <Label
-                              htmlFor="participants-and-providers-medicare-type"
-                              className="text-normal"
-                            >
-                              {participantsAndProvidersT(
-                                'medicareProviderType.question'
-                              )}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.medicareProviderType}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextAreaField}
-                              error={flatErrors.medicareProviderType}
-                              id="participants-and-providers-medicare-type"
-                              data-testid="participants-and-providers-medicare-type"
-                              name="medicareProviderType"
-                            />
-                          </FieldGroup>
-                        )}
+                          <FieldErrorMsg>
+                            {flatErrors.participantsCurrentlyInModels}
+                          </FieldErrorMsg>
 
-                        {(values?.participants || []).includes(
-                          ParticipantsType.STATES
-                        ) && (
-                          <FieldGroup
-                            scrollElement="statesEngagement"
-                            error={!!flatErrors.statesEngagement}
-                          >
-                            <Label
-                              htmlFor="participants-and-providers-states-engagement"
-                              className="text-normal"
-                            >
-                              {participantsAndProvidersT(
-                                'statesEngagement.question'
-                              )}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.statesEngagement}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextAreaField}
-                              error={flatErrors.statesEngagement}
-                              id="participants-and-providers-states-engagement"
-                              data-testid="participants-and-providers-states-engagement"
-                              name="statesEngagement"
-                            />
-                          </FieldGroup>
-                        )}
+                          <BooleanRadio
+                            field="participantsCurrentlyInModels"
+                            id="participants-and-providers-current-participants"
+                            value={values.participantsCurrentlyInModels}
+                            setFieldValue={setFieldValue}
+                            options={
+                              participantsCurrentlyInModelsConfig.options
+                            }
+                          />
 
-                        {(values?.participants || []).includes(
-                          ParticipantsType.OTHER
-                        ) && (
-                          <FieldGroup
-                            scrollElement="participantsOther"
-                            error={!!flatErrors.participantsOther}
-                          >
-                            <Label
-                              htmlFor="participants-and-providers-participants-other"
-                              className="text-normal"
-                            >
-                              {participantsAndProvidersT(
-                                'participantsOther.question'
-                              )}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.participantsOther}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextAreaField}
-                              error={flatErrors.participantsOther}
-                              id="participants-and-providers-participants-other"
-                              data-testid="participants-and-providers-participants-other"
-                              name="participantsOther"
-                            />
-                          </FieldGroup>
-                        )}
+                          <AddNote
+                            id="participants-and-providers-current-participants-note"
+                            field="participantsCurrentlyInModelsNote"
+                          />
+                        </FieldGroup>
 
-                        <AddNote
-                          id="participants-and-providers-participants-note"
-                          field="participantsNote"
-                        />
-                      </FieldGroup>
+                        <FieldGroup
+                          scrollElement="modelApplicationLevel"
+                          error={!!flatErrors.modelApplicationLevel}
+                        >
+                          <Label htmlFor="participants-and-providers-application-level">
+                            {participantsAndProvidersT(
+                              'modelApplicationLevel.question'
+                            )}
+                          </Label>
 
-                      <FieldGroup
-                        scrollElement="participantsCurrentlyInModels"
-                        error={!!flatErrors.participantsCurrentlyInModels}
-                        className="margin-y-4 margin-bottom-8"
-                      >
-                        <Label htmlFor="participants-and-providers-current-participants">
-                          {participantsAndProvidersT(
-                            'participantsCurrentlyInModels.question'
-                          )}
-                        </Label>
+                          <p className="text-base margin-0 line-height-body-3">
+                            {participantsAndProvidersT(
+                              'modelApplicationLevel.hint'
+                            )}
+                          </p>
 
-                        <p className="text-base margin-0 line-height-body-3">
-                          {participantsAndProvidersT(
-                            'participantsCurrentlyInModels.hint'
-                          )}
-                        </p>
+                          <FieldErrorMsg>
+                            {flatErrors.modelApplicationLevel}
+                          </FieldErrorMsg>
 
-                        <FieldErrorMsg>
-                          {flatErrors.participantsCurrentlyInModels}
-                        </FieldErrorMsg>
+                          <Field
+                            as={TextAreaField}
+                            error={flatErrors.modelApplicationLevel}
+                            id="participants-and-providers-application-level"
+                            name="modelApplicationLevel"
+                          />
+                        </FieldGroup>
 
-                        <BooleanRadio
-                          field="participantsCurrentlyInModels"
-                          id="participants-and-providers-current-participants"
-                          value={values.participantsCurrentlyInModels}
-                          setFieldValue={setFieldValue}
-                          options={participantsCurrentlyInModelsConfig.options}
-                        />
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {miscellaneousT('next')}
+                          </Button>
+                        </div>
 
-                        <AddNote
-                          id="participants-and-providers-current-participants-note"
-                          field="participantsCurrentlyInModelsNote"
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="modelApplicationLevel"
-                        error={!!flatErrors.modelApplicationLevel}
-                      >
-                        <Label htmlFor="participants-and-providers-application-level">
-                          {participantsAndProvidersT(
-                            'modelApplicationLevel.question'
-                          )}
-                        </Label>
-
-                        <p className="text-base margin-0 line-height-body-3">
-                          {participantsAndProvidersT(
-                            'modelApplicationLevel.hint'
-                          )}
-                        </p>
-
-                        <FieldErrorMsg>
-                          {flatErrors.modelApplicationLevel}
-                        </FieldErrorMsg>
-
-                        <Field
-                          as={TextAreaField}
-                          error={flatErrors.modelApplicationLevel}
-                          id="participants-and-providers-application-level"
-                          name="modelApplicationLevel"
-                        />
-                      </FieldGroup>
-
-                      <div className="margin-top-6 margin-bottom-3">
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {miscellaneousT('next')}
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('back')}
+                        >
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
-                      </div>
-
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('back')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {miscellaneousT('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
 

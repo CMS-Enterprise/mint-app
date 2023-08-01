@@ -18,6 +18,9 @@ declare global {
 
   // These types are defined in GQL generated types.  
   // Defining globally here for FE to recognize generated types.
+  //
+  // Until we add better scalar mapping with graphql-codegen, anything added here should
+  // also be added to codegen.ts
    type UUID = string;
    type Time = string;
    type Upload = File;

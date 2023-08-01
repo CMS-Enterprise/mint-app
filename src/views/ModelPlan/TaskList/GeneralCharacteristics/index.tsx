@@ -8,6 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   ComboBox,
+  Fieldset,
   Grid,
   GridContainer,
   IconArrowBack,
@@ -88,19 +89,24 @@ export const CharacteristicsContent = () => {
   >(null);
   const history = useHistory();
 
-  const { data: modelData, error: modelError } = useQuery<
-    GetDraftModelPlansType,
-    GetModelPlansVariables
-  >(GetDraftModelPlans, {
-    variables: {
-      filter: ModelPlanFilter.INCLUDE_ALL,
-      isMAC: false
+  const {
+    data: modelData,
+    error: modelError,
+    loading: modelLoading
+  } = useQuery<GetDraftModelPlansType, GetModelPlansVariables>(
+    GetDraftModelPlans,
+    {
+      variables: {
+        filter: ModelPlanFilter.INCLUDE_ALL,
+        isMAC: false
+      }
     }
-  });
+  );
 
   const {
     data: existingModelData,
-    error: existingModelError
+    error: existingModelError,
+    loading: existingModelLoading
   } = useQuery<ExistingModelPlanType>(GetExistingModelPlans);
 
   // Combined MINT models with existing models from DB.  Sorts them alphabetically and returns options for MultiSelect
@@ -298,254 +304,266 @@ export const CharacteristicsContent = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="isNewModel"
-                  error={!!flatErrors.isNewModel}
-                  className="margin-y-4 margin-bottom-8"
+                <Fieldset
+                  disabled={
+                    !!error || loading || modelLoading || existingModelLoading
+                  }
                 >
-                  <Label htmlFor="plan-characteristics-is-new-model">
-                    {generalCharacteristicsT('isNewModel.question')}
-                  </Label>
+                  <FieldGroup
+                    scrollElement="isNewModel"
+                    error={!!flatErrors.isNewModel}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-is-new-model">
+                      {generalCharacteristicsT('isNewModel.question')}
+                    </Label>
 
-                  <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
 
-                  <BooleanRadio
-                    field="isNewModel"
-                    id="plan-characteristics-is-new-model"
-                    value={values.isNewModel}
-                    setFieldValue={setFieldValue}
-                    options={isNewModelConfig.options}
-                    childName="existingModel"
-                  />
+                    <BooleanRadio
+                      field="isNewModel"
+                      id="plan-characteristics-is-new-model"
+                      value={values.isNewModel}
+                      setFieldValue={setFieldValue}
+                      options={isNewModelConfig.options}
+                      childName="existingModel"
+                    />
 
-                  {values.isNewModel === false && (
-                    <FieldGroup
-                      scrollElement="existingModel"
-                      error={!!flatErrors.existingModel}
-                    >
-                      <Label
-                        htmlFor="plan-characteristics-existing-model"
-                        className="margin-bottom-1 text-normal"
-                      >
-                        {generalCharacteristicsT('existingModel.question')}
-                      </Label>
-
-                      <p className="text-base margin-0">
-                        {generalCharacteristicsT('existingModel.hint')}
-                      </p>
-
-                      <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
-
-                      <ComboBox
-                        disabled={!!modelError || !!existingModelError}
-                        data-test-id="plan-characteristics-existing-model"
-                        id="plan-characteristics-existing-model"
-                        name="existingModel"
-                        className={classNames({
-                          disabled: !!modelError || !!existingModelError
-                        })}
-                        inputProps={{
-                          id: 'plan-characteristics-existing-model',
-                          name: 'existingModel',
-                          'aria-describedby':
-                            'plan-characteristics-existing-model'
-                        }}
-                        options={modelPlanOptions}
-                        defaultValue={
-                          modelPlanOptions.find(
-                            modelPlan => modelPlan.label === existingModel
-                          )?.value || ''
-                        }
-                        onChange={modelPlanID => {
-                          const model = modelPlanOptions.find(
-                            modelPlan => modelPlan.value === modelPlanID
-                          );
-                          if (model) {
-                            setFieldValue('existingModel', model.label);
-                          } else {
-                            setFieldValue('existingModel', '');
-                          }
-                        }}
-                      />
-                    </FieldGroup>
-                  )}
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="resemblesExistingModel"
-                  error={!!flatErrors.resemblesExistingModel}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="plan-characteristics-resembles-existing-model">
-                    {generalCharacteristicsT('resemblesExistingModel.question')}
-                  </Label>
-
-                  <FieldErrorMsg>
-                    {flatErrors.resemblesExistingModel}
-                  </FieldErrorMsg>
-
-                  <BooleanRadio
-                    field="resemblesExistingModel"
-                    id="plan-characteristics-resembles-existing-model"
-                    value={values.resemblesExistingModel}
-                    setFieldValue={setFieldValue}
-                    options={resemblesExistingModelConfig.options}
-                  />
-
-                  {values.resemblesExistingModel && (
-                    <>
+                    {values.isNewModel === false && (
                       <FieldGroup
-                        scrollElement="resemblesExistingModelWhich"
-                        error={!!flatErrors.resemblesExistingModelWhich}
-                        className="margin-top-4"
+                        scrollElement="existingModel"
+                        error={!!flatErrors.existingModel}
                       >
                         <Label
-                          htmlFor="plan-characteristics-resembles-which-model"
-                          className="text-normal"
-                          id="label-plan-characteristics-resembles-which-model"
+                          htmlFor="plan-characteristics-existing-model"
+                          className="margin-bottom-1 text-normal"
                         >
-                          {generalCharacteristicsT(
-                            'existingModelLinks.question'
-                          )}
+                          {generalCharacteristicsT('existingModel.question')}
                         </Label>
 
-                        <p className="text-base margin-y-1">
-                          {generalCharacteristicsT('existingModelLinks.hint')}
+                        <p className="text-base margin-0">
+                          {generalCharacteristicsT('existingModel.hint')}
                         </p>
 
                         <FieldErrorMsg>
-                          {flatErrors.resemblesExistingModelWhich}
+                          {flatErrors.existingModel}
                         </FieldErrorMsg>
 
-                        <Field
-                          as={MultiSelect}
-                          id="plan-characteristics-resembles-which-model"
-                          ariaLabel="label-plan-characteristics-resembles-which-model"
-                          name="existingModelLinks"
-                          options={modelPlanOptions}
-                          selectedLabel={generalCharacteristicsT(
-                            'existingModelLinks.multiSelectLabel'
-                          )}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('existingModelLinks', value);
+                        <ComboBox
+                          disabled={!!modelError || !!existingModelError}
+                          data-test-id="plan-characteristics-existing-model"
+                          id="plan-characteristics-existing-model"
+                          name="existingModel"
+                          className={classNames({
+                            disabled: !!modelError || !!existingModelError
+                          })}
+                          inputProps={{
+                            id: 'plan-characteristics-existing-model',
+                            name: 'existingModel',
+                            'aria-describedby':
+                              'plan-characteristics-existing-model'
                           }}
-                          initialValues={initialValues.existingModelLinks}
+                          options={modelPlanOptions}
+                          defaultValue={
+                            modelPlanOptions.find(
+                              modelPlan => modelPlan.label === existingModel
+                            )?.value || ''
+                          }
+                          onChange={modelPlanID => {
+                            const model = modelPlanOptions.find(
+                              modelPlan => modelPlan.value === modelPlanID
+                            );
+                            if (model) {
+                              setFieldValue('existingModel', model.label);
+                            } else {
+                              setFieldValue('existingModel', '');
+                            }
+                          }}
                         />
                       </FieldGroup>
-                      <FieldGroup
-                        scrollElement="resemblesExistingModelHow"
-                        error={!!flatErrors.resemblesExistingModelHow}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="plan-characteristics-resembles-how-model"
-                          className="text-normal"
-                        >
-                          {generalCharacteristicsT(
-                            'resemblesExistingModelHow.question'
-                          )}
-                        </Label>
+                    )}
+                  </FieldGroup>
 
-                        <FieldErrorMsg>
-                          {flatErrors.resemblesExistingModelHow}
-                        </FieldErrorMsg>
-
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          error={flatErrors.resemblesExistingModelHow}
-                          id="plan-characteristics-resembles-how-model"
-                          name="resemblesExistingModelHow"
-                        />
-                      </FieldGroup>
-
-                      <AddNote
-                        id="plan-characteristics-resemble-existing-note"
-                        field="resemblesExistingModelNote"
-                      />
-                    </>
-                  )}
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="hasComponentsOrTracks"
-                  error={!!flatErrors.hasComponentsOrTracks}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="plan-characteristics-has-component-or-tracks">
-                    {generalCharacteristicsT('hasComponentsOrTracks.question')}
-                  </Label>
-
-                  <FieldErrorMsg>
-                    {flatErrors.hasComponentsOrTracks}
-                  </FieldErrorMsg>
-
-                  <BooleanRadio
-                    field="hasComponentsOrTracks"
-                    id="plan-characteristics-has-component-or-tracks"
-                    value={values.hasComponentsOrTracks}
-                    setFieldValue={setFieldValue}
-                    options={hasComponentsOrTracksConfig.options}
-                    childName="hasComponentsOrTracksDiffer"
+                  <FieldGroup
+                    scrollElement="resemblesExistingModel"
+                    error={!!flatErrors.resemblesExistingModel}
+                    className="margin-y-4 margin-bottom-8"
                   >
-                    {values.hasComponentsOrTracks === true ? (
-                      <div className="display-flex margin-left-4 margin-bottom-1">
+                    <Label htmlFor="plan-characteristics-resembles-existing-model">
+                      {generalCharacteristicsT(
+                        'resemblesExistingModel.question'
+                      )}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.resemblesExistingModel}
+                    </FieldErrorMsg>
+
+                    <BooleanRadio
+                      field="resemblesExistingModel"
+                      id="plan-characteristics-resembles-existing-model"
+                      value={values.resemblesExistingModel}
+                      setFieldValue={setFieldValue}
+                      options={resemblesExistingModelConfig.options}
+                    />
+
+                    {values.resemblesExistingModel && (
+                      <>
                         <FieldGroup
-                          className="flex-1"
-                          scrollElement="hasComponentsOrTracksDiffer"
-                          error={!!flatErrors.hasComponentsOrTracksDiffer}
+                          scrollElement="resemblesExistingModelWhich"
+                          error={!!flatErrors.resemblesExistingModelWhich}
+                          className="margin-top-4"
                         >
                           <Label
-                            htmlFor="plan-characteristics-tracks-differ-how"
-                            className="margin-bottom-1 text-normal"
+                            htmlFor="plan-characteristics-resembles-which-model"
+                            className="text-normal"
+                            id="label-plan-characteristics-resembles-which-model"
                           >
                             {generalCharacteristicsT(
-                              'hasComponentsOrTracksDiffer.question'
+                              'existingModelLinks.question'
+                            )}
+                          </Label>
+
+                          <p className="text-base margin-y-1">
+                            {generalCharacteristicsT('existingModelLinks.hint')}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.resemblesExistingModelWhich}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={MultiSelect}
+                            id="plan-characteristics-resembles-which-model"
+                            ariaLabel="label-plan-characteristics-resembles-which-model"
+                            name="existingModelLinks"
+                            options={modelPlanOptions}
+                            selectedLabel={generalCharacteristicsT(
+                              'existingModelLinks.multiSelectLabel'
+                            )}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue('existingModelLinks', value);
+                            }}
+                            initialValues={initialValues.existingModelLinks}
+                          />
+                        </FieldGroup>
+                        <FieldGroup
+                          scrollElement="resemblesExistingModelHow"
+                          error={!!flatErrors.resemblesExistingModelHow}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="plan-characteristics-resembles-how-model"
+                            className="text-normal"
+                          >
+                            {generalCharacteristicsT(
+                              'resemblesExistingModelHow.question'
                             )}
                           </Label>
 
                           <FieldErrorMsg>
-                            {flatErrors.hasComponentsOrTracksDiffer}
+                            {flatErrors.resemblesExistingModelHow}
                           </FieldErrorMsg>
 
                           <Field
                             as={TextAreaField}
-                            error={!!flatErrors.hasComponentsOrTracksDiffer}
-                            className="margin-top-0 height-15"
-                            data-testid="plan-characteristics-tracks-differ-how"
-                            id="plan-characteristics-tracks-differ-how"
-                            name="hasComponentsOrTracksDiffer"
+                            className="height-15"
+                            error={flatErrors.resemblesExistingModelHow}
+                            id="plan-characteristics-resembles-how-model"
+                            name="resemblesExistingModelHow"
                           />
                         </FieldGroup>
-                      </div>
-                    ) : (
-                      <></>
+
+                        <AddNote
+                          id="plan-characteristics-resemble-existing-note"
+                          field="resemblesExistingModelNote"
+                        />
+                      </>
                     )}
-                  </BooleanRadio>
+                  </FieldGroup>
 
-                  <AddNote
-                    id="plan-characteristics-has-component-or-tracks-note"
-                    field="hasComponentsOrTracksNote"
-                  />
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="hasComponentsOrTracks"
+                    error={!!flatErrors.hasComponentsOrTracks}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-has-component-or-tracks">
+                      {generalCharacteristicsT(
+                        'hasComponentsOrTracks.question'
+                      )}
+                    </Label>
 
-                <div className="margin-top-6 margin-bottom-3">
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {miscellaneousT('next')}
+                    <FieldErrorMsg>
+                      {flatErrors.hasComponentsOrTracks}
+                    </FieldErrorMsg>
+
+                    <BooleanRadio
+                      field="hasComponentsOrTracks"
+                      id="plan-characteristics-has-component-or-tracks"
+                      value={values.hasComponentsOrTracks}
+                      setFieldValue={setFieldValue}
+                      options={hasComponentsOrTracksConfig.options}
+                      childName="hasComponentsOrTracksDiffer"
+                    >
+                      {values.hasComponentsOrTracks === true ? (
+                        <div className="display-flex margin-left-4 margin-bottom-1">
+                          <FieldGroup
+                            className="flex-1"
+                            scrollElement="hasComponentsOrTracksDiffer"
+                            error={!!flatErrors.hasComponentsOrTracksDiffer}
+                          >
+                            <Label
+                              htmlFor="plan-characteristics-tracks-differ-how"
+                              className="margin-bottom-1 text-normal"
+                            >
+                              {generalCharacteristicsT(
+                                'hasComponentsOrTracksDiffer.question'
+                              )}
+                            </Label>
+
+                            <FieldErrorMsg>
+                              {flatErrors.hasComponentsOrTracksDiffer}
+                            </FieldErrorMsg>
+
+                            <Field
+                              as={TextAreaField}
+                              error={!!flatErrors.hasComponentsOrTracksDiffer}
+                              className="margin-top-0 height-15"
+                              data-testid="plan-characteristics-tracks-differ-how"
+                              id="plan-characteristics-tracks-differ-how"
+                              name="hasComponentsOrTracksDiffer"
+                            />
+                          </FieldGroup>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </BooleanRadio>
+
+                    <AddNote
+                      id="plan-characteristics-has-component-or-tracks-note"
+                      field="hasComponentsOrTracksNote"
+                    />
+                  </FieldGroup>
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('back')}
+                  >
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('back')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-
-                  {miscellaneousT('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
-              {id && (
+              {id && !(loading || modelLoading || existingModelLoading) && (
                 <AutoSave
                   values={values}
                   onSave={() => {

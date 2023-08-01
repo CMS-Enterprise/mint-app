@@ -233,283 +233,291 @@ export const ParticipantOptions = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="expectedNumberOfParticipants"
-                  error={!!flatErrors.expectedNumberOfParticipants}
-                >
-                  <Label htmlFor="participants-and-providers-expected-participants">
-                    {participantsAndProvidersT(
-                      'expectedNumberOfParticipants.question'
-                    )}
-                  </Label>
-
-                  <p className="text-base margin-0 line-height-body-3">
-                    {participantsAndProvidersT(
-                      'expectedNumberOfParticipants.hint'
-                    )}
-                  </p>
-
-                  <FieldErrorMsg>
-                    {flatErrors.expectedNumberOfParticipants}
-                  </FieldErrorMsg>
-
-                  <Field
-                    as={RangeInput}
-                    className="maxw-none width-full"
-                    error={flatErrors.expectedNumberOfParticipants}
-                    id="participants-and-providers-expected-participants"
-                    data-testid="participants-and-providers-expected-participants"
-                    name="expectedNumberOfParticipants"
-                    min={0}
-                    max={10000}
-                    step={1}
-                    onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFieldValue(
-                        'expectedNumberOfParticipants',
-                        Number(e.target.value)
-                      );
-                    }}
-                  />
-
-                  <div className="display-flex mint-header__basic">
-                    <span>{participantsAndProvidersMiscT('zero')}</span>
-                    <span>{participantsAndProvidersMiscT('tenThousand')}</span>
-                  </div>
-
-                  <Label
-                    htmlFor="participants-and-providers-participants-other-input"
-                    className="text-normal"
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="expectedNumberOfParticipants"
+                    error={!!flatErrors.expectedNumberOfParticipants}
                   >
-                    {participantsAndProvidersMiscT('numberOfParticipants')}
-                  </Label>
+                    <Label htmlFor="participants-and-providers-expected-participants">
+                      {participantsAndProvidersT(
+                        'expectedNumberOfParticipants.question'
+                      )}
+                    </Label>
 
-                  <FieldErrorMsg>
-                    {flatErrors.expectedNumberOfParticipants}
-                  </FieldErrorMsg>
+                    <p className="text-base margin-0 line-height-body-3">
+                      {participantsAndProvidersT(
+                        'expectedNumberOfParticipants.hint'
+                      )}
+                    </p>
 
-                  <Field
-                    as={TextInput}
-                    type="number"
-                    className="width-card"
-                    error={flatErrors.expectedNumberOfParticipants}
-                    id="participants-and-providers-participants-other-input"
-                    name="expectedNumberOfParticipants"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      if (Number.isNaN(e.target.value)) return;
-                      setFieldValue(
-                        'expectedNumberOfParticipants',
-                        Number(e.target.value)
-                      );
-                    }}
-                  />
+                    <FieldErrorMsg>
+                      {flatErrors.expectedNumberOfParticipants}
+                    </FieldErrorMsg>
 
-                  <Label
-                    htmlFor="participants-and-providers-current-participants"
-                    className="text-normal"
-                  >
-                    {participantsAndProvidersT('estimateConfidence.question')}
-                  </Label>
-
-                  <FieldErrorMsg>
-                    {flatErrors.participantsCurrentlyInModels}
-                  </FieldErrorMsg>
-
-                  <Fieldset>
-                    {getKeys(estimateConfidenceConfig.options).map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`participants-and-providers-confidence-${key}`}
-                        name="estimateConfidence"
-                        label={estimateConfidenceConfig.options[key]}
-                        value={key}
-                        checked={values.estimateConfidence === key}
-                        onChange={() => {
-                          setFieldValue('estimateConfidence', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-
-                  <AddNote
-                    id="participants-and-providers-confidence-note"
-                    field="confidenceNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="recruitmentMethod"
-                  error={!!flatErrors.recruitmentMethod}
-                >
-                  <Label htmlFor="participants-and-providers-recruitment-method">
-                    {participantsAndProvidersT('recruitmentMethod.question')}
-                  </Label>
-
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="participants-and-providers-recruitment-method-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
+                    <Field
+                      as={RangeInput}
+                      className="maxw-none width-full"
+                      error={flatErrors.expectedNumberOfParticipants}
+                      id="participants-and-providers-expected-participants"
+                      data-testid="participants-and-providers-expected-participants"
+                      name="expectedNumberOfParticipants"
+                      min={0}
+                      max={10000}
+                      step={1}
+                      onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue(
+                          'expectedNumberOfParticipants',
+                          Number(e.target.value)
+                        );
+                      }}
                     />
-                  )}
 
-                  <FieldErrorMsg>{flatErrors.recruitmentMethod}</FieldErrorMsg>
+                    <div className="display-flex mint-header__basic">
+                      <span>{participantsAndProvidersMiscT('zero')}</span>
+                      <span>
+                        {participantsAndProvidersMiscT('tenThousand')}
+                      </span>
+                    </div>
 
-                  <Fieldset>
-                    {getKeys(recruitmentMethodConfig.options).map(key => (
-                      <Fragment key={key}>
+                    <Label
+                      htmlFor="participants-and-providers-participants-other-input"
+                      className="text-normal"
+                    >
+                      {participantsAndProvidersMiscT('numberOfParticipants')}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.expectedNumberOfParticipants}
+                    </FieldErrorMsg>
+
+                    <Field
+                      as={TextInput}
+                      type="number"
+                      className="width-card"
+                      error={flatErrors.expectedNumberOfParticipants}
+                      id="participants-and-providers-participants-other-input"
+                      name="expectedNumberOfParticipants"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        if (Number.isNaN(e.target.value)) return;
+                        setFieldValue(
+                          'expectedNumberOfParticipants',
+                          Number(e.target.value)
+                        );
+                      }}
+                    />
+
+                    <Label
+                      htmlFor="participants-and-providers-current-participants"
+                      className="text-normal"
+                    >
+                      {participantsAndProvidersT('estimateConfidence.question')}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.participantsCurrentlyInModels}
+                    </FieldErrorMsg>
+
+                    <Fieldset>
+                      {getKeys(estimateConfidenceConfig.options).map(key => (
                         <Field
                           as={Radio}
-                          id={`participants-and-providers-recruitment-method-${key}`}
-                          name="recruitmentMethod"
-                          label={recruitmentMethodConfig.options[key]}
+                          key={key}
+                          id={`participants-and-providers-confidence-${key}`}
+                          name="estimateConfidence"
+                          label={estimateConfidenceConfig.options[key]}
                           value={key}
-                          checked={values.recruitmentMethod === key}
+                          checked={values.estimateConfidence === key}
                           onChange={() => {
-                            setFieldValue('recruitmentMethod', key);
+                            setFieldValue('estimateConfidence', key);
                           }}
                         />
+                      ))}
+                    </Fieldset>
 
-                        {key === RecruitmentType.NOFO && (
-                          <p className="text-base margin-bottom-neg-05 margin-left-4 margin-top-1 line-height-body-3">
-                            {recruitmentMethodConfig.optionsLabels?.NOFO}
-                          </p>
-                        )}
-
-                        {key === RecruitmentType.OTHER &&
-                          values.recruitmentMethod === key && (
-                            <div className="margin-left-4 margin-top-1">
-                              <Label
-                                htmlFor="participants-and-providers-recruitment-other"
-                                className="text-normal"
-                              >
-                                {participantsAndProvidersT(
-                                  'recruitmentOther.question'
-                                )}
-                              </Label>
-                              <FieldErrorMsg>
-                                {flatErrors.recruitmentOther}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextAreaField}
-                                className="maxw-none mint-textarea"
-                                id="participants-and-providers-recruitment-other"
-                                maxLength={5000}
-                                name="recruitmentOther"
-                              />
-                            </div>
-                          )}
-                      </Fragment>
-                    ))}
-                  </Fieldset>
-
-                  <AddNote
-                    id="participants-and-providers-recruitment-method-note"
-                    field="recruitmentNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="selectionMethod"
-                  error={!!flatErrors.selectionMethod}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="participants-and-providers-selection-method"
-                    id="label-participants-and-providers-selection-method"
-                  >
-                    {participantsAndProvidersT('selectionMethod.question')}
-                  </Label>
-
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="participants-and-providers-selection-method-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
+                    <AddNote
+                      id="participants-and-providers-confidence-note"
+                      field="confidenceNote"
                     />
-                  )}
+                  </FieldGroup>
 
-                  <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
+                  <FieldGroup
+                    scrollElement="recruitmentMethod"
+                    error={!!flatErrors.recruitmentMethod}
+                  >
+                    <Label htmlFor="participants-and-providers-recruitment-method">
+                      {participantsAndProvidersT('recruitmentMethod.question')}
+                    </Label>
 
-                  <Field
-                    as={MultiSelect}
-                    id="participants-and-providers-selection-method"
-                    name="selectionMethod"
-                    arialabel="label-participants-and-providers-selection-method"
-                    options={composeMultiSelectOptions(
-                      selectionMethodConfig.options
-                    )}
-                    selectedLabel={participantsAndProvidersT(
-                      'selectedParticipants'
-                    )}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('selectionMethod', value);
-                    }}
-                    initialValues={initialValues.selectionMethod}
-                  />
-
-                  {(values?.selectionMethod || []).includes(
-                    ParticipantSelectionType.OTHER
-                  ) && (
-                    <FieldGroup
-                      scrollElement="selectionOther"
-                      error={!!flatErrors.selectionOther}
-                    >
-                      <Label
-                        htmlFor="participants-and-providers-selection-other"
-                        className="text-normal"
-                      >
-                        {participantsAndProvidersT('selectionOther.question')}
-                      </Label>
-
-                      <FieldErrorMsg>{flatErrors.selectionOther}</FieldErrorMsg>
-
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        error={flatErrors.selectionOther}
-                        id="participants-and-providers-selection-other"
-                        name="selectionOther"
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="participants-and-providers-recruitment-method-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
                       />
-                    </FieldGroup>
-                  )}
+                    )}
 
-                  <AddNote
-                    id="participants-and-providers-selection-note"
-                    field="selectionNote"
-                  />
-                </FieldGroup>
+                    <FieldErrorMsg>
+                      {flatErrors.recruitmentMethod}
+                    </FieldErrorMsg>
 
-                <div className="margin-top-6 margin-bottom-3">
+                    <Fieldset>
+                      {getKeys(recruitmentMethodConfig.options).map(key => (
+                        <Fragment key={key}>
+                          <Field
+                            as={Radio}
+                            id={`participants-and-providers-recruitment-method-${key}`}
+                            name="recruitmentMethod"
+                            label={recruitmentMethodConfig.options[key]}
+                            value={key}
+                            checked={values.recruitmentMethod === key}
+                            onChange={() => {
+                              setFieldValue('recruitmentMethod', key);
+                            }}
+                          />
+
+                          {key === RecruitmentType.NOFO && (
+                            <p className="text-base margin-bottom-neg-05 margin-left-4 margin-top-1 line-height-body-3">
+                              {recruitmentMethodConfig.optionsLabels?.NOFO}
+                            </p>
+                          )}
+
+                          {key === RecruitmentType.OTHER &&
+                            values.recruitmentMethod === key && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Label
+                                  htmlFor="participants-and-providers-recruitment-other"
+                                  className="text-normal"
+                                >
+                                  {participantsAndProvidersT(
+                                    'recruitmentOther.question'
+                                  )}
+                                </Label>
+                                <FieldErrorMsg>
+                                  {flatErrors.recruitmentOther}
+                                </FieldErrorMsg>
+                                <Field
+                                  as={TextAreaField}
+                                  className="maxw-none mint-textarea"
+                                  id="participants-and-providers-recruitment-other"
+                                  maxLength={5000}
+                                  name="recruitmentOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      ))}
+                    </Fieldset>
+
+                    <AddNote
+                      id="participants-and-providers-recruitment-method-note"
+                      field="recruitmentNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="selectionMethod"
+                    error={!!flatErrors.selectionMethod}
+                    className="margin-top-4"
+                  >
+                    <Label
+                      htmlFor="participants-and-providers-selection-method"
+                      id="label-participants-and-providers-selection-method"
+                    >
+                      {participantsAndProvidersT('selectionMethod.question')}
+                    </Label>
+
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="participants-and-providers-selection-method-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
+                    )}
+
+                    <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
+
+                    <Field
+                      as={MultiSelect}
+                      id="participants-and-providers-selection-method"
+                      name="selectionMethod"
+                      arialabel="label-participants-and-providers-selection-method"
+                      options={composeMultiSelectOptions(
+                        selectionMethodConfig.options
+                      )}
+                      selectedLabel={participantsAndProvidersT(
+                        'selectedParticipants'
+                      )}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('selectionMethod', value);
+                      }}
+                      initialValues={initialValues.selectionMethod}
+                    />
+
+                    {(values?.selectionMethod || []).includes(
+                      ParticipantSelectionType.OTHER
+                    ) && (
+                      <FieldGroup
+                        scrollElement="selectionOther"
+                        error={!!flatErrors.selectionOther}
+                      >
+                        <Label
+                          htmlFor="participants-and-providers-selection-other"
+                          className="text-normal"
+                        >
+                          {participantsAndProvidersT('selectionOther.question')}
+                        </Label>
+
+                        <FieldErrorMsg>
+                          {flatErrors.selectionOther}
+                        </FieldErrorMsg>
+
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.selectionOther}
+                          id="participants-and-providers-selection-other"
+                          name="selectionOther"
+                        />
+                      </FieldGroup>
+                    )}
+
+                    <AddNote
+                      id="participants-and-providers-selection-note"
+                      field="selectionNote"
+                    />
+                  </FieldGroup>
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {miscellaneousT('back')}
+                    </Button>
+
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
+
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {miscellaneousT('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {miscellaneousT('next')}
-                  </Button>
-                </div>
-
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {miscellaneousT('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (

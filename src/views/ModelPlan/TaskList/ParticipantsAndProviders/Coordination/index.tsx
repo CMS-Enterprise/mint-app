@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   IconArrowBack,
   Label
 } from '@trussworks/react-uswds';
@@ -222,204 +223,210 @@ export const Coordination = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="coordinateWork"
-                  error={!!flatErrors.coordinateWork}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="participants-and-providers-coordniate-work">
-                    {participantsAndProvidersT('coordinateWork.question')}
-                  </Label>
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="coordinateWork"
+                    error={!!flatErrors.coordinateWork}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="participants-and-providers-coordniate-work">
+                      {participantsAndProvidersT('coordinateWork.question')}
+                    </Label>
 
-                  <p className="text-base margin-0 line-height-body-3">
-                    {participantsAndProvidersT('coordinateWork.hint')}
-                  </p>
+                    <p className="text-base margin-0 line-height-body-3">
+                      {participantsAndProvidersT('coordinateWork.hint')}
+                    </p>
 
-                  <FieldErrorMsg>{flatErrors.coordinateWork}</FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.coordinateWork}</FieldErrorMsg>
 
-                  <BooleanRadio
-                    field="coordinateWork"
-                    id="participants-and-providers-coordniate-work"
-                    value={values.coordinateWork}
-                    setFieldValue={setFieldValue}
-                    options={coordinateWorkConfig.options}
-                  />
+                    <BooleanRadio
+                      field="coordinateWork"
+                      id="participants-and-providers-coordniate-work"
+                      value={values.coordinateWork}
+                      setFieldValue={setFieldValue}
+                      options={coordinateWorkConfig.options}
+                    />
 
-                  <AddNote
-                    id="participants-and-providers-coordniate-work-note"
-                    field="coordinateWorkNote"
-                  />
-                </FieldGroup>
+                    <AddNote
+                      id="participants-and-providers-coordniate-work-note"
+                      field="coordinateWorkNote"
+                    />
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="gainsharePayments"
-                  error={!!flatErrors.gainsharePayments}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="participants-and-providers-gainshare-payment">
-                    {participantsAndProvidersT('gainsharePayments.question')}
-                  </Label>
+                  <FieldGroup
+                    scrollElement="gainsharePayments"
+                    error={!!flatErrors.gainsharePayments}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="participants-and-providers-gainshare-payment">
+                      {participantsAndProvidersT('gainsharePayments.question')}
+                    </Label>
 
-                  <FieldErrorMsg>{flatErrors.gainsharePayments}</FieldErrorMsg>
+                    <FieldErrorMsg>
+                      {flatErrors.gainsharePayments}
+                    </FieldErrorMsg>
 
-                  <BooleanRadio
-                    field="gainsharePayments"
-                    id="participants-and-providers-gainshare-payment"
-                    value={values.gainsharePayments}
-                    setFieldValue={setFieldValue}
-                    options={gainsharePaymentsConfig.options}
-                  />
+                    <BooleanRadio
+                      field="gainsharePayments"
+                      id="participants-and-providers-gainshare-payment"
+                      value={values.gainsharePayments}
+                      setFieldValue={setFieldValue}
+                      options={gainsharePaymentsConfig.options}
+                    />
 
-                  {values.gainsharePayments && (
-                    <>
-                      <Label
-                        htmlFor="participants-and-providers-gainshare-track"
-                        className="text-normal"
-                      >
-                        {participantsAndProvidersT(
-                          'gainsharePaymentsTrack.question'
-                        )}
-                      </Label>
-
-                      <FieldErrorMsg>
-                        {flatErrors.gainsharePaymentsTrack}
-                      </FieldErrorMsg>
-
-                      <BooleanRadio
-                        field="gainsharePaymentsTrack"
-                        id="participants-and-providers-gainshare-track"
-                        value={values.gainsharePaymentsTrack}
-                        setFieldValue={setFieldValue}
-                        options={gainsharePaymentsTrackConfig.options}
-                      />
-                    </>
-                  )}
-                  <AddNote
-                    id="participants-and-providers-gainshare-payment-note"
-                    field="gainsharePaymentsNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="participantsIds"
-                  error={!!flatErrors.participantsIds}
-                >
-                  <FieldArray
-                    name="participantsIds"
-                    render={arrayHelpers => (
+                    {values.gainsharePayments && (
                       <>
-                        <legend className="usa-label">
+                        <Label
+                          htmlFor="participants-and-providers-gainshare-track"
+                          className="text-normal"
+                        >
                           {participantsAndProvidersT(
-                            'participantsIds.question'
+                            'gainsharePaymentsTrack.question'
                           )}
-                        </legend>
-
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="ops-eval-and-learning-data-needed-warning"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
-
-                        <p className="text-base margin-0 line-height-body-3">
-                          {participantsAndProvidersT('participantsIds.hint')}
-                        </p>
+                        </Label>
 
                         <FieldErrorMsg>
-                          {flatErrors.participantsIds}
+                          {flatErrors.gainsharePaymentsTrack}
                         </FieldErrorMsg>
 
-                        {getKeys(participantsIdsConfig.options).map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`participants-and-providers-participant-id-${type}`}
-                                name="participantsIds"
-                                label={participantsIdsConfig.options[type]}
-                                value={type}
-                                checked={values?.participantsIds.includes(type)}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.participantsIds.indexOf(
-                                      e.target.value as ParticipantsIDType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-
-                              {type === ParticipantsIDType.OTHER &&
-                                values.participantsIds.includes(type) && (
-                                  <div className="margin-left-4">
-                                    <Label
-                                      htmlFor="participants-and-providers-participant-id-other"
-                                      className="text-normal margin-top-1"
-                                    >
-                                      {participantsAndProvidersT(
-                                        'participantsIdsOther.question'
-                                      )}
-                                    </Label>
-
-                                    <FieldErrorMsg>
-                                      {flatErrors.participantsIdsOther}
-                                    </FieldErrorMsg>
-
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="participants-and-providers-participant-id-other"
-                                      data-testid="participants-and-providers-participant-id-other"
-                                      maxLength={5000}
-                                      name="participantsIdsOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                        <AddNote
-                          id="participants-and-providers-participant-id-note"
-                          field="participantsIDSNote"
+                        <BooleanRadio
+                          field="gainsharePaymentsTrack"
+                          id="participants-and-providers-gainshare-track"
+                          value={values.gainsharePaymentsTrack}
+                          setFieldValue={setFieldValue}
+                          options={gainsharePaymentsTrackConfig.options}
                         />
                       </>
                     )}
-                  />
-                </FieldGroup>
+                    <AddNote
+                      id="participants-and-providers-gainshare-payment-note"
+                      field="gainsharePaymentsNote"
+                    />
+                  </FieldGroup>
 
-                <div className="margin-top-6 margin-bottom-3">
+                  <FieldGroup
+                    scrollElement="participantsIds"
+                    error={!!flatErrors.participantsIds}
+                  >
+                    <FieldArray
+                      name="participantsIds"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label">
+                            {participantsAndProvidersT(
+                              'participantsIds.question'
+                            )}
+                          </legend>
+
+                          {itSolutionsStarted && (
+                            <ITSolutionsWarning
+                              id="ops-eval-and-learning-data-needed-warning"
+                              onClick={() =>
+                                handleFormSubmit(
+                                  `/models/${modelID}/task-list/it-solutions`
+                                )
+                              }
+                            />
+                          )}
+
+                          <p className="text-base margin-0 line-height-body-3">
+                            {participantsAndProvidersT('participantsIds.hint')}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.participantsIds}
+                          </FieldErrorMsg>
+
+                          {getKeys(participantsIdsConfig.options).map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`participants-and-providers-participant-id-${type}`}
+                                  name="participantsIds"
+                                  label={participantsIdsConfig.options[type]}
+                                  value={type}
+                                  checked={values?.participantsIds.includes(
+                                    type
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.participantsIds.indexOf(
+                                        e.target.value as ParticipantsIDType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+
+                                {type === ParticipantsIDType.OTHER &&
+                                  values.participantsIds.includes(type) && (
+                                    <div className="margin-left-4">
+                                      <Label
+                                        htmlFor="participants-and-providers-participant-id-other"
+                                        className="text-normal margin-top-1"
+                                      >
+                                        {participantsAndProvidersT(
+                                          'participantsIdsOther.question'
+                                        )}
+                                      </Label>
+
+                                      <FieldErrorMsg>
+                                        {flatErrors.participantsIdsOther}
+                                      </FieldErrorMsg>
+
+                                      <Field
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
+                                        id="participants-and-providers-participant-id-other"
+                                        data-testid="participants-and-providers-participant-id-other"
+                                        maxLength={5000}
+                                        name="participantsIdsOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                          <AddNote
+                            id="participants-and-providers-participant-id-note"
+                            field="participantsIDSNote"
+                          />
+                        </>
+                      )}
+                    />
+                  </FieldGroup>
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {miscellaneousT('back')}
+                    </Button>
+
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
+
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {miscellaneousT('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {miscellaneousT('next')}
-                  </Button>
-                </div>
-
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-
-                  {miscellaneousT('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (

@@ -191,110 +191,111 @@ const Overview = () => {
                   window.scrollTo(0, 0);
                 }}
               >
-                <FieldGroup
-                  scrollElement="modelType"
-                  error={!!flatErrors.modelType}
-                  className="margin-top-4"
-                >
-                  <Label htmlFor="modelType">
-                    {basicsT('modelType.question')}
-                  </Label>
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="modelType"
+                    error={!!flatErrors.modelType}
+                    className="margin-top-4"
+                  >
+                    <Label htmlFor="modelType">
+                      {basicsT('modelType.question')}
+                    </Label>
 
-                  <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
 
-                  <Fieldset>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="ModelType-Voluntary"
+                        name="modelType"
+                        label={modelTypeConfig.options.VOLUNTARY}
+                        value="VOLUNTARY"
+                        checked={values.modelType === 'VOLUNTARY'}
+                      />
+                      <Field
+                        as={Radio}
+                        id="ModelType-Mandatory"
+                        name="modelType"
+                        label={modelTypeConfig.options.MANDATORY}
+                        value="MANDATORY"
+                        checked={values.modelType === 'MANDATORY'}
+                      />
+                    </Fieldset>
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="problem"
+                    error={!!flatErrors.problem}
+                    className="margin-top-4"
+                  >
                     <Field
-                      as={Radio}
-                      id="ModelType-Voluntary"
-                      name="modelType"
-                      label={modelTypeConfig.options.VOLUNTARY}
-                      value="VOLUNTARY"
-                      checked={values.modelType === 'VOLUNTARY'}
+                      as={TextAreaField}
+                      error={flatErrors.problem}
+                      id="ModelType-Problem"
+                      name="problem"
+                      label={basicsT('problem.question')}
                     />
+                  </FieldGroup>
 
+                  <FieldGroup
+                    scrollElement="goal"
+                    error={!!flatErrors.goal}
+                    className="margin-top-4"
+                  >
                     <Field
-                      as={Radio}
-                      id="ModelType-Mandatory"
-                      name="modelType"
-                      label={modelTypeConfig.options.MANDATORY}
-                      value="MANDATORY"
-                      checked={values.modelType === 'MANDATORY'}
+                      as={TextAreaField}
+                      error={flatErrors.goal}
+                      id="ModelType-Goal"
+                      name="goal"
+                      hint={basicsT('goal.hint')}
+                      label={basicsT('goal.question')}
                     />
-                  </Fieldset>
-                </FieldGroup>
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="problem"
-                  error={!!flatErrors.problem}
-                  className="margin-top-4"
-                >
-                  <Field
-                    as={TextAreaField}
-                    error={flatErrors.problem}
-                    id="ModelType-Problem"
-                    name="problem"
-                    label={basicsT('problem.question')}
-                  />
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="testInterventions"
+                    error={!!flatErrors.testInterventions}
+                    className="margin-top-4"
+                  >
+                    <Field
+                      as={TextAreaField}
+                      error={flatErrors.testInterventions}
+                      id="ModelType-testInterventions"
+                      name="testInterventions"
+                      label={basicsT('testInterventions.question')}
+                    />
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="goal"
-                  error={!!flatErrors.goal}
-                  className="margin-top-4"
-                >
-                  <Field
-                    as={TextAreaField}
-                    error={flatErrors.goal}
-                    id="ModelType-Goal"
-                    name="goal"
-                    hint={basicsT('goal.hint')}
-                    label={basicsT('goal.question')}
-                  />
-                </FieldGroup>
+                  <AddNote id="ModelType-note" field="note" />
 
-                <FieldGroup
-                  scrollElement="testInterventions"
-                  error={!!flatErrors.testInterventions}
-                  className="margin-top-4"
-                >
-                  <Field
-                    as={TextAreaField}
-                    error={flatErrors.testInterventions}
-                    id="ModelType-testInterventions"
-                    name="testInterventions"
-                    label={basicsT('testInterventions.question')}
-                  />
-                </FieldGroup>
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled"
+                      onClick={() => handleFormSubmit('task-list')}
+                    >
+                      {miscellaneousT('back')}
+                    </Button>
 
-                <AddNote id="ModelType-note" field="note" />
-
-                <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="submit"
+                      disabled={!(dirty || isValid)}
+                      className=""
+                      onClick={() => setErrors({})}
+                    >
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => handleFormSubmit('back')}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {miscellaneousT('back')}
-                  </Button>
+                    <IconArrowBack className="margin-right-1" aria-hidden />
 
-                  <Button
-                    type="submit"
-                    disabled={!(dirty || isValid)}
-                    className=""
-                    onClick={() => setErrors({})}
-                  >
-                    {miscellaneousT('next')}
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-
-                  {miscellaneousT('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (
