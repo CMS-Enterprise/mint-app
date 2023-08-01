@@ -3,10 +3,11 @@ import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
+import generalCharacteristicsOld from './draftModelPlan/generalCharacteristicsOld';
 import itSolutions from './draftModelPlan/itSolutions';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
-// import participantsAndProviders from './draftModelPlan/participantsAndProviders';
+import participantsAndProvidersOld from './draftModelPlan/participantsAndProvidersOld';
 import payments from './draftModelPlan/payments';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import subtasks from './draftModelPlan/subtasks';
@@ -72,8 +73,10 @@ const enUS = {
   nda,
   newModel,
   operationsEvaluationAndLearning,
-  // participantsAndProviders,
   payments,
+  // Old Translations
+  generalCharacteristicsOld,
+  participantsAndProvidersOld,
   // New Translation
   modelPlan,
   basics,
