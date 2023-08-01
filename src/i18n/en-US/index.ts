@@ -1,13 +1,14 @@
+import basicsOld from './draftModelPlan/basics';
 import beneficiaries from './draftModelPlan/beneficiaries';
 import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
-import generalCharacteristicsOld from './draftModelPlan/generalCharacteristicsOld';
+import generalCharacteristicsOld from './draftModelPlan/generalCharacteristics';
 import itSolutions from './draftModelPlan/itSolutions';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
-import participantsAndProvidersOld from './draftModelPlan/participantsAndProvidersOld';
+import participantsAndProvidersOld from './draftModelPlan/participantsAndProviders';
 import payments from './draftModelPlan/payments';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import subtasks from './draftModelPlan/subtasks';
@@ -75,6 +76,7 @@ const enUS = {
   operationsEvaluationAndLearning,
   payments,
   // Old Translations
+  basicsOld,
   generalCharacteristicsOld,
   participantsAndProvidersOld,
   // New Translation

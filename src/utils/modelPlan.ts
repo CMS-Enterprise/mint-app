@@ -104,23 +104,23 @@ export const translateComplexityLevel = (
 export const translateModelCategory = (category: string) => {
   switch (category) {
     case 'ACCOUNTABLE_CARE':
-      return i18next.t('basics:modelCategories.accountableCare');
+      return i18next.t('basicsOld:modelCategories.accountableCare');
     case 'DEMONSTRATION':
-      return i18next.t('basics:modelCategories.demonstration');
+      return i18next.t('basicsOld:modelCategories.demonstration');
     case 'EPISODE_BASED_PAYMENT_INITIATIVES':
-      return i18next.t('basics:modelCategories.paymentInitiatives');
+      return i18next.t('basicsOld:modelCategories.paymentInitiatives');
     case 'INIT_ACCEL_DEV_AND_TEST':
-      return i18next.t('basics:modelCategories.devAndTest');
+      return i18next.t('basicsOld:modelCategories.devAndTest');
     case 'INIT_MEDICAID_CHIP_POP':
-      return i18next.t('basics:modelCategories.chipPop');
+      return i18next.t('basicsOld:modelCategories.chipPop');
     case 'INIT_SPEED_ADOPT_BEST_PRACTICE':
-      return i18next.t('basics:modelCategories.speedBestPractice');
+      return i18next.t('basicsOld:modelCategories.speedBestPractice');
     case 'INIT__MEDICARE_MEDICAID_ENROLLEES':
-      return i18next.t('basics:modelCategories.medicareMedicaidEnrollees');
+      return i18next.t('basicsOld:modelCategories.medicareMedicaidEnrollees');
     case 'PRIMARY_CARE_TRANSFORMATION':
-      return i18next.t('basics:modelCategories.primaryCare');
+      return i18next.t('basicsOld:modelCategories.primaryCare');
     case 'UNKNOWN':
-      return i18next.t('basics:modelCategories.unknown');
+      return i18next.t('basicsOld:modelCategories.unknown');
     default:
       return '';
   }
