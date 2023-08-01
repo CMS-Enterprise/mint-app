@@ -280,9 +280,7 @@ export const ParticipantOptions = () => {
                     htmlFor="participants-and-providers-participants-other-input"
                     className="text-normal"
                   >
-                    {participantsAndProvidersT(
-                      'expectedNumberOfParticipants.question'
-                    )}
+                    {participantsAndProvidersMiscT('numberOfParticipants')}
                   </Label>
 
                   <FieldErrorMsg>

@@ -26,7 +26,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       STANDALONE_PART_D_PLANS: 'Standalone Part D plans',
       STATES: 'States',
       STATE_MEDICAID_AGENCIES: 'State Medicaid agencies',
-      OTHER: 'OTher'
+      OTHER: 'Other'
     },
     filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
   },
@@ -216,9 +216,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      MASS_EMAIL: 'Send mass emails to new participants',
       IT_TOOL:
         'Manage ongoing communications with participants using an IT tool',
+      MASS_EMAIL: 'Send mass emails to new participants',
       OTHER: 'Other',
       NO_COMMUNICATION: 'We are not planning to communicate'
     }
@@ -259,9 +259,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'enum',
     formType: 'radio',
     options: {
-      TWO_SIDED: 'Two-sided',
-      ONE_SIDED: 'One-sided',
       CAPITATION: 'Capitalization',
+      ONE_SIDED: 'One-sided',
+      TWO_SIDED: 'Two-sided',
       OTHER: 'Other'
     }
   },
@@ -365,9 +365,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      TINS: 'TINs',
-      NPIS: 'NPIs',
       CCNS: 'CCNs',
+      NPIS: 'NPIs',
+      TINS: 'TINs',
       OTHER: 'Other',
       NO_IDENTIFIERS: 'No, we will not collect provider identifiers'
     }
@@ -398,8 +398,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       ANNUALLY: 'Annually',
       BIANNUALLY: 'Biannually',
-      QUARTERLY: 'Quarterly',
       MONTHLY: 'Monthly',
+      QUARTERLY: 'Quarterly',
       ROLLING: 'Rolling',
       OTHER: 'Other'
     }
@@ -425,6 +425,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderAddMethod',
     dbField: 'provider_add_method',
     question: 'How will you decide to add providers? Select all that apply.',
+    hint:
+      'Please include details on decision points, timing, and implications of adding them to the model in an additional note.',
     readonlyQuestion: 'How will you decide to add providers?',
     dataType: 'enum',
     formType: 'multiSelect',
@@ -463,18 +465,19 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerLeaveMethod',
     goField: 'ProviderLeaveMethod',
     dbField: 'provider_leave_method',
-    question: 'Will you track gainsharing payments?',
+    question: 'Can providers leave the model? Select all that apply.',
+    readonlyQuestion: 'Can providers leave the model?',
     hint:
       'Please include details on decision points, timing, and implications of leaving the model in an additional note.',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      VOLUNTARILY_WITHOUT_IMPLICATIONS:
-        'They can leave voluntarily at any time without implications',
-      AFTER_A_CERTAIN_WITH_IMPLICATIONS:
-        'They can leave after a certain date but there are implications',
       VARIES_BY_TYPE_OF_PROVIDER: 'It varies by type of provider',
       NOT_ALLOWED_TO_LEAVE: 'They are not allowed to leave',
+      AFTER_A_CERTAIN_WITH_IMPLICATIONS:
+        'They can leave after a certain date but there are implications',
+      VOLUNTARILY_WITHOUT_IMPLICATIONS:
+        'They can leave voluntarily at any time without implications',
       OTHER: 'Other',
       NOT_APPLICABLE: 'Not applicable'
     }
@@ -499,7 +502,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerOverlap',
     goField: 'ProviderOverlap',
     dbField: 'provider_overlap',
-    question: 'Will you track gainsharing payments?',
+    question: 'Will the providers overlap with other models?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -549,7 +552,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
 export const participantsAndProvidersMisc: Record<string, string> = {
   heading: 'Participants and Providers',
   clearanceHeading: 'Review participants and providers',
-  breadcrumb: 'Participants and Providers',
+  breadcrumb: 'Participants and providers',
   participantsDifferenceHeading:
     'What’s the difference between participants and providers?',
   participantsDifferenceInfo:
