@@ -156,9 +156,10 @@ const TaskList = () => {
     operationalNeedsArray: OperationalNeedsType[]
   ) => {
     if (operationalNeedsArray.length !== 0) {
-      return operationalNeedsArray.reduce((a, b) =>
-        a.modifiedDts! > b.modifiedDts! ? a : b
-      ).modifiedDts;
+      return operationalNeedsArray
+        .filter(need => !!need.modifiedDts)
+        .reduce((a, b) => (a.modifiedDts! > b.modifiedDts! ? a : b))
+        .modifiedDts;
     }
     return null;
   };
