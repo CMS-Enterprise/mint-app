@@ -242,349 +242,357 @@ const Performance = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="benchmarkForPerformance"
-                  error={!!flatErrors.benchmarkForPerformance}
-                >
-                  <Label htmlFor="ops-eval-and-learning-benchmark-performance">
-                    {t('establishBenchmark')}
-                  </Label>
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="ops-eval-and-learning-benchmark-performance-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="benchmarkForPerformance"
+                    error={!!flatErrors.benchmarkForPerformance}
+                  >
+                    <Label htmlFor="ops-eval-and-learning-benchmark-performance">
+                      {t('establishBenchmark')}
+                    </Label>
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-benchmark-performance-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
+                    )}
+                    <FieldErrorMsg>
+                      {flatErrors.benchmarkForPerformance}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {Object.keys(BenchmarkForPerformanceType)
+                        .sort(sortOtherEnum)
+                        .map(key => (
+                          <Field
+                            as={Radio}
+                            key={key}
+                            id={`ops-eval-and-learning-benchmark-performance-${key}`}
+                            name="dataFullTimeOrIncremental"
+                            label={translateBenchmarkForPerformanceType(key)}
+                            value={key}
+                            checked={values.benchmarkForPerformance === key}
+                            onChange={() => {
+                              setFieldValue('benchmarkForPerformance', key);
+                            }}
+                          />
+                        ))}
+                    </Fieldset>
+
+                    <AddNote
+                      id="ops-eval-and-learning-benchmark-performance-note"
+                      field="benchmarkForPerformanceNote"
                     />
-                  )}
-                  <FieldErrorMsg>
-                    {flatErrors.benchmarkForPerformance}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    {Object.keys(BenchmarkForPerformanceType)
-                      .sort(sortOtherEnum)
-                      .map(key => (
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="computePerformanceScores"
+                    error={!!flatErrors.computePerformanceScores}
+                    className="margin-top-6"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-compute-performance">
+                      {t('computeScores')}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.computePerformanceScores}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
                         <Field
                           as={Radio}
                           key={key}
-                          id={`ops-eval-and-learning-benchmark-performance-${key}`}
-                          name="dataFullTimeOrIncremental"
-                          label={translateBenchmarkForPerformanceType(key)}
-                          value={key}
-                          checked={values.benchmarkForPerformance === key}
+                          id={`ops-eval-and-learning-compute-performance-${key}`}
+                          data-testid={`ops-eval-and-learning-compute-performance-${key}`}
+                          name="computePerformanceScores"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.computePerformanceScores === key}
                           onChange={() => {
-                            setFieldValue('benchmarkForPerformance', key);
+                            setFieldValue('computePerformanceScores', key);
                           }}
                         />
                       ))}
-                  </Fieldset>
+                    </Fieldset>
 
-                  <AddNote
-                    id="ops-eval-and-learning-benchmark-performance-note"
-                    field="benchmarkForPerformanceNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="computePerformanceScores"
-                  error={!!flatErrors.computePerformanceScores}
-                  className="margin-top-6"
-                >
-                  <Label htmlFor="ops-eval-and-learning-compute-performance">
-                    {t('computeScores')}
-                  </Label>
-
-                  <FieldErrorMsg>
-                    {flatErrors.computePerformanceScores}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-compute-performance-${key}`}
-                        data-testid={`ops-eval-and-learning-compute-performance-${key}`}
-                        name="computePerformanceScores"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.computePerformanceScores === key}
-                        onChange={() => {
-                          setFieldValue('computePerformanceScores', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-
-                  <AddNote
-                    id="ops-eval-and-learning-compute-performance-note"
-                    field="computePerformanceScoresNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="riskAdjustPerformance"
-                  error={!!flatErrors.riskAdjustPerformance}
-                  className="margin-top-6"
-                >
-                  <Label htmlFor="ops-eval-and-learning-risk-adjustments">
-                    {t('riskAdjustments')}
-                  </Label>
-
-                  <Label
-                    htmlFor="ops-eval-and-learning-risk-adjustment-performance"
-                    className="text-normal margin-top-2"
-                  >
-                    {t('performanceScores')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.riskAdjustPerformance}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-risk-adjustment-performance-${key}`}
-                        name="riskAdjustPerformance"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.riskAdjustPerformance === key}
-                        onChange={() => {
-                          setFieldValue('riskAdjustPerformance', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-
-                  <Label
-                    htmlFor="ops-eval-and-learning-risk-adjustment-feedback"
-                    className="text-normal"
-                  >
-                    {t('feedbackResults')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.riskAdjustFeedback}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-risk-adjustment-feedback-${key}`}
-                        name="riskAdjustFeedback"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.riskAdjustFeedback === key}
-                        onChange={() => {
-                          setFieldValue('riskAdjustFeedback', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-
-                  <Label
-                    htmlFor="ops-eval-and-learning-risk-adjustment-payment"
-                    className="text-normal"
-                  >
-                    {t('payments')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.riskAdjustPayments}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-risk-adjustment-payment-${key}`}
-                        name="riskAdjustPayments"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.riskAdjustPayments === key}
-                        onChange={() => {
-                          setFieldValue('riskAdjustPayments', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-
-                  <Label
-                    htmlFor="ops-eval-and-learning-risk-adjustment-other"
-                    className="text-normal"
-                  >
-                    {t('others')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.riskAdjustOther}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-risk-adjustment-other-${key}`}
-                        name="riskAdjustOther"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.riskAdjustOther === key}
-                        onChange={() => {
-                          setFieldValue('riskAdjustOther', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
-
-                  <AddNote
-                    id="ops-eval-and-learning-risk-adjustment-note"
-                    field="riskAdjustNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="appealPerformance"
-                  error={!!flatErrors.appealPerformance}
-                  className="margin-top-6"
-                >
-                  <Label htmlFor="ops-eval-and-learning-appeals">
-                    {t('participantAppeal')}
-                  </Label>
-
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="ops-eval-and-learning-appeal-performance-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
-                      className="margin-top-2"
+                    <AddNote
+                      id="ops-eval-and-learning-compute-performance-note"
+                      field="computePerformanceScoresNote"
                     />
-                  )}
+                  </FieldGroup>
 
-                  <Alert slim type="info">
-                    {t('appealsWarning')}
-                  </Alert>
-
-                  <Label
-                    htmlFor="ops-eval-and-learning-appeal-performance"
-                    className="text-normal margin-top-2"
+                  <FieldGroup
+                    scrollElement="riskAdjustPerformance"
+                    error={!!flatErrors.riskAdjustPerformance}
+                    className="margin-top-6"
                   >
-                    {t('performanceScores')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.appealPerformance}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-appeal-performance-${key}`}
-                        name="appealPerformance"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.appealPerformance === key}
-                        onChange={() => {
-                          setFieldValue('appealPerformance', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
+                    <Label htmlFor="ops-eval-and-learning-risk-adjustments">
+                      {t('riskAdjustments')}
+                    </Label>
 
-                  <Label
-                    htmlFor="ops-eval-and-learning-appeal-feedback"
-                    className="text-normal"
+                    <Label
+                      htmlFor="ops-eval-and-learning-risk-adjustment-performance"
+                      className="text-normal margin-top-2"
+                    >
+                      {t('performanceScores')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.riskAdjustPerformance}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-risk-adjustment-performance-${key}`}
+                          name="riskAdjustPerformance"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.riskAdjustPerformance === key}
+                          onChange={() => {
+                            setFieldValue('riskAdjustPerformance', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+
+                    <Label
+                      htmlFor="ops-eval-and-learning-risk-adjustment-feedback"
+                      className="text-normal"
+                    >
+                      {t('feedbackResults')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.riskAdjustFeedback}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-risk-adjustment-feedback-${key}`}
+                          name="riskAdjustFeedback"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.riskAdjustFeedback === key}
+                          onChange={() => {
+                            setFieldValue('riskAdjustFeedback', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+
+                    <Label
+                      htmlFor="ops-eval-and-learning-risk-adjustment-payment"
+                      className="text-normal"
+                    >
+                      {t('payments')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.riskAdjustPayments}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-risk-adjustment-payment-${key}`}
+                          name="riskAdjustPayments"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.riskAdjustPayments === key}
+                          onChange={() => {
+                            setFieldValue('riskAdjustPayments', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+
+                    <Label
+                      htmlFor="ops-eval-and-learning-risk-adjustment-other"
+                      className="text-normal"
+                    >
+                      {t('others')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.riskAdjustOther}</FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-risk-adjustment-other-${key}`}
+                          name="riskAdjustOther"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.riskAdjustOther === key}
+                          onChange={() => {
+                            setFieldValue('riskAdjustOther', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+
+                    <AddNote
+                      id="ops-eval-and-learning-risk-adjustment-note"
+                      field="riskAdjustNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="appealPerformance"
+                    error={!!flatErrors.appealPerformance}
+                    className="margin-top-6"
                   >
-                    {t('feedbackResults')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.appealFeedback}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-appeal-feedback-${key}`}
-                        name="appealFeedback"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.appealFeedback === key}
-                        onChange={() => {
-                          setFieldValue('appealFeedback', key);
-                        }}
+                    <Label htmlFor="ops-eval-and-learning-appeals">
+                      {t('participantAppeal')}
+                    </Label>
+
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-appeal-performance-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                        className="margin-top-2"
                       />
-                    ))}
-                  </Fieldset>
+                    )}
 
-                  <Label
-                    htmlFor="ops-eval-and-learning-appeal-payment"
-                    className="text-normal"
-                  >
-                    {t('payments')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.appealPayments}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-appeal-payment-${key}`}
-                        name="appealPayments"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.appealPayments === key}
-                        onChange={() => {
-                          setFieldValue('appealPayments', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
+                    <Alert slim type="info">
+                      {t('appealsWarning')}
+                    </Alert>
 
-                  <Label
-                    htmlFor="ops-eval-and-learning-appeal-other"
-                    className="text-normal"
-                  >
-                    {t('others')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.appealOther}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-appeal-other-${key}`}
-                        name="appealOther"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.appealOther === key}
-                        onChange={() => {
-                          setFieldValue('appealOther', key);
-                        }}
-                      />
-                    ))}
-                  </Fieldset>
+                    <Label
+                      htmlFor="ops-eval-and-learning-appeal-performance"
+                      className="text-normal margin-top-2"
+                    >
+                      {t('performanceScores')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.appealPerformance}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-appeal-performance-${key}`}
+                          name="appealPerformance"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.appealPerformance === key}
+                          onChange={() => {
+                            setFieldValue('appealPerformance', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
 
-                  <AddNote
-                    id="ops-eval-and-learning-appeal-note"
-                    field="appealNote"
-                  />
-                </FieldGroup>
+                    <Label
+                      htmlFor="ops-eval-and-learning-appeal-feedback"
+                      className="text-normal"
+                    >
+                      {t('feedbackResults')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.appealFeedback}</FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-appeal-feedback-${key}`}
+                          name="appealFeedback"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.appealFeedback === key}
+                          onChange={() => {
+                            setFieldValue('appealFeedback', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
 
-                <div className="margin-top-6 margin-bottom-3">
+                    <Label
+                      htmlFor="ops-eval-and-learning-appeal-payment"
+                      className="text-normal"
+                    >
+                      {t('payments')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.appealPayments}</FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-appeal-payment-${key}`}
+                          name="appealPayments"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.appealPayments === key}
+                          onChange={() => {
+                            setFieldValue('appealPayments', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+
+                    <Label
+                      htmlFor="ops-eval-and-learning-appeal-other"
+                      className="text-normal"
+                    >
+                      {t('others')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.appealOther}</FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`ops-eval-and-learning-appeal-other-${key}`}
+                          name="appealOther"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.appealOther === key}
+                          onChange={() => {
+                            setFieldValue('appealOther', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+
+                    <AddNote
+                      id="ops-eval-and-learning-appeal-note"
+                      field="appealNote"
+                    />
+                  </FieldGroup>
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (

@@ -97,172 +97,302 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     class="desktop:grid-col-6 margin-top-6"
     data-testid="plan-characteristics-involvements-form"
   >
-    <div
-      class="usa-form-group margin-y-4"
-      data-scroll="careCoordinationInvolved"
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
     >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="plan-characteristics-care-coordination-involved"
+      <div
+        class="usa-form-group margin-y-4"
+        data-scroll="careCoordinationInvolved"
       >
-        Is care coordination involved?
-      </label>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
-      >
-        <div
-          class="usa-radio"
-          data-testid="radio"
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-care-coordination-involved"
         >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-care-coordination-involved"
-            name="careCoordinationInvolved"
-            type="radio"
-            value="TRUE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-care-coordination-involved"
-          >
-            Yes
-          </label>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-care-coordination-involved-no"
-            name="careCoordinationInvolved"
-            type="radio"
-            value="FALSE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-care-coordination-involved-no"
-          >
-            No
-          </label>
-        </div>
-      </fieldset>
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
-    </div>
-    <div
-      class="usa-form-group margin-y-4"
-      data-scroll="additionalServicesInvolved"
-    >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="plan-characteristics-additional-services"
-      >
-        Are additional services involved?
-      </label>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
-      >
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-additional-services"
-            name="additionalServicesInvolved"
-            type="radio"
-            value="TRUE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-additional-services"
-          >
-            Yes
-          </label>
-        </div>
-        <div
-          class="display-flex margin-left-4 margin-bottom-1"
+          Is care coordination involved?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
         >
           <div
-            class="usa-form-group flex-1"
-            data-scroll="additionalServicesInvolvedDescription"
+            class="usa-radio"
+            data-testid="radio"
           >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-care-coordination-involved"
+              name="careCoordinationInvolved"
+              type="radio"
+              value="TRUE"
+            />
             <label
-              class="usa-label margin-bottom-1 text-normal"
-              data-testid="label"
-              for="plan-characteristics-additional-services-description"
+              class="usa-radio__label"
+              for="plan-characteristics-care-coordination-involved"
             >
-              How so?
+              Yes
             </label>
-            <textarea
-              aria-labelledby="label-plan-characteristics-additional-services-description hint-plan-characteristics-additional-services-description"
-              class="margin-top-0 height-15 usa-textarea"
-              data-testid="plan-characteristics-additional-services-description"
-              id="plan-characteristics-additional-services-description"
-              name="additionalServicesInvolvedDescription"
-            >
-              Lots of additional services
-            </textarea>
           </div>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-additional-services-no"
-            name="additionalServicesInvolved"
-            type="radio"
-            value="FALSE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-additional-services-no"
+          <div
+            class="usa-radio"
+            data-testid="radio"
           >
-            No
-          </label>
-        </div>
-      </fieldset>
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-care-coordination-involved-no"
+              name="careCoordinationInvolved"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-care-coordination-involved-no"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        class="usa-form-group margin-y-4"
+        data-scroll="additionalServicesInvolved"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-additional-services"
+        >
+          Are additional services involved?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-additional-services"
+              name="additionalServicesInvolved"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-additional-services"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="display-flex margin-left-4 margin-bottom-1"
+          >
+            <div
+              class="usa-form-group flex-1"
+              data-scroll="additionalServicesInvolvedDescription"
+            >
+              <label
+                class="usa-label margin-bottom-1 text-normal"
+                data-testid="label"
+                for="plan-characteristics-additional-services-description"
+              >
+                How so?
+              </label>
+              <textarea
+                aria-labelledby="label-plan-characteristics-additional-services-description hint-plan-characteristics-additional-services-description"
+                class="margin-top-0 height-15 usa-textarea"
+                data-testid="plan-characteristics-additional-services-description"
+                id="plan-characteristics-additional-services-description"
+                name="additionalServicesInvolvedDescription"
+              >
+                Lots of additional services
+              </textarea>
+            </div>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-additional-services-no"
+              name="additionalServicesInvolved"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-additional-services-no"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        class="usa-form-group margin-y-4"
+        data-scroll="communityPartnersInvolved"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-community-partners-involved"
+        >
+          Are community partners involved?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-community-partners-involved"
+              name="communityPartnersInvolved"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-community-partners-involved"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="plan-characteristics-community-partners-no"
+              name="communityPartnersInvolved"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-community-partners-no"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        class="margin-top-6 margin-bottom-3"
+      >
+        <button
+          class="usa-button usa-button usa-button--outline margin-bottom-1"
+          data-testid="button"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          class="usa-button"
+          data-testid="button"
+          type="submit"
+        >
+          Next
+        </button>
+      </div>
       <button
         class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
+        data-testid="button"
         type="button"
       >
         <svg
@@ -280,137 +410,12 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
             fill="none"
           />
           <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
           />
         </svg>
-        Add an additional note
+        Save and return to task list
       </button>
-    </div>
-    <div
-      class="usa-form-group margin-y-4"
-      data-scroll="communityPartnersInvolved"
-    >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="plan-characteristics-community-partners-involved"
-      >
-        Are community partners involved?
-      </label>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
-      >
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-community-partners-involved"
-            name="communityPartnersInvolved"
-            type="radio"
-            value="TRUE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-community-partners-involved"
-          >
-            Yes
-          </label>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="plan-characteristics-community-partners-no"
-            name="communityPartnersInvolved"
-            type="radio"
-            value="FALSE"
-          />
-          <label
-            class="usa-radio__label"
-            for="plan-characteristics-community-partners-no"
-          >
-            No
-          </label>
-        </div>
-      </fieldset>
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
-    </div>
-    <div
-      class="margin-top-6 margin-bottom-3"
-    >
-      <button
-        class="usa-button usa-button usa-button--outline margin-bottom-1"
-        data-testid="button"
-        type="button"
-      >
-        Back
-      </button>
-      <button
-        class="usa-button"
-        data-testid="button"
-        type="submit"
-      >
-        Next
-      </button>
-    </div>
-    <button
-      class="usa-button usa-button usa-button--unstyled"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon margin-right-1"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-        />
-      </svg>
-      Save and return to task list
-    </button>
+    </fieldset>
   </form>
   <div
     class="mint-page-number margin-y-6"
