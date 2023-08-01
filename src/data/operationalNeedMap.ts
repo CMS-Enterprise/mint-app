@@ -49,7 +49,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/participants-options',
     fieldName: 'recruitmentMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:recruitParticipants',
+    question: 'participantsAndProviders:recruitmentMethod.question',
     answer: 'translateRecruitmentType',
     section: 'participantsAndProviders'
   },
@@ -57,7 +57,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:howWillYouSelect',
+    question: 'participantsAndProviders:selectionMethod.question',
     answer: 'translateParticipantSelectiontType',
     section: 'participantsAndProviders'
   },
@@ -65,7 +65,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:howWillYouSelect',
+    question: 'participantsAndProviders:selectionMethod.question',
     answer: 'translateParticipantSelectiontType',
     section: 'participantsAndProviders'
   },
@@ -73,7 +73,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/communication',
     fieldName: 'communicationMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:participantCommunication',
+    question: 'participantsAndProviders:communicationMethod.question',
     answer: 'translateCommunicationType',
     section: 'participantsAndProviders'
   },
@@ -81,7 +81,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/provider-options',
     fieldName: 'providerOverlap',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:overlap',
+    question: 'participantsAndProviders:providerOverlap.question',
     answer: 'translateOverlapType',
     section: 'participantsAndProviders'
   },
@@ -89,7 +89,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/coordination',
     fieldName: 'participantsIds',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:collectTINs',
+    question: 'participantsAndProviders:participantsIds.question',
     answer: 'translateParticipantIDType',
     section: 'participantsAndProviders'
   },

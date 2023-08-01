@@ -37,7 +37,9 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'participants',
       'medicareProviderType',
       'statesEngagement',
-      'selectionMethod'
+      'selectionMethod',
+      'selectionOther',
+      'selectionNote'
     ],
     beneficiaries: [
       'beneficiarySelectionMethod',
@@ -73,8 +75,14 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     'participants-and-providers': [
       'providerAdditionFrequency',
+      'providerAdditionFrequencyOther',
+      'providerAdditionFrequencyNote',
       'providerAddMethod',
-      'providerLeaveMethod'
+      'providerAddMethodOther',
+      'providerAddMethodNote',
+      'providerLeaveMethod',
+      'providerLeaveMethodOther',
+      'providerLeaveMethodNote'
     ],
     beneficiaries: ['precedenceRules'],
     payments: [
@@ -92,7 +100,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: ['nameHistory', 'modelType', 'goal', 'performancePeriodStarts'],
     'participants-and-providers': [
       'expectedNumberOfParticipants',
-      'estimateConfidence'
+      'estimateConfidence',
+      'confidenceNote'
     ],
     payments: [
       'fundingSource',
@@ -108,7 +117,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: ['nameHistory', 'performancePeriodStarts'],
     'participants-and-providers': [
       'expectedNumberOfParticipants',
-      'estimateConfidence'
+      'estimateConfidence',
+      'confidenceNote'
     ],
     'ops-eval-and-learning': [
       'ccmInvolvment',
@@ -147,9 +157,16 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'statesEngagement',
       'expectedNumberOfParticipants',
       'estimateConfidence',
+      'confidenceNote',
       'providerAdditionFrequency',
+      'providerAdditionFrequencyOther',
+      'providerAdditionFrequencyNote',
       'providerAddMethod',
-      'providerLeaveMethod'
+      'providerAddMethodOther',
+      'providerAddMethodNote',
+      'providerLeaveMethod',
+      'providerLeaveMethodOther',
+      'providerLeaveMethodNote'
     ],
     payments: [
       'fundingSource',
@@ -196,9 +213,14 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'statesEngagement',
       'modelApplicationLevel',
       'selectionMethod',
+      'selectionOther',
+      'selectionNote',
       'participantsIds',
+      'participantsIdsOther',
+      'participantsIdsNote',
       'providerOverlap',
-      'providerOverlapHierarchy'
+      'providerOverlapHierarchy',
+      'providerOverlapNote'
     ],
     beneficiaries: [
       'treatDualElligibleDifferent',
@@ -275,8 +297,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'statesEngagement',
       'modelApplicationLevel',
       'selectionMethod',
+      'selectionOther',
+      'selectionNote',
       'providerOverlap',
-      'providerOverlapHierarchy'
+      'providerOverlapHierarchy',
+      'providerOverlapNote'
     ],
     beneficiaries: [
       'treatDualElligibleDifferent',
@@ -327,7 +352,10 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'statesEngagement',
       'expectedNumberOfParticipants',
       'estimateConfidence',
-      'communicationMethod'
+      'confidenceNote',
+      'communicationMethod',
+      'communicationMethodOther',
+      'communicationMethodNote'
     ],
     'ops-eval-and-learning': [
       'stakeholders',

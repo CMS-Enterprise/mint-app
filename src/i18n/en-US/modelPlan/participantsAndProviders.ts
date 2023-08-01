@@ -106,7 +106,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     hint:
       'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
     dataType: 'number',
-    formType: 'rangeInput'
+    formType: 'rangeInput',
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
   },
   estimateConfidence: {
     gqlField: 'estimateConfidence',
@@ -120,7 +121,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       SLIGHTLY: 'Slightly confident',
       FAIRLY: 'Fairly confident',
       COMPLETELY: 'Completely confident'
-    }
+    },
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
   },
   confidenceNote: {
     gqlField: 'confidenceNote',
@@ -128,7 +130,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'confidence_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
   },
   recruitmentMethod: {
     gqlField: 'recruitmentMethod',
@@ -190,7 +193,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       SUPPORT_FROM_CMMI: 'Solicit support for CMII staff',
       OTHER: 'Other',
       NO_SELECTING_PARTICIPANTS: 'We won’t be selecting participants'
-    }
+    },
+    filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
   selectionOther: {
     gqlField: 'selectionOther',
@@ -198,7 +202,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'selection_other',
     question: 'Please describe the other participants engaging with this model',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
   selectionNote: {
     gqlField: 'selectionNote',
@@ -206,7 +211,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'selection_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
   communicationMethod: {
     gqlField: 'communicationMethod',
@@ -221,7 +227,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       MASS_EMAIL: 'Send mass emails to new participants',
       OTHER: 'Other',
       NO_COMMUNICATION: 'We are not planning to communicate'
-    }
+    },
+    filterGroups: ['cbosc']
   },
   communicationMethodOther: {
     gqlField: 'communicationMethodOther',
@@ -229,7 +236,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'communication_method',
     question: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cbosc']
   },
   communicationNote: {
     gqlField: 'communicationNote',
@@ -237,7 +245,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'communication_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cbosc']
   },
   participantAssumeRisk: {
     gqlField: 'participantAssumeRisk',
@@ -370,7 +379,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       TINS: 'TINs',
       OTHER: 'Other',
       NO_IDENTIFIERS: 'No, we will not collect provider identifiers'
-    }
+    },
+    filterGroups: ['iddoc']
   },
   participantsIdsOther: {
     gqlField: 'participantsIdsOther',
@@ -378,7 +388,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participants_ids_other',
     question: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc']
   },
   participantsIDSNote: {
     gqlField: 'participantsIDSNote',
@@ -386,7 +397,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participants_ids_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc']
   },
   providerAdditionFrequency: {
     gqlField: 'providerAdditionFrequency',
@@ -402,7 +414,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       QUARTERLY: 'Quarterly',
       ROLLING: 'Rolling',
       OTHER: 'Other'
-    }
+    },
+    filterGroups: ['oact', 'ipc']
   },
   providerAdditionFrequencyOther: {
     gqlField: 'providerAdditionFrequencyOther',
@@ -410,7 +423,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_addition_frequency_other',
     question: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['oact', 'ipc']
   },
   providerAdditionFrequencyNote: {
     gqlField: 'providerAdditionFrequencyNote',
@@ -418,7 +432,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_addition_frequency_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['oact', 'ipc']
   },
   providerAddMethod: {
     gqlField: 'providerAddMethod',
@@ -442,7 +457,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
         'Use online tools to view what types of participant files and data have been uploaded and downloaded',
       OTHER: 'Other',
       NA: 'Not applicable'
-    }
+    },
+    filterGroups: ['ipc', 'oact']
   },
   providerAddMethodOther: {
     gqlField: 'providerAddMethodOther',
@@ -451,7 +467,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     question:
       'Please describe the other method for deciding which providers to add.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['ipc', 'oact']
   },
   providerAddMethodNote: {
     gqlField: 'providerAddMethodNote',
@@ -459,7 +476,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_add_method_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['ipc', 'oact']
   },
   providerLeaveMethod: {
     gqlField: 'providerLeaveMethod',
@@ -480,7 +498,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
         'They can leave voluntarily at any time without implications',
       OTHER: 'Other',
       NOT_APPLICABLE: 'Not applicable'
-    }
+    },
+    filterGroups: ['ipc', 'oact']
   },
   providerLeaveMethodOther: {
     gqlField: 'providerLeaveMethodOther',
@@ -488,7 +507,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_leave_method_other',
     question: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['ipc', 'oact']
   },
   providerLeaveMethodNote: {
     gqlField: 'providerLeaveMethodNote',
@@ -496,7 +516,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_leave_method_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['ipc', 'oact']
   },
   providerOverlap: {
     gqlField: 'providerOverlap',
@@ -510,7 +531,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
         'Yes, we expect to develop policies to manage the overlaps',
       YES_NO_ISSUES: 'Yes, and the overlaps would not be an issue',
       NO: 'No'
-    }
+    },
+    filterGroups: ['iddoc', 'pbg']
   },
   providerOverlapHierarchy: {
     gqlField: 'providerOverlapHierarchy',
@@ -519,7 +541,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     question:
       'If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   },
   providerOverlapNote: {
     gqlField: 'providerOverlapNote',
@@ -527,7 +550,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_overlap_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   },
   status: {
     gqlField: 'status',
