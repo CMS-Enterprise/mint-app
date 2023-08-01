@@ -98,11 +98,14 @@ const taskListSectionMap: TaskListSectionMapType = {
 export const getLatestModifiedDate = (
   operationalNeedsArray: OperationalNeedsType[]
 ) => {
-  if (operationalNeedsArray.length !== 0) {
-    return operationalNeedsArray
-      .filter(need => !!need.modifiedDts)
-      .reduce((a, b) => (a.modifiedDts! > b.modifiedDts! ? a : b)).modifiedDts;
+  const updatedNeeds = operationalNeedsArray.filter(need => need.modifiedDts);
+
+  if (updatedNeeds.length !== 0) {
+    return updatedNeeds.reduce((a, b) =>
+      a.modifiedDts! > b.modifiedDts! ? a : b
+    ).modifiedDts;
   }
+
   return null;
 };
 
