@@ -5,6 +5,7 @@
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 import {
+  AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
   AuthorityAllowance,
@@ -12,6 +13,7 @@ import {
   CMMIGroup,
   CMSCenter,
   ConfidenceType,
+  ContractorSupportType,
   FrequencyType,
   GeographyApplication,
   GeographyType,
@@ -28,6 +30,7 @@ import {
   ProviderLeaveType,
   RecruitmentType,
   SelectionMethodType,
+  StakeholdersType,
   TaskStatus,
   TriStateAnswer,
   WaiverType
@@ -257,10 +260,29 @@ export type TranslationBeneficiaries = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+// Operations Evaluation and Learning
+export type TranslationOpsEvalAndLearning = {
+  agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
+  agencyOrStateHelpOther: TranslationFieldProperties;
+  agencyOrStateHelpNote: TranslationFieldProperties;
+  stakeholders: TranslationFieldPropertiesWithOptions<StakeholdersType>;
+  stakeholdersOther: TranslationFieldProperties;
+  stakeholdersNote: TranslationFieldProperties;
+  helpdeskUse: TranslationFieldPropertiesWithOptions<Bool>;
+  helpdeskUseNote: TranslationFieldProperties;
+  contractorSupport: TranslationFieldPropertiesWithOptions<ContractorSupportType>;
+  contractorSupportOther: TranslationFieldProperties;
+  contractorSupportHow: TranslationFieldProperties;
+  contractorSupportNote: TranslationFieldProperties;
+  iddocSupport: TranslationFieldPropertiesWithOptions<Bool>;
+  iddocSupportNote: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
   generalCharacteristics: TranslationGeneralCharacteristics;
   participantsAndProviders: TranslationParticipantsAndProviders;
   beneficiaries: TranslationBeneficiaries;
+  opsEvalAndLearning: TranslationOpsEvalAndLearning;
 };

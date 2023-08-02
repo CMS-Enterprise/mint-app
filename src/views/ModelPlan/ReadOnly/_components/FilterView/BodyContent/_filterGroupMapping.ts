@@ -236,8 +236,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     'ops-eval-and-learning': [
       'contractorSupport',
+      'contractorSupportOther',
       'contractorSupportHow',
+      'contractorSupportNote',
       'iddocSupport',
+      'iddocSupportNote',
       'technicalContactsIdentified',
       'captureParticipantInfo',
       'icdOwner',
@@ -374,9 +377,14 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     'ops-eval-and-learning': [
       'stakeholders',
+      'stakeholdersOther',
+      'stakeholdersNote',
       'helpdeskUse',
+      'helpdeskUseNote',
       'contractorSupport',
-      'contractorSupportHow'
+      'contractorSupportOther',
+      'contractorSupportHow',
+      'contractorSupportNote'
     ]
   }
 };

@@ -105,17 +105,17 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'ops-eval-and-learning',
     fieldName: 'helpdeskUse',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:helpDesk',
+    question: 'operationsEvaluationAndLearning:helpdeskUse.question',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   IDDOC_SUPPORT: {
     route: 'ops-eval-and-learning',
     fieldName: 'iddocSupport',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:iddocSupport',
+    question: 'operationsEvaluationAndLearning:iddocSupport.question',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   ESTABLISH_BENCH: {
     route: 'ops-eval-and-learning/performance',
@@ -123,7 +123,8 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:establishBenchmark',
     answer: 'translateBenchmarkForPerformanceType',
-    section: 'operationsEvaluationAndLearning'
+    section:
+      'operationsEvaluaoperationsEvaluationAndLearningMisctionAndLearning'
   },
   PROCESS_PART_APPEALS: {
     route: 'ops-eval-and-learning/performance',
@@ -138,7 +139,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     answer: 'translateBoolean',
     multiPart: true,
     multiPartQuestion: 'translateAppealsQuestionType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   ACQUIRE_AN_EVAL_CONT: {
     route: 'ops-eval-and-learning/evaluation',
@@ -146,7 +147,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:evaluationApproach',
     answer: 'translateEvaluationApproachType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   QUALITY_PERFORMANCE_SCORES: {
     route: 'ops-eval-and-learning/evaluation',
@@ -154,7 +155,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:dataNeeded',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   CLAIMS_BASED_MEASURES: {
     route: 'ops-eval-and-learning/evaluation',
@@ -162,7 +163,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:dataNeeded',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   DATA_TO_SUPPORT_EVAL: {
     route: 'ops-eval-and-learning/evaluation',
@@ -170,7 +171,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:dataNeeded',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   DATA_TO_MONITOR: {
     route: 'ops-eval-and-learning/evaluation',
@@ -178,7 +179,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:dataNeeded',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   SEND_REPDATA_TO_PART: {
     route: 'ops-eval-and-learning/evaluation',
@@ -186,7 +187,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:dataToSend',
     answer: 'translateDataToSendParticipantsType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   PART_TO_PART_COLLAB: {
     route: 'ops-eval-and-learning/learning',
@@ -202,7 +203,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:learningSystem',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   ACQUIRE_A_LEARN_CONT: {
     route: 'ops-eval-and-learning/learning',
@@ -210,7 +211,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:learningSystem',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR: {
     route: 'ops-eval-and-learning/ccw-and-quality',
@@ -218,7 +219,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:validatedQuality',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   IT_PLATFORM_FOR_LEARNING: {
     route: 'ops-eval-and-learning/learning',
@@ -226,7 +227,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:learningSystem',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluationAndLearningMisc'
   },
   ADJUST_FFS_CLAIMS: {
     route: 'payment',
