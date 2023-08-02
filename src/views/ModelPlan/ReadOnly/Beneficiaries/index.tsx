@@ -5,14 +5,6 @@ import { useQuery } from '@apollo/client';
 import GetAllBeneficiaries from 'queries/ReadOnly/GetAllBeneficiaries';
 import { GetAllBeneficiaries as AllBeneficiariesTypes } from 'queries/ReadOnly/types/GetAllBeneficiaries';
 import { FrequencyType, TriStateAnswer } from 'types/graphql-global-types';
-import {
-  translateBeneficiariesType,
-  translateConfidenceType,
-  translateFrequencyType,
-  translateOverlapType,
-  translateSelectionMethodType,
-  translateTriStateAnswer
-} from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -28,9 +20,11 @@ const ReadOnlyBeneficiaries = ({
   isViewingFilteredView,
   filteredQuestions
 }: ReadOnlyProps) => {
-  const { t } = useTranslation('beneficiaries');
-  const { t: h } = useTranslation('draftModelPlan');
-  const { t: p } = useTranslation('prepareForClearance');
+  const { t: beneficiariesT } = useTranslation('beneficiaries');
+
+  const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
+
+  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -79,15 +73,15 @@ const ReadOnlyBeneficiaries = ({
     >
       <TitleAndStatus
         clearance={clearance}
-        clearanceTitle={t('clearanceHeading')}
-        heading={t('heading')}
+        clearanceTitle={beneficiariesMiscT('clearanceHeading')}
+        heading={beneficiariesMiscT('heading')}
         isViewingFilteredView={isViewingFilteredView}
         status={status}
       />
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
-          {p('forModelPlan', {
+          {prepareForClearanceT('forModelPlan', {
             modelName
           })}
         </p>
@@ -105,9 +99,11 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'beneficiaries',
           <ReadOnlySection
-            heading={t('beneficiariesQuestion')}
+            heading={beneficiariesT('beneficiaries.readonlyQuestion')}
             list
-            listItems={beneficiaries?.map(translateBeneficiariesType)}
+            listItems={beneficiaries?.map((type): string =>
+              beneficiariesT(`beneficiaries.options.${type}`)
+            )}
             listOtherItem={beneficiariesOther}
             notes={beneficiariesNote}
           />
@@ -119,14 +115,19 @@ const ReadOnlyBeneficiaries = ({
           'treatDualElligibleDifferent',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('dualEligibility'),
+              heading: beneficiariesT('treatDualElligibleDifferent.question'),
               copy:
                 treatDualElligibleDifferent &&
-                translateTriStateAnswer(treatDualElligibleDifferent)
+                beneficiariesT(
+                  `treatDualElligibleDifferent.options.${treatDualElligibleDifferent}`,
+                  ''
+                )
             }}
             secondSection={
               treatDualElligibleDifferent === TriStateAnswer.YES && {
-                heading: h('howSo'),
+                heading: beneficiariesT(
+                  'treatDualElligibleDifferentHow.question'
+                ),
                 copy: treatDualElligibleDifferentHow
               }
             }
@@ -138,7 +139,9 @@ const ReadOnlyBeneficiaries = ({
             filteredQuestions,
             'treatDualElligibleDifferent',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={beneficiariesT(
+                'treatDualElligibleDifferentNote.question'
+              )}
               copy={treatDualElligibleDifferentNote}
             />
           )}
@@ -149,14 +152,19 @@ const ReadOnlyBeneficiaries = ({
           'excludeCertainCharacteristics',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('excluded'),
+              heading: beneficiariesT('excludeCertainCharacteristics.question'),
               copy:
                 excludeCertainCharacteristics &&
-                translateTriStateAnswer(excludeCertainCharacteristics)
+                beneficiariesT(
+                  `excludeCertainCharacteristics.options.${excludeCertainCharacteristics}`,
+                  ''
+                )
             }}
             secondSection={
               excludeCertainCharacteristics === TriStateAnswer.YES && {
-                heading: t('excludedNestedQuestion'),
+                heading: beneficiariesT(
+                  'excludeCertainCharacteristicsCriteria.question'
+                ),
                 copy: excludeCertainCharacteristicsCriteria
               }
             }
@@ -169,7 +177,9 @@ const ReadOnlyBeneficiaries = ({
             filteredQuestions,
             'excludeCertainCharacteristics',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={beneficiariesT(
+                'excludeCertainCharacteristicsNote.question'
+              )}
               copy={excludeCertainCharacteristicsNote}
             />
           )}
@@ -189,15 +199,18 @@ const ReadOnlyBeneficiaries = ({
             'numberPeopleImpacted',
             <SideBySideReadOnlySection
               firstSection={{
-                heading: t('howManyImpacted'),
+                heading: beneficiariesT('numberPeopleImpacted.question'),
                 copy: numberPeopleImpacted?.toString(),
                 notes: confidenceNote
               }}
               secondSection={{
-                heading: t('levelOfConfidence'),
+                heading: beneficiariesT('estimateConfidence.question'),
                 copy:
                   estimateConfidence &&
-                  translateConfidenceType(estimateConfidence)
+                  beneficiariesT(
+                    `estimateConfidence.options.${estimateConfidence}`,
+                    ''
+                  )
               }}
             />
           )}
@@ -205,15 +218,18 @@ const ReadOnlyBeneficiaries = ({
         {!isViewingFilteredView && (
           <>
             <ReadOnlySection
-              heading={t('howManyImpacted')}
+              heading={beneficiariesT('numberPeopleImpacted.question')}
               copy={numberPeopleImpacted?.toString()}
             />
 
             <ReadOnlySection
-              heading={t('levelOfConfidence')}
+              heading={beneficiariesT('estimateConfidence.question')}
               copy={
                 estimateConfidence &&
-                translateConfidenceType(estimateConfidence)
+                beneficiariesT(
+                  `estimateConfidence.options.${estimateConfidence}`,
+                  ''
+                )
               }
               notes={confidenceNote}
             />
@@ -225,10 +241,12 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'beneficiarySelectionMethod',
           <ReadOnlySection
-            heading={t('chooseBeneficiariesQuestion')}
+            heading={beneficiariesT(
+              'beneficiarySelectionMethod.readonlyQuestion'
+            )}
             list
-            listItems={beneficiarySelectionMethod?.map(
-              translateSelectionMethodType
+            listItems={beneficiarySelectionMethod?.map((type): string =>
+              beneficiariesT(`beneficiarySelectionMethod.options.${type}`)
             )}
             listOtherItem={beneficiarySelectionOther}
             notes={beneficiarySelectionNote}
@@ -244,14 +262,18 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'beneficiarySelectionFrequency',
           <ReadOnlySection
-            heading={t('beneficiaryFrequency')}
+            heading={beneficiariesT('beneficiarySelectionFrequency.question')}
             copy={
               beneficiarySelectionFrequency &&
               (beneficiarySelectionFrequency === FrequencyType.OTHER
-                ? `${translateFrequencyType(
-                    beneficiarySelectionFrequency
+                ? `${beneficiariesT(
+                    `beneficiarySelectionFrequency.options.${beneficiarySelectionFrequency}`,
+                    ''
                   )} \u2014  ${beneficiarySelectionFrequencyOther}`
-                : translateFrequencyType(beneficiarySelectionFrequency))
+                : beneficiariesT(
+                    `beneficiarySelectionFrequency.options.${beneficiarySelectionFrequency}`,
+                    ''
+                  ))
             }
             notes={beneficiarySelectionFrequencyNote}
           />
@@ -262,9 +284,13 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'beneficiaryOverlap',
           <ReadOnlySection
-            heading={t('beneficiaryOverlap')}
+            heading={beneficiariesT('beneficiaryOverlap.question')}
             copy={
-              beneficiaryOverlap && translateOverlapType(beneficiaryOverlap)
+              beneficiaryOverlap &&
+              beneficiariesT(
+                `beneficiaryOverlap.options.${beneficiaryOverlap}`,
+                ''
+              )
             }
             notes={beneficiaryOverlapNote}
           />
@@ -275,7 +301,7 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'precedenceRules',
           <ReadOnlySection
-            heading={t('benficiaryPrecedence')}
+            heading={beneficiariesT('precedenceRules.question')}
             copy={precedenceRules}
           />
         )}
