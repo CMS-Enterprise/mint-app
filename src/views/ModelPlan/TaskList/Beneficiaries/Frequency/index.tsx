@@ -27,6 +27,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import getFrequency from 'queries/Beneficiaries/getFrequency';
 import {
@@ -36,20 +37,25 @@ import {
 } from 'queries/Beneficiaries/types/GetFrequency';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
-import { FrequencyType, OverlapType } from 'types/graphql-global-types';
+import { FrequencyType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  sortOtherEnum,
-  translateFrequencyType,
-  translateOverlapType
-} from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Frequency = () => {
-  const { t } = useTranslation('beneficiaries');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: beneficiariesT } = useTranslation('beneficiaries');
+
+  const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
+    beneficiaryOverlap: beneficiaryOverlapConfig
+  } = usePlanTranslation('beneficiaries');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
@@ -156,18 +162,18 @@ const Frequency = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{beneficiariesMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {beneficiariesMiscT('heading')}
       </PageHeading>
 
       <p
@@ -178,8 +184,9 @@ const Frequency = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -201,19 +208,20 @@ const Frequency = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -235,59 +243,73 @@ const Frequency = () => {
                         error={!!flatErrors.beneficiarySelectionFrequency}
                       >
                         <Label htmlFor="beneficiaries-beneficiarySelectionFrequency">
-                          {t('beneficiaryFrequency')}
+                          {beneficiariesT(
+                            'beneficiarySelectionFrequency.question'
+                          )}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.beneficiarySelectionFrequency}
                         </FieldErrorMsg>
+
                         <Fieldset>
-                          {Object.keys(FrequencyType)
-                            .sort(sortOtherEnum)
-                            .map(key => (
-                              <Fragment key={key}>
-                                <Field
-                                  as={Radio}
-                                  id={`beneficiaries-beneficiarySelectionFrequency-${key}`}
-                                  name="beneficiarySelectionFrequency"
-                                  label={translateFrequencyType(key)}
-                                  value={key}
-                                  checked={
-                                    values.beneficiarySelectionFrequency === key
-                                  }
-                                  onChange={() => {
-                                    setFieldValue(
-                                      'beneficiarySelectionFrequency',
-                                      key
-                                    );
-                                  }}
-                                />
-                                {key === 'OTHER' &&
-                                  values.beneficiarySelectionFrequency ===
-                                    key && (
-                                    <div className="margin-left-4 margin-top-1">
-                                      <Label
-                                        htmlFor="beneficiaries-beneficiary-selection-frequency-other"
-                                        className="text-normal"
-                                      >
-                                        {h('pleaseSpecify')}
-                                      </Label>
-                                      <FieldErrorMsg>
-                                        {
-                                          flatErrors.beneficiarySelectionFrequencyOther
-                                        }
-                                      </FieldErrorMsg>
-                                      <Field
-                                        as={TextAreaField}
-                                        className="maxw-none mint-textarea"
-                                        id="beneficiaries-beneficiary-selection-frequency-other"
-                                        maxLength={5000}
-                                        name="beneficiarySelectionFrequencyOther"
-                                      />
-                                    </div>
-                                  )}
-                              </Fragment>
-                            ))}
+                          {getKeys(
+                            beneficiarySelectionFrequencyConfig.options
+                          ).map(key => (
+                            <Fragment key={key}>
+                              <Field
+                                as={Radio}
+                                id={`beneficiaries-beneficiarySelectionFrequency-${key}`}
+                                name="beneficiarySelectionFrequency"
+                                label={
+                                  beneficiarySelectionFrequencyConfig.options[
+                                    key
+                                  ]
+                                }
+                                value={key}
+                                checked={
+                                  values.beneficiarySelectionFrequency === key
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'beneficiarySelectionFrequency',
+                                    key
+                                  );
+                                }}
+                              />
+
+                              {key === FrequencyType.OTHER &&
+                                values.beneficiarySelectionFrequency ===
+                                  key && (
+                                  <div className="margin-left-4 margin-top-1">
+                                    <Label
+                                      htmlFor="beneficiaries-beneficiary-selection-frequency-other"
+                                      className="text-normal"
+                                    >
+                                      {beneficiariesT(
+                                        'beneficiarySelectionFrequencyOther.question'
+                                      )}
+                                    </Label>
+
+                                    <FieldErrorMsg>
+                                      {
+                                        flatErrors.beneficiarySelectionFrequencyOther
+                                      }
+                                    </FieldErrorMsg>
+
+                                    <Field
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
+                                      id="beneficiaries-beneficiary-selection-frequency-other"
+                                      maxLength={5000}
+                                      name="beneficiarySelectionFrequencyOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          ))}
                         </Fieldset>
+
                         <AddNote
                           id="beneficiaries-beneficiarySelectionFrequency-note"
                           field="beneficiarySelectionFrequencyNote"
@@ -299,7 +321,7 @@ const Frequency = () => {
                         error={!!flatErrors.beneficiaryOverlap}
                       >
                         <Label htmlFor="beneficiaries-overlap">
-                          {t('beneficiaryOverlap')}
+                          {beneficiariesT('beneficiaryOverlap.question')}
                         </Label>
 
                         {itSolutionsStarted && (
@@ -316,16 +338,16 @@ const Frequency = () => {
                         <FieldErrorMsg>
                           {flatErrors.beneficiaryOverlap}
                         </FieldErrorMsg>
+
                         <Fieldset>
-                          {Object.keys(OverlapType)
-                            .sort(sortOtherEnum)
-                            .map(key => (
+                          {getKeys(beneficiaryOverlapConfig.options).map(
+                            key => (
                               <Fragment key={key}>
                                 <Field
                                   as={Radio}
                                   id={`beneficiaries-overlap-${key}`}
                                   name="beneficiariesOverlap"
-                                  label={translateOverlapType(key)}
+                                  label={beneficiaryOverlapConfig.options[key]}
                                   value={key}
                                   checked={values.beneficiaryOverlap === key}
                                   onChange={() => {
@@ -333,8 +355,10 @@ const Frequency = () => {
                                   }}
                                 />
                               </Fragment>
-                            ))}
+                            )
+                          )}
                         </Fieldset>
+
                         <AddNote
                           id="beneficiaries-overlap-note"
                           field="beneficiaryOverlapNote"
@@ -349,14 +373,17 @@ const Frequency = () => {
                           htmlFor="beneficiaries-precedence-rules"
                           className="maxw-none"
                         >
-                          {t('benficiaryPrecedence')}
+                          {beneficiariesT('precedenceRules.question')}
                         </Label>
+
                         <p className="text-base margin-0 line-height-body-3">
-                          {t('benficiaryPrecedenceExtra')}
+                          {beneficiariesT('precedenceRules.hint')}
                         </p>
+
                         <FieldErrorMsg>
                           {flatErrors.precedenceRules}
                         </FieldErrorMsg>
+
                         <Field
                           as={TextAreaField}
                           className="height-15"
@@ -371,7 +398,7 @@ const Frequency = () => {
                         <ReadyForReview
                           id="beneficiaries-status"
                           field="status"
-                          sectionName={t('heading')}
+                          sectionName={beneficiariesMiscT('heading')}
                           status={values.status}
                           setFieldValue={setFieldValue}
                           readyForReviewBy={
@@ -389,24 +416,28 @@ const Frequency = () => {
                             handleFormSubmit('back');
                           }}
                         >
-                          {h('back')}
+                          {miscellaneousT('back')}
                         </Button>
+
                         <Button type="submit" onClick={() => setErrors({})}>
-                          {h('saveAndStartNext')}
+                          {miscellaneousT('saveAndStartNext')}
                         </Button>
                       </div>
+
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
                         onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
+
+                        {miscellaneousT('saveAndReturn')}
                       </Button>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -420,6 +451,7 @@ const Frequency = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={3} totalPages={3} className="margin-y-6" />
     </>
   );

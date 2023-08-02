@@ -247,6 +247,14 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionMethod: TranslationFieldPropertiesWithOptions<SelectionMethodType>;
   beneficiarySelectionNote: TranslationFieldProperties;
   beneficiarySelectionOther: TranslationFieldProperties;
+  // Frequency
+  beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiarySelectionFrequencyOther: TranslationFieldProperties;
+  beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
+  beneficiaryOverlapNote: TranslationFieldProperties;
+  precedenceRules: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 export type TranslationPlan = {

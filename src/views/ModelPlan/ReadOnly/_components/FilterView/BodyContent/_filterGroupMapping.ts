@@ -45,7 +45,9 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'beneficiarySelectionMethod',
       'beneficiarySelectionOther',
       'beneficiarySelectionNote',
-      'beneficiarySelectionFrequency'
+      'beneficiarySelectionFrequency',
+      'beneficiarySelectionFrequencyOther',
+      'beneficiarySelectionFrequencyNote'
     ],
     'ops-eval-and-learning': [
       'benchmarkForPerformance',
@@ -348,6 +350,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'numberPeopleImpacted',
       'estimateConfidence',
       'beneficiaryOverlap',
+      'beneficiaryOverlapNote',
       'precedenceRules'
     ]
   },

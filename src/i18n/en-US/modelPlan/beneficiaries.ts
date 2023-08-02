@@ -154,7 +154,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionMethod',
     goField: 'BeneficiarySelectionMethod',
     dbField: 'beneficiary_selection_method',
-    question: 'How will you choose beneficiaries?',
+    question: 'How will you choose beneficiaries? Select all that apply.',
+    readonlyQuestion: 'How will you choose beneficiaries?',
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected methods',
@@ -175,7 +176,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_other',
     question: 'Please describe the other method for choosing beneficiaries.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi']
   },
   beneficiarySelectionNote: {
     gqlField: 'beneficiarySelectionNote',
@@ -183,7 +185,97 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  beneficiarySelectionFrequency: {
+    gqlField: 'beneficiarySelectionFrequency',
+    goField: 'BeneficiarySelectionFrequency',
+    dbField: 'beneficiary_selection_frequency',
+    question: 'How frequently are beneficiaries chosen?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      ANNUALLY: 'Annually',
+      BIANNUALLY: 'Biannually',
+      MONTHLY: 'Monthly',
+      QUARTERLY: 'Quarterly',
+      ROLLING: 'Rolling',
+      OTHER: 'Other'
+    },
+    filterGroups: ['cmmi']
+  },
+  beneficiarySelectionFrequencyOther: {
+    gqlField: 'beneficiarySelectionFrequencyOther',
+    goField: 'BeneficiarySelectionFrequencyOther',
+    dbField: 'beneficiary_selection_frequency_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  beneficiarySelectionFrequencyNote: {
+    gqlField: 'beneficiarySelectionFrequencyNote',
+    goField: 'BeneficiarySelectionFrequencyNote',
+    dbField: 'beneficiary_selection_frequency_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  beneficiaryOverlap: {
+    gqlField: 'beneficiaryOverlap',
+    goField: 'BeneficiaryOverlap',
+    dbField: 'beneficiary_overlap',
+    question: 'Will the beneficiaries overlap with other models?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      YES_NEED_POLICIES:
+        'Yes, we expect to develop policies to manage the overlaps',
+      YES_NO_ISSUES: 'Yes, and the overlaps would not be an issue',
+      NO: 'No'
+    },
+    filterGroups: ['mdm']
+  },
+  beneficiaryOverlapNote: {
+    gqlField: 'beneficiaryOverlapNote',
+    goField: 'BeneficiaryOverlapNote',
+    dbField: 'beneficiary_overlap_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['mdm']
+  },
+  precedenceRules: {
+    gqlField: 'precedenceRules',
+    goField: 'PrecedenceRules',
+    dbField: 'beneficiary_overlap_note',
+    question:
+      'Are there precedence rules between this model and other model(s)?',
+    hint:
+      'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['mdm', 'oact']
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    question: 'Model Plan status',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      READY:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      IN_PROGRESS:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_REVIEW:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_CLEARANCE:
+        'This section of the Model Plan (Model basics) is ready for review.'
+    }
   }
 };
 
