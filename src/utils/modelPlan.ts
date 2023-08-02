@@ -55,7 +55,7 @@ export const translateTriStateAnswer = (type: string) => {
     case 'NO':
       return i18next.t('draftModelPlan:no');
     case 'TBD':
-      return i18next.t('beneficiaries:beneficiariesOptions.na');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.na');
     default:
       return '';
   }
@@ -374,21 +374,23 @@ export const translateParticipantsType = (type: string) => {
 export const translateBeneficiariesType = (type: string) => {
   switch (type) {
     case 'DISEASE_SPECIFIC':
-      return i18next.t('beneficiaries:beneficiariesOptions.diseaseSpecific');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.diseaseSpecific');
     case 'DUALLY_ELIGIBLE':
-      return i18next.t('beneficiaries:beneficiariesOptions.duallyEligible');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.duallyEligible');
     case 'MEDICAID':
-      return i18next.t('beneficiaries:beneficiariesOptions.medicaid');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.medicaid');
     case 'MEDICARE_ADVANTAGE':
-      return i18next.t('beneficiaries:beneficiariesOptions.medicareAdvantage');
+      return i18next.t(
+        'beneficiariesOld:beneficiariesOptions.medicareAdvantage'
+      );
     case 'MEDICARE_FFS':
-      return i18next.t('beneficiaries:beneficiariesOptions.medicareFfs');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.medicareFfs');
     case 'MEDICARE_PART_D':
-      return i18next.t('beneficiaries:beneficiariesOptions.medicarePartD');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.medicarePartD');
     case 'OTHER':
-      return i18next.t('beneficiaries:beneficiariesOptions.other');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.other');
     case 'NA':
-      return i18next.t('beneficiaries:beneficiariesOptions.na');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.na');
     default:
       return '';
   }
@@ -397,19 +399,19 @@ export const translateBeneficiariesType = (type: string) => {
 export const translateSelectionMethodType = (type: string) => {
   switch (type) {
     case 'HISTORICAL':
-      return i18next.t('beneficiaries:selectionMethod.historical');
+      return i18next.t('beneficiariesOld:selectionMethod.historical');
     case 'PROSPECTIVE':
-      return i18next.t('beneficiaries:selectionMethod.prospective');
+      return i18next.t('beneficiariesOld:selectionMethod.prospective');
     case 'PROVIDER_SIGN_UP':
-      return i18next.t('beneficiaries:selectionMethod.retrospective');
+      return i18next.t('beneficiariesOld:selectionMethod.retrospective');
     case 'RETROSPECTIVE':
-      return i18next.t('beneficiaries:selectionMethod.voluntary');
+      return i18next.t('beneficiariesOld:selectionMethod.voluntary');
     case 'VOLUNTARY':
-      return i18next.t('beneficiaries:selectionMethod.providerSignUp');
+      return i18next.t('beneficiariesOld:selectionMethod.providerSignUp');
     case 'OTHER':
-      return i18next.t('beneficiaries:selectionMethod.other');
+      return i18next.t('beneficiariesOld:selectionMethod.other');
     case 'NA':
-      return i18next.t('beneficiaries:selectionMethod.na');
+      return i18next.t('beneficiariesOld:selectionMethod.na');
     default:
       return '';
   }
@@ -529,13 +531,13 @@ export const translateAnticipatedPaymentFrequencyType = (type: string) => {
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':
-      return i18next.t('beneficiaries:estimateOptions.notAtAll');
+      return i18next.t('beneficiariesOld:estimateOptions.notAtAll');
     case 'SLIGHTLY':
-      return i18next.t('beneficiaries:estimateOptions.slightly');
+      return i18next.t('beneficiariesOld:estimateOptions.slightly');
     case 'FAIRLY':
-      return i18next.t('beneficiaries:estimateOptions.fairly');
+      return i18next.t('beneficiariesOld:estimateOptions.fairly');
     case 'COMPLETELY':
-      return i18next.t('beneficiaries:estimateOptions.completely');
+      return i18next.t('beneficiariesOld:estimateOptions.completely');
     default:
       return '';
   }
@@ -657,17 +659,17 @@ export const translateParticipantIDType = (type: string) => {
 export const translateFrequencyType = (type: string) => {
   switch (type) {
     case 'ANNUALLY':
-      return i18next.t('beneficiaries:frequencyOptions.annually');
+      return i18next.t('beneficiariesOld:frequencyOptions.annually');
     case 'BIANNUALLY':
-      return i18next.t('beneficiaries:frequencyOptions.biannually');
+      return i18next.t('beneficiariesOld:frequencyOptions.biannually');
     case 'QUARTERLY':
-      return i18next.t('beneficiaries:frequencyOptions.quarterly');
+      return i18next.t('beneficiariesOld:frequencyOptions.quarterly');
     case 'MONTHLY':
-      return i18next.t('beneficiaries:frequencyOptions.monthly');
+      return i18next.t('beneficiariesOld:frequencyOptions.monthly');
     case 'ROLLING':
-      return i18next.t('beneficiaries:frequencyOptions.rolling');
+      return i18next.t('beneficiariesOld:frequencyOptions.rolling');
     case 'OTHER':
-      return i18next.t('beneficiaries:frequencyOptions.other');
+      return i18next.t('beneficiariesOld:frequencyOptions.other');
     default:
       return '';
   }
@@ -774,11 +776,11 @@ export const translateProviderLeaveType = (type: string) => {
 export const translateOverlapType = (type: string) => {
   switch (type) {
     case 'YES_NEED_POLICIES':
-      return i18next.t('beneficiaries:overlapOptions.yes');
+      return i18next.t('beneficiariesOld:overlapOptions.yes');
     case 'YES_NO_ISSUES':
-      return i18next.t('beneficiaries:overlapOptions.yesNoIssue');
+      return i18next.t('beneficiariesOld:overlapOptions.yesNoIssue');
     case 'NO':
-      return i18next.t('beneficiaries:overlapOptions.no');
+      return i18next.t('beneficiariesOld:overlapOptions.no');
     default:
       return '';
   }
@@ -1280,11 +1282,13 @@ export const mapMultiSelectOptions = (
 
 // Used to map MultiSelect options from Enums
 export const composeMultiSelectOptions = (
-  translationObject: Record<string, string>
+  translationObject: Record<string, string>,
+  sublabels?: Record<string, string>
 ) =>
   getKeys(translationObject).map(key => ({
     value: key,
-    label: translationObject[key]
+    label: translationObject[key],
+    subLabel: sublabels ? sublabels[key] : null
   }));
 
 // Sort mapped enums to be alphabetical and have 'OTHER' come last

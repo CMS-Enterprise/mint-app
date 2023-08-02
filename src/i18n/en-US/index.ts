@@ -1,5 +1,5 @@
 import basicsOld from './draftModelPlan/basics';
-import beneficiaries from './draftModelPlan/beneficiaries';
+import beneficiariesOld from './draftModelPlan/beneficiaries';
 import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
@@ -18,6 +18,7 @@ import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
+import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import {
   generalCharacteristics,
   generalCharacteristicsMisc
@@ -51,7 +52,6 @@ import termsAndConditions from './termsAndConditions';
 const enUS = {
   accessibilityStatement,
   auth,
-  beneficiaries,
   cookies,
   crtdl,
   discussions,
@@ -80,6 +80,7 @@ const enUS = {
   basicsOld,
   generalCharacteristicsOld,
   participantsAndProvidersOld,
+  beneficiariesOld,
   // New Translation
   modelPlan,
   basics,
@@ -88,6 +89,8 @@ const enUS = {
   generalCharacteristicsMisc,
   participantsAndProviders,
   participantsAndProvidersMisc,
+  beneficiaries,
+  beneficiariesMisc,
   miscellaneous,
   // End new translation
   prepareForClearance,

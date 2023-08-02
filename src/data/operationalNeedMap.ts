@@ -97,9 +97,9 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'beneficiaries/beneficiary-frequency',
     fieldName: 'beneficiaryOverlap',
     parentField: 'beneficiaries',
-    question: 'beneficiaries:beneficiaryOverlap',
+    question: 'beneficiaries:beneficiaryOverlap.question',
     answer: 'translateOverlapType',
-    section: 'beneficiaries'
+    section: 'beneficiariesMisc'
   },
   HELPDESK_SUPPORT: {
     route: 'ops-eval-and-learning',
@@ -107,7 +107,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:helpDesk',
     answer: 'translateBoolean',
-    section: 'beneficiaries'
+    section: 'operationsEvaluationAndLearning'
   },
   IDDOC_SUPPORT: {
     route: 'ops-eval-and-learning',

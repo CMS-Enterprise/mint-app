@@ -8,6 +8,7 @@ import {
   AgreementType,
   AlternativePaymentModelType,
   AuthorityAllowance,
+  BeneficiariesType,
   CMMIGroup,
   CMSCenter,
   ConfidenceType,
@@ -27,6 +28,7 @@ import {
   ProviderLeaveType,
   RecruitmentType,
   TaskStatus,
+  TriStateAnswer,
   WaiverType
 } from './graphql-global-types';
 
@@ -226,9 +228,23 @@ export type TranslationParticipantsAndProviders = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+// Beneficiaries
+export type TranslationBeneficiaries = {
+  beneficiaries: TranslationFieldPropertiesWithOptions<BeneficiariesType>;
+  beneficiariesOther: TranslationFieldProperties;
+  beneficiariesNote: TranslationFieldProperties;
+  treatDualElligibleDifferent: TranslationFieldPropertiesWithOptions<TriStateAnswer>;
+  treatDualElligibleDifferentHow: TranslationFieldProperties;
+  treatDualElligibleDifferentNote: TranslationFieldProperties;
+  excludeCertainCharacteristics: TranslationFieldPropertiesWithOptions<TriStateAnswer>;
+  excludeCertainCharacteristicsCriteria: TranslationFieldProperties;
+  excludeCertainCharacteristicsNote: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
   generalCharacteristics: TranslationGeneralCharacteristics;
   participantsAndProviders: TranslationParticipantsAndProviders;
+  beneficiaries: TranslationBeneficiaries;
 };

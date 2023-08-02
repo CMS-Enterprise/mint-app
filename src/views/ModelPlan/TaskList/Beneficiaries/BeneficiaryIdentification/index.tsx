@@ -28,6 +28,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetBeneficiaryIdentification from 'queries/Beneficiaries/getBeneficiaryIndentification';
 import {
   GetBeneficiaryIdentification as BeneficiaryIdentificationType,
@@ -37,14 +38,25 @@ import {
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import { sortOtherEnum, translateBeneficiariesType } from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const BeneficiaryIdentification = () => {
-  const { t } = useTranslation('beneficiaries');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: beneficiariesT } = useTranslation('beneficiaries');
+
+  const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    beneficiaries: beneficiariesConfig,
+    treatDualElligibleDifferent: treatDualElligibleDifferentConfig,
+    excludeCertainCharacteristics: excludeCertainCharacteristicsConfig
+  } = usePlanTranslation('beneficiaries');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<BeneficiaryIdentificationFormType>>(
@@ -107,15 +119,6 @@ const BeneficiaryIdentification = () => {
       });
   };
 
-  const mappedBeneficiariesType = Object.keys(BeneficiariesType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateBeneficiariesType(key),
-      subLabel:
-        key === BeneficiariesType.DISEASE_SPECIFIC ? t('diseaseSubLabel') : null
-    }));
-
   const initialValues: BeneficiaryIdentificationFormType = {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
@@ -140,18 +143,18 @@ const BeneficiaryIdentification = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{beneficiariesMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {beneficiariesMiscT('heading')}
       </PageHeading>
 
       <p
@@ -163,7 +166,7 @@ const BeneficiaryIdentification = () => {
         </Trans>
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -187,17 +190,17 @@ const BeneficiaryIdentification = () => {
           const flatErrors = flattenErrors(errors);
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -224,8 +227,9 @@ const BeneficiaryIdentification = () => {
                             htmlFor="beneficiaries-beneficiaries"
                             id="label-beneficiaries-beneficiaries"
                           >
-                            {t('beneficiaries')}
+                            {beneficiariesT('beneficiaries.question')}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.beneficiaries}
                           </FieldErrorMsg>
@@ -235,8 +239,13 @@ const BeneficiaryIdentification = () => {
                             id="beneficiaries-beneficiaries"
                             name="beneficiaries"
                             ariaLabel="label-beneficiaries-beneficiaries"
-                            options={mappedBeneficiariesType}
-                            selectedLabel={t('selectedGroup')}
+                            options={composeMultiSelectOptions(
+                              beneficiariesConfig.options,
+                              beneficiariesConfig.optionsLabels
+                            )}
+                            selectedLabel={beneficiariesT(
+                              'beneficiaries.multiSelectLabel'
+                            )}
                             onChange={(value: string[] | []) => {
                               setFieldValue('beneficiaries', value);
                             }}
@@ -254,11 +263,13 @@ const BeneficiaryIdentification = () => {
                                 htmlFor="beneficiaries-other"
                                 className="text-normal"
                               >
-                                {t('beneficiariesOther')}
+                                {beneficiariesT('beneficiariesOther.question')}
                               </Label>
+
                               <FieldErrorMsg>
                                 {flatErrors.beneficiariesOther}
                               </FieldErrorMsg>
+
                               <Field
                                 as={TextField}
                                 error={flatErrors.beneficiariesOther}
@@ -273,7 +284,7 @@ const BeneficiaryIdentification = () => {
                             BeneficiariesType.NA
                           ) && (
                             <Alert type="info" slim>
-                              {t('beneficiariesNA')}
+                              {beneficiariesMiscT('beneficiariesNA')}
                             </Alert>
                           )}
 
@@ -289,17 +300,23 @@ const BeneficiaryIdentification = () => {
                           className="margin-y-4 margin-bottom-8"
                         >
                           <Label htmlFor="beneficiaries-dual-eligibility">
-                            {t('dualEligibility')}
+                            {beneficiariesT(
+                              'treatDualElligibleDifferent.question'
+                            )}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.treatDualElligibleDifferent}
                           </FieldErrorMsg>
+
                           <Fieldset>
                             <Field
                               as={Radio}
                               id="beneficiaries-dual-eligibility"
                               name="treatDualElligibleDifferent"
-                              label={h('yes')}
+                              label={
+                                treatDualElligibleDifferentConfig.options.YES
+                              }
                               value="TRUE"
                               checked={
                                 values.treatDualElligibleDifferent ===
@@ -326,11 +343,15 @@ const BeneficiaryIdentification = () => {
                                   htmlFor="beneficiaries-dual-eligibility-how"
                                   className="text-normal"
                                 >
-                                  {h('howSo')}
+                                  {beneficiariesT(
+                                    'treatDualElligibleDifferentHow.question'
+                                  )}
                                 </Label>
+
                                 <FieldErrorMsg>
                                   {flatErrors.treatDualElligibleDifferentHow}
                                 </FieldErrorMsg>
+
                                 <Field
                                   as={TextAreaField}
                                   className="height-15"
@@ -343,11 +364,14 @@ const BeneficiaryIdentification = () => {
                                 />
                               </FieldGroup>
                             )}
+
                             <Field
                               as={Radio}
                               id="beneficiaries-dual-eligibility-no"
                               name="treatDualElligibleDifferent"
-                              label={h('no')}
+                              label={
+                                treatDualElligibleDifferentConfig.options.NO
+                              }
                               value="FALSE"
                               checked={
                                 values.treatDualElligibleDifferent ===
@@ -360,11 +384,14 @@ const BeneficiaryIdentification = () => {
                                 );
                               }}
                             />
+
                             <Field
                               as={Radio}
                               id="beneficiaries-dual-eligibility-tbd"
                               name="treatDualElligibleDifferent"
-                              label={t('beneficiariesOptions.na')}
+                              label={
+                                treatDualElligibleDifferentConfig.options.TBD
+                              }
                               value="TBD"
                               checked={
                                 values.treatDualElligibleDifferent ===
@@ -378,6 +405,7 @@ const BeneficiaryIdentification = () => {
                               }}
                             />
                           </Fieldset>
+
                           <AddNote
                             id="beneficiaries-dual-eligibility-note"
                             field="treatDualElligibleDifferentNote"
@@ -390,17 +418,23 @@ const BeneficiaryIdentification = () => {
                           className="margin-y-4 margin-bottom-8"
                         >
                           <Label htmlFor="beneficiaries-exclude">
-                            {t('excluded')}
+                            {beneficiariesT(
+                              'excludeCertainCharacteristics.question'
+                            )}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.excludeCertainCharacteristics}
                           </FieldErrorMsg>
+
                           <Fieldset>
                             <Field
                               as={Radio}
                               id="beneficiaries-exclude"
                               name="excludeCertainCharacteristics"
-                              label={h('yes')}
+                              label={
+                                excludeCertainCharacteristicsConfig.options.YES
+                              }
                               value="TRUE"
                               checked={
                                 values.excludeCertainCharacteristics ===
@@ -427,13 +461,17 @@ const BeneficiaryIdentification = () => {
                                   htmlFor="beneficiaries-exclude-criteria"
                                   className="text-normal"
                                 >
-                                  {t('excludedNestedQuestion')}
+                                  {beneficiariesT(
+                                    'excludeCertainCharacteristicsCriteria.question'
+                                  )}
                                 </Label>
+
                                 <FieldErrorMsg>
                                   {
                                     flatErrors.excludeCertainCharacteristicsCriteria
                                   }
                                 </FieldErrorMsg>
+
                                 <Field
                                   as={TextAreaField}
                                   className="height-15"
@@ -451,7 +489,9 @@ const BeneficiaryIdentification = () => {
                               as={Radio}
                               id="beneficiaries-exclude-no"
                               name="excludeCertainCharacteristics"
-                              label={h('no')}
+                              label={
+                                excludeCertainCharacteristicsConfig.options.NO
+                              }
                               value="FALSE"
                               checked={
                                 values.excludeCertainCharacteristics ===
@@ -464,11 +504,14 @@ const BeneficiaryIdentification = () => {
                                 );
                               }}
                             />
+
                             <Field
                               as={Radio}
                               id="beneficiaries-exclude-tbd"
                               name="excludeCertainCharacteristics"
-                              label={t('beneficiariesOptions.na')}
+                              label={
+                                excludeCertainCharacteristicsConfig.options.TBD
+                              }
                               value="TBD"
                               checked={
                                 values.excludeCertainCharacteristics ===
@@ -482,6 +525,7 @@ const BeneficiaryIdentification = () => {
                               }}
                             />
                           </Fieldset>
+
                           <AddNote
                             id="beneficiaries-exclude-note"
                             field="excludeCertainCharacteristicsNote"
@@ -490,9 +534,10 @@ const BeneficiaryIdentification = () => {
 
                         <div className="margin-top-6 margin-bottom-3">
                           <Button type="submit" onClick={() => setErrors({})}>
-                            {h('next')}
+                            {miscellaneousT('next')}
                           </Button>
                         </div>
+
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
@@ -502,13 +547,15 @@ const BeneficiaryIdentification = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {h('saveAndReturn')}
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -522,6 +569,7 @@ const BeneficiaryIdentification = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={1} totalPages={3} className="margin-y-6" />
     </>
   );
