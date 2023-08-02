@@ -28,6 +28,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import getPeopleImpacted from 'queries/Beneficiaries/getPeopleImpacted';
 import {
   GetPeopleImpacted as PeopleImpactedType,
@@ -36,22 +37,25 @@ import {
 } from 'queries/Beneficiaries/types/GetPeopleImpacted';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
-import {
-  ConfidenceType,
-  SelectionMethodType
-} from 'types/graphql-global-types';
+import { SelectionMethodType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  sortOtherEnum,
-  translateConfidenceType,
-  translateSelectionMethodType
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const PeopleImpact = () => {
-  const { t } = useTranslation('beneficiaries');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: beneficiariesT } = useTranslation('beneficiaries');
+
+  const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    estimateConfidence: estimateConfidenceConfig,
+    beneficiarySelectionMethod: beneficiarySelectionMethodConfig
+  } = usePlanTranslation('beneficiaries');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
@@ -110,13 +114,6 @@ const PeopleImpact = () => {
       });
   };
 
-  const mappedSelectionMethodType = Object.keys(SelectionMethodType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateSelectionMethodType(key)
-    }));
-
   const initialValues: PeopleImpactedFormType = {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
@@ -137,18 +134,18 @@ const PeopleImpact = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{beneficiariesMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {beneficiariesMiscT('heading')}
       </PageHeading>
 
       <p
@@ -159,8 +156,9 @@ const PeopleImpact = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -182,13 +180,14 @@ const PeopleImpact = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -217,11 +216,13 @@ const PeopleImpact = () => {
                           error={!!flatErrors.numberPeopleImpacted}
                         >
                           <Label htmlFor="expected-people-impacted">
-                            {t('howManyImpacted')}
+                            {beneficiariesT('numberPeopleImpacted.question')}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.numberPeopleImpacted}
                           </FieldErrorMsg>
+
                           <Field
                             as={RangeInput}
                             className="maxw-none width-full"
@@ -240,19 +241,24 @@ const PeopleImpact = () => {
                               );
                             }}
                           />
+
                           <div className="display-flex mint-header__basic">
-                            <span>{t('zero')}</span>
-                            <span>{t('tenThousand')}</span>
+                            <span>{beneficiariesMiscT('zero')}</span>
+
+                            <span>{beneficiariesMiscT('tenThousand')}</span>
                           </div>
+
                           <Label
                             htmlFor="expected-people-impacted"
                             className="text-normal"
                           >
-                            {t('numberOfPeopleImpacted')}
+                            {beneficiariesMiscT('numberOfPeopleImpacted')}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.numberPeopleImpacted}
                           </FieldErrorMsg>
+
                           <Field
                             as={TextInput}
                             type="number"
@@ -276,32 +282,32 @@ const PeopleImpact = () => {
                             htmlFor="beneficiaries-impact-estimateConfidence"
                             className="text-normal"
                           >
-                            {t('levelOfConfidence')}
+                            {beneficiariesT('estimateConfidence.question')}
                           </Label>
+
                           <FieldErrorMsg>
-                            {flatErrors.participantsCurrentlyInModels}
+                            {flatErrors.estimateConfidence}
                           </FieldErrorMsg>
+
                           <Fieldset>
-                            {[
-                              ConfidenceType.NOT_AT_ALL,
-                              ConfidenceType.SLIGHTLY,
-                              ConfidenceType.FAIRLY,
-                              ConfidenceType.COMPLETELY
-                            ].map(key => (
-                              <Field
-                                as={Radio}
-                                key={key}
-                                id={`beneficiaries-impact-confidence-${key}`}
-                                name="participantsCurrentlyInModels"
-                                label={translateConfidenceType(key)}
-                                value={key}
-                                checked={values.estimateConfidence === key}
-                                onChange={() => {
-                                  setFieldValue('estimateConfidence', key);
-                                }}
-                              />
-                            ))}
+                            {getKeys(estimateConfidenceConfig.options).map(
+                              key => (
+                                <Field
+                                  as={Radio}
+                                  key={key}
+                                  id={`beneficiaries-impact-confidence-${key}`}
+                                  name="estimateConfidence"
+                                  label={estimateConfidenceConfig.options[key]}
+                                  value={key}
+                                  checked={values.estimateConfidence === key}
+                                  onChange={() => {
+                                    setFieldValue('estimateConfidence', key);
+                                  }}
+                                />
+                              )
+                            )}
                           </Fieldset>
+
                           <AddNote
                             id="beneficiaries-impact-confidence-note"
                             field="confidenceNote"
@@ -317,8 +323,11 @@ const PeopleImpact = () => {
                             htmlFor="beneficiaries-chooseBeneficiaries"
                             id="label-beneficiaries-chooseBeneficiaries"
                           >
-                            {t('chooseBeneficiaries')}
+                            {beneficiariesT(
+                              'beneficiarySelectionMethod.question'
+                            )}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.beneficiarySelectionMethod}
                           </FieldErrorMsg>
@@ -328,8 +337,12 @@ const PeopleImpact = () => {
                             id="beneficiaries-chooseBeneficiaries"
                             name="beneficiarySelectionMethod"
                             ariaLabel="label-beneficiaries-chooseBeneficiaries"
-                            options={mappedSelectionMethodType}
-                            selectedLabel={t('selectedMethods')}
+                            options={composeMultiSelectOptions(
+                              beneficiarySelectionMethodConfig.options
+                            )}
+                            selectedLabel={beneficiariesT(
+                              'beneficiarySelectionMethod.multiSelectLabel'
+                            )}
                             onChange={(value: string[] | []) => {
                               setFieldValue(
                                 'beneficiarySelectionMethod',
@@ -352,11 +365,15 @@ const PeopleImpact = () => {
                                 htmlFor="beneficiaries-choose-beneficiaries-other"
                                 className="text-normal"
                               >
-                                {t('selectionMethodOther')}
+                                {beneficiariesT(
+                                  'beneficiarySelectionOther.question'
+                                )}
                               </Label>
+
                               <FieldErrorMsg>
                                 {flatErrors.beneficiarySelectionOther}
                               </FieldErrorMsg>
+
                               <Field
                                 as={TextField}
                                 error={flatErrors.beneficiarySelectionOther}
@@ -381,12 +398,14 @@ const PeopleImpact = () => {
                               handleFormSubmit('back');
                             }}
                           >
-                            {h('back')}
+                            {miscellaneousT('back')}
                           </Button>
+
                           <Button type="submit" onClick={() => setErrors({})}>
-                            {h('next')}
+                            {miscellaneousT('next')}
                           </Button>
                         </div>
+
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
@@ -396,13 +415,15 @@ const PeopleImpact = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {h('saveAndReturn')}
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -416,6 +437,7 @@ const PeopleImpact = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={2} totalPages={3} className="margin-y-6" />
     </>
   );

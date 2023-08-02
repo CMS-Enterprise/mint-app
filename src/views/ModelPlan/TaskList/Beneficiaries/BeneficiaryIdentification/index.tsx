@@ -165,6 +165,7 @@ const BeneficiaryIdentification = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {miscellaneousT('helpText')}
       </p>
@@ -188,6 +189,7 @@ const BeneficiaryIdentification = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {getKeys(errors).length > 0 && (
@@ -207,6 +209,7 @@ const BeneficiaryIdentification = () => {
                   })}
                 </ErrorAlert>
               )}
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap className="beneficiaries__info">
                   <Grid desktop={{ col: 6 }}>

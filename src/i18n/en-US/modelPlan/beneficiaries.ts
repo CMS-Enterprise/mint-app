@@ -30,7 +30,8 @@ export const beneficiaries: TranslationBeneficiaries = {
       MEDICARE_PART_D: '',
       NA: '',
       OTHER: ''
-    }
+    },
+    filterGroups: ['mdm']
   },
   beneficiariesOther: {
     gqlField: 'beneficiariesOther',
@@ -38,7 +39,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiaries_other',
     question: 'Please describe the other groups this model will impact.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['mdm']
   },
   beneficiariesNote: {
     gqlField: 'beneficiariesNote',
@@ -46,7 +48,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiaries_other',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['mdm']
   },
   treatDualElligibleDifferent: {
     gqlField: 'treatDualElligibleDifferent',
@@ -60,7 +63,8 @@ export const beneficiaries: TranslationBeneficiaries = {
       YES: 'Yes',
       NO: 'No',
       TBD: 'Not applicable'
-    }
+    },
+    filterGroups: ['iddoc', 'pbg']
   },
   treatDualElligibleDifferentHow: {
     gqlField: 'treatDualElligibleDifferentHow',
@@ -68,7 +72,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'treat_dual_elligible_different',
     question: 'How so?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   },
   treatDualElligibleDifferentNote: {
     gqlField: 'treatDualElligibleDifferentNote',
@@ -76,7 +81,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'treat_dual_elligible_different_note',
     question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   },
   excludeCertainCharacteristics: {
     gqlField: 'excludeCertainCharacteristics',
@@ -90,7 +96,8 @@ export const beneficiaries: TranslationBeneficiaries = {
       YES: 'Yes',
       NO: 'No',
       TBD: 'Not applicable'
-    }
+    },
+    filterGroups: ['iddoc', 'pbg']
   },
   excludeCertainCharacteristicsCriteria: {
     gqlField: 'excludeCertainCharacteristicsCriteria',
@@ -98,12 +105,82 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'exclude_certain_characteristics_criteria',
     question: 'What are the exclusionary criteria?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   },
   excludeCertainCharacteristicsNote: {
     gqlField: 'excludeCertainCharacteristicsNote',
     goField: 'ExcludeCertainCharacteristicsNote',
     dbField: 'exclude_certain_characteristics_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
+  },
+  numberPeopleImpacted: {
+    gqlField: 'numberPeopleImpacted',
+    goField: 'NumberPeopleImpacted',
+    dbField: 'number_people_impacted',
+    question: 'How many people do you think will be impacted by this model?',
+    dataType: 'number',
+    formType: 'rangeInput',
+    filterGroups: ['mdm']
+  },
+  estimateConfidence: {
+    gqlField: 'estimateConfidence',
+    goField: 'EstimateConfidence',
+    dbField: 'estimate_confidence',
+    question: 'What is your level of confidence on this estimate?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      NOT_AT_ALL: 'Not at all confident',
+      SLIGHTLY: 'Slightly confident',
+      FAIRLY: 'Fairly confident',
+      COMPLETELY: 'Completely confident'
+    },
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc', 'mdm']
+  },
+  confidenceNote: {
+    gqlField: 'confidenceNote',
+    goField: 'ConfidenceNote',
+    dbField: 'confidence_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
+  },
+  beneficiarySelectionMethod: {
+    gqlField: 'beneficiarySelectionMethod',
+    goField: 'BeneficiarySelectionMethod',
+    dbField: 'beneficiary_selection_method',
+    question: 'How will you choose beneficiaries?',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    multiSelectLabel: 'Selected methods',
+    options: {
+      HISTORICAL: 'Historical claims',
+      PROSPECTIVE: 'Assign/capture - prospective',
+      RETROSPECTIVE: 'Assign/capture - retrospective',
+      VOLUNTARY: 'Voluntary alignment',
+      PROVIDER_SIGN_UP: 'Beneficiary will sign up through their provider',
+      OTHER: 'Other',
+      NA: 'Not applicable'
+    },
+    filterGroups: ['cmmi']
+  },
+  beneficiarySelectionOther: {
+    gqlField: 'beneficiarySelectionOther',
+    goField: 'BeneficiarySelectionOther',
+    dbField: 'beneficiary_selection_other',
+    question: 'Please describe the other method for choosing beneficiaries.',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  beneficiarySelectionNote: {
+    gqlField: 'beneficiarySelectionNote',
+    goField: 'BeneficiarySelectionNote',
+    dbField: 'beneficiary_selection_note',
     question: 'Notes',
     dataType: 'string',
     formType: 'textarea'
@@ -115,7 +192,10 @@ export const beneficiariesMisc = {
   clearanceHeading: 'Review beneficiciaries',
   breadcrumb: 'Beneficiaries',
   beneficiariesNA:
-    'If you will not have beneficiaries, you can skip the rest of the questions in this section. Feel free to add any additional notes or details that would be helpful to others.'
+    'If you will not have beneficiaries, you can skip the rest of the questions in this section. Feel free to add any additional notes or details that would be helpful to others.',
+  numberOfPeopleImpacted: 'Number of people',
+  zero: '0',
+  tenThousand: '10,000+'
 };
 
 export default beneficiaries;

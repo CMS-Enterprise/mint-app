@@ -27,6 +27,7 @@ import {
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
+  SelectionMethodType,
   TaskStatus,
   TriStateAnswer,
   WaiverType
@@ -239,6 +240,13 @@ export type TranslationBeneficiaries = {
   excludeCertainCharacteristics: TranslationFieldPropertiesWithOptions<TriStateAnswer>;
   excludeCertainCharacteristicsCriteria: TranslationFieldProperties;
   excludeCertainCharacteristicsNote: TranslationFieldProperties;
+  // People Impact
+  numberPeopleImpacted: TranslationFieldProperties;
+  estimateConfidence: TranslationFieldPropertiesWithOptions<ConfidenceType>;
+  confidenceNote: TranslationFieldProperties;
+  beneficiarySelectionMethod: TranslationFieldPropertiesWithOptions<SelectionMethodType>;
+  beneficiarySelectionNote: TranslationFieldProperties;
+  beneficiarySelectionOther: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

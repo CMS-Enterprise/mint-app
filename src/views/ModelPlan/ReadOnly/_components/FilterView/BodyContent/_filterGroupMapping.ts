@@ -43,6 +43,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     beneficiaries: [
       'beneficiarySelectionMethod',
+      'beneficiarySelectionOther',
+      'beneficiarySelectionNote',
       'beneficiarySelectionFrequency'
     ],
     'ops-eval-and-learning': [
@@ -224,7 +226,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     beneficiaries: [
       'treatDualElligibleDifferent',
-      'excludeCertainCharacteristics'
+      'treatDualElligibleDifferentHow',
+      'treatDualElligibleDifferentNote',
+      'excludeCertainCharacteristics',
+      'excludeCertainCharacteristicsCriteria',
+      'excludeCertainCharacteristicsNote'
     ],
     'ops-eval-and-learning': [
       'contractorSupport',
@@ -305,7 +311,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     beneficiaries: [
       'treatDualElligibleDifferent',
-      'excludeCertainCharacteristics'
+      'treatDualElligibleDifferentHow',
+      'treatDualElligibleDifferentNote',
+      'excludeCertainCharacteristics',
+      'excludeCertainCharacteristicsCriteria',
+      'excludeCertainCharacteristicsNote'
     ],
     'ops-eval-and-learning': [
       'contractorSupport',
@@ -333,6 +343,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: ['nameHistory'],
     beneficiaries: [
       'beneficiaries',
+      'beneficiariesOther',
+      'beneficiariesNote',
       'numberPeopleImpacted',
       'estimateConfidence',
       'beneficiaryOverlap',
