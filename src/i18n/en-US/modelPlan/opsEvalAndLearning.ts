@@ -408,6 +408,166 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
+  },
+  benchmarkForPerformance: {
+    gqlField: 'benchmarkForPerformance',
+    goField: 'BenchmarkForPerformance',
+    dbField: 'benchmark_for_performance',
+    question: 'Are data flow diagrams needed?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      YES_RECONCILE: 'Yes, and we will reconcile actual performance against it',
+      YES_NO_RECONCILE:
+        'Yes, but we will not reconcile actual performance against it',
+      NO: 'No'
+    },
+    filterGroups: ['cmmi']
+  },
+  benchmarkForPerformanceNote: {
+    gqlField: 'benchmarkForPerformanceNote',
+    goField: 'BenchmarkForPerformanceNote',
+    dbField: 'benchmark_for_performance_note',
+    question: 'Are data flow diagrams needed?',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  computePerformanceScores: {
+    gqlField: 'computePerformanceScores',
+    goField: 'ComputePerformanceScores',
+    dbField: 'compute_performance_scores',
+    question: 'Will you compute performance scores?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['cmmi']
+  },
+  computePerformanceScoresNote: {
+    gqlField: 'computePerformanceScoresNote',
+    goField: 'ComputePerformanceScoresNote',
+    dbField: 'compute_performance_scores_note',
+    question: 'Are data flow diagrams needed?',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  riskAdjustPerformance: {
+    gqlField: 'riskAdjustPerformance',
+    goField: 'RiskAdjustPerformance',
+    dbField: 'risk_adjust_performance',
+    question: 'Performance Scores',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['cmmi']
+  },
+  riskAdjustFeedback: {
+    gqlField: 'riskAdjustFeedback',
+    goField: 'RiskAdjustFeedback',
+    dbField: 'risk_adjust_feedback',
+    question: 'Feedback Results',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  riskAdjustPayments: {
+    gqlField: 'riskAdjustPayments',
+    goField: 'RiskAdjustPayments',
+    dbField: 'risk_adjust_payments',
+    question: 'Payments',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['cmmi']
+  },
+  riskAdjustOther: {
+    gqlField: 'riskAdjustOther',
+    goField: 'RiskAdjustOther',
+    dbField: 'risk_adjust_other',
+    question: 'Others',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  riskAdjustNote: {
+    gqlField: 'riskAdjustNote',
+    goField: 'RiskAdjustNote',
+    dbField: 'risk_adjust_note',
+    question: 'Are data flow diagrams needed?',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  appealPerformance: {
+    gqlField: 'appealPerformance',
+    goField: 'AppealPerformance',
+    dbField: 'appeal_performance',
+    question: 'Performance Scores',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  appealFeedback: {
+    gqlField: 'appealFeedback',
+    goField: 'AppealFeedback',
+    dbField: 'appeal_feedback',
+    question: 'Feedback Results',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  appealPayments: {
+    gqlField: 'appealPayments',
+    goField: 'AppealPayments',
+    dbField: 'appeal_payments',
+    question: 'Payments',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  appealOther: {
+    gqlField: 'appealOther',
+    goField: 'AppealOther',
+    dbField: 'appeal_other',
+    question: 'Others',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  appealNote: {
+    gqlField: 'appealNote',
+    goField: 'AppealNote',
+    dbField: 'appeal_note',
+    question: 'Are data flow diagrams needed?',
+    dataType: 'string',
+    formType: 'textarea'
   }
 };
 
@@ -427,7 +587,10 @@ export const opsEvalAndLearningMisc = {
     'SSM request to begin analysis at least 1 year before implementation',
   dataMonitoring: 'Data monitoring questions',
   dataMonitoringContinued: 'Data monitoring questions continued',
-  participantAppeal: 'Will participants be able to appeal the following?'
+  participantAppeal: 'Will participants be able to appeal the following?',
+  riskAdjustments: 'Will you make risk adjustments to the following?',
+  appealsWarning:
+    'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.'
 };
 
 export default opsEvalAndLearning;

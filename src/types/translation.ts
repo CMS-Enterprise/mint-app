@@ -9,6 +9,7 @@ import {
   AgreementType,
   AlternativePaymentModelType,
   AuthorityAllowance,
+  BenchmarkForPerformanceType,
   BeneficiariesType,
   CMMIGroup,
   CMSCenter,
@@ -304,6 +305,21 @@ export type TranslationOpsEvalAndLearning = {
   produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptions<Bool>;
   fileNamingConventions: TranslationFieldProperties;
   dataMonitoringNote: TranslationFieldProperties;
+  // Performance
+  benchmarkForPerformance: TranslationFieldPropertiesWithOptions<BenchmarkForPerformanceType>;
+  benchmarkForPerformanceNote: TranslationFieldProperties;
+  computePerformanceScores: TranslationFieldPropertiesWithOptions<Bool>;
+  computePerformanceScoresNote: TranslationFieldProperties;
+  riskAdjustPerformance: TranslationFieldPropertiesWithOptions<Bool>;
+  riskAdjustFeedback: TranslationFieldPropertiesWithOptions<Bool>;
+  riskAdjustPayments: TranslationFieldPropertiesWithOptions<Bool>;
+  riskAdjustOther: TranslationFieldPropertiesWithOptions<Bool>;
+  riskAdjustNote: TranslationFieldProperties;
+  appealPerformance: TranslationFieldPropertiesWithOptions<Bool>;
+  appealFeedback: TranslationFieldPropertiesWithOptions<Bool>;
+  appealPayments: TranslationFieldPropertiesWithOptions<Bool>;
+  appealOther: TranslationFieldPropertiesWithOptions<Bool>;
+  appealNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

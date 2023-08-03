@@ -51,8 +51,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     'ops-eval-and-learning': [
       'benchmarkForPerformance',
+      'benchmarkForPerformanceNote',
       'computePerformanceScores',
+      'computePerformanceScoresNote',
       'riskAdjustPerformance',
+      'riskAdjustNote',
       'riskAdjustPayments',
       'dataNeededForMonitoring',
       'dataToSendParticicipants',
