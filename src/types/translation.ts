@@ -20,6 +20,7 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  MonitoringFileType,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRiskType,
@@ -276,6 +277,24 @@ export type TranslationOpsEvalAndLearning = {
   contractorSupportNote: TranslationFieldProperties;
   iddocSupport: TranslationFieldPropertiesWithOptions<Bool>;
   iddocSupportNote: TranslationFieldProperties;
+  // IDDOC
+  technicalContactsIdentified: TranslationFieldPropertiesWithOptions<Bool>;
+  technicalContactsIdentifiedDetail: TranslationFieldProperties;
+  technicalContactsIdentifiedNote: TranslationFieldProperties;
+  captureParticipantInfo: TranslationFieldPropertiesWithOptions<Bool>;
+  captureParticipantInfoNote: TranslationFieldProperties;
+  icdOwner: TranslationFieldProperties;
+  draftIcdDueDate: TranslationFieldProperties;
+  icdNote: TranslationFieldProperties;
+  // IDDOC Testing
+  uatNeeds: TranslationFieldProperties;
+  stcNeeds: TranslationFieldProperties;
+  testingTimelines: TranslationFieldProperties;
+  testingNote: TranslationFieldProperties;
+  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptions<MonitoringFileType>;
+  dataMonitoringFileOther: TranslationFieldProperties;
+  dataResponseType: TranslationFieldProperties;
+  dataResponseFileFrequency: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

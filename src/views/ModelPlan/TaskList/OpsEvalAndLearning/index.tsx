@@ -111,8 +111,8 @@ export const isQualityMeasures = (
 export const OpsEvalAndLearningContent = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
 
-  const { t: opsEvalAndLearningsMiscT } = useTranslation(
-    'opsEvalAndLearningsMisc'
+  const { t: opsEvalAndLearningMiscT } = useTranslation(
+    'opsEvalAndLearningMisc'
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
@@ -244,12 +244,10 @@ export const OpsEvalAndLearningContent = () => {
             <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>
-          {opsEvalAndLearningsMiscT('breadcrumb')}
-        </Breadcrumb>
+        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {opsEvalAndLearningsMiscT('heading')}
+        {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
 
       <p
@@ -616,7 +614,7 @@ export const OpsEvalAndLearningContent = () => {
                     </p>
 
                     <p className="text-base margin-y-1 margin-top-2">
-                      {miscellaneousT('additionalQuestionsInfo')}
+                      {opsEvalAndLearningMiscT('additionalQuestionsInfo')}
                     </p>
 
                     <FieldErrorMsg>{flatErrors.iddocSupport}</FieldErrorMsg>

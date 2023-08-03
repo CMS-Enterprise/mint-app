@@ -163,6 +163,168 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
+  },
+  technicalContactsIdentified: {
+    gqlField: 'technicalContactsIdentified',
+    goField: 'TechnicalContactsIdentified',
+    dbField: 'technical_contacts_identified',
+    question: 'Are technical contacts identified?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc']
+  },
+  technicalContactsIdentifiedDetail: {
+    gqlField: 'technicalContactsIdentifiedDetail',
+    goField: 'TechnicalContactsIdentifiedDetail',
+    dbField: 'technical_contacts_identified_detail',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  technicalContactsIdentifiedNote: {
+    gqlField: 'technicalContactsIdentifiedNote',
+    goField: 'TechnicalContactsIdentifiedNote',
+    dbField: 'technical_contacts_identified_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  captureParticipantInfo: {
+    gqlField: 'captureParticipantInfo',
+    goField: 'CaptureParticipantInfo',
+    dbField: 'capture_participant_info',
+    question: 'Will you capture participant information?',
+    hint:
+      'This means the participant record for a model would be included in the ACO-OS Entity File.',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc']
+  },
+  captureParticipantInfoNote: {
+    gqlField: 'captureParticipantInfoNote',
+    goField: 'CaptureParticipantInfoNote',
+    dbField: 'capture_participant_info',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  icdOwner: {
+    gqlField: 'icdOwner',
+    goField: 'IcdOwner',
+    dbField: 'icd_owner',
+    question: 'ICD owner',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['iddoc']
+  },
+  draftIcdDueDate: {
+    gqlField: 'draftIcdDueDate',
+    goField: 'DraftIcdDueDate',
+    dbField: 'draft_icd_due_date',
+    question: 'Draft ICD required by',
+    dataType: 'date',
+    formType: 'datePicker',
+    filterGroups: ['iddoc']
+  },
+  icdNote: {
+    gqlField: 'icdNote',
+    goField: 'IcdNote',
+    dbField: 'icd_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  uatNeeds: {
+    gqlField: 'uatNeeds',
+    goField: 'UatNeeds',
+    dbField: 'uat_needs',
+    question: 'User Acceptance Testing (UAT) – test data needs',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  stcNeeds: {
+    gqlField: 'stcNeeds',
+    goField: 'StcNeeds',
+    dbField: 'stc_needs',
+    question: 'STC – test data needs',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  testingTimelines: {
+    gqlField: 'testingTimelines',
+    goField: 'TestingTimelines',
+    dbField: 'testing_timelines',
+    question: 'Define the testing timelines',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  testingNote: {
+    gqlField: 'testingNote',
+    goField: 'TestingNote',
+    dbField: 'testing_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  dataMonitoringFileTypes: {
+    gqlField: 'dataMonitoringFileTypes',
+    goField: 'DataMonitoringFileTypes',
+    dbField: 'data_monitoring_file_types',
+    question: 'What types of files? Select all that apply.',
+    readonlyQuestion: 'What types of files?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      BENEFICIARY: 'Beneficiary',
+      PROVIDER: 'Provider',
+      PART_A: 'Part A',
+      PART_B: 'Part B',
+      OTHER: 'Other'
+    },
+    filterGroups: ['iddoc']
+  },
+  dataMonitoringFileOther: {
+    gqlField: 'dataMonitoringFileOther',
+    goField: 'DataMonitoringFileOther',
+    dbField: 'data_monitoring_file_other',
+    question: 'What types of responses?',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['iddoc']
+  },
+  dataResponseType: {
+    gqlField: 'dataResponseType',
+    goField: 'DataResponseType',
+    dbField: 'data_response_type',
+    question: 'What types of responses?',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  dataResponseFileFrequency: {
+    gqlField: 'dataResponseFileFrequency',
+    goField: 'DataResponseFileFrequency',
+    dbField: 'data_response_file_frequency',
+    question: 'Frequency of files?',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['iddoc']
   }
 };
 
@@ -172,7 +334,16 @@ export const opsEvalAndLearningMisc = {
     'Review operations, evaluation, and learning',
   breadcrumb: 'Operations, evaluation, and learning',
   additionalQuestionsInfo:
-    'If you select yes, there will be additional questions to answer.'
+    'If you select yes, there will be additional questions to answer.',
+  iddocHeading: 'IDDOC operations questions',
+  icdHeading: 'Interface Control Document (ICD) questions',
+  icdSubheading:
+    'An interface control document provides a record of all interface information generated for a project.',
+  testingQuestions: 'Testing questions',
+  ssmRequest:
+    'SSM request to begin analysis at least 1 year before implementation',
+  dataMonitoring: 'Data monitoring questions',
+  dataMonitoringContinued: 'Data monitoring questions continued'
 };
 
 export default opsEvalAndLearning;
