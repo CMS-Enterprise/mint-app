@@ -32,9 +32,7 @@ const AuthenticationWrapper = ({ children }: ParentComponentProps) => {
     _oktaAuth: OktaAuth,
     originalUri: string
   ) => {
-    window.location.replace(
-      toRelativeUrl(originalUri || '/', window.location.origin)
-    );
+    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
   };
 
   return isLocalAuthEnabled() &&
