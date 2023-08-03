@@ -568,6 +568,170 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     question: 'Are data flow diagrams needed?',
     dataType: 'string',
     formType: 'textarea'
+  },
+  evaluationApproaches: {
+    gqlField: 'evaluationApproaches',
+    goField: 'eEvaluationApproaches',
+    dbField: 'evaluation_approaches',
+    question:
+      'What type of evaluation approach are you considering? Select all that apply.',
+    readonlyQuestion: 'What type of evaluation approach are you considering?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      COMPARISON_MATCH: 'Identify a comparison/match group',
+      CONTROL_INTERVENTION: 'Establish control and intervention groups',
+      INTERRUPTED_TIME: 'Interrupted time series',
+      NON_MEDICARE_DATA:
+        'Leverage non-Medicare data (such as Medicaid data, external data sets)',
+      OTHER: 'Other'
+    }
+  },
+  evaluationApproachOther: {
+    gqlField: 'evaluationApproachOther',
+    goField: 'EvaluationApproachOther',
+    dbField: 'evaluation_approach_other',
+    question:
+      'Please describe the other evaluation approach you are considering.',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  evalutaionApproachNote: {
+    gqlField: 'evalutaionApproachNote',
+    goField: 'EvalutaionApproachNote',
+    dbField: 'evalutaion_approach_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  ccmInvolvment: {
+    gqlField: 'ccmInvolvment',
+    goField: 'CcmInvolvment',
+    dbField: 'ccm_involvment',
+    question: 'Is Chronic Conditions Warehouse (CCW) involved in the model?',
+    hint:
+      'If you select either yes option, there will be additional questions to answer.',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      YES_EVALUATION: 'Yes, for evaluation',
+      YES__IMPLEMENTATION: 'Yes, for implementation',
+      NO: 'No',
+      OTHER: 'Other'
+    }
+  },
+  ccmInvolvmentOther: {
+    gqlField: 'ccmInvolvmentOther',
+    goField: 'CcmInvolvmentOther',
+    dbField: 'ccm_involvment_other',
+    question: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  ccmInvolvmentNote: {
+    gqlField: 'ccmInvolvmentNote',
+    goField: 'CcmInvolvmentNote',
+    dbField: 'ccm_involvment_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  dataNeededForMonitoring: {
+    gqlField: 'dataNeededForMonitoring',
+    goField: 'DataNeededForMonitoring',
+    dbField: 'data_needed_for_monitoring',
+    question:
+      'What data do you need to monitor the model? Select all that apply.',
+    readonlyQuestion: 'What data do you need to monitor the model?',
+    hint:
+      'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    options: {
+      SITE_VISITS: 'Site visits',
+      MEDICARE_CLAIMS: 'Medicare claims',
+      MEDICAID_CLAIMS: 'Medicaid claims',
+      ENCOUNTER_DATA: 'Encounter data',
+      NO_PAY_CLAIMS: 'No pay claims',
+      QUALITY_CLAIMS_BASED_MEASURES: 'Quality claims-based measures',
+      QUALITY_REPORTED_MEASURES: 'Quality reported measures',
+      CLINICAL_DATA: 'Clinical data',
+      NON_CLINICAL_DATA: 'Non-clinical data (e.g., surveys)',
+      NON_MEDICAL_DATA: 'Non-medical data (e.g., housing, nutrition)',
+      OTHER: 'Other',
+      NOT_PLANNING_TO_COLLECT_DATA: 'Not planning to collect data'
+    }
+  },
+  dataNeededForMonitoringOther: {
+    gqlField: 'dataNeededForMonitoringOther',
+    goField: 'DataNeededForMonitoringOther',
+    dbField: 'data_needed_for_monitoring_other',
+    question: 'What other data do you need to monitor?',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  dataNeededForMonitoringNote: {
+    gqlField: 'dataNeededForMonitoringNote',
+    goField: 'DataNeededForMonitoringNote',
+    dbField: 'data_needed_for_monitoring_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  dataToSendParticicipants: {
+    gqlField: 'dataToSendParticicipants',
+    goField: 'DataToSendParticicipants',
+    dbField: 'data_to_send_particicipants',
+    question: 'What data will you send to participants? Select all that apply.',
+    readonlyQuestion: 'What data will you send to participants?',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    options: {
+      BASELINE_HISTORICAL_DATA: 'Baseline/historical data',
+      CLAIMS_LEVEL_DATA: 'Claims-level data',
+      BENEFICIARY_LEVEL_DATA: 'Beneficiary-level data',
+      PARTICIPANT_LEVEL_DATA: 'Participant-level data',
+      PROVIDER_LEVEL_DATA: 'Provider-level data',
+      OTHER_MIPS_DATA: 'Other',
+      NOT_PLANNING_TO_SEND_DATA: 'Not planning to send data'
+    }
+  },
+  dataToSendParticicipantsOther: {
+    gqlField: 'dataToSendParticicipantsOther',
+    goField: 'DataToSendParticicipantsOther',
+    dbField: 'data_to_send_particicipants_other',
+    question: 'What other data do you need to send?',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  dataToSendParticicipantsNote: {
+    gqlField: 'dataToSendParticicipantsNote',
+    goField: 'DataToSendParticicipantsNote',
+    dbField: 'data_to_send_particicipants_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  shareCclfData: {
+    gqlField: 'shareCclfData',
+    goField: 'ShareCclfData',
+    dbField: 'share_cclf_data',
+    question:
+      'Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  shareCclfDataNote: {
+    gqlField: 'shareCclfDataNote',
+    goField: 'ShareCclfDataNote',
+    dbField: 'share_cclf_data_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
   }
 };
 

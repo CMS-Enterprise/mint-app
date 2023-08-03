@@ -11,11 +11,15 @@ import {
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
+  CcmInvolvmentType,
   CMMIGroup,
   CMSCenter,
   ConfidenceType,
   ContractorSupportType,
+  DataForMonitoringType,
   DataFullTimeOrIncrementalType,
+  DataToSendParticipantsType,
+  EvaluationApproachType,
   FrequencyType,
   GeographyApplication,
   GeographyType,
@@ -320,6 +324,21 @@ export type TranslationOpsEvalAndLearning = {
   appealPayments: TranslationFieldPropertiesWithOptions<Bool>;
   appealOther: TranslationFieldPropertiesWithOptions<Bool>;
   appealNote: TranslationFieldProperties;
+  // Evaluation
+  evaluationApproaches: TranslationFieldPropertiesWithOptions<EvaluationApproachType>;
+  evaluationApproachOther: TranslationFieldProperties;
+  evalutaionApproachNote: TranslationFieldProperties;
+  ccmInvolvment: TranslationFieldPropertiesWithOptions<CcmInvolvmentType>;
+  ccmInvolvmentOther: TranslationFieldProperties;
+  ccmInvolvmentNote: TranslationFieldProperties;
+  dataNeededForMonitoring: TranslationFieldPropertiesWithOptions<DataForMonitoringType>;
+  dataNeededForMonitoringOther: TranslationFieldProperties;
+  dataNeededForMonitoringNote: TranslationFieldProperties;
+  dataToSendParticicipants: TranslationFieldPropertiesWithOptions<DataToSendParticipantsType>;
+  dataToSendParticicipantsOther: TranslationFieldProperties;
+  dataToSendParticicipantsNote: TranslationFieldProperties;
+  shareCclfData: TranslationFieldPropertiesWithOptions<Bool>;
+  shareCclfDataNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {
