@@ -99,125 +99,174 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       action="#"
       class="tablet:grid-col-6 margin-top-6"
     >
-      <div
-        class="usa-form-group margin-top-4"
-        data-scroll="modelType"
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
+        disabled=""
       >
-        <label
-          class="usa-label"
-          data-testid="label"
-          for="modelType"
+        <div
+          class="usa-form-group margin-top-4"
+          data-scroll="modelType"
         >
-          Model Type
-        </label>
-        <fieldset
-          class="usa-fieldset"
-          data-testid="fieldset"
-        >
-          <div
-            class="usa-radio"
-            data-testid="radio"
+          <label
+            class="usa-label"
+            data-testid="label"
+            for="modelType"
           >
-            <input
-              class="usa-radio__input"
-              id="ModelType-Voluntary"
-              name="modelType"
-              type="radio"
-              value="VOLUNTARY"
-            />
-            <label
-              class="usa-radio__label"
-              for="ModelType-Voluntary"
-            >
-              Voluntary
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Model Type
+          </label>
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
           >
-            <input
-              class="usa-radio__input"
-              id="ModelType-Mandatory"
-              name="modelType"
-              type="radio"
-              value="MANDATORY"
-            />
-            <label
-              class="usa-radio__label"
-              for="ModelType-Mandatory"
+            <div
+              class="usa-radio"
+              data-testid="radio"
             >
-              Mandatory
-            </label>
-          </div>
-        </fieldset>
-      </div>
-      <div
-        class="usa-form-group margin-top-4"
-        data-scroll="problem"
-      >
-        <label
-          class="usa-label"
-          for="ModelType-Problem"
-          id="label-ModelType-Problem"
+              <input
+                class="usa-radio__input"
+                id="ModelType-Voluntary"
+                name="modelType"
+                type="radio"
+                value="VOLUNTARY"
+              />
+              <label
+                class="usa-radio__label"
+                for="ModelType-Voluntary"
+              >
+                Voluntary
+              </label>
+            </div>
+            <div
+              class="usa-radio"
+              data-testid="radio"
+            >
+              <input
+                class="usa-radio__input"
+                id="ModelType-Mandatory"
+                name="modelType"
+                type="radio"
+                value="MANDATORY"
+              />
+              <label
+                class="usa-radio__label"
+                for="ModelType-Mandatory"
+              >
+                Mandatory
+              </label>
+            </div>
+          </fieldset>
+        </div>
+        <div
+          class="usa-form-group margin-top-4"
+          data-scroll="problem"
         >
-          Problem statement
-        </label>
-        <textarea
-          aria-labelledby="label-ModelType-Problem hint-ModelType-Problem"
-          class="usa-textarea"
-          id="ModelType-Problem"
-          name="problem"
-        />
-      </div>
-      <div
-        class="usa-form-group margin-top-4"
-        data-scroll="goal"
-      >
-        <label
-          class="usa-label"
-          for="ModelType-Goal"
-          id="label-ModelType-Goal"
+          <label
+            class="usa-label"
+            for="ModelType-Problem"
+            id="label-ModelType-Problem"
+          >
+            Problem statement
+          </label>
+          <textarea
+            aria-labelledby="label-ModelType-Problem hint-ModelType-Problem"
+            class="usa-textarea"
+            id="ModelType-Problem"
+            name="problem"
+          />
+        </div>
+        <div
+          class="usa-form-group margin-top-4"
+          data-scroll="goal"
         >
-          Goal
-        </label>
-        <span
-          class="usa-hint display-block text-normal"
-          id="hint-ModelType-Goal"
+          <label
+            class="usa-label"
+            for="ModelType-Goal"
+            id="label-ModelType-Goal"
+          >
+            Goal
+          </label>
+          <span
+            class="usa-hint display-block text-normal"
+            id="hint-ModelType-Goal"
+          >
+            Please include the high level goal of the program and a description of the project.
+          </span>
+          <textarea
+            aria-labelledby="label-ModelType-Goal hint-ModelType-Goal"
+            class="usa-textarea"
+            id="ModelType-Goal"
+            name="goal"
+          />
+        </div>
+        <div
+          class="usa-form-group margin-top-4"
+          data-scroll="testInterventions"
         >
-          Please include the high level goal of the program and a description of the project.
-        </span>
-        <textarea
-          aria-labelledby="label-ModelType-Goal hint-ModelType-Goal"
-          class="usa-textarea"
-          id="ModelType-Goal"
-          name="goal"
-        />
-      </div>
-      <div
-        class="usa-form-group margin-top-4"
-        data-scroll="testInterventions"
-      >
-        <label
-          class="usa-label"
-          for="ModelType-testInterventions"
-          id="label-ModelType-testInterventions"
+          <label
+            class="usa-label"
+            for="ModelType-testInterventions"
+            id="label-ModelType-testInterventions"
+          >
+            Test Interventions
+          </label>
+          <textarea
+            aria-labelledby="label-ModelType-testInterventions hint-ModelType-testInterventions"
+            class="usa-textarea"
+            id="ModelType-testInterventions"
+            name="testInterventions"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
         >
-          Test Interventions
-        </label>
-        <textarea
-          aria-labelledby="label-ModelType-testInterventions hint-ModelType-testInterventions"
-          class="usa-textarea"
-          id="ModelType-testInterventions"
-          name="testInterventions"
-        />
-      </div>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+        <div
+          class="margin-top-6 margin-bottom-3"
+        >
+          <button
+            class="usa-button usa-button usa-button--outline margin-bottom-1"
+            data-testid="button"
+            type="button"
+          >
+            Back
+          </button>
+          <button
+            class="usa-button"
+            data-testid="button"
+            type="submit"
+          >
+            Next
+          </button>
+        </div>
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
+          data-testid="button"
           type="button"
         >
           <svg
@@ -235,55 +284,12 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               fill="none"
             />
             <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
             />
           </svg>
-          Add an additional note
+          Save and return to task list
         </button>
-      </div>
-      <div
-        class="margin-top-6 margin-bottom-3"
-      >
-        <button
-          class="usa-button usa-button usa-button--outline margin-bottom-1"
-          data-testid="button"
-          type="button"
-        >
-          Back
-        </button>
-        <button
-          class="usa-button"
-          data-testid="button"
-          type="submit"
-        >
-          Next
-        </button>
-      </div>
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="button"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-          />
-        </svg>
-        Save and return to task list
-      </button>
+      </fieldset>
     </form>
     <div
       class="mint-page-number margin-bottom-10"

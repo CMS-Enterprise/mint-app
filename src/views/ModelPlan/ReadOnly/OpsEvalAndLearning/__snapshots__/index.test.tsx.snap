@@ -14,12 +14,16 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
       >
         Operations, evaluation, and learning
       </h2>
-      <span
-        class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-warning"
-        data-testid="tasklist-tag"
-      >
-        In progress
-      </span>
+      <div>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+      </div>
     </div>
     <div
       class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
@@ -122,67 +126,82 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
+        class="grid-row grid-gap"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--what-contractors-will-support-your-model margin-bottom-3"
+          class="desktop:grid-col-6"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
           >
-            What contractors will support your model?
-          </p>
-          <ul
-            class="margin-y-0 padding-left-3"
+            <div
+              class="read-only-section read-only-section--what-contractors-will-support-your-model margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What contractors will support your model?
+              </p>
+              <ul
+                class="margin-y-0 padding-left-3"
+              >
+                <li
+                  class="font-sans-md line-height-sans-4"
+                >
+                  May have separate contractors for different implementation functions
+                </li>
+                <li
+                  class="font-sans-md line-height-sans-4"
+                >
+                  Other
+                </li>
+                <ul
+                  data-testid="other-entry"
+                >
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      Other not specified
+                    </em>
+                  </li>
+                </ul>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
           >
-            <li
-              class="font-sans-md line-height-sans-4"
+            <div
+              class="read-only-section read-only-section--in-what-capacity-will-they-support-your-model margin-bottom-3"
             >
-              May have separate contractors for different implementation functions
-            </li>
-            <li
-              class="font-sans-md line-height-sans-4"
-            >
-              Other
-            </li>
-            <ul
-              data-testid="other-entry"
-            >
-              <li
-                class="font-sans-md line-height-sans-4"
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                In what capacity will they support your model?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
                 <em
                   class="text-base"
                 >
-                  Other not specified
+                  No answer entered
                 </em>
-              </li>
-            </ul>
-          </ul>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--in-what-capacity-will-they-support-your-model margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            In what capacity will they support your model?
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
-          </p>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

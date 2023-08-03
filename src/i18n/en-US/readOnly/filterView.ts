@@ -1,5 +1,6 @@
 const filterView = {
-  group: 'Group',
+  filterView: 'Filter view',
+  modalTitle: 'Filter this Model Plan content',
   modelTeam: 'Model Team',
   content: 'Filter down to the content your group cares the most about.',
   selectAGroup: 'Select a group',

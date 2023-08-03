@@ -288,7 +288,7 @@ const solutions: SolutionTType = {
       description: `Centralized Data Exchange (CDX) is a part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it enables CMMI-to-Participant Interoperability and application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one centralized file exchange.
 
 CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
-      
+
 The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.`,
       links: [
         {
@@ -725,10 +725,10 @@ Specific to CMMI, HIGLAS has two integrated points:`,
   },
   healthDataReporting: {
     about: {
-      description: `Health Data Reporting (HDR) is part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models. 
+      description: `Health Data Reporting (HDR) is part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models.
 
 HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
-      
+
 HDR’s Configuration Management allows model teams to define and modify performance and submission periods, change data elements to be collected across performance periods, and manage and monitor submissions.`,
       links: [
         {
@@ -1028,7 +1028,7 @@ The Model team will receive an implementation milestone schedule that identifies
           links: [
             {
               link:
-                'https://cmsbox.app.box.com/s/8rody63c7w6x2skkrchit43a7q4e7fa1',
+                'https://cmsbox.app.box.com/s/rc1koqoevslmern6r0hfoabj0zkcawoq',
               external: true
             }
           ],
@@ -1591,37 +1591,22 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         'The Salesforce Letter of Intent (LOI) is a website that allows model teams to collect information to gauge the level of industry interest in a participation agreement model.',
       components: [
         {
-          header: 'Functions',
-          items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
-          ]
-        },
-        {
           header: 'Product capabilities',
           items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+            '<bold>Access management</bold> - candidate participants can access a web page without a CMS account.',
+            {
+              header:
+                '<bold>Data collection</bold> - collect data from candidate participants such as:',
+              items: [
+                'Indication of interest',
+                'Contact information',
+                'Organization information (e.g., demographics, type of organization)',
+                'Supporting documents'
+              ],
+              description:
+                'You can customize the data collection during the development process.'
+            },
+            '<bold>Track</bold> submissions'
           ]
         },
         {
@@ -1832,6 +1817,7 @@ const helpAndKnowledge = {
   relatedHelp: 'Related help articles',
   relatedDescription:
     'Below are some additional help articles that you may find useful.',
+  viewAllRelated: 'View all help articles',
   operationalSolutions: 'Operational solutions',
   operationalSolutionsInfo:
     'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.',

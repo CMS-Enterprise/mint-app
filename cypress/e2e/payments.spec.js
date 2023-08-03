@@ -1,44 +1,22 @@
-import { aliasQuery } from '../support/graphql-test-utils';
-
 describe('The Model Plan Payment Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
-
-    cy.intercept('POST', '/api/graph/query', req => {
-      aliasQuery(req, 'GetModelPlan');
-      aliasQuery(req, 'GetFunding');
-      aliasQuery(req, 'GetClaimsBasedPayment');
-      aliasQuery(req, 'GetAnticipateDependencies');
-      aliasQuery(req, 'GetBeneficiaryCostSharing');
-      aliasQuery(req, 'GetNonClaimsBasedPayment');
-      aliasQuery(req, 'GetComplexity');
-      aliasQuery(req, 'GetRecover');
-    });
   });
 
   it('completes a Model Plan Ops Eval and Learning form', () => {
     cy.clickPlanTableByName('Empty Plan');
-
-    cy.wait('@GetModelPlan')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
 
     // Clicks the Payment tasklist item
     cy.get('[data-testid="payment"]').click();
 
     // Page - /payment
 
-    cy.wait('@GetFunding')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
     });
 
     cy.get('#payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT')
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
@@ -72,16 +50,13 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/claims-based-payment
 
-    cy.wait('@GetClaimsBasedPayment')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/claims-based-payment/
       );
     });
+
+    cy.get('[data-testid="fieldset"').first().should('not.be.disabled');
 
     cy.get('#payment-pay-claims').within(() => {
       cy.get("input[type='text']").click();
@@ -115,11 +90,6 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/anticipating-dependencies
 
-    cy.wait('@GetAnticipateDependencies')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/anticipating-dependencies/
@@ -127,6 +97,7 @@ describe('The Model Plan Payment Form', () => {
     });
 
     cy.get('#payment-creating-dependencies-between-services-true')
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
@@ -146,11 +117,6 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/beneficiary-cost-sharing
 
-    cy.wait('@GetBeneficiaryCostSharing')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/beneficiary-cost-sharing/
@@ -158,6 +124,7 @@ describe('The Model Plan Payment Form', () => {
     });
 
     cy.get('#payment-beneficiary-cost-sharing')
+      .should('not.be.disabled')
       .type('Bill in accounting')
       .should('have.value', 'Bill in accounting');
 
@@ -177,16 +144,13 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/non-claims-based-payment
 
-    cy.wait('@GetNonClaimsBasedPayment')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/non-claims-based-payment/
       );
     });
+
+    cy.get('[data-testid="fieldset"').first().should('not.be.disabled');
 
     cy.get('#payment-nonclaims-payments').within(() => {
       cy.get("input[type='text']").click();
@@ -222,11 +186,6 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/complexity
 
-    cy.wait('@GetComplexity')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/complexity/
@@ -234,6 +193,7 @@ describe('The Model Plan Payment Form', () => {
     });
 
     cy.get('#payment-complexity-LOW')
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
@@ -263,11 +223,6 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/recover-payment
 
-    cy.wait('@GetRecover')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/recover-payment/
@@ -275,6 +230,7 @@ describe('The Model Plan Payment Form', () => {
     });
 
     cy.get('#payment-recover-payment-true')
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
@@ -286,14 +242,14 @@ describe('The Model Plan Payment Form', () => {
       .type('10/26/2028')
       .should('have.value', '10/26/2028');
 
-    cy.contains('button', 'Save and start next Model Plan section').should(
-      'not.exist'
-    );
-
-    // Uncomment the code below once IT Lead Experience is PROD
-    // cy.contains('button', 'Continue to IT solutions and implementation status').click();
-    // cy.location().should(loc => {
-    //   expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/it-solutions$/);
-    // });
+    cy.contains(
+      'button',
+      'Continue to IT solutions and implementation status'
+    ).click();
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/task-list\/it-solutions$/
+      );
+    });
   });
 });

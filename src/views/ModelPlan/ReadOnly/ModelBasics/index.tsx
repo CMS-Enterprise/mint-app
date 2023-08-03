@@ -16,12 +16,16 @@ import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { checkGroupMap } from '../_components/FilterView/util';
+import {
+  checkGroupMap,
+  hasQuestions,
+  highLevelTimelineQuestions
+} from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
+import TitleAndStatus from '../_components/TitleAndStatus';
 
 import './index.scss';
 
@@ -105,16 +109,13 @@ const ReadOnlyModelBasics = ({
       className="read-only-model-plan--model-basics"
       data-testid="read-only-model-plan--model-basics"
     >
-      <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">
-          {clearance
-            ? planBasicsMiscT('clearanceHeading')
-            : planBasicsMiscT('heading')}
-        </h2>
-        {!isViewingFilteredView && status && (
-          <TaskListStatusTag status={status} />
-        )}
-      </div>
+      <TitleAndStatus
+        clearance={clearance}
+        clearanceTitle={planBasicsMiscT('clearanceHeading')}
+        heading={planBasicsMiscT('heading')}
+        isViewingFilteredView={isViewingFilteredView}
+        status={status}
+      />
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
@@ -151,15 +152,22 @@ const ReadOnlyModelBasics = ({
 
           <p className="line-height-mono-4">
             {planBasicsMiscT('otherIdentifiersInfo1')}
-            <TrussLink
-              aria-label="Open AMS in a new tab"
-              href="https://ams.cmmi.cms.gov"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="external"
-            >
+
+            <span className="mint-no-print">
+              <TrussLink
+                aria-label="Open AMS in a new tab"
+                href="https://ams.cmmi.cms.gov"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="external"
+              >
+                {planBasicsMiscT('otherIdentifiersInfo2')}
+              </TrussLink>
+            </span>
+
+            <span className="mint-only-print-inline">
               {planBasicsMiscT('otherIdentifiersInfo2')}
-            </TrussLink>
+            </span>
 
             {planBasicsMiscT('otherIdentifiersInfo3')}
           </p>
@@ -363,6 +371,14 @@ const ReadOnlyModelBasics = ({
               copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}
             />
           )}
+
+          {filteredQuestions &&
+            hasQuestions(filteredQuestions, highLevelTimelineQuestions) && (
+              <ReadOnlySection
+                heading={generalT('note')}
+                copy={highLevelNote}
+              />
+            )}
         </>
       ) : (
         <SectionWrapper
@@ -373,9 +389,7 @@ const ReadOnlyModelBasics = ({
             }
           )}
         >
-          <h3 className="margin-top-0 margin-bottom-4">
-            {planBasicsMiscT('highLevelTimeline')}
-          </h3>
+          <h3 className="margin-y-0">{planBasicsMiscT('highLevelTimeline')}</h3>
 
           <ProcessList className="read-only-model-plan__timeline">
             <ProcessListItem className="read-only-model-plan__timeline__list-item">

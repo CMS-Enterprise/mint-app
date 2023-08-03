@@ -95,6 +95,20 @@ const taskListSectionMap: TaskListSectionMapType = {
   prepareForClearance: TaskListSection.PREPARE_FOR_CLEARANCE
 };
 
+export const getLatestModifiedDate = (
+  operationalNeedsArray: OperationalNeedsType[]
+) => {
+  const updatedNeeds = operationalNeedsArray.filter(need => need.modifiedDts);
+
+  if (updatedNeeds.length !== 0) {
+    return updatedNeeds.reduce((a, b) =>
+      a.modifiedDts! > b.modifiedDts! ? a : b
+    ).modifiedDts;
+  }
+
+  return null;
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
@@ -153,8 +167,7 @@ const TaskList = () => {
   };
 
   const itSolutions: ITSolutionsType = {
-    // modifiedDts: operationalNeeds?.modifiedDts,
-    modifiedDts: null, // TODO: Get most recently updated operational need
+    modifiedDts: getLatestModifiedDate(operationalNeeds),
     status: getITSolutionsStatus(operationalNeeds)
   };
 

@@ -13,6 +13,7 @@ const draftModelPlan = {
   yes: 'Yes',
   no: 'No',
   howSo: 'How so?',
+  pleaseDescribe: 'Please describe',
   pleaseSpecify: 'Please specify',
   saveAndStartNext: 'Save and start next Model Plan section',
   continueToTaskList: 'Continue to Model Plan task list',

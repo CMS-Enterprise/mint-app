@@ -14,60 +14,74 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
       >
         Payment
       </h2>
-      <span
-        class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-warning"
-        data-testid="tasklist-tag"
-      >
-        In progress
-      </span>
+      <div>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+      </div>
     </div>
     <div
       class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
     >
       <div
-        class="desktop:grid-col-12"
+        class="grid-row grid-gap"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
           >
-            What will be the funding source for payments?
-          </p>
-          <ul
-            class="margin-y-0 padding-left-3"
-          >
-            <li
-              class="font-sans-md line-height-sans-4"
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
-              Patient Protection Affordable Care Act (Sec 3021)
-            </li>
-          </ul>
+              What will be the funding source for payments?
+            </p>
+            <ul
+              class="margin-y-0 padding-left-3"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Patient Protection Affordable Care Act (Sec 3021)
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div
-        class="desktop:grid-col-12"
+        class="grid-row grid-gap"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--what-is-the-funding-source-for-reconciliation-or-other-expenditures margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          <div
+            class="read-only-section read-only-section--what-is-the-funding-source-for-reconciliation-or-other-expenditures margin-bottom-3"
           >
-            What is the funding source for reconciliation or other expenditures?
-          </p>
-          <ul
-            class="margin-y-0 padding-left-3"
-          >
-            <li
-              class="font-sans-md line-height-sans-4"
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
-              Patient Protection Affordable Care Act (Sec 3021)
-            </li>
-          </ul>
+              What is the funding source for reconciliation or other expenditures?
+            </p>
+            <ul
+              class="margin-y-0 padding-left-3"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Patient Protection Affordable Care Act (Sec 3021)
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div
@@ -221,12 +235,12 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             data-testid="grid"
           >
             <div
-              class="read-only-section read-only-section--how-so margin-bottom-3"
+              class="read-only-section read-only-section--please-describe margin-bottom-3"
             >
               <p
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                How so?
+                Please describe
               </p>
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -346,7 +360,27 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
     />
     <div
       class=""
-    />
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-the-shared-systems-be-involved-for-additional-payment-of-claims margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will the Shared Systems be involved for additional payment of claims?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+      </div>
+    </div>
     <div
       class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
     >
@@ -406,12 +440,12 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             data-testid="grid"
           >
             <div
-              class="read-only-section read-only-section--how-so margin-bottom-3"
+              class="read-only-section read-only-section--please-describe margin-bottom-3"
             >
               <p
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                How so?
+                Please describe
               </p>
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"

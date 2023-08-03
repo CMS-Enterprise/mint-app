@@ -11,7 +11,7 @@ exports[`Filter View Modal matches snapshot 1`] = `
       <h3
         class="margin-y-0"
       >
-        Group
+        Filter this Model Plan content
       </h3>
       <p
         class="margin-top-0 margin-bottom-3 font-body-sm text-base"
@@ -327,7 +327,7 @@ exports[`Filter View Modal matches snapshot 1`] = `
         </button>
         <button
           class="usa-button margin-x-0"
-          data-testid="button"
+          data-testid="filter-view-submit"
           disabled=""
           type="button"
         >

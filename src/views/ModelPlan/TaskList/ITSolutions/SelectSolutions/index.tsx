@@ -10,6 +10,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
   CardGroup,
+  Fieldset,
   Grid,
   IconArrowBack
 } from '@trussworks/react-uswds';
@@ -309,105 +310,108 @@ const SelectSolutions = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <legend className="text-bold margin-bottom-2">
-                      {t('chooseCommonSolution')}
-                    </legend>
+                    <Fieldset disabled={!!error || loading}>
+                      <legend className="text-bold margin-bottom-2">
+                        {t('chooseCommonSolution')}
+                      </legend>
 
-                    {loading ? (
-                      <PageLoading />
-                    ) : (
-                      <CardGroup>
-                        {commonSolutions.map(
-                          (solution: GetOperationalNeedSolutionsType) => (
-                            <CheckboxCard
-                              solution={solution}
-                              index={allTheSolutions.findIndex(x =>
-                                x.id === '00000000-0000-0000-0000-000000000000'
-                                  ? x.name === solution.name
-                                  : x.id === solution.id
+                      {loading ? (
+                        <PageLoading />
+                      ) : (
+                        <CardGroup>
+                          {commonSolutions.map(
+                            (solution: GetOperationalNeedSolutionsType) => (
+                              <CheckboxCard
+                                solution={solution}
+                                index={allTheSolutions.findIndex(x =>
+                                  x.id ===
+                                  '00000000-0000-0000-0000-000000000000'
+                                    ? x.name === solution.name
+                                    : x.id === solution.id
+                                )}
+                                // Default Operational Solutions start with an id full of zeroes.
+                                // if solution is default solution, then check name to find index
+                                // otherwise, continue to use id to find index
+                                key={`${
+                                  solution.nameOther
+                                    ?.toLowerCase()
+                                    .replaceAll(' ', '-') ||
+                                  solution.name
+                                    ?.toLowerCase()
+                                    .replaceAll(' ', '-')
+                                }--${solution.id}`}
+                              />
+                            )
+                          )}
+                        </CardGroup>
+                      )}
+
+                      {otherSolutions.length > 0 && (
+                        <>
+                          <legend className="text-bold margin-top-5 margin-bottom-2">
+                            {t('chooseOtherSolution')}
+                          </legend>
+                          {loading ? (
+                            <PageLoading />
+                          ) : (
+                            <CardGroup>
+                              {otherSolutions.map(
+                                (solution: GetOperationalNeedSolutionsType) => (
+                                  <CheckboxCard
+                                    solution={solution}
+                                    index={allTheSolutions.findIndex(x =>
+                                      x.id ===
+                                      '00000000-0000-0000-0000-000000000000'
+                                        ? x.name === solution.name
+                                        : x.id === solution.id
+                                    )}
+                                    key={solution.nameOther || solution.name}
+                                  />
+                                )
                               )}
-                              // Default Operational Solutions start with an id full of zeroes.
-                              // if solution is default solution, then check name to find index
-                              // otherwise, continue to use id to find index
-                              key={`${
-                                solution.nameOther
-                                  ?.toLowerCase()
-                                  .replaceAll(' ', '-') ||
-                                solution.name
-                                  ?.toLowerCase()
-                                  .replaceAll(' ', '-')
-                              }--${solution.id}`}
-                            />
-                          )
-                        )}
-                      </CardGroup>
-                    )}
+                            </CardGroup>
+                          )}
+                        </>
+                      )}
 
-                    {otherSolutions.length > 0 && (
-                      <>
-                        <legend className="text-bold margin-top-5 margin-bottom-2">
-                          {t('chooseOtherSolution')}
-                        </legend>
-                        {loading ? (
-                          <PageLoading />
-                        ) : (
-                          <CardGroup>
-                            {otherSolutions.map(
-                              (solution: GetOperationalNeedSolutionsType) => (
-                                <CheckboxCard
-                                  solution={solution}
-                                  index={allTheSolutions.findIndex(x =>
-                                    x.id ===
-                                    '00000000-0000-0000-0000-000000000000'
-                                      ? x.name === solution.name
-                                      : x.id === solution.id
-                                  )}
-                                  key={solution.nameOther || solution.name}
-                                />
-                              )
-                            )}
-                          </CardGroup>
-                        )}
-                      </>
-                    )}
-
-                    <Button
-                      type="button"
-                      id="add-solution-not-listed"
-                      className="usa-button usa-button--outline margin-top-2"
-                      onClick={() => {
-                        history.push(
-                          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${!!isCustomNeed}`
-                        );
-                      }}
-                    >
-                      {t('selectAnother')}
-                    </Button>
-
-                    <div className="margin-top-6 margin-bottom-3">
                       <Button
-                        type="submit"
-                        className="margin-bottom-1"
-                        disabled={
-                          allTheSolutions.filter(solution => solution.needed)
-                            .length === 0
+                        type="button"
+                        id="add-solution-not-listed"
+                        className="usa-button usa-button--outline margin-top-2"
+                        onClick={() => {
+                          history.push(
+                            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${!!isCustomNeed}`
+                          );
+                        }}
+                      >
+                        {t('selectAnother')}
+                      </Button>
+
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button
+                          type="submit"
+                          className="margin-bottom-1"
+                          disabled={
+                            allTheSolutions.filter(solution => solution.needed)
+                              .length === 0
+                          }
+                        >
+                          {t('continue')}
+                        </Button>
+                      </div>
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--unstyled display-flex flex-align-center"
+                        onClick={() =>
+                          history.push(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
                         }
                       >
-                        {t('continue')}
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {update ? t('dontUpdate') : t('dontAdd')}
                       </Button>
-                    </div>
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled display-flex flex-align-center"
-                      onClick={() =>
-                        history.push(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
-                    >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
-                      {update ? t('dontUpdate') : t('dontAdd')}
-                    </Button>
+                    </Fieldset>
                   </Form>
                 </>
               );

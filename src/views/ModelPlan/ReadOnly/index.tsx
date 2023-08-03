@@ -4,7 +4,6 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
-  Alert,
   Grid,
   GridContainer,
   IconArrowBack,
@@ -18,7 +17,9 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import ShareExportModal from 'components/ShareExport';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
@@ -36,8 +37,8 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
-import BodyContent from './_components/FilterView/BodyContent';
-import FilterGroupMap from './_components/FilterView/BodyContent/_filterGroupMapping';
+import FilteredViewBodyContent from './_components/FilterView/BodyContent';
+import { filterGroups } from './_components/FilterView/BodyContent/_filterGroupMapping';
 import FilterViewModal from './_components/FilterView/Modal';
 import { groupOptions } from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
@@ -67,7 +68,7 @@ export interface subComponentsProps {
   [key: string]: subComponentProps;
 }
 
-const listOfSubpageKey = [
+const listOfSubpageKey: string[] = [
   'model-basics',
   'general-characteristics',
   'participants-and-providers',
@@ -81,123 +82,11 @@ const listOfSubpageKey = [
   'crs-and-tdl'
 ];
 
-export type SubpageKey = typeof listOfSubpageKey[number];
-const isSubpage = (
-  x: SubpageKey,
-  flags: any,
-  isHelpArticle?: boolean
-): boolean => {
-  if (isHelpArticle) {
-    return listOfSubpageKey
-      .filter(subpage => subpage !== 'discussions')
-      .includes(x);
-  }
-  if (flags.hideITLeadExperience) {
-    return listOfSubpageKey
-      .filter(subpage => subpage !== 'it-solutions')
-      .includes(x);
-  }
-  return listOfSubpageKey.includes(x);
-};
-
-const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
-  const { t: h } = useTranslation('generalReadOnly');
-  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
-  const isTablet = useCheckResponsiveScreen('desktop', 'smaller');
-
-  const history = useHistory();
-
-  const flags = useFlags();
-
-  const {
-    modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
-    subinfo
-  } = useParams<{
-    modelID: string;
-    subinfo: SubpageKey;
-  }>();
-
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const filteredView = params.get('filter-view');
-  const isViewingFilteredGroup = filteredView !== null;
-
-  // Used to check if user is assessment for rendering subnav to task list
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
-
-  const descriptionRef = React.createRef<HTMLElement>();
-  const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
-  const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
-
-  // If no subinfo param exists, default to first subpage key
-  const defaultSection: typeof listOfSubpageKey[number] = listOfSubpageKey[0];
-
-  // Enable the description toggle if it overflows
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const { current: el } = descriptionRef;
-    if (!el) return;
-    if (el.scrollHeight > el.offsetHeight) {
-      setIsDescriptionExpandable(true);
-    }
-  });
-
-  const { data, loading, error, refetch } = useQuery<GetModelSummaryType>(
-    GetModelSummary,
-    {
-      variables: {
-        id: modelID
-      }
-    }
-  );
-
-  const favoriteMutations = useFavoritePlan();
-
-  const handleUpdateFavorite = (
-    modelPlanID: string,
-    type: UpdateFavoriteProps
-  ) => {
-    favoriteMutations[type]({
-      variables: {
-        modelPlanID
-      }
-    }).then(refetch);
-  };
-
-  const {
-    id,
-    abbreviation,
-    modelName,
-    isFavorite,
-    createdDts,
-    modifiedDts,
-    status,
-    basics,
-    generalCharacteristics,
-    collaborators,
-    isCollaborator,
-    crTdls
-  } = data?.modelPlan || ({} as GetModelSummaryTypes);
-
-  if (filteredView && !Object.keys(FilterGroupMap).includes(filteredView)) {
-    return <NotFound />;
-  }
-
-  const hasEditAccess: boolean =
-    !isHelpArticle &&
-    !isMAC(groups) &&
-    (isCollaborator || isAssessment(groups, flags));
-
-  const filteredViewOutput = (value: string) => {
-    if (value === 'cmmi') {
-      return groupOptions.filter(n => n.value.includes(value))[0].label;
-    }
-    return groupOptions
-      .filter(n => n.value.includes(value))[0]
-      .value.toUpperCase();
-  };
-
-  const subComponents: subComponentsProps = {
+export const ReadOnlyComponents = (
+  modelID: string,
+  isHelpArticle: boolean | undefined
+): subComponentsProps => {
+  return {
     'model-basics': {
       route: `/models/${modelID}/read-only/model-basics`,
       helpRoute: '/help-and-knowledge/sample-model-plan/model-basics',
@@ -261,6 +150,132 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       )
     }
   };
+};
+
+export type SubpageKey = typeof listOfSubpageKey[number];
+
+const isSubpage = (
+  x: SubpageKey,
+  flags: any,
+  isHelpArticle?: boolean
+): boolean => {
+  if (isHelpArticle) {
+    return listOfSubpageKey
+      .filter(subpage => subpage !== 'discussions')
+      .includes(x);
+  }
+  if (flags.hideITLeadExperience) {
+    return listOfSubpageKey
+      .filter(subpage => subpage !== 'it-solutions')
+      .includes(x);
+  }
+  return listOfSubpageKey.includes(x);
+};
+
+export const filteredViewOutput = (value: string) => {
+  if (value === 'cmmi') {
+    return groupOptions.filter(n => n.value.includes(value))[0].label;
+  }
+  return groupOptions
+    .filter(n => n.value.includes(value))[0]
+    .value.toUpperCase();
+};
+
+const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
+  const { t: h } = useTranslation('generalReadOnly');
+
+  const {
+    modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
+    subinfo
+  } = useParams<{
+    modelID: string;
+    subinfo: SubpageKey;
+  }>();
+
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
+  const flags = useFlags();
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const filteredView = params.get('filter-view') as typeof filterGroups[number];
+  const isViewingFilteredGroup = filteredView !== null;
+
+  const history = useHistory();
+
+  // If no subinfo param exists, default to first subpage key
+  const defaultSection: typeof listOfSubpageKey[number] = listOfSubpageKey[0];
+
+  // Used to check if user is assessment for rendering subnav to task list
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+
+  const descriptionRef = React.createRef<HTMLElement>();
+
+  const [
+    isDescriptionExpandable,
+    setIsDescriptionExpandable
+  ] = useState<boolean>(false);
+
+  const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState<boolean>(
+    false
+  );
+
+  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
+
+  // Enable the description toggle if it overflows
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const { current: el } = descriptionRef;
+    if (!el) return;
+    if (el.scrollHeight > el.offsetHeight) {
+      setIsDescriptionExpandable(true);
+    }
+  });
+
+  const { data, loading, error, refetch } = useQuery<GetModelSummaryType>(
+    GetModelSummary,
+    {
+      variables: {
+        id: modelID
+      }
+    }
+  );
+
+  const favoriteMutations = useFavoritePlan();
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(refetch);
+  };
+
+  const {
+    id,
+    abbreviation,
+    modelName,
+    isFavorite,
+    createdDts,
+    modifiedDts,
+    status,
+    basics,
+    generalCharacteristics,
+    collaborators,
+    isCollaborator,
+    crTdls
+  } = data?.modelPlan || ({} as GetModelSummaryTypes);
+
+  const hasEditAccess: boolean =
+    !isHelpArticle &&
+    !isMAC(groups) &&
+    (isCollaborator || isAssessment(groups, flags));
+
+  const subComponents = ReadOnlyComponents(modelID, isHelpArticle);
 
   if (isHelpArticle) delete subComponents.discussions;
 
@@ -282,35 +297,20 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return <NotFound />;
   }
 
-  return (
-    <MainContent
-      className="model-plan-read-only"
-      data-testid="model-plan-read-only"
+  const Summary = (
+    <SummaryBox
+      heading=""
+      className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
+      data-testid="read-only-model-summary"
     >
-      <Modal
-        isOpen={isFilterViewModalOpen}
-        closeModal={() => setIsFilterViewModalOpen(false)}
-        shouldCloseOnOverlayClick
-        modalHeading={h('filterView.text')}
+      <GridContainer
+        className={classnames({
+          'padding-x-0': isMobile,
+          'padding-x-2': isTablet
+        })}
       >
-        <FilterViewModal
-          closeModal={() => setIsFilterViewModalOpen(false)}
-          filteredView={filteredView}
-        />
-      </Modal>
-
-      <SummaryBox
-        heading=""
-        className="padding-y-6 padding-x-2 border-0 bg-primary-lighter margin-top-0"
-        data-testid="read-only-model-summary"
-      >
-        <GridContainer
-          className={classnames({
-            'padding-x-0': isMobile,
-            'padding-x-2': isTablet
-          })}
-        >
-          {!isHelpArticle && (
+        {!isHelpArticle && (
+          <div className="mint-no-print">
             <div className="display-flex flex-justify">
               <UswdsReactLink
                 to="/models"
@@ -326,28 +326,31 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 updateFavorite={handleUpdateFavorite}
               />
             </div>
+          </div>
+        )}
+
+        <PageHeading
+          className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+          headingLevel={isHelpArticle ? 'h2' : 'h1'}
+        >
+          {modelName}{' '}
+          {abbreviation && (
+            <span className="font-sans-sm text-normal">({abbreviation})</span>
           )}
+        </PageHeading>
 
-          <PageHeading
-            className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-            headingLevel={isHelpArticle ? 'h2' : 'h1'}
-          >
-            {modelName}{' '}
-            {abbreviation && (
-              <span className="font-sans-sm text-normal">({abbreviation})</span>
-            )}
-          </PageHeading>
+        <TaskListStatus
+          readOnly
+          modelID={modelID}
+          status={status}
+          statusLabel
+          modifiedOrCreateLabel={!!modifiedDts}
+          modifiedDts={modifiedDts ?? createdDts}
+          hasEditAccess={hasEditAccess}
+        />
 
-          <TaskListStatus
-            readOnly
-            modelID={modelID}
-            status={status}
-            statusLabel
-            modifiedOrCreateLabel={!!modifiedDts}
-            modifiedDts={modifiedDts ?? createdDts}
-          />
-
-          {!isViewingFilteredGroup && (
+        {!isViewingFilteredGroup && (
+          <div className="mint-no-print">
             <ModelSummary
               descriptionRef={descriptionRef}
               goal={basics?.goal ?? ''}
@@ -361,14 +364,67 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               )}
               crTdls={crTdls}
             />
-          )}
-        </GridContainer>
-      </SummaryBox>
+          </div>
+        )}
+      </GridContainer>
+    </SummaryBox>
+  );
+
+  const ModelWarning = (
+    <>
+      {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
+        <Alert
+          type="warning"
+          className="margin-top-2 margin-bottom-5 desktop:margin-y-3"
+        >
+          {h('alert')}
+        </Alert>
+      )}
+    </>
+  );
+
+  return (
+    <MainContent
+      className="model-plan-read-only"
+      data-testid="model-plan-read-only"
+    >
+      <Modal
+        isOpen={isFilterViewModalOpen}
+        closeModal={() => setIsFilterViewModalOpen(false)}
+        shouldCloseOnOverlayClick
+        className="radius-md"
+        modalHeading={h('filterView.text')}
+      >
+        <FilterViewModal
+          closeModal={() => setIsFilterViewModalOpen(false)}
+          filteredView={filteredView}
+        />
+      </Modal>
+
+      <Modal
+        isOpen={isExportModalOpen}
+        closeModal={() => setIsExportModalOpen(false)}
+        className="padding-0 radius-md"
+        navigation
+        shouldCloseOnOverlayClick
+      >
+        <ShareExportModal
+          closeModal={() => setIsExportModalOpen(false)}
+          modelID={modelID}
+          filteredView={filteredView}
+        />
+      </Modal>
+
+      {Summary}
 
       {!flags.hideGroupView && (
         <FilterViewBanner
-          filteredView={filteredView && filteredViewOutput(filteredView)}
+          filteredView={
+            filteredView &&
+            (filteredViewOutput(filteredView) as typeof filterGroups[number])
+          }
           openFilterModal={() => setIsFilterViewModalOpen(true)}
+          openExportModal={() => setIsExportModalOpen(true)}
         />
       )}
 
@@ -379,20 +435,16 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       />
 
       <GridContainer className="model-plan-alert-wrapper">
-        {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
-          <Alert
-            type="warning"
-            className="margin-top-2 margin-bottom-5 desktop:margin-y-3"
-          >
-            {h('alert')}
-          </Alert>
-        )}
+        {ModelWarning}
       </GridContainer>
 
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
           {isViewingFilteredGroup ? (
-            <BodyContent modelID={modelID} filteredView={filteredView} />
+            <FilteredViewBodyContent
+              modelID={modelID}
+              filteredView={filteredView}
+            />
           ) : (
             <Grid row gap>
               {!isMobile && (

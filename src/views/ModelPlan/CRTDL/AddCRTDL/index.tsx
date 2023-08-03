@@ -251,7 +251,7 @@ const AddCRTDL = () => {
                       window.scrollTo(0, 0);
                     }}
                   >
-                    <Fieldset disabled={!!error}>
+                    <Fieldset disabled={!!error || loading}>
                       <Grid row>
                         <Grid desktop={{ col: 6 }}>
                           <FieldGroup
@@ -357,21 +357,22 @@ const AddCRTDL = () => {
                           </FieldGroup>
                         </Grid>
                       </Grid>
+
+                      <div className="margin-y-4 display-block">
+                        <Button
+                          type="submit"
+                          id="submit-cr-and-tdl"
+                          disabled={
+                            !values.idNumber ||
+                            !values.dateInitiated ||
+                            !values.title
+                          }
+                          onClick={() => setErrors({})}
+                        >
+                          {!crtdlID ? t('addCRTDL') : t('updateCRTDL')}
+                        </Button>
+                      </div>
                     </Fieldset>
-                    <div className="margin-y-4 display-block">
-                      <Button
-                        type="submit"
-                        id="submit-cr-and-tdl"
-                        disabled={
-                          !values.idNumber ||
-                          !values.dateInitiated ||
-                          !values.title
-                        }
-                        onClick={() => setErrors({})}
-                      >
-                        {!crtdlID ? t('addCRTDL') : t('updateCRTDL')}
-                      </Button>
-                    </div>
                   </Form>
                 </>
               );

@@ -3,16 +3,14 @@
 exports[`RelatedArticle matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="bg-primary-lighter margin-bottom-neg-7"
+    class="bg-primary-lighter"
   >
-    <main
-      class="mint-main-content grid-container padding-y-2"
-      id="main-content"
-      role="main"
-      tabindex="-1"
+    <div
+      class="grid-container padding-top-4 padding-bottom-10"
+      data-testid="gridContainer"
     >
       <h2
-        class="margin-bottom-1"
+        class="margin-top-0 margin-bottom-1"
       >
         Related help articles
       </h2>
@@ -22,7 +20,7 @@ exports[`RelatedArticle matches the snapshot 1`] = `
         Below are some additional help articles that you may find useful.
       </dt>
       <ul
-        class="usa-card-group margin-y-2"
+        class="usa-card-group"
         data-testid="CardGroup"
       >
         <li
@@ -76,8 +74,59 @@ exports[`RelatedArticle matches the snapshot 1`] = `
             </div>
           </div>
         </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                How to have a successful 2-pager meeting
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/getting-started"
+            >
+              <span
+                aria-label="Articles under the Getting started category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                Getting started
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body"
+              data-testid="CardBody"
+            >
+              <p>
+                Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read How to have a successful 2-pager meeting article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
       </ul>
-    </main>
+    </div>
   </div>
 </DocumentFragment>
 `;

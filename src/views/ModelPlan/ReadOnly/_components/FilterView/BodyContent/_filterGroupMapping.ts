@@ -1,4 +1,16 @@
-const FilterGroupMap = {
+export const filterGroups = [
+  'cmmi',
+  'oact',
+  'dfsdm',
+  'ccw',
+  'ipc',
+  'iddoc',
+  'pbg',
+  'mdm',
+  'cbosc'
+] as const;
+
+const FilterGroupMap: Record<typeof filterGroups[number], any> = {
   cmmi: {
     'general-characteristics': [
       'alternativePaymentModelTypes',
@@ -70,9 +82,9 @@ const FilterGroupMap = {
     payments: [
       'fundingSource',
       'fundingSourceTrustFund',
+      'fundingSourceR',
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
-      'fundingStructure',
       'anticipatedPaymentFrequency',
       'paymentStartDate'
     ]
@@ -192,6 +204,7 @@ const FilterGroupMap = {
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
       'nonClaimsPayments',
+      'waiverOnlyAppliesPartOfPayment',
       'planningToUseInnovationPaymentContractor',
       'anticipateReconcilingPaymentsRetrospectively'
     ]
@@ -239,6 +252,7 @@ const FilterGroupMap = {
       'needsClaimsDataCollection',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
+      'waiverOnlyAppliesPartOfPayment',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
       'nonClaimsPayments',

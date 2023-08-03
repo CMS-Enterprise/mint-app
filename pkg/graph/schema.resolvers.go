@@ -206,7 +206,16 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, c
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanBasics(logger, id, changes, principal, r.store)
+	return resolvers.UpdatePlanBasics(
+		logger,
+		id,
+		changes,
+		principal,
+		r.store,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+	)
 }
 
 // UpdatePlanGeneralCharacteristics is the resolver for the updatePlanGeneralCharacteristics field.

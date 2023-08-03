@@ -60,6 +60,7 @@ services:
       - EMAIL_HOST=email
       - EMAIL_PORT=1025
       - MINT_TEAM_EMAIL
+      - DATE_CHANGED_RECIPIENT_EMAILS
       - EMAIL_SENDER
       - EMAIL_ENABLED
       - GRT_EMAIL=success@simulator.amazonses.com

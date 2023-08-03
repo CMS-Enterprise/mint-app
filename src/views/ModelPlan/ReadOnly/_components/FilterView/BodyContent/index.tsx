@@ -10,7 +10,7 @@ import ReadOnlyParticipantsAndProviders from 'views/ModelPlan/ReadOnly/Participa
 import ReadOnlyPayments from 'views/ModelPlan/ReadOnly/Payments';
 import ReadOnlyTeamInfo from 'views/ModelPlan/ReadOnly/Team';
 
-import allPossibleFilterViews from './_filterGroupMapping';
+import allPossibleFilterViews, { filterGroups } from './_filterGroupMapping';
 
 const FitleredViewSection = ({
   children,
@@ -39,7 +39,7 @@ const BodyContent = ({
   filteredView
 }: {
   modelID: string;
-  filteredView: string;
+  filteredView: typeof filterGroups[number];
 }) => {
   const { t } = useTranslation('filterView');
 
@@ -59,7 +59,11 @@ const BodyContent = ({
     <Grid>
       <FitleredViewSection sectionName="model-team">
         <h2 className="margin-top-0 margin-bottom-4">{t('modelTeam')}</h2>
-        <ReadOnlyTeamInfo modelID={modelID} isViewingFilteredView />
+        <ReadOnlyTeamInfo
+          modelID={modelID}
+          isViewingFilteredView
+          filteredView={filteredView}
+        />
       </FitleredViewSection>
 
       {Object.keys(individualFilterView).map(task => {

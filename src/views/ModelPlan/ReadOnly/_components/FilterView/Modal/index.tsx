@@ -46,7 +46,7 @@ const FilterViewModal = ({
   return (
     <div data-testid="filter-view-modal">
       <div className="filter-view__body padding-top-3 padding-bottom-4">
-        <h3 className="margin-y-0">{t('group')}</h3>
+        <h3 className="margin-y-0">{t('modalTitle')}</h3>
         <p className="margin-top-0 margin-bottom-3 font-body-sm text-base">
           {t('content')}
         </p>
@@ -92,6 +92,7 @@ const FilterViewModal = ({
           </Button>
           <Button
             type="button"
+            data-testid="filter-view-submit"
             disabled={filteredGroup === ''}
             className="margin-x-0"
             onClick={() => handleSubmit(filteredGroup)}

@@ -541,7 +541,7 @@ exports[`IT Solutions About Components matches the snapshot: Centralized Data Ex
          Suite of tools for non-ACO models; it enables CMMI-to-Participant Interoperability and application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one centralized file exchange.
 
 CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
-      
+
 The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.
       </p>
       <div
@@ -1069,10 +1069,10 @@ exports[`IT Solutions About Components matches the snapshot: Health Data Reporti
         >
           Innovation Support Platform (ISP)
         </a>
-         Suite of tools for non-ACO models; it is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models. 
+         Suite of tools for non-ACO models; it is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models.
 
 HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
-      
+
 HDR’s Configuration Management allows model teams to define and modify performance and submission periods, change data elements to be collected across performance periods, and manage and monitor submissions.
       </p>
       <div
@@ -1840,7 +1840,7 @@ exports[`IT Solutions About Components matches the snapshot: Innovation Support 
               <a
                 aria-label="Open in a new tab"
                 class="usa-link usa-link--external"
-                href="https://cmsbox.app.box.com/s/8rody63c7w6x2skkrchit43a7q4e7fa1"
+                href="https://cmsbox.app.box.com/s/rc1koqoevslmern6r0hfoabj0zkcawoq"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -2808,119 +2808,6 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Letter o
         <h3
           class="margin-bottom-2"
         >
-          Functions
-        </h3>
-        <ul
-          class="padding-left-4 margin-top-0"
-        >
-          <li
-            class="list-item"
-          >
-            Portal registration
-          </li>
-          <li
-            class="list-item"
-          >
-            User access management
-          </li>
-          <li
-            class="list-item"
-          >
-            Model application management
-          </li>
-          <li
-            class="list-item"
-          >
-            Organization management
-          </li>
-          <li
-            class="list-item"
-          >
-            Contact management
-          </li>
-          <li
-            class="list-item"
-          >
-            Practitioner submission & tracking
-          </li>
-          <li
-            class="list-item"
-          >
-            Submission Period management
-          </li>
-          <li
-            class="list-item"
-          >
-            Case management
-          </li>
-          <li
-            class="list-item"
-          >
-            File submission / approval
-          </li>
-          <li
-            class="list-item"
-          >
-            Mass file download
-          </li>
-          <li
-            class="list-item"
-          >
-            File tracker / dashboard
-          </li>
-          <li
-            class="list-item"
-          >
-            Annual / quarterly deliverable management
-          </li>
-          <li
-            class="list-item"
-          >
-            Attestation management
-          </li>
-          <li
-            class="list-item"
-          >
-            Corrective action planning
-          </li>
-          <li
-            class="list-item"
-          >
-            Events, tasks, email / templates
-          </li>
-          <li
-            class="list-item"
-          >
-            Reports
-          </li>
-          <li
-            class="list-item"
-          >
-            Dashboards
-          </li>
-          <li
-            class="list-item"
-          >
-            Single Sign On (OKTA) w/ MFA
-          </li>
-          <li
-            class="list-item"
-          >
-            RIDP (Remote Identity Proofing)
-          </li>
-          <li
-            class="list-item"
-          >
-            Anti-virus file scanning
-          </li>
-        </ul>
-      </div>
-      <div
-        class="margin-top-4"
-      >
-        <h3
-          class="margin-bottom-2"
-        >
           Product capabilities
         </h3>
         <ul
@@ -2929,22 +2816,57 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Letter o
           <li
             class="list-item"
           >
-            Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)
+            <strong>
+              Access management
+            </strong>
+             - candidate participants can access a web page without a CMS account.
           </li>
           <li
             class="list-item"
           >
-            Enable the collection of information and the exchange of documents
+            <span>
+              <strong>
+                Data collection
+              </strong>
+               - collect data from candidate participants such as:
+            </span>
+            <ul
+              class="padding-left-4 margin-top-0"
+            >
+              <li
+                class="list-item"
+              >
+                Indication of interest
+              </li>
+              <li
+                class="list-item"
+              >
+                Contact information
+              </li>
+              <li
+                class="list-item"
+              >
+                Organization information (e.g., demographics, type of organization)
+              </li>
+              <li
+                class="list-item"
+              >
+                Supporting documents
+              </li>
+            </ul>
+            <p
+              class="margin-y-0"
+            >
+              You can customize the data collection during the development process.
+            </p>
           </li>
           <li
             class="list-item"
           >
-            Track/monitor model participant deliverable submission and compliance
-          </li>
-          <li
-            class="list-item"
-          >
-            Enter/escalate questions/issues to support contractors
+            <strong>
+              Track
+            </strong>
+             submissions
           </li>
         </ul>
       </div>
