@@ -17,12 +17,14 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetIDDOCMonitoring from 'queries/OpsEvalAndLearning/GetIDDOCMonitoring';
 import {
   GetIDDOCMonitoring as GetIDDOCMonitoringType,
@@ -31,10 +33,9 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetIDDOCMonitoring';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import { DataFullTimeOrIncrementalType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import { translateDataFullTimeOrIncrementalType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -45,8 +46,21 @@ import {
 } from '..';
 
 const IDDOCMonitoring = () => {
-  const { t } = useTranslation('operationsEvaluationAndLearning');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
+
+  const { t: opsEvalAndLearningMiscT } = useTranslation(
+    'opsEvalAndLearningMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    dataFullTimeOrIncremental: dataFullTimeOrIncrementalConfig,
+    eftSetUp: eftSetUpConfig,
+    unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncludedConfig,
+    dataFlowDiagramsNeeded: dataFlowDiagramsNeededConfig,
+    produceBenefitEnhancementFiles: produceBenefitEnhancementFilesConfig
+  } = usePlanTranslation('opsEvalAndLearning');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
@@ -135,28 +149,29 @@ const IDDOCMonitoring = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -181,17 +196,17 @@ const IDDOCMonitoring = () => {
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -207,33 +222,39 @@ const IDDOCMonitoring = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <h3>{t('dataMonitoringContinued')}</h3>
+                  <h3>{opsEvalAndLearningMiscT('dataMonitoringContinued')}</h3>
 
                   <FieldGroup
                     scrollElement="dataFullTimeOrIncremental"
                     error={!!flatErrors.dataFullTimeOrIncremental}
                   >
                     <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
-                      {t('timeFrequency')}
+                      {opsEvalAndLearningT(
+                        'dataFullTimeOrIncremental.question'
+                      )}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.dataFullTimeOrIncremental}
                     </FieldErrorMsg>
+
                     <Fieldset>
-                      {Object.keys(DataFullTimeOrIncrementalType).map(key => (
-                        <Field
-                          as={Radio}
-                          key={key}
-                          id={`ops-eval-and-learning-fulltime-or-incremental-${key}`}
-                          name="dataFullTimeOrIncremental"
-                          label={translateDataFullTimeOrIncrementalType(key)}
-                          value={key}
-                          checked={values.dataFullTimeOrIncremental === key}
-                          onChange={() => {
-                            setFieldValue('dataFullTimeOrIncremental', key);
-                          }}
-                        />
-                      ))}
+                      {getKeys(dataFullTimeOrIncrementalConfig.options).map(
+                        key => (
+                          <Field
+                            as={Radio}
+                            key={key}
+                            id={`ops-eval-and-learning-fulltime-or-incremental-${key}`}
+                            name="dataFullTimeOrIncremental"
+                            label={dataFullTimeOrIncrementalConfig.options[key]}
+                            value={key}
+                            checked={values.dataFullTimeOrIncremental === key}
+                            onChange={() => {
+                              setFieldValue('dataFullTimeOrIncremental', key);
+                            }}
+                          />
+                        )
+                      )}
                     </Fieldset>
                   </FieldGroup>
 
@@ -243,25 +264,18 @@ const IDDOCMonitoring = () => {
                     className="margin-top-6"
                   >
                     <Label htmlFor="ops-eval-and-learning-eft-setup">
-                      {t('eftAndConnectivity')}
+                      {opsEvalAndLearningT('eftSetUp.question')}
                     </Label>
+
                     <FieldErrorMsg>{flatErrors.eftSetUp}</FieldErrorMsg>
-                    <Fieldset>
-                      {[true, false].map(key => (
-                        <Field
-                          as={Radio}
-                          key={key}
-                          id={`ops-eval-and-learning-eft-setup-${key}`}
-                          name="eftSetUp"
-                          label={key ? h('yes') : h('no')}
-                          value={key ? 'YES' : 'NO'}
-                          checked={values.eftSetUp === key}
-                          onChange={() => {
-                            setFieldValue('eftSetUp', key);
-                          }}
-                        />
-                      ))}
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="eftSetUp"
+                      id="ops-eval-and-learning-eft-setup"
+                      value={values.eftSetUp}
+                      setFieldValue={setFieldValue}
+                      options={eftSetUpConfig.options}
+                    />
                   </FieldGroup>
 
                   <FieldGroup
@@ -270,32 +284,22 @@ const IDDOCMonitoring = () => {
                     className="margin-top-6"
                   >
                     <Label htmlFor="ops-eval-and-learning-unsolicted-adjustment-included">
-                      {t('adjustments')}
+                      {opsEvalAndLearningT(
+                        'unsolicitedAdjustmentsIncluded.question'
+                      )}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.unsolicitedAdjustmentsIncluded}
                     </FieldErrorMsg>
-                    <Fieldset>
-                      {[true, false].map(key => (
-                        <Field
-                          as={Radio}
-                          key={key}
-                          id={`ops-eval-and-learning-unsolicted-adjustment-included-${key}`}
-                          name="unsolicitedAdjustmentsIncluded"
-                          label={key ? h('yes') : h('no')}
-                          value={key ? 'YES' : 'NO'}
-                          checked={
-                            values.unsolicitedAdjustmentsIncluded === key
-                          }
-                          onChange={() => {
-                            setFieldValue(
-                              'unsolicitedAdjustmentsIncluded',
-                              key
-                            );
-                          }}
-                        />
-                      ))}
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="unsolicitedAdjustmentsIncluded"
+                      id="ops-eval-and-learning-unsolicted-adjustment-included"
+                      value={values.unsolicitedAdjustmentsIncluded}
+                      setFieldValue={setFieldValue}
+                      options={unsolicitedAdjustmentsIncludedConfig.options}
+                    />
                   </FieldGroup>
 
                   <FieldGroup
@@ -304,27 +308,20 @@ const IDDOCMonitoring = () => {
                     className="margin-top-6"
                   >
                     <Label htmlFor="ops-eval-and-learning-diagrams-needed">
-                      {t('diagrams')}
+                      {opsEvalAndLearningT('dataFlowDiagramsNeeded.question')}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.dataFlowDiagramsNeeded}
                     </FieldErrorMsg>
-                    <Fieldset>
-                      {[true, false].map(key => (
-                        <Field
-                          as={Radio}
-                          key={key}
-                          id={`ops-eval-and-learning-diagrams-needed-${key}`}
-                          name="dataFlowDiagramsNeeded"
-                          label={key ? h('yes') : h('no')}
-                          value={key ? 'YES' : 'NO'}
-                          checked={values.dataFlowDiagramsNeeded === key}
-                          onChange={() => {
-                            setFieldValue('dataFlowDiagramsNeeded', key);
-                          }}
-                        />
-                      ))}
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="dataFlowDiagramsNeeded"
+                      id="ops-eval-and-learning-diagrams-needed"
+                      value={values.dataFlowDiagramsNeeded}
+                      setFieldValue={setFieldValue}
+                      options={dataFlowDiagramsNeededConfig.options}
+                    />
                   </FieldGroup>
 
                   <FieldGroup
@@ -333,35 +330,28 @@ const IDDOCMonitoring = () => {
                     className="margin-top-6"
                   >
                     <Label htmlFor="ops-eval-and-learning-produce-benefit-files">
-                      {t('benefitEnhancement')}
+                      {opsEvalAndLearningT(
+                        'produceBenefitEnhancementFiles.question'
+                      )}
                     </Label>
+
                     <p className="text-base margin-y-1">
-                      {t('benefitEnhancementInfo')}
+                      {opsEvalAndLearningT(
+                        'produceBenefitEnhancementFiles.hint'
+                      )}
                     </p>
+
                     <FieldErrorMsg>
                       {flatErrors.produceBenefitEnhancementFiles}
                     </FieldErrorMsg>
-                    <Fieldset>
-                      {[true, false].map(key => (
-                        <Field
-                          as={Radio}
-                          key={key}
-                          id={`ops-eval-and-learning-produce-benefit-files-${key}`}
-                          name="produceBenefitEnhancementFiles"
-                          label={key ? h('yes') : h('no')}
-                          value={key ? 'YES' : 'NO'}
-                          checked={
-                            values.produceBenefitEnhancementFiles === key
-                          }
-                          onChange={() => {
-                            setFieldValue(
-                              'produceBenefitEnhancementFiles',
-                              key
-                            );
-                          }}
-                        />
-                      ))}
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="produceBenefitEnhancementFiles"
+                      id="ops-eval-and-learning-produce-benefit-files"
+                      value={values.produceBenefitEnhancementFiles}
+                      setFieldValue={setFieldValue}
+                      options={produceBenefitEnhancementFilesConfig.options}
+                    />
                   </FieldGroup>
 
                   <FieldGroup
@@ -370,11 +360,13 @@ const IDDOCMonitoring = () => {
                     error={!!flatErrors.fileNamingConventions}
                   >
                     <Label htmlFor="ops-eval-and-learning-file-naming-convention">
-                      {t('namingConventions')}
+                      {opsEvalAndLearningT('fileNamingConventions.question')}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.fileNamingConventions}
                     </FieldErrorMsg>
+
                     <Field
                       as={TextInput}
                       error={!!flatErrors.fileNamingConventions}
@@ -398,19 +390,22 @@ const IDDOCMonitoring = () => {
                         handleFormSubmit('back');
                       }}
                     >
-                      {h('back')}
+                      {miscellaneousT('back')}
                     </Button>
+
                     <Button type="submit" onClick={() => setErrors({})}>
-                      {h('next')}
+                      {miscellaneousT('next')}
                     </Button>
                   </div>
+
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {h('saveAndReturn')}
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
@@ -428,6 +423,7 @@ const IDDOCMonitoring = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

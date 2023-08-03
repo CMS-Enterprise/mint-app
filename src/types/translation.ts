@@ -14,6 +14,7 @@ import {
   CMSCenter,
   ConfidenceType,
   ContractorSupportType,
+  DataFullTimeOrIncrementalType,
   FrequencyType,
   GeographyApplication,
   GeographyType,
@@ -295,6 +296,14 @@ export type TranslationOpsEvalAndLearning = {
   dataMonitoringFileOther: TranslationFieldProperties;
   dataResponseType: TranslationFieldProperties;
   dataResponseFileFrequency: TranslationFieldProperties;
+  // IDDOC Monitoring
+  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptions<DataFullTimeOrIncrementalType>;
+  eftSetUp: TranslationFieldPropertiesWithOptions<Bool>;
+  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptions<Bool>;
+  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
+  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptions<Bool>;
+  fileNamingConventions: TranslationFieldProperties;
+  dataMonitoringNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

@@ -325,6 +325,89 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'text',
     filterGroups: ['iddoc']
+  },
+  dataFullTimeOrIncremental: {
+    gqlField: 'dataFullTimeOrIncremental',
+    goField: 'DataFullTimeOrIncremental',
+    dbField: 'data_full_time_or_incremental',
+    question: 'Full time or incremental?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      FULL_TIME: 'Full time',
+      INCREMENTAL: 'Incremental'
+    },
+    filterGroups: ['iddoc']
+  },
+  eftSetUp: {
+    gqlField: 'eftSetUp',
+    goField: 'EftSetUp',
+    dbField: 'eft_set_up',
+    question: 'Are Electronic File Transfer (EFT) and connectivity set up?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  unsolicitedAdjustmentsIncluded: {
+    gqlField: 'unsolicitedAdjustmentsIncluded',
+    goField: 'UnsolicitedAdjustmentsIncluded',
+    dbField: 'unsolicited_adjustments_included',
+    question: 'Will unsolicited adjustments be included?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc']
+  },
+  dataFlowDiagramsNeeded: {
+    gqlField: 'dataFlowDiagramsNeeded',
+    goField: 'DataFlowDiagramsNeeded',
+    dbField: 'data_flow_diagrams_needed',
+    question: 'Are data flow diagrams needed?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  produceBenefitEnhancementFiles: {
+    gqlField: 'produceBenefitEnhancementFiles',
+    goField: 'ProduceBenefitEnhancementFiles',
+    dbField: 'produce_benefit_enhancement_files',
+    question: 'Will you produce Benefit Enhancement Files?',
+    hint:
+      'This means we would use these files for Participating and Preferred Providers.',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc']
+  },
+  fileNamingConventions: {
+    gqlField: 'fileNamingConventions',
+    goField: 'FileNamingConventions',
+    dbField: 'file_naming_conventions',
+    question: 'File naming conventions',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['iddoc']
+  },
+  dataMonitoringNote: {
+    gqlField: 'dataMonitoringNote',
+    goField: 'DataMonitoringNote',
+    dbField: 'data_monitoring_note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
   }
 };
 
@@ -343,7 +426,8 @@ export const opsEvalAndLearningMisc = {
   ssmRequest:
     'SSM request to begin analysis at least 1 year before implementation',
   dataMonitoring: 'Data monitoring questions',
-  dataMonitoringContinued: 'Data monitoring questions continued'
+  dataMonitoringContinued: 'Data monitoring questions continued',
+  participantAppeal: 'Will participants be able to appeal the following?'
 };
 
 export default opsEvalAndLearning;
