@@ -139,7 +139,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'isNewModel',
           <ReadOnlySection
-            heading={generalCharacteristicsT('isNewModel.question')}
+            heading={generalCharacteristicsT('isNewModel.label')}
             copy={generalCharacteristicsT(`isNewModel.options.${isNewModel}`)}
           />
         )}
@@ -150,7 +150,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'existingModel',
             <ReadOnlySection
-              heading={generalCharacteristicsT('existingModel.question')}
+              heading={generalCharacteristicsT('existingModel.label')}
               copy={existingModel}
             />
           )}
@@ -160,7 +160,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'resemblesExistingModel',
           <ReadOnlySection
-            heading={generalCharacteristicsT('resemblesExistingModel.question')}
+            heading={generalCharacteristicsT('resemblesExistingModel.label')}
             copy={generalCharacteristicsT(
               `resemblesExistingModel.options.${resemblesExistingModel}`
             )}
@@ -172,7 +172,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'modelResemblance',
           <ReadOnlySection
-            heading={generalCharacteristicsT('existingModelLinks.question')}
+            heading={generalCharacteristicsT('existingModelLinks.label')}
             list
             listItems={mappedExistingModels}
           />
@@ -183,9 +183,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'resemblesExistingModelHow',
           <ReadOnlySection
-            heading={generalCharacteristicsT(
-              'resemblesExistingModelHow.question'
-            )}
+            heading={generalCharacteristicsT('resemblesExistingModelHow.label')}
             copy={resemblesExistingModelHow}
             notes={resemblesExistingModelNote}
           />
@@ -196,7 +194,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'hasComponentsOrTracks',
           <ReadOnlySection
-            heading={generalCharacteristicsT('hasComponentsOrTracks.question')}
+            heading={generalCharacteristicsT('hasComponentsOrTracks.label')}
             copy={generalCharacteristicsT(
               `hasComponentsOrTracks.options.${hasComponentsOrTracks}`
             )}
@@ -210,7 +208,7 @@ const ReadOnlyGeneralCharacteristics = ({
             'hasComponentsOrTracksDiffer',
             <ReadOnlySection
               heading={generalCharacteristicsT(
-                'hasComponentsOrTracksDiffer.question'
+                'hasComponentsOrTracksDiffer.label'
               )}
               copy={hasComponentsOrTracksDiffer}
               notes={hasComponentsOrTracksNote}
@@ -231,7 +229,7 @@ const ReadOnlyGeneralCharacteristics = ({
           'alternativePaymentModelTypes',
           <ReadOnlySection
             heading={generalCharacteristicsT(
-              'alternativePaymentModelTypes.question'
+              'alternativePaymentModelTypes.label'
             )}
             list
             listItems={alternativePaymentModelTypes?.map((type): string =>
@@ -268,7 +266,7 @@ const ReadOnlyGeneralCharacteristics = ({
               filteredQuestions,
               'collectPlanBids',
               <ReadOnlySection
-                heading={generalCharacteristicsT('collectPlanBids.question')}
+                heading={generalCharacteristicsT('collectPlanBids.label')}
                 copy={generalCharacteristicsT(
                   `collectPlanBids.options.${collectPlanBids}`
                 )}
@@ -282,7 +280,7 @@ const ReadOnlyGeneralCharacteristics = ({
               'managePartCDEnrollment',
               <ReadOnlySection
                 heading={generalCharacteristicsT(
-                  'managePartCDEnrollment.question'
+                  'managePartCDEnrollment.label'
                 )}
                 copy={generalCharacteristicsT(
                   `managePartCDEnrollment.options.${managePartCDEnrollment}`
@@ -296,9 +294,7 @@ const ReadOnlyGeneralCharacteristics = ({
               filteredQuestions,
               'planContractUpdated',
               <ReadOnlySection
-                heading={generalCharacteristicsT(
-                  'planContractUpdated.question'
-                )}
+                heading={generalCharacteristicsT('planContractUpdated.label')}
                 copy={generalCharacteristicsT(
                   `planContractUpdated.options.${planContractUpdated}`,
                   ''
@@ -324,7 +320,7 @@ const ReadOnlyGeneralCharacteristics = ({
           <SideBySideReadOnlySection
             firstSection={{
               heading: generalCharacteristicsT(
-                'careCoordinationInvolved.question'
+                'careCoordinationInvolved.label'
               ),
               copy: generalCharacteristicsT(
                 `careCoordinationInvolved.options.${careCoordinationInvolved}`,
@@ -334,7 +330,7 @@ const ReadOnlyGeneralCharacteristics = ({
             secondSection={
               careCoordinationInvolved === true && {
                 heading: generalCharacteristicsT(
-                  'careCoordinationInvolvedDescription.question'
+                  'careCoordinationInvolvedDescription.label'
                 ),
                 copy: careCoordinationInvolvedDescription
               }
@@ -348,7 +344,7 @@ const ReadOnlyGeneralCharacteristics = ({
             'careCoordinationInvolved',
             <ReadOnlySection
               heading={generalCharacteristicsT(
-                'careCoordinationInvolvedNote.question'
+                'careCoordinationInvolvedNote.label'
               )}
               copy={careCoordinationInvolvedNote}
             />
@@ -361,7 +357,7 @@ const ReadOnlyGeneralCharacteristics = ({
           <SideBySideReadOnlySection
             firstSection={{
               heading: generalCharacteristicsT(
-                'additionalServicesInvolved.question'
+                'additionalServicesInvolved.label'
               ),
               copy: generalCharacteristicsT(
                 `additionalServicesInvolved.options.${additionalServicesInvolved}`,
@@ -371,7 +367,7 @@ const ReadOnlyGeneralCharacteristics = ({
             secondSection={
               additionalServicesInvolved === true && {
                 heading: generalCharacteristicsT(
-                  'additionalServicesInvolvedDescription.question'
+                  'additionalServicesInvolvedDescription.label'
                 ),
                 copy: additionalServicesInvolvedDescription
               }
@@ -385,7 +381,7 @@ const ReadOnlyGeneralCharacteristics = ({
             'additionalServicesInvolved',
             <ReadOnlySection
               heading={generalCharacteristicsT(
-                'additionalServicesInvolved.question'
+                'additionalServicesInvolved.label'
               )}
               copy={additionalServicesInvolvedNote}
             />
@@ -398,7 +394,7 @@ const ReadOnlyGeneralCharacteristics = ({
           <SideBySideReadOnlySection
             firstSection={{
               heading: generalCharacteristicsT(
-                'communityPartnersInvolved.question'
+                'communityPartnersInvolved.label'
               ),
               copy: generalCharacteristicsT(
                 `communityPartnersInvolved.options.${communityPartnersInvolved}`,
@@ -408,7 +404,7 @@ const ReadOnlyGeneralCharacteristics = ({
             secondSection={
               communityPartnersInvolved === true && {
                 heading: generalCharacteristicsT(
-                  'communityPartnersInvolvedDescription.question'
+                  'communityPartnersInvolvedDescription.label'
                 ),
                 copy: communityPartnersInvolvedDescription
               }
@@ -422,7 +418,7 @@ const ReadOnlyGeneralCharacteristics = ({
             'communityPartnersInvolved',
             <ReadOnlySection
               heading={generalCharacteristicsT(
-                'communityPartnersInvolvedNote.question'
+                'communityPartnersInvolvedNote.label'
               )}
               copy={communityPartnersInvolvedNote}
             />
@@ -441,7 +437,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'geographiesTargeted',
           <ReadOnlySection
-            heading={generalCharacteristicsT('geographiesTargeted.question')}
+            heading={generalCharacteristicsT('geographiesTargeted.label')}
             copy={generalCharacteristicsT(
               `geographiesTargeted.options.${geographiesTargeted}`,
               ''
@@ -456,7 +452,7 @@ const ReadOnlyGeneralCharacteristics = ({
           <SideBySideReadOnlySection
             firstSection={{
               heading: generalCharacteristicsT(
-                'geographiesTargetedTypes.question'
+                'geographiesTargetedTypes.label'
               ),
               list: true,
               listItems: geographiesTargetedTypes?.map((type): string =>
@@ -468,7 +464,7 @@ const ReadOnlyGeneralCharacteristics = ({
             }}
             secondSection={{
               heading: generalCharacteristicsT(
-                'geographiesTargetedAppliedTo.question'
+                'geographiesTargetedAppliedTo.label'
               ),
               list: true,
               listItems: geographiesTargetedAppliedTo?.map((type): string =>
@@ -485,9 +481,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'geographiesTargetedTypes',
           <ReadOnlySection
-            heading={generalCharacteristicsT(
-              'geographiesTargetedNote.question'
-            )}
+            heading={generalCharacteristicsT('geographiesTargetedNote.label')}
             copy={geographiesTargetedNote}
           />
         )}
@@ -497,7 +491,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'participationOptions',
           <ReadOnlySection
-            heading={generalCharacteristicsT('participationOptions.question')}
+            heading={generalCharacteristicsT('participationOptions.label')}
             copy={generalCharacteristicsT(
               `participationOptions.options.${participationOptions}`,
               ''
@@ -511,7 +505,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'agreementTypes',
           <ReadOnlySection
-            heading={generalCharacteristicsT('agreementTypes.question')}
+            heading={generalCharacteristicsT('agreementTypes.label')}
             list
             listItems={agreementTypes?.map((type): string =>
               generalCharacteristicsT(`agreementTypes.options.${type}`)
@@ -526,7 +520,7 @@ const ReadOnlyGeneralCharacteristics = ({
           'multiplePatricipationAgreementsNeeded',
           <ReadOnlySection
             heading={generalCharacteristicsT(
-              'multiplePatricipationAgreementsNeeded.question'
+              'multiplePatricipationAgreementsNeeded.label'
             )}
             copy={generalCharacteristicsT(
               `multiplePatricipationAgreementsNeeded.options.${multiplePatricipationAgreementsNeeded}`,
@@ -544,7 +538,7 @@ const ReadOnlyGeneralCharacteristics = ({
           'rulemakingRequired',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: generalCharacteristicsT('rulemakingRequired.question'),
+              heading: generalCharacteristicsT('rulemakingRequired.label'),
               copy: generalCharacteristicsT(
                 `rulemakingRequired.options.${rulemakingRequired}`,
                 ''
@@ -553,7 +547,7 @@ const ReadOnlyGeneralCharacteristics = ({
             secondSection={
               !!(rulemakingRequired === true || isViewingFilteredView) && {
                 heading: generalCharacteristicsT(
-                  'rulemakingRequiredDescription.question'
+                  'rulemakingRequiredDescription.label'
                 ),
                 copy: rulemakingRequiredDescription
               }
@@ -566,9 +560,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'rulemakingRequired',
             <ReadOnlySection
-              heading={generalCharacteristicsT(
-                'rulemakingRequiredNote.question'
-              )}
+              heading={generalCharacteristicsT('rulemakingRequiredNote.label')}
               copy={rulemakingRequiredNote}
             />
           )}
@@ -578,7 +570,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'authorityAllowances',
           <ReadOnlySection
-            heading={generalCharacteristicsT('authorityAllowances.question')}
+            heading={generalCharacteristicsT('authorityAllowances.label')}
             list
             listItems={authorityAllowances?.map((type): string =>
               generalCharacteristicsT(`authorityAllowances.options.${type}`)
@@ -594,7 +586,7 @@ const ReadOnlyGeneralCharacteristics = ({
           'waiversRequired',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: generalCharacteristicsT('waiversRequired.question'),
+              heading: generalCharacteristicsT('waiversRequired.label'),
               copy: generalCharacteristicsT(
                 `waiversRequired.options.${waiversRequired}`,
                 ''
@@ -621,7 +613,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'waiversRequired',
             <ReadOnlySection
-              heading={generalCharacteristicsT('waiversRequiredNote.question')}
+              heading={generalCharacteristicsT('waiversRequiredNote.label')}
               copy={waiversRequiredNote}
             />
           )}

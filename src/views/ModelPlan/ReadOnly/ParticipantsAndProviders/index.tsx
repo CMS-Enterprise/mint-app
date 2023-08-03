@@ -148,9 +148,7 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'medicareProviderType',
             <ReadOnlySection
-              heading={participantsAndProvidersT(
-                'medicareProviderType.question'
-              )}
+              heading={participantsAndProvidersT('medicareProviderType.label')}
               copy={medicareProviderType}
             />
           )}
@@ -161,7 +159,7 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'statesEngagement',
             <ReadOnlySection
-              heading={participantsAndProvidersT('statesEngagement.question')}
+              heading={participantsAndProvidersT('statesEngagement.label')}
               copy={statesEngagement}
             />
           )}
@@ -172,7 +170,7 @@ const ReadOnlyParticipantsAndProviders = ({
           'participantsCurrentlyInModels',
           <ReadOnlySection
             heading={participantsAndProvidersT(
-              'participantsCurrentlyInModels.question'
+              'participantsCurrentlyInModels.label'
             )}
             copy={participantsAndProvidersT(
               `participantsCurrentlyInModels.options.${participantsCurrentlyInModels}`,
@@ -187,9 +185,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'modelApplicationLevel',
           <ReadOnlySection
-            heading={participantsAndProvidersT(
-              'modelApplicationLevel.question'
-            )}
+            heading={participantsAndProvidersT('modelApplicationLevel.label')}
             copy={modelApplicationLevel}
           />
         )}
@@ -209,12 +205,12 @@ const ReadOnlyParticipantsAndProviders = ({
           <SideBySideReadOnlySection
             firstSection={{
               heading: participantsAndProvidersT(
-                'expectedNumberOfParticipants.question'
+                'expectedNumberOfParticipants.label'
               ),
               copy: expectedNumberOfParticipants?.toString()
             }}
             secondSection={{
-              heading: participantsAndProvidersT('estimateConfidence.question'),
+              heading: participantsAndProvidersT('estimateConfidence.label'),
               copy:
                 estimateConfidence &&
                 participantsAndProvidersT(
@@ -231,7 +227,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'expectedNumberOfParticipants',
           <ReadOnlySection
-            heading={participantsAndProvidersT('confidenceNote.question')}
+            heading={participantsAndProvidersT('confidenceNote.label')}
             copy={confidenceNote}
           />
         )}
@@ -243,7 +239,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'recruitmentMethod',
           <ReadOnlySection
-            heading={participantsAndProvidersT('recruitmentMethod.question')}
+            heading={participantsAndProvidersT('recruitmentMethod.label')}
             copy={
               recruitmentMethod &&
               (recruitmentMethod === RecruitmentType.OTHER
@@ -289,7 +285,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'communicationMethod',
           <ReadOnlySection
-            heading={participantsAndProvidersT('communicationMethod.question')}
+            heading={participantsAndProvidersT('communicationMethod.label')}
             list
             listItems={communicationMethod?.map((type): string =>
               participantsAndProvidersT(`communicationMethod.options.${type}`)
@@ -305,9 +301,7 @@ const ReadOnlyParticipantsAndProviders = ({
           'participantAssumeRisk',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: participantsAndProvidersT(
-                'participantAssumeRisk.question'
-              ),
+              heading: participantsAndProvidersT('participantAssumeRisk.label'),
               copy: participantsAndProvidersT(
                 `participantAssumeRisk.options.${participantAssumeRisk}`,
                 ''
@@ -315,7 +309,7 @@ const ReadOnlyParticipantsAndProviders = ({
             }}
             secondSection={
               participantAssumeRisk === true && {
-                heading: participantsAndProvidersT('riskType.question'),
+                heading: participantsAndProvidersT('riskType.label'),
                 copy:
                   riskType &&
                   participantsAndProvidersT(`riskType.options.${riskType}`, ''),
@@ -330,7 +324,7 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'participantAssumeRisk',
             <ReadOnlySection
-              heading={participantsAndProvidersT('riskNote.question')}
+              heading={participantsAndProvidersT('riskNote.label')}
               copy={riskNote}
             />
           )}
@@ -340,7 +334,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'willRiskChange',
           <ReadOnlySection
-            heading={participantsAndProvidersT('willRiskChange.question')}
+            heading={participantsAndProvidersT('willRiskChange.label')}
             copy={participantsAndProvidersT(
               `willRiskChange.options.${willRiskChange}`,
               ''
@@ -362,7 +356,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'coordinateWork',
           <ReadOnlySection
-            heading={participantsAndProvidersT('coordinateWork.question')}
+            heading={participantsAndProvidersT('coordinateWork.label')}
             copy={participantsAndProvidersT(
               `coordinateWork.options.${coordinateWork}`,
               ''
@@ -377,7 +371,7 @@ const ReadOnlyParticipantsAndProviders = ({
           'gainsharePayments',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: participantsAndProvidersT('gainsharePayments.question'),
+              heading: participantsAndProvidersT('gainsharePayments.label'),
               copy: participantsAndProvidersT(
                 `gainsharePayments.options.${gainsharePayments}`,
                 ''
@@ -386,7 +380,7 @@ const ReadOnlyParticipantsAndProviders = ({
             secondSection={
               gainsharePayments === true && {
                 heading: participantsAndProvidersT(
-                  'gainsharePaymentsTrack.question'
+                  'gainsharePaymentsTrack.label'
                 ),
                 copy: participantsAndProvidersT(
                   `gainsharePaymentsTrack.options.${gainsharePaymentsTrack}`,
@@ -402,9 +396,7 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'gainsharePayments',
             <ReadOnlySection
-              heading={participantsAndProvidersT(
-                'gainsharePaymentsNote.question'
-              )}
+              heading={participantsAndProvidersT('gainsharePaymentsNote.label')}
               copy={gainsharePaymentsNote}
             />
           )}
@@ -414,7 +406,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'participantsIds',
           <ReadOnlySection
-            heading={participantsAndProvidersT('participantsIds.question')}
+            heading={participantsAndProvidersT('participantsIds.label')}
             list
             listItems={participantsIds?.map((type): string =>
               participantsAndProvidersT(`participantsIds.options.${type}`)
@@ -434,7 +426,7 @@ const ReadOnlyParticipantsAndProviders = ({
           'providerAdditionFrequency',
           <ReadOnlySection
             heading={participantsAndProvidersT(
-              'providerAdditionFrequency.question'
+              'providerAdditionFrequency.label'
             )}
             copy={
               providerAdditionFrequency &&
@@ -490,7 +482,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'providerOverlap',
           <ReadOnlySection
-            heading={participantsAndProvidersT('providerOverlap.question')}
+            heading={participantsAndProvidersT('providerOverlap.label')}
             copy={
               providerOverlap &&
               participantsAndProvidersT(
@@ -508,7 +500,7 @@ const ReadOnlyParticipantsAndProviders = ({
             'providerOverlapHierarchy',
             <ReadOnlySection
               heading={participantsAndProvidersT(
-                'providerOverlapHierarchy.question'
+                'providerOverlapHierarchy.label'
               )}
               copy={providerOverlapHierarchy}
             />
@@ -520,9 +512,7 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'providerOverlapHierarchy',
             <ReadOnlySection
-              heading={participantsAndProvidersT(
-                'providerOverlapNote.question'
-              )}
+              heading={participantsAndProvidersT('providerOverlapNote.label')}
               copy={providerOverlapNote}
             />
           )}

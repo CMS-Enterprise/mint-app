@@ -58,9 +58,9 @@ export type TranslationFieldProperties = {
   gqlField: string;
   goField: string;
   dbField: string;
-  question: string;
-  readonlyQuestion?: string;
-  hint?: string;
+  label: string;
+  readonlyLabel?: string;
+  sublabel?: string;
   multiSelectLabel?: string;
   dataType: 'string' | 'number' | 'boolean' | 'date' | 'enum';
   isArray?: boolean;

@@ -283,7 +283,7 @@ const Milestones = () => {
                               className="margin-top-0"
                               fieldName="completeICIP"
                               id="Milestone-completeICIP"
-                              label={basicsT('completeICIP.question')}
+                              label={basicsT('completeICIP.label')}
                               placeHolder
                               handleOnBlur={handleOnBlur}
                               formikValue={values.completeICIP}
@@ -315,7 +315,7 @@ const Milestones = () => {
                             <MINTDatePicker
                               fieldName="clearanceStarts"
                               id="Milestone-clearanceStarts"
-                              label={basicsT('clearanceStarts.question')}
+                              label={basicsT('clearanceStarts.label')}
                               boldLabel={false}
                               placeHolder
                               handleOnBlur={handleOnBlur}
@@ -329,7 +329,7 @@ const Milestones = () => {
                             <MINTDatePicker
                               fieldName="clearanceEnds"
                               id="Milestone-clearanceEnds"
-                              label={basicsT('clearanceEnds.question')}
+                              label={basicsT('clearanceEnds.label')}
                               boldLabel={false}
                               placeHolder
                               handleOnBlur={handleOnBlur}
@@ -361,7 +361,7 @@ const Milestones = () => {
                             className="margin-top-0"
                             fieldName="announced"
                             id="Milestone-announced"
-                            label={basicsT('announced.question')}
+                            label={basicsT('announced.label')}
                             placeHolder
                             handleOnBlur={handleOnBlur}
                             formikValue={values.announced}
@@ -386,7 +386,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="applicationsStart"
                             id="Milestone-applicationsStart"
-                            label={basicsT('applicationsStart.question')}
+                            label={basicsT('applicationsStart.label')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -399,7 +399,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="applicationsEnd"
                             id="Milestone-applicationsEnd"
-                            label={basicsT('applicationsEnd.question')}
+                            label={basicsT('applicationsEnd.label')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -439,7 +439,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="performancePeriodStarts"
                             id="Milestone-performancePeriodStarts"
-                            label={basicsT('performancePeriodStarts.question')}
+                            label={basicsT('performancePeriodStarts.label')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -453,7 +453,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="performancePeriodEnds"
                             id="Milestone-performancePeriodEnds"
-                            label={basicsT('performancePeriodEnds.question')}
+                            label={basicsT('performancePeriodEnds.label')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -484,7 +484,7 @@ const Milestones = () => {
                             fieldName="wrapUpEnds"
                             className="margin-top-0"
                             id="Milestone-wrapUpEnds"
-                            label={basicsT('wrapUpEnds.question')}
+                            label={basicsT('wrapUpEnds.label')}
                             placeHolder
                             handleOnBlur={handleOnBlur}
                             formikValue={values.wrapUpEnds}
@@ -507,11 +507,11 @@ const Milestones = () => {
                       className="margin-top-4"
                     >
                       <Label htmlFor="phasedIn">
-                        {basicsT('phasedIn.question')}
+                        {basicsT('phasedIn.label')}
                       </Label>
 
                       <span className="usa-hint display-block text-normal margin-top-1">
-                        {basicsT('phasedIn.hint')}
+                        {basicsT('phasedIn.sublabel')}
                       </span>
 
                       <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>

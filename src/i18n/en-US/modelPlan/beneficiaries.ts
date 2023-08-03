@@ -5,8 +5,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'participantsCurrentlyInModels',
     goField: 'ParticipantsCurrentlyInModels',
     dbField: 'beneficiaries',
-    question: 'Who are the beneficiaries of this model? Select all that apply.',
-    readonlyQuestion: 'Who are the beneficiaries of this model?',
+    label: 'Who are the beneficiaries of this model? Select all that apply.',
+    readonlyLabel: 'Who are the beneficiaries of this model?',
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected groups',
@@ -37,7 +37,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiariesOther',
     goField: 'BeneficiariesOther',
     dbField: 'beneficiaries_other',
-    question: 'Please describe the other groups this model will impact.',
+    label: 'Please describe the other groups this model will impact.',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['mdm']
@@ -46,7 +46,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiariesNote',
     goField: 'BeneficiariesNote',
     dbField: 'beneficiaries_other',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['mdm']
@@ -55,7 +55,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'treatDualElligibleDifferent',
     goField: 'TreatDualElligibleDifferent',
     dbField: 'treat_dual_elligible_different',
-    question:
+    label:
       'Should dually-eligible beneficiaries be treated differently than non-dually eligibles?',
     dataType: 'boolean',
     formType: 'radio',
@@ -70,7 +70,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'treatDualElligibleDifferentHow',
     goField: 'TreatDualElligibleDifferentHow',
     dbField: 'treat_dual_elligible_different',
-    question: 'How so?',
+    label: 'How so?',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
@@ -79,7 +79,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'treatDualElligibleDifferentNote',
     goField: 'TreatDualElligibleDifferentNote',
     dbField: 'treat_dual_elligible_different_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
@@ -88,7 +88,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'excludeCertainCharacteristics',
     goField: 'ExcludeCertainCharacteristics',
     dbField: 'exclude_certain_characteristics',
-    question:
+    label:
       'Should beneficiaries with certain characteristics or enrollments be excluded?',
     dataType: 'boolean',
     formType: 'radio',
@@ -103,7 +103,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'excludeCertainCharacteristicsCriteria',
     goField: 'ExcludeCertainCharacteristicsCriteria',
     dbField: 'exclude_certain_characteristics_criteria',
-    question: 'What are the exclusionary criteria?',
+    label: 'What are the exclusionary criteria?',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
@@ -112,7 +112,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'excludeCertainCharacteristicsNote',
     goField: 'ExcludeCertainCharacteristicsNote',
     dbField: 'exclude_certain_characteristics_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
@@ -121,7 +121,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'numberPeopleImpacted',
     goField: 'NumberPeopleImpacted',
     dbField: 'number_people_impacted',
-    question: 'How many people do you think will be impacted by this model?',
+    label: 'How many people do you think will be impacted by this model?',
     dataType: 'number',
     formType: 'rangeInput',
     filterGroups: ['mdm']
@@ -130,7 +130,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'estimateConfidence',
     goField: 'EstimateConfidence',
     dbField: 'estimate_confidence',
-    question: 'What is your level of confidence on this estimate?',
+    label: 'What is your level of confidence on this estimate?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -145,7 +145,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'confidenceNote',
     goField: 'ConfidenceNote',
     dbField: 'confidence_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
@@ -154,8 +154,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionMethod',
     goField: 'BeneficiarySelectionMethod',
     dbField: 'beneficiary_selection_method',
-    question: 'How will you choose beneficiaries? Select all that apply.',
-    readonlyQuestion: 'How will you choose beneficiaries?',
+    label: 'How will you choose beneficiaries? Select all that apply.',
+    readonlyLabel: 'How will you choose beneficiaries?',
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected methods',
@@ -174,7 +174,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionOther',
     goField: 'BeneficiarySelectionOther',
     dbField: 'beneficiary_selection_other',
-    question: 'Please describe the other method for choosing beneficiaries.',
+    label: 'Please describe the other method for choosing beneficiaries.',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
@@ -183,7 +183,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionNote',
     goField: 'BeneficiarySelectionNote',
     dbField: 'beneficiary_selection_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
@@ -192,7 +192,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionFrequency',
     goField: 'BeneficiarySelectionFrequency',
     dbField: 'beneficiary_selection_frequency',
-    question: 'How frequently are beneficiaries chosen?',
+    label: 'How frequently are beneficiaries chosen?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -209,7 +209,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionFrequencyOther',
     goField: 'BeneficiarySelectionFrequencyOther',
     dbField: 'beneficiary_selection_frequency_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
@@ -218,7 +218,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionFrequencyNote',
     goField: 'BeneficiarySelectionFrequencyNote',
     dbField: 'beneficiary_selection_frequency_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
@@ -227,7 +227,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiaryOverlap',
     goField: 'BeneficiaryOverlap',
     dbField: 'beneficiary_overlap',
-    question: 'Will the beneficiaries overlap with other models?',
+    label: 'Will the beneficiaries overlap with other models?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -242,7 +242,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiaryOverlapNote',
     goField: 'BeneficiaryOverlapNote',
     dbField: 'beneficiary_overlap_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['mdm']
@@ -251,9 +251,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'precedenceRules',
     goField: 'PrecedenceRules',
     dbField: 'beneficiary_overlap_note',
-    question:
-      'Are there precedence rules between this model and other model(s)?',
-    hint:
+    label: 'Are there precedence rules between this model and other model(s)?',
+    sublabel:
       'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
     dataType: 'string',
     formType: 'textarea',
@@ -263,7 +262,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'status',
     goField: 'Status',
     dbField: 'status',
-    question: 'Model Plan status',
+    label: 'Model Plan status',
     dataType: 'enum',
     formType: 'checkbox',
     options: {

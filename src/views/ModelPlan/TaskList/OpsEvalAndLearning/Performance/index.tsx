@@ -266,7 +266,7 @@ const Performance = () => {
                     error={!!flatErrors.benchmarkForPerformance}
                   >
                     <Label htmlFor="ops-eval-and-learning-benchmark-performance">
-                      {opsEvalAndLearningT('benchmarkForPerformance.question')}
+                      {opsEvalAndLearningT('benchmarkForPerformance.label')}
                     </Label>
 
                     {itSolutionsStarted && (
@@ -315,7 +315,7 @@ const Performance = () => {
                     className="margin-top-6"
                   >
                     <Label htmlFor="ops-eval-and-learning-compute-performance">
-                      {opsEvalAndLearningT('computePerformanceScores.question')}
+                      {opsEvalAndLearningT('computePerformanceScores.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -349,7 +349,7 @@ const Performance = () => {
                       htmlFor="ops-eval-and-learning-risk-adjustment-performance"
                       className="text-normal margin-top-2"
                     >
-                      {opsEvalAndLearningT('riskAdjustPerformance.question')}
+                      {opsEvalAndLearningT('riskAdjustPerformance.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -368,7 +368,7 @@ const Performance = () => {
                       htmlFor="ops-eval-and-learning-risk-adjustment-feedback"
                       className="text-normal"
                     >
-                      {opsEvalAndLearningT('riskAdjustFeedback.question')}
+                      {opsEvalAndLearningT('riskAdjustFeedback.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -387,7 +387,7 @@ const Performance = () => {
                       htmlFor="ops-eval-and-learning-risk-adjustment-payment"
                       className="text-normal"
                     >
-                      {opsEvalAndLearningT('riskAdjustPayments.question')}
+                      {opsEvalAndLearningT('riskAdjustPayments.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -406,7 +406,7 @@ const Performance = () => {
                       htmlFor="ops-eval-and-learning-risk-adjustment-other"
                       className="text-normal"
                     >
-                      {opsEvalAndLearningT('riskAdjustOther.question')}
+                      {opsEvalAndLearningT('riskAdjustOther.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.riskAdjustOther}</FieldErrorMsg>
@@ -454,7 +454,7 @@ const Performance = () => {
                       htmlFor="ops-eval-and-learning-appeal-performance"
                       className="text-normal margin-top-2"
                     >
-                      {opsEvalAndLearningT('appealPerformance.question')}
+                      {opsEvalAndLearningT('appealPerformance.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -473,7 +473,7 @@ const Performance = () => {
                       htmlFor="ops-eval-and-learning-appeal-feedback"
                       className="text-normal"
                     >
-                      {opsEvalAndLearningT('appealFeedback.question')}
+                      {opsEvalAndLearningT('appealFeedback.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.appealFeedback}</FieldErrorMsg>
@@ -490,7 +490,7 @@ const Performance = () => {
                       htmlFor="ops-eval-and-learning-appeal-payment"
                       className="text-normal"
                     >
-                      {opsEvalAndLearningT('appealPayments.question')}
+                      {opsEvalAndLearningT('appealPayments.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.appealPayments}</FieldErrorMsg>
@@ -507,7 +507,7 @@ const Performance = () => {
                       htmlFor="ops-eval-and-learning-appeal-other"
                       className="text-normal"
                     >
-                      {opsEvalAndLearningT('appealOther.question')}
+                      {opsEvalAndLearningT('appealOther.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.appealOther}</FieldErrorMsg>

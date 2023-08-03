@@ -244,7 +244,7 @@ const Frequency = () => {
                       >
                         <Label htmlFor="beneficiaries-beneficiarySelectionFrequency">
                           {beneficiariesT(
-                            'beneficiarySelectionFrequency.question'
+                            'beneficiarySelectionFrequency.label'
                           )}
                         </Label>
 
@@ -287,7 +287,7 @@ const Frequency = () => {
                                       className="text-normal"
                                     >
                                       {beneficiariesT(
-                                        'beneficiarySelectionFrequencyOther.question'
+                                        'beneficiarySelectionFrequencyOther.label'
                                       )}
                                     </Label>
 
@@ -321,7 +321,7 @@ const Frequency = () => {
                         error={!!flatErrors.beneficiaryOverlap}
                       >
                         <Label htmlFor="beneficiaries-overlap">
-                          {beneficiariesT('beneficiaryOverlap.question')}
+                          {beneficiariesT('beneficiaryOverlap.label')}
                         </Label>
 
                         {itSolutionsStarted && (
@@ -373,11 +373,11 @@ const Frequency = () => {
                           htmlFor="beneficiaries-precedence-rules"
                           className="maxw-none"
                         >
-                          {beneficiariesT('precedenceRules.question')}
+                          {beneficiariesT('precedenceRules.label')}
                         </Label>
 
                         <p className="text-base margin-0 line-height-body-3">
-                          {beneficiariesT('precedenceRules.hint')}
+                          {beneficiariesT('precedenceRules.sublabel')}
                         </p>
 
                         <FieldErrorMsg>

@@ -230,7 +230,7 @@ const BeneficiaryIdentification = () => {
                             htmlFor="beneficiaries-beneficiaries"
                             id="label-beneficiaries-beneficiaries"
                           >
-                            {beneficiariesT('beneficiaries.question')}
+                            {beneficiariesT('beneficiaries.label')}
                           </Label>
 
                           <FieldErrorMsg>
@@ -266,7 +266,7 @@ const BeneficiaryIdentification = () => {
                                 htmlFor="beneficiaries-other"
                                 className="text-normal"
                               >
-                                {beneficiariesT('beneficiariesOther.question')}
+                                {beneficiariesT('beneficiariesOther.label')}
                               </Label>
 
                               <FieldErrorMsg>
@@ -304,7 +304,7 @@ const BeneficiaryIdentification = () => {
                         >
                           <Label htmlFor="beneficiaries-dual-eligibility">
                             {beneficiariesT(
-                              'treatDualElligibleDifferent.question'
+                              'treatDualElligibleDifferent.label'
                             )}
                           </Label>
 
@@ -347,7 +347,7 @@ const BeneficiaryIdentification = () => {
                                   className="text-normal"
                                 >
                                   {beneficiariesT(
-                                    'treatDualElligibleDifferentHow.question'
+                                    'treatDualElligibleDifferentHow.label'
                                   )}
                                 </Label>
 
@@ -422,7 +422,7 @@ const BeneficiaryIdentification = () => {
                         >
                           <Label htmlFor="beneficiaries-exclude">
                             {beneficiariesT(
-                              'excludeCertainCharacteristics.question'
+                              'excludeCertainCharacteristics.label'
                             )}
                           </Label>
 
@@ -465,7 +465,7 @@ const BeneficiaryIdentification = () => {
                                   className="text-normal"
                                 >
                                   {beneficiariesT(
-                                    'excludeCertainCharacteristicsCriteria.question'
+                                    'excludeCertainCharacteristicsCriteria.label'
                                   )}
                                 </Label>
 

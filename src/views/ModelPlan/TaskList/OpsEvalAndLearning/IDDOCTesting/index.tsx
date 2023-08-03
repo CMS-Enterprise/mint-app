@@ -236,7 +236,7 @@ const IDDOCTesting = () => {
                     error={!!flatErrors.uatNeeds}
                   >
                     <Label htmlFor="ops-eval-and-learning-uat-needs">
-                      {opsEvalAndLearningT('uatNeeds.question')}
+                      {opsEvalAndLearningT('uatNeeds.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.uatNeeds}</FieldErrorMsg>
@@ -256,7 +256,7 @@ const IDDOCTesting = () => {
                     error={!!flatErrors.stcNeeds}
                   >
                     <Label htmlFor="ops-eval-and-learning-stc-needs">
-                      {opsEvalAndLearningT('stcNeeds.question')}
+                      {opsEvalAndLearningT('stcNeeds.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.stcNeeds}</FieldErrorMsg>
@@ -277,7 +277,7 @@ const IDDOCTesting = () => {
                     error={!!flatErrors.testingTimelines}
                   >
                     <Label htmlFor="ops-eval-and-learning-testing-timelines">
-                      {opsEvalAndLearningT('testingTimelines.question')}
+                      {opsEvalAndLearningT('testingTimelines.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.testingTimelines}</FieldErrorMsg>
@@ -303,9 +303,7 @@ const IDDOCTesting = () => {
                     render={arrayHelpers => (
                       <>
                         <legend className="usa-label maxw-none">
-                          {opsEvalAndLearningT(
-                            'dataMonitoringFileTypes.question'
-                          )}
+                          {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
                         </legend>
 
                         <FieldErrorMsg>
@@ -351,7 +349,7 @@ const IDDOCTesting = () => {
                                         className="text-normal"
                                       >
                                         {opsEvalAndLearningT(
-                                          'dataMonitoringFileOther.question'
+                                          'dataMonitoringFileOther.label'
                                         )}
                                       </Label>
 
@@ -382,7 +380,7 @@ const IDDOCTesting = () => {
                     error={!!flatErrors.dataResponseType}
                   >
                     <Label htmlFor="ops-eval-and-learning-data-response-type">
-                      {opsEvalAndLearningT('dataResponseType.question')}
+                      {opsEvalAndLearningT('dataResponseType.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.dataResponseType}</FieldErrorMsg>
@@ -402,9 +400,7 @@ const IDDOCTesting = () => {
                     error={!!flatErrors.dataResponseFileFrequency}
                   >
                     <Label htmlFor="ops-eval-and-learning-data-file-frequency">
-                      {opsEvalAndLearningT(
-                        'dataResponseFileFrequency.question'
-                      )}
+                      {opsEvalAndLearningT('dataResponseFileFrequency.label')}
                     </Label>
 
                     <FieldErrorMsg>

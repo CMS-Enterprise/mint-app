@@ -314,7 +314,7 @@ export const OpsEvalAndLearningContent = () => {
                     render={arrayHelpers => (
                       <>
                         <legend className="usa-label maxw-none">
-                          {opsEvalAndLearningT('agencyOrStateHelp.question')}
+                          {opsEvalAndLearningT('agencyOrStateHelp.label')}
                         </legend>
 
                         <FieldErrorMsg>
@@ -357,7 +357,7 @@ export const OpsEvalAndLearningContent = () => {
                                       className="text-normal"
                                     >
                                       {opsEvalAndLearningT(
-                                        'agencyOrStateHelpOther.question'
+                                        'agencyOrStateHelpOther.label'
                                       )}
                                     </Label>
 
@@ -395,7 +395,7 @@ export const OpsEvalAndLearningContent = () => {
                       htmlFor="ops-eval-and-learning-stakeholders"
                       id="label-ops-eval-and-learning-stakeholders"
                     >
-                      {opsEvalAndLearningT('stakeholders.question')}
+                      {opsEvalAndLearningT('stakeholders.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.stakeholders}</FieldErrorMsg>
@@ -421,7 +421,7 @@ export const OpsEvalAndLearningContent = () => {
                     {values.stakeholders.includes(StakeholdersType.OTHER) && (
                       <>
                         <p className="margin-y-1 margin-top-3">
-                          {opsEvalAndLearningT('stakeholdersOther.question')}
+                          {opsEvalAndLearningT('stakeholdersOther.label')}
                         </p>
 
                         <FieldErrorMsg>
@@ -451,7 +451,7 @@ export const OpsEvalAndLearningContent = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="ops-eval-and-learning-help-desk-use">
-                      {opsEvalAndLearningT('helpdeskUse.question')}
+                      {opsEvalAndLearningT('helpdeskUse.label')}
                     </Label>
 
                     {itSolutionsStarted && (
@@ -486,7 +486,7 @@ export const OpsEvalAndLearningContent = () => {
                     render={arrayHelpers => (
                       <>
                         <legend className="usa-label maxw-none">
-                          {opsEvalAndLearningT('contractorSupport.question')}
+                          {opsEvalAndLearningT('contractorSupport.label')}
                         </legend>
 
                         <FieldErrorMsg>
@@ -529,7 +529,7 @@ export const OpsEvalAndLearningContent = () => {
                                       className="text-normal"
                                     >
                                       {opsEvalAndLearningT(
-                                        'contractorSupportOther.question'
+                                        'contractorSupportOther.label'
                                       )}
                                     </Label>
 
@@ -558,13 +558,13 @@ export const OpsEvalAndLearningContent = () => {
                             htmlFor="ops-eval-and-learning-contractor-support-how"
                             className="text-normal margin-top-4"
                           >
-                            {opsEvalAndLearningT(
-                              'contractorSupportHow.question'
-                            )}
+                            {opsEvalAndLearningT('contractorSupportHow.label')}
                           </Label>
 
                           <p className="text-base margin-y-1">
-                            {opsEvalAndLearningT('contractorSupportHow.hint')}
+                            {opsEvalAndLearningT(
+                              'contractorSupportHow.sublabel'
+                            )}
                           </p>
 
                           <FieldErrorMsg>
@@ -595,7 +595,7 @@ export const OpsEvalAndLearningContent = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="ops-eval-and-learning-iddoc-support">
-                      {opsEvalAndLearningT('iddocSupport.question')}
+                      {opsEvalAndLearningT('iddocSupport.label')}
                     </Label>
 
                     {itSolutionsStarted && (
@@ -610,7 +610,7 @@ export const OpsEvalAndLearningContent = () => {
                     )}
 
                     <p className="text-base margin-y-1">
-                      {opsEvalAndLearningT('iddocSupport.hint')}
+                      {opsEvalAndLearningT('iddocSupport.sublabel')}
                     </p>
 
                     <p className="text-base margin-y-1 margin-top-2">

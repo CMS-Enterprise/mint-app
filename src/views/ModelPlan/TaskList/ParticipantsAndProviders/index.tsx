@@ -234,7 +234,7 @@ export const ParticipantsAndProvidersContent = () => {
                             htmlFor="participants-and-providers-participants"
                             id="label-participants-and-providers-participants"
                           >
-                            {participantsAndProvidersT('participants.question')}
+                            {participantsAndProvidersT('participants.label')}
                           </Label>
 
                           <FieldErrorMsg>
@@ -286,7 +286,7 @@ export const ParticipantsAndProvidersContent = () => {
                                 className="text-normal"
                               >
                                 {participantsAndProvidersT(
-                                  'medicareProviderType.question'
+                                  'medicareProviderType.label'
                                 )}
                               </Label>
                               <FieldErrorMsg>
@@ -314,7 +314,7 @@ export const ParticipantsAndProvidersContent = () => {
                                 className="text-normal"
                               >
                                 {participantsAndProvidersT(
-                                  'statesEngagement.question'
+                                  'statesEngagement.label'
                                 )}
                               </Label>
                               <FieldErrorMsg>
@@ -342,7 +342,7 @@ export const ParticipantsAndProvidersContent = () => {
                                 className="text-normal"
                               >
                                 {participantsAndProvidersT(
-                                  'participantsOther.question'
+                                  'participantsOther.label'
                                 )}
                               </Label>
                               <FieldErrorMsg>
@@ -371,13 +371,13 @@ export const ParticipantsAndProvidersContent = () => {
                         >
                           <Label htmlFor="participants-and-providers-current-participants">
                             {participantsAndProvidersT(
-                              'participantsCurrentlyInModels.question'
+                              'participantsCurrentlyInModels.label'
                             )}
                           </Label>
 
                           <p className="text-base margin-0 line-height-body-3">
                             {participantsAndProvidersT(
-                              'participantsCurrentlyInModels.hint'
+                              'participantsCurrentlyInModels.sublabel'
                             )}
                           </p>
 
@@ -407,13 +407,13 @@ export const ParticipantsAndProvidersContent = () => {
                         >
                           <Label htmlFor="participants-and-providers-application-level">
                             {participantsAndProvidersT(
-                              'modelApplicationLevel.question'
+                              'modelApplicationLevel.label'
                             )}
                           </Label>
 
                           <p className="text-base margin-0 line-height-body-3">
                             {participantsAndProvidersT(
-                              'modelApplicationLevel.hint'
+                              'modelApplicationLevel.sublabel'
                             )}
                           </p>
 

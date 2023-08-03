@@ -245,9 +245,7 @@ const IDDOC = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
-                      {opsEvalAndLearningT(
-                        'technicalContactsIdentified.question'
-                      )}
+                      {opsEvalAndLearningT('technicalContactsIdentified.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -269,7 +267,7 @@ const IDDOC = () => {
                             className="text-normal"
                           >
                             {opsEvalAndLearningT(
-                              'technicalContactsIdentifiedDetail.question'
+                              'technicalContactsIdentifiedDetail.label'
                             )}
                           </Label>
 
@@ -302,11 +300,11 @@ const IDDOC = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="ops-eval-and-learning-capture-participant-info">
-                      {opsEvalAndLearningT('captureParticipantInfo.question')}
+                      {opsEvalAndLearningT('captureParticipantInfo.label')}
                     </Label>
 
                     <p className="text-base margin-bottom-1 margin-top-1">
-                      {opsEvalAndLearningT('captureParticipantInfo.hint')}
+                      {opsEvalAndLearningT('captureParticipantInfo.sublabel')}
                     </p>
 
                     <FieldErrorMsg>
@@ -339,7 +337,7 @@ const IDDOC = () => {
                     error={!!flatErrors.icdOwner}
                   >
                     <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
-                      {opsEvalAndLearningT('icdOwner.question')}
+                      {opsEvalAndLearningT('icdOwner.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.icdOwner}</FieldErrorMsg>
@@ -360,7 +358,7 @@ const IDDOC = () => {
                         fieldName="draftIcdDueDate"
                         id="ops-eval-and-learning-icd-due-date"
                         className="margin-top-6"
-                        label={opsEvalAndLearningT('draftIcdDueDate.question')}
+                        label={opsEvalAndLearningT('draftIcdDueDate.label')}
                         placeHolder
                         handleOnBlur={handleOnBlur}
                         formikValue={values.draftIcdDueDate}

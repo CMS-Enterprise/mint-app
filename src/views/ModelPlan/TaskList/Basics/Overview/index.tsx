@@ -198,7 +198,7 @@ const Overview = () => {
                     className="margin-top-4"
                   >
                     <Label htmlFor="modelType">
-                      {basicsT('modelType.question')}
+                      {basicsT('modelType.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
@@ -233,7 +233,7 @@ const Overview = () => {
                       error={flatErrors.problem}
                       id="ModelType-Problem"
                       name="problem"
-                      label={basicsT('problem.question')}
+                      label={basicsT('problem.label')}
                     />
                   </FieldGroup>
 
@@ -247,8 +247,8 @@ const Overview = () => {
                       error={flatErrors.goal}
                       id="ModelType-Goal"
                       name="goal"
-                      hint={basicsT('goal.hint')}
-                      label={basicsT('goal.question')}
+                      hint={basicsT('goal.sublabel')}
+                      label={basicsT('goal.label')}
                     />
                   </FieldGroup>
 
@@ -262,7 +262,7 @@ const Overview = () => {
                       error={flatErrors.testInterventions}
                       id="ModelType-testInterventions"
                       name="testInterventions"
-                      label={basicsT('testInterventions.question')}
+                      label={basicsT('testInterventions.label')}
                     />
                   </FieldGroup>
 

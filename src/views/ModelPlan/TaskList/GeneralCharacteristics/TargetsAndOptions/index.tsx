@@ -247,7 +247,7 @@ const TargetsAndOptions = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="plan-characteristics-geographies-targeted">
-                      {generalCharacteristicsT('geographiesTargeted.question')}
+                      {generalCharacteristicsT('geographiesTargeted.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -270,7 +270,7 @@ const TargetsAndOptions = () => {
                             <>
                               <legend className="usa-label text-normal">
                                 {generalCharacteristicsT(
-                                  'geographiesTargetedTypes.question'
+                                  'geographiesTargetedTypes.label'
                                 )}
                               </legend>
 
@@ -327,7 +327,7 @@ const TargetsAndOptions = () => {
                                             className="text-normal"
                                           >
                                             {generalCharacteristicsT(
-                                              'geographiesTargetedTypesOther.question'
+                                              'geographiesTargetedTypesOther.label'
                                             )}
                                           </Label>
                                           <FieldErrorMsg>
@@ -358,7 +358,7 @@ const TargetsAndOptions = () => {
                             <>
                               <legend className="usa-label text-normal">
                                 {generalCharacteristicsT(
-                                  'geographiesTargetedAppliedTo.question'
+                                  'geographiesTargetedAppliedTo.label'
                                 )}
                               </legend>
 
@@ -414,7 +414,7 @@ const TargetsAndOptions = () => {
                                             className="text-normal"
                                           >
                                             {generalCharacteristicsT(
-                                              'geographiesTargetedAppliedToOther.question'
+                                              'geographiesTargetedAppliedToOther.label'
                                             )}
                                           </Label>
                                           <FieldErrorMsg>
@@ -452,7 +452,7 @@ const TargetsAndOptions = () => {
                     className="margin-y-4"
                   >
                     <Label htmlFor="plan-characteristics-participation">
-                      {generalCharacteristicsT('participationOptions.question')}
+                      {generalCharacteristicsT('participationOptions.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -482,7 +482,7 @@ const TargetsAndOptions = () => {
                       render={arrayHelpers => (
                         <>
                           <legend className="usa-label">
-                            {generalCharacteristicsT('agreementTypes.question')}
+                            {generalCharacteristicsT('agreementTypes.label')}
                           </legend>
 
                           {itSolutionsStarted && (
@@ -497,7 +497,7 @@ const TargetsAndOptions = () => {
                           )}
 
                           <p className="text-base margin-y-1">
-                            {generalCharacteristicsT('agreementTypes.hint')}
+                            {generalCharacteristicsT('agreementTypes.sublabel')}
                           </p>
 
                           <FieldErrorMsg>
@@ -540,7 +540,7 @@ const TargetsAndOptions = () => {
                                         className="text-normal"
                                       >
                                         {generalCharacteristicsT(
-                                          'agreementTypesOther.question'
+                                          'agreementTypesOther.label'
                                         )}
                                       </Label>
 
@@ -581,13 +581,13 @@ const TargetsAndOptions = () => {
                           className="text-normal"
                         >
                           {generalCharacteristicsT(
-                            'multiplePatricipationAgreementsNeeded.question'
+                            'multiplePatricipationAgreementsNeeded.label'
                           )}
                         </Label>
 
                         <p className="text-base margin-y-1">
                           {generalCharacteristicsT(
-                            'multiplePatricipationAgreementsNeeded.hint'
+                            'multiplePatricipationAgreementsNeeded.sublabel'
                           )}
                         </p>
 

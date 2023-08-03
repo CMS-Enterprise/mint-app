@@ -229,9 +229,7 @@ const IDDOCMonitoring = () => {
                     error={!!flatErrors.dataFullTimeOrIncremental}
                   >
                     <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
-                      {opsEvalAndLearningT(
-                        'dataFullTimeOrIncremental.question'
-                      )}
+                      {opsEvalAndLearningT('dataFullTimeOrIncremental.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -264,7 +262,7 @@ const IDDOCMonitoring = () => {
                     className="margin-top-6"
                   >
                     <Label htmlFor="ops-eval-and-learning-eft-setup">
-                      {opsEvalAndLearningT('eftSetUp.question')}
+                      {opsEvalAndLearningT('eftSetUp.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.eftSetUp}</FieldErrorMsg>
@@ -285,7 +283,7 @@ const IDDOCMonitoring = () => {
                   >
                     <Label htmlFor="ops-eval-and-learning-unsolicted-adjustment-included">
                       {opsEvalAndLearningT(
-                        'unsolicitedAdjustmentsIncluded.question'
+                        'unsolicitedAdjustmentsIncluded.label'
                       )}
                     </Label>
 
@@ -308,7 +306,7 @@ const IDDOCMonitoring = () => {
                     className="margin-top-6"
                   >
                     <Label htmlFor="ops-eval-and-learning-diagrams-needed">
-                      {opsEvalAndLearningT('dataFlowDiagramsNeeded.question')}
+                      {opsEvalAndLearningT('dataFlowDiagramsNeeded.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -331,13 +329,13 @@ const IDDOCMonitoring = () => {
                   >
                     <Label htmlFor="ops-eval-and-learning-produce-benefit-files">
                       {opsEvalAndLearningT(
-                        'produceBenefitEnhancementFiles.question'
+                        'produceBenefitEnhancementFiles.label'
                       )}
                     </Label>
 
                     <p className="text-base margin-y-1">
                       {opsEvalAndLearningT(
-                        'produceBenefitEnhancementFiles.hint'
+                        'produceBenefitEnhancementFiles.sublabel'
                       )}
                     </p>
 
@@ -360,7 +358,7 @@ const IDDOCMonitoring = () => {
                     error={!!flatErrors.fileNamingConventions}
                   >
                     <Label htmlFor="ops-eval-and-learning-file-naming-convention">
-                      {opsEvalAndLearningT('fileNamingConventions.question')}
+                      {opsEvalAndLearningT('fileNamingConventions.label')}
                     </Label>
 
                     <FieldErrorMsg>

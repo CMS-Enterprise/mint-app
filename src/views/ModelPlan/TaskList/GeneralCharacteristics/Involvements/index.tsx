@@ -222,7 +222,7 @@ const Involvements = () => {
                   >
                     <Label htmlFor="plan-characteristics-care-coordination-involved">
                       {generalCharacteristicsT(
-                        'careCoordinationInvolved.question'
+                        'careCoordinationInvolved.label'
                       )}
                     </Label>
 
@@ -252,7 +252,7 @@ const Involvements = () => {
                               className="margin-bottom-1 text-normal"
                             >
                               {generalCharacteristicsT(
-                                'careCoordinationInvolvedDescription.question'
+                                'careCoordinationInvolvedDescription.label'
                               )}
                             </Label>
 
@@ -289,7 +289,7 @@ const Involvements = () => {
                   >
                     <Label htmlFor="plan-characteristics-additional-services">
                       {generalCharacteristicsT(
-                        'additionalServicesInvolved.question'
+                        'additionalServicesInvolved.label'
                       )}
                     </Label>
 
@@ -319,7 +319,7 @@ const Involvements = () => {
                               className="margin-bottom-1 text-normal"
                             >
                               {generalCharacteristicsT(
-                                'additionalServicesInvolvedDescription.question'
+                                'additionalServicesInvolvedDescription.label'
                               )}
                             </Label>
 
@@ -357,7 +357,7 @@ const Involvements = () => {
                   >
                     <Label htmlFor="plan-characteristics-community-partners-involved">
                       {generalCharacteristicsT(
-                        'communityPartnersInvolved.question'
+                        'communityPartnersInvolved.label'
                       )}
                     </Label>
 
@@ -387,7 +387,7 @@ const Involvements = () => {
                               className="margin-bottom-1 text-normal"
                             >
                               {generalCharacteristicsT(
-                                'communityPartnersInvolvedDescription.question'
+                                'communityPartnersInvolvedDescription.label'
                               )}
                             </Label>
 

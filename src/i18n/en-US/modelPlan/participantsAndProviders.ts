@@ -5,8 +5,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participants',
     goField: 'Participants',
     dbField: 'participants',
-    question: 'Who are the participants? Select all that apply.',
-    readonlyQuestion: 'Who are the participants?',
+    label: 'Who are the participants? Select all that apply.',
+    readonlyLabel: 'Who are the participants?',
     multiSelectLabel: 'Selected participants',
     dataType: 'enum',
     formType: 'multiSelect',
@@ -34,7 +34,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'medicareProviderType',
     goField: 'MedicareProviderType',
     dbField: 'medicare_provider_type',
-    question: 'Which type of medicare providers?',
+    label: 'Which type of medicare providers?',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
@@ -43,7 +43,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'statesEngagement',
     goField: 'StatesEngagement',
     dbField: 'states_engagement',
-    question: 'Please describe how states will engage with your model.',
+    label: 'Please describe how states will engage with your model.',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']
@@ -52,7 +52,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participantsOther',
     goField: 'ParticipantsOther',
     dbField: 'participantsOther',
-    question: 'Please describe the other participants engaging with this model',
+    label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -60,7 +60,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participantsNote',
     goField: 'ParticipantsNote',
     dbField: 'participantsNote',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -68,8 +68,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participantsCurrentlyInModels',
     goField: 'ParticipantsCurrentlyInModels',
     dbField: 'participants_currently_in_models_note',
-    question: 'Are the participants in CMMI models now?',
-    hint:
+    label: 'Are the participants in CMMI models now?',
+    sublabel:
       'If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.',
     dataType: 'boolean',
     formType: 'radio',
@@ -82,7 +82,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participantsCurrentlyInModelsNote',
     goField: 'ParticipantsCurrentlyInModelsNote',
     dbField: 'participants_currently_in_models_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -90,8 +90,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'modelApplicationLevel',
     goField: 'ModelApplicationLevel',
     dbField: 'modelApplicationLevel',
-    question: 'At what level will the model apply?',
-    hint:
+    label: 'At what level will the model apply?',
+    sublabel:
       '(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
     dataType: 'string',
     formType: 'textarea',
@@ -102,8 +102,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'expectedNumberOfParticipants',
     goField: 'ExpectedNumberOfParticipants',
     dbField: 'expected_number_of_participants',
-    question: 'How many participants do you expect?',
-    hint:
+    label: 'How many participants do you expect?',
+    sublabel:
       'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
     dataType: 'number',
     formType: 'rangeInput',
@@ -113,7 +113,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'estimateConfidence',
     goField: 'EstimateConfidence',
     dbField: 'estimate_confidence',
-    question: 'What is your level of confidence on this estimate?',
+    label: 'What is your level of confidence on this estimate?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -128,7 +128,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'confidenceNote',
     goField: 'ConfidenceNote',
     dbField: 'confidence_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'ccw', 'dfsdm', 'ipc']
@@ -137,7 +137,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'recruitmentMethod',
     goField: 'RecruitmentMethod',
     dbField: 'recruitment_method',
-    question: 'How will you recruit the participants?',
+    label: 'How will you recruit the participants?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -160,7 +160,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'recruitmentOther',
     goField: 'RecruitmentOther',
     dbField: 'recruitment_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -168,7 +168,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'recruitmentNote',
     goField: 'RecruitmentNote',
     dbField: 'recruitment_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -176,8 +176,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'selectionMethod',
     goField: 'SelectionMethod',
     dbField: 'selection_method',
-    question: 'How will you select participants? Select all that appy.',
-    readonlyQuestion: 'How will you select participants?',
+    label: 'How will you select participants? Select all that appy.',
+    readonlyLabel: 'How will you select participants?',
     multiSelectLabel: 'Selected participants',
     dataType: 'enum',
     formType: 'multiSelect',
@@ -200,7 +200,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'selectionOther',
     goField: 'SelectionOther',
     dbField: 'selection_other',
-    question: 'Please describe the other participants engaging with this model',
+    label: 'Please describe the other participants engaging with this model',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'iddoc', 'pbg']
@@ -209,7 +209,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'selectionNote',
     goField: 'SelectionNote',
     dbField: 'selection_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'iddoc', 'pbg']
@@ -218,7 +218,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'communicationMethod',
     goField: 'CommunicationMethod',
     dbField: 'communication_method',
-    question: 'How will you communicate with participants?',
+    label: 'How will you communicate with participants?',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -234,7 +234,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'communicationMethodOther',
     goField: 'CommunicationMethodOther',
     dbField: 'communication_method',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc']
@@ -243,7 +243,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'communicationNote',
     goField: 'CommunicationNote',
     dbField: 'communication_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc']
@@ -252,7 +252,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participantAssumeRisk',
     goField: 'ParticipantAssumeRisk',
     dbField: 'participant_assume_risk',
-    question: 'Will the participants assume risk?',
+    label: 'Will the participants assume risk?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -264,7 +264,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'riskType',
     goField: 'RiskType',
     dbField: 'risk_type',
-    question: 'What type of risk will the participant assume?',
+    label: 'What type of risk will the participant assume?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -278,7 +278,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'riskOther',
     goField: 'RiskOther',
     dbField: 'risk_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -286,7 +286,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'riskNote',
     goField: 'RiskNote',
     dbField: 'risk_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -294,7 +294,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'willRiskChange',
     goField: 'WillRiskChange',
     dbField: 'will_risk_change',
-    question: 'Will the risk arrangement change as the model progresses?',
+    label: 'Will the risk arrangement change as the model progresses?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -306,7 +306,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'willRiskChangeNote',
     goField: 'WillRiskChangeNote',
     dbField: 'will_risk_change_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -314,8 +314,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'coordinateWork',
     goField: 'CoordinateWork',
     dbField: 'coordinate_work',
-    question: 'Will the participants coordinate the work of others?',
-    hint: '(e.g. conveners)',
+    label: 'Will the participants coordinate the work of others?',
+    sublabel: '(e.g. conveners)',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -327,7 +327,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'coordinateWorkNote',
     goField: 'CoordinateWorkNote',
     dbField: 'coordinate_work_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -335,7 +335,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'gainsharePayments',
     goField: 'GainsharePayments',
     dbField: 'gainshare_payments',
-    question: 'Will there be gainsharing payments?',
+    label: 'Will there be gainsharing payments?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -347,7 +347,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'gainsharePaymentsTrack',
     goField: 'GainsharePaymentsTrack',
     dbField: 'gainshare_payments_track',
-    question: 'Will you track gainsharing payments?',
+    label: 'Will you track gainsharing payments?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -359,7 +359,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'gainsharePaymentsNote',
     goField: 'GainsharePaymentsNote',
     dbField: 'gainshare_payments_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -367,10 +367,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participantsIds',
     goField: 'ParticipantsIds',
     dbField: 'participants_ids',
-    question: 'Will you collect participant IDs? If so, select which types.',
-    hint:
+    label: 'Will you collect participant IDs? If so, select which types.',
+    sublabel:
       'Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.',
-    readonlyQuestion: 'Will you collect participant IDs?',
+    readonlyLabel: 'Will you collect participant IDs?',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -386,7 +386,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participantsIdsOther',
     goField: 'ParticipantsIdsOther',
     dbField: 'participants_ids_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -395,7 +395,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'participantsIDSNote',
     goField: 'ParticipantsIDSNote',
     dbField: 'participants_ids_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -404,7 +404,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerAdditionFrequency',
     goField: 'ProviderAdditionFrequency',
     dbField: 'provider_addition_frequency',
-    question: 'How frequently are providers added?',
+    label: 'How frequently are providers added?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -421,7 +421,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerAdditionFrequencyOther',
     goField: 'ProviderAdditionFrequencyOther',
     dbField: 'provider_addition_frequency_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['oact', 'ipc']
@@ -430,7 +430,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerAdditionFrequencyNote',
     goField: 'ProviderAdditionFrequencyNote',
     dbField: 'provider_addition_frequency_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['oact', 'ipc']
@@ -439,10 +439,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerAddMethod',
     goField: 'ProviderAddMethod',
     dbField: 'provider_add_method',
-    question: 'How will you decide to add providers? Select all that apply.',
-    hint:
+    label: 'How will you decide to add providers? Select all that apply.',
+    sublabel:
       'Please include details on decision points, timing, and implications of adding them to the model in an additional note.',
-    readonlyQuestion: 'How will you decide to add providers?',
+    readonlyLabel: 'How will you decide to add providers?',
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'How will you add providers?',
@@ -464,7 +464,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerAddMethodOther',
     goField: 'ProviderAddMethodOther',
     dbField: 'provider_add_method_other',
-    question:
+    label:
       'Please describe the other method for deciding which providers to add.',
     dataType: 'string',
     formType: 'textarea',
@@ -474,7 +474,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerAddMethodNote',
     goField: 'ProviderAddMethodNote',
     dbField: 'provider_add_method_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['ipc', 'oact']
@@ -483,9 +483,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerLeaveMethod',
     goField: 'ProviderLeaveMethod',
     dbField: 'provider_leave_method',
-    question: 'Can providers leave the model? Select all that apply.',
-    readonlyQuestion: 'Can providers leave the model?',
-    hint:
+    label: 'Can providers leave the model? Select all that apply.',
+    readonlyLabel: 'Can providers leave the model?',
+    sublabel:
       'Please include details on decision points, timing, and implications of leaving the model in an additional note.',
     dataType: 'enum',
     formType: 'checkbox',
@@ -505,7 +505,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerLeaveMethodOther',
     goField: 'ProviderLeaveMethodOther',
     dbField: 'provider_leave_method_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['ipc', 'oact']
@@ -514,7 +514,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerLeaveMethodNote',
     goField: 'ProviderLeaveMethodNote',
     dbField: 'provider_leave_method_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['ipc', 'oact']
@@ -523,7 +523,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerOverlap',
     goField: 'ProviderOverlap',
     dbField: 'provider_overlap',
-    question: 'Will the providers overlap with other models?',
+    label: 'Will the providers overlap with other models?',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -538,7 +538,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerOverlapHierarchy',
     goField: 'ProviderOverlapHierarchy',
     dbField: 'provider_overlap_hierarchy',
-    question:
+    label:
       'If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
     dataType: 'string',
     formType: 'textarea',
@@ -548,7 +548,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'providerOverlapNote',
     goField: 'ProviderOverlapNote',
     dbField: 'provider_overlap_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
@@ -557,7 +557,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'status',
     goField: 'Status',
     dbField: 'status',
-    question: 'Model Plan status',
+    label: 'Model Plan status',
     dataType: 'enum',
     formType: 'checkbox',
     options: {

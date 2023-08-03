@@ -5,7 +5,7 @@ export const basics: TranslationBasics = {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
     dbField: 'model_category',
-    question: 'Model category',
+    label: 'Model category',
     dataType: 'enum',
     formType: 'select',
     options: {
@@ -29,7 +29,7 @@ export const basics: TranslationBasics = {
     gqlField: 'amsModelID',
     goField: 'AmsModelID',
     dbField: 'ams_model_ID',
-    question: 'Model ID',
+    label: 'Model ID',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -37,7 +37,7 @@ export const basics: TranslationBasics = {
     gqlField: 'demoCode',
     goField: 'DemoCode',
     dbField: 'demo_code',
-    question: 'Demo code(s)',
+    label: 'Demo code(s)',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -45,7 +45,7 @@ export const basics: TranslationBasics = {
     gqlField: 'cmsCenters',
     goField: 'CMMIGroups',
     dbField: 'cmmi_groups',
-    question: 'CMS component',
+    label: 'CMS component',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -63,8 +63,8 @@ export const basics: TranslationBasics = {
     gqlField: 'cmmiGroups',
     goField: 'CMSCenters',
     dbField: 'cms_centers',
-    question: 'CMMI Group',
-    hint:
+    label: 'CMMI Group',
+    sublabel:
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: 'enum',
     formType: 'checkbox',
@@ -82,7 +82,7 @@ export const basics: TranslationBasics = {
     gqlField: 'modelType',
     goField: 'ModelType',
     dbField: 'model_type',
-    question: 'Model Type',
+    label: 'Model Type',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -96,7 +96,7 @@ export const basics: TranslationBasics = {
     gqlField: 'problem',
     goField: 'Problem',
     dbField: 'problem',
-    question: 'Problem statement',
+    label: 'Problem statement',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -104,8 +104,8 @@ export const basics: TranslationBasics = {
     gqlField: 'goal',
     goField: 'Goal',
     dbField: 'goal',
-    question: 'Goal',
-    hint:
+    label: 'Goal',
+    sublabel:
       'Please include the high level goal of the program and a description of the project.',
     dataType: 'string',
     formType: 'textarea',
@@ -115,7 +115,7 @@ export const basics: TranslationBasics = {
     gqlField: 'testInterventions',
     goField: 'TestInterventions',
     dbField: 'test_interventions',
-    question: 'Test Interventions',
+    label: 'Test Interventions',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -123,7 +123,7 @@ export const basics: TranslationBasics = {
     gqlField: 'note',
     goField: 'Note',
     dbField: 'note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -131,7 +131,7 @@ export const basics: TranslationBasics = {
     gqlField: 'completeICIP',
     goField: 'CompleteICIP',
     dbField: 'complete_icip',
-    question: 'Complete ICIP',
+    label: 'Complete ICIP',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['ipc']
@@ -140,7 +140,7 @@ export const basics: TranslationBasics = {
     gqlField: 'clearanceStarts',
     goField: 'ClearanceStarts',
     dbField: 'clearance_starts',
-    question: 'Clearance start date',
+    label: 'Clearance start date',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['ipc']
@@ -149,7 +149,7 @@ export const basics: TranslationBasics = {
     gqlField: 'clearanceEnds',
     goField: 'ClearanceEnds',
     dbField: 'clearance_ends',
-    question: 'Clearance end date',
+    label: 'Clearance end date',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['ipc']
@@ -158,7 +158,7 @@ export const basics: TranslationBasics = {
     gqlField: 'announced',
     goField: 'Announced',
     dbField: 'announced',
-    question: 'Announce model',
+    label: 'Announce model',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['cbosc', 'iddoc', 'ipc', 'pbg']
@@ -167,7 +167,7 @@ export const basics: TranslationBasics = {
     gqlField: 'applicationsStart',
     goField: 'ApplicationsStart',
     dbField: 'applications_starts',
-    question: 'Application start date',
+    label: 'Application start date',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['cbosc', 'ipc']
@@ -176,7 +176,7 @@ export const basics: TranslationBasics = {
     gqlField: 'applicationsEnd',
     goField: 'ApplicationsEnd',
     dbField: 'applications_ends',
-    question: 'Application end date',
+    label: 'Application end date',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['ipc']
@@ -185,7 +185,7 @@ export const basics: TranslationBasics = {
     gqlField: 'performancePeriodStarts',
     goField: 'PerformancePeriodStarts',
     dbField: 'performance_period_starts',
-    question: 'Performance start date',
+    label: 'Performance start date',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['cbosc', 'ccw', 'dfsdm', 'iddoc', 'ipc', 'pbg']
@@ -194,7 +194,7 @@ export const basics: TranslationBasics = {
     gqlField: 'performancePeriodEnds',
     goField: 'PerformancePeriodEnds',
     dbField: 'performance_period_ends',
-    question: 'Performance end date',
+    label: 'Performance end date',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['ipc']
@@ -203,7 +203,7 @@ export const basics: TranslationBasics = {
     gqlField: 'highLevelNote',
     goField: 'HighLevelNote',
     dbField: 'high_level_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -211,7 +211,7 @@ export const basics: TranslationBasics = {
     gqlField: 'wrapUpEnds',
     goField: 'WrapUpEnds',
     dbField: 'wrap_up_ends',
-    question: 'Model wrap-up end date',
+    label: 'Model wrap-up end date',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['ipc']
@@ -220,9 +220,9 @@ export const basics: TranslationBasics = {
     gqlField: 'phasedIn',
     goField: 'PhasedIn',
     dbField: 'phased_in',
-    question:
+    label:
       'If timelines are tight, might there be pieces of the model that can be phased in over time?',
-    hint:
+    sublabel:
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
     dataType: 'boolean',
     formType: 'radio',
@@ -236,7 +236,7 @@ export const basics: TranslationBasics = {
     gqlField: 'phasedInNote',
     goField: 'PhasedInNote',
     dbField: 'phased_in_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
@@ -245,7 +245,7 @@ export const basics: TranslationBasics = {
     gqlField: 'status',
     goField: 'Status',
     dbField: 'status',
-    question: 'Model Plan status',
+    label: 'Model Plan status',
     dataType: 'enum',
     formType: 'checkbox',
     options: {

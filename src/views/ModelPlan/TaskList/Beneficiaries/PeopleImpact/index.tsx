@@ -216,7 +216,7 @@ const PeopleImpact = () => {
                           error={!!flatErrors.numberPeopleImpacted}
                         >
                           <Label htmlFor="expected-people-impacted">
-                            {beneficiariesT('numberPeopleImpacted.question')}
+                            {beneficiariesT('numberPeopleImpacted.label')}
                           </Label>
 
                           <FieldErrorMsg>
@@ -282,7 +282,7 @@ const PeopleImpact = () => {
                             htmlFor="beneficiaries-impact-estimateConfidence"
                             className="text-normal"
                           >
-                            {beneficiariesT('estimateConfidence.question')}
+                            {beneficiariesT('estimateConfidence.label')}
                           </Label>
 
                           <FieldErrorMsg>
@@ -323,9 +323,7 @@ const PeopleImpact = () => {
                             htmlFor="beneficiaries-chooseBeneficiaries"
                             id="label-beneficiaries-chooseBeneficiaries"
                           >
-                            {beneficiariesT(
-                              'beneficiarySelectionMethod.question'
-                            )}
+                            {beneficiariesT('beneficiarySelectionMethod.label')}
                           </Label>
 
                           <FieldErrorMsg>
@@ -366,7 +364,7 @@ const PeopleImpact = () => {
                                 className="text-normal"
                               >
                                 {beneficiariesT(
-                                  'beneficiarySelectionOther.question'
+                                  'beneficiarySelectionOther.label'
                                 )}
                               </Label>
 

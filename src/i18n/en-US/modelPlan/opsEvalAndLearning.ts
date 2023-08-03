@@ -5,9 +5,9 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'agencyOrStateHelp',
     goField: 'AgencyOrStateHelp',
     dbField: 'agency_or_state_help',
-    question:
+    label:
       'Will another Agency or State help design/operate the model? Select all that apply.',
-    readonlyQuestion:
+    readonlyLabel:
       'Will another Agency or State help design/operate the model?',
     dataType: 'enum',
     formType: 'checkbox',
@@ -24,7 +24,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'agencyOrStateHelpOther',
     goField: 'AgencyOrStateHelpOther',
     dbField: 'agency_or_state_help_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -32,7 +32,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'agencyOrStateHelpNote',
     goField: 'AgencyOrStateHelpNote',
     dbField: 'agency_or_state_help_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -40,7 +40,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'stakeholders',
     goField: 'Stakeholders',
     dbField: 'stakeholders',
-    question: 'What stakeholders do you plan to communicate with?',
+    label: 'What stakeholders do you plan to communicate with?',
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected stakeholders',
@@ -59,7 +59,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'stakeholdersOther',
     goField: 'StakeholdersOther',
     dbField: 'stakeholders',
-    question:
+    label:
       'Please describe the other stakeholders you plan to communicate with.',
     dataType: 'string',
     formType: 'textarea',
@@ -69,7 +69,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'stakeholdersNote',
     goField: 'StakeholdersNote',
     dbField: 'stakeholders_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc']
@@ -78,7 +78,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'helpdeskUse',
     goField: 'HelpdeskUse',
     dbField: 'stakeholders_note',
-    question: 'Do you plan to use a helpdesk?',
+    label: 'Do you plan to use a helpdesk?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -91,7 +91,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'helpdeskUseNote',
     goField: 'HelpdeskUseNote',
     dbField: 'helpdesk_use_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc']
@@ -100,7 +100,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'contractorSupport',
     goField: 'ContractorSupport',
     dbField: 'contractor_support',
-    question: 'What contractors will support your model?',
+    label: 'What contractors will support your model?',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -116,7 +116,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'contractorSupportOther',
     goField: 'ContractorSupportOther',
     dbField: 'contractor_support_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'iddoc']
@@ -125,8 +125,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'contractorSupportHow',
     goField: 'ContractorSupportHow',
     dbField: 'contractor_support_how',
-    question: 'In what capacity will they support your model?',
-    hint: '(implementation, data analysis, quality, etc.)',
+    label: 'In what capacity will they support your model?',
+    sublabel: '(implementation, data analysis, quality, etc.)',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'iddoc']
@@ -135,7 +135,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'contractorSupportNote',
     goField: 'ContractorSupportNote',
     dbField: 'contractor_support_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'iddoc']
@@ -144,8 +144,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'iddocSupport',
     goField: 'IddocSupport',
     dbField: 'iddoc_support',
-    question: 'Are you planning to use IDDOC support?',
-    hint:
+    label: 'Are you planning to use IDDOC support?',
+    sublabel:
       'IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.',
     dataType: 'boolean',
     formType: 'radio',
@@ -159,7 +159,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'iddocSupportNote',
     goField: 'IddocSupportNote',
     dbField: 'iddoc_support_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -168,7 +168,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'technicalContactsIdentified',
     goField: 'TechnicalContactsIdentified',
     dbField: 'technical_contacts_identified',
-    question: 'Are technical contacts identified?',
+    label: 'Are technical contacts identified?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -181,7 +181,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'technicalContactsIdentifiedDetail',
     goField: 'TechnicalContactsIdentifiedDetail',
     dbField: 'technical_contacts_identified_detail',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -190,7 +190,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'technicalContactsIdentifiedNote',
     goField: 'TechnicalContactsIdentifiedNote',
     dbField: 'technical_contacts_identified_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -199,8 +199,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'captureParticipantInfo',
     goField: 'CaptureParticipantInfo',
     dbField: 'capture_participant_info',
-    question: 'Will you capture participant information?',
-    hint:
+    label: 'Will you capture participant information?',
+    sublabel:
       'This means the participant record for a model would be included in the ACO-OS Entity File.',
     dataType: 'boolean',
     formType: 'radio',
@@ -214,7 +214,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'captureParticipantInfoNote',
     goField: 'CaptureParticipantInfoNote',
     dbField: 'capture_participant_info',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -223,7 +223,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'icdOwner',
     goField: 'IcdOwner',
     dbField: 'icd_owner',
-    question: 'ICD owner',
+    label: 'ICD owner',
     dataType: 'string',
     formType: 'text',
     filterGroups: ['iddoc']
@@ -232,7 +232,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'draftIcdDueDate',
     goField: 'DraftIcdDueDate',
     dbField: 'draft_icd_due_date',
-    question: 'Draft ICD required by',
+    label: 'Draft ICD required by',
     dataType: 'date',
     formType: 'datePicker',
     filterGroups: ['iddoc']
@@ -241,7 +241,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'icdNote',
     goField: 'IcdNote',
     dbField: 'icd_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -250,7 +250,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'uatNeeds',
     goField: 'UatNeeds',
     dbField: 'uat_needs',
-    question: 'User Acceptance Testing (UAT) – test data needs',
+    label: 'User Acceptance Testing (UAT) – test data needs',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -259,7 +259,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'stcNeeds',
     goField: 'StcNeeds',
     dbField: 'stc_needs',
-    question: 'STC – test data needs',
+    label: 'STC – test data needs',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -268,7 +268,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'testingTimelines',
     goField: 'TestingTimelines',
     dbField: 'testing_timelines',
-    question: 'Define the testing timelines',
+    label: 'Define the testing timelines',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -277,7 +277,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'testingNote',
     goField: 'TestingNote',
     dbField: 'testing_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -286,8 +286,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataMonitoringFileTypes',
     goField: 'DataMonitoringFileTypes',
     dbField: 'data_monitoring_file_types',
-    question: 'What types of files? Select all that apply.',
-    readonlyQuestion: 'What types of files?',
+    label: 'What types of files? Select all that apply.',
+    readonlyLabel: 'What types of files?',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -303,7 +303,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataMonitoringFileOther',
     goField: 'DataMonitoringFileOther',
     dbField: 'data_monitoring_file_other',
-    question: 'What types of responses?',
+    label: 'What types of responses?',
     dataType: 'string',
     formType: 'text',
     filterGroups: ['iddoc']
@@ -312,7 +312,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataResponseType',
     goField: 'DataResponseType',
     dbField: 'data_response_type',
-    question: 'What types of responses?',
+    label: 'What types of responses?',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -321,7 +321,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataResponseFileFrequency',
     goField: 'DataResponseFileFrequency',
     dbField: 'data_response_file_frequency',
-    question: 'Frequency of files?',
+    label: 'Frequency of files?',
     dataType: 'string',
     formType: 'text',
     filterGroups: ['iddoc']
@@ -330,7 +330,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataFullTimeOrIncremental',
     goField: 'DataFullTimeOrIncremental',
     dbField: 'data_full_time_or_incremental',
-    question: 'Full time or incremental?',
+    label: 'Full time or incremental?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -343,7 +343,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'eftSetUp',
     goField: 'EftSetUp',
     dbField: 'eft_set_up',
-    question: 'Are Electronic File Transfer (EFT) and connectivity set up?',
+    label: 'Are Electronic File Transfer (EFT) and connectivity set up?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -355,7 +355,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'unsolicitedAdjustmentsIncluded',
     goField: 'UnsolicitedAdjustmentsIncluded',
     dbField: 'unsolicited_adjustments_included',
-    question: 'Will unsolicited adjustments be included?',
+    label: 'Will unsolicited adjustments be included?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -368,7 +368,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataFlowDiagramsNeeded',
     goField: 'DataFlowDiagramsNeeded',
     dbField: 'data_flow_diagrams_needed',
-    question: 'Are data flow diagrams needed?',
+    label: 'Are data flow diagrams needed?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -380,8 +380,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'produceBenefitEnhancementFiles',
     goField: 'ProduceBenefitEnhancementFiles',
     dbField: 'produce_benefit_enhancement_files',
-    question: 'Will you produce Benefit Enhancement Files?',
-    hint:
+    label: 'Will you produce Benefit Enhancement Files?',
+    sublabel:
       'This means we would use these files for Participating and Preferred Providers.',
     dataType: 'boolean',
     formType: 'radio',
@@ -395,7 +395,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'fileNamingConventions',
     goField: 'FileNamingConventions',
     dbField: 'file_naming_conventions',
-    question: 'File naming conventions',
+    label: 'File naming conventions',
     dataType: 'string',
     formType: 'text',
     filterGroups: ['iddoc']
@@ -404,7 +404,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataMonitoringNote',
     goField: 'DataMonitoringNote',
     dbField: 'data_monitoring_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc']
@@ -413,7 +413,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'benchmarkForPerformance',
     goField: 'BenchmarkForPerformance',
     dbField: 'benchmark_for_performance',
-    question: 'Are data flow diagrams needed?',
+    label: 'Are data flow diagrams needed?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -428,7 +428,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'benchmarkForPerformanceNote',
     goField: 'BenchmarkForPerformanceNote',
     dbField: 'benchmark_for_performance_note',
-    question: 'Are data flow diagrams needed?',
+    label: 'Are data flow diagrams needed?',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
@@ -437,7 +437,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'computePerformanceScores',
     goField: 'ComputePerformanceScores',
     dbField: 'compute_performance_scores',
-    question: 'Will you compute performance scores?',
+    label: 'Will you compute performance scores?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -450,7 +450,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'computePerformanceScoresNote',
     goField: 'ComputePerformanceScoresNote',
     dbField: 'compute_performance_scores_note',
-    question: 'Are data flow diagrams needed?',
+    label: 'Are data flow diagrams needed?',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
@@ -459,7 +459,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'riskAdjustPerformance',
     goField: 'RiskAdjustPerformance',
     dbField: 'risk_adjust_performance',
-    question: 'Performance Scores',
+    label: 'Performance Scores',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -472,7 +472,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'riskAdjustFeedback',
     goField: 'RiskAdjustFeedback',
     dbField: 'risk_adjust_feedback',
-    question: 'Feedback Results',
+    label: 'Feedback Results',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -484,7 +484,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'riskAdjustPayments',
     goField: 'RiskAdjustPayments',
     dbField: 'risk_adjust_payments',
-    question: 'Payments',
+    label: 'Payments',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -497,7 +497,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'riskAdjustOther',
     goField: 'RiskAdjustOther',
     dbField: 'risk_adjust_other',
-    question: 'Others',
+    label: 'Others',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -509,7 +509,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'riskAdjustNote',
     goField: 'RiskAdjustNote',
     dbField: 'risk_adjust_note',
-    question: 'Are data flow diagrams needed?',
+    label: 'Are data flow diagrams needed?',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -517,7 +517,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealPerformance',
     goField: 'AppealPerformance',
     dbField: 'appeal_performance',
-    question: 'Performance Scores',
+    label: 'Performance Scores',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -529,7 +529,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealFeedback',
     goField: 'AppealFeedback',
     dbField: 'appeal_feedback',
-    question: 'Feedback Results',
+    label: 'Feedback Results',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -541,7 +541,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealPayments',
     goField: 'AppealPayments',
     dbField: 'appeal_payments',
-    question: 'Payments',
+    label: 'Payments',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -553,7 +553,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealOther',
     goField: 'AppealOther',
     dbField: 'appeal_other',
-    question: 'Others',
+    label: 'Others',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -565,7 +565,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealNote',
     goField: 'AppealNote',
     dbField: 'appeal_note',
-    question: 'Are data flow diagrams needed?',
+    label: 'Are data flow diagrams needed?',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -573,9 +573,9 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'evaluationApproaches',
     goField: 'eEvaluationApproaches',
     dbField: 'evaluation_approaches',
-    question:
+    label:
       'What type of evaluation approach are you considering? Select all that apply.',
-    readonlyQuestion: 'What type of evaluation approach are you considering?',
+    readonlyLabel: 'What type of evaluation approach are you considering?',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -591,8 +591,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'evaluationApproachOther',
     goField: 'EvaluationApproachOther',
     dbField: 'evaluation_approach_other',
-    question:
-      'Please describe the other evaluation approach you are considering.',
+    label: 'Please describe the other evaluation approach you are considering.',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -600,7 +599,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'evalutaionApproachNote',
     goField: 'EvalutaionApproachNote',
     dbField: 'evalutaion_approach_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -608,8 +607,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'ccmInvolvment',
     goField: 'CcmInvolvment',
     dbField: 'ccm_involvment',
-    question: 'Is Chronic Conditions Warehouse (CCW) involved in the model?',
-    hint:
+    label: 'Is Chronic Conditions Warehouse (CCW) involved in the model?',
+    sublabel:
       'If you select either yes option, there will be additional questions to answer.',
     dataType: 'enum',
     formType: 'checkbox',
@@ -618,35 +617,38 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       YES__IMPLEMENTATION: 'Yes, for implementation',
       NO: 'No',
       OTHER: 'Other'
-    }
+    },
+    filterGroups: ['ccw']
   },
   ccmInvolvmentOther: {
     gqlField: 'ccmInvolvmentOther',
     goField: 'CcmInvolvmentOther',
     dbField: 'ccm_involvment_other',
-    question: 'Please specify',
+    label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['ccw']
   },
   ccmInvolvmentNote: {
     gqlField: 'ccmInvolvmentNote',
     goField: 'CcmInvolvmentNote',
     dbField: 'ccm_involvment_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['ccw']
   },
   dataNeededForMonitoring: {
     gqlField: 'dataNeededForMonitoring',
     goField: 'DataNeededForMonitoring',
     dbField: 'data_needed_for_monitoring',
-    question:
-      'What data do you need to monitor the model? Select all that apply.',
-    readonlyQuestion: 'What data do you need to monitor the model?',
-    hint:
+    label: 'What data do you need to monitor the model? Select all that apply.',
+    readonlyLabel: 'What data do you need to monitor the model?',
+    sublabel:
       'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
     dataType: 'enum',
     formType: 'multiSelect',
+    multiSelectLabel: 'Selected data',
     options: {
       SITE_VISITS: 'Site visits',
       MEDICARE_CLAIMS: 'Medicare claims',
@@ -660,30 +662,33 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       NON_MEDICAL_DATA: 'Non-medical data (e.g., housing, nutrition)',
       OTHER: 'Other',
       NOT_PLANNING_TO_COLLECT_DATA: 'Not planning to collect data'
-    }
+    },
+    filterGroups: ['cmmi', 'iddoc']
   },
   dataNeededForMonitoringOther: {
     gqlField: 'dataNeededForMonitoringOther',
     goField: 'DataNeededForMonitoringOther',
     dbField: 'data_needed_for_monitoring_other',
-    question: 'What other data do you need to monitor?',
+    label: 'What other data do you need to monitor?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc']
   },
   dataNeededForMonitoringNote: {
     gqlField: 'dataNeededForMonitoringNote',
     goField: 'DataNeededForMonitoringNote',
     dbField: 'data_needed_for_monitoring_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc']
   },
   dataToSendParticicipants: {
     gqlField: 'dataToSendParticicipants',
     goField: 'DataToSendParticicipants',
     dbField: 'data_to_send_particicipants',
-    question: 'What data will you send to participants? Select all that apply.',
-    readonlyQuestion: 'What data will you send to participants?',
+    label: 'What data will you send to participants? Select all that apply.',
+    readonlyLabel: 'What data will you send to participants?',
     dataType: 'enum',
     formType: 'multiSelect',
     options: {
@@ -694,44 +699,49 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       PROVIDER_LEVEL_DATA: 'Provider-level data',
       OTHER_MIPS_DATA: 'Other',
       NOT_PLANNING_TO_SEND_DATA: 'Not planning to send data'
-    }
+    },
+    filterGroups: ['cmmi']
   },
   dataToSendParticicipantsOther: {
     gqlField: 'dataToSendParticicipantsOther',
     goField: 'DataToSendParticicipantsOther',
     dbField: 'data_to_send_particicipants_other',
-    question: 'What other data do you need to send?',
+    label: 'What other data do you need to send?',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi']
   },
   dataToSendParticicipantsNote: {
     gqlField: 'dataToSendParticicipantsNote',
     goField: 'DataToSendParticicipantsNote',
     dbField: 'data_to_send_particicipants_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi']
   },
   shareCclfData: {
     gqlField: 'shareCclfData',
     goField: 'ShareCclfData',
     dbField: 'share_cclf_data',
-    question:
+    label:
       'Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    filterGroups: ['cmmi']
   },
   shareCclfDataNote: {
     gqlField: 'shareCclfDataNote',
     goField: 'ShareCclfDataNote',
     dbField: 'share_cclf_data_note',
-    question: 'Notes',
+    label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['cmmi']
   }
 };
 

@@ -115,7 +115,7 @@ const ReadOnlyBeneficiaries = ({
           'treatDualElligibleDifferent',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: beneficiariesT('treatDualElligibleDifferent.question'),
+              heading: beneficiariesT('treatDualElligibleDifferent.label'),
               copy:
                 treatDualElligibleDifferent &&
                 beneficiariesT(
@@ -125,9 +125,7 @@ const ReadOnlyBeneficiaries = ({
             }}
             secondSection={
               treatDualElligibleDifferent === TriStateAnswer.YES && {
-                heading: beneficiariesT(
-                  'treatDualElligibleDifferentHow.question'
-                ),
+                heading: beneficiariesT('treatDualElligibleDifferentHow.label'),
                 copy: treatDualElligibleDifferentHow
               }
             }
@@ -139,9 +137,7 @@ const ReadOnlyBeneficiaries = ({
             filteredQuestions,
             'treatDualElligibleDifferent',
             <ReadOnlySection
-              heading={beneficiariesT(
-                'treatDualElligibleDifferentNote.question'
-              )}
+              heading={beneficiariesT('treatDualElligibleDifferentNote.label')}
               copy={treatDualElligibleDifferentNote}
             />
           )}
@@ -152,7 +148,7 @@ const ReadOnlyBeneficiaries = ({
           'excludeCertainCharacteristics',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: beneficiariesT('excludeCertainCharacteristics.question'),
+              heading: beneficiariesT('excludeCertainCharacteristics.label'),
               copy:
                 excludeCertainCharacteristics &&
                 beneficiariesT(
@@ -163,7 +159,7 @@ const ReadOnlyBeneficiaries = ({
             secondSection={
               excludeCertainCharacteristics === TriStateAnswer.YES && {
                 heading: beneficiariesT(
-                  'excludeCertainCharacteristicsCriteria.question'
+                  'excludeCertainCharacteristicsCriteria.label'
                 ),
                 copy: excludeCertainCharacteristicsCriteria
               }
@@ -178,7 +174,7 @@ const ReadOnlyBeneficiaries = ({
             'excludeCertainCharacteristics',
             <ReadOnlySection
               heading={beneficiariesT(
-                'excludeCertainCharacteristicsNote.question'
+                'excludeCertainCharacteristicsNote.label'
               )}
               copy={excludeCertainCharacteristicsNote}
             />
@@ -199,12 +195,12 @@ const ReadOnlyBeneficiaries = ({
             'numberPeopleImpacted',
             <SideBySideReadOnlySection
               firstSection={{
-                heading: beneficiariesT('numberPeopleImpacted.question'),
+                heading: beneficiariesT('numberPeopleImpacted.label'),
                 copy: numberPeopleImpacted?.toString(),
                 notes: confidenceNote
               }}
               secondSection={{
-                heading: beneficiariesT('estimateConfidence.question'),
+                heading: beneficiariesT('estimateConfidence.label'),
                 copy:
                   estimateConfidence &&
                   beneficiariesT(
@@ -218,12 +214,12 @@ const ReadOnlyBeneficiaries = ({
         {!isViewingFilteredView && (
           <>
             <ReadOnlySection
-              heading={beneficiariesT('numberPeopleImpacted.question')}
+              heading={beneficiariesT('numberPeopleImpacted.label')}
               copy={numberPeopleImpacted?.toString()}
             />
 
             <ReadOnlySection
-              heading={beneficiariesT('estimateConfidence.question')}
+              heading={beneficiariesT('estimateConfidence.label')}
               copy={
                 estimateConfidence &&
                 beneficiariesT(
@@ -262,7 +258,7 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'beneficiarySelectionFrequency',
           <ReadOnlySection
-            heading={beneficiariesT('beneficiarySelectionFrequency.question')}
+            heading={beneficiariesT('beneficiarySelectionFrequency.label')}
             copy={
               beneficiarySelectionFrequency &&
               (beneficiarySelectionFrequency === FrequencyType.OTHER
@@ -284,7 +280,7 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'beneficiaryOverlap',
           <ReadOnlySection
-            heading={beneficiariesT('beneficiaryOverlap.question')}
+            heading={beneficiariesT('beneficiaryOverlap.label')}
             copy={
               beneficiaryOverlap &&
               beneficiariesT(
@@ -301,7 +297,7 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'precedenceRules',
           <ReadOnlySection
-            heading={beneficiariesT('precedenceRules.question')}
+            heading={beneficiariesT('precedenceRules.label')}
             copy={precedenceRules}
           />
         )}
