@@ -739,7 +739,6 @@ type DataFrequencyType string
 const (
 	DataFrequencyTypeAnnually            DataFrequencyType = "ANNUALLY"
 	DataFrequencyTypeBiannually          DataFrequencyType = "BIANNUALLY"
-	DataFrequencyTypeSemiannually        DataFrequencyType = "SEMIANNUALLY"
 	DataFrequencyTypeQuarterly           DataFrequencyType = "QUARTERLY"
 	DataFrequencyTypeMonthly             DataFrequencyType = "MONTHLY"
 	DataFrequencyTypeSemiMonthly         DataFrequencyType = "SEMI_MONTHLY"
@@ -752,7 +751,6 @@ const (
 var AllDataFrequencyType = []DataFrequencyType{
 	DataFrequencyTypeAnnually,
 	DataFrequencyTypeBiannually,
-	DataFrequencyTypeSemiannually,
 	DataFrequencyTypeQuarterly,
 	DataFrequencyTypeMonthly,
 	DataFrequencyTypeSemiMonthly,
@@ -764,7 +762,7 @@ var AllDataFrequencyType = []DataFrequencyType{
 
 func (e DataFrequencyType) IsValid() bool {
 	switch e {
-	case DataFrequencyTypeAnnually, DataFrequencyTypeBiannually, DataFrequencyTypeSemiannually, DataFrequencyTypeQuarterly, DataFrequencyTypeMonthly, DataFrequencyTypeSemiMonthly, DataFrequencyTypeWeekly, DataFrequencyTypeDaily, DataFrequencyTypeOther, DataFrequencyTypeNotPlanningToDoThis:
+	case DataFrequencyTypeAnnually, DataFrequencyTypeBiannually, DataFrequencyTypeQuarterly, DataFrequencyTypeMonthly, DataFrequencyTypeSemiMonthly, DataFrequencyTypeWeekly, DataFrequencyTypeDaily, DataFrequencyTypeOther, DataFrequencyTypeNotPlanningToDoThis:
 		return true
 	}
 	return false

@@ -8605,7 +8605,6 @@ enum ConfidenceType {
 enum FrequencyType {
   ANNUALLY
   BIANNUALLY
-  SEMIANNUALLY
   QUARTERLY
   MONTHLY
   ROLLING
@@ -8771,7 +8770,6 @@ enum DataToSendParticipantsType {
 enum DataFrequencyType {
     ANNUALLY
     BIANNUALLY
-    SEMIANNUALLY
     QUARTERLY
     MONTHLY
     SEMI_MONTHLY
@@ -8872,7 +8870,6 @@ enum ComplexityCalculationLevelType {
 enum AnticipatedPaymentFrequencyType {
   ANNUALLY
   BIANNUALLY
-  SEMIANNUALLY
   QUARTERLY
   MONTHLY
   SEMIMONTHLY

@@ -40,7 +40,6 @@ export enum AnticipatedPaymentFrequencyType {
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
-  SEMIANNUALLY = "SEMIANNUALLY",
   SEMIMONTHLY = "SEMIMONTHLY",
   WEEKLY = "WEEKLY",
 }
@@ -152,7 +151,6 @@ export enum DataFrequencyType {
   NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
-  SEMIANNUALLY = "SEMIANNUALLY",
   SEMI_MONTHLY = "SEMI_MONTHLY",
   WEEKLY = "WEEKLY",
 }
@@ -226,7 +224,6 @@ export enum FrequencyType {
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
   ROLLING = "ROLLING",
-  SEMIANNUALLY = "SEMIANNUALLY",
 }
 
 export enum FundingSource {
