@@ -248,7 +248,7 @@ const PrepareForClearanceCheckList = ({
               >
                 <h3 className="margin-bottom-0">{t('subheading')}</h3>
 
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={!!error || loading}>
                   <div className="margin-top-3 margin-bottom-3">
                     <FieldGroup
                       scrollElement="basics"

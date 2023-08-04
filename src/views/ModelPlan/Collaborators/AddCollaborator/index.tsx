@@ -2,7 +2,13 @@ import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Dropdown, Label, TextInput } from '@trussworks/react-uswds';
+import {
+  Button,
+  Dropdown,
+  Fieldset,
+  Label,
+  TextInput
+} from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -56,12 +62,15 @@ const Collaborators = () => {
     UpdateModelPlanCollaboratorVariables
   >(UpdateModelPlanCollaborator);
 
-  const { data } = useQuery<GetModelCollaborator>(GetModelPlanCollaborator, {
-    variables: {
-      id: collaboratorId
-    },
-    skip: !collaboratorId
-  });
+  const { data, loading: queryLoading } = useQuery<GetModelCollaborator>(
+    GetModelPlanCollaborator,
+    {
+      variables: {
+        id: collaboratorId
+      },
+      skip: !collaboratorId
+    }
+  );
 
   const collaborator =
     data?.planCollaboratorByID ?? ({ userAccount: {} } as CollaboratorFormType);
@@ -206,121 +215,125 @@ const Collaborators = () => {
                       window.scrollTo(0, 0);
                     }}
                   >
-                    <FieldGroup
-                      scrollElement="userAccount.commonName"
-                      error={!!flatErrors['userAccount.commonName']}
-                    >
-                      <Label
-                        htmlFor="model-team-cedar-contact"
-                        id="label-model-team-cedar-contact"
+                    <Fieldset disabled={queryLoading}>
+                      <FieldGroup
+                        scrollElement="userAccount.commonName"
+                        error={!!flatErrors['userAccount.commonName']}
                       >
-                        {t('teamMemberName')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors['userAccount.commonName']}
-                      </FieldErrorMsg>
+                        <Label
+                          htmlFor="model-team-cedar-contact"
+                          id="label-model-team-cedar-contact"
+                        >
+                          {t('teamMemberName')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors['userAccount.commonName']}
+                        </FieldErrorMsg>
 
-                      {collaboratorId ? (
-                        <Field
-                          as={TextInput}
-                          disabled
-                          error={!!flatErrors['userAccount.commonName']}
-                          className="margin-top-1"
-                          id="collaboration-full-name"
-                          name="userAccount.commonName"
-                        />
-                      ) : (
-                        <>
-                          <Label
-                            id="hint-model-team-cedar-contact"
-                            htmlFor="model-team-cedar-contact"
-                            className="text-normal margin-top-1 margin-bottom-105 text-base"
-                            hint
-                          >
-                            {t('startTyping')}
-                          </Label>
-
-                          <OktaUserSelect
-                            id="model-team-cedar-contact"
-                            name="model-team-cedar-contact"
-                            ariaLabelledBy="label-model-team-cedar-contact"
-                            ariaDescribedBy="hint-model-team-cedar-contact"
-                            onChange={oktaUser => {
-                              setFieldValue(
-                                'userAccount.commonName',
-                                oktaUser?.displayName
-                              );
-                              setFieldValue(
-                                'userAccount.username',
-                                oktaUser?.username
-                              );
-                            }}
+                        {collaboratorId ? (
+                          <Field
+                            as={TextInput}
+                            disabled
+                            error={!!flatErrors['userAccount.commonName']}
+                            className="margin-top-1"
+                            id="collaboration-full-name"
+                            name="userAccount.commonName"
                           />
-                        </>
-                      )}
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="teamRole"
-                      error={!!flatErrors.teamRole}
-                    >
-                      <Label htmlFor="collaborator-role">
-                        {t('teamMemberRole')}
-                      </Label>
-                      <FieldErrorMsg>{flatErrors.teamRole}</FieldErrorMsg>
-                      <Field
-                        as={Dropdown}
-                        id="collaborator-role"
-                        name="role"
-                        value={values.teamRole || ''}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setFieldValue('teamRole', e.target.value);
-                        }}
-                      >
-                        <option key="default-select" disabled value="">
-                          {`-${h('select')}-`}
-                        </option>
-                        {Object.keys(teamRoles).map(role => {
-                          return (
-                            <option
-                              key={`Collaborator-Role-${translateTeamRole(
-                                teamRoles[role]
-                              )}`}
-                              value={role || ''}
+                        ) : (
+                          <>
+                            <Label
+                              id="hint-model-team-cedar-contact"
+                              htmlFor="model-team-cedar-contact"
+                              className="text-normal margin-top-1 margin-bottom-105 text-base"
+                              hint
                             >
-                              {translateTeamRole(teamRoles[role])}
-                            </option>
-                          );
-                        })}
-                      </Field>
-                    </FieldGroup>
+                              {t('startTyping')}
+                            </Label>
 
-                    <Alert
-                      type="info"
-                      slim
-                      data-testid="mandatory-fields-alert"
-                      className="margin-y-4"
-                    >
-                      <span className="mandatory-fields-alert__text">
-                        {t('searchMemberInfo')}
-                      </span>
-                    </Alert>
+                            <OktaUserSelect
+                              id="model-team-cedar-contact"
+                              name="model-team-cedar-contact"
+                              ariaLabelledBy="label-model-team-cedar-contact"
+                              ariaDescribedBy="hint-model-team-cedar-contact"
+                              onChange={oktaUser => {
+                                setFieldValue(
+                                  'userAccount.commonName',
+                                  oktaUser?.displayName
+                                );
+                                setFieldValue(
+                                  'userAccount.username',
+                                  oktaUser?.username
+                                );
+                              }}
+                            />
+                          </>
+                        )}
+                      </FieldGroup>
 
-                    <div className="margin-y-4 display-block">
-                      <Button
-                        type="submit"
-                        disabled={
-                          !values.userAccount.commonName || !values.teamRole
-                        }
+                      <FieldGroup
+                        scrollElement="teamRole"
+                        error={!!flatErrors.teamRole}
                       >
-                        {!collaboratorId
-                          ? t('addTeamMemberButton')
-                          : t('updateTeamMember')}
-                      </Button>
-                      {(loading || updateLoading) && (
-                        <Spinner className="margin-left-2" />
-                      )}
-                    </div>
+                        <Label htmlFor="collaborator-role">
+                          {t('teamMemberRole')}
+                        </Label>
+                        <FieldErrorMsg>{flatErrors.teamRole}</FieldErrorMsg>
+                        <Field
+                          as={Dropdown}
+                          id="collaborator-role"
+                          name="role"
+                          value={values.teamRole || ''}
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setFieldValue('teamRole', e.target.value);
+                          }}
+                        >
+                          <option key="default-select" disabled value="">
+                            {`-${h('select')}-`}
+                          </option>
+                          {Object.keys(teamRoles).map(role => {
+                            return (
+                              <option
+                                key={`Collaborator-Role-${translateTeamRole(
+                                  teamRoles[role]
+                                )}`}
+                                value={role || ''}
+                              >
+                                {translateTeamRole(teamRoles[role])}
+                              </option>
+                            );
+                          })}
+                        </Field>
+                      </FieldGroup>
+
+                      <Alert
+                        type="info"
+                        slim
+                        data-testid="mandatory-fields-alert"
+                        className="margin-y-4"
+                      >
+                        <span className="mandatory-fields-alert__text">
+                          {t('searchMemberInfo')}
+                        </span>
+                      </Alert>
+
+                      <div className="margin-y-4 display-block">
+                        <Button
+                          type="submit"
+                          disabled={
+                            !values.userAccount.commonName || !values.teamRole
+                          }
+                        >
+                          {!collaboratorId
+                            ? t('addTeamMemberButton')
+                            : t('updateTeamMember')}
+                        </Button>
+                        {(loading || updateLoading) && (
+                          <Spinner className="margin-left-2" />
+                        )}
+                      </div>
+                    </Fieldset>
                   </Form>
                 </>
               );

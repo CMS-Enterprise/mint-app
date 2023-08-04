@@ -298,30 +298,203 @@ export const OpsEvalAndLearningContent = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldArray
-                  name="agencyOrStateHelp"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label maxw-none">
-                        {t('anotherAgency')}
-                      </legend>
-                      <FieldErrorMsg>
-                        {flatErrors.agencyOrStateHelp}
-                      </FieldErrorMsg>
+                <Fieldset disabled={!!error || loading}>
+                  <FieldArray
+                    name="agencyOrStateHelp"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label maxw-none">
+                          {t('anotherAgency')}
+                        </legend>
+                        <FieldErrorMsg>
+                          {flatErrors.agencyOrStateHelp}
+                        </FieldErrorMsg>
 
-                      {Object.keys(AgencyOrStateHelpType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
+                        {Object.keys(AgencyOrStateHelpType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`ops-eval-and-learning-agency-or-state-help-${type}`}
+                                  name="agencyOrStateHelp"
+                                  label={translateAgencyOrStateHelpType(type)}
+                                  value={type}
+                                  checked={values?.agencyOrStateHelp.includes(
+                                    type as AgencyOrStateHelpType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.agencyOrStateHelp.indexOf(
+                                        e.target.value as AgencyOrStateHelpType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === 'OTHER' &&
+                                  values.agencyOrStateHelp.includes(
+                                    AgencyOrStateHelpType.OTHER
+                                  ) && (
+                                    <div className="margin-left-4 margin-top-neg-3">
+                                      <Label
+                                        htmlFor="ops-eval-and-learning-agency-or-state-help-other"
+                                        className="text-normal"
+                                      >
+                                        {h('pleaseSpecify')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.agencyOrStateHelpOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
+                                        id="ops-eval-and-learning-agency-or-state-help-other"
+                                        maxLength={5000}
+                                        name="agencyOrStateHelpOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        <AddNote
+                          id="ops-eval-and-learning-agency-or-state-help-note"
+                          field="agencyOrStateHelpNote"
+                        />
+                      </>
+                    )}
+                  />
+
+                  <FieldGroup
+                    scrollElement="stakeholders"
+                    error={!!flatErrors.stakeholders}
+                    className="margin-top-4"
+                  >
+                    <Label
+                      htmlFor="ops-eval-and-learning-stakeholders"
+                      id="label-ops-eval-and-learning-stakeholders"
+                    >
+                      {t('stakeholders')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.stakeholders}</FieldErrorMsg>
+
+                    <Field
+                      as={MultiSelect}
+                      id="ops-eval-and-learning-stakeholders"
+                      name="stakeholders"
+                      ariaLabel="label-ops-eval-and-learning-stakeholders"
+                      role="combobox"
+                      options={mapMultiSelectOptions(
+                        translateStakeholdersType,
+                        StakeholdersType
+                      )}
+                      selectedLabel={t('selectedStakeholders')}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('stakeholders', value);
+                      }}
+                      initialValues={initialValues.stakeholders}
+                    />
+
+                    {values.stakeholders.includes(StakeholdersType.OTHER) && (
+                      <>
+                        <p className="margin-y-1 margin-top-3">
+                          {t('pleaseDescribe')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.stakeholdersOther}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextInput}
+                          data-testid="ops-eval-and-learning-stakeholders-other"
+                          error={!!flatErrors.stakeholdersOther}
+                          id="ops-eval-and-learning-key-other"
+                          maxLength={50}
+                          name="stakeholdersOther"
+                        />
+                      </>
+                    )}
+
+                    <AddNote
+                      id="ops-eval-and-learning-stakeholders-note"
+                      field="stakeholdersNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="helpdeskUse"
+                    error={!!flatErrors.helpdeskUse}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-help-desk-use">
+                      {t('helpDesk')}
+                    </Label>
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-help-desk-use-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
+                    )}
+                    <FieldErrorMsg>{flatErrors.helpdeskUse}</FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key.toString()}
+                          id={`ops-eval-and-learning-help-desk-use-${key}`}
+                          name="helpdeskUse"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.helpdeskUse === key}
+                          onChange={() => {
+                            setFieldValue('helpdeskUse', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+
+                    <AddNote
+                      id="ops-eval-and-learning-help-desk-use-note"
+                      field="helpdeskUseNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldArray
+                    name="contractorSupport"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label maxw-none">
+                          {t('whatContractors')}
+                        </legend>
+                        <FieldErrorMsg>
+                          {flatErrors.contractorSupport}
+                        </FieldErrorMsg>
+
+                        {[
+                          ContractorSupportType.ONE,
+                          ContractorSupportType.MULTIPLE,
+                          ContractorSupportType.NONE,
+                          ContractorSupportType.OTHER
+                        ].map(type => {
                           return (
                             <Fragment key={type}>
                               <Field
                                 as={CheckboxField}
-                                id={`ops-eval-and-learning-agency-or-state-help-${type}`}
-                                name="agencyOrStateHelp"
-                                label={translateAgencyOrStateHelpType(type)}
+                                id={`ops-eval-and-learning-contractor-support-${type}`}
+                                name="contractorSupport"
+                                label={translateContractorSupportType(type)}
                                 value={type}
-                                checked={values?.agencyOrStateHelp.includes(
-                                  type as AgencyOrStateHelpType
+                                checked={values?.contractorSupport.includes(
+                                  type as ContractorSupportType
                                 )}
                                 onChange={(
                                   e: React.ChangeEvent<HTMLInputElement>
@@ -329,315 +502,144 @@ export const OpsEvalAndLearningContent = () => {
                                   if (e.target.checked) {
                                     arrayHelpers.push(e.target.value);
                                   } else {
-                                    const idx = values.agencyOrStateHelp.indexOf(
-                                      e.target.value as AgencyOrStateHelpType
+                                    const idx = values.contractorSupport.indexOf(
+                                      e.target.value as ContractorSupportType
                                     );
                                     arrayHelpers.remove(idx);
                                   }
                                 }}
                               />
                               {type === 'OTHER' &&
-                                values.agencyOrStateHelp.includes(
-                                  AgencyOrStateHelpType.OTHER
+                                values.contractorSupport.includes(
+                                  ContractorSupportType.OTHER
                                 ) && (
                                   <div className="margin-left-4 margin-top-neg-3">
                                     <Label
-                                      htmlFor="ops-eval-and-learning-agency-or-state-help-other"
+                                      htmlFor="ops-eval-and-learning-contractor-support-other"
                                       className="text-normal"
                                     >
                                       {h('pleaseSpecify')}
                                     </Label>
                                     <FieldErrorMsg>
-                                      {flatErrors.agencyOrStateHelpOther}
+                                      {flatErrors.contractorSupportOther}
                                     </FieldErrorMsg>
                                     <Field
                                       as={TextAreaField}
                                       className="maxw-none mint-textarea"
-                                      id="ops-eval-and-learning-agency-or-state-help-other"
+                                      id="ops-eval-and-learning-contractor-support-other"
                                       maxLength={5000}
-                                      name="agencyOrStateHelpOther"
+                                      name="contractorSupportOther"
                                     />
                                   </div>
                                 )}
                             </Fragment>
                           );
                         })}
-                      <AddNote
-                        id="ops-eval-and-learning-agency-or-state-help-note"
-                        field="agencyOrStateHelpNote"
-                      />
-                    </>
-                  )}
-                />
 
-                <FieldGroup
-                  scrollElement="stakeholders"
-                  error={!!flatErrors.stakeholders}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="ops-eval-and-learning-stakeholders"
-                    id="label-ops-eval-and-learning-stakeholders"
-                  >
-                    {t('stakeholders')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.stakeholders}</FieldErrorMsg>
+                        <FieldGroup
+                          scrollElement="contractorSupportHow"
+                          error={!!flatErrors.contractorSupportHow}
+                        >
+                          <Label
+                            htmlFor="ops-eval-and-learning-contractor-support-how"
+                            className="text-normal margin-top-4"
+                          >
+                            {t('whatContractorsHow')}
+                          </Label>
+                          <p className="text-base margin-y-1">
+                            {t('whatContractorsHowInfo')}
+                          </p>
+                          <FieldErrorMsg>
+                            {flatErrors.contractorSupportHow}
+                          </FieldErrorMsg>
+                          <Field
+                            as={TextAreaField}
+                            className="height-card"
+                            error={flatErrors.contractorSupportHow}
+                            id="ops-eval-and-learning-contractor-support-how"
+                            data-testid="ops-eval-and-learning-contractor-support-how"
+                            name="contractorSupportHow"
+                          />
+                        </FieldGroup>
 
-                  <Field
-                    as={MultiSelect}
-                    id="ops-eval-and-learning-stakeholders"
-                    name="stakeholders"
-                    ariaLabel="label-ops-eval-and-learning-stakeholders"
-                    role="combobox"
-                    options={mapMultiSelectOptions(
-                      translateStakeholdersType,
-                      StakeholdersType
+                        <AddNote
+                          id="ops-eval-and-learning-contractor-support-note"
+                          field="contractorSupportNote"
+                        />
+                      </>
                     )}
-                    selectedLabel={t('selectedStakeholders')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('stakeholders', value);
-                    }}
-                    initialValues={initialValues.stakeholders}
                   />
 
-                  {values.stakeholders.includes(StakeholdersType.OTHER) && (
-                    <>
-                      <p className="margin-y-1 margin-top-3">
-                        {t('pleaseDescribe')}
-                      </p>
-                      <FieldErrorMsg>
-                        {flatErrors.stakeholdersOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextInput}
-                        data-testid="ops-eval-and-learning-stakeholders-other"
-                        error={!!flatErrors.stakeholdersOther}
-                        id="ops-eval-and-learning-key-other"
-                        maxLength={50}
-                        name="stakeholdersOther"
+                  <FieldGroup
+                    scrollElement="iddocSupport"
+                    error={!!flatErrors.iddocSupport}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="ops-eval-and-learning-iddoc-support">
+                      {t('iddocSupport')}
+                    </Label>
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-iddoc-support-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
                       />
-                    </>
-                  )}
-
-                  <AddNote
-                    id="ops-eval-and-learning-stakeholders-note"
-                    field="stakeholdersNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="helpdeskUse"
-                  error={!!flatErrors.helpdeskUse}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="ops-eval-and-learning-help-desk-use">
-                    {t('helpDesk')}
-                  </Label>
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="ops-eval-and-learning-help-desk-use-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
-                    />
-                  )}
-                  <FieldErrorMsg>{flatErrors.helpdeskUse}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
+                    )}
+                    <p className="text-base margin-y-1">
+                      {t('iddocSupportInfo')}
+                    </p>
+                    <p className="text-base margin-y-1 margin-top-2">
+                      {t('iddocSupportInfo2')}
+                    </p>
+                    <FieldErrorMsg>{flatErrors.iddocSupport}</FieldErrorMsg>
+                    <Fieldset>
                       <Field
                         as={Radio}
-                        key={key.toString()}
-                        id={`ops-eval-and-learning-help-desk-use-${key}`}
-                        name="helpdeskUse"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.helpdeskUse === key}
+                        id="ops-eval-and-learning-iddoc-support"
+                        name="iddocSupport"
+                        label={h('yes')}
+                        value="TRUE"
+                        checked={values.iddocSupport === true}
                         onChange={() => {
-                          setFieldValue('helpdeskUse', key);
+                          setFieldValue('iddocSupport', true);
                         }}
                       />
-                    ))}
-                  </Fieldset>
-
-                  <AddNote
-                    id="ops-eval-and-learning-help-desk-use-note"
-                    field="helpdeskUseNote"
-                  />
-                </FieldGroup>
-
-                <FieldArray
-                  name="contractorSupport"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label maxw-none">
-                        {t('whatContractors')}
-                      </legend>
-                      <FieldErrorMsg>
-                        {flatErrors.contractorSupport}
-                      </FieldErrorMsg>
-
-                      {[
-                        ContractorSupportType.ONE,
-                        ContractorSupportType.MULTIPLE,
-                        ContractorSupportType.NONE,
-                        ContractorSupportType.OTHER
-                      ].map(type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`ops-eval-and-learning-contractor-support-${type}`}
-                              name="contractorSupport"
-                              label={translateContractorSupportType(type)}
-                              value={type}
-                              checked={values?.contractorSupport.includes(
-                                type as ContractorSupportType
-                              )}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                if (e.target.checked) {
-                                  arrayHelpers.push(e.target.value);
-                                } else {
-                                  const idx = values.contractorSupport.indexOf(
-                                    e.target.value as ContractorSupportType
-                                  );
-                                  arrayHelpers.remove(idx);
-                                }
-                              }}
-                            />
-                            {type === 'OTHER' &&
-                              values.contractorSupport.includes(
-                                ContractorSupportType.OTHER
-                              ) && (
-                                <div className="margin-left-4 margin-top-neg-3">
-                                  <Label
-                                    htmlFor="ops-eval-and-learning-contractor-support-other"
-                                    className="text-normal"
-                                  >
-                                    {h('pleaseSpecify')}
-                                  </Label>
-                                  <FieldErrorMsg>
-                                    {flatErrors.contractorSupportOther}
-                                  </FieldErrorMsg>
-                                  <Field
-                                    as={TextAreaField}
-                                    className="maxw-none mint-textarea"
-                                    id="ops-eval-and-learning-contractor-support-other"
-                                    maxLength={5000}
-                                    name="contractorSupportOther"
-                                  />
-                                </div>
-                              )}
-                          </Fragment>
-                        );
-                      })}
-
-                      <FieldGroup
-                        scrollElement="contractorSupportHow"
-                        error={!!flatErrors.contractorSupportHow}
-                      >
-                        <Label
-                          htmlFor="ops-eval-and-learning-contractor-support-how"
-                          className="text-normal margin-top-4"
-                        >
-                          {t('whatContractorsHow')}
-                        </Label>
-                        <p className="text-base margin-y-1">
-                          {t('whatContractorsHowInfo')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.contractorSupportHow}
-                        </FieldErrorMsg>
-                        <Field
-                          as={TextAreaField}
-                          className="height-card"
-                          error={flatErrors.contractorSupportHow}
-                          id="ops-eval-and-learning-contractor-support-how"
-                          data-testid="ops-eval-and-learning-contractor-support-how"
-                          name="contractorSupportHow"
-                        />
-                      </FieldGroup>
-
-                      <AddNote
-                        id="ops-eval-and-learning-contractor-support-note"
-                        field="contractorSupportNote"
+                      <Field
+                        as={Radio}
+                        id="ops-eval-and-learning-iddoc-support-no"
+                        name="iddocSupport"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.iddocSupport === false}
+                        onChange={() => {
+                          setFieldValue('iddocSupport', false);
+                        }}
                       />
-                    </>
-                  )}
-                />
+                    </Fieldset>
 
-                <FieldGroup
-                  scrollElement="iddocSupport"
-                  error={!!flatErrors.iddocSupport}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="ops-eval-and-learning-iddoc-support">
-                    {t('iddocSupport')}
-                  </Label>
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="ops-eval-and-learning-iddoc-support-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
+                    <AddNote
+                      id="ops-eval-and-learning-iddoc-support-note"
+                      field="iddocSupportNote"
                     />
-                  )}
-                  <p className="text-base margin-y-1">
-                    {t('iddocSupportInfo')}
-                  </p>
-                  <p className="text-base margin-y-1 margin-top-2">
-                    {t('iddocSupportInfo2')}
-                  </p>
-                  <FieldErrorMsg>{flatErrors.iddocSupport}</FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="ops-eval-and-learning-iddoc-support"
-                      name="iddocSupport"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.iddocSupport === true}
-                      onChange={() => {
-                        setFieldValue('iddocSupport', true);
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="ops-eval-and-learning-iddoc-support-no"
-                      name="iddocSupport"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.iddocSupport === false}
-                      onChange={() => {
-                        setFieldValue('iddocSupport', false);
-                      }}
-                    />
-                  </Fieldset>
+                  </FieldGroup>
 
-                  <AddNote
-                    id="ops-eval-and-learning-iddoc-support-note"
-                    field="iddocSupportNote"
-                  />
-                </FieldGroup>
-
-                <div className="margin-top-6 margin-bottom-3">
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('back')}
+                  >
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('back')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (

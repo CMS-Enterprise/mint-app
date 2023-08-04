@@ -216,199 +216,211 @@ const AnticipateDependencies = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <PageHeading
-                        headingLevel="h3"
-                        className="margin-bottom-3"
-                      >
-                        {t('claimSpecificQuestionsContinued')}
-                      </PageHeading>
-
-                      <FieldGroup
-                        scrollElement="creatingDependenciesBetweenServices"
-                        error={!!flatErrors.creatingDependenciesBetweenServices}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="creatingDependenciesBetweenServices"
-                          className="maxw-none"
+                      <Fieldset disabled={!!error || loading}>
+                        <PageHeading
+                          headingLevel="h3"
+                          className="margin-bottom-3"
                         >
-                          {t('ancitipateCreatingDependencies')}
-                        </Label>
-                        <p className="text-base margin-y-1">
-                          {t('ancitipateCreatingDependenciesSubcopy')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.creatingDependenciesBetweenServices}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-creating-dependencies-between-services-${key}`}
-                              data-testid={`payment-creating-dependencies-between-services-${key}`}
-                              name="creatingDependenciesBetweenServices"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={
-                                values.creatingDependenciesBetweenServices ===
-                                key
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'creatingDependenciesBetweenServices',
+                          {t('claimSpecificQuestionsContinued')}
+                        </PageHeading>
+
+                        <FieldGroup
+                          scrollElement="creatingDependenciesBetweenServices"
+                          error={
+                            !!flatErrors.creatingDependenciesBetweenServices
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="creatingDependenciesBetweenServices"
+                            className="maxw-none"
+                          >
+                            {t('ancitipateCreatingDependencies')}
+                          </Label>
+                          <p className="text-base margin-y-1">
+                            {t('ancitipateCreatingDependenciesSubcopy')}
+                          </p>
+                          <FieldErrorMsg>
+                            {flatErrors.creatingDependenciesBetweenServices}
+                          </FieldErrorMsg>
+                          <Fieldset>
+                            {[true, false].map(key => (
+                              <Field
+                                as={Radio}
+                                key={key}
+                                id={`payment-creating-dependencies-between-services-${key}`}
+                                data-testid={`payment-creating-dependencies-between-services-${key}`}
+                                name="creatingDependenciesBetweenServices"
+                                label={key ? h('yes') : h('no')}
+                                value={key ? 'YES' : 'NO'}
+                                checked={
+                                  values.creatingDependenciesBetweenServices ===
                                   key
-                                );
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-creating-dependencies-between-services-note"
-                          field="creatingDependenciesBetweenServicesNote"
-                        />
-                      </FieldGroup>
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'creatingDependenciesBetweenServices',
+                                    key
+                                  );
+                                }}
+                              />
+                            ))}
+                          </Fieldset>
+                          <AddNote
+                            id="payment-creating-dependencies-between-services-note"
+                            field="creatingDependenciesBetweenServicesNote"
+                          />
+                        </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="needsClaimsDataCollection"
-                        error={!!flatErrors.needsClaimsDataCollection}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="needsClaimsDataCollection"
-                          className="maxw-none"
+                        <FieldGroup
+                          scrollElement="needsClaimsDataCollection"
+                          error={!!flatErrors.needsClaimsDataCollection}
+                          className="margin-top-4"
                         >
-                          {t('needsClaimsDataCollection')}
-                        </Label>
-                        <p className="text-base margin-y-1">
-                          {t('needsClaimsDataCollectionSubcopy')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.needsClaimsDataCollection}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-needs-claims-data-collection-${key}`}
-                              data-testid={`payment-needs-claims-data-collection-${key}`}
-                              name="needsClaimsDataCollection"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={values.needsClaimsDataCollection === key}
-                              onChange={() => {
-                                setFieldValue('needsClaimsDataCollection', key);
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-needs-claims-data-collection-note"
-                          field="needsClaimsDataCollectionNote"
-                        />
-                      </FieldGroup>
+                          <Label
+                            htmlFor="needsClaimsDataCollection"
+                            className="maxw-none"
+                          >
+                            {t('needsClaimsDataCollection')}
+                          </Label>
+                          <p className="text-base margin-y-1">
+                            {t('needsClaimsDataCollectionSubcopy')}
+                          </p>
+                          <FieldErrorMsg>
+                            {flatErrors.needsClaimsDataCollection}
+                          </FieldErrorMsg>
+                          <Fieldset>
+                            {[true, false].map(key => (
+                              <Field
+                                as={Radio}
+                                key={key}
+                                id={`payment-needs-claims-data-collection-${key}`}
+                                data-testid={`payment-needs-claims-data-collection-${key}`}
+                                name="needsClaimsDataCollection"
+                                label={key ? h('yes') : h('no')}
+                                value={key ? 'YES' : 'NO'}
+                                checked={
+                                  values.needsClaimsDataCollection === key
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'needsClaimsDataCollection',
+                                    key
+                                  );
+                                }}
+                              />
+                            ))}
+                          </Fieldset>
+                          <AddNote
+                            id="payment-needs-claims-data-collection-note"
+                            field="needsClaimsDataCollectionNote"
+                          />
+                        </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="providingThirdPartyFile"
-                        error={!!flatErrors.providingThirdPartyFile}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="providingThirdPartyFile"
-                          className="maxw-none"
+                        <FieldGroup
+                          scrollElement="providingThirdPartyFile"
+                          error={!!flatErrors.providingThirdPartyFile}
+                          className="margin-top-4"
                         >
-                          {t('thirdParty')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.providingThirdPartyFile}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-providing-third-party-file-${key}`}
-                              data-testid={`payment-providing-third-party-file-${key}`}
-                              name="providingThirdPartyFile"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={values.providingThirdPartyFile === key}
-                              onChange={() => {
-                                setFieldValue('providingThirdPartyFile', key);
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                      </FieldGroup>
+                          <Label
+                            htmlFor="providingThirdPartyFile"
+                            className="maxw-none"
+                          >
+                            {t('thirdParty')}
+                          </Label>
+                          <FieldErrorMsg>
+                            {flatErrors.providingThirdPartyFile}
+                          </FieldErrorMsg>
+                          <Fieldset>
+                            {[true, false].map(key => (
+                              <Field
+                                as={Radio}
+                                key={key}
+                                id={`payment-providing-third-party-file-${key}`}
+                                data-testid={`payment-providing-third-party-file-${key}`}
+                                name="providingThirdPartyFile"
+                                label={key ? h('yes') : h('no')}
+                                value={key ? 'YES' : 'NO'}
+                                checked={values.providingThirdPartyFile === key}
+                                onChange={() => {
+                                  setFieldValue('providingThirdPartyFile', key);
+                                }}
+                              />
+                            ))}
+                          </Fieldset>
+                        </FieldGroup>
 
-                      <Alert type="info" slim className="margin-y-6">
-                        {t('alert')}
-                      </Alert>
+                        <Alert type="info" slim className="margin-y-6">
+                          {t('alert')}
+                        </Alert>
 
-                      <FieldGroup
-                        scrollElement="isContractorAwareTestDataRequirements"
-                        error={
-                          !!flatErrors.isContractorAwareTestDataRequirements
-                        }
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="isContractorAwareTestDataRequirements"
-                          className="maxw-none"
+                        <FieldGroup
+                          scrollElement="isContractorAwareTestDataRequirements"
+                          error={
+                            !!flatErrors.isContractorAwareTestDataRequirements
+                          }
+                          className="margin-top-4"
                         >
-                          {t('isContractorAwareTestDataRequirements')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.isContractorAwareTestDataRequirements}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-contractor-aware-test-data-requirements-${key}`}
-                              data-testid={`payment-contractor-aware-test-data-requirements-${key}`}
-                              name="isContractorAwareTestDataRequirements"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={
-                                values.isContractorAwareTestDataRequirements ===
-                                key
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'isContractorAwareTestDataRequirements',
+                          <Label
+                            htmlFor="isContractorAwareTestDataRequirements"
+                            className="maxw-none"
+                          >
+                            {t('isContractorAwareTestDataRequirements')}
+                          </Label>
+                          <FieldErrorMsg>
+                            {flatErrors.isContractorAwareTestDataRequirements}
+                          </FieldErrorMsg>
+                          <Fieldset>
+                            {[true, false].map(key => (
+                              <Field
+                                as={Radio}
+                                key={key}
+                                id={`payment-contractor-aware-test-data-requirements-${key}`}
+                                data-testid={`payment-contractor-aware-test-data-requirements-${key}`}
+                                name="isContractorAwareTestDataRequirements"
+                                label={key ? h('yes') : h('no')}
+                                value={key ? 'YES' : 'NO'}
+                                checked={
+                                  values.isContractorAwareTestDataRequirements ===
                                   key
-                                );
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                      </FieldGroup>
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'isContractorAwareTestDataRequirements',
+                                    key
+                                  );
+                                }}
+                              />
+                            ))}
+                          </Fieldset>
+                        </FieldGroup>
 
-                      <div className="margin-top-6 margin-bottom-3">
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--outline margin-bottom-1"
+                            onClick={() => {
+                              handleFormSubmit('back');
+                            }}
+                          >
+                            {h('back')}
+                          </Button>
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {h('next')}
+                          </Button>
+                        </div>
                         <Button
                           type="button"
-                          className="usa-button usa-button--outline margin-bottom-1"
-                          onClick={() => {
-                            handleFormSubmit('back');
-                          }}
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('task-list')}
                         >
-                          {h('back')}
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+                          {h('saveAndReturn')}
                         </Button>
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
-                        </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('task-list')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>

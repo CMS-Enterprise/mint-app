@@ -134,168 +134,173 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         action="#"
         class="margin-top-2"
       >
-        <legend
-          class="text-bold margin-bottom-2"
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
         >
-          Choose from common solutions
-        </legend>
-        <ul
-          class="usa-card-group"
-          data-testid="CardGroup"
-        >
-          <div
-            class="tablet:grid-col-6 desktop:grid-col-4 display-flex"
-            data-testid="grid"
+          <legend
+            class="text-bold margin-bottom-2"
           >
-            <li
-              class="usa-card width-full"
-              data-testid="Card"
+            Choose from common solutions
+          </legend>
+          <ul
+            class="usa-card-group"
+            data-testid="CardGroup"
+          >
+            <div
+              class="tablet:grid-col-6 desktop:grid-col-4 display-flex"
+              data-testid="grid"
             >
-              <div
-                class="usa-card__container padding-3 flex-justify"
+              <li
+                class="usa-card width-full"
+                data-testid="Card"
               >
                 <div
-                  class="solutions-checkbox__above-the-border"
+                  class="usa-card__container padding-3 flex-justify"
                 >
                   <div
-                    class="solutions-checkbox__header"
+                    class="solutions-checkbox__above-the-border"
                   >
                     <div
-                      class="usa-checkbox margin-y-0"
-                      data-testid="checkbox"
+                      class="solutions-checkbox__header"
                     >
-                      <input
-                        class="usa-checkbox__input"
-                        id="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
-                        name="solutions[0].needed"
-                        type="checkbox"
-                        value="false"
-                      />
-                      <label
-                        class="usa-checkbox__label"
-                        for="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
+                      <div
+                        class="usa-checkbox margin-y-0"
+                        data-testid="checkbox"
                       >
-                        Select this solution
-                      </label>
-                    </div>
-                    <h3
-                      class="margin-top-2 solutions-checkbox__header margin-bottom-1"
-                    >
-                      Research, Measurement, Assessment, Design, and Analysis
-                    </h3>
-                    <h5
-                      class="margin-top-0 margin-bottom-2 text-normal"
-                    >
-                      (RMADA)
-                    </h5>
-                  </div>
-                  <div
-                    class="margin-bottom-2 solutions-checkbox__body-text"
-                  >
-                    Research, Measurement, Assessment, Design, and Analysis (RMADA) Indefinite Delivery Indefinite Quantity 2 (IDIQ) umbrella contract, the Centers for Medicare & Medicaid Services (CMS) shall award task orders (TOs) for a wide range of analytic support and technical assistance activities that support models and demonstration programs created or derived under the auspices of the Patient Protection & Affordable Care Act (ACA), the Medicare Access and CHIP Reauthorization Act (MACRA), other non-ACA statutes, and future health reform legislation. Supporting all aspects of model design and operations (with the exception of information technology);
-                  </div>
-                  <div
-                    class="tablet:grid-col-12 margin-bottom-2"
-                    data-testid="grid"
-                  >
-                    <p
-                      class="text-bold margin-bottom-0"
-                    >
-                      Point of contact
-                    </p>
-                    <p
-                      class="margin-y-0"
-                    >
-                      Joe Pusateri
-                    </p>
-                    <a
-                      aria-label="Send an email"
-                      class="usa-link line-height-body-5 display-flex flex-align-center"
-                      href="mailto:joseph.pusateri@cms.hhs.gov"
-                      target="_blank"
-                    >
-                      <div>
-                        joseph.pusateri@cms.hhs.gov
+                        <input
+                          class="usa-checkbox__input"
+                          id="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
+                          name="solutions[0].needed"
+                          type="checkbox"
+                          value="false"
+                        />
+                        <label
+                          class="usa-checkbox__label"
+                          for="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
+                        >
+                          Select this solution
+                        </label>
                       </div>
+                      <h3
+                        class="margin-top-2 solutions-checkbox__header margin-bottom-1"
+                      >
+                        Research, Measurement, Assessment, Design, and Analysis
+                      </h3>
+                      <h5
+                        class="margin-top-0 margin-bottom-2 text-normal"
+                      >
+                        (RMADA)
+                      </h5>
+                    </div>
+                    <div
+                      class="margin-bottom-2 solutions-checkbox__body-text"
+                    >
+                      Research, Measurement, Assessment, Design, and Analysis (RMADA) Indefinite Delivery Indefinite Quantity 2 (IDIQ) umbrella contract, the Centers for Medicare & Medicaid Services (CMS) shall award task orders (TOs) for a wide range of analytic support and technical assistance activities that support models and demonstration programs created or derived under the auspices of the Patient Protection & Affordable Care Act (ACA), the Medicare Access and CHIP Reauthorization Act (MACRA), other non-ACA statutes, and future health reform legislation. Supporting all aspects of model design and operations (with the exception of information technology);
+                    </div>
+                    <div
+                      class="tablet:grid-col-12 margin-bottom-2"
+                      data-testid="grid"
+                    >
+                      <p
+                        class="text-bold margin-bottom-0"
+                      >
+                        Point of contact
+                      </p>
+                      <p
+                        class="margin-y-0"
+                      >
+                        Joe Pusateri
+                      </p>
+                      <a
+                        aria-label="Send an email"
+                        class="usa-link line-height-body-5 display-flex flex-align-center"
+                        href="mailto:joseph.pusateri@cms.hhs.gov"
+                        target="_blank"
+                      >
+                        <div>
+                          joseph.pusateri@cms.hhs.gov
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="border-top border-base-light"
+                  >
+                    <a
+                      class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/select-solutions?solution=research-measurement-assessment-design-and-analysis&section=about"
+                    >
+                      About this solution
+                      <svg
+                        class="usa-icon margin-left-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
                     </a>
                   </div>
                 </div>
-                <div
-                  class="border-top border-base-light"
-                >
-                  <a
-                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/select-solutions?solution=research-measurement-assessment-design-and-analysis&section=about"
-                  >
-                    About this solution
-                    <svg
-                      class="usa-icon margin-left-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </li>
-          </div>
-        </ul>
-        <button
-          class="usa-button usa-button usa-button--outline margin-top-2"
-          data-testid="button"
-          id="add-solution-not-listed"
-          type="button"
-        >
-          Select another solution not listed
-        </button>
-        <div
-          class="margin-top-6 margin-bottom-3"
-        >
+              </li>
+            </div>
+          </ul>
           <button
-            class="usa-button margin-bottom-1"
+            class="usa-button usa-button usa-button--outline margin-top-2"
             data-testid="button"
-            disabled=""
-            type="submit"
+            id="add-solution-not-listed"
+            type="button"
           >
-            Continue
+            Select another solution not listed
           </button>
-        </div>
-        <button
-          class="usa-button usa-button usa-button--unstyled display-flex flex-align-center"
-          data-testid="button"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="margin-top-6 margin-bottom-3"
           >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-            />
-          </svg>
-          Don’t add solutions and return to tracker
-        </button>
+            <button
+              class="usa-button margin-bottom-1"
+              data-testid="button"
+              disabled=""
+              type="submit"
+            >
+              Continue
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled display-flex flex-align-center"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Don’t add solutions and return to tracker
+          </button>
+        </fieldset>
       </form>
     </div>
   </div>

@@ -226,427 +226,431 @@ const TargetsAndOptions = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="geographiesTargeted"
-                  error={!!flatErrors.geographiesTargeted}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="plan-characteristics-geographies-targeted">
-                    {t('specificGeographies')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.geographiesTargeted}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-geographies-targeted"
-                      name="geographiesTargeted"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.geographiesTargeted === true}
-                      onChange={() => {
-                        setFieldValue('geographiesTargeted', true);
-                      }}
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="geographiesTargeted"
+                    error={!!flatErrors.geographiesTargeted}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-geographies-targeted">
+                      {t('specificGeographies')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.geographiesTargeted}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-geographies-targeted"
+                        name="geographiesTargeted"
+                        label={h('yes')}
+                        value="TRUE"
+                        checked={values.geographiesTargeted === true}
+                        onChange={() => {
+                          setFieldValue('geographiesTargeted', true);
+                        }}
+                      />
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-geographies-targeted-no"
+                        name="geographiesTargeted"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.geographiesTargeted === false}
+                        onChange={() => {
+                          setFieldValue('geographiesTargeted', false);
+                        }}
+                      />
+                    </Fieldset>
+                    {values.geographiesTargeted && (
+                      <>
+                        <FieldArray
+                          name="geographiesTargetedTypes"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label text-normal">
+                                {t('geographyType')}
+                              </legend>
+                              <FieldErrorMsg>
+                                {flatErrors.geographiesTargetedTypes}
+                              </FieldErrorMsg>
+
+                              {Object.keys(GeographyType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        id={`plan-characteristics-geographies-type-${type}`}
+                                        name="geographiesTargetedTypes"
+                                        label={translateGeographyTypes(type)}
+                                        value={type}
+                                        checked={values.geographiesTargetedTypes.includes(
+                                          type as GeographyType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.geographiesTargetedTypes.indexOf(
+                                              e.target.value as GeographyType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === 'OTHER' &&
+                                        values.geographiesTargetedTypes.includes(
+                                          type as GeographyType
+                                        ) && (
+                                          <FieldGroup
+                                            className="margin-left-4 margin-y-2"
+                                            error={
+                                              !!flatErrors.geographiesTargetedTypesOther
+                                            }
+                                          >
+                                            <Label
+                                              htmlFor="plan-characteristics-geographies-targeted-other"
+                                              className="text-normal"
+                                            >
+                                              {t('geographySpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {
+                                                flatErrors.geographiesTargetedTypesOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextAreaField}
+                                              data-testid="plan-characteristics-geographies-targeted-other"
+                                              id="plan-characteristics-geographies-targeted-other"
+                                              maxLength={5000}
+                                              className="mint-textarea"
+                                              name="geographiesTargetedTypesOther"
+                                            />
+                                          </FieldGroup>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                            </>
+                          )}
+                        />
+
+                        <FieldArray
+                          name="geographiesTargetedAppliedTo"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label text-normal">
+                                {t('geographyApplied')}
+                              </legend>
+                              <FieldErrorMsg>
+                                {flatErrors.geographiesTargetedAppliedTo}
+                              </FieldErrorMsg>
+
+                              {Object.keys(GeographyApplication)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        id={`plan-characteristics-geographies-applied-to-${type}`}
+                                        name="geographiesTargetedAppliedTo"
+                                        label={translateGeographyApplication(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values.geographiesTargetedAppliedTo.includes(
+                                          type as GeographyApplication
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.geographiesTargetedAppliedTo.indexOf(
+                                              e.target
+                                                .value as GeographyApplication
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === 'OTHER' &&
+                                        values.geographiesTargetedAppliedTo.includes(
+                                          type as GeographyApplication
+                                        ) && (
+                                          <FieldGroup
+                                            className="margin-left-4 margin-top-2 margin-bottom-0"
+                                            error={
+                                              !!flatErrors.geographiesTargetedAppliedToOther
+                                            }
+                                          >
+                                            <Label
+                                              htmlFor="plan-characteristics-geographies-applied-to-other"
+                                              className="text-normal"
+                                            >
+                                              {t('geographyAppliedSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {
+                                                flatErrors.geographiesTargetedAppliedToOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextAreaField}
+                                              id="plan-characteristics-geographies-applied-to-other"
+                                              maxLength={5000}
+                                              className="mint-textarea"
+                                              name="geographiesTargetedAppliedToOther"
+                                            />
+                                          </FieldGroup>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                            </>
+                          )}
+                        />
+
+                        <AddNote
+                          id="plan-characteristics-geographies-targeted-note"
+                          field="geographiesTargetedNote"
+                        />
+                      </>
+                    )}
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="participationOptions"
+                    error={!!flatErrors.participationOptions}
+                    className="margin-y-4"
+                  >
+                    <Label htmlFor="plan-characteristics-participation">
+                      {t('participationOptions')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.participationOptions}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-participation"
+                        name="participationOptions"
+                        label={h('yes')}
+                        value="TRUE"
+                        checked={values.participationOptions === true}
+                        onChange={() => {
+                          setFieldValue('participationOptions', true);
+                        }}
+                      />
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-participation-no"
+                        name="participationOptions"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.participationOptions === false}
+                        onChange={() => {
+                          setFieldValue('participationOptions', false);
+                        }}
+                      />
+                    </Fieldset>
+                  </FieldGroup>
+
+                  <AddNote
+                    id="plan-characteristics-participation-note"
+                    field="participationOptionsNote"
+                  />
+
+                  <FieldGroup
+                    scrollElement="agreementTypes"
+                    error={!!flatErrors.agreementTypes}
+                  >
+                    <FieldArray
+                      name="agreementTypes"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label">
+                            {t('agreementType')}
+                          </legend>
+
+                          {itSolutionsStarted && (
+                            <ITSolutionsWarning
+                              id="ops-eval-and-learning-data-needed-warning"
+                              onClick={() =>
+                                handleFormSubmit(
+                                  `/models/${modelID}/task-list/it-solutions`
+                                )
+                              }
+                            />
+                          )}
+
+                          <p className="text-base margin-y-1">
+                            {t('agreementNote')}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.agreementTypes}
+                          </FieldErrorMsg>
+
+                          {Object.keys(AgreementType)
+                            .sort(sortOtherEnum)
+                            .map(type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`plan-characteristics-agreement-type-${type}`}
+                                    name="agreementTypes"
+                                    label={translateAgreementTypes(type)}
+                                    value={type}
+                                    checked={values.agreementTypes.includes(
+                                      type as AgreementType
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.agreementTypes.indexOf(
+                                          e.target.value as AgreementType
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
+                                  {type === 'OTHER' &&
+                                    values.agreementTypes.includes(
+                                      type as AgreementType
+                                    ) && (
+                                      <FieldGroup
+                                        className="margin-left-4 margin-top-2 margin-bottom-0"
+                                        error={!!flatErrors.agreementTypesOther}
+                                      >
+                                        <Label
+                                          htmlFor="plan-characteristics-agreement-type-other"
+                                          className="text-normal"
+                                        >
+                                          {h('pleaseSpecify')}
+                                        </Label>
+                                        <FieldErrorMsg>
+                                          {flatErrors.agreementTypesOther}
+                                        </FieldErrorMsg>
+                                        <Field
+                                          as={TextAreaField}
+                                          className="mint-textarea"
+                                          id="plan-characteristics-agreement-type-other"
+                                          maxLength={5000}
+                                          name="agreementTypesOther"
+                                        />
+                                      </FieldGroup>
+                                    )}
+                                </Fragment>
+                              );
+                            })}
+                        </>
+                      )}
                     />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-geographies-targeted-no"
-                      name="geographiesTargeted"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.geographiesTargeted === false}
-                      onChange={() => {
-                        setFieldValue('geographiesTargeted', false);
-                      }}
-                    />
-                  </Fieldset>
-                  {values.geographiesTargeted && (
+                  </FieldGroup>
+
+                  {values.agreementTypes.includes(
+                    'PARTICIPATION' as AgreementType
+                  ) && (
                     <>
-                      <FieldArray
-                        name="geographiesTargetedTypes"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label text-normal">
-                              {t('geographyType')}
-                            </legend>
-                            <FieldErrorMsg>
-                              {flatErrors.geographiesTargetedTypes}
-                            </FieldErrorMsg>
-
-                            {Object.keys(GeographyType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`plan-characteristics-geographies-type-${type}`}
-                                      name="geographiesTargetedTypes"
-                                      label={translateGeographyTypes(type)}
-                                      value={type}
-                                      checked={values.geographiesTargetedTypes.includes(
-                                        type as GeographyType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.geographiesTargetedTypes.indexOf(
-                                            e.target.value as GeographyType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === 'OTHER' &&
-                                      values.geographiesTargetedTypes.includes(
-                                        type as GeographyType
-                                      ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-y-2"
-                                          error={
-                                            !!flatErrors.geographiesTargetedTypesOther
-                                          }
-                                        >
-                                          <Label
-                                            htmlFor="plan-characteristics-geographies-targeted-other"
-                                            className="text-normal"
-                                          >
-                                            {t('geographySpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.geographiesTargetedTypesOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextAreaField}
-                                            data-testid="plan-characteristics-geographies-targeted-other"
-                                            id="plan-characteristics-geographies-targeted-other"
-                                            maxLength={5000}
-                                            className="mint-textarea"
-                                            name="geographiesTargetedTypesOther"
-                                          />
-                                        </FieldGroup>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                          </>
-                        )}
-                      />
-
-                      <FieldArray
-                        name="geographiesTargetedAppliedTo"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label text-normal">
-                              {t('geographyApplied')}
-                            </legend>
-                            <FieldErrorMsg>
-                              {flatErrors.geographiesTargetedAppliedTo}
-                            </FieldErrorMsg>
-
-                            {Object.keys(GeographyApplication)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`plan-characteristics-geographies-applied-to-${type}`}
-                                      name="geographiesTargetedAppliedTo"
-                                      label={translateGeographyApplication(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values.geographiesTargetedAppliedTo.includes(
-                                        type as GeographyApplication
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.geographiesTargetedAppliedTo.indexOf(
-                                            e.target
-                                              .value as GeographyApplication
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === 'OTHER' &&
-                                      values.geographiesTargetedAppliedTo.includes(
-                                        type as GeographyApplication
-                                      ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-top-2 margin-bottom-0"
-                                          error={
-                                            !!flatErrors.geographiesTargetedAppliedToOther
-                                          }
-                                        >
-                                          <Label
-                                            htmlFor="plan-characteristics-geographies-applied-to-other"
-                                            className="text-normal"
-                                          >
-                                            {t('geographyAppliedSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.geographiesTargetedAppliedToOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextAreaField}
-                                            id="plan-characteristics-geographies-applied-to-other"
-                                            maxLength={5000}
-                                            className="mint-textarea"
-                                            name="geographiesTargetedAppliedToOther"
-                                          />
-                                        </FieldGroup>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                          </>
-                        )}
-                      />
+                      <FieldGroup
+                        scrollElement="multiplePatricipationAgreementsNeeded"
+                        error={
+                          !!flatErrors.multiplePatricipationAgreementsNeeded
+                        }
+                        className="margin-y-4"
+                      >
+                        <Label
+                          htmlFor="plan-characteristics-multiple-participation-needed"
+                          className="text-normal"
+                        >
+                          {t('moreParticipation')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('agreementDepending')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.multiplePatricipationAgreementsNeeded}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="plan-characteristics-multiple-participation-needed"
+                            name="multiplePatricipationAgreementsNeeded"
+                            label={h('yes')}
+                            value="TRUE"
+                            checked={
+                              values.multiplePatricipationAgreementsNeeded ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'multiplePatricipationAgreementsNeeded',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="plan-characteristics-multiple-participation-needed-no"
+                            name="multiplePatricipationAgreementsNeeded"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.multiplePatricipationAgreementsNeeded ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'multiplePatricipationAgreementsNeeded',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                      </FieldGroup>
 
                       <AddNote
-                        id="plan-characteristics-geographies-targeted-note"
-                        field="geographiesTargetedNote"
+                        id="plan-characteristics-multiple-participation-needed-note"
+                        field="multiplePatricipationAgreementsNeededNote"
                       />
                     </>
                   )}
-                </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="participationOptions"
-                  error={!!flatErrors.participationOptions}
-                  className="margin-y-4"
-                >
-                  <Label htmlFor="plan-characteristics-participation">
-                    {t('participationOptions')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.participationOptions}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-participation"
-                      name="participationOptions"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.participationOptions === true}
-                      onChange={() => {
-                        setFieldValue('participationOptions', true);
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
                       }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-participation-no"
-                      name="participationOptions"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.participationOptions === false}
-                      onChange={() => {
-                        setFieldValue('participationOptions', false);
-                      }}
-                    />
-                  </Fieldset>
-                </FieldGroup>
-
-                <AddNote
-                  id="plan-characteristics-participation-note"
-                  field="participationOptionsNote"
-                />
-
-                <FieldGroup
-                  scrollElement="agreementTypes"
-                  error={!!flatErrors.agreementTypes}
-                >
-                  <FieldArray
-                    name="agreementTypes"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label">
-                          {t('agreementType')}
-                        </legend>
-
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="ops-eval-and-learning-data-needed-warning"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
-
-                        <p className="text-base margin-y-1">
-                          {t('agreementNote')}
-                        </p>
-
-                        <FieldErrorMsg>
-                          {flatErrors.agreementTypes}
-                        </FieldErrorMsg>
-
-                        {Object.keys(AgreementType)
-                          .sort(sortOtherEnum)
-                          .map(type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`plan-characteristics-agreement-type-${type}`}
-                                  name="agreementTypes"
-                                  label={translateAgreementTypes(type)}
-                                  value={type}
-                                  checked={values.agreementTypes.includes(
-                                    type as AgreementType
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.agreementTypes.indexOf(
-                                        e.target.value as AgreementType
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
-                                  }}
-                                />
-                                {type === 'OTHER' &&
-                                  values.agreementTypes.includes(
-                                    type as AgreementType
-                                  ) && (
-                                    <FieldGroup
-                                      className="margin-left-4 margin-top-2 margin-bottom-0"
-                                      error={!!flatErrors.agreementTypesOther}
-                                    >
-                                      <Label
-                                        htmlFor="plan-characteristics-agreement-type-other"
-                                        className="text-normal"
-                                      >
-                                        {h('pleaseSpecify')}
-                                      </Label>
-                                      <FieldErrorMsg>
-                                        {flatErrors.agreementTypesOther}
-                                      </FieldErrorMsg>
-                                      <Field
-                                        as={TextAreaField}
-                                        className="mint-textarea"
-                                        id="plan-characteristics-agreement-type-other"
-                                        maxLength={5000}
-                                        name="agreementTypesOther"
-                                      />
-                                    </FieldGroup>
-                                  )}
-                              </Fragment>
-                            );
-                          })}
-                      </>
-                    )}
-                  />
-                </FieldGroup>
-
-                {values.agreementTypes.includes(
-                  'PARTICIPATION' as AgreementType
-                ) && (
-                  <>
-                    <FieldGroup
-                      scrollElement="multiplePatricipationAgreementsNeeded"
-                      error={!!flatErrors.multiplePatricipationAgreementsNeeded}
-                      className="margin-y-4"
                     >
-                      <Label
-                        htmlFor="plan-characteristics-multiple-participation-needed"
-                        className="text-normal"
-                      >
-                        {t('moreParticipation')}
-                      </Label>
-                      <p className="text-base margin-y-1">
-                        {t('agreementDepending')}
-                      </p>
-                      <FieldErrorMsg>
-                        {flatErrors.multiplePatricipationAgreementsNeeded}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-multiple-participation-needed"
-                          name="multiplePatricipationAgreementsNeeded"
-                          label={h('yes')}
-                          value="TRUE"
-                          checked={
-                            values.multiplePatricipationAgreementsNeeded ===
-                            true
-                          }
-                          onChange={() => {
-                            setFieldValue(
-                              'multiplePatricipationAgreementsNeeded',
-                              true
-                            );
-                          }}
-                        />
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-multiple-participation-needed-no"
-                          name="multiplePatricipationAgreementsNeeded"
-                          label={h('no')}
-                          value="FALSE"
-                          checked={
-                            values.multiplePatricipationAgreementsNeeded ===
-                            false
-                          }
-                          onChange={() => {
-                            setFieldValue(
-                              'multiplePatricipationAgreementsNeeded',
-                              false
-                            );
-                          }}
-                        />
-                      </Fieldset>
-                    </FieldGroup>
-
-                    <AddNote
-                      id="plan-characteristics-multiple-participation-needed-note"
-                      field="multiplePatricipationAgreementsNeededNote"
-                    />
-                  </>
-                )}
-
-                <div className="margin-top-6 margin-bottom-3">
+                      {h('back')}
+                    </Button>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
               {id && (
                 <AutoSave

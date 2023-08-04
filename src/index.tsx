@@ -88,9 +88,10 @@ const wsProtocol = protocol === 'https' ? 'wss' : 'ws'; // Use WSS when connecti
 const wsLink = new WebSocketLink(
   new SubscriptionClient(`${wsProtocol}://${gqlAddressWithoutProtocol}`, {
     reconnect: true,
-    connectionParams: {
+    lazy: true,
+    connectionParams: () => ({
       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
-    }
+    })
   })
 );
 

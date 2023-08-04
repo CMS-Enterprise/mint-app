@@ -75,19 +75,24 @@ export const CharacteristicsContent = () => {
   >(null);
   const history = useHistory();
 
-  const { data: modelData, error: modelError } = useQuery<
-    GetDraftModelPlansType,
-    GetModelPlansVariables
-  >(GetDraftModelPlans, {
-    variables: {
-      filter: ModelPlanFilter.INCLUDE_ALL,
-      isMAC: false
+  const {
+    data: modelData,
+    error: modelError,
+    loading: modelLoading
+  } = useQuery<GetDraftModelPlansType, GetModelPlansVariables>(
+    GetDraftModelPlans,
+    {
+      variables: {
+        filter: ModelPlanFilter.INCLUDE_ALL,
+        isMAC: false
+      }
     }
-  });
+  );
 
   const {
     data: existingModelData,
-    error: existingModelError
+    error: existingModelError,
+    loading: existingModelLoading
   } = useQuery<ExistingModelPlanType>(GetExistingModelPlans);
 
   // Combined MINT models with existing models from DB.  Sorts them alphabetically and returns options for MultiSelect
@@ -280,274 +285,282 @@ export const CharacteristicsContent = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="isNewModel"
-                  error={!!flatErrors.isNewModel}
-                  className="margin-y-4 margin-bottom-8"
+                <Fieldset
+                  disabled={loading || modelLoading || existingModelLoading}
                 >
-                  <Label htmlFor="plan-characteristics-is-new-model">
-                    {t('isNewModel')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-is-new-model"
-                      name="isNewModel"
-                      label={t('newModel')}
-                      value="TRUE"
-                      checked={values.isNewModel === true}
-                      onChange={() => {
-                        setFieldValue('isNewModel', true);
-                        setFieldValue('existingModel', '');
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-is-new-model-no"
-                      name="isNewModel"
-                      label={t('newTrack')}
-                      value="FALSE"
-                      checked={values.isNewModel === false}
-                      onChange={() => {
-                        setFieldValue('isNewModel', false);
-                      }}
-                    />
-                  </Fieldset>
-                  {values.isNewModel === false && (
-                    <FieldGroup
-                      scrollElement="existingModel"
-                      error={!!flatErrors.existingModel}
-                    >
-                      <Label
-                        htmlFor="plan-characteristics-existing-model"
-                        className="margin-bottom-1 text-normal"
-                      >
-                        {t('whichExistingModel')}
-                      </Label>
-                      <p className="text-base margin-0">{t('startTypeing')}</p>
-                      <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
-
-                      <ComboBox
-                        disabled={!!modelError || !!existingModelError}
-                        data-test-id="plan-characteristics-existing-model"
-                        id="plan-characteristics-existing-model"
-                        name="existingModel"
-                        className={classNames({
-                          disabled: !!modelError || !!existingModelError
-                        })}
-                        inputProps={{
-                          id: 'plan-characteristics-existing-model',
-                          name: 'existingModel',
-                          'aria-describedby':
-                            'plan-characteristics-existing-model'
-                        }}
-                        options={modelPlanOptions}
-                        defaultValue={
-                          modelPlanOptions.find(
-                            modelPlan => modelPlan.label === existingModel
-                          )?.value || ''
-                        }
-                        onChange={modelPlanID => {
-                          const model = modelPlanOptions.find(
-                            modelPlan => modelPlan.value === modelPlanID
-                          );
-                          if (model) {
-                            setFieldValue('existingModel', model.label);
-                          } else {
-                            setFieldValue('existingModel', '');
-                          }
+                  <FieldGroup
+                    scrollElement="isNewModel"
+                    error={!!flatErrors.isNewModel}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-is-new-model">
+                      {t('isNewModel')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-is-new-model"
+                        name="isNewModel"
+                        label={t('newModel')}
+                        value="TRUE"
+                        checked={values.isNewModel === true}
+                        onChange={() => {
+                          setFieldValue('isNewModel', true);
+                          setFieldValue('existingModel', '');
                         }}
                       />
-                    </FieldGroup>
-                  )}
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="resemblesExistingModel"
-                  error={!!flatErrors.resemblesExistingModel}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="plan-characteristics-resembles-existing-model">
-                    {t('resembleModel')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.resemblesExistingModel}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-resembles-existing-model"
-                      name="resemblesExistingModel"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.resemblesExistingModel === true}
-                      onChange={() => {
-                        setFieldValue('resemblesExistingModel', true);
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-resembles-existing-model-no"
-                      name="resemblesExistingModel"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.resemblesExistingModel === false}
-                      onChange={() => {
-                        setFieldValue('resemblesExistingModel', false);
-                      }}
-                    />
-                  </Fieldset>
-                  {values.resemblesExistingModel && (
-                    <>
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-is-new-model-no"
+                        name="isNewModel"
+                        label={t('newTrack')}
+                        value="FALSE"
+                        checked={values.isNewModel === false}
+                        onChange={() => {
+                          setFieldValue('isNewModel', false);
+                        }}
+                      />
+                    </Fieldset>
+                    {values.isNewModel === false && (
                       <FieldGroup
-                        scrollElement="resemblesExistingModelWhich"
-                        error={!!flatErrors.resemblesExistingModelWhich}
-                        className="margin-top-4"
+                        scrollElement="existingModel"
+                        error={!!flatErrors.existingModel}
                       >
                         <Label
-                          htmlFor="plan-characteristics-resembles-which-model"
-                          className="text-normal"
-                          id="label-plan-characteristics-resembles-which-model"
+                          htmlFor="plan-characteristics-existing-model"
+                          className="margin-bottom-1 text-normal"
                         >
-                          {t('modelResemblance')}
+                          {t('whichExistingModel')}
                         </Label>
-                        <p className="text-base margin-y-1">
+                        <p className="text-base margin-0">
                           {t('startTypeing')}
                         </p>
                         <FieldErrorMsg>
-                          {flatErrors.resemblesExistingModelWhich}
+                          {flatErrors.existingModel}
                         </FieldErrorMsg>
 
-                        <Field
-                          as={MultiSelect}
-                          id="plan-characteristics-resembles-which-model"
-                          ariaLabel="label-plan-characteristics-resembles-which-model"
-                          name="existingModelLinks"
-                          options={modelPlanOptions}
-                          selectedLabel={t('selectedModels')}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('existingModelLinks', value);
+                        <ComboBox
+                          disabled={!!modelError || !!existingModelError}
+                          data-test-id="plan-characteristics-existing-model"
+                          id="plan-characteristics-existing-model"
+                          name="existingModel"
+                          className={classNames({
+                            disabled: !!modelError || !!existingModelError
+                          })}
+                          inputProps={{
+                            id: 'plan-characteristics-existing-model',
+                            name: 'existingModel',
+                            'aria-describedby':
+                              'plan-characteristics-existing-model'
                           }}
-                          initialValues={initialValues.existingModelLinks}
+                          options={modelPlanOptions}
+                          defaultValue={
+                            modelPlanOptions.find(
+                              modelPlan => modelPlan.label === existingModel
+                            )?.value || ''
+                          }
+                          onChange={modelPlanID => {
+                            const model = modelPlanOptions.find(
+                              modelPlan => modelPlan.value === modelPlanID
+                            );
+                            if (model) {
+                              setFieldValue('existingModel', model.label);
+                            } else {
+                              setFieldValue('existingModel', '');
+                            }
+                          }}
                         />
                       </FieldGroup>
-                      <FieldGroup
-                        scrollElement="resemblesExistingModelHow"
-                        error={!!flatErrors.resemblesExistingModelHow}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="plan-characteristics-resembles-how-model"
-                          className="text-normal"
-                        >
-                          {t('waysResembleModel')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.resemblesExistingModelHow}
-                        </FieldErrorMsg>
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          error={flatErrors.resemblesExistingModelHow}
-                          id="plan-characteristics-resembles-how-model"
-                          name="resemblesExistingModelHow"
-                        />
-                      </FieldGroup>
+                    )}
+                  </FieldGroup>
 
-                      <AddNote
-                        id="plan-characteristics-resemble-existing-note"
-                        field="resemblesExistingModelNote"
+                  <FieldGroup
+                    scrollElement="resemblesExistingModel"
+                    error={!!flatErrors.resemblesExistingModel}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-resembles-existing-model">
+                      {t('resembleModel')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.resemblesExistingModel}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-resembles-existing-model"
+                        name="resemblesExistingModel"
+                        label={h('yes')}
+                        value="TRUE"
+                        checked={values.resemblesExistingModel === true}
+                        onChange={() => {
+                          setFieldValue('resemblesExistingModel', true);
+                        }}
                       />
-                    </>
-                  )}
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="hasComponentsOrTracks"
-                  error={!!flatErrors.hasComponentsOrTracks}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="plan-characteristics-has-component-or-tracks">
-                    {t('differentComponents')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.hasComponentsOrTracks}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-has-component-or-tracks"
-                      name="hasComponentsOrTracks"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.hasComponentsOrTracks === true}
-                      onChange={() => {
-                        setFieldValue('hasComponentsOrTracks', true);
-                        setFieldValue('hasComponentsOrTracksDiffer', '');
-                      }}
-                    />
-                    {values.hasComponentsOrTracks === true && (
-                      <div className="display-flex margin-left-4 margin-bottom-1">
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-resembles-existing-model-no"
+                        name="resemblesExistingModel"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.resemblesExistingModel === false}
+                        onChange={() => {
+                          setFieldValue('resemblesExistingModel', false);
+                        }}
+                      />
+                    </Fieldset>
+                    {values.resemblesExistingModel && (
+                      <>
                         <FieldGroup
-                          className="flex-1"
-                          scrollElement="hasComponentsOrTracksDiffer"
-                          error={!!flatErrors.hasComponentsOrTracksDiffer}
+                          scrollElement="resemblesExistingModelWhich"
+                          error={!!flatErrors.resemblesExistingModelWhich}
+                          className="margin-top-4"
                         >
                           <Label
-                            htmlFor="plan-characteristics-tracks-differ-how"
-                            className="margin-bottom-1 text-normal"
+                            htmlFor="plan-characteristics-resembles-which-model"
+                            className="text-normal"
+                            id="label-plan-characteristics-resembles-which-model"
                           >
-                            {t('tracksDiffer')}
+                            {t('modelResemblance')}
+                          </Label>
+                          <p className="text-base margin-y-1">
+                            {t('startTypeing')}
+                          </p>
+                          <FieldErrorMsg>
+                            {flatErrors.resemblesExistingModelWhich}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={MultiSelect}
+                            id="plan-characteristics-resembles-which-model"
+                            ariaLabel="label-plan-characteristics-resembles-which-model"
+                            name="existingModelLinks"
+                            options={modelPlanOptions}
+                            selectedLabel={t('selectedModels')}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue('existingModelLinks', value);
+                            }}
+                            initialValues={initialValues.existingModelLinks}
+                          />
+                        </FieldGroup>
+                        <FieldGroup
+                          scrollElement="resemblesExistingModelHow"
+                          error={!!flatErrors.resemblesExistingModelHow}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="plan-characteristics-resembles-how-model"
+                            className="text-normal"
+                          >
+                            {t('waysResembleModel')}
                           </Label>
                           <FieldErrorMsg>
-                            {flatErrors.hasComponentsOrTracksDiffer}
+                            {flatErrors.resemblesExistingModelHow}
                           </FieldErrorMsg>
                           <Field
                             as={TextAreaField}
-                            error={!!flatErrors.hasComponentsOrTracksDiffer}
-                            className="margin-top-0 height-15"
-                            data-testid="plan-characteristics-tracks-differ-how"
-                            id="plan-characteristics-tracks-differ-how"
-                            name="hasComponentsOrTracksDiffer"
+                            className="height-15"
+                            error={flatErrors.resemblesExistingModelHow}
+                            id="plan-characteristics-resembles-how-model"
+                            name="resemblesExistingModelHow"
                           />
                         </FieldGroup>
-                      </div>
+
+                        <AddNote
+                          id="plan-characteristics-resemble-existing-note"
+                          field="resemblesExistingModelNote"
+                        />
+                      </>
                     )}
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-has-component-or-tracks-no"
-                      name="hasComponentsOrTracks"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.hasComponentsOrTracks === false}
-                      onChange={() => {
-                        setFieldValue('hasComponentsOrTracks', false);
-                      }}
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="hasComponentsOrTracks"
+                    error={!!flatErrors.hasComponentsOrTracks}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-has-component-or-tracks">
+                      {t('differentComponents')}
+                    </Label>
+                    <FieldErrorMsg>
+                      {flatErrors.hasComponentsOrTracks}
+                    </FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-has-component-or-tracks"
+                        name="hasComponentsOrTracks"
+                        label={h('yes')}
+                        value="TRUE"
+                        checked={values.hasComponentsOrTracks === true}
+                        onChange={() => {
+                          setFieldValue('hasComponentsOrTracks', true);
+                          setFieldValue('hasComponentsOrTracksDiffer', '');
+                        }}
+                      />
+                      {values.hasComponentsOrTracks === true && (
+                        <div className="display-flex margin-left-4 margin-bottom-1">
+                          <FieldGroup
+                            className="flex-1"
+                            scrollElement="hasComponentsOrTracksDiffer"
+                            error={!!flatErrors.hasComponentsOrTracksDiffer}
+                          >
+                            <Label
+                              htmlFor="plan-characteristics-tracks-differ-how"
+                              className="margin-bottom-1 text-normal"
+                            >
+                              {t('tracksDiffer')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.hasComponentsOrTracksDiffer}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextAreaField}
+                              error={!!flatErrors.hasComponentsOrTracksDiffer}
+                              className="margin-top-0 height-15"
+                              data-testid="plan-characteristics-tracks-differ-how"
+                              id="plan-characteristics-tracks-differ-how"
+                              name="hasComponentsOrTracksDiffer"
+                            />
+                          </FieldGroup>
+                        </div>
+                      )}
+                      <Field
+                        as={Radio}
+                        id="plan-characteristics-has-component-or-tracks-no"
+                        name="hasComponentsOrTracks"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.hasComponentsOrTracks === false}
+                        onChange={() => {
+                          setFieldValue('hasComponentsOrTracks', false);
+                        }}
+                      />
+                    </Fieldset>
+
+                    <AddNote
+                      id="plan-characteristics-has-component-or-tracks-note"
+                      field="hasComponentsOrTracksNote"
                     />
-                  </Fieldset>
+                  </FieldGroup>
 
-                  <AddNote
-                    id="plan-characteristics-has-component-or-tracks-note"
-                    field="hasComponentsOrTracksNote"
-                  />
-                </FieldGroup>
-
-                <div className="margin-top-6 margin-bottom-3">
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {h('next')}
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('back')}
+                  >
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
                   </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('back')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
-              {id && (
+              {id && !(loading || modelLoading || existingModelLoading) && (
                 <AutoSave
                   values={values}
                   onSave={() => {
