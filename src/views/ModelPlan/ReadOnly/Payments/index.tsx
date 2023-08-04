@@ -97,7 +97,6 @@ const ReadOnlyPayments = ({
     sharedSystemsInvolvedAdditionalClaimPaymentNote,
     planningToUseInnovationPaymentContractor,
     planningToUseInnovationPaymentContractorNote,
-    fundingStructure,
     expectedCalculationComplexityLevel,
     expectedCalculationComplexityLevelNote,
     canParticipantsSelectBetweenPaymentMechanisms,
@@ -508,17 +507,6 @@ const ReadOnlyPayments = ({
                 planningToUseInnovationPaymentContractor
               )}
               notes={planningToUseInnovationPaymentContractorNote}
-            />
-          )}
-
-        {isNonClaims &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingStructure',
-            <ReadOnlySection
-              heading={t('fundingStructure')}
-              copy={fundingStructure}
             />
           )}
       </div>

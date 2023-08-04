@@ -340,7 +340,6 @@ export interface GetAllSingleModelData_modelPlan_payments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: string | null;
   planningToUseInnovationPaymentContractor: boolean | null;
   planningToUseInnovationPaymentContractorNote: string | null;
-  fundingStructure: string | null;
   willRecoverPayments: boolean | null;
   willRecoverPaymentsNote: string | null;
   anticipateReconcilingPaymentsRetrospectively: boolean | null;

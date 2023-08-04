@@ -64,6 +64,7 @@ export enum AnticipatedPaymentFrequencyType {
   Monthly = 'MONTHLY',
   Other = 'OTHER',
   Quarterly = 'QUARTERLY',
+  Semiannually = 'SEMIANNUALLY',
   Semimonthly = 'SEMIMONTHLY',
   Weekly = 'WEEKLY'
 }
@@ -241,6 +242,7 @@ export enum DataFrequencyType {
   NotPlanningToDoThis = 'NOT_PLANNING_TO_DO_THIS',
   Other = 'OTHER',
   Quarterly = 'QUARTERLY',
+  Semiannually = 'SEMIANNUALLY',
   SemiMonthly = 'SEMI_MONTHLY',
   Weekly = 'WEEKLY'
 }
@@ -421,7 +423,8 @@ export enum FrequencyType {
   Monthly = 'MONTHLY',
   Other = 'OTHER',
   Quarterly = 'QUARTERLY',
-  Rolling = 'ROLLING'
+  Rolling = 'ROLLING',
+  Semiannually = 'SEMIANNUALLY'
 }
 
 export enum FundingSource {
@@ -1947,8 +1950,9 @@ export type PlanPayments = {
   fundingSourceRNote?: Maybe<Scalars['String']['output']>;
   fundingSourceROther?: Maybe<Scalars['String']['output']>;
   fundingSourceRTrustFund?: Maybe<Scalars['String']['output']>;
+  fundingSourceRTrustFundType?: Maybe<TrustFundType>;
   fundingSourceTrustFund?: Maybe<Scalars['String']['output']>;
-  fundingStructure?: Maybe<Scalars['String']['output']>;
+  fundingSourceTrustFundType?: Maybe<TrustFundType>;
   id: Scalars['UUID']['output'];
   isContractorAwareTestDataRequirements?: Maybe<Scalars['Boolean']['output']>;
   modelPlanID: Scalars['UUID']['output'];
@@ -2022,8 +2026,9 @@ export type PlanPaymentsChanges = {
   fundingSourceRNote?: InputMaybe<Scalars['String']['input']>;
   fundingSourceROther?: InputMaybe<Scalars['String']['input']>;
   fundingSourceRTrustFund?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceRTrustFundType?: InputMaybe<TrustFundType>;
   fundingSourceTrustFund?: InputMaybe<Scalars['String']['input']>;
-  fundingStructure?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceTrustFundType?: InputMaybe<TrustFundType>;
   isContractorAwareTestDataRequirements?: InputMaybe<Scalars['Boolean']['input']>;
   needsClaimsDataCollection?: InputMaybe<Scalars['Boolean']['input']>;
   needsClaimsDataCollectionNote?: InputMaybe<Scalars['String']['input']>;
@@ -2504,6 +2509,11 @@ export enum TriStateAnswer {
   No = 'NO',
   Tbd = 'TBD',
   Yes = 'YES'
+}
+
+export enum TrustFundType {
+  MedicarePartAHiTrustFund = 'MEDICARE_PART_A_HI_TRUST_FUND',
+  MedicarePartBSmiTrustFund = 'MEDICARE_PART_B_SMI_TRUST_FUND'
 }
 
 export type UpdateOperationalSolutionSubtaskChangesInput = {

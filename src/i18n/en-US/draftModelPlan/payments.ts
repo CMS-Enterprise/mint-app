@@ -225,9 +225,6 @@ const payments = {
     'Are you planning to use the Innovation Payment Contractor?',
   planningToUseInnovationPaymentContractorSubcopy:
     'Note: If there will be 30+ payees we recommend a contractor. ',
-  fundingStructure: 'What is the funding structure?',
-  fundingStructureSubcopy:
-    'If possible, upload a copy of the allotment and allowance.',
   expectedCalculationComplexityLevel:
     'What level of complexity do you expect calculations to be?',
   complexityLevel: {

@@ -50,7 +50,6 @@ export default gql`
         sharedSystemsInvolvedAdditionalClaimPaymentNote
         planningToUseInnovationPaymentContractor
         planningToUseInnovationPaymentContractorNote
-        fundingStructure
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
         canParticipantsSelectBetweenPaymentMechanisms

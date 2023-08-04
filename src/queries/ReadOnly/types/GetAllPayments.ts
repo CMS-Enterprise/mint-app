@@ -56,7 +56,6 @@ export interface GetAllPayments_modelPlan_payments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: string | null;
   planningToUseInnovationPaymentContractor: boolean | null;
   planningToUseInnovationPaymentContractorNote: string | null;
-  fundingStructure: string | null;
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote: string | null;
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;

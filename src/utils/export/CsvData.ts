@@ -345,7 +345,6 @@ const csvFields = [
   'payments.sharedSystemsInvolvedAdditionalClaimPaymentNote',
   'payments.planningToUseInnovationPaymentContractor',
   'payments.planningToUseInnovationPaymentContractorNote',
-  'payments.fundingStructure',
   'payments.willRecoverPayments',
   'payments.willRecoverPaymentsNote',
   'payments.anticipateReconcilingPaymentsRetrospectively',

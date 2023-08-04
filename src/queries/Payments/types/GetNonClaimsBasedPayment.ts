@@ -24,7 +24,6 @@ export interface GetNonClaimsBasedPayment_modelPlan_payments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: string | null;
   planningToUseInnovationPaymentContractor: boolean | null;
   planningToUseInnovationPaymentContractorNote: string | null;
-  fundingStructure: string | null;
 }
 
 export interface GetNonClaimsBasedPayment_modelPlan_operationalNeeds {

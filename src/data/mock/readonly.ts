@@ -514,7 +514,6 @@ const paymentsData: PaymentTypes = {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: null,
   planningToUseInnovationPaymentContractor: true,
   planningToUseInnovationPaymentContractorNote: null,
-  fundingStructure: null,
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: null,
   canParticipantsSelectBetweenPaymentMechanisms: true,

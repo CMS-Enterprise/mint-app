@@ -26,7 +26,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useScrollElement from 'hooks/useScrollElement';
 import GetNonClaimsBasedPayment from 'queries/Payments/GetNonClaimsBasedPayment';
@@ -85,8 +84,7 @@ const NonClaimsBasedPayment = () => {
     sharedSystemsInvolvedAdditionalClaimPayment,
     sharedSystemsInvolvedAdditionalClaimPaymentNote,
     planningToUseInnovationPaymentContractor,
-    planningToUseInnovationPaymentContractorNote,
-    fundingStructure
+    planningToUseInnovationPaymentContractorNote
   } = data?.modelPlan?.payments || ({} as NonClaimsBasedPaymentFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -163,8 +161,7 @@ const NonClaimsBasedPayment = () => {
     planningToUseInnovationPaymentContractor:
       planningToUseInnovationPaymentContractor ?? null,
     planningToUseInnovationPaymentContractorNote:
-      planningToUseInnovationPaymentContractorNote ?? '',
-    fundingStructure: fundingStructure ?? ''
+      planningToUseInnovationPaymentContractorNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -472,33 +469,6 @@ const NonClaimsBasedPayment = () => {
                           <AddNote
                             id="payment-use-innovation-payment-contractor-note"
                             field="planningToUseInnovationPaymentContractorNote"
-                          />
-                        </FieldGroup>
-
-                        <FieldGroup
-                          scrollElement="payment-funding-structure"
-                          error={!!flatErrors.fundingStructure}
-                          className="margin-top-4"
-                        >
-                          <Label
-                            htmlFor="payment-funding-structure"
-                            className="maxw-none"
-                          >
-                            {t('fundingStructure')}
-                          </Label>
-                          <p className="text-base margin-y-1">
-                            {t('fundingStructureSubcopy')}
-                          </p>
-                          <FieldErrorMsg>
-                            {flatErrors.fundingStructure}
-                          </FieldErrorMsg>
-                          <Field
-                            as={TextAreaField}
-                            className="height-15"
-                            error={flatErrors.fundingStructure}
-                            id="payment-funding-structure"
-                            data-testid="payment-funding-structure"
-                            name="fundingStructure"
                           />
                         </FieldGroup>
 

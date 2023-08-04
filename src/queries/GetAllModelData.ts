@@ -361,7 +361,6 @@ export default gql`
         sharedSystemsInvolvedAdditionalClaimPaymentNote
         planningToUseInnovationPaymentContractor
         planningToUseInnovationPaymentContractorNote
-        fundingStructure
         willRecoverPayments
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively
