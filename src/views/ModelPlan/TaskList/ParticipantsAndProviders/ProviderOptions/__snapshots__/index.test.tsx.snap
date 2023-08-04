@@ -212,22 +212,6 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-SEMIANNUALLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="SEMIANNUALLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-SEMIANNUALLY"
-            />
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
-          >
-            <input
-              class="usa-radio__input"
               id="participants-and-providers-additional-frequency-OTHER"
               name="providerAdditionFrequency"
               type="radio"
