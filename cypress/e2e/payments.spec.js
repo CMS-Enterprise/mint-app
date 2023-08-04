@@ -178,10 +178,6 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-structure')
-      .type('Payment Funding Structure')
-      .should('have.value', 'Payment Funding Structure');
-
     cy.contains('button', 'Next').click();
 
     // Page - /payment/complexity
