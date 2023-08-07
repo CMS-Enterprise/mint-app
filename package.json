@@ -7,6 +7,7 @@
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@craco/craco": "^7.0.0",
     "@cypress/code-coverage": "^3.10.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@okta/okta-auth-js": "^6.1.0",
     "@okta/okta-react": "^6.4.2",
     "@okta/okta-signin-widget": "^6.0.1",
@@ -90,7 +91,7 @@
     "lint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "generate": "graphql-codegen && apollo client:codegen --passthroughCustomScalars --localSchemaFile=pkg/graph/schema.graphql --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
+    "generate": "graphql-codegen",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -128,9 +129,10 @@
     "@storybook/react": "^6.3.1",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/json2csv": "^5.0.3",
     "@types/redux-actions": "^2.6.2",
+    "@types/testing-library__jest-dom": "^5.14.9",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
     "apollo-link": "^1.2.14",
     "apollo-link-error": "^1.1.13",
@@ -175,8 +177,7 @@
     "axios": "0.21.1",
     "marked": "0.7.0",
     "node-fetch": "2.6.1",
-    "graphql": "15.8.0",
-    "@graphql-typed-document-node/core": "3.2.0"
+    "graphql": "15.8.0"
   },
   "comments": {
     "on_resolutions": {
@@ -192,6 +193,9 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
+    "moduleNameMapper": {
+      "/\\.*\\.(css|less|scss|sass)$/": "identity-obj-proxy"
+    },
     "coverageThreshold": {
       "global": {
         "branches": 50,
@@ -201,10 +205,5 @@
       }
     }
   },
-  "packageManager": "yarn@3.6.1",
-  "dependenciesMeta": {
-    "@uswds/uswds@3.5.0": {
-      "unplugged": true
-    }
-  }
+  "packageManager": "yarn@3.6.1"
 }

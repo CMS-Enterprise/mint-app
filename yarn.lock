@@ -5005,7 +5005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-typed-document-node/core@npm:3.2.0":
+"@graphql-typed-document-node/core@npm:3.2.0, @graphql-typed-document-node/core@npm:^3.1.1, @graphql-typed-document-node/core@npm:^3.2.0":
   version: 3.2.0
   resolution: "@graphql-typed-document-node/core@npm:3.2.0"
   peerDependencies:
@@ -7641,14 +7641,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:^13.5.0":
-  version: 13.5.0
-  resolution: "@testing-library/user-event@npm:13.5.0"
-  dependencies:
-    "@babel/runtime": ^7.12.5
+"@testing-library/user-event@npm:^14.4.3":
+  version: 14.4.3
+  resolution: "@testing-library/user-event@npm:14.4.3"
   peerDependencies:
     "@testing-library/dom": ">=7.21.4"
-  checksum: 16319de685fbb7008f1ba667928f458b2d08196918002daca56996de80ef35e6d9de26e9e1ece7d00a004692b95a597cf9142fff0dc53f2f51606a776584f549
+  checksum: 852c48ea6db1c9471b18276617c84fec4320771e466cd58339a732ca3fd73ad35e5a43ae14f51af51a8d0a150dcf60fcaab049ef367871207bea8f92c4b8195e
   languageName: node
   linkType: hard
 
@@ -8562,6 +8560,15 @@ __metadata:
   version: 1.0.7
   resolution: "@types/tapable@npm:1.0.7"
   checksum: efae5c6cd184cbd768f98c0777c829e30045d57664731f36fcc7e32a372fd01c0f50283375e8cd6e325d321d7962906d2bdb82ee4595f7b9f53cefd3011bfa82
+  languageName: node
+  linkType: hard
+
+"@types/testing-library__jest-dom@npm:^5.14.9":
+  version: 5.14.9
+  resolution: "@types/testing-library__jest-dom@npm:5.14.9"
+  dependencies:
+    "@types/jest": "*"
+  checksum: d364494fc2545316292e88861146146af1e3818792ca63b62a63758b2f737669b687f4aaddfcfbcb7d0e1ed7890a9bd05de23ff97f277d5e68de574497a9ee72
   languageName: node
   linkType: hard
 
@@ -12459,6 +12466,7 @@ __metadata:
     "@cypress/webpack-preprocessor": ^5.12.2
     "@graphql-codegen/cli": ^5.0.0
     "@graphql-codegen/client-preset": ^4.1.0
+    "@graphql-typed-document-node/core": ^3.2.0
     "@okta/okta-auth-js": ^6.1.0
     "@okta/okta-react": ^6.4.2
     "@okta/okta-signin-widget": ^6.0.1
@@ -12470,7 +12478,7 @@ __metadata:
     "@storybook/react": ^6.3.1
     "@testing-library/jest-dom": ^5.12.0
     "@testing-library/react": ^11.2.7
-    "@testing-library/user-event": ^13.5.0
+    "@testing-library/user-event": ^14.4.3
     "@trussworks/react-uswds": ^2.8.0
     "@types/apollo-upload-client": ^17.0.1
     "@types/enzyme": ^3.10.3
@@ -12492,6 +12500,7 @@ __metadata:
     "@types/redux-actions": ^2.6.2
     "@types/redux-mock-store": ^1.0.1
     "@types/redux-saga-routines": ^3.1.0
+    "@types/testing-library__jest-dom": ^5.14.9
     "@types/text-encoding": ^0.0.35
     "@types/yup": ^0.29.11
     "@uswds/uswds": ^3.4.1
@@ -12574,9 +12583,6 @@ __metadata:
     typescript: ^4.5.2
     wait-on: ^5.2.1
     yup: ^0.32.8
-  dependenciesMeta:
-    "@uswds/uswds@3.5.0":
-      unplugged: true
   languageName: unknown
   linkType: soft
 

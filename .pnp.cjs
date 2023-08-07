@@ -36,6 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cypress/webpack-preprocessor", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:5.12.2"],\
             ["@graphql-codegen/cli", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:5.0.0"],\
             ["@graphql-codegen/client-preset", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:4.1.0"],\
+            ["@graphql-typed-document-node/core", "virtual:c404e78de0d8141cea012dcda431d6d8ec60318de1cd646aaf4cc3f6b83ae06858e9a89536c654e1f99abc617c82481706d4b33653c5a1cd0705699ced19d197#npm:3.2.0"],\
             ["@okta/okta-auth-js", "npm:6.1.0"],\
             ["@okta/okta-react", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:6.4.2"],\
             ["@okta/okta-signin-widget", "npm:6.0.1"],\
@@ -47,7 +48,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@storybook/react", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:6.3.1"],\
             ["@testing-library/jest-dom", "npm:5.12.0"],\
             ["@testing-library/react", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:11.2.7"],\
-            ["@testing-library/user-event", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:13.5.0"],\
+            ["@testing-library/user-event", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:14.4.3"],\
             ["@trussworks/react-uswds", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:2.8.0"],\
             ["@types/apollo-upload-client", "npm:17.0.1"],\
             ["@types/enzyme", "npm:3.10.8"],\
@@ -69,6 +70,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/redux-actions", "npm:2.6.2"],\
             ["@types/redux-mock-store", "npm:1.0.2"],\
             ["@types/redux-saga-routines", "npm:3.1.1"],\
+            ["@types/testing-library__jest-dom", "npm:5.14.9"],\
             ["@types/text-encoding", "npm:0.0.35"],\
             ["@types/yup", "npm:0.29.11"],\
             ["@uswds/uswds", "npm:3.5.0"],\
@@ -13877,18 +13879,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@testing-library/user-event", [\
-        ["npm:13.5.0", {\
-          "packageLocation": "./.yarn/cache/@testing-library-user-event-npm-13.5.0-1ff89b703a-16319de685.zip/node_modules/@testing-library/user-event/",\
+        ["npm:14.4.3", {\
+          "packageLocation": "./.yarn/cache/@testing-library-user-event-npm-14.4.3-2d1a75355f-852c48ea6d.zip/node_modules/@testing-library/user-event/",\
           "packageDependencies": [\
-            ["@testing-library/user-event", "npm:13.5.0"]\
+            ["@testing-library/user-event", "npm:14.4.3"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:13.5.0", {\
-          "packageLocation": "./.yarn/__virtual__/@testing-library-user-event-virtual-de994f700a/0/cache/@testing-library-user-event-npm-13.5.0-1ff89b703a-16319de685.zip/node_modules/@testing-library/user-event/",\
+        ["virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:14.4.3", {\
+          "packageLocation": "./.yarn/__virtual__/@testing-library-user-event-virtual-28e1979bb1/0/cache/@testing-library-user-event-npm-14.4.3-2d1a75355f-852c48ea6d.zip/node_modules/@testing-library/user-event/",\
           "packageDependencies": [\
-            ["@testing-library/user-event", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:13.5.0"],\
-            ["@babel/runtime", "npm:7.20.7"],\
+            ["@testing-library/user-event", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:14.4.3"],\
             ["@testing-library/dom", null],\
             ["@types/testing-library__dom", null]\
           ],\
@@ -14973,6 +14974,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/testing-library__jest-dom", [\
+        ["npm:5.14.9", {\
+          "packageLocation": "./.yarn/cache/@types-testing-library__jest-dom-npm-5.14.9-319d22d764-d364494fc2.zip/node_modules/@types/testing-library__jest-dom/",\
+          "packageDependencies": [\
+            ["@types/testing-library__jest-dom", "npm:5.14.9"],\
+            ["@types/jest", "npm:26.0.23"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:5.9.5", {\
           "packageLocation": "./.yarn/cache/@types-testing-library__jest-dom-npm-5.9.5-5a42b58918-f2ed81103a.zip/node_modules/@types/testing-library__jest-dom/",\
           "packageDependencies": [\
@@ -15353,7 +15362,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],\
       ["@uswds/uswds", [\
         ["npm:3.5.0", {\
-          "packageLocation": "./.yarn/unplugged/@uswds-uswds-npm-3.5.0-d09d1519e1/node_modules/@uswds/uswds/",\
+          "packageLocation": "./.yarn/cache/@uswds-uswds-npm-3.5.0-d09d1519e1-51bb955aaf.zip/node_modules/@uswds/uswds/",\
           "packageDependencies": [\
             ["@uswds/uswds", "npm:3.5.0"],\
             ["classlist-polyfill", "npm:1.0.3"],\
@@ -19796,6 +19805,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cypress/webpack-preprocessor", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:5.12.2"],\
             ["@graphql-codegen/cli", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:5.0.0"],\
             ["@graphql-codegen/client-preset", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:4.1.0"],\
+            ["@graphql-typed-document-node/core", "virtual:c404e78de0d8141cea012dcda431d6d8ec60318de1cd646aaf4cc3f6b83ae06858e9a89536c654e1f99abc617c82481706d4b33653c5a1cd0705699ced19d197#npm:3.2.0"],\
             ["@okta/okta-auth-js", "npm:6.1.0"],\
             ["@okta/okta-react", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:6.4.2"],\
             ["@okta/okta-signin-widget", "npm:6.0.1"],\
@@ -19807,7 +19817,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@storybook/react", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:6.3.1"],\
             ["@testing-library/jest-dom", "npm:5.12.0"],\
             ["@testing-library/react", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:11.2.7"],\
-            ["@testing-library/user-event", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:13.5.0"],\
+            ["@testing-library/user-event", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:14.4.3"],\
             ["@trussworks/react-uswds", "virtual:cfea4ff8fb8159231e63cd446618a0f7cae382c63607bafcbba14e6b51fec7ebe343d1a8a09ce468b6fa874ae9c91d693e00c025f896eae5db36cf03e9ee93ac#npm:2.8.0"],\
             ["@types/apollo-upload-client", "npm:17.0.1"],\
             ["@types/enzyme", "npm:3.10.8"],\
@@ -19829,6 +19839,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/redux-actions", "npm:2.6.2"],\
             ["@types/redux-mock-store", "npm:1.0.2"],\
             ["@types/redux-saga-routines", "npm:3.1.1"],\
+            ["@types/testing-library__jest-dom", "npm:5.14.9"],\
             ["@types/text-encoding", "npm:0.0.35"],\
             ["@types/yup", "npm:0.29.11"],\
             ["@uswds/uswds", "npm:3.5.0"],\

@@ -58,15 +58,17 @@
 // @forward '../node_modules/font-awesome/css/font-awesome.min.css';
 // @forward '../node_modules/@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 // @forward '../node_modules/@trussworks/react-uswds/lib/index.css';
-@forward '@font-awesome/css/font-awesome.min.css';
-@forward '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-@forward '@trussworks/react-uswds/lib/index.css';
+
 
 // Custom USWDS
 @forward './stylesheets/custom.scss';
 
 // Print styles (used for PDF generation)
 @forward './stylesheets/print.scss';
+
+@import 'font-awesome/css/font-awesome.min.css';
+@import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
+@import '@trussworks/react-uswds/lib/index.css';
 
 html
 body,
