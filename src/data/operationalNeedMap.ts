@@ -185,7 +185,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataToSendParticicipants',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataToSend',
+    question: 'operationsEvaluationAndLearning:dataToSendParticicipants.label',
     answer: 'translateDataToSendParticipantsType',
     section: 'operationsEvaluationAndLearningMisc'
   },

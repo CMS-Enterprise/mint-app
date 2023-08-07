@@ -742,6 +742,129 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
+  },
+  sendFilesBetweenCcw: {
+    gqlField: 'sendFilesBetweenCcw',
+    goField: 'SendFilesBetweenCcw',
+    dbField: 'send_files_between_ccw',
+    label:
+      'Will you need to send files between the CCW and other applications?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['ccw']
+  },
+  sendFilesBetweenCcwNote: {
+    gqlField: 'sendFilesBetweenCcwNote',
+    goField: 'SendFilesBetweenCcwNote',
+    dbField: 'send_files_between_ccw_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['ccw']
+  },
+  appToSendFilesToKnown: {
+    gqlField: 'appToSendFilesToKnown',
+    goField: 'AppToSendFilesToKnown',
+    dbField: 'app_to_send_files_to_known',
+    label:
+      'Do you know which applications will be on the other sides of the file transfers?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['ccw']
+  },
+  appToSendFilesToWhich: {
+    gqlField: 'appToSendFilesToWhich',
+    goField: 'AppToSendFilesToWhich',
+    dbField: 'app_to_send_files_to_which',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['ccw']
+  },
+  appToSendFilesToNote: {
+    gqlField: 'appToSendFilesToNote',
+    goField: 'AppToSendFilesToNote',
+    dbField: 'app_to_send_files_to_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['ccw']
+  },
+  useCcwForFileDistribiutionToParticipants: {
+    gqlField: 'useCcwForFileDistribiutionToParticipants',
+    goField: 'UseCcwForFileDistribiutionToParticipants',
+    dbField: 'use_ccw_for_file_distribiution_to_participants',
+    label:
+      'Will you use the CCW to distribute files to and from model participants?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['ccw']
+  },
+  useCcwForFileDistribiutionToParticipantsNote: {
+    gqlField: 'useCcwForFileDistribiutionToParticipantsNote',
+    goField: 'UseCcwForFileDistribiutionToParticipantsNote',
+    dbField: 'use_ccw_for_file_distribiution_to_participants_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['ccw']
+  },
+  developNewQualityMeasures: {
+    gqlField: 'developNewQualityMeasures',
+    goField: 'DevelopNewQualityMeasures',
+    dbField: 'develop_new_quality_measures',
+    label:
+      'Do you plan to develop a new validated quality measure for your model?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['cmmi']
+  },
+  developNewQualityMeasuresNote: {
+    gqlField: 'developNewQualityMeasuresNote',
+    goField: 'DevelopNewQualityMeasuresNote',
+    dbField: 'develop_new_quality_measures_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  qualityPerformanceImpactsPayment: {
+    gqlField: 'qualityPerformanceImpactsPayment',
+    goField: 'QualityPerformanceImpactsPayment',
+    dbField: 'quality_performance_impacts_payment',
+    label: 'Does quality performance impact payment?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['cmmi']
+  },
+  qualityPerformanceImpactsPaymentNote: {
+    gqlField: 'qualityPerformanceImpactsPaymentNote',
+    goField: 'QualityPerformanceImpactsPaymentNote',
+    dbField: 'quality_performance_impacts_payment_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
   }
 };
 
@@ -764,7 +887,9 @@ export const opsEvalAndLearningMisc = {
   participantAppeal: 'Will participants be able to appeal the following?',
   riskAdjustments: 'Will you make risk adjustments to the following?',
   appealsWarning:
-    'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.'
+    'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.',
+  ccwSpecific: 'Chronic Conditions Warehouse (CCW) questions',
+  qualityQuestions: 'Quality questions'
 };
 
 export default opsEvalAndLearning;

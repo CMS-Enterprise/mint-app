@@ -339,6 +339,18 @@ export type TranslationOpsEvalAndLearning = {
   dataToSendParticicipantsNote: TranslationFieldProperties;
   shareCclfData: TranslationFieldPropertiesWithOptions<Bool>;
   shareCclfDataNote: TranslationFieldProperties;
+  // CCW And Quality
+  sendFilesBetweenCcw: TranslationFieldPropertiesWithOptions<Bool>;
+  sendFilesBetweenCcwNote: TranslationFieldProperties;
+  appToSendFilesToKnown: TranslationFieldPropertiesWithOptions<Bool>;
+  appToSendFilesToWhich: TranslationFieldProperties;
+  appToSendFilesToNote: TranslationFieldProperties;
+  useCcwForFileDistribiutionToParticipants: TranslationFieldPropertiesWithOptions<Bool>;
+  useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
+  developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
+  developNewQualityMeasuresNote: TranslationFieldProperties;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

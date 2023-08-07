@@ -65,7 +65,9 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'dataToSendParticicipantsNote',
       'shareCclfData',
       'developNewQualityMeasures',
+      'developNewQualityMeasuresNote',
       'qualityPerformanceImpactsPayment',
+      'qualityPerformanceImpactsPaymentNote',
       'dataSharingFrequency',
       'dataCollectionFrequency'
     ],
@@ -136,8 +138,12 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'ccmInvolvmentOther',
       'ccmInvolvmentNote',
       'sendFilesBetweenCcw',
+      'sendFilesBetweenCcwNote',
       'appToSendFilesToKnown',
-      'useCcwForFileDistribiutionToParticipants'
+      'appToSendFilesToWhich',
+      'appToSendFilesToNote',
+      'useCcwForFileDistribiutionToParticipants',
+      'useCcwForFileDistribiutionToParticipantsNote'
     ],
     payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
   },
