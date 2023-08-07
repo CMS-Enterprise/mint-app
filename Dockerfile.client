@@ -5,9 +5,10 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 FROM base AS modules
 
-COPY package.json ./
-COPY yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY .yarn/ ./.yarn
+COPY . ./
+ENV CYPRESSINSTALLBINARY=0
+RUN yarn install --immutable
 
 FROM modules AS src
 

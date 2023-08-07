@@ -1,3 +1,9 @@
+const path = require('path');
+
+const importPath = path.join(path.dirname(require.resolve('@uswds/uswds')),"/../..", "packages")
+console.log("===== WEE HAH! =====")
+console.log(importPath)
+
 module.exports = {
   style: {
     sass: {
@@ -6,10 +12,14 @@ module.exports = {
         sassOptions: {
           includePaths: [
             './src/stylesheets',
-            './node_modules/@uswds/uswds/packages'
+            // './node_modules/@uswds/uswds/packages'
+            importPath
           ]
         }
       }
     }
+  },
+  devServer: {
+    port: 3005
   }
 };

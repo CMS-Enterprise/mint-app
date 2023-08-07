@@ -38,6 +38,16 @@ yarn-error.log*
 node_modules
 package-lock.json
 
+# yarn (WITH ZERO INSTALLS - SHOULD MATCH DOCKERIGNORE)
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Various temp files
 tmp
 *.swp

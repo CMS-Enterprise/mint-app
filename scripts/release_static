@@ -43,7 +43,7 @@ export REACT_APP_LOCAL_AUTH_ENABLED="false" # Disable deploying local auth
 s3_err="$(aws s3 ls "$STATIC_S3_BUCKET" 1>/dev/null 2>&1)"
 if [[ -z "$s3_err" ]] ; then
   ( set -x -u ;
-    yarn install --frozen-lockfile
+    yarn install --immutable
     yarn run build || exit
     aws s3 sync --no-progress --delete build/ s3://"$STATIC_S3_BUCKET"/
   )
