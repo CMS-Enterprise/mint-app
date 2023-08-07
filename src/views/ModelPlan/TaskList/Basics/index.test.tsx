@@ -24,7 +24,7 @@ const basicMockData: GetModelPlanInfoType = {
     __typename: 'PlanBasics',
     demoCode: '123',
     amsModelID: '2414213',
-    modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
+    modelCategory: ModelCategory.STATE_BASED,
     cmmiGroups: [
       CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,
       CMMIGroup.POLICY_AND_PROGRAMS_GROUP

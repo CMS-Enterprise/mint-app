@@ -487,7 +487,7 @@ func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Co
 }
 
 // AdditionalModelCategories is the resolver for the additionalModelCategories field.
-func (r *planBasicsResolver) AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.AdditionalModelCategory, error) {
+func (r *planBasicsResolver) AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error) {
 	panic(fmt.Errorf("not implemented: AdditionalModelCategories - additionalModelCategories"))
 }
 

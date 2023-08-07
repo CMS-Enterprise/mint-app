@@ -194,7 +194,7 @@ const modelBasicsData: GetAllBasicsTypes = {
   id: '123',
   demoCode: '1234',
   amsModelID: '43532323',
-  modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
+  modelCategory: ModelCategory.STATE_BASED,
   cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
   cmsOther: 'The Center for Awesomeness',
   cmmiGroups: [

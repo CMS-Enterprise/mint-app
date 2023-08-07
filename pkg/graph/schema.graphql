@@ -272,7 +272,7 @@ type PlanBasics {
   amsModelID: String
 
   modelCategory: ModelCategory
-  additionalModelCategories: [AdditionalModelCategory!]!
+  additionalModelCategories: [ModelCategory!]!
   cmsCenters: [CMSCenter!]!
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
@@ -323,7 +323,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   amsModelID: String
 
   modelCategory: ModelCategory
-  additionalModelCategories: [AdditionalModelCategory!]
+  additionalModelCategories: [ModelCategory!]
   cmsCenters: [CMSCenter!]
   cmsOther: String
   cmmiGroups: [CMMIGroup!]
@@ -1747,29 +1747,12 @@ enum ModelType
 
 enum ModelCategory {
   ACCOUNTABLE_CARE
-  DEMONSTRATION
-  EPISODE_BASED_PAYMENT_INITIATIVES
-  INIT_MEDICAID_CHIP_POP
-  INIT__MEDICARE_MEDICAID_ENROLLEES
-  INIT_ACCEL_DEV_AND_TEST
-  INIT_SPEED_ADOPT_BEST_PRACTICE
-  PRIMARY_CARE_TRANSFORMATION
-  UNKNOWN
   DISEASE_SPECIFIC_AND_EPISODIC
   HEALTH_PLAN
   PRESCRIPTION_DRUG
   STATE_BASED
   STATUTORY
   TO_BE_DETERMINED
-}
-
-enum AdditionalModelCategory {
-  ACCOUNTABLE_CARE
-  DISEASE_SPECIFIC_AND_EPISODIC
-  HEALTH_PLAN
-  PRESCRIPTION_DRUG
-  STATE_BASED
-  STATUTORY
 }
 
 enum ModelStatus {

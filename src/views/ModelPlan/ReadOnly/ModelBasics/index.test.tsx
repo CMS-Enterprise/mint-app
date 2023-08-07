@@ -29,9 +29,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       ).toBeInTheDocument();
       expect(screen.getByText('Second Name')).toBeInTheDocument();
       expect(
-        screen.getByText(
-          translateModelCategory(ModelCategory.PRIMARY_CARE_TRANSFORMATION)
-        )
+        screen.getByText(translateModelCategory(ModelCategory.STATE_BASED))
       ).toBeInTheDocument();
     });
   });

@@ -490,14 +490,12 @@ export type LaunchDarklySettings = {
 
 export enum ModelCategory {
   AccountableCare = 'ACCOUNTABLE_CARE',
-  Demonstration = 'DEMONSTRATION',
-  EpisodeBasedPaymentInitiatives = 'EPISODE_BASED_PAYMENT_INITIATIVES',
-  InitAccelDevAndTest = 'INIT_ACCEL_DEV_AND_TEST',
-  InitMedicaidChipPop = 'INIT_MEDICAID_CHIP_POP',
-  InitSpeedAdoptBestPractice = 'INIT_SPEED_ADOPT_BEST_PRACTICE',
-  InitMedicareMedicaidEnrollees = 'INIT__MEDICARE_MEDICAID_ENROLLEES',
-  PrimaryCareTransformation = 'PRIMARY_CARE_TRANSFORMATION',
-  Unknown = 'UNKNOWN'
+  DiseaseSpecificAndEpisodic = 'DISEASE_SPECIFIC_AND_EPISODIC',
+  HealthPlan = 'HEALTH_PLAN',
+  PrescriptionDrug = 'PRESCRIPTION_DRUG',
+  StateBased = 'STATE_BASED',
+  Statutory = 'STATUTORY',
+  ToBeDetermined = 'TO_BE_DETERMINED'
 }
 
 export enum ModelLearningSystemType {
@@ -1155,6 +1153,7 @@ export enum PayType {
 /** Represents plan basics */
 export type PlanBasics = {
   __typename?: 'PlanBasics';
+  additionalModelCategories: Array<ModelCategory>;
   amsModelID?: Maybe<Scalars['String']['output']>;
   announced?: Maybe<Scalars['Time']['output']>;
   applicationsEnd?: Maybe<Scalars['Time']['output']>;
@@ -1201,6 +1200,7 @@ export type PlanBasics = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanBasicsChanges = {
+  additionalModelCategories?: InputMaybe<Array<ModelCategory>>;
   amsModelID?: InputMaybe<Scalars['String']['input']>;
   announced?: InputMaybe<Scalars['Time']['input']>;
   applicationsEnd?: InputMaybe<Scalars['Time']['input']>;
