@@ -1041,6 +1041,70 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
+  },
+  modelLearningSystems: {
+    gqlField: 'modelLearningSystems',
+    goField: 'ModelLearningSystems',
+    dbField: 'model_learning_systems',
+    label: 'Will the model have a learning strategy?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      LEARNING_CONTRACTOR:
+        'We plan to have a learning contractor (cross-model or individual)',
+      IT_PLATFORM_CONNECT: 'We plan to use an IT platform (Connect)',
+      PARTICIPANT_COLLABORATION:
+        'We plan to enable participant-to-participant collaboration',
+      EDUCATE_BENEFICIARIES: 'We plan to educate beneficiaries',
+      OTHER: 'Other',
+      NO_LEARNING_SYSTEM: 'No, we will not have a learning strategy'
+    }
+  },
+  modelLearningSystemsOther: {
+    gqlField: 'modelLearningSystemsOther',
+    goField: 'ModelLearningSystemsOther',
+    dbField: 'model_learning_systems_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  modelLearningSystemsNote: {
+    gqlField: 'modelLearningSystemsNote',
+    goField: 'ModelLearningSystemsNote',
+    dbField: 'model_learning_systems_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  anticipatedChallenges: {
+    gqlField: 'anticipatedChallenges',
+    goField: 'AnticipatedChallenges',
+    dbField: 'anticipated_challenges',
+    label:
+      'What challenges do you anticipate during Model design and implementation?',
+    sublabel:
+      'Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    label: 'Model Plan status',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      READY:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      IN_PROGRESS:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_REVIEW:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_CLEARANCE:
+        'This section of the Model Plan (Model basics) is ready for review.'
+    }
   }
 };
 

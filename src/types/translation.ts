@@ -27,6 +27,7 @@ import {
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
+  ModelLearningSystemType,
   ModelType,
   MonitoringFileType,
   OverlapType,
@@ -367,6 +368,12 @@ export type TranslationOpsEvalAndLearning = {
   qualityReportingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   qualityReportingStartsOther: TranslationFieldProperties;
   qualityReportingStartsNote: TranslationFieldProperties;
+  // Learning
+  modelLearningSystems: TranslationFieldPropertiesWithOptions<ModelLearningSystemType>;
+  modelLearningSystemsOther: TranslationFieldProperties;
+  modelLearningSystemsNote: TranslationFieldProperties;
+  anticipatedChallenges: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 export type TranslationPlan = {
