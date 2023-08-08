@@ -90,6 +90,8 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(updatedPP.AnticipateReconcilingPaymentsRetrospectivelyNote)
 	suite.Nil(updatedPP.PaymentStartDate)
 	suite.Nil(updatedPP.PaymentStartDateNote)
+	suite.Nil(updatedPP.FundingSourceTrustFundType)
+	suite.Nil(updatedPP.FundingSourceRTrustFundType)
 }
 
 // TestPlanPaymentsReadByModelPlan tests PlanPaymentsReadByModelPlan
@@ -165,6 +167,8 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	suite.Nil(pp.AnticipateReconcilingPaymentsRetrospectivelyNote)
 	suite.Nil(pp.PaymentStartDate)
 	suite.Nil(pp.PaymentStartDateNote)
+	suite.Nil(pp.FundingSourceTrustFundType)
+	suite.Nil(pp.FundingSourceRTrustFundType)
 }
 
 func (suite *ResolverSuite) TestPlanPaymentsDataLoader() {
