@@ -219,6 +219,24 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 		s.False(princ.JobCodeASSESSMENT)
 		s.True(princ.JobCodeMAC)
 	})
+	s.Run("MINT_CONTRACTOR_FFS users only have MAC permissions", func() {
+		faktory := s.buildMiddleWareFactory(func(jwt string) (*jwtverifier.Jwt, error) {
+			return nil, errors.New("invalid token")
+		})
+		jwt := validJwt()
+		jwt.Claims["mint-groups"] = []interface{}{"MINT_CONTRACTOR_FFS_NONPROD"}
+
+		eJwt := authentication.EnhancedJwt{
+			JWT:       jwt,
+			AuthToken: "Bearer isNotABear",
+		}
+		ctx := appcontext.WithEnhancedJWT(context.Background(), eJwt)
+		princ, err := faktory.newPrincipal(ctx)
+		s.NoError(err)
+		s.False(princ.JobCodeUSER)
+		s.False(princ.JobCodeASSESSMENT)
+		s.True(princ.JobCodeMAC)
+	})
 }
 
 func TestJobCodes(t *testing.T) {
