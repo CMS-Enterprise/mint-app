@@ -29,12 +29,14 @@ describe('The Model Plan General Characteristics Form', () => {
       .type('Plan with B{downArrow}{enter}')
       .should('have.value', 'Plan with Basics');
 
-    cy.get('#plan-characteristics-resembles-existing-model')
+    cy.get('#plan-characteristics-resembles-existing-model-true')
       .check({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-resembles-which-model').within(() => {
-      cy.get("input[type='text']").type('advance payment{downArrow}{enter}');
+      cy.get("input[type='text']")
+        .click()
+        .type('advance payment{downArrow}{enter}');
     });
 
     cy.get('[data-testid="multiselect-tag--Advance Payment ACO Model"]')
@@ -47,7 +49,7 @@ describe('The Model Plan General Characteristics Form', () => {
       .type('In every way')
       .should('have.value', 'In every way');
 
-    cy.get('#plan-characteristics-has-component-or-tracks')
+    cy.get('#plan-characteristics-has-component-or-tracks-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -89,7 +91,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/involvements
 
-    cy.get('#plan-characteristics-care-coordination-involved')
+    cy.get('#plan-characteristics-care-coordination-involved-true')
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
@@ -98,7 +100,7 @@ describe('The Model Plan General Characteristics Form', () => {
       .type('Yes, care coordination is involved in every way')
       .should('have.value', 'Yes, care coordination is involved in every way');
 
-    cy.get('#plan-characteristics-additional-services')
+    cy.get('#plan-characteristics-additional-services-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -109,7 +111,7 @@ describe('The Model Plan General Characteristics Form', () => {
         'Yes, additional services are involved in every way'
       );
 
-    cy.get('#plan-characteristics-community-partners-involved')
+    cy.get('#plan-characteristics-community-partners-involved-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -124,7 +126,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/targets-and-options
 
-    cy.get('#plan-characteristics-geographies-targeted')
+    cy.get('#plan-characteristics-geographies-targeted-true')
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
@@ -137,7 +139,7 @@ describe('The Model Plan General Characteristics Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#plan-characteristics-participation')
+    cy.get('#plan-characteristics-participation-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -153,7 +155,7 @@ describe('The Model Plan General Characteristics Form', () => {
       .type('Just a different agreement type')
       .should('have.value', 'Just a different agreement type');
 
-    cy.get('#plan-characteristics-multiple-participation-needed')
+    cy.get('#plan-characteristics-multiple-participation-needed-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -161,7 +163,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/authority
 
-    cy.get('#plan-characteristics-rulemaking-required')
+    cy.get('#plan-characteristics-rulemaking-required-true')
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
@@ -174,7 +176,7 @@ describe('The Model Plan General Characteristics Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#plan-characteristics-waivers-required')
+    cy.get('#plan-characteristics-waivers-required-true')
       .check({ force: true })
       .should('be.checked');
 

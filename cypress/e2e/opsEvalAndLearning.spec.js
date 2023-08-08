@@ -66,7 +66,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .type('They will provide wireframes of workflows')
       .should('have.value', 'They will provide wireframes of workflows');
 
-    cy.get('#ops-eval-and-learning-iddoc-support')
+    cy.get('#ops-eval-and-learning-iddoc-support-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -87,7 +87,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.get('@technical-contacts').type('Bill in accounting');
     cy.get('@technical-contacts').should('have.value', 'Bill in accounting');
 
-    cy.get('#ops-eval-and-learning-capture-participant-info')
+    cy.get('#ops-eval-and-learning-capture-participant-info-true')
       .check({ force: true })
       .should('be.checked');
 
