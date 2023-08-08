@@ -105,26 +105,25 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'ops-eval-and-learning',
     fieldName: 'helpdeskUse',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:helpdeskUse.label',
+    question: 'opsEvalAndLearning:helpdeskUse.label',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   IDDOC_SUPPORT: {
     route: 'ops-eval-and-learning',
     fieldName: 'iddocSupport',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:iddocSupport.label',
+    question: 'opsEvalAndLearning:iddocSupport.label',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   ESTABLISH_BENCH: {
     route: 'ops-eval-and-learning/performance',
     fieldName: 'benchmarkForPerformance',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:benchmarkForPerformance.label',
+    question: 'opsEvalAndLearning:benchmarkForPerformance.label',
     answer: 'translateBenchmarkForPerformanceType',
-    section:
-      'operationsEvaluaoperationsEvaluationAndLearningMisctionAndLearning'
+    section: 'operationsEvaluaopsEvalAndLearningMisctionAndLearning'
   },
   PROCESS_PART_APPEALS: {
     route: 'ops-eval-and-learning/performance',
@@ -135,99 +134,99 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
       'appealOther'
     ],
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearningMisc:participantAppeal',
+    question: 'opsEvalAndLearningMisc:participantAppeal',
     answer: 'translateBoolean',
     multiPart: true,
     multiPartQuestion: 'translateAppealsQuestionType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   ACQUIRE_AN_EVAL_CONT: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'evaluationApproaches',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:evaluationApproaches.label',
+    question: 'opsEvalAndLearning:evaluationApproaches.label',
     answer: 'translateEvaluationApproachType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   QUALITY_PERFORMANCE_SCORES: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeededForMonitoring.label',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   CLAIMS_BASED_MEASURES: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeededForMonitoring.label',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   DATA_TO_SUPPORT_EVAL: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeededForMonitoring.label',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   DATA_TO_MONITOR: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeededForMonitoring.label',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   SEND_REPDATA_TO_PART: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataToSendParticicipants',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataToSendParticicipants.label',
+    question: 'opsEvalAndLearning:dataToSendParticicipants.label',
     answer: 'translateDataToSendParticipantsType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   PART_TO_PART_COLLAB: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:modelLearningSystems.label',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearning'
   },
   EDUCATE_BENEF: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:modelLearningSystems.label',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   ACQUIRE_A_LEARN_CONT: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:modelLearningSystems.label',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR: {
     route: 'ops-eval-and-learning/ccw-and-quality',
     fieldName: 'developNewQualityMeasures',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:developNewQualityMeasures.label',
+    question: 'opsEvalAndLearning:developNewQualityMeasures.label',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   IT_PLATFORM_FOR_LEARNING: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:modelLearningSystems.label',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearningMisc'
+    section: 'opsEvalAndLearningMisc'
   },
   ADJUST_FFS_CLAIMS: {
     route: 'payment',
