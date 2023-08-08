@@ -12,14 +12,15 @@ exports[`The BooleanRadio component matches snapshot 1`] = `
     >
       <input
         class="usa-radio__input"
-        id="care-coordination-involved"
+        data-testid="care-coordination-involved-true"
+        id="care-coordination-involved-true"
         name="careCoordinationInvolved"
         type="radio"
         value="TRUE"
       />
       <label
         class="usa-radio__label"
-        for="care-coordination-involved"
+        for="care-coordination-involved-true"
       >
         Yes
       </label>
@@ -30,14 +31,15 @@ exports[`The BooleanRadio component matches snapshot 1`] = `
     >
       <input
         class="usa-radio__input"
-        id="care-coordination-involved-no"
+        data-testid="care-coordination-involved-false"
+        id="care-coordination-involved-false"
         name="careCoordinationInvolved"
         type="radio"
         value="FALSE"
       />
       <label
         class="usa-radio__label"
-        for="care-coordination-involved-no"
+        for="care-coordination-involved-false"
       >
         No
       </label>

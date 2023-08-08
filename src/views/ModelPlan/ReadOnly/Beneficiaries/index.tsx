@@ -99,7 +99,7 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'beneficiaries',
           <ReadOnlySection
-            heading={beneficiariesT('beneficiaries.readonlyQuestion')}
+            heading={beneficiariesT('beneficiaries.readonlyLabel')}
             list
             listItems={beneficiaries?.map((type): string =>
               beneficiariesT(`beneficiaries.options.${type}`)
@@ -237,9 +237,7 @@ const ReadOnlyBeneficiaries = ({
           filteredQuestions,
           'beneficiarySelectionMethod',
           <ReadOnlySection
-            heading={beneficiariesT(
-              'beneficiarySelectionMethod.readonlyQuestion'
-            )}
+            heading={beneficiariesT('beneficiarySelectionMethod.readonlyLabel')}
             list
             listItems={beneficiarySelectionMethod?.map((type): string =>
               beneficiariesT(`beneficiarySelectionMethod.options.${type}`)

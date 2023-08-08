@@ -413,8 +413,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'benchmarkForPerformance',
     goField: 'BenchmarkForPerformance',
     dbField: 'benchmark_for_performance',
-    label: 'Are data flow diagrams needed?',
-    dataType: 'boolean',
+    label: 'Will you establish a benchmark to capture performance?',
+    dataType: 'enum',
     formType: 'radio',
     options: {
       YES_RECONCILE: 'Yes, and we will reconcile actual performance against it',
@@ -428,7 +428,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'benchmarkForPerformanceNote',
     goField: 'BenchmarkForPerformanceNote',
     dbField: 'benchmark_for_performance_note',
-    label: 'Are data flow diagrams needed?',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
@@ -450,7 +450,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'computePerformanceScoresNote',
     goField: 'ComputePerformanceScoresNote',
     dbField: 'compute_performance_scores_note',
-    label: 'Are data flow diagrams needed?',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']

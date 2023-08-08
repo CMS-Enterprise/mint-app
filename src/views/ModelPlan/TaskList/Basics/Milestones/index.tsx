@@ -14,13 +14,13 @@ import {
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
-  ProcessListItem,
-  Radio
+  ProcessListItem
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -516,31 +516,13 @@ const Milestones = () => {
 
                       <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
 
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="phasedIn-Yes"
-                          name="phasedIn"
-                          label={phasedInConfig.options.true}
-                          value="YES"
-                          checked={values.phasedIn === true}
-                          onChange={() => {
-                            setFieldValue('phasedIn', true);
-                          }}
-                        />
-
-                        <Field
-                          as={Radio}
-                          id="phasedIn-No"
-                          name="phasedIn"
-                          label={phasedInConfig.options.false}
-                          value="FALSE"
-                          checked={values.phasedIn === false}
-                          onChange={() => {
-                            setFieldValue('phasedIn', false);
-                          }}
-                        />
-                      </Fieldset>
+                      <BooleanRadio
+                        field="phasedIn"
+                        id="phasedIn"
+                        value={values.phasedIn}
+                        setFieldValue={setFieldValue}
+                        options={phasedInConfig.options}
+                      />
                     </FieldGroup>
 
                     <AddNote id="ModelType-phasedInNote" field="phasedInNote" />

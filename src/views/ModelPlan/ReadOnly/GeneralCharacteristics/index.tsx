@@ -247,7 +247,7 @@ const ReadOnlyGeneralCharacteristics = ({
           'keyCharacteristics',
           <ReadOnlySection
             heading={generalCharacteristicsT(
-              'keyCharacteristics.readonlyQuestion'
+              'keyCharacteristics.readonlyLabel'
             )}
             list
             listItems={keyCharacteristics?.map((type): string =>
@@ -595,7 +595,7 @@ const ReadOnlyGeneralCharacteristics = ({
             secondSection={
               waiversRequired === true && {
                 heading: generalCharacteristicsT(
-                  'waiversRequiredTypes.readonlyQuestion'
+                  'waiversRequiredTypes.readonlyLabel'
                 ),
                 list: true,
                 listItems: waiversRequiredTypes?.map((type): string =>

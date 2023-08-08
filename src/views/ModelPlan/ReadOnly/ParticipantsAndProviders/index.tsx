@@ -132,7 +132,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'participants',
           <ReadOnlySection
-            heading={participantsAndProvidersT('participants.readonlyQuestion')}
+            heading={participantsAndProvidersT('participants.readonlyLabel')}
             list
             listItems={participants?.map((type): string =>
               participantsAndProvidersT(`participants.options.${type}`)
@@ -260,9 +260,7 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'selectionMethod',
           <ReadOnlySection
-            heading={participantsAndProvidersT(
-              'selectionMethod.readonlyQuestion'
-            )}
+            heading={participantsAndProvidersT('selectionMethod.readonlyLabel')}
             list
             listItems={selectionMethod?.map((type): string =>
               participantsAndProvidersT(`selectionMethod.options.${type}`)
@@ -449,7 +447,7 @@ const ReadOnlyParticipantsAndProviders = ({
           'providerAddMethod',
           <ReadOnlySection
             heading={participantsAndProvidersT(
-              'providerAddMethod.readonlyQuestion'
+              'providerAddMethod.readonlyLabel'
             )}
             list
             listItems={providerAddMethod?.map((type): string =>
@@ -466,7 +464,7 @@ const ReadOnlyParticipantsAndProviders = ({
           'providerLeaveMethod',
           <ReadOnlySection
             heading={participantsAndProvidersT(
-              'providerLeaveMethod.readonlyQuestion'
+              'providerLeaveMethod.readonlyLabel'
             )}
             list
             listItems={providerLeaveMethod?.map((type): string =>

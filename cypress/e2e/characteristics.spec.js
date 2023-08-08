@@ -19,7 +19,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
-    cy.get('#plan-characteristics-is-new-model-no')
+    cy.get('#plan-characteristics-is-new-model-false')
       .check({ force: true })
       .should('be.checked');
 
