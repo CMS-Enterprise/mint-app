@@ -10,7 +10,7 @@ import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
 
-import TaskList from './index';
+import TaskList, { getLatestModifiedDate } from './index';
 
 describe('The Model Plan Task List', () => {
   const mockStore = configureMockStore();
@@ -115,6 +115,30 @@ describe('The Model Plan Task List', () => {
     expect(
       await screen.findByTestId('model-plan-task-list')
     ).toBeInTheDocument();
+  });
+
+  it('gets the last modified date of it solutions', async () => {
+    const expectedDate: string = '2023-05-21T13:38:11.998962Z';
+
+    const lastUpdated = getLatestModifiedDate([
+      {
+        __typename: 'OperationalNeed',
+        id: '724c19ce-0309-4f04-a4fe-d9ed345dbec',
+        modifiedDts: null
+      },
+      {
+        __typename: 'OperationalNeed',
+        id: '864c19ce-0309-4f04-a4fe-d9ed844edbec',
+        modifiedDts: '2023-04-01T13:38:11.998962Z'
+      },
+      {
+        __typename: 'OperationalNeed',
+        id: '134c19ce-0309-4f04-a4fe-d9ed844edbec',
+        modifiedDts: '2023-05-21T13:38:11.998962Z'
+      }
+    ]);
+
+    expect(lastUpdated).toEqual(expectedDate);
   });
 
   it('displays the model plan task list steps', async () => {

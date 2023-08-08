@@ -10,6 +10,7 @@ type ModelPlanDateChangedSubjectContent struct {
 // DateChange defines the parameters necessary for parsing date changes, both singular and ranges
 // If the OldRange and NewRange are both nil, then the change is singular
 type DateChange struct {
+	IsChanged                                              bool
 	Field                                                  string
 	IsRange                                                bool
 	OldDate, NewDate                                       *time.Time
