@@ -135,7 +135,7 @@ type TrustFundType string
 //goland:noinspection ALL
 const (
 	TrustFundTypeMedicarePartAHI  TrustFundType = "MEDICARE_PART_A_HI_TRUST_FUND"
-	TrustFundTypeMedicarePartBSMI TrustFundType = "MEDICARE_PART_B_TRUST_FUND"
+	TrustFundTypeMedicarePartBSMI TrustFundType = "MEDICARE_PART_B_SMI_TRUST_FUND"
 )
 
 // PlanPayments defines the data associated with a plan payments model

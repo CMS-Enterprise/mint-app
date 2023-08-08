@@ -3,7 +3,7 @@ BEGIN;
     DROP COLUMN funding_structure;
 
   CREATE TYPE trust_fund_type AS ENUM (
-    'MEDICARE_PART_A_HI_TRUST_FUND'
+      'MEDICARE_PART_A_HI_TRUST_FUND'
       'MEDICARE_PART_B_SMI_TRUST_FUND'
     );
 
