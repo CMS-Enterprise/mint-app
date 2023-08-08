@@ -68,6 +68,8 @@ SELECT
     pay.anticipate_reconciling_payments_retrospectively_note,
     pay.payment_start_date,
     pay.payment_start_date_note,
+    pay.funding_source_trust_fund_type,
+    pay.funding_source_r_trust_fund_type,
     pay.created_by,
     pay.created_dts,
     pay.modified_by,

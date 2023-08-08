@@ -60,6 +60,8 @@ SELECT
     anticipate_reconciling_payments_retrospectively_note,
     payment_start_date,
     payment_start_date_note,
+    funding_source_trust_fund_type,
+    funding_source_r_trust_fund_type,
     created_by,
     created_dts,
     modified_by,
