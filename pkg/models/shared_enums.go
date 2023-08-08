@@ -26,12 +26,12 @@ type FrequencyType string
 
 // These constants represent the different values of CMSCenter
 const (
-	SelectionAnnually     FrequencyType = "ANNUALLY"
-	SelectionSemiAnnually FrequencyType = "SEMIANNUALLY"
-	SelectionQuarterly    FrequencyType = "QUARTERLY"
-	SelectionMonthly      FrequencyType = "MONTHLY"
-	SelectionRolling      FrequencyType = "ROLLING"
-	SelectionOther        FrequencyType = "OTHER"
+	SelectionAnnually   FrequencyType = "ANNUALLY"
+	SelectionBiannually FrequencyType = "BIANNUALLY"
+	SelectionQuarterly  FrequencyType = "QUARTERLY"
+	SelectionMonthly    FrequencyType = "MONTHLY"
+	SelectionRolling    FrequencyType = "ROLLING"
+	SelectionOther      FrequencyType = "OTHER"
 )
 
 // ConfidenceType representes the values possible for the amount of confidence in an answer
