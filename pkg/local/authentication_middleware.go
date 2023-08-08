@@ -74,10 +74,12 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	if parseErr := json.Unmarshal([]byte(devUserConfigJSON), &config); parseErr != nil {
 		return nil, errors.New("could not parse local auth JSON")
 	}
+
 	// Pull job codes from config
+	// NOTE: We only allow nonprod job codes here. This is reflected in src/views/AuthenticationWrapper/DevLogin.tsx only pulling nonprod job codes
 	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
 	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
-	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT Contractor"))
+	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT_CONTRACTOR_FFS_NONPROD"))
 
 	// Always set assessment users to have base user permissions
 	if jcAssessment {
