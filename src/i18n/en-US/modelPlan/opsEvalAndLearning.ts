@@ -460,6 +460,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'RiskAdjustPerformance',
     dbField: 'risk_adjust_performance',
     label: 'Performance Scores',
+    readonlyLabel: 'Will you make risk adjustments to performance scores?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -473,6 +474,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'RiskAdjustFeedback',
     dbField: 'risk_adjust_feedback',
     label: 'Feedback Results',
+    readonlyLabel: 'Will you make risk adjustments to feedback results?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -485,6 +487,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'RiskAdjustPayments',
     dbField: 'risk_adjust_payments',
     label: 'Payments',
+    readonlyLabel: 'Will you make risk adjustments to payments?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -498,6 +501,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'RiskAdjustOther',
     dbField: 'risk_adjust_other',
     label: 'Others',
+    readonlyLabel: 'Will you make risk adjustments to others?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -518,6 +522,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealPerformance',
     dbField: 'appeal_performance',
     label: 'Performance Scores',
+    readonlyLabel: 'Will participants be able to appeal performance scores?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -530,6 +535,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealFeedback',
     dbField: 'appeal_feedback',
     label: 'Feedback Results',
+    readonlyLabel: 'Will participants be able to appeal feedback results?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -542,6 +548,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealPayments',
     dbField: 'appeal_payments',
     label: 'Payments',
+    readonlyLabel: 'Will participants be able to appeal payments?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -554,6 +561,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealOther',
     dbField: 'appeal_other',
     label: 'Others',
+    readonlyLabel: 'Will participants be able to appeal others?',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -1116,22 +1124,29 @@ export const opsEvalAndLearningMisc = {
   additionalQuestionsInfo:
     'If you select yes, there will be additional questions to answer.',
   iddocHeading: 'IDDOC operations questions',
+  iddocReadonlyHeading: 'IDDOC Operations',
   icdHeading: 'Interface Control Document (ICD) questions',
+  icdReadonlyHeading: 'Interface Control Document (ICD)',
   icdSubheading:
     'An interface control document provides a record of all interface information generated for a project.',
   testingQuestions: 'Testing questions',
   ssmRequest:
     'SSM request to begin analysis at least 1 year before implementation',
   dataMonitoring: 'Data monitoring questions',
+  dataMonitoringHeading: 'Data Monitoring',
   dataMonitoringContinued: 'Data monitoring questions continued',
   participantAppeal: 'Will participants be able to appeal the following?',
   riskAdjustments: 'Will you make risk adjustments to the following?',
   appealsWarning:
     'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.',
   ccwSpecific: 'Chronic Conditions Warehouse (CCW) questions',
+  ccwSpecificReadonly: 'Chronic Conditions Warehouse (CCW)',
   qualityQuestions: 'Quality questions',
+  qualityReadonly: 'Quality',
   reportingTiming: 'Data sharing timing and frequency',
-  dataCollectionTiming: 'Data collection timing and frequency'
+  dataCollectionTiming: 'Data collection timing and frequency',
+  dataReadonly: 'Data Sharing, Collection, and Reporting Timing and Frequency',
+  testing: 'Testing'
 };
 
 export default opsEvalAndLearning;
