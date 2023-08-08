@@ -59,14 +59,29 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                <em
-                  class="text-base"
-                >
-                  Other not specified
-                </em>
+                Agency other
               </li>
             </ul>
           </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              State note
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -101,6 +116,25 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             </li>
           </ul>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note stateholders
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -117,12 +151,27 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Yes
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note help desk
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -164,11 +213,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    <em
-                      class="text-base"
-                    >
-                      Other not specified
-                    </em>
+                    Support other
                   </li>
                 </ul>
               </ul>
@@ -194,14 +239,29 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Support how
               </p>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note for support
+          </p>
         </div>
       </div>
     </div>
@@ -226,12 +286,520 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Yes
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note iddoc support
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--are-technical-contacts-identified margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Are technical contacts identified?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Yes
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--please-specify margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Please specify
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Detail of technical contacts
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note for contacts
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-you-capture-participant-information margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will you capture participant information?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for participants
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <h3>
+        Interface Control Document (ICD)
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--icd-owner margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            ICD owner
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            ICD owner
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--draft-icd-required-by margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Draft ICD required by
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Invalid DateTime
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for icd
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <h3>
+        Testing
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--user-acceptance-testing--uat----test-data-needs margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            User Acceptance Testing (UAT) – test data needs
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            UAT needs
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--stc---test-data-needs margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            STC – test data needs
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            STC needs
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--define-the-testing-timelines margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Define the testing timelines
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Testing timelines
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for testing
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <h3>
+        Data Monitoring
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-types-of-files--select-all-that-apply margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            What types of files? Select all that apply.
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Part A
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Part B
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-types-of-responses margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            What types of responses?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            File
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--frequency-of-files margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Frequency of files?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Every week
+          </p>
+        </div>
+      </div>
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--full-time-or-incremental margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Full time or incremental?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Full time
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--are-electronic-file-transfer--eft--and-connectivity-set-up margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Are Electronic File Transfer (EFT) and connectivity set up?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Yes
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-unsolicited-adjustments-be-included margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will unsolicited adjustments be included?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Yes
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--are-data-flow-diagrams-needed margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Are data flow diagrams needed?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Yes
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-you-produce-benefit-enhancement-files margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will you produce Benefit Enhancement Files?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--file-naming-conventions margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            File naming conventions
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            PDF
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for monitoring
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -253,12 +821,27 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Yes, and we will reconcile actual performance against it
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for benchmark
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -276,12 +859,27 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Yes
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for computing
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -307,11 +905,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Yes
               </p>
             </div>
           </div>
@@ -335,11 +929,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Yes
               </p>
             </div>
           </div>
@@ -368,11 +958,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Yes
               </p>
             </div>
           </div>
@@ -396,11 +982,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Yes
               </p>
             </div>
           </div>
@@ -421,11 +1003,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Note for risk 
           </p>
         </div>
       </div>
@@ -452,11 +1030,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Yes
               </p>
             </div>
           </div>
@@ -480,11 +1054,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Yes
               </p>
             </div>
           </div>
@@ -513,11 +1083,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Yes
               </p>
             </div>
           </div>
@@ -541,11 +1107,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Yes
               </p>
             </div>
           </div>
@@ -566,11 +1128,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Note for appeal
           </p>
         </div>
       </div>
@@ -609,14 +1167,29 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                <em
-                  class="text-base"
-                >
-                  Other not specified
-                </em>
+                Other eval approach
               </li>
             </ul>
           </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for approach
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -650,14 +1223,29 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                <em
-                  class="text-base"
-                >
-                  Other not specified
-                </em>
+                CCM involvement other
               </li>
             </ul>
           </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for involvement
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -696,14 +1284,29 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                <em
-                  class="text-base"
-                >
-                  Other not specified
-                </em>
+                Data mon other
               </li>
             </ul>
           </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for data mon
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -742,14 +1345,29 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                <em
-                  class="text-base"
-                >
-                  Other not specified
-                </em>
+                Data to send other
               </li>
             </ul>
           </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for data to send
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -767,12 +1385,27 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Yes
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for cclf
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -797,12 +1430,27 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Yes
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for ccw
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -810,27 +1458,71 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         data-testid="grid"
       >
         <div
-          class="desktop:grid-col-12"
+          class="desktop:grid-col-6"
           data-testid="grid"
         >
           <div
-            class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers margin-bottom-3"
+            class="desktop:grid-col-12"
+            data-testid="grid"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <div
+              class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers margin-bottom-3"
             >
-              Do you know which applications will be on the other sides of the file transfers?
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              <em
-                class="text-base"
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                No answer entered
-              </em>
-            </p>
+                Do you know which applications will be on the other sides of the file transfers?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Yes
+              </p>
+            </div>
           </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--please-specify margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Please specify
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Which app to send
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note for app to send
+          </p>
         </div>
       </div>
       <div
@@ -848,12 +1540,27 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Yes
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for ccw disctro
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -878,11 +1585,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            During application period
           </p>
         </div>
       </div>
@@ -908,6 +1611,25 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             </li>
           </ul>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for data freq
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -924,11 +1646,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Early in the first performance year
           </p>
         </div>
       </div>
@@ -954,6 +1672,25 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             </li>
           </ul>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for data freq
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -970,12 +1707,27 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Later in the first performance year
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for qual report
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -1016,14 +1768,29 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                <em
-                  class="text-base"
-                >
-                  Other not specified
-                </em>
+                Other learning system
               </li>
             </ul>
           </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for learning system
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -1041,11 +1808,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Some challenges
           </p>
         </div>
       </div>
