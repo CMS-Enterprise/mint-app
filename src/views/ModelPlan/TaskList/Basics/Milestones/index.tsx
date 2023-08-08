@@ -183,6 +183,11 @@ const Milestones = () => {
 
       <AskAQuestion modelID={modelID} />
 
+      {/* 
+        Conditional render the entire form here to load async data properly on a hard browser refresh
+        Naviagting to this component through react-router-dom however properly loads the async data into the Truss datepickers
+      */}
+
       {!loading && (
         <Formik
           initialValues={initialValues}

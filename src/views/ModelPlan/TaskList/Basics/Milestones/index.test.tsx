@@ -12,18 +12,18 @@ import Milestones from './index';
 const milestonesMockData: GetMilestonesType = {
   __typename: 'PlanBasics',
   id: '123',
-  completeICIP: null,
-  clearanceStarts: null,
-  clearanceEnds: null,
-  announced: null,
-  applicationsStart: null,
-  applicationsEnd: null,
-  performancePeriodStarts: null,
-  performancePeriodEnds: null,
-  wrapUpEnds: null,
-  highLevelNote: '',
-  phasedIn: null,
-  phasedInNote: '',
+  completeICIP: '2029-05-12T15:01:39.190679Z',
+  clearanceStarts: '2030-06-12T15:01:39.190679Z',
+  clearanceEnds: '2028-12-12T15:01:39.190679Z',
+  announced: '2029-07-08T15:01:39.190679Z',
+  applicationsStart: '2031-02-114T15:01:39.190679Z',
+  applicationsEnd: '2031-01-23T15:01:39.190679Z',
+  performancePeriodStarts: '2029-06-12T15:01:39.190679Z',
+  performancePeriodEnds: '2029-012-28T15:01:39.190679Z',
+  wrapUpEnds: '2030-05-08T15:01:39.190679Z',
+  highLevelNote: 'High level note',
+  phasedIn: true,
+  phasedInNote: 'Phased in note',
   readyForReviewByUserAccount: {
     commonName: 'ASDF',
     id: '000',
@@ -85,6 +85,11 @@ describe('Model Plan Documents page', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('model-plan-milestones')).toBeInTheDocument();
+    });
+
     await waitFor(() => {
       expect(asFragment()).toMatchSnapshot();
     });
