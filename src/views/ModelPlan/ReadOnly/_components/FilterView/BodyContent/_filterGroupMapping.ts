@@ -69,7 +69,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'qualityPerformanceImpactsPayment',
       'qualityPerformanceImpactsPaymentNote',
       'dataSharingFrequency',
-      'dataCollectionFrequency'
+      'dataSharingFrequencyOther',
+      'dataSharingFrequencyNote',
+      'dataCollectionFrequency',
+      'dataCollectionFrequencyOther',
+      'dataCollectionFrequencyNote'
     ],
     payments: [
       'payType',
@@ -278,8 +282,12 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'dataNeededForMonitoringOther',
       'dataNeededForMonitoringNote',
       'dataSharingStarts',
+      'dataSharingStartsOther',
       'dataSharingFrequency',
+      'dataSharingFrequencyOther',
+      'dataSharingFrequencyNote',
       'dataCollectionStarts',
+      'dataCollectionStartsOther',
       'anticipatedChallenges'
     ],
     payments: [

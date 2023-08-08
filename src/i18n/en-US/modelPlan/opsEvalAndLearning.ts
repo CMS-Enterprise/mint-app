@@ -865,6 +865,182 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi']
+  },
+  dataSharingStarts: {
+    gqlField: 'dataSharingStarts',
+    goField: 'DataSharingStarts',
+    dbField: 'data_sharing_starts',
+    label: 'Data sharing starts',
+    sublabel:
+      'If using ACO-OS support, SSM request to begin analysis at least 1 year before implementation',
+    dataType: 'enum',
+    formType: 'select',
+    options: {
+      DURING_APPLICATION_PERIOD: 'During application period',
+      SHORTLY_BEFORE_THE_START_DATE: 'Shortly before the start date',
+      EARLY_IN_THE_FIRST_PERFORMANCE_YEAR:
+        'Early in the first performance year',
+      LATER_IN_THE_FIRST_PERFORMANCE_YEAR:
+        'Later in the first performance year',
+      IN_THE_SUBSEQUENT_PERFORMANCE_YEAR: 'In the subsequent performance year',
+      AT_SOME_OTHER_POINT_IN_TIME: 'At some other point in time',
+      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this',
+      OTHER: 'Other'
+    },
+    filterGroups: ['iddoc']
+  },
+  dataSharingStartsOther: {
+    gqlField: 'dataSharingStartsOther',
+    goField: 'DataSharingStartsOther',
+    dbField: 'data_sharing_starts_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  dataSharingFrequency: {
+    gqlField: 'dataSharingFrequency',
+    goField: 'DataSharingFrequency',
+    dbField: 'data_sharing_frequency',
+    label: 'How often do you anticipate sharing data?',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    multiSelectLabel: 'Data sharing frequency',
+    options: {
+      ANNUALLY: 'Annually',
+      BIANNUALLY: 'Biannually',
+      QUARTERLY: 'Quarterly',
+      MONTHLY: 'Monthly',
+      SEMI_MONTHLY: 'Semi-monthly',
+      WEEKLY: 'Weekly',
+      DAILY: 'Daily',
+      OTHER: 'Other',
+      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this'
+    },
+    filterGroups: ['cmmi', 'iddoc']
+  },
+  dataSharingFrequencyOther: {
+    gqlField: 'dataSharingFrequencyOther',
+    goField: 'DataSharingFrequencyOther',
+    dbField: 'data_sharing_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc']
+  },
+  dataSharingStartsNote: {
+    gqlField: 'dataSharingStartsNote',
+    goField: 'DataSharingStartsNote',
+    dbField: 'data_sharing_starts_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc']
+  },
+  dataCollectionStarts: {
+    gqlField: 'dataCollectionStarts',
+    goField: 'DataCollectionStarts',
+    dbField: 'data_collection_starts',
+    label: 'Data collection starts',
+    dataType: 'enum',
+    formType: 'select',
+    options: {
+      DURING_APPLICATION_PERIOD: 'During application period',
+      SHORTLY_BEFORE_THE_START_DATE: 'Shortly before the start date',
+      EARLY_IN_THE_FIRST_PERFORMANCE_YEAR:
+        'Early in the first performance year',
+      LATER_IN_THE_FIRST_PERFORMANCE_YEAR:
+        'Later in the first performance year',
+      IN_THE_SUBSEQUENT_PERFORMANCE_YEAR: 'In the subsequent performance year',
+      AT_SOME_OTHER_POINT_IN_TIME: 'At some other point in time',
+      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this',
+      OTHER: 'Other'
+    },
+    filterGroups: ['iddoc']
+  },
+  dataCollectionStartsOther: {
+    gqlField: 'dataCollectionStartsOther',
+    goField: 'DataCollectionStartsOther',
+    dbField: 'data_collection_starts_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc']
+  },
+  dataCollectionFrequency: {
+    gqlField: 'dataCollectionFrequency',
+    goField: 'DataCollectionFrequency',
+    dbField: 'data_collection_frequency',
+    label: 'How often do you anticipate collecting data?',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    multiSelectLabel: 'Data collection frequency',
+    options: {
+      ANNUALLY: 'Annually',
+      BIANNUALLY: 'Biannually',
+      QUARTERLY: 'Quarterly',
+      MONTHLY: 'Monthly',
+      SEMI_MONTHLY: 'Semi-monthly',
+      WEEKLY: 'Weekly',
+      DAILY: 'Daily',
+      OTHER: 'Other',
+      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this'
+    },
+    filterGroups: ['cmmi']
+  },
+  dataCollectionFrequencyOther: {
+    gqlField: 'dataCollectionFrequencyOther',
+    goField: 'DataCollectionFrequencyOther',
+    dbField: 'data_collection_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  dataCollectionFrequencyNote: {
+    gqlField: 'dataCollectionFrequencyNote',
+    goField: 'DataCollectionFrequencyNote',
+    dbField: 'data_collection_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  qualityReportingStarts: {
+    gqlField: 'qualityReportingStarts',
+    goField: 'QualityReportingStarts',
+    dbField: 'quality_reporting_starts',
+    label: 'Quality reporting starts',
+    dataType: 'enum',
+    formType: 'select',
+    options: {
+      DURING_APPLICATION_PERIOD: 'During application period',
+      SHORTLY_BEFORE_THE_START_DATE: 'Shortly before the start date',
+      EARLY_IN_THE_FIRST_PERFORMANCE_YEAR:
+        'Early in the first performance year',
+      LATER_IN_THE_FIRST_PERFORMANCE_YEAR:
+        'Later in the first performance year',
+      IN_THE_SUBSEQUENT_PERFORMANCE_YEAR: 'In the subsequent performance year',
+      AT_SOME_OTHER_POINT_IN_TIME: 'At some other point in time',
+      NOT_PLANNING_TO_DO_THIS: 'Not planning to do this',
+      OTHER: 'Other'
+    }
+  },
+  qualityReportingStartsOther: {
+    gqlField: 'qualityReportingStartsOther',
+    goField: 'QualityReportingStartsOther',
+    dbField: 'quality_reporting_starts_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  qualityReportingStartsNote: {
+    gqlField: 'qualityReportingStartsNote',
+    goField: 'QualityReportingStartsNote',
+    dbField: 'quality_reporting_starts_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
   }
 };
 
@@ -889,7 +1065,9 @@ export const opsEvalAndLearningMisc = {
   appealsWarning:
     'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.',
   ccwSpecific: 'Chronic Conditions Warehouse (CCW) questions',
-  qualityQuestions: 'Quality questions'
+  qualityQuestions: 'Quality questions',
+  reportingTiming: 'Data sharing timing and frequency',
+  dataCollectionTiming: 'Data collection timing and frequency'
 };
 
 export default opsEvalAndLearning;
