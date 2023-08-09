@@ -320,11 +320,9 @@ export interface GetAllSingleModelData_modelPlan_payments {
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   fundingSource: FundingSource[];
-  fundingSourceTrustFund: string | null;
   fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
-  fundingSourceRTrustFund: string | null;
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
   payRecipients: PayRecipient[];

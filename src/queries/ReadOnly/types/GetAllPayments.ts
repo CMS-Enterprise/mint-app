@@ -12,11 +12,9 @@ import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBase
 export interface GetAllPayments_modelPlan_payments {
   __typename: "PlanPayments";
   fundingSource: FundingSource[];
-  fundingSourceTrustFund: string | null;
   fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
-  fundingSourceRTrustFund: string | null;
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
   payRecipients: PayRecipient[];

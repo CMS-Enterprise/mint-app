@@ -968,13 +968,11 @@ export interface PlanParticipantsAndProvidersChanges {
 
 export interface PlanPaymentsChanges {
   fundingSource?: FundingSource[] | null;
-  fundingSourceTrustFund?: string | null;
-  fundingSourceTrustFundType?: TrustFundType | null;
+  fundingSourceTrustFundType?: TrustFundType[] | null;
   fundingSourceOther?: string | null;
   fundingSourceNote?: string | null;
   fundingSourceR?: FundingSource[] | null;
-  fundingSourceRTrustFund?: string | null;
-  fundingSourceRTrustFundType?: TrustFundType | null;
+  fundingSourceRTrustFundType?: TrustFundType[] | null;
   fundingSourceROther?: string | null;
   fundingSourceRNote?: string | null;
   payRecipients?: PayRecipient[] | null;

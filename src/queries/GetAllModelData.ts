@@ -341,11 +341,9 @@ export default gql`
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         fundingSource
-        fundingSourceTrustFund
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
-        fundingSourceRTrustFund
         fundingSourceROther
         fundingSourceRNote
         payRecipients

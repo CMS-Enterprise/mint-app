@@ -6,11 +6,9 @@ export default gql`
       id
       payments {
         fundingSource
-        fundingSourceTrustFund
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
-        fundingSourceRTrustFund
         fundingSourceROther
         fundingSourceRNote
         payRecipients

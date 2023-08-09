@@ -832,13 +832,11 @@ type PlanPayments {
 
   # Page 1
   fundingSource:                      [FundingSource!]!
-  fundingSourceTrustFund:             String
-  fundingSourceTrustFundType:         TrustFundType
+  fundingSourceTrustFundType:         [TrustFundType!]!
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]!
-  fundingSourceRTrustFund:            String
-  fundingSourceRTrustFundType:        TrustFundType
+  fundingSourceRTrustFundType:        [TrustFundType!]!
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]!
@@ -927,13 +925,11 @@ type PlanPayments {
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   fundingSource:                      [FundingSource!]
-  fundingSourceTrustFund:             String
-  fundingSourceTrustFundType:         TrustFundType
+  fundingSourceTrustFundType:         [TrustFundType!]
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFund:            String
-  fundingSourceRTrustFundType:        TrustFundType
+  fundingSourceRTrustFundType:        [TrustFundType!]
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]

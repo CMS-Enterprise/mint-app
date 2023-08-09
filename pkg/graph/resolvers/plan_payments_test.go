@@ -32,11 +32,11 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(pp.ModifiedBy)
 
 	//suite.Nil(updatedPP.FundingSource)
-	suite.Nil(updatedPP.FundingSourceTrustFund)
+	suite.Nil(updatedPP.FundingSourceTrustFundType)
 	suite.Nil(updatedPP.FundingSourceOther)
 	//suite.Nil(updatedPP.FundingSourceNote)
 	suite.Nil(updatedPP.FundingSourceR)
-	suite.Nil(updatedPP.FundingSourceRTrustFund)
+	suite.Nil(updatedPP.FundingSourceRTrustFundType)
 	suite.Nil(updatedPP.FundingSourceROther)
 	suite.Nil(updatedPP.FundingSourceRNote)
 	suite.Nil(updatedPP.PayRecipients)
@@ -90,8 +90,6 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(updatedPP.AnticipateReconcilingPaymentsRetrospectivelyNote)
 	suite.Nil(updatedPP.PaymentStartDate)
 	suite.Nil(updatedPP.PaymentStartDateNote)
-	suite.Nil(updatedPP.FundingSourceTrustFundType)
-	suite.Nil(updatedPP.FundingSourceRTrustFundType)
 }
 
 // TestPlanPaymentsReadByModelPlan tests PlanPaymentsReadByModelPlan
@@ -109,11 +107,11 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	//Asset these fields are nil upon creation
 
 	suite.Nil(pp.FundingSource)
-	suite.Nil(pp.FundingSourceTrustFund)
+	suite.Nil(pp.FundingSourceTrustFundType)
 	suite.Nil(pp.FundingSourceOther)
 	suite.Nil(pp.FundingSourceNote)
 	suite.Nil(pp.FundingSourceR)
-	suite.Nil(pp.FundingSourceRTrustFund)
+	suite.Nil(pp.FundingSourceRTrustFundType)
 	suite.Nil(pp.FundingSourceROther)
 	suite.Nil(pp.FundingSourceRNote)
 	suite.Nil(pp.PayRecipients)
@@ -167,8 +165,6 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	suite.Nil(pp.AnticipateReconcilingPaymentsRetrospectivelyNote)
 	suite.Nil(pp.PaymentStartDate)
 	suite.Nil(pp.PaymentStartDateNote)
-	suite.Nil(pp.FundingSourceTrustFundType)
-	suite.Nil(pp.FundingSourceRTrustFundType)
 }
 
 func (suite *ResolverSuite) TestPlanPaymentsDataLoader() {

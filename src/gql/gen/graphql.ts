@@ -1946,10 +1946,8 @@ export type PlanPayments = {
   fundingSourceR: Array<FundingSource>;
   fundingSourceRNote?: Maybe<Scalars['String']['output']>;
   fundingSourceROther?: Maybe<Scalars['String']['output']>;
-  fundingSourceRTrustFund?: Maybe<Scalars['String']['output']>;
-  fundingSourceRTrustFundType?: Maybe<TrustFundType>;
-  fundingSourceTrustFund?: Maybe<Scalars['String']['output']>;
-  fundingSourceTrustFundType?: Maybe<TrustFundType>;
+  fundingSourceRTrustFundType: Array<TrustFundType>;
+  fundingSourceTrustFundType: Array<TrustFundType>;
   id: Scalars['UUID']['output'];
   isContractorAwareTestDataRequirements?: Maybe<Scalars['Boolean']['output']>;
   modelPlanID: Scalars['UUID']['output'];
@@ -2022,10 +2020,8 @@ export type PlanPaymentsChanges = {
   fundingSourceR?: InputMaybe<Array<FundingSource>>;
   fundingSourceRNote?: InputMaybe<Scalars['String']['input']>;
   fundingSourceROther?: InputMaybe<Scalars['String']['input']>;
-  fundingSourceRTrustFund?: InputMaybe<Scalars['String']['input']>;
-  fundingSourceRTrustFundType?: InputMaybe<TrustFundType>;
-  fundingSourceTrustFund?: InputMaybe<Scalars['String']['input']>;
-  fundingSourceTrustFundType?: InputMaybe<TrustFundType>;
+  fundingSourceRTrustFundType?: InputMaybe<Array<TrustFundType>>;
+  fundingSourceTrustFundType?: InputMaybe<Array<TrustFundType>>;
   isContractorAwareTestDataRequirements?: InputMaybe<Scalars['Boolean']['input']>;
   needsClaimsDataCollection?: InputMaybe<Scalars['Boolean']['input']>;
   needsClaimsDataCollectionNote?: InputMaybe<Scalars['String']['input']>;
