@@ -224,7 +224,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()
-		jwt.Claims["mint-groups"] = []interface{}{"MINT_CONTRACTOR_FFS_NONPROD"}
+		jwt.Claims["mint-groups"] = []interface{}{"MINT_CTR_FFS_NONPROD"}
 
 		eJwt := authentication.EnhancedJwt{
 			JWT:       jwt,

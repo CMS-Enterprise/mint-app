@@ -27,7 +27,7 @@ const (
 	JobCodeTestUser           = "MINT_USER_NONPROD"
 	JobCodeTestAssessment     = "MINT_ASSESSMENT_NONPROD"
 	JobCodeTestMACUser        = "MINT MAC Users"
-	JobCodeTestMINTContractor = "MINT_CONTRACTOR_FFS_NONPROD"
+	JobCodeTestMINTContractor = "MINT_CTR_FFS_NONPROD"
 	JobCodeProdUser           = "MINT_USER"
 	JobCodeProdAssessment     = "MINT_ASSESSMENT"
 	JobCodeProdMACUser        = "MINT MAC Users"
