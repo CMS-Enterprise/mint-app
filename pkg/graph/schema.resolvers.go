@@ -488,7 +488,8 @@ func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Co
 
 // AdditionalModelCategories is the resolver for the additionalModelCategories field.
 func (r *planBasicsResolver) AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error) {
-	panic(fmt.Errorf("not implemented: AdditionalModelCategories - additionalModelCategories"))
+	modelCategories := models.ConvertEnums[models.ModelCategory](obj.AdditionalModelCategories)
+	return modelCategories, nil
 }
 
 // CmsCenters is the resolver for the cmsCenters field.

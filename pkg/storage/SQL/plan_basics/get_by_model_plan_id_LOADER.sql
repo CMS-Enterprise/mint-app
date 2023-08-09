@@ -12,6 +12,7 @@ SELECT
     plan_basics.demo_code,
     plan_basics.ams_model_id,
     plan_basics.model_category,
+    plan_basics.additional_model_categories,
     plan_basics.cms_centers,
     plan_basics.cms_other,
     plan_basics.cmmi_groups,

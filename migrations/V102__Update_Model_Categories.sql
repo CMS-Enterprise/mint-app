@@ -1,3 +1,7 @@
+BEGIN;
+  ALTER TYPE MODEL_CATEGORY ADD VALUE 'TO_BE_DETERMINED';
+COMMIT;
+
 -- Set fields we will be removing to 'TO_BE_DETERMINED'
 UPDATE plan_basics
 SET model_category = 'TO_BE_DETERMINED'
@@ -33,4 +37,4 @@ ALTER TYPE MODEL_CATEGORY_NEW RENAME TO MODEL_CATEGORY;
 
 
 -- Add the additional_categories column
-ALTER TABLE plan_basics ADD COLUMN additional_categories MODEL_CATEGORY[];
+ALTER TABLE plan_basics ADD COLUMN additional_model_categories MODEL_CATEGORY[];
