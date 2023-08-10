@@ -16,6 +16,9 @@ const config: CodegenConfig = {
           Time: 'Time',
           UUID: 'UUID',
           Upload: 'Upload'
+        },
+        namingConvention: {
+          enumValues: 'change-case-all#upperCase#snakeCase'
         }
       }
     }

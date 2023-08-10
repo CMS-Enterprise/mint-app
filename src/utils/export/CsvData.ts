@@ -326,11 +326,9 @@ const csvFields = [
   'payments.anticipatedPaymentFrequencyOther',
   'payments.anticipatedPaymentFrequencyNote',
   'payments.fundingSource', // array
-  'payments.fundingSourceTrustFund',
   'payments.fundingSourceOther',
   'payments.fundingSourceNote',
   'payments.fundingSourceR', // array
-  'payments.fundingSourceRTrustFund',
   'payments.fundingSourceROther',
   'payments.fundingSourceRNote',
   'payments.payRecipients', // array

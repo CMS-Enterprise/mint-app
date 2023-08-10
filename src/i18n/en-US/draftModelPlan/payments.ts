@@ -12,7 +12,13 @@ const payments = {
     trustFund: 'Trust Fund',
     other: 'Other'
   },
-  whichType: 'Which type?',
+  whichType: 'Which type(s)?',
+  MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
+  MEDICARE_PART_A_HI_TRUST_FUNDInfo:
+    'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
+  MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
+  MEDICARE_PART_B_SMI_TRUST_FUNDInfo:
+    'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.',
   whichFundingType: 'Which type of trust fund?',
   validDate: 'Please use a valid date format',
   otherSourceOption: 'Please describe the funding source.',

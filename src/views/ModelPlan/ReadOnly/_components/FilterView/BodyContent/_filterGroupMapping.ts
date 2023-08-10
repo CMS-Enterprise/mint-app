@@ -64,9 +64,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     beneficiaries: ['precedenceRules'],
     payments: [
       'fundingSource',
-      'fundingSourceTrustFund',
       'fundingSourceR',
-      'fundingSourceRTrustFund',
       'payClaims',
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
@@ -81,7 +79,6 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'fundingSource',
-      'fundingSourceTrustFund',
       'fundingSourceR',
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
@@ -125,9 +122,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'fundingSource',
-      'fundingSourceTrustFund',
       'fundingSourceR',
-      'fundingSourceRTrustFund',
       'payType',
       'nonClaimsPayments',
       'numberPaymentsPerPayCycle',

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import classNames from 'classnames';
+import { FundingSource } from 'gql/gen/graphql';
 
 import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
 import { GetAllPayments as GetModelPlanPaymentType } from 'queries/ReadOnly/types/GetAllPayments';
@@ -53,11 +54,11 @@ const ReadOnlyPayments = ({
 
   const {
     fundingSource,
-    fundingSourceTrustFund,
+    fundingSourceTrustFundType,
     fundingSourceOther,
     fundingSourceNote,
     fundingSourceR,
-    fundingSourceRTrustFund,
+    fundingSourceRTrustFundType,
     fundingSourceROther,
     fundingSourceRNote,
     payRecipients,
@@ -159,21 +160,28 @@ const ReadOnlyPayments = ({
           isViewingFilteredView,
           filteredQuestions,
           'fundingSource',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: t('fundingSourceQuestion'),
-              list: true,
-              listItems: fundingSource?.map(translateSourceOptions),
-              listOtherItem: fundingSourceOther
-            }}
-            secondSection={
-              !!fundingSourceTrustFund && {
-                heading: t('whichFundingType'),
-                copy: fundingSourceTrustFund
-              }
-            }
+          <ReadOnlySection
+            heading={t('fundingSourceQuestion')}
+            list
+            listItems={fundingSource?.map(translateSourceOptions)}
+            listOtherItem={fundingSourceOther}
           />
         )}
+
+        {fundingSource?.includes(FundingSource.TRUST_FUND) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSource',
+            <ReadOnlySection
+              heading={t('whichFundingType')}
+              list
+              listItems={fundingSourceTrustFundType?.map(
+                type => t(`${type}`) as string
+              )}
+            />
+          )}
+
         {fundingSourceNote &&
           checkGroupMap(
             isViewingFilteredView,
@@ -189,21 +197,28 @@ const ReadOnlyPayments = ({
           isViewingFilteredView,
           filteredQuestions,
           'fundingSourceR',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: t('reconciliationQuestion'),
-              list: true,
-              listItems: fundingSourceR?.map(translateSourceOptions),
-              listOtherItem: fundingSourceROther
-            }}
-            secondSection={
-              !!fundingSourceRTrustFund && {
-                heading: t('whichFundingType'),
-                copy: fundingSourceRTrustFund
-              }
-            }
+          <ReadOnlySection
+            heading={t('reconciliationQuestion')}
+            list
+            listItems={fundingSourceR?.map(translateSourceOptions)}
+            listOtherItem={fundingSourceROther}
           />
         )}
+
+        {fundingSourceR?.includes(FundingSource.TRUST_FUND) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSourceR',
+            <ReadOnlySection
+              heading={t('whichFundingType')}
+              list
+              listItems={fundingSourceRTrustFundType?.map(
+                type => t(`${type}`) as string
+              )}
+            />
+          )}
+
         {fundingSourceRNote &&
           checkGroupMap(
             isViewingFilteredView,
