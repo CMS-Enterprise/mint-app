@@ -29,6 +29,10 @@ export type TranslationFieldPropertiesWithOptions = TranslationFieldProperties &
   options: Record<string, string>;
 };
 
+export type TranslationFieldPropertiesWithOptionsAndTooltip = TranslationFieldPropertiesWithOptions & {
+  tooltip: Record<string, string>;
+};
+
 // Model Plan
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
@@ -41,7 +45,7 @@ export type TranslationPlanBasics = {
   // Model Plan
   amsModelID: TranslationFieldProperties;
   demoCode: TranslationFieldProperties;
-  modelCategory: TranslationFieldPropertiesWithOptions;
+  modelCategory: TranslationFieldPropertiesWithOptionsAndTooltip;
   cmsCenters: TranslationFieldPropertiesWithOptions;
   cmmiGroups: TranslationFieldPropertiesWithOptions;
   // Overview

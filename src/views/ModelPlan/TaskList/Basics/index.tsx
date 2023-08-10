@@ -7,13 +7,14 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Dropdown,
   Fieldset,
   Grid,
   GridContainer,
   IconArrowBack,
+  IconInfo,
   Label,
   Link as TrussLink,
+  Radio,
   SummaryBox,
   TextInput
 } from '@trussworks/react-uswds';
@@ -31,6 +32,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
+import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
@@ -41,7 +43,11 @@ import {
 } from 'queries/Basics/types/GetModelPlanInfo';
 import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
 import UpdateModelPlanAndBasics from 'queries/UpdateModelPlanAndBasics';
-import { CMMIGroup, CMSCenter } from 'types/graphql-global-types';
+import {
+  CMMIGroup,
+  CMSCenter,
+  ModelCategory
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -408,7 +414,7 @@ const BasicsContent = () => {
                             {flatErrors['basics.modelCategory']}
                           </FieldErrorMsg>
 
-                          <Field
+                          {/* <Field
                             as={Dropdown}
                             id="plan-basics-model-category"
                             name="basics.modelCategory"
@@ -434,7 +440,42 @@ const BasicsContent = () => {
                                 );
                               }
                             )}
-                          </Field>
+                          </Field> */}
+                          <Fieldset>
+                            {Object.keys(ModelCategory).map(key => (
+                              <Fragment key={key}>
+                                <Field
+                                  as={Radio}
+                                  id={`plan-basics-model-category-${key}`}
+                                  name="basics.modelCategory"
+                                  label={
+                                    <span
+                                      className="display-flex flex-align-center"
+                                      style={{ gap: '4px' }}
+                                    >
+                                      {modelCategoryConfig.options[key]}
+                                      {key !==
+                                        ModelCategory.TO_BE_DETERMINED && (
+                                        <Tooltip
+                                          label={
+                                            modelCategoryConfig.tooltip[key]
+                                          }
+                                          position="right"
+                                        >
+                                          <IconInfo className="text-base-light" />
+                                        </Tooltip>
+                                      )}
+                                    </span>
+                                  }
+                                  value={key}
+                                  checked={values.basics.modelCategory === key}
+                                  onChange={() => {
+                                    setFieldValue('basics.modelCategory', key);
+                                  }}
+                                />
+                              </Fragment>
+                            ))}
+                          </Fieldset>
                         </FieldGroup>
 
                         <FieldGroup
