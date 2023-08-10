@@ -475,44 +475,48 @@ const BasicsContent = () => {
                           </FieldErrorMsg>
 
                           <Fieldset>
-                            {Object.keys(ModelCategory).map(key => (
-                              <Fragment key={key}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`plan-basics-model-additional-category-${key}`}
-                                  name="basics.additionalModelCategories"
-                                  label={
-                                    <span
-                                      className="display-flex flex-align-center"
-                                      style={{ gap: '4px' }}
-                                    >
-                                      {modelCategoryConfig.options[key]}
-                                      {key !==
-                                        ModelCategory.TO_BE_DETERMINED && (
-                                        <Tooltip
-                                          label={
-                                            modelCategoryConfig.tooltip[key]
-                                          }
-                                          position="right"
-                                        >
-                                          <IconInfo className="text-base-light" />
-                                        </Tooltip>
-                                      )}
-                                    </span>
-                                  }
-                                  value={key}
-                                  checked={values.basics.additionalModelCategories.includes(
-                                    key as ModelCategory
-                                  )}
-                                  // onChange={() => {
-                                  //   setFieldValue(
-                                  //     'basics.additionalModelCategories',
-                                  //     key
-                                  //   );
-                                  // }}
-                                />
-                              </Fragment>
-                            ))}
+                            {Object.keys(ModelCategory)
+                              .filter(
+                                key => key !== ModelCategory.TO_BE_DETERMINED
+                              )
+                              .map(key => (
+                                <Fragment key={key}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`plan-basics-model-additional-category-${key}`}
+                                    name="basics.additionalModelCategories"
+                                    label={
+                                      <span
+                                        className="display-flex flex-align-center"
+                                        style={{ gap: '4px' }}
+                                      >
+                                        {modelCategoryConfig.options[key]}
+                                        {key !==
+                                          ModelCategory.TO_BE_DETERMINED && (
+                                          <Tooltip
+                                            label={
+                                              modelCategoryConfig.tooltip[key]
+                                            }
+                                            position="right"
+                                          >
+                                            <IconInfo className="text-base-light" />
+                                          </Tooltip>
+                                        )}
+                                      </span>
+                                    }
+                                    value={key}
+                                    checked={values.basics.additionalModelCategories.includes(
+                                      key as ModelCategory
+                                    )}
+                                    // onChange={() => {
+                                    //   setFieldValue(
+                                    //     'basics.additionalModelCategories',
+                                    //     key
+                                    //   );
+                                    // }}
+                                  />
+                                </Fragment>
+                              ))}
                           </Fieldset>
                         </FieldGroup>
 
