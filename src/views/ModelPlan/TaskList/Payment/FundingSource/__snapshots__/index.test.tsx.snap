@@ -1,20 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Model Plan Payment matches snapshot 1`] = `
-<DocumentFragment>
+Array [
   <nav
     aria-label="Breadcrumbs"
-    class="usa-breadcrumb usa-breadcrumb--wrap"
+    className="usa-breadcrumb usa-breadcrumb--wrap"
   >
     <ol
-      class="usa-breadcrumb__list"
+      className="usa-breadcrumb__list"
     >
       <li
-        class="usa-breadcrumb__list-item"
+        className="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          className="usa-breadcrumb__link"
           href="/"
+          onClick={[Function]}
         >
           <span>
             Home
@@ -22,11 +23,12 @@ exports[`Model Plan Payment matches snapshot 1`] = `
         </a>
       </li>
       <li
-        class="usa-breadcrumb__list-item"
+        className="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          className="usa-breadcrumb__link"
           href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          onClick={[Function]}
         >
           <span>
             Model Plan task list
@@ -35,40 +37,40 @@ exports[`Model Plan Payment matches snapshot 1`] = `
       </li>
       <li
         aria-current="page"
-        class="usa-breadcrumb__list-item usa-current"
+        className="usa-breadcrumb__list-item usa-current"
       >
         Payment
       </li>
     </ol>
-  </nav>
+  </nav>,
   <h1
     aria-live="polite"
-    class="mint-h1 margin-top-4 margin-bottom-2"
-    tabindex="-1"
+    className="mint-h1 margin-top-4 margin-bottom-2"
+    tabIndex={-1}
   >
     Payment
-  </h1>
+  </h1>,
   <p
-    class="margin-top-0 margin-bottom-1 font-body-lg"
+    className="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for My excellent plan that I just initiated
-  </p>
+    for 
+  </p>,
   <p
-    class="margin-bottom-2 font-body-md line-height-sans-4"
+    className="margin-bottom-2 font-body-md line-height-sans-4"
   >
     If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
-  </p>
+  </p>,
   <div
-    class="padding-2 bg-primary-lighter"
+    className="padding-2 bg-primary-lighter"
   >
     <div
-      class="display-flex"
+      className="display-flex"
       data-testid="ask-a-question"
     >
       <svg
-        class="usa-icon text-primary margin-right-1"
-        focusable="false"
+        className="usa-icon text-primary margin-right-1"
+        focusable={false}
         height="1em"
         role="img"
         viewBox="0 0 24 24"
@@ -84,142 +86,152 @@ exports[`Model Plan Payment matches snapshot 1`] = `
         />
       </svg>
       <button
-        class="usa-button usa-button--unstyled"
+        className="usa-button usa-button--unstyled"
         data-testid="ask-a-question-button"
+        onClick={[Function]}
         type="button"
       >
         Ask a question
       </button>
     </div>
-  </div>
+  </div>,
   <div
-    class="grid-container padding-left-0 padding-right-0"
+    className="grid-container padding-left-0 padding-right-0"
     data-testid="gridContainer"
   >
     <div
-      class="grid-row grid-gap"
+      className="grid-row grid-gap"
       data-testid="grid"
     >
       <div
-        class="desktop:grid-col-6"
+        className="desktop:grid-col-6"
         data-testid="grid"
       >
         <form
           action="#"
-          class="margin-top-6"
+          className="margin-top-6"
           data-testid="payment-funding-source-form"
+          onReset={[Function]}
+          onSubmit={[Function]}
         >
           <fieldset
-            class="usa-fieldset"
+            className="usa-fieldset"
             data-testid="fieldset"
+            disabled={true}
           >
             <div
-              class="usa-form-group margin-top-4"
+              className="usa-form-group margin-top-4"
               data-scroll="fundingSource"
             >
               <label
-                class="usa-label maxw-none"
+                className="usa-label maxw-none"
                 data-testid="label"
-                for="fundingSource"
+                htmlFor="fundingSource"
               >
                 What will be the funding source for payments? Select all that apply.
               </label>
               <fieldset
-                class="usa-fieldset"
+                className="usa-fieldset"
                 data-testid="fieldset"
               >
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
                     name="fundingSource"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Patient Protection Affordable Care Act (Sec 3021)
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-funding-source-TRUST_FUND"
                     name="fundingSource"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="TRUST_FUND"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-TRUST_FUND"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-funding-source-TRUST_FUND"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Trust Fund
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="usa-form-group margin-left-4 margin-top-2 margin-bottom-4"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="fundingSourceTrustFund"
-                  >
-                    Which type?
-                  </label>
-                  <input
-                    class="usa-input"
-                    data-testid="payment-funding-source-trust-fund"
-                    id="payment-funding-source-trust-fund"
-                    maxlength="50"
-                    name="fundingSourceTrustFund"
-                    value="Trust Fund"
-                  />
-                </div>
-                <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-funding-source-OTHER"
                     name="fundingSource"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="OTHER"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-OTHER"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-funding-source-OTHER"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Other
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
               </fieldset>
               <div
-                class="margin-top-4 margin-bottom-8"
+                className="margin-top-4 margin-bottom-8"
               >
                 <button
-                  class="usa-button usa-button usa-button--unstyled"
+                  className="usa-button usa-button usa-button--unstyled"
                   data-testid="add-note-toggle"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg
-                    aria-hidden="true"
-                    class="usa-icon margin-right-1"
-                    focusable="false"
+                    aria-hidden={true}
+                    className="usa-icon margin-right-1"
+                    focusable={false}
                     height="1em"
                     role="img"
                     viewBox="0 0 24 24"
@@ -239,93 +251,118 @@ exports[`Model Plan Payment matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="usa-form-group margin-top-4"
+              className="usa-form-group margin-top-4"
               data-scroll="fundingSourceR"
             >
               <label
-                class="usa-label maxw-none"
+                className="usa-label maxw-none"
                 data-testid="label"
-                for="fundingSourceR"
+                htmlFor="fundingSourceR"
               >
                 What is the funding source for reconciliation or other expenditures? Select all that apply.
               </label>
               <fieldset
-                class="usa-fieldset"
+                className="usa-fieldset"
                 data-testid="fieldset"
               >
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
                     name="fundingSourceR"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Patient Protection Affordable Care Act (Sec 3021)
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-funding-source-reconciliation-TRUST_FUND"
                     name="fundingSourceR"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="TRUST_FUND"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-reconciliation-TRUST_FUND"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-funding-source-reconciliation-TRUST_FUND"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Trust Fund
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-funding-source-reconciliation-OTHER"
                     name="fundingSourceR"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="OTHER"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-funding-source-reconciliation-OTHER"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-funding-source-reconciliation-OTHER"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Other
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
               </fieldset>
               <div
-                class="margin-top-4 margin-bottom-8"
+                className="margin-top-4 margin-bottom-8"
               >
                 <button
-                  class="usa-button usa-button usa-button--unstyled"
+                  className="usa-button usa-button usa-button--unstyled"
                   data-testid="add-note-toggle"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg
-                    aria-hidden="true"
-                    class="usa-icon margin-right-1"
-                    focusable="false"
+                    aria-hidden={true}
+                    className="usa-icon margin-right-1"
+                    focusable={false}
                     height="1em"
                     role="img"
                     viewBox="0 0 24 24"
@@ -345,133 +382,174 @@ exports[`Model Plan Payment matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="usa-form-group margin-top-4"
+              className="usa-form-group margin-top-4"
               data-scroll="payRecipients"
             >
               <label
-                class="usa-label maxw-none"
+                className="usa-label maxw-none"
                 data-testid="label"
-                for="payRecipients"
+                htmlFor="payRecipients"
               >
                 Who will you pay? Select all that apply.
               </label>
               <fieldset
-                class="usa-fieldset"
+                className="usa-fieldset"
                 data-testid="fieldset"
               >
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-pay-recipients-BENEFICIARIES"
                     name="payRecipients"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="BENEFICIARIES"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-BENEFICIARIES"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-pay-recipients-BENEFICIARIES"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Beneficiaries
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-pay-recipients-PARTICIPANTS"
                     name="payRecipients"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="PARTICIPANTS"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-PARTICIPANTS"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-pay-recipients-PARTICIPANTS"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Participants
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-pay-recipients-PROVIDERS"
                     name="payRecipients"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="PROVIDERS"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-PROVIDERS"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-pay-recipients-PROVIDERS"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Providers
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-pay-recipients-STATES"
                     name="payRecipients"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="STATES"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-STATES"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-pay-recipients-STATES"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     States
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-pay-recipients-OTHER"
                     name="payRecipients"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="OTHER"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-OTHER"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-pay-recipients-OTHER"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Other
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
               </fieldset>
               <div
-                class="margin-top-4 margin-bottom-8"
+                className="margin-top-4 margin-bottom-8"
               >
                 <button
-                  class="usa-button usa-button usa-button--unstyled"
+                  className="usa-button usa-button usa-button--unstyled"
                   data-testid="add-note-toggle"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg
-                    aria-hidden="true"
-                    class="usa-icon margin-right-1"
-                    focusable="false"
+                    aria-hidden={true}
+                    className="usa-icon margin-right-1"
+                    focusable={false}
                     height="1em"
                     role="img"
                     viewBox="0 0 24 24"
@@ -491,98 +569,123 @@ exports[`Model Plan Payment matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="usa-form-group margin-top-4"
+              className="usa-form-group margin-top-4"
               data-scroll="payType"
             >
               <label
-                class="usa-label maxw-none"
+                className="usa-label maxw-none"
                 data-testid="label"
-                for="payType"
+                htmlFor="payType"
               >
                 What will you pay?
               </label>
               <p
-                class="text-base margin-y-1 margin-top-2"
+                className="text-base margin-y-1 margin-top-2"
               >
                 If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.
               </p>
               <fieldset
-                class="usa-fieldset"
+                className="usa-fieldset"
                 data-testid="fieldset"
               >
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-pay-recipients-CLAIMS_BASED_PAYMENTS"
                     name="payType"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="CLAIMS_BASED_PAYMENTS"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-CLAIMS_BASED_PAYMENTS"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-pay-recipients-CLAIMS_BASED_PAYMENTS"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Claims-Based Payments
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-pay-recipients-NON_CLAIMS_BASED_PAYMENTS"
                     name="payType"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="NON_CLAIMS_BASED_PAYMENTS"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-NON_CLAIMS_BASED_PAYMENTS"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-pay-recipients-NON_CLAIMS_BASED_PAYMENTS"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Non-Claims-Based Payments
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
                 <div
-                  class="mint-checkbox usa-checkbox"
+                  className="mint-checkbox usa-checkbox"
                 >
                   <input
-                    class="usa-checkbox__input"
+                    checked={false}
+                    className="usa-checkbox__input"
                     id="payment-pay-recipients-GRANTS"
                     name="payType"
+                    onBlur={[Function]}
+                    onChange={[Function]}
                     type="checkbox"
                     value="GRANTS"
                   />
                   <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-GRANTS"
+                    className="usa-checkbox__label"
+                    htmlFor="payment-pay-recipients-GRANTS"
+                    style={
+                      Object {
+                        "width": "fit-content",
+                      }
+                    }
                   >
                     Grants
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
                   />
                 </div>
               </fieldset>
               <div
-                class="margin-top-4 margin-bottom-8"
+                className="margin-top-4 margin-bottom-8"
               >
                 <button
-                  class="usa-button usa-button usa-button--unstyled"
+                  className="usa-button usa-button usa-button--unstyled"
                   data-testid="add-note-toggle"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg
-                    aria-hidden="true"
-                    class="usa-icon margin-right-1"
-                    focusable="false"
+                    aria-hidden={true}
+                    className="usa-icon margin-right-1"
+                    focusable={false}
                     height="1em"
                     role="img"
                     viewBox="0 0 24 24"
@@ -602,25 +705,27 @@ exports[`Model Plan Payment matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="margin-top-6 margin-bottom-3"
+              className="margin-top-6 margin-bottom-3"
             >
               <button
-                class="usa-button"
+                className="usa-button"
                 data-testid="button"
+                onClick={[Function]}
                 type="submit"
               >
                 Next
               </button>
             </div>
             <button
-              class="usa-button usa-button usa-button--unstyled"
+              className="usa-button usa-button usa-button--unstyled"
               data-testid="button"
+              onClick={[Function]}
               type="button"
             >
               <svg
-                aria-hidden="true"
-                class="usa-icon margin-right-1"
-                focusable="false"
+                aria-hidden={true}
+                className="usa-icon margin-right-1"
+                focusable={false}
                 height="1em"
                 role="img"
                 viewBox="0 0 24 24"
@@ -641,15 +746,6 @@ exports[`Model Plan Payment matches snapshot 1`] = `
         </form>
       </div>
     </div>
-  </div>
-  <div
-    class="mint-page-number margin-y-6"
-  >
-    <span
-      class="mint-page-number__page-num"
-    >
-      Page 1 of 5
-    </span>
-  </div>
-</DocumentFragment>
+  </div>,
+]
 `;

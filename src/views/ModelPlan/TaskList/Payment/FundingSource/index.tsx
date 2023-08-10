@@ -179,27 +179,23 @@ const FundingSource = () => {
 
       {Object.keys(TrustFundType).map(trustType => {
         return (
-          <div className="display-flex flex-align-center">
-            <Fragment key={trustType}>
-              <Field
-                key={trustType}
-                as={CheckboxField}
-                id={`payment-funding-source-${fieldName}-${trustType}`}
-                name={fieldName}
-                label={t(`${trustType}`)}
-                value={trustType}
-                checked={values[fieldName]?.includes(
-                  trustType as TrustFundType
-                )}
-              />
-              <Tooltip
-                label={t(`${trustType}Info`)}
-                position="right"
-                className="margin-left-05 height-105"
-              >
-                <IconInfo className="text-base-light" />
-              </Tooltip>
-            </Fragment>
+          <div className="display-flex flex-align-center" key={trustType}>
+            <Field
+              key={trustType}
+              as={CheckboxField}
+              id={`payment-funding-source-${fieldName}-${trustType}`}
+              name={fieldName}
+              label={t(`${trustType}`)}
+              value={trustType}
+              checked={values[fieldName]?.includes(trustType as TrustFundType)}
+            />
+            <Tooltip
+              label={t(`${trustType}Info`)}
+              position="right"
+              className="margin-left-05 height-105"
+            >
+              <IconInfo className="text-base-light" />
+            </Tooltip>
           </div>
         );
       })}
@@ -301,6 +297,7 @@ const FundingSource = () => {
                                       key={type}
                                       as={CheckboxField}
                                       id={`payment-funding-source-${type}`}
+                                      data-testid={`payment-funding-source-${type}`}
                                       name="fundingSource"
                                       label={translateSourceOptions(type)}
                                       value={type}
