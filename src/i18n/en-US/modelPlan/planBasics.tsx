@@ -257,6 +257,8 @@ export const planBasics: TranslationPlanBasics = {
 // Miscellaneous translations outside scope of individual questions
 export const planBasicsMisc: Record<string, string> = {
   heading: 'Model basics',
+  description:
+    'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question using the link below.',
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
   previousNames: 'Previous model names',
