@@ -167,7 +167,7 @@ const payments = {
   paymentFrequency: 'Frequency of payment cycles',
   paymentFrequencyOptions: {
     annually: 'Annually',
-    biannually: 'Biannually',
+    biannually: 'Semiannually',
     quarterly: 'Quarterly',
     monthly: 'Monthly'
   },
@@ -245,7 +245,7 @@ const payments = {
   selectedAnticipatedPaymentFrequency: 'Selected payment frequency',
   anticipatedPaymentFrequencyOptions: {
     annually: 'Annually',
-    biannually: 'Biannually',
+    biannually: 'Semiannually',
     daily: 'Daily',
     monthly: 'Monthly',
     other: 'Other',

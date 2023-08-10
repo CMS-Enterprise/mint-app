@@ -1846,7 +1846,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    Biannually
+                    Semiannually
                   </p>
                 </div>
               </div>
@@ -3659,7 +3659,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Biannually
+                      Semiannually
                     </li>
                   </ul>
                 </div>
