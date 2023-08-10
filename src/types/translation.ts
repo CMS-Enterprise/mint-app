@@ -46,6 +46,7 @@ export type TranslationPlanBasics = {
   amsModelID: TranslationFieldProperties;
   demoCode: TranslationFieldProperties;
   modelCategory: TranslationFieldPropertiesWithOptionsAndTooltip;
+  additionalModelCategories: TranslationFieldProperties;
   cmsCenters: TranslationFieldPropertiesWithOptions;
   cmmiGroups: TranslationFieldPropertiesWithOptions;
   // Overview

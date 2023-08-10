@@ -32,6 +32,16 @@ export const planBasics: TranslationPlanBasics = {
       TO_BE_DETERMINED: 'To be determined'
     }
   },
+  additionalModelCategories: {
+    gqlField: 'additionalModelCategories',
+    goField: 'AdditionalModelCategories',
+    dbField: 'additional_model_categories',
+    question: 'Additional model categories',
+    hint:
+      'If your model doesn’t fall into any additional categories, you can skip this.',
+    dataType: 'string',
+    formType: 'checkbox'
+  },
   amsModelID: {
     gqlField: 'amsModelID',
     goField: 'AmsModelID',
