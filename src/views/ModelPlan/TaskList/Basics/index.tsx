@@ -96,18 +96,20 @@ const BasicsContent = () => {
 
   const { id, modelName, abbreviation, basics, nameHistory } =
     data?.modelPlan || {};
-  const filteredNameHistory = nameHistory?.filter(
-    previousName => previousName !== modelName
-  );
 
   const {
     demoCode,
     amsModelID,
     modelCategory,
+    additionalModelCategories,
     cmsCenters,
     cmmiGroups,
     cmsOther
   } = basics || {};
+
+  const filteredNameHistory = nameHistory?.filter(
+    previousName => previousName !== modelName
+  );
 
   const [update] = useMutation<UpdateModelPlanAndBasicsVariables>(
     UpdateModelPlanAndBasics
@@ -170,6 +172,7 @@ const BasicsContent = () => {
       demoCode: demoCode ?? '',
       amsModelID: amsModelID ?? '',
       modelCategory: modelCategory ?? null,
+      additionalModelCategories: additionalModelCategories ?? [],
       cmsCenters: cmsCenters ?? [],
       cmmiGroups: cmmiGroups ?? [],
       cmsOther: cmsOther ?? ''
@@ -212,9 +215,12 @@ const BasicsContent = () => {
         <Breadcrumb current>{planBasicsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
 
-      <PageHeading className="margin-top-4">
+      <PageHeading className="margin-top-4 margin-bottom-0">
         {planBasicsMiscT('heading')}
       </PageHeading>
+      <p className="margin-top-1 margin-bottom-2 line-height-sans-3">
+        {planBasicsMiscT('description')}
+      </p>
 
       <AskAQuestion modelID={modelID} />
 
@@ -270,7 +276,6 @@ const BasicsContent = () => {
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
                     <Form
-                      className="margin-top-4"
                       onSubmit={e => {
                         handleSubmit(e);
                         window.scrollTo(0, 0);
@@ -414,33 +419,6 @@ const BasicsContent = () => {
                             {flatErrors['basics.modelCategory']}
                           </FieldErrorMsg>
 
-                          {/* <Field
-                            as={Dropdown}
-                            id="plan-basics-model-category"
-                            name="basics.modelCategory"
-                            value={values.basics.modelCategory || ''}
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setFieldValue(
-                                'basics.modelCategory',
-                                e.target.value
-                              );
-                            }}
-                          >
-                            <option key="default-select" disabled value="">
-                              {`-${generalT('select')}-`}
-                            </option>
-                            {Object.keys(modelCategoryConfig.options).map(
-                              category => {
-                                return (
-                                  <option key={category} value={category}>
-                                    {modelCategoryConfig.options[category]}
-                                  </option>
-                                );
-                              }
-                            )}
-                          </Field> */}
                           <Fieldset>
                             {Object.keys(ModelCategory).map(key => (
                               <Fragment key={key}>
@@ -472,6 +450,66 @@ const BasicsContent = () => {
                                   onChange={() => {
                                     setFieldValue('basics.modelCategory', key);
                                   }}
+                                />
+                              </Fragment>
+                            ))}
+                          </Fieldset>
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="additionalModelCategories"
+                          error={
+                            !!flatErrors['basics.additionalModelCategories']
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="plan-basics-model-additional-category">
+                            {planBasicsT('additionalModelCategories.question')}
+                          </Label>
+                          <span className="usa-hint display-block text-normal margin-top-1">
+                            {planBasicsT('additionalModelCategories.hint')}
+                          </span>
+
+                          <FieldErrorMsg>
+                            {flatErrors['basics.additionalModelCategories']}
+                          </FieldErrorMsg>
+
+                          <Fieldset>
+                            {Object.keys(ModelCategory).map(key => (
+                              <Fragment key={key}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`plan-basics-model-additional-category-${key}`}
+                                  name="basics.additionalModelCategories"
+                                  label={
+                                    <span
+                                      className="display-flex flex-align-center"
+                                      style={{ gap: '4px' }}
+                                    >
+                                      {modelCategoryConfig.options[key]}
+                                      {key !==
+                                        ModelCategory.TO_BE_DETERMINED && (
+                                        <Tooltip
+                                          label={
+                                            modelCategoryConfig.tooltip[key]
+                                          }
+                                          position="right"
+                                        >
+                                          <IconInfo className="text-base-light" />
+                                        </Tooltip>
+                                      )}
+                                    </span>
+                                  }
+                                  value={key}
+                                  checked={values.basics.additionalModelCategories.includes(
+                                    key as ModelCategory
+                                  )}
+                                  // onChange={() => {
+                                  //   setFieldValue(
+                                  //     'basics.additionalModelCategories',
+                                  //     key
+                                  //   );
+                                  // }}
                                 />
                               </Fragment>
                             ))}
