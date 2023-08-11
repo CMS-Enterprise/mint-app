@@ -73,6 +73,7 @@ const ReadOnlyModelBasics = ({
     demoCode,
     amsModelID,
     modelCategory,
+    additionalModelCategories,
     cmsCenters,
     cmsOther,
     cmmiGroups,
@@ -208,9 +209,20 @@ const ReadOnlyModelBasics = ({
         isViewingFilteredView,
         filteredQuestions,
         'modelCategory',
-        <ReadOnlySection
-          heading={planBasicsT('modelCategory.question')}
-          copy={planBasicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: planBasicsT('modelCategory.question'),
+            copy: planBasicsT(`modelCategory.options.${modelCategory}`, '') // Default to empty string if category is null
+          }}
+          secondSection={
+            additionalModelCategories?.length !== 0 && {
+              heading: planBasicsT('additionalModelCategories.question'),
+              list: true,
+              listItems: additionalModelCategories?.map(group =>
+                planBasicsT(`modelCategory.options.${group}`)
+              ) as string[]
+            }
+          }
         />
       )}
 
