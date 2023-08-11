@@ -358,11 +358,9 @@ export interface GetAllModelData_modelPlanCollection_payments {
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   fundingSource: FundingSource[];
-  fundingSourceTrustFund: string | null;
   fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
-  fundingSourceRTrustFund: string | null;
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
   payRecipients: PayRecipient[];
@@ -378,7 +376,6 @@ export interface GetAllModelData_modelPlanCollection_payments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: string | null;
   planningToUseInnovationPaymentContractor: boolean | null;
   planningToUseInnovationPaymentContractorNote: string | null;
-  fundingStructure: string | null;
   willRecoverPayments: boolean | null;
   willRecoverPaymentsNote: string | null;
   anticipateReconcilingPaymentsRetrospectively: boolean | null;

@@ -341,11 +341,9 @@ export default gql`
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         fundingSource
-        fundingSourceTrustFund
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
-        fundingSourceRTrustFund
         fundingSourceROther
         fundingSourceRNote
         payRecipients
@@ -361,7 +359,6 @@ export default gql`
         sharedSystemsInvolvedAdditionalClaimPaymentNote
         planningToUseInnovationPaymentContractor
         planningToUseInnovationPaymentContractorNote
-        fundingStructure
         willRecoverPayments
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively

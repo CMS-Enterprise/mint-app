@@ -11,10 +11,14 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
+  IconInfo,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import GetFunding from 'gql/apolloGQL/Payments/GetFunding';
+import UpdatePayments from 'gql/apolloGQL/Payments/UpdatePayments';
+import { GetFundingQuery, PayType, TrustFundType } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,20 +30,12 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import Tooltip from 'components/shared/Tooltip';
 import useScrollElement from 'hooks/useScrollElement';
-import GetFunding from 'queries/Payments/GetFunding';
-import {
-  GetFunding as GetFundingType,
-  GetFunding_modelPlan_payments as FundingFormType,
-  GetFundingVariables
-} from 'queries/Payments/types/GetFunding';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   ClaimsBasedPayType,
   FundingSource as FundingSourceEnum,
-  PayRecipient,
-  PayType
+  PayRecipient
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -54,6 +50,8 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
+type FundingFormType = GetFundingQuery['modelPlan']['payments'];
+
 const FundingSource = () => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
@@ -62,10 +60,7 @@ const FundingSource = () => {
   const formikRef = useRef<FormikProps<FundingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetFundingType,
-    GetFundingVariables
-  >(GetFunding, {
+  const { data, loading, error } = useQuery(GetFunding, {
     variables: {
       id: modelID
     }
@@ -77,11 +72,11 @@ const FundingSource = () => {
   const {
     id,
     fundingSource,
-    fundingSourceTrustFund,
+    fundingSourceTrustFundType,
     fundingSourceOther,
     fundingSourceNote,
     fundingSourceR,
-    fundingSourceRTrustFund,
+    fundingSourceRTrustFundType,
     fundingSourceROther,
     fundingSourceRNote,
     payRecipients,
@@ -98,15 +93,17 @@ const FundingSource = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useMutation(UpdatePayments);
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | string) => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
+
     const hasNonClaimBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
+
     update({
       variables: {
         id,
@@ -146,11 +143,11 @@ const FundingSource = () => {
     __typename: 'PlanPayments',
     id: id ?? '',
     fundingSource: fundingSource ?? [],
-    fundingSourceTrustFund: fundingSourceTrustFund ?? '',
+    fundingSourceTrustFundType: fundingSourceTrustFundType ?? [],
     fundingSourceOther: fundingSourceOther ?? '',
     fundingSourceNote: fundingSourceNote ?? '',
     fundingSourceR: fundingSourceR ?? [],
-    fundingSourceRTrustFund: fundingSourceRTrustFund ?? '',
+    fundingSourceRTrustFundType: fundingSourceRTrustFundType ?? [],
     fundingSourceROther: fundingSourceROther ?? '',
     fundingSourceRNote: fundingSourceRNote ?? '',
     payRecipients: payRecipients ?? [],
@@ -164,6 +161,46 @@ const FundingSource = () => {
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
+
+  const TrustFundSelection = ({
+    values,
+    fieldName
+  }: {
+    values: FundingFormType;
+    fieldName: 'fundingSourceTrustFundType' | 'fundingSourceRTrustFundType';
+  }) => (
+    <Fieldset className="margin-left-4">
+      <Label
+        htmlFor="fundingSourceTrustFundType"
+        className="maxw-none text-normal"
+      >
+        {t('whichType')}
+      </Label>
+
+      {Object.keys(TrustFundType).map(trustType => {
+        return (
+          <div className="display-flex flex-align-center" key={trustType}>
+            <Field
+              key={trustType}
+              as={CheckboxField}
+              id={`payment-funding-source-${fieldName}-${trustType}`}
+              name={fieldName}
+              label={t(`${trustType}`)}
+              value={trustType}
+              checked={values[fieldName]?.includes(trustType as TrustFundType)}
+            />
+            <Tooltip
+              label={t(`${trustType}Info`)}
+              position="right"
+              className="margin-left-05 height-105"
+            >
+              <IconInfo className="text-base-light" />
+            </Tooltip>
+          </div>
+        );
+      })}
+    </Fieldset>
+  );
 
   return (
     <>
@@ -260,6 +297,7 @@ const FundingSource = () => {
                                       key={type}
                                       as={CheckboxField}
                                       id={`payment-funding-source-${type}`}
+                                      data-testid={`payment-funding-source-${type}`}
                                       name="fundingSource"
                                       label={translateSourceOptions(type)}
                                       value={type}
@@ -267,35 +305,16 @@ const FundingSource = () => {
                                         type as FundingSourceEnum
                                       )}
                                     />
-                                    {type === 'TRUST_FUND' &&
+                                    {type === FundingSourceEnum.TRUST_FUND &&
                                       values.fundingSource?.includes(
                                         type as FundingSourceEnum
                                       ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-top-2 margin-bottom-4"
-                                          error={
-                                            !!flatErrors.fundingSourceTrustFund
-                                          }
-                                        >
-                                          <Label
-                                            htmlFor="fundingSourceTrustFund"
-                                            className="text-normal"
-                                          >
-                                            {t('whichType')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.fundingSourceTrustFund}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            id="payment-funding-source-trust-fund"
-                                            data-testid="payment-funding-source-trust-fund"
-                                            maxLength={50}
-                                            name="fundingSourceTrustFund"
-                                          />
-                                        </FieldGroup>
+                                        <TrustFundSelection
+                                          values={values}
+                                          fieldName="fundingSourceTrustFundType"
+                                        />
                                       )}
-                                    {type === 'OTHER' &&
+                                    {type === FundingSourceEnum.OTHER &&
                                       values.fundingSource?.includes(
                                         type as FundingSourceEnum
                                       ) && (
@@ -360,33 +379,14 @@ const FundingSource = () => {
                                         type as FundingSourceEnum
                                       )}
                                     />
-                                    {type === 'TRUST_FUND' &&
+                                    {type === FundingSourceEnum.TRUST_FUND &&
                                       values.fundingSourceR?.includes(
                                         type as FundingSourceEnum
                                       ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-top-2 margin-bottom-4"
-                                          error={
-                                            !!flatErrors.fundingSourceRTrustFund
-                                          }
-                                        >
-                                          <Label
-                                            htmlFor="fundingSourceRTrustFund"
-                                            className="text-normal"
-                                          >
-                                            {t('whichType')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.fundingSourceRTrustFund}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            id="payment-funding-source-reconciliation-trust-fund"
-                                            data-testid="payment-funding-source-reconciliation-trust-fund"
-                                            maxLength={50}
-                                            name="fundingSourceRTrustFund"
-                                          />
-                                        </FieldGroup>
+                                        <TrustFundSelection
+                                          values={values}
+                                          fieldName="fundingSourceRTrustFundType"
+                                        />
                                       )}
                                     {type === 'OTHER' &&
                                       values.fundingSourceR?.includes(

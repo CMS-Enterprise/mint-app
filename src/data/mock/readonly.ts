@@ -1,3 +1,5 @@
+import { TrustFundType } from 'gql/gen/graphql';
+
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
@@ -482,11 +484,11 @@ export const opsEvalAndLearningMocks = [
 const paymentsData: PaymentTypes = {
   __typename: 'PlanPayments',
   fundingSource: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
-  fundingSourceTrustFund: null,
+  fundingSourceTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
   fundingSourceOther: null,
   fundingSourceNote: null,
   fundingSourceR: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
-  fundingSourceRTrustFund: null,
+  fundingSourceRTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
   fundingSourceROther: null,
   fundingSourceRNote: null,
   payRecipients: [PayRecipient.BENEFICIARIES],
@@ -526,7 +528,6 @@ const paymentsData: PaymentTypes = {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: null,
   planningToUseInnovationPaymentContractor: true,
   planningToUseInnovationPaymentContractorNote: null,
-  fundingStructure: null,
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType.HIGH,
   expectedCalculationComplexityLevelNote: null,
   canParticipantsSelectBetweenPaymentMechanisms: true,
