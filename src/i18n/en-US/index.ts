@@ -9,7 +9,7 @@ import itSolutions from './draftModelPlan/itSolutions';
 import newModel from './draftModelPlan/newModel';
 import opsEvalAndLearningOld from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProvidersOld from './draftModelPlan/participantsAndProviders';
-import payments from './draftModelPlan/payments';
+import paymentsOld from './draftModelPlan/payments';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
@@ -33,6 +33,7 @@ import {
   participantsAndProviders,
   participantsAndProvidersMisc
 } from './modelPlan/participantsAndProviders';
+import { payments, paymentsMisc } from './modelPlan/payments';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -78,8 +79,7 @@ const enUS = {
   modelSummary,
   nda,
   newModel,
-
-  payments,
+  paymentsOld,
   // Old Translations
   basicsOld,
   generalCharacteristicsOld,
@@ -98,6 +98,8 @@ const enUS = {
   beneficiariesMisc,
   opsEvalAndLearning,
   opsEvalAndLearningMisc,
+  payments,
+  paymentsMisc,
   miscellaneous,
   // End new translation
   prepareForClearance,

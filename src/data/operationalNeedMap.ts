@@ -232,31 +232,31 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'payment',
     fieldName: 'payType',
     parentField: 'payments',
-    question: 'payments:whatWillYouPay',
+    question: 'payments:payType.label',
     answer: 'translatePayType',
-    section: 'payments'
+    section: 'paymentsMisc'
   },
   MANAGE_FFS_EXCL_PAYMENTS: {
     route: 'payment/claims-based-payment',
     fieldName: 'shouldAnyProvidersExcludedFFSSystems',
     parentField: 'payments',
-    question: 'payments:excludedFromPayment',
+    question: 'payments:shouldAnyProvidersExcludedFFSSystems.label',
     answer: 'translateBoolean',
-    section: 'payments'
+    section: 'paymentsMisc'
   },
   MAKE_NON_CLAIMS_BASED_PAYMENTS: {
     route: 'payment',
     fieldName: 'payType',
     parentField: 'payments',
-    question: 'payments:whatWillYouPay',
+    question: 'payments:payType.label',
     answer: 'translatePayType',
-    section: 'payments'
+    section: 'paymentsMisc'
   },
   COMPUTE_SHARED_SAVINGS_PAYMENT: {
     route: 'payment/non-claims-based-payment',
     fieldName: 'nonClaimsPayments',
     parentField: 'payments',
-    question: 'payments:nonClaimsPayments',
+    question: 'payments:nonClaimsPayments.label',
     answer: 'translateNonClaimsBasedPayType',
     section: 'payments'
   },
@@ -264,9 +264,9 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'payment/recover-payment',
     fieldName: 'willRecoverPayments',
     parentField: 'payments',
-    question: 'payments:willRecoverPayments',
+    question: 'payments:willRecoverPayments.label',
     answer: 'translateBoolean',
-    section: 'payments'
+    section: 'paymentsMisc'
   }
 };
 

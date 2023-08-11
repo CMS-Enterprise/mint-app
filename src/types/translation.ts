@@ -23,6 +23,7 @@ import {
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
+  FundingSource,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
@@ -36,6 +37,8 @@ import {
   ParticipantSelectionType,
   ParticipantsIDType,
   ParticipantsType,
+  PayRecipient,
+  PayType,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -43,6 +46,7 @@ import {
   StakeholdersType,
   TaskStatus,
   TriStateAnswer,
+  TrustFundType,
   WaiverType
 } from './graphql-global-types';
 
@@ -376,6 +380,23 @@ export type TranslationOpsEvalAndLearning = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+// Payments
+export type TranslationPayments = {
+  fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
+  fundingSourceTrustFundType: TranslationFieldPropertiesWithOptions<TrustFundType>;
+  fundingSourceOther: TranslationFieldProperties;
+  fundingSourceNote: TranslationFieldProperties;
+  fundingSourceR: TranslationFieldPropertiesWithOptions<FundingSource>;
+  fundingSourceRTrustFundType: TranslationFieldPropertiesWithOptions<TrustFundType>;
+  fundingSourceROther: TranslationFieldProperties;
+  fundingSourceRNote: TranslationFieldProperties;
+  payRecipients: TranslationFieldPropertiesWithOptions<PayRecipient>;
+  payRecipientsOtherSpecification: TranslationFieldProperties;
+  payRecipientsNote: TranslationFieldProperties;
+  payType: TranslationFieldPropertiesWithOptions<PayType>;
+  payTypeNote: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -383,4 +404,5 @@ export type TranslationPlan = {
   participantsAndProviders: TranslationParticipantsAndProviders;
   beneficiaries: TranslationBeneficiaries;
   opsEvalAndLearning: TranslationOpsEvalAndLearning;
+  payments: TranslationPayments;
 };
