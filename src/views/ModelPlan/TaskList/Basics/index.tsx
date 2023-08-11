@@ -450,6 +450,18 @@ const BasicsContent = () => {
                                   checked={values.basics.modelCategory === key}
                                   onChange={() => {
                                     setFieldValue('basics.modelCategory', key);
+                                    if (
+                                      values.basics.additionalModelCategories.includes(
+                                        key as ModelCategory
+                                      )
+                                    ) {
+                                      values.basics.additionalModelCategories.splice(
+                                        values.basics.additionalModelCategories.indexOf(
+                                          key as ModelCategory
+                                        ),
+                                        1
+                                      );
+                                    }
                                   }}
                                 />
                               </Fragment>
@@ -489,6 +501,9 @@ const BasicsContent = () => {
                                     as={CheckboxField}
                                     id={`plan-basics-model-additional-category-${group}`}
                                     name="basics.additionalModelCategories"
+                                    disabled={
+                                      values.basics.modelCategory === group
+                                    }
                                     label={
                                       <span
                                         className="display-flex flex-align-center"
