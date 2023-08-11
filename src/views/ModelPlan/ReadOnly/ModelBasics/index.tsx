@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
   Grid,
+  IconInfo,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
@@ -11,9 +12,11 @@ import {
 import classNames from 'classnames';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
+import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
+import { ModelCategory } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -212,17 +215,37 @@ const ReadOnlyModelBasics = ({
         <SideBySideReadOnlySection
           firstSection={{
             heading: planBasicsT('modelCategory.question'),
-            copy: planBasicsT(`modelCategory.options.${modelCategory}`, '') // Default to empty string if category is null
+            // copy: planBasicsT(`modelCategory.options.${modelCategory}`, '') // Default to empty string if category is null
+            copy:
+              modelCategory === null ? (
+                ''
+              ) : (
+                <span
+                  className="display-flex flex-align-center"
+                  style={{ gap: '4px' }}
+                >
+                  {planBasicsT(`modelCategory.options.${modelCategory}`, '')}
+
+                  {modelCategory !== ModelCategory.TO_BE_DETERMINED && (
+                    <Tooltip
+                      label={planBasicsT(
+                        `modelCategory.tooltip.${modelCategory}`
+                      )}
+                      position="right"
+                    >
+                      <IconInfo className="text-base-light" />
+                    </Tooltip>
+                  )}
+                </span>
+              )
           }}
-          secondSection={
-            additionalModelCategories?.length !== 0 && {
-              heading: planBasicsT('additionalModelCategories.question'),
-              list: true,
-              listItems: additionalModelCategories?.map(group =>
-                planBasicsT(`modelCategory.options.${group}`)
-              ) as string[]
-            }
-          }
+          secondSection={{
+            heading: planBasicsT('additionalModelCategories.question'),
+            list: true,
+            listItems: additionalModelCategories?.map(group =>
+              planBasicsT(`modelCategory.options.${group}`)
+            ) as string[]
+          }}
         />
       )}
 

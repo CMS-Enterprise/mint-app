@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
 
 export type ReadOnlySectionProps = {
-  copy?: string | null;
+  copy?: string | null | React.ReactNode;
   heading: string;
   list?: boolean;
   listItems?: (string | number)[];
