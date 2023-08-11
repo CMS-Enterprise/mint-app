@@ -521,7 +521,7 @@ const BasicsContent = () => {
                           error={!!flatErrors['basics.cmsCenters']}
                           className="margin-top-4"
                         >
-                          <Fieldset legend={planBasicsT('cmsCenters.question')}>
+                          <Fieldset>
                             <FieldArray
                               name="basics.cmsCenters"
                               render={arrayHelpers => (
