@@ -141,6 +141,7 @@ const BasicsContent = () => {
           demoCode: updateBasics.demoCode,
           amsModelID: updateBasics.amsModelID,
           modelCategory: updateBasics.modelCategory,
+          additionalModelCategories: updateBasics.additionalModelCategories,
           cmsCenters: updateBasics.cmsCenters,
           cmmiGroups: updateBasics.cmmiGroups,
           cmsOther: updateBasics.cmsOther
@@ -457,15 +458,18 @@ const BasicsContent = () => {
                         </FieldGroup>
 
                         <FieldGroup
-                          scrollElement="additionalModelCategories"
                           error={
                             !!flatErrors['basics.additionalModelCategories']
                           }
                           className="margin-top-4"
                         >
-                          <Label htmlFor="plan-basics-model-additional-category">
+                          <Label
+                            htmlFor="basics.additionalModelCategories"
+                            className="text-normal"
+                          >
                             {planBasicsT('additionalModelCategories.question')}
                           </Label>
+
                           <span className="usa-hint display-block text-normal margin-top-1">
                             {planBasicsT('additionalModelCategories.hint')}
                           </span>
@@ -474,50 +478,42 @@ const BasicsContent = () => {
                             {flatErrors['basics.additionalModelCategories']}
                           </FieldErrorMsg>
 
-                          <Fieldset>
-                            {Object.keys(ModelCategory)
-                              .filter(
-                                key => key !== ModelCategory.TO_BE_DETERMINED
-                              )
-                              .map(key => (
-                                <Fragment key={key}>
+                          {Object.keys(ModelCategory)
+                            .filter(
+                              key => key !== ModelCategory.TO_BE_DETERMINED
+                            )
+                            .map(group => {
+                              return (
+                                <Fragment key={group}>
                                   <Field
                                     as={CheckboxField}
-                                    id={`plan-basics-model-additional-category-${key}`}
+                                    id={`plan-basics-model-additional-category-${group}`}
                                     name="basics.additionalModelCategories"
                                     label={
                                       <span
                                         className="display-flex flex-align-center"
                                         style={{ gap: '4px' }}
                                       >
-                                        {modelCategoryConfig.options[key]}
-                                        {key !==
-                                          ModelCategory.TO_BE_DETERMINED && (
-                                          <Tooltip
-                                            label={
-                                              modelCategoryConfig.tooltip[key]
-                                            }
-                                            position="right"
-                                          >
-                                            <IconInfo className="text-base-light" />
-                                          </Tooltip>
-                                        )}
+                                        {modelCategoryConfig.options[group]}
+
+                                        <Tooltip
+                                          label={
+                                            modelCategoryConfig.tooltip[group]
+                                          }
+                                          position="right"
+                                        >
+                                          <IconInfo className="text-base-light" />
+                                        </Tooltip>
                                       </span>
                                     }
-                                    value={key}
+                                    value={group}
                                     checked={values.basics.additionalModelCategories.includes(
-                                      key as ModelCategory
+                                      group as ModelCategory
                                     )}
-                                    // onChange={() => {
-                                    //   setFieldValue(
-                                    //     'basics.additionalModelCategories',
-                                    //     key
-                                    //   );
-                                    // }}
                                   />
                                 </Fragment>
-                              ))}
-                          </Fieldset>
+                              );
+                            })}
                         </FieldGroup>
 
                         <FieldGroup
