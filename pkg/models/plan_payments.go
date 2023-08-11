@@ -129,17 +129,26 @@ const (
 	PayTypeGrants PayType = "GRANTS"
 )
 
+// TrustFundType is the enumeration of options for this category
+type TrustFundType string
+
+//goland:noinspection ALL
+const (
+	TrustFundTypeMedicarePartAHI  TrustFundType = "MEDICARE_PART_A_HI_TRUST_FUND"
+	TrustFundTypeMedicarePartBSMI TrustFundType = "MEDICARE_PART_B_SMI_TRUST_FUND"
+)
+
 // PlanPayments defines the data associated with a plan payments model
 type PlanPayments struct {
 	baseTaskListSection
 
 	// Page 1
 	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
-	FundingSourceTrustFund          *string        `json:"fundingSourceTrustFund" db:"funding_source_trust_fund"`
+	FundingSourceTrustFundType      pq.StringArray `json:"fundingSourceTrustFundType" db:"funding_source_trust_fund_type"`
 	FundingSourceOther              *string        `json:"fundingSourceOther" db:"funding_source_other"`
 	FundingSourceNote               *string        `json:"fundingSourceNote" db:"funding_source_note"`
 	FundingSourceR                  pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
-	FundingSourceRTrustFund         *string        `json:"fundingSourceRTrustFund" db:"funding_source_r_trust_fund"`
+	FundingSourceRTrustFundType     pq.StringArray `json:"fundingSourceRTrustFundType" db:"funding_source_r_trust_fund_type"`
 	FundingSourceROther             *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
 	FundingSourceRNote              *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
 	PayRecipients                   pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
@@ -187,7 +196,6 @@ type PlanPayments struct {
 	SharedSystemsInvolvedAdditionalClaimPaymentNote *string        `json:"sharedSystemsInvolvedAdditionalClaimPaymentNote" db:"shared_systems_involved_additional_claim_payment_note"`
 	PlanningToUseInnovationPaymentContractor        *bool          `json:"planningToUseInnovationPaymentContractor" db:"planning_to_use_innovation_payment_contractor" statusWeight:"1"`
 	PlanningToUseInnovationPaymentContractorNote    *string        `json:"planningToUseInnovationPaymentContractorNote" db:"planning_to_use_innovation_payment_contractor_note"`
-	FundingStructure                                *string        `json:"fundingStructure" db:"funding_structure" statusWeight:"1"`
 
 	// Page 6
 	ExpectedCalculationComplexityLevel                *ComplexityCalculationLevelType `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level" statusWeight:"1"`

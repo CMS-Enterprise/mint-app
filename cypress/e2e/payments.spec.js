@@ -20,6 +20,16 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.get('#payment-funding-source-TRUST_FUND')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get(
+      '#payment-funding-source-fundingSourceTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND'
+    )
+      .check({ force: true })
+      .should('be.checked');
+
     cy.get('#payment-funding-source-OTHER')
       .check({ force: true })
       .should('be.checked');
@@ -30,6 +40,16 @@ describe('The Model Plan Payment Form', () => {
 
     cy.get(
       '#payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
+    )
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-funding-source-reconciliation-TRUST_FUND')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get(
+      '#payment-funding-source-fundingSourceRTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND'
     )
       .check({ force: true })
       .should('be.checked');
@@ -177,10 +197,6 @@ describe('The Model Plan Payment Form', () => {
     cy.get('#payment-use-innovation-payment-contractor-true')
       .check({ force: true })
       .should('be.checked');
-
-    cy.get('#payment-funding-structure')
-      .type('Payment Funding Structure')
-      .should('have.value', 'Payment Funding Structure');
 
     cy.contains('button', 'Next').click();
 

@@ -583,30 +583,6 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="usa-form-group margin-top-4"
-              data-scroll="payment-funding-structure"
-            >
-              <label
-                class="usa-label maxw-none"
-                data-testid="label"
-                for="payment-funding-structure"
-              >
-                What is the funding structure?
-              </label>
-              <p
-                class="text-base margin-y-1"
-              >
-                If possible, upload a copy of the allotment and allowance.
-              </p>
-              <textarea
-                aria-labelledby="label-payment-funding-structure hint-payment-funding-structure"
-                class="height-15 usa-textarea"
-                data-testid="payment-funding-structure"
-                id="payment-funding-structure"
-                name="fundingStructure"
-              />
-            </div>
-            <div
               class="margin-top-6 margin-bottom-3"
             >
               <button
