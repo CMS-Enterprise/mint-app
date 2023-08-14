@@ -153,7 +153,7 @@ const Milestones = () => {
   }
 
   return (
-    <div data-testid="model-plan-milestones">
+    <div>
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -182,6 +182,11 @@ const Milestones = () => {
       </p>
 
       <AskAQuestion modelID={modelID} />
+
+      {/* 
+        Conditional render the entire form here to load async data properly on a hard browser refresh
+        Naviagting to this component through react-router-dom however properly loads the async data into the Truss datepickers
+      */}
 
       {!loading && (
         <Formik
@@ -224,7 +229,7 @@ const Milestones = () => {
             };
 
             return (
-              <>
+              <div data-testid="model-plan-milestones">
                 {getKeys(errors).length > 0 && (
                   <ErrorAlert
                     testId="formik-validation-errors"
@@ -582,7 +587,7 @@ const Milestones = () => {
                     </Button>
                   </Fieldset>
                 </Form>
-              </>
+              </div>
             );
           }}
         </Formik>
