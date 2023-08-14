@@ -24,12 +24,10 @@ import {
   GetAllModelPlans_modelPlanCollection as AllModelPlansType,
   GetAllModelPlans_modelPlanCollection_crTdls as CRTDLType
 } from 'queries/ReadOnly/types/GetAllModelPlans';
+import { ModelCategory } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
-import {
-  translateModelCategory,
-  translateModelPlanStatus
-} from 'utils/modelPlan';
+import { translateModelPlanStatus } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -53,6 +51,7 @@ const Table = ({
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('modelSummary');
   const { t: f } = useTranslation('home');
+  const { t: planBasicsT } = useTranslation('planBasics');
 
   const columns = useMemo(() => {
     return [
@@ -116,11 +115,27 @@ const Table = ({
       {
         Header: t('allModels.tableHeading.category'),
         accessor: 'basics.modelCategory',
-        Cell: ({ value }: any) => {
+        Cell: ({ row, value }: any) => {
+          const additionalModelCategory =
+            row.original.basics.additionalModelCategories;
+
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
-          return translateModelCategory(value);
+          if (value) {
+            if (additionalModelCategory.length !== 0) {
+              const newArray = additionalModelCategory.map(
+                (group: ModelCategory) => {
+                  return planBasicsT(`modelCategory.options.${group}`);
+                }
+              );
+
+              return `${planBasicsT(
+                `modelCategory.options.${value}`
+              )}, ${newArray.join(', ')}`;
+            }
+          }
+          return planBasicsT(`modelCategory.options.${value}`);
         }
       },
       {
@@ -161,7 +176,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, h, updateFavorite]);
+  }, [t, updateFavorite, planBasicsT, h]);
 
   const {
     getTableProps,
