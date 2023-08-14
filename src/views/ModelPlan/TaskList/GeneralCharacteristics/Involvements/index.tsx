@@ -9,13 +9,13 @@ import {
   Button,
   Fieldset,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -23,6 +23,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetInvolvements from 'queries/GeneralCharacteristics/GetInvolvements';
 import {
   GetInvolvements as GetInvolvementsType,
@@ -31,13 +32,26 @@ import {
 } from 'queries/GeneralCharacteristics/types/GetInvolvements';
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Involvements = () => {
-  const { t } = useTranslation('generalCharacteristics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: generalCharacteristicsT } = useTranslation(
+    'generalCharacteristics'
+  );
+  const { t: generalCharacteristicsMiscT } = useTranslation(
+    'generalCharacteristicsMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    careCoordinationInvolved: careCoordinationInvolvedConfig,
+    additionalServicesInvolved: additionalServicesInvolvedConfig,
+    communityPartnersInvolved: communityPartnersInvolvedConfig
+  } = usePlanTranslation('generalCharacteristics');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<InvolvementsFormType>>(null);
@@ -127,28 +141,30 @@ const Involvements = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {generalCharacteristicsMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {generalCharacteristicsMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -170,25 +186,27 @@ const Involvements = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <Form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-involvements-form"
@@ -203,28 +221,24 @@ const Involvements = () => {
                     className="margin-y-4"
                   >
                     <Label htmlFor="plan-characteristics-care-coordination-involved">
-                      {t('careCoordination')}
+                      {generalCharacteristicsT(
+                        'careCoordinationInvolved.question'
+                      )}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.careCoordinationInvolved}
                     </FieldErrorMsg>
-                    <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="plan-characteristics-care-coordination-involved"
-                        name="careCoordinationInvolved"
-                        label={h('yes')}
-                        value="TRUE"
-                        checked={values.careCoordinationInvolved === true}
-                        onChange={() => {
-                          setFieldValue('careCoordinationInvolved', true);
-                          setFieldValue(
-                            'careCoordinationInvolvedDescription',
-                            ''
-                          );
-                        }}
-                      />
-                      {values.careCoordinationInvolved === true && (
+
+                    <BooleanRadio
+                      field="careCoordinationInvolved"
+                      id="plan-characteristics-care-coordination-involved"
+                      value={values.careCoordinationInvolved}
+                      setFieldValue={setFieldValue}
+                      options={careCoordinationInvolvedConfig.options}
+                      childName="careCoordinationInvolvedDescription"
+                    >
+                      {values.careCoordinationInvolved === true ? (
                         <div className="display-flex margin-left-4 margin-bottom-1">
                           <FieldGroup
                             className="flex-1"
@@ -237,11 +251,15 @@ const Involvements = () => {
                               htmlFor="plan-characteristics-care-coordination-description"
                               className="margin-bottom-1 text-normal"
                             >
-                              {h('howSo')}
+                              {generalCharacteristicsT(
+                                'careCoordinationInvolvedDescription.question'
+                              )}
                             </Label>
+
                             <FieldErrorMsg>
                               {flatErrors.careCoordinationInvolvedDescription}
                             </FieldErrorMsg>
+
                             <Field
                               as={TextAreaField}
                               error={
@@ -253,19 +271,10 @@ const Involvements = () => {
                             />
                           </FieldGroup>
                         </div>
+                      ) : (
+                        <></>
                       )}
-                      <Field
-                        as={Radio}
-                        id="plan-characteristics-care-coordination-involved-no"
-                        name="careCoordinationInvolved"
-                        label={h('no')}
-                        value="FALSE"
-                        checked={values.careCoordinationInvolved === false}
-                        onChange={() => {
-                          setFieldValue('careCoordinationInvolved', false);
-                        }}
-                      />
-                    </Fieldset>
+                    </BooleanRadio>
                   </FieldGroup>
 
                   <AddNote
@@ -279,28 +288,24 @@ const Involvements = () => {
                     className="margin-y-4"
                   >
                     <Label htmlFor="plan-characteristics-additional-services">
-                      {t('additionalServices')}
+                      {generalCharacteristicsT(
+                        'additionalServicesInvolved.question'
+                      )}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.additionalServicesInvolved}
                     </FieldErrorMsg>
-                    <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="plan-characteristics-additional-services"
-                        name="additionalServicesInvolved"
-                        label={h('yes')}
-                        value="TRUE"
-                        checked={values.additionalServicesInvolved === true}
-                        onChange={() => {
-                          setFieldValue('additionalServicesInvolved', true);
-                          setFieldValue(
-                            'additionalServicesInvolvedDescription',
-                            ''
-                          );
-                        }}
-                      />
-                      {values.additionalServicesInvolved === true && (
+
+                    <BooleanRadio
+                      field="additionalServicesInvolved"
+                      id="plan-characteristics-additional-services"
+                      value={values.additionalServicesInvolved}
+                      setFieldValue={setFieldValue}
+                      options={additionalServicesInvolvedConfig.options}
+                      childName="additionalServicesInvolvedDescription"
+                    >
+                      {values.additionalServicesInvolved === true ? (
                         <div className="display-flex margin-left-4 margin-bottom-1">
                           <FieldGroup
                             className="flex-1"
@@ -313,11 +318,15 @@ const Involvements = () => {
                               htmlFor="plan-characteristics-additional-services-description"
                               className="margin-bottom-1 text-normal"
                             >
-                              {h('howSo')}
+                              {generalCharacteristicsT(
+                                'additionalServicesInvolvedDescription.question'
+                              )}
                             </Label>
+
                             <FieldErrorMsg>
                               {flatErrors.additionalServicesInvolvedDescription}
                             </FieldErrorMsg>
+
                             <Field
                               as={TextAreaField}
                               error={
@@ -330,19 +339,10 @@ const Involvements = () => {
                             />
                           </FieldGroup>
                         </div>
+                      ) : (
+                        <></>
                       )}
-                      <Field
-                        as={Radio}
-                        id="plan-characteristics-additional-services-no"
-                        name="additionalServicesInvolved"
-                        label={h('no')}
-                        value="FALSE"
-                        checked={values.additionalServicesInvolved === false}
-                        onChange={() => {
-                          setFieldValue('additionalServicesInvolved', false);
-                        }}
-                      />
-                    </Fieldset>
+                    </BooleanRadio>
                   </FieldGroup>
 
                   <AddNote
@@ -356,28 +356,24 @@ const Involvements = () => {
                     className="margin-y-4"
                   >
                     <Label htmlFor="plan-characteristics-community-partners-involved">
-                      {t('communityInvolved')}
+                      {generalCharacteristicsT(
+                        'communityPartnersInvolved.question'
+                      )}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.communityPartnersInvolved}
                     </FieldErrorMsg>
-                    <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="plan-characteristics-community-partners-involved"
-                        name="communityPartnersInvolved"
-                        label={h('yes')}
-                        value="TRUE"
-                        checked={values.communityPartnersInvolved === true}
-                        onChange={() => {
-                          setFieldValue('communityPartnersInvolved', true);
-                          setFieldValue(
-                            'communityPartnersInvolvedDescription',
-                            ''
-                          );
-                        }}
-                      />
-                      {values.communityPartnersInvolved === true && (
+
+                    <BooleanRadio
+                      field="communityPartnersInvolved"
+                      id="plan-characteristics-community-partners-involved"
+                      value={values.communityPartnersInvolved}
+                      setFieldValue={setFieldValue}
+                      options={communityPartnersInvolvedConfig.options}
+                      childName="communityPartnersInvolvedDescription"
+                    >
+                      {values.communityPartnersInvolved === true ? (
                         <div className="display-flex margin-left-4 margin-bottom-1">
                           <FieldGroup
                             className="flex-1"
@@ -390,11 +386,15 @@ const Involvements = () => {
                               htmlFor="plan-characteristics-community-partners-description"
                               className="margin-bottom-1 text-normal"
                             >
-                              {h('howSo')}
+                              {generalCharacteristicsT(
+                                'communityPartnersInvolvedDescription.question'
+                              )}
                             </Label>
+
                             <FieldErrorMsg>
                               {flatErrors.communityPartnersInvolvedDescription}
                             </FieldErrorMsg>
+
                             <Field
                               as={TextAreaField}
                               error={
@@ -406,19 +406,10 @@ const Involvements = () => {
                             />
                           </FieldGroup>
                         </div>
+                      ) : (
+                        <></>
                       )}
-                      <Field
-                        as={Radio}
-                        id="plan-characteristics-community-partners-no"
-                        name="communityPartnersInvolved"
-                        label={h('no')}
-                        value="FALSE"
-                        checked={values.communityPartnersInvolved === false}
-                        onChange={() => {
-                          setFieldValue('communityPartnersInvolved', false);
-                        }}
-                      />
-                    </Fieldset>
+                    </BooleanRadio>
                   </FieldGroup>
 
                   <AddNote
@@ -434,22 +425,26 @@ const Involvements = () => {
                         handleFormSubmit('back');
                       }}
                     >
-                      {h('back')}
+                      {miscellaneousT('back')}
                     </Button>
+
                     <Button type="submit" onClick={() => setErrors({})}>
-                      {h('next')}
+                      {miscellaneousT('next')}
                     </Button>
                   </div>
+
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {h('saveAndReturn')}
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -463,6 +458,7 @@ const Involvements = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={3} totalPages={5} className="margin-y-6" />
     </>
   );

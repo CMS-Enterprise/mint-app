@@ -386,7 +386,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
             <h4
               class="text-normal margin-bottom-1"
             >
-              Selected participants
+              How will you add providers?
             </h4>
             <ul
               class="usa-list--unstyled"

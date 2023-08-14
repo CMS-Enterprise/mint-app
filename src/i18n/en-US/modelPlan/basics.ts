@@ -1,6 +1,6 @@
-import { TranslationPlanBasics } from 'types/translation';
+import { TranslationBasics } from 'types/translation';
 
-export const planBasics: TranslationPlanBasics = {
+export const basics: TranslationBasics = {
   modelCategory: {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
@@ -22,7 +22,8 @@ export const planBasics: TranslationPlanBasics = {
         'Initiatives Focused on the Medicare and Medicaid Enrollees',
       PRIMARY_CARE_TRANSFORMATION: 'Primary Care Transformation',
       UNKNOWN: 'Unknown'
-    }
+    },
+    filterGroups: ['ipc']
   },
   amsModelID: {
     gqlField: 'amsModelID',
@@ -55,7 +56,8 @@ export const planBasics: TranslationPlanBasics = {
         'Center for Clinical Standards and Quality (CCSQ)',
       CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)',
       OTHER: 'Other'
-    }
+    },
+    filterGroups: ['ipc']
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
@@ -73,7 +75,8 @@ export const planBasics: TranslationPlanBasics = {
       STATE_AND_POPULATION_HEALTH_GROUP:
         'State and Population Health Group (SPHG)',
       TBD: 'To be determined'
-    }
+    },
+    filterGroups: ['ipc']
   },
   modelType: {
     gqlField: 'modelType',
@@ -84,8 +87,10 @@ export const planBasics: TranslationPlanBasics = {
     formType: 'radio',
     options: {
       VOLUNTARY: 'Voluntary',
-      MANDATORY: 'Mandatory'
-    }
+      MANDATORY: 'Mandatory',
+      TBD: 'To be determined'
+    },
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },
   problem: {
     gqlField: 'problem',
@@ -103,7 +108,8 @@ export const planBasics: TranslationPlanBasics = {
     hint:
       'Please include the high level goal of the program and a description of the project.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },
   testInterventions: {
     gqlField: 'testInterventions',
@@ -113,13 +119,22 @@ export const planBasics: TranslationPlanBasics = {
     dataType: 'string',
     formType: 'textarea'
   },
+  note: {
+    gqlField: 'note',
+    goField: 'Note',
+    dbField: 'note',
+    question: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   completeICIP: {
     gqlField: 'completeICIP',
     goField: 'CompleteICIP',
     dbField: 'complete_icip',
     question: 'Complete ICIP',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   clearanceStarts: {
     gqlField: 'clearanceStarts',
@@ -127,7 +142,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'clearance_starts',
     question: 'Clearance start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   clearanceEnds: {
     gqlField: 'clearanceEnds',
@@ -135,7 +151,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'clearance_ends',
     question: 'Clearance end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   announced: {
     gqlField: 'announced',
@@ -143,7 +160,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'announced',
     question: 'Announce model',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc', 'iddoc', 'ipc', 'pbg']
   },
   applicationsStart: {
     gqlField: 'applicationsStart',
@@ -151,7 +169,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'applications_starts',
     question: 'Application start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc', 'ipc']
   },
   applicationsEnd: {
     gqlField: 'applicationsEnd',
@@ -159,7 +178,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'applications_ends',
     question: 'Application end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   performancePeriodStarts: {
     gqlField: 'performancePeriodStarts',
@@ -167,7 +187,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'performance_period_starts',
     question: 'Performance start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'iddoc', 'ipc', 'pbg']
   },
   performancePeriodEnds: {
     gqlField: 'performancePeriodEnds',
@@ -175,13 +196,14 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'performance_period_ends',
     question: 'Performance end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   highLevelNote: {
     gqlField: 'highLevelNote',
     goField: 'HighLevelNote',
     dbField: 'high_level_note',
-    question: 'Note',
+    question: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -191,7 +213,8 @@ export const planBasics: TranslationPlanBasics = {
     dbField: 'wrap_up_ends',
     question: 'Model wrap-up end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   phasedIn: {
     gqlField: 'phasedIn',
@@ -206,15 +229,17 @@ export const planBasics: TranslationPlanBasics = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    filterGroups: ['iddoc', 'pbg']
   },
   phasedInNote: {
     gqlField: 'phasedInNote',
     goField: 'PhasedInNote',
     dbField: 'phased_in_note',
-    question: 'Note',
+    question: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   },
   status: {
     gqlField: 'status',
@@ -237,7 +262,7 @@ export const planBasics: TranslationPlanBasics = {
 };
 
 // Miscellaneous translations outside scope of individual questions
-export const planBasicsMisc: Record<string, string> = {
+export const basicsMisc: Record<string, string> = {
   heading: 'Model basics',
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
@@ -252,11 +277,12 @@ export const planBasicsMisc: Record<string, string> = {
   demonstrationPerformanceInfo:
     'When the model will be active beginning with the go-live date',
   na: 'No answer entered',
-  otherNotSpecificed: 'Other not specified',
+  otherNotSpecified: 'Other not specified',
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
   required1: 'All fields marked with ',
   required2: ' are required.',
+  notes: 'Notes',
   noneEntered: 'None entered',
   otherIdentifiers: 'Other identifiers',
   otherIdentifiersInfo1: 'These are created in ',
@@ -265,4 +291,4 @@ export const planBasicsMisc: Record<string, string> = {
     ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.'
 };
 
-export default planBasics;
+export default basics;
