@@ -6,7 +6,7 @@ export type ReadOnlySectionProps = {
   copy?: string | null | React.ReactNode;
   heading: string;
   list?: boolean;
-  listItems?: (string | number)[];
+  listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
   notes?: string | null;
 };
@@ -25,6 +25,10 @@ const ReadOnlySection = ({
     .replace(/\W*$/g, '')
     .replace(/\W/g, '-');
 
+  const isElement = (element: string | number | React.ReactElement) => {
+    return React.isValidElement(element);
+  };
+
   const renderCopyOrList = () => {
     if (!list || listItems.length === 0) {
       return (
@@ -34,7 +38,11 @@ const ReadOnlySection = ({
       );
     }
     return (
-      <ul className="margin-y-0 padding-left-3">
+      <ul
+        className={`margin-y-0 padding-left-${
+          isElement(listItems[0]) ? '2' : '3'
+        }`}
+      >
         {listItems.map(item => (
           <React.Fragment key={`${sectionName}--${item}`}>
             <li className="font-sans-md line-height-sans-4">{item}</li>

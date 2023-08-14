@@ -242,9 +242,24 @@ const ReadOnlyModelBasics = ({
           secondSection={{
             heading: planBasicsT('additionalModelCategories.question'),
             list: true,
-            listItems: additionalModelCategories?.map(group =>
-              planBasicsT(`modelCategory.options.${group}`)
-            ) as string[]
+            listItems: additionalModelCategories?.map(group => {
+              return (
+                <span
+                  className="display-flex flex-align-center"
+                  style={{ gap: '4px' }}
+                >
+                  {planBasicsT(`modelCategory.options.${group}`)}
+
+                  <Tooltip
+                    label={planBasicsT(`modelCategory.tooltip.${group}`)}
+                    position="right"
+                  >
+                    <IconInfo className="text-base-light" />
+                  </Tooltip>
+                </span>
+              );
+            })
+            // TODO: tests
           }}
         />
       )}
