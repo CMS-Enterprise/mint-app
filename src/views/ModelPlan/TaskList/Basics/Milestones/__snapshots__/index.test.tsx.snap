@@ -55,7 +55,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       class="margin-top-0 margin-bottom-1 font-body-lg"
       data-testid="model-plan-name"
     >
-      for 
+      for My excellent plan that I just initiated
     </p>
     <p
       class="margin-bottom-2 font-body-md line-height-sans-4"

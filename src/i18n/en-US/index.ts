@@ -78,7 +78,6 @@ const enUS = {
   modelSummary,
   nda,
   newModel,
-
   payments,
   // Old Translations
   basicsOld,
