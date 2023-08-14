@@ -119,7 +119,9 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'payClaimsNote',
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
-      'waiveBeneficiaryCostSharingForAnyServices'
+      'waiveBeneficiaryCostSharingForAnyServices',
+      'waiveBeneficiaryCostSharingServiceSpecification',
+      'waiveBeneficiaryCostSharingNote'
     ]
   },
   dfsdm: {
@@ -319,13 +321,18 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'affectsMedicareSecondaryPayerClaimsNote',
       'payModelDifferentiation',
       'creatingDependenciesBetweenServices',
+      'creatingDependenciesBetweenServicesNote',
       'needsClaimsDataCollection',
+      'needsClaimsDataCollectionNote',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
+      'waiveBeneficiaryCostSharingServiceSpecification',
+      'waiveBeneficiaryCostSharingNote',
       'nonClaimsPayments',
       'waiverOnlyAppliesPartOfPayment',
+      'waiveBeneficiaryCostSharingNote',
       'planningToUseInnovationPaymentContractor',
       'anticipateReconcilingPaymentsRetrospectively'
     ]
@@ -389,12 +396,16 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'affectsMedicareSecondaryPayerClaimsNote',
       'payModelDifferentiation',
       'creatingDependenciesBetweenServices',
+      'creatingDependenciesBetweenServicesNote',
       'needsClaimsDataCollection',
+      'needsClaimsDataCollectionNote',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
       'waiverOnlyAppliesPartOfPayment',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
+      'waiveBeneficiaryCostSharingServiceSpecification',
+      'waiveBeneficiaryCostSharingNote',
       'nonClaimsPayments',
       'planningToUseInnovationPaymentContractor',
       'anticipateReconcilingPaymentsRetrospectively'

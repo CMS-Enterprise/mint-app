@@ -297,6 +297,139 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'pbg']
+  },
+  creatingDependenciesBetweenServices: {
+    gqlField: 'creatingDependenciesBetweenServices',
+    goField: 'CreatingDependenciesBetweenServices',
+    dbField: 'creating_dependencies_between_services',
+    label: 'Are you anticipating creating dependencies between services?',
+    sublabel:
+      'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  creatingDependenciesBetweenServicesNote: {
+    gqlField: 'creatingDependenciesBetweenServicesNote',
+    goField: 'CreatingDependenciesBetweenServicesNote',
+    dbField: 'creating_dependencies_between_services_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
+  },
+  needsClaimsDataCollection: {
+    gqlField: 'needsClaimsDataCollection',
+    goField: 'NeedsClaimsDataCollection',
+    dbField: 'needs_claims_data_collection',
+    label: 'Will any additional data need to be collected for claims?',
+    sublabel:
+      'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  needsClaimsDataCollectionNote: {
+    gqlField: 'needsClaimsDataCollectionNote',
+    goField: 'NeedsClaimsDataCollectionNote',
+    dbField: 'needs_claims_data_collection_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
+  },
+  providingThirdPartyFile: {
+    gqlField: 'providingThirdPartyFile',
+    goField: 'ProvidingThirdPartyFile',
+    dbField: 'providing_third_party_file',
+    label:
+      'Will your contractor be providing data (a Third Party File) that will be used in claims processing?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  isContractorAwareTestDataRequirements: {
+    gqlField: 'isContractorAwareTestDataRequirements',
+    goField: 'IsContractorAwareTestDataRequirements',
+    dbField: 'is_contractor_aware_test_data_requirements',
+    label:
+      'Is your contractor aware that test data will be needed, and when that test data must be available?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  beneficiaryCostSharingLevelAndHandling: {
+    gqlField: 'beneficiaryCostSharingLevelAndHandling',
+    goField: 'BeneficiaryCostSharingLevelAndHandling',
+    dbField: 'is_contractor_aware_test_data_requirements',
+    label:
+      'What is the intended level of beneficiary cost-sharing and how will it be handled?',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'oact', 'pbg']
+  },
+  waiveBeneficiaryCostSharingForAnyServices: {
+    gqlField: 'waiveBeneficiaryCostSharingForAnyServices',
+    goField: 'WaiveBeneficiaryCostSharingForAnyServices',
+    dbField: 'is_contractor_aware_test_data_requirements',
+    label:
+      'Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'oact', 'pbg']
+  },
+  waiveBeneficiaryCostSharingServiceSpecification: {
+    gqlField: 'waiveBeneficiaryCostSharingServiceSpecification',
+    goField: 'WaiveBeneficiaryCostSharingServiceSpecification',
+    dbField: 'is_contractor_aware_test_data_requirements',
+    label: 'Please specify which services.',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'oact', 'pbg']
+  },
+  waiverOnlyAppliesPartOfPayment: {
+    gqlField: 'waiverOnlyAppliesPartOfPayment',
+    goField: 'WaiverOnlyAppliesPartOfPayment',
+    dbField: 'is_contractor_aware_test_data_requirements',
+    label: 'Would the waiver only apply for part of the payment?',
+    sublabel:
+      'For example, we would assess cost-sharing for the service itself, but not for an add-on payment',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  waiveBeneficiaryCostSharingNote: {
+    gqlField: 'waiveBeneficiaryCostSharingNote',
+    goField: 'WaiveBeneficiaryCostSharingNote',
+    dbField: 'is_contractor_aware_test_data_requirements',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'oact', 'pbg']
   }
 };
 
@@ -307,7 +440,10 @@ export const paymentsMisc = {
   description:
     'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question below.',
   claimSpecificQuestions: 'Claims-based payment questions',
-  claimSpecificQuestionsContinued: 'Claims-based payment questions continued'
+  claimSpecificQuestionsContinued: 'Claims-based payment questions continued',
+  alert:
+    'Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).',
+  beneficaryCostSharingQuestions: 'Beneficiary cost-sharing questions'
 };
 
 export default payments;

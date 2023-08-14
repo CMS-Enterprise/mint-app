@@ -408,6 +408,19 @@ export type TranslationPayments = {
   affectsMedicareSecondaryPayerClaimsHow: TranslationFieldProperties;
   affectsMedicareSecondaryPayerClaimsNote: TranslationFieldProperties;
   payModelDifferentiation: TranslationFieldProperties;
+  // Anticipating Dependencies
+  creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptions<Bool>;
+  creatingDependenciesBetweenServicesNote: TranslationFieldProperties;
+  needsClaimsDataCollection: TranslationFieldPropertiesWithOptions<Bool>;
+  needsClaimsDataCollectionNote: TranslationFieldProperties;
+  providingThirdPartyFile: TranslationFieldPropertiesWithOptions<Bool>;
+  isContractorAwareTestDataRequirements: TranslationFieldPropertiesWithOptions<Bool>;
+  // Beneficiary Cost Sharing
+  beneficiaryCostSharingLevelAndHandling: TranslationFieldProperties;
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldPropertiesWithOptions<Bool>;
+  waiveBeneficiaryCostSharingServiceSpecification: TranslationFieldProperties;
+  waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  waiveBeneficiaryCostSharingNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {
