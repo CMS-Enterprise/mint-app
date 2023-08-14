@@ -215,7 +215,6 @@ const ReadOnlyModelBasics = ({
         <SideBySideReadOnlySection
           firstSection={{
             heading: planBasicsT('modelCategory.question'),
-            // copy: planBasicsT(`modelCategory.options.${modelCategory}`, '') // Default to empty string if category is null
             copy:
               modelCategory === null ? (
                 ''
