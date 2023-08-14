@@ -21,6 +21,7 @@ const mockModel: ModelPlanType = {
   basics: {
     performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
     modelCategory: ModelCategory.STATE_BASED,
+    additionalModelCategories: [],
     goal: 'The goal',
     __typename: 'PlanBasics'
   },
