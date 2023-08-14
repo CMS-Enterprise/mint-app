@@ -5,17 +5,6 @@ import { useQuery } from '@apollo/client';
 import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
 import { KeyCharacteristic } from 'types/graphql-global-types';
-import {
-  translateAgreementTypes,
-  translateAlternativePaymentTypes,
-  translateAuthorityAllowance,
-  translateBooleanOrNull,
-  translateGeographyApplication,
-  translateGeographyTypes,
-  translateKeyCharacteristics,
-  translateNewModel,
-  translateWaiverTypes
-} from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -31,9 +20,14 @@ const ReadOnlyGeneralCharacteristics = ({
   isViewingFilteredView,
   filteredQuestions
 }: ReadOnlyProps) => {
-  const { t } = useTranslation('generalCharacteristics');
-  const { t: h } = useTranslation('draftModelPlan');
-  const { t: p } = useTranslation('prepareForClearance');
+  const { t: generalCharacteristicsT } = useTranslation(
+    'generalCharacteristics'
+  );
+
+  const { t: generalCharacteristicsMiscT } = useTranslation(
+    'generalCharacteristicsMisc'
+  );
+  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -119,15 +113,15 @@ const ReadOnlyGeneralCharacteristics = ({
     >
       <TitleAndStatus
         clearance={clearance}
-        clearanceTitle={t('clearanceHeading')}
-        heading={t('heading')}
+        clearanceTitle={generalCharacteristicsMiscT('clearanceHeading')}
+        heading={generalCharacteristicsMiscT('heading')}
         isViewingFilteredView={isViewingFilteredView}
         status={status}
       />
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
-          {p('forModelPlan', {
+          {prepareForClearanceT('forModelPlan', {
             modelName
           })}
         </p>
@@ -145,8 +139,8 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'isNewModel',
           <ReadOnlySection
-            heading={t('isNewModel')}
-            copy={translateNewModel(isNewModel)}
+            heading={generalCharacteristicsT('isNewModel.question')}
+            copy={generalCharacteristicsT(`isNewModel.options.${isNewModel}`)}
           />
         )}
 
@@ -156,7 +150,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'existingModel',
             <ReadOnlySection
-              heading={t('whichExistingModel')}
+              heading={generalCharacteristicsT('existingModel.question')}
               copy={existingModel}
             />
           )}
@@ -166,8 +160,10 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'resemblesExistingModel',
           <ReadOnlySection
-            heading={t('resembleModel')}
-            copy={translateBooleanOrNull(resemblesExistingModel)}
+            heading={generalCharacteristicsT('resemblesExistingModel.question')}
+            copy={generalCharacteristicsT(
+              `resemblesExistingModel.options.${resemblesExistingModel}`
+            )}
           />
         )}
 
@@ -176,7 +172,7 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'modelResemblance',
           <ReadOnlySection
-            heading={t('modelResemblance')}
+            heading={generalCharacteristicsT('existingModelLinks.question')}
             list
             listItems={mappedExistingModels}
           />
@@ -187,7 +183,9 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'resemblesExistingModelHow',
           <ReadOnlySection
-            heading={t('waysResembleModel')}
+            heading={generalCharacteristicsT(
+              'resemblesExistingModelHow.question'
+            )}
             copy={resemblesExistingModelHow}
             notes={resemblesExistingModelNote}
           />
@@ -198,8 +196,10 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'hasComponentsOrTracks',
           <ReadOnlySection
-            heading={t('differentComponents')}
-            copy={translateBooleanOrNull(hasComponentsOrTracks)}
+            heading={generalCharacteristicsT('hasComponentsOrTracks.question')}
+            copy={generalCharacteristicsT(
+              `hasComponentsOrTracks.options.${hasComponentsOrTracks}`
+            )}
           />
         )}
 
@@ -209,7 +209,9 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'hasComponentsOrTracksDiffer',
             <ReadOnlySection
-              heading={t('tracksDiffer')}
+              heading={generalCharacteristicsT(
+                'hasComponentsOrTracksDiffer.question'
+              )}
               copy={hasComponentsOrTracksDiffer}
               notes={hasComponentsOrTracksNote}
             />
@@ -228,10 +230,14 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'alternativePaymentModelTypes',
           <ReadOnlySection
-            heading={t('modelAPM')}
+            heading={generalCharacteristicsT(
+              'alternativePaymentModelTypes.question'
+            )}
             list
-            listItems={alternativePaymentModelTypes?.map(
-              translateAlternativePaymentTypes
+            listItems={alternativePaymentModelTypes?.map((type): string =>
+              generalCharacteristicsT(
+                `alternativePaymentModelTypes.options.${type}`
+              )
             )}
             notes={alternativePaymentModelNote}
           />
@@ -242,9 +248,13 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'keyCharacteristics',
           <ReadOnlySection
-            heading={t('keyCharacteristicsQuestion')}
+            heading={generalCharacteristicsT(
+              'keyCharacteristics.readonlyQuestion'
+            )}
             list
-            listItems={keyCharacteristics?.map(translateKeyCharacteristics)}
+            listItems={keyCharacteristics?.map((type): string =>
+              generalCharacteristicsT(`keyCharacteristics.options.${type}`)
+            )}
             listOtherItem={keyCharacteristicsOther}
             notes={keyCharacteristicsNote}
           />
@@ -258,8 +268,10 @@ const ReadOnlyGeneralCharacteristics = ({
               filteredQuestions,
               'collectPlanBids',
               <ReadOnlySection
-                heading={t('reviewPlanBids')}
-                copy={translateBooleanOrNull(collectPlanBids)}
+                heading={generalCharacteristicsT('collectPlanBids.question')}
+                copy={generalCharacteristicsT(
+                  `collectPlanBids.options.${collectPlanBids}`
+                )}
                 notes={collectPlanBidsNote}
               />
             )}
@@ -269,8 +281,12 @@ const ReadOnlyGeneralCharacteristics = ({
               filteredQuestions,
               'managePartCDEnrollment',
               <ReadOnlySection
-                heading={t('manageEnrollment')}
-                copy={translateBooleanOrNull(managePartCDEnrollment)}
+                heading={generalCharacteristicsT(
+                  'managePartCDEnrollment.question'
+                )}
+                copy={generalCharacteristicsT(
+                  `managePartCDEnrollment.options.${managePartCDEnrollment}`
+                )}
                 notes={managePartCDEnrollmentNote}
               />
             )}
@@ -280,8 +296,13 @@ const ReadOnlyGeneralCharacteristics = ({
               filteredQuestions,
               'planContractUpdated',
               <ReadOnlySection
-                heading={t('updatedContract')}
-                copy={translateBooleanOrNull(planContractUpdated)}
+                heading={generalCharacteristicsT(
+                  'planContractUpdated.question'
+                )}
+                copy={generalCharacteristicsT(
+                  `planContractUpdated.options.${planContractUpdated}`,
+                  ''
+                )}
                 notes={planContractUpdatedNote}
               />
             )}
@@ -302,12 +323,19 @@ const ReadOnlyGeneralCharacteristics = ({
           'careCoordinationInvolved',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('careCoordination'),
-              copy: translateBooleanOrNull(careCoordinationInvolved)
+              heading: generalCharacteristicsT(
+                'careCoordinationInvolved.question'
+              ),
+              copy: generalCharacteristicsT(
+                `careCoordinationInvolved.options.${careCoordinationInvolved}`,
+                ''
+              )
             }}
             secondSection={
               careCoordinationInvolved === true && {
-                heading: h('howSo'),
+                heading: generalCharacteristicsT(
+                  'careCoordinationInvolvedDescription.question'
+                ),
                 copy: careCoordinationInvolvedDescription
               }
             }
@@ -319,7 +347,9 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'careCoordinationInvolved',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={generalCharacteristicsT(
+                'careCoordinationInvolvedNote.question'
+              )}
               copy={careCoordinationInvolvedNote}
             />
           )}
@@ -330,12 +360,19 @@ const ReadOnlyGeneralCharacteristics = ({
           'additionalServicesInvolved',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('additionalServices'),
-              copy: translateBooleanOrNull(additionalServicesInvolved)
+              heading: generalCharacteristicsT(
+                'additionalServicesInvolved.question'
+              ),
+              copy: generalCharacteristicsT(
+                `additionalServicesInvolved.options.${additionalServicesInvolved}`,
+                ''
+              )
             }}
             secondSection={
               additionalServicesInvolved === true && {
-                heading: h('howSo'),
+                heading: generalCharacteristicsT(
+                  'additionalServicesInvolvedDescription.question'
+                ),
                 copy: additionalServicesInvolvedDescription
               }
             }
@@ -347,7 +384,9 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'additionalServicesInvolved',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={generalCharacteristicsT(
+                'additionalServicesInvolved.question'
+              )}
               copy={additionalServicesInvolvedNote}
             />
           )}
@@ -358,12 +397,19 @@ const ReadOnlyGeneralCharacteristics = ({
           'communityPartnersInvolved',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('communityInvolved'),
-              copy: translateBooleanOrNull(communityPartnersInvolved)
+              heading: generalCharacteristicsT(
+                'communityPartnersInvolved.question'
+              ),
+              copy: generalCharacteristicsT(
+                `communityPartnersInvolved.options.${communityPartnersInvolved}`,
+                ''
+              )
             }}
             secondSection={
               communityPartnersInvolved === true && {
-                heading: h('howSo'),
+                heading: generalCharacteristicsT(
+                  'communityPartnersInvolvedDescription.question'
+                ),
                 copy: communityPartnersInvolvedDescription
               }
             }
@@ -375,7 +421,9 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'communityPartnersInvolved',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={generalCharacteristicsT(
+                'communityPartnersInvolvedNote.question'
+              )}
               copy={communityPartnersInvolvedNote}
             />
           )}
@@ -393,8 +441,11 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'geographiesTargeted',
           <ReadOnlySection
-            heading={t('specificGeographies')}
-            copy={translateBooleanOrNull(geographiesTargeted)}
+            heading={generalCharacteristicsT('geographiesTargeted.question')}
+            copy={generalCharacteristicsT(
+              `geographiesTargeted.options.${geographiesTargeted}`,
+              ''
+            )}
           />
         )}
 
@@ -404,16 +455,26 @@ const ReadOnlyGeneralCharacteristics = ({
           'geographiesTargetedTypes',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('geographyType'),
+              heading: generalCharacteristicsT(
+                'geographiesTargetedTypes.question'
+              ),
               list: true,
-              listItems: geographiesTargetedTypes?.map(translateGeographyTypes),
+              listItems: geographiesTargetedTypes?.map((type): string =>
+                generalCharacteristicsT(
+                  `geographiesTargetedTypes.options.${type}`
+                )
+              ),
               listOtherItem: geographiesTargetedTypesOther
             }}
             secondSection={{
-              heading: t('geographyApplied'),
+              heading: generalCharacteristicsT(
+                'geographiesTargetedAppliedTo.question'
+              ),
               list: true,
-              listItems: geographiesTargetedAppliedTo?.map(
-                translateGeographyApplication
+              listItems: geographiesTargetedAppliedTo?.map((type): string =>
+                generalCharacteristicsT(
+                  `geographiesTargetedAppliedTo.options.${type}`
+                )
               ),
               listOtherItem: geographiesTargetedAppliedToOther
             }}
@@ -424,7 +485,9 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'geographiesTargetedTypes',
           <ReadOnlySection
-            heading={t('basics:notes')}
+            heading={generalCharacteristicsT(
+              'geographiesTargetedNote.question'
+            )}
             copy={geographiesTargetedNote}
           />
         )}
@@ -434,8 +497,11 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'participationOptions',
           <ReadOnlySection
-            heading={t('participationOptions')}
-            copy={translateBooleanOrNull(participationOptions)}
+            heading={generalCharacteristicsT('participationOptions.question')}
+            copy={generalCharacteristicsT(
+              `participationOptions.options.${participationOptions}`,
+              ''
+            )}
             notes={participationOptionsNote}
           />
         )}
@@ -445,9 +511,11 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'agreementTypes',
           <ReadOnlySection
-            heading={t('agreementType')}
+            heading={generalCharacteristicsT('agreementTypes.question')}
             list
-            listItems={agreementTypes?.map(translateAgreementTypes)}
+            listItems={agreementTypes?.map((type): string =>
+              generalCharacteristicsT(`agreementTypes.options.${type}`)
+            )}
             listOtherItem={agreementTypesOther}
           />
         )}
@@ -457,8 +525,13 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'multiplePatricipationAgreementsNeeded',
           <ReadOnlySection
-            heading={t('moreParticipation')}
-            copy={translateBooleanOrNull(multiplePatricipationAgreementsNeeded)}
+            heading={generalCharacteristicsT(
+              'multiplePatricipationAgreementsNeeded.question'
+            )}
+            copy={generalCharacteristicsT(
+              `multiplePatricipationAgreementsNeeded.options.${multiplePatricipationAgreementsNeeded}`,
+              ''
+            )}
             notes={multiplePatricipationAgreementsNeededNote}
           />
         )}
@@ -471,12 +544,17 @@ const ReadOnlyGeneralCharacteristics = ({
           'rulemakingRequired',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('rulemakingRequired'),
-              copy: translateBooleanOrNull(rulemakingRequired)
+              heading: generalCharacteristicsT('rulemakingRequired.question'),
+              copy: generalCharacteristicsT(
+                `rulemakingRequired.options.${rulemakingRequired}`,
+                ''
+              )
             }}
             secondSection={
               !!(rulemakingRequired === true || isViewingFilteredView) && {
-                heading: t('ruleMakingInfo'),
+                heading: generalCharacteristicsT(
+                  'rulemakingRequiredDescription.question'
+                ),
                 copy: rulemakingRequiredDescription
               }
             }
@@ -488,7 +566,9 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'rulemakingRequired',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={generalCharacteristicsT(
+                'rulemakingRequiredNote.question'
+              )}
               copy={rulemakingRequiredNote}
             />
           )}
@@ -498,9 +578,11 @@ const ReadOnlyGeneralCharacteristics = ({
           filteredQuestions,
           'authorityAllowances',
           <ReadOnlySection
-            heading={t('authorityAllowed')}
+            heading={generalCharacteristicsT('authorityAllowances.question')}
             list
-            listItems={authorityAllowances?.map(translateAuthorityAllowance)}
+            listItems={authorityAllowances?.map((type): string =>
+              generalCharacteristicsT(`authorityAllowances.options.${type}`)
+            )}
             listOtherItem={authorityAllowancesOther}
             notes={authorityAllowancesNote}
           />
@@ -512,14 +594,23 @@ const ReadOnlyGeneralCharacteristics = ({
           'waiversRequired',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('waiversRequired'),
-              copy: translateBooleanOrNull(waiversRequired)
+              heading: generalCharacteristicsT('waiversRequired.question'),
+              copy: generalCharacteristicsT(
+                `waiversRequired.options.${waiversRequired}`,
+                ''
+              )
             }}
             secondSection={
               waiversRequired === true && {
-                heading: t('waiverTypesQuestion'),
+                heading: generalCharacteristicsT(
+                  'waiversRequiredTypes.readonlyQuestion'
+                ),
                 list: true,
-                listItems: waiversRequiredTypes?.map(translateWaiverTypes)
+                listItems: waiversRequiredTypes?.map((type): string =>
+                  generalCharacteristicsT(
+                    `waiversRequiredTypes.options.${type}`
+                  )
+                )
               }
             }
           />
@@ -530,7 +621,7 @@ const ReadOnlyGeneralCharacteristics = ({
             filteredQuestions,
             'waiversRequired',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={generalCharacteristicsT('waiversRequiredNote.question')}
               copy={waiversRequiredNote}
             />
           )}

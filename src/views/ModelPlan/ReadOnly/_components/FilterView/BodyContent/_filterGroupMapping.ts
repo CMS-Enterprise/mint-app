@@ -10,22 +10,36 @@ export const filterGroups = [
   'cbosc'
 ] as const;
 
+export type FilterGroup = typeof filterGroups[number];
+
 const FilterGroupMap: Record<typeof filterGroups[number], any> = {
   cmmi: {
     'general-characteristics': [
       'alternativePaymentModelTypes',
+      'alternativePaymentModelTypesNote',
       'keyCharacteristics',
+      'keyCharacteristicsNote',
+      'keyCharacteristicsOther',
       'participationOptions',
+      'participationOptionsNote',
       'agreementTypes',
+      'agreementTypesOther',
       'multiplePatricipationAgreementsNeeded',
+      'multiplePatricipationAgreementsNeededNote',
       'authorityAllowances',
-      'waiversRequired'
+      'authorityAllowancesOther',
+      'authorityAllowancesNote',
+      'waiversRequired',
+      'waiversRequiredTypes',
+      'waiversRequiredNote'
     ],
     'participants-and-providers': [
       'participants',
       'medicareProviderType',
       'statesEngagement',
-      'selectionMethod'
+      'selectionMethod',
+      'selectionOther',
+      'selectionNote'
     ],
     beneficiaries: [
       'beneficiarySelectionMethod',
@@ -55,11 +69,20 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
   },
   oact: {
     basics: ['nameHistory'],
-    'general-characteristics': ['alternativePaymentModelTypes'],
+    'general-characteristics': [
+      'alternativePaymentModelTypes',
+      'alternativePaymentModelTypesNote'
+    ],
     'participants-and-providers': [
       'providerAdditionFrequency',
+      'providerAdditionFrequencyOther',
+      'providerAdditionFrequencyNote',
       'providerAddMethod',
-      'providerLeaveMethod'
+      'providerAddMethodOther',
+      'providerAddMethodNote',
+      'providerLeaveMethod',
+      'providerLeaveMethodOther',
+      'providerLeaveMethodNote'
     ],
     beneficiaries: ['precedenceRules'],
     payments: [
@@ -75,7 +98,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: ['nameHistory', 'modelType', 'goal', 'performancePeriodStarts'],
     'participants-and-providers': [
       'expectedNumberOfParticipants',
-      'estimateConfidence'
+      'estimateConfidence',
+      'confidenceNote'
     ],
     payments: [
       'fundingSource',
@@ -90,7 +114,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: ['nameHistory', 'performancePeriodStarts'],
     'participants-and-providers': [
       'expectedNumberOfParticipants',
-      'estimateConfidence'
+      'estimateConfidence',
+      'confidenceNote'
     ],
     'ops-eval-and-learning': [
       'ccmInvolvment',
@@ -107,18 +132,38 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'cmsCenters',
       'cmmiGroups',
       'modelType',
-      'goal'
+      'goal',
+      'completeICIP',
+      'clearanceStarts',
+      'clearanceEnds',
+      'announced',
+      'applicationsStart',
+      'applicationsEnd',
+      'performancePeriodStarts',
+      'performancePeriodEnds',
+      'wrapUpEnds'
     ],
-    'general-characteristics': ['rulemakingRequired'],
+    'general-characteristics': [
+      'rulemakingRequired',
+      'rulemakingRequiredDescription',
+      'rulemakingRequiredNote'
+    ],
     'participants-and-providers': [
       'participants',
       'medicareProviderType',
       'statesEngagement',
       'expectedNumberOfParticipants',
       'estimateConfidence',
+      'confidenceNote',
       'providerAdditionFrequency',
+      'providerAdditionFrequencyOther',
+      'providerAdditionFrequencyNote',
       'providerAddMethod',
-      'providerLeaveMethod'
+      'providerAddMethodOther',
+      'providerAddMethodNote',
+      'providerLeaveMethod',
+      'providerLeaveMethodOther',
+      'providerLeaveMethodNote'
     ],
     payments: [
       'fundingSource',
@@ -140,14 +185,22 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'goal',
       'announced',
       'performancePeriodStarts',
-      'phasedIn'
+      'phasedIn',
+      'phasedInNote'
     ],
     'general-characteristics': [
       'keyCharacteristics',
+      'keyCharacteristicsNote',
+      'keyCharacteristicsOther',
       'geographiesTargeted',
+      'geographiesTargetedNote',
       'geographiesTargetedTypes',
+      'geographiesTargetedTypesOther',
       'geographiesTargetedAppliedTo',
-      'rulemakingRequired'
+      'geographiesTargetedAppliedToOther',
+      'rulemakingRequired',
+      'rulemakingRequiredDescription',
+      'rulemakingRequiredNote'
     ],
     'participants-and-providers': [
       'participants',
@@ -155,9 +208,14 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'statesEngagement',
       'modelApplicationLevel',
       'selectionMethod',
+      'selectionOther',
+      'selectionNote',
       'participantsIds',
+      'participantsIdsOther',
+      'participantsIdsNote',
       'providerOverlap',
-      'providerOverlapHierarchy'
+      'providerOverlapHierarchy',
+      'providerOverlapNote'
     ],
     beneficiaries: [
       'treatDualElligibleDifferent',
@@ -211,14 +269,22 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'goal',
       'announced',
       'performancePeriodStarts',
-      'phasedIn'
+      'phasedIn',
+      'phasedInNote'
     ],
     'general-characteristics': [
       'keyCharacteristics',
+      'keyCharacteristicsNote',
+      'keyCharacteristicsOther',
       'geographiesTargeted',
+      'geographiesTargetedNote',
       'geographiesTargetedTypes',
+      'geographiesTargetedTypesOther',
       'geographiesTargetedAppliedTo',
-      'rulemakingRequired'
+      'geographiesTargetedAppliedToOther',
+      'rulemakingRequired',
+      'rulemakingRequiredDescription',
+      'rulemakingRequiredNote'
     ],
     'participants-and-providers': [
       'participants',
@@ -226,8 +292,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'statesEngagement',
       'modelApplicationLevel',
       'selectionMethod',
+      'selectionOther',
+      'selectionNote',
       'providerOverlap',
-      'providerOverlapHierarchy'
+      'providerOverlapHierarchy',
+      'providerOverlapNote'
     ],
     beneficiaries: [
       'treatDualElligibleDifferent',
@@ -278,7 +347,10 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'statesEngagement',
       'expectedNumberOfParticipants',
       'estimateConfidence',
-      'communicationMethod'
+      'confidenceNote',
+      'communicationMethod',
+      'communicationMethodOther',
+      'communicationMethodNote'
     ],
     'ops-eval-and-learning': [
       'stakeholders',

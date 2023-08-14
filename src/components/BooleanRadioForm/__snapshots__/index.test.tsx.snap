@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The BooleanRadio component matches snapshot 1`] = `
+<DocumentFragment>
+  <fieldset
+    class="usa-fieldset"
+    data-testid="fieldset"
+  >
+    <div
+      class="usa-radio"
+      data-testid="radio"
+    >
+      <input
+        class="usa-radio__input"
+        id="care-coordination-involved"
+        name="careCoordinationInvolved"
+        type="radio"
+        value="TRUE"
+      />
+      <label
+        class="usa-radio__label"
+        for="care-coordination-involved"
+      >
+        Yes
+      </label>
+    </div>
+    <div
+      class="usa-radio"
+      data-testid="radio"
+    >
+      <input
+        class="usa-radio__input"
+        id="care-coordination-involved-no"
+        name="careCoordinationInvolved"
+        type="radio"
+        value="FALSE"
+      />
+      <label
+        class="usa-radio__label"
+        for="care-coordination-involved-no"
+      >
+        No
+      </label>
+    </div>
+  </fieldset>
+</DocumentFragment>
+`;

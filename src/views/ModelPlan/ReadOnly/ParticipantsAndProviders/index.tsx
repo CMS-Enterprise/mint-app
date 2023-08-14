@@ -10,20 +10,6 @@ import {
   ParticipantsType,
   RecruitmentType
 } from 'types/graphql-global-types';
-import {
-  translateBooleanOrNull,
-  translateCommunicationType,
-  translateConfidenceType,
-  translateFrequencyType,
-  translateOverlapType,
-  translateParticipantIDType,
-  translateParticipantSelectiontType,
-  translateParticipantsType,
-  translateProviderAddType,
-  translateProviderLeaveType,
-  translateRecruitmentType,
-  translateRiskType
-} from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -39,8 +25,14 @@ const ReadOnlyParticipantsAndProviders = ({
   isViewingFilteredView,
   filteredQuestions
 }: ReadOnlyProps) => {
-  const { t } = useTranslation('participantsAndProviders');
-  const { t: p } = useTranslation('prepareForClearance');
+  const { t: participantsAndProvidersT } = useTranslation(
+    'participantsAndProviders'
+  );
+
+  const { t: participantsAndProvidersMiscT } = useTranslation(
+    'participantsAndProvidersMisc'
+  );
+  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -114,15 +106,15 @@ const ReadOnlyParticipantsAndProviders = ({
     >
       <TitleAndStatus
         clearance={clearance}
-        clearanceTitle={t('clearanceHeading')}
-        heading={t('heading')}
+        clearanceTitle={participantsAndProvidersMiscT('clearanceHeading')}
+        heading={participantsAndProvidersMiscT('heading')}
         isViewingFilteredView={isViewingFilteredView}
         status={status}
       />
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
-          {p('forModelPlan', {
+          {prepareForClearanceT('forModelPlan', {
             modelName
           })}
         </p>
@@ -140,9 +132,11 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'participants',
           <ReadOnlySection
-            heading={t('whoAreParticipantsQuestion')}
+            heading={participantsAndProvidersT('participants.readonlyQuestion')}
             list
-            listItems={participants?.map(translateParticipantsType)}
+            listItems={participants?.map((type): string =>
+              participantsAndProvidersT(`participants.options.${type}`)
+            )}
             listOtherItem={participantsOther}
             notes={participantsNote}
           />
@@ -154,7 +148,9 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'medicareProviderType',
             <ReadOnlySection
-              heading={t('typeMedicateProvider')}
+              heading={participantsAndProvidersT(
+                'medicareProviderType.question'
+              )}
               copy={medicareProviderType}
             />
           )}
@@ -165,7 +161,7 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'statesEngagement',
             <ReadOnlySection
-              heading={t('describeStates')}
+              heading={participantsAndProvidersT('statesEngagement.question')}
               copy={statesEngagement}
             />
           )}
@@ -175,8 +171,13 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'participantsCurrentlyInModels',
           <ReadOnlySection
-            heading={t('participantsCMMI')}
-            copy={translateBooleanOrNull(participantsCurrentlyInModels)}
+            heading={participantsAndProvidersT(
+              'participantsCurrentlyInModels.question'
+            )}
+            copy={participantsAndProvidersT(
+              `participantsCurrentlyInModels.options.${participantsCurrentlyInModels}`,
+              ''
+            )}
             notes={participantsCurrentlyInModelsNote}
           />
         )}
@@ -186,7 +187,9 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'modelApplicationLevel',
           <ReadOnlySection
-            heading={t('modelLevel')}
+            heading={participantsAndProvidersT(
+              'modelApplicationLevel.question'
+            )}
             copy={modelApplicationLevel}
           />
         )}
@@ -205,14 +208,19 @@ const ReadOnlyParticipantsAndProviders = ({
           'expectedNumberOfParticipants',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('howManyParticipants'),
+              heading: participantsAndProvidersT(
+                'expectedNumberOfParticipants.question'
+              ),
               copy: expectedNumberOfParticipants?.toString()
             }}
             secondSection={{
-              heading: t('estimateConfidence'),
+              heading: participantsAndProvidersT('estimateConfidence.question'),
               copy:
                 estimateConfidence &&
-                translateConfidenceType(estimateConfidence),
+                participantsAndProvidersT(
+                  `estimateConfidence.options.${estimateConfidence}`,
+                  ''
+                ),
               listOtherItem: riskOther
             }}
           />
@@ -222,7 +230,10 @@ const ReadOnlyParticipantsAndProviders = ({
           isViewingFilteredView,
           filteredQuestions,
           'expectedNumberOfParticipants',
-          <ReadOnlySection heading={t('basics:notes')} copy={confidenceNote} />
+          <ReadOnlySection
+            heading={participantsAndProvidersT('confidenceNote.question')}
+            copy={confidenceNote}
+          />
         )}
 
         {/* If "Other", then display "Other — Lorem ipsum." */}
@@ -232,14 +243,17 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'recruitmentMethod',
           <ReadOnlySection
-            heading={t('recruitParticipants')}
+            heading={participantsAndProvidersT('recruitmentMethod.question')}
             copy={
               recruitmentMethod &&
               (recruitmentMethod === RecruitmentType.OTHER
-                ? `${translateRecruitmentType(
-                    recruitmentMethod
+                ? `${participantsAndProvidersT(
+                    `recruitmentMethod.options.${recruitmentMethod}`
                   )} \u2014  ${recruitmentOther}`
-                : translateRecruitmentType(recruitmentMethod))
+                : participantsAndProvidersT(
+                    `recruitmentMethod.options.${recruitmentMethod}`,
+                    ''
+                  ))
             }
             notes={recruitmentNote}
           />
@@ -250,9 +264,13 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'selectionMethod',
           <ReadOnlySection
-            heading={t('howWillYouSelectQuestion')}
+            heading={participantsAndProvidersT(
+              'selectionMethod.readonlyQuestion'
+            )}
             list
-            listItems={selectionMethod?.map(translateParticipantSelectiontType)}
+            listItems={selectionMethod?.map((type): string =>
+              participantsAndProvidersT(`selectionMethod.options.${type}`)
+            )}
             listOtherItem={selectionOther}
             notes={selectionNote}
           />
@@ -271,9 +289,11 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'communicationMethod',
           <ReadOnlySection
-            heading={t('participantCommunication')}
+            heading={participantsAndProvidersT('communicationMethod.question')}
             list
-            listItems={communicationMethod?.map(translateCommunicationType)}
+            listItems={communicationMethod?.map((type): string =>
+              participantsAndProvidersT(`communicationMethod.options.${type}`)
+            )}
             listOtherItem={communicationMethodOther}
             notes={communicationNote}
           />
@@ -285,13 +305,20 @@ const ReadOnlyParticipantsAndProviders = ({
           'participantAssumeRisk',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('assumeRisk'),
-              copy: translateBooleanOrNull(participantAssumeRisk)
+              heading: participantsAndProvidersT(
+                'participantAssumeRisk.question'
+              ),
+              copy: participantsAndProvidersT(
+                `participantAssumeRisk.options.${participantAssumeRisk}`,
+                ''
+              )
             }}
             secondSection={
               participantAssumeRisk === true && {
-                heading: t('riskType'),
-                copy: riskType && translateRiskType(riskType),
+                heading: participantsAndProvidersT('riskType.question'),
+                copy:
+                  riskType &&
+                  participantsAndProvidersT(`riskType.options.${riskType}`, ''),
                 listOtherItem: riskOther
               }
             }
@@ -302,7 +329,10 @@ const ReadOnlyParticipantsAndProviders = ({
             isViewingFilteredView,
             filteredQuestions,
             'participantAssumeRisk',
-            <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
+            <ReadOnlySection
+              heading={participantsAndProvidersT('riskNote.question')}
+              copy={riskNote}
+            />
           )}
 
         {checkGroupMap(
@@ -310,8 +340,11 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'willRiskChange',
           <ReadOnlySection
-            heading={t('changeRisk')}
-            copy={translateBooleanOrNull(willRiskChange)}
+            heading={participantsAndProvidersT('willRiskChange.question')}
+            copy={participantsAndProvidersT(
+              `willRiskChange.options.${willRiskChange}`,
+              ''
+            )}
             notes={willRiskChangeNote}
           />
         )}
@@ -329,8 +362,11 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'coordinateWork',
           <ReadOnlySection
-            heading={t('workCoordination')}
-            copy={translateBooleanOrNull(coordinateWork)}
+            heading={participantsAndProvidersT('coordinateWork.question')}
+            copy={participantsAndProvidersT(
+              `coordinateWork.options.${coordinateWork}`,
+              ''
+            )}
             notes={coordinateWorkNote}
           />
         )}
@@ -341,13 +377,21 @@ const ReadOnlyParticipantsAndProviders = ({
           'gainsharePayments',
           <SideBySideReadOnlySection
             firstSection={{
-              heading: t('gainsharing'),
-              copy: translateBooleanOrNull(gainsharePayments)
+              heading: participantsAndProvidersT('gainsharePayments.question'),
+              copy: participantsAndProvidersT(
+                `gainsharePayments.options.${gainsharePayments}`,
+                ''
+              )
             }}
             secondSection={
               gainsharePayments === true && {
-                heading: t('trackPayments'),
-                copy: translateBooleanOrNull(gainsharePaymentsTrack)
+                heading: participantsAndProvidersT(
+                  'gainsharePaymentsTrack.question'
+                ),
+                copy: participantsAndProvidersT(
+                  `gainsharePaymentsTrack.options.${gainsharePaymentsTrack}`,
+                  ''
+                )
               }
             }
           />
@@ -358,7 +402,9 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'gainsharePayments',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={participantsAndProvidersT(
+                'gainsharePaymentsNote.question'
+              )}
               copy={gainsharePaymentsNote}
             />
           )}
@@ -368,9 +414,11 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'participantsIds',
           <ReadOnlySection
-            heading={t('collectTINs')}
+            heading={participantsAndProvidersT('participantsIds.question')}
             list
-            listItems={participantsIds?.map(translateParticipantIDType)}
+            listItems={participantsIds?.map((type): string =>
+              participantsAndProvidersT(`participantsIds.options.${type}`)
+            )}
             listOtherItem={participantsIdsOther}
             notes={participantsIDSNote}
           />
@@ -385,14 +433,19 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'providerAdditionFrequency',
           <ReadOnlySection
-            heading={t('frequency')}
+            heading={participantsAndProvidersT(
+              'providerAdditionFrequency.question'
+            )}
             copy={
               providerAdditionFrequency &&
               (providerAdditionFrequency === FrequencyType.OTHER
-                ? `${translateFrequencyType(
-                    providerAdditionFrequency
+                ? `${participantsAndProvidersT(
+                    `providerAdditionFrequency.options.${providerAdditionFrequency}`
                   )} \u2014  ${providerAdditionFrequencyOther}`
-                : translateFrequencyType(providerAdditionFrequency))
+                : participantsAndProvidersT(
+                    `providerAdditionFrequency.options.${providerAdditionFrequency}`,
+                    ''
+                  ))
             }
             notes={providerAdditionFrequencyNote}
           />
@@ -403,9 +456,13 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'providerAddMethod',
           <ReadOnlySection
-            heading={t('decideProvidersQuestion')}
+            heading={participantsAndProvidersT(
+              'providerAddMethod.readonlyQuestion'
+            )}
             list
-            listItems={providerAddMethod?.map(translateProviderAddType)}
+            listItems={providerAddMethod?.map((type): string =>
+              participantsAndProvidersT(`providerAddMethod.options.${type}`)
+            )}
             listOtherItem={providerAddMethodOther}
             notes={providerAddMethodNote}
           />
@@ -416,9 +473,13 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'providerLeaveMethod',
           <ReadOnlySection
-            heading={t('canProvidersLeaveQuestion')}
+            heading={participantsAndProvidersT(
+              'providerLeaveMethod.readonlyQuestion'
+            )}
             list
-            listItems={providerLeaveMethod?.map(translateProviderLeaveType)}
+            listItems={providerLeaveMethod?.map((type): string =>
+              participantsAndProvidersT(`providerLeaveMethod.options.${type}`)
+            )}
             listOtherItem={providerLeaveMethodOther}
             notes={providerLeaveMethodNote}
           />
@@ -429,8 +490,14 @@ const ReadOnlyParticipantsAndProviders = ({
           filteredQuestions,
           'providerOverlap',
           <ReadOnlySection
-            heading={t('overlap')}
-            copy={providerOverlap && translateOverlapType(providerOverlap)}
+            heading={participantsAndProvidersT('providerOverlap.question')}
+            copy={
+              providerOverlap &&
+              participantsAndProvidersT(
+                `providerOverlap.options.${providerOverlap}`,
+                ''
+              )
+            }
           />
         )}
 
@@ -440,7 +507,9 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'providerOverlapHierarchy',
             <ReadOnlySection
-              heading={t('overlapInfo')}
+              heading={participantsAndProvidersT(
+                'providerOverlapHierarchy.question'
+              )}
               copy={providerOverlapHierarchy}
             />
           )}
@@ -451,7 +520,9 @@ const ReadOnlyParticipantsAndProviders = ({
             filteredQuestions,
             'providerOverlapHierarchy',
             <ReadOnlySection
-              heading={t('basics:notes')}
+              heading={participantsAndProvidersT(
+                'providerOverlapNote.question'
+              )}
               copy={providerOverlapNote}
             />
           )}

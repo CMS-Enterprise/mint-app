@@ -19,7 +19,7 @@ const ReadOnlySection = ({
   listOtherItem,
   notes
 }: ReadOnlySectionProps) => {
-  const { t } = useTranslation('basics');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const sectionName = heading
     .toLowerCase()
     .replace(/\W*$/g, '')
@@ -29,7 +29,7 @@ const ReadOnlySection = ({
     if (!list || listItems.length === 0) {
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {copy || <em className="text-base">{t('na')}</em>}
+          {copy || <em className="text-base">{miscellaneousT('na')}</em>}
         </p>
       );
     }
@@ -42,7 +42,9 @@ const ReadOnlySection = ({
               <ul data-testid="other-entry">
                 <li className="font-sans-md line-height-sans-4">
                   {listOtherItem || (
-                    <em className="text-base">{t('otherNotSpecificed')}</em>
+                    <em className="text-base">
+                      {miscellaneousT('otherNotSpecified')}
+                    </em>
                   )}
                 </li>
               </ul>
@@ -54,7 +56,7 @@ const ReadOnlySection = ({
   };
 
   // If no notes are written, do not render
-  if (heading === t('notes') && !copy) {
+  if (heading === miscellaneousT('notes') && !copy) {
     return null;
   }
 
@@ -68,7 +70,9 @@ const ReadOnlySection = ({
         </p>
         {renderCopyOrList()}
       </div>
-      {notes && <ReadOnlySection heading={t('notes')} copy={notes} />}
+      {notes && (
+        <ReadOnlySection heading={miscellaneousT('notes')} copy={notes} />
+      )}
     </Grid>
   );
 };

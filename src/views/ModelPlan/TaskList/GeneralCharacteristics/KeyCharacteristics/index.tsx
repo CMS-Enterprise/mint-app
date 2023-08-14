@@ -10,13 +10,13 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -27,6 +27,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
 import {
@@ -40,18 +41,29 @@ import {
   AlternativePaymentModelType,
   KeyCharacteristic
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  mapMultiSelectOptions,
-  translateAlternativePaymentTypes,
-  translateKeyCharacteristics
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const KeyCharacteristics = () => {
-  const { t } = useTranslation('generalCharacteristics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: generalCharacteristicsT } = useTranslation(
+    'generalCharacteristics'
+  );
+  const { t: generalCharacteristicsMiscT } = useTranslation(
+    'generalCharacteristicsMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    alternativePaymentModelTypes: alternativePaymentModelTypesConfig,
+    keyCharacteristics: keyCharacteristicsConfig,
+    collectPlanBids: collectPlanBidsConfig,
+    managePartCDEnrollment: managePartCDEnrollmentConfig,
+    planContractUpdated: planContractUpdatedConfig
+  } = usePlanTranslation('generalCharacteristics');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<KeyCharacteristicsFormType>>(null);
@@ -153,28 +165,31 @@ const KeyCharacteristics = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {generalCharacteristicsMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {generalCharacteristicsMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -196,19 +211,20 @@ const KeyCharacteristics = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -229,15 +245,20 @@ const KeyCharacteristics = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <legend className="usa-label maxw-none">
-                      {t('modelAPM')}
+                      {generalCharacteristicsT(
+                        'alternativePaymentModelTypes.question'
+                      )}
                     </legend>
+
                     <Alert
                       type="info"
                       slim
                       data-testid="mandatory-fields-alert"
                     >
                       <span className="mandatory-fields-alert__text">
-                        {t('MIPSInfo')}
+                        {generalCharacteristicsT(
+                          'alternativePaymentModelTypes.hint'
+                        )}
                       </span>
                     </Alert>
 
@@ -246,7 +267,7 @@ const KeyCharacteristics = () => {
                     </FieldErrorMsg>
 
                     <Fieldset>
-                      {Object.keys(AlternativePaymentModelType)
+                      {getKeys(alternativePaymentModelTypesConfig.options)
                         .filter(x => x !== AlternativePaymentModelType.NOT_APM)
                         .map(type => {
                           return (
@@ -255,10 +276,14 @@ const KeyCharacteristics = () => {
                                 as={CheckboxField}
                                 id={`plan-characteristics-alternative-payment-${type}`}
                                 name="alternativePaymentModelTypes"
-                                label={translateAlternativePaymentTypes(type)}
+                                label={
+                                  alternativePaymentModelTypesConfig.options[
+                                    type
+                                  ]
+                                }
                                 value={type}
                                 checked={values.alternativePaymentModelTypes.includes(
-                                  type as AlternativePaymentModelType
+                                  type
                                 )}
                                 disabled={values.alternativePaymentModelTypes.includes(
                                   AlternativePaymentModelType.NOT_APM
@@ -267,13 +292,16 @@ const KeyCharacteristics = () => {
                             </Fragment>
                           );
                         })}
+
                       <Field
                         as={CheckboxField}
                         id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
                         name="alternativePaymentModelTypes"
-                        label={translateAlternativePaymentTypes(
-                          AlternativePaymentModelType.NOT_APM
-                        )}
+                        label={
+                          alternativePaymentModelTypesConfig.options[
+                            AlternativePaymentModelType.NOT_APM
+                          ]
+                        }
                         value={AlternativePaymentModelType.NOT_APM}
                         checked={values.alternativePaymentModelTypes.includes(
                           AlternativePaymentModelType.NOT_APM
@@ -306,8 +334,9 @@ const KeyCharacteristics = () => {
                       htmlFor="plan-characteristics-key-characteristics"
                       id="label-plan-characteristics-key-characteristics"
                     >
-                      {t('keyCharacteristics')}
+                      {generalCharacteristicsT('keyCharacteristics.question')}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.keyCharacteristics}
                     </FieldErrorMsg>
@@ -318,11 +347,12 @@ const KeyCharacteristics = () => {
                       name="keyCharacteristics"
                       ariaLabel="label-plan-characteristics-key-characteristics"
                       role="combobox"
-                      options={mapMultiSelectOptions(
-                        translateKeyCharacteristics,
-                        KeyCharacteristic
+                      options={composeMultiSelectOptions(
+                        keyCharacteristicsConfig.options
                       )}
-                      selectedLabel={t('selectedKeyCharacteristics')}
+                      selectedLabel={generalCharacteristicsT(
+                        'keyCharacteristics.multiSelectLabel'
+                      )}
                       onChange={(value: string[] | []) => {
                         setFieldValue('keyCharacteristics', value);
                       }}
@@ -344,14 +374,19 @@ const KeyCharacteristics = () => {
                       error={!!flatErrors.keyCharacteristicsOther}
                     >
                       <Label htmlFor="plan-characteristics-key-other">
-                        {t('specificQuestions')}
+                        {generalCharacteristicsMiscT('specificQuestions')}
                       </Label>
+
                       <p className="margin-y-1 margin-top-3">
-                        {t('pleaseDescribe')}
+                        {generalCharacteristicsT(
+                          'keyCharacteristicsOther.question'
+                        )}
                       </p>
+
                       <FieldErrorMsg>
                         {flatErrors.keyCharacteristicsOther}
                       </FieldErrorMsg>
+
                       <Field
                         as={TextInput}
                         data-testid="plan-characteristics-key-other"
@@ -364,10 +399,10 @@ const KeyCharacteristics = () => {
                   )}
 
                   {(values.keyCharacteristics.includes(
-                    'PART_C' as KeyCharacteristic
+                    KeyCharacteristic.PART_C
                   ) ||
                     values.keyCharacteristics.includes(
-                      'PART_D' as KeyCharacteristic
+                      KeyCharacteristic.PART_D
                     )) && (
                     <>
                       <FieldGroup
@@ -379,8 +414,9 @@ const KeyCharacteristics = () => {
                           htmlFor="plan-characteristics-collect-bids"
                           className="text-normal"
                         >
-                          {t('reviewPlanBids')}
+                          {generalCharacteristicsT('collectPlanBids.question')}
                         </Label>
+
                         {itSolutionsStarted && (
                           <ITSolutionsWarning
                             id="plan-characteristics-collect-bids-warning"
@@ -391,33 +427,18 @@ const KeyCharacteristics = () => {
                             }
                           />
                         )}
+
                         <FieldErrorMsg>
                           {flatErrors.collectPlanBids}
                         </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="plan-characteristics-collect-bids"
-                            name="collectPlanBids"
-                            label={h('yes')}
-                            value="TRUE"
-                            checked={values.collectPlanBids === true}
-                            onChange={() => {
-                              setFieldValue('collectPlanBids', true);
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="plan-characteristics-collect-bids-no"
-                            name="collectPlanBids"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={values.collectPlanBids === false}
-                            onChange={() => {
-                              setFieldValue('collectPlanBids', false);
-                            }}
-                          />
-                        </Fieldset>
+
+                        <BooleanRadio
+                          field="collectPlanBids"
+                          id="plan-characteristics-collect-bids"
+                          value={values.collectPlanBids}
+                          setFieldValue={setFieldValue}
+                          options={collectPlanBidsConfig.options}
+                        />
                       </FieldGroup>
 
                       <AddNote
@@ -435,8 +456,11 @@ const KeyCharacteristics = () => {
                           htmlFor="plan-characteristics-manage-enrollment"
                           className="text-normal"
                         >
-                          {t('manageEnrollment')}
+                          {generalCharacteristicsT(
+                            'managePartCDEnrollment.question'
+                          )}
                         </Label>
+
                         {itSolutionsStarted && (
                           <ITSolutionsWarning
                             id="plan-characteristics-manage-enrollment-warning"
@@ -447,33 +471,18 @@ const KeyCharacteristics = () => {
                             }
                           />
                         )}
+
                         <FieldErrorMsg>
                           {flatErrors.managePartCDEnrollment}
                         </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="plan-characteristics-manage-enrollment"
-                            name="managePartCDEnrollment"
-                            label={h('yes')}
-                            value="TRUE"
-                            checked={values.managePartCDEnrollment === true}
-                            onChange={() => {
-                              setFieldValue('managePartCDEnrollment', true);
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="plan-characteristics-manage-enrollment-no"
-                            name="managePartCDEnrollment"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={values.managePartCDEnrollment === false}
-                            onChange={() => {
-                              setFieldValue('managePartCDEnrollment', false);
-                            }}
-                          />
-                        </Fieldset>
+
+                        <BooleanRadio
+                          field="managePartCDEnrollment"
+                          id="plan-characteristics-manage-enrollment"
+                          value={values.managePartCDEnrollment}
+                          setFieldValue={setFieldValue}
+                          options={managePartCDEnrollmentConfig.options}
+                        />
                       </FieldGroup>
 
                       <AddNote
@@ -491,8 +500,11 @@ const KeyCharacteristics = () => {
                           htmlFor="plan-characteristics-contact-updated"
                           className="text-normal"
                         >
-                          {t('updatedContract')}
+                          {generalCharacteristicsT(
+                            'planContractUpdated.question'
+                          )}
                         </Label>
+
                         {itSolutionsStarted && (
                           <ITSolutionsWarning
                             id="plan-characteristics-contact-updated-warning"
@@ -503,33 +515,18 @@ const KeyCharacteristics = () => {
                             }
                           />
                         )}
+
                         <FieldErrorMsg>
                           {flatErrors.planContractUpdated}
                         </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="plan-characteristics-contact-updated"
-                            name="planContractUpdated"
-                            label={h('yes')}
-                            value="TRUE"
-                            checked={values.planContractUpdated === true}
-                            onChange={() => {
-                              setFieldValue('planContractUpdated', true);
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="plan-characteristics-contact-updated-no"
-                            name="planContractUpdated"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={values.planContractUpdated === false}
-                            onChange={() => {
-                              setFieldValue('planContractUpdated', false);
-                            }}
-                          />
-                        </Fieldset>
+
+                        <BooleanRadio
+                          field="planContractUpdated"
+                          id="plan-characteristics-contact-updated"
+                          value={values.planContractUpdated}
+                          setFieldValue={setFieldValue}
+                          options={planContractUpdatedConfig.options}
+                        />
                       </FieldGroup>
 
                       <AddNote
@@ -547,10 +544,11 @@ const KeyCharacteristics = () => {
                         handleFormSubmit('back');
                       }}
                     >
-                      {h('back')}
+                      {miscellaneousT('back')}
                     </Button>
+
                     <Button type="submit" onClick={() => setErrors({})}>
-                      {h('next')}
+                      {miscellaneousT('next')}
                     </Button>
                   </div>
                   <Button
@@ -559,10 +557,12 @@ const KeyCharacteristics = () => {
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {h('saveAndReturn')}
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -576,6 +576,7 @@ const KeyCharacteristics = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={2} totalPages={5} className="margin-y-6" />
     </>
   );

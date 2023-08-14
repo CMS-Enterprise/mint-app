@@ -11,86 +11,87 @@ export interface NeedMap {
   section: string;
 }
 
+// TODO: replance 'answer' translation methods with new mapped translations enums once all work is done
 const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
   MANAGE_CD: {
     route: 'characteristics/key-characteristics',
     fieldName: 'managePartCDEnrollment',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:manageEnrollment',
+    question: 'generalCharacteristics:managePartCDEnrollment.question',
     answer: 'translateBoolean',
-    section: 'beneficiaries'
+    section: 'generalCharacteristicsMisc'
   },
   REV_COL_BIDS: {
     route: 'characteristics/key-characteristics',
     fieldName: 'collectPlanBids',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:reviewPlanBids',
+    question: 'generalCharacteristics:collectPlanBids.question',
     answer: 'translateBoolean',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   UPDATE_CONTRACT: {
     route: 'characteristics/key-characteristics',
     fieldName: 'planContractUpdated',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:updatedContract',
+    question: 'generalCharacteristics:planContractUpdated.question',
     answer: 'translateBoolean',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   SIGN_PARTICIPATION_AGREEMENTS: {
     route: 'characteristics/targets-and-options',
     fieldName: 'agreementTypes',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:agreementType',
+    question: 'generalCharacteristics:agreementTypes.question',
     answer: 'translateAgreementTypes',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   RECRUIT_PARTICIPANTS: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'recruitmentMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:recruitParticipants',
+    question: 'participantsAndProviders:recruitmentMethod.question',
     answer: 'translateRecruitmentType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   APP_SUPPORT_CON: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:howWillYouSelect',
+    question: 'participantsAndProviders:selectionMethod.question',
     answer: 'translateParticipantSelectiontType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   REV_SCORE_APP: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:howWillYouSelect',
+    question: 'participantsAndProviders:selectionMethod.question',
     answer: 'translateParticipantSelectiontType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   COMM_W_PART: {
     route: 'participants-and-providers/communication',
     fieldName: 'communicationMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:participantCommunication',
+    question: 'participantsAndProviders:communicationMethod.question',
     answer: 'translateCommunicationType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   MANAGE_PROV_OVERLAP: {
     route: 'participants-and-providers/provider-options',
     fieldName: 'providerOverlap',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:overlap',
+    question: 'participantsAndProviders:providerOverlap.question',
     answer: 'translateOverlapType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   VET_PROVIDERS_FOR_PROGRAM_INTEGRITY: {
     route: 'participants-and-providers/coordination',
     fieldName: 'participantsIds',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:collectTINs',
+    question: 'participantsAndProviders:participantsIds.question',
     answer: 'translateParticipantIDType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   MANAGE_BEN_OVERLAP: {
     route: 'beneficiaries/beneficiary-frequency',
