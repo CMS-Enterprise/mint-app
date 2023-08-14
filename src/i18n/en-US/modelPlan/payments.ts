@@ -166,6 +166,137 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'ipc']
+  },
+  payClaims: {
+    gqlField: 'payClaims',
+    goField: 'PayClaims',
+    dbField: 'pay_claims',
+    label: 'Select which claims-based payments will you pay.',
+    sublabel:
+      'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    multiSelectLabel: 'Selected claims-based payments',
+    options: {
+      ADJUSTMENTS_TO_FFS_PAYMENTS: 'Adjustments to FFS payments',
+      CARE_MANAGEMENT_HOME_VISITS: 'Payments for care management home visits',
+      REDUCTIONS_TO_BENEFICIARY_COST_SHARING:
+        'Reductions to beneficiary cost-sharing',
+      SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS:
+        'Payments for SNF claims without 3-day hospital admissions',
+      TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE:
+        'Payments for telehealth services not covered through Traditional Medicare',
+      SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE:
+        'Payments for services not covered through Traditional Medicare',
+      OTHER: 'Other'
+    },
+    filterGroups: ['cmmi', 'oact']
+  },
+  payClaimsOther: {
+    gqlField: 'payClaimsOther',
+    goField: 'PayClaimsOther',
+    dbField: 'pay_claims_other',
+    label: 'Please describe the other payment frequency..',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'oact']
+  },
+  payClaimsNote: {
+    gqlField: 'payClaimsNote',
+    goField: 'PayClaimsNote',
+    dbField: 'pay_claims_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'oact']
+  },
+  shouldAnyProvidersExcludedFFSSystems: {
+    gqlField: 'shouldAnyProvidersExcludedFFSSystems',
+    goField: 'ShouldAnyProvidersExcludedFFSSystems',
+    dbField: 'should_any_providers_excluded_ffs_systems',
+    label:
+      'Should any model providers be excluded from existing Fee-for-Service payment systems?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  shouldAnyProviderExcludedFFSSystemsNote: {
+    gqlField: 'shouldAnyProviderExcludedFFSSystemsNote',
+    goField: 'ShouldAnyProviderExcludedFFSSystemsNote',
+    dbField: 'should_any_providers_excluded_ffs_systems_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
+  },
+  changesMedicarePhysicianFeeSchedule: {
+    gqlField: 'changesMedicarePhysicianFeeSchedule',
+    goField: 'ChangesMedicarePhysicianFeeSchedule',
+    dbField: 'changes_medicare_physician_fee_schedule',
+    label: 'Will the model change the Medicare Physician Fee Schedule?',
+    sublabel:
+      'If so, it might impact Critical Access Hospitals paid under Method II.',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  changesMedicarePhysicianFeeScheduleNote: {
+    gqlField: 'changesMedicarePhysicianFeeScheduleNote',
+    goField: 'ChangesMedicarePhysicianFeeScheduleNote',
+    dbField: 'changes_medicare_physician_fee_schedule_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
+  },
+  affectsMedicareSecondaryPayerClaims: {
+    gqlField: 'affectsMedicareSecondaryPayerClaims',
+    goField: 'AffectsMedicareSecondaryPayerClaims',
+    dbField: 'affects_medicare_secondary_payer_claims',
+    label: 'Does the model affect Medicare Secondary Payer claims?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
+  affectsMedicareSecondaryPayerClaimsHow: {
+    gqlField: 'affectsMedicareSecondaryPayerClaimsHow',
+    goField: 'AffectsMedicareSecondaryPayerClaimsHow',
+    dbField: 'affects_medicare_secondary_payer_claims_how',
+    label: 'How so?',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
+  },
+  affectsMedicareSecondaryPayerClaimsNote: {
+    gqlField: 'affectsMedicareSecondaryPayerClaimsNote',
+    goField: 'AffectsMedicareSecondaryPayerClaimsNote',
+    dbField: 'affects_medicare_secondary_payer_claims_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
+  },
+  payModelDifferentiation: {
+    gqlField: 'payModelDifferentiation',
+    goField: 'PayModelDifferentiation',
+    dbField: 'pay_model_differentiation',
+    label:
+      'How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   }
 };
 
@@ -174,7 +305,9 @@ export const paymentsMisc = {
   clearanceHeading: 'Review payment',
   breadcrumb: 'Payment',
   description:
-    'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question below.'
+    'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question below.',
+  claimSpecificQuestions: 'Claims-based payment questions',
+  claimSpecificQuestionsContinued: 'Claims-based payment questions continued'
 };
 
 export default payments;

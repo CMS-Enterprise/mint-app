@@ -258,7 +258,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'payments',
     question: 'payments:nonClaimsPayments.label',
     answer: 'translateNonClaimsBasedPayType',
-    section: 'payments'
+    section: 'paymentsMisc'
   },
   RECOVER_PAYMENTS: {
     route: 'payment/recover-payment',

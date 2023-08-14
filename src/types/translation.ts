@@ -12,6 +12,7 @@ import {
   BenchmarkForPerformanceType,
   BeneficiariesType,
   CcmInvolvmentType,
+  ClaimsBasedPayType,
   CMMIGroup,
   CMSCenter,
   ConfidenceType,
@@ -395,6 +396,18 @@ export type TranslationPayments = {
   payRecipientsNote: TranslationFieldProperties;
   payType: TranslationFieldPropertiesWithOptions<PayType>;
   payTypeNote: TranslationFieldProperties;
+  // Claims Based Payment
+  payClaims: TranslationFieldPropertiesWithOptions<ClaimsBasedPayType>;
+  payClaimsOther: TranslationFieldProperties;
+  payClaimsNote: TranslationFieldProperties;
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldPropertiesWithOptions<Bool>;
+  shouldAnyProviderExcludedFFSSystemsNote: TranslationFieldProperties;
+  changesMedicarePhysicianFeeSchedule: TranslationFieldPropertiesWithOptions<Bool>;
+  changesMedicarePhysicianFeeScheduleNote: TranslationFieldProperties;
+  affectsMedicareSecondaryPayerClaims: TranslationFieldPropertiesWithOptions<Bool>;
+  affectsMedicareSecondaryPayerClaimsHow: TranslationFieldProperties;
+  affectsMedicareSecondaryPayerClaimsNote: TranslationFieldProperties;
+  payModelDifferentiation: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {
