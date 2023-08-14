@@ -1,29 +1,29 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
 import GetMilestones from 'queries/Basics/GetMilestones';
 import { GetMilestones_modelPlan_basics as GetMilestonesType } from 'queries/Basics/types/GetMilestones';
 import { TaskStatus } from 'types/graphql-global-types';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import Milestones from './index';
 
 const milestonesMockData: GetMilestonesType = {
   __typename: 'PlanBasics',
   id: '123',
-  completeICIP: null,
-  clearanceStarts: null,
-  clearanceEnds: null,
-  announced: null,
-  applicationsStart: null,
-  applicationsEnd: null,
-  performancePeriodStarts: null,
-  performancePeriodEnds: null,
-  wrapUpEnds: null,
-  highLevelNote: '',
-  phasedIn: null,
-  phasedInNote: '',
+  completeICIP: '2029-05-12T15:01:39.190679Z',
+  clearanceStarts: '2030-06-12T15:01:39.190679Z',
+  clearanceEnds: '2028-12-12T15:01:39.190679Z',
+  announced: '2029-07-08T15:01:39.190679Z',
+  applicationsStart: '2031-02-114T15:01:39.190679Z',
+  applicationsEnd: '2031-01-23T15:01:39.190679Z',
+  performancePeriodStarts: '2029-06-12T15:01:39.190679Z',
+  performancePeriodEnds: '2029-012-28T15:01:39.190679Z',
+  wrapUpEnds: '2030-05-08T15:01:39.190679Z',
+  highLevelNote: 'High level note',
+  phasedIn: true,
+  phasedInNote: 'Phased in note',
   readyForReviewByUserAccount: {
     commonName: 'ASDF',
     id: '000',
@@ -42,6 +42,7 @@ const mocks = [
     result: {
       data: {
         modelPlan: {
+          __typename: 'ModelPlan',
           id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
           modelName: 'My excellent plan that I just initiated',
           basics: milestonesMockData
@@ -59,11 +60,11 @@ describe('Model Plan Documents page', () => {
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/milestones'
         ]}
       >
-        <MockedProvider>
+        <VerboseMockedProvider mocks={mocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/milestones">
             <Milestones />
           </Route>
-        </MockedProvider>
+        </VerboseMockedProvider>
       </MemoryRouter>
     );
 
@@ -71,6 +72,7 @@ describe('Model Plan Documents page', () => {
       expect(screen.getByTestId('model-plan-milestones')).toBeInTheDocument();
     });
   });
+
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
@@ -78,13 +80,18 @@ describe('Model Plan Documents page', () => {
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/milestones'
         ]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
+        <VerboseMockedProvider mocks={mocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/milestones">
             <Milestones />
           </Route>
-        </MockedProvider>
+        </VerboseMockedProvider>
       </MemoryRouter>
     );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('model-plan-milestones')).toBeInTheDocument();
+    });
+
     await waitFor(() => {
       expect(asFragment()).toMatchSnapshot();
     });

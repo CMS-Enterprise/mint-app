@@ -24,15 +24,14 @@ import (
 
 // These job codes define the environmentally specific potential codes which a user may possess
 const (
-	JobCodeTestUser       = "MINT_USER_NONPROD"
-	JobCodeTestAssessment = "MINT_ASSESSMENT_NONPROD"
-	JobCodeTestMACUser    = "MINT MAC Users"
-	JobCodeProdUser       = "MINT_USER"
-	JobCodeProdAssessment = "MINT_ASSESSMENT"
-	JobCodeProdMACUser    = "MINT MAC Users"
-
-	// This represents the rename to the MAC user job code. Future work will likely rename the job code config, but for now will allow either
-	JobCodeMINTContractor = "MINT Contractor"
+	JobCodeTestUser           = "MINT_USER_NONPROD"
+	JobCodeTestAssessment     = "MINT_ASSESSMENT_NONPROD"
+	JobCodeTestMACUser        = "MINT MAC Users"
+	JobCodeTestMINTContractor = "MINT_CTR_FFS_NONPROD"
+	JobCodeProdUser           = "MINT_USER"
+	JobCodeProdAssessment     = "MINT_ASSESSMENT"
+	JobCodeProdMACUser        = "MINT MAC Users"
+	JobCodeProdMINTContractor = "MINT_CONTRACTOR_FFS"
 )
 
 // JobCodesConfig contains a set of environment context-sensitive job codes
@@ -64,7 +63,7 @@ func NewProductionJobCodesConfig() *JobCodesConfig {
 		JobCodeProdUser,
 		JobCodeProdAssessment,
 		JobCodeProdMACUser,
-		JobCodeMINTContractor,
+		JobCodeProdMINTContractor,
 	)
 }
 
@@ -74,7 +73,7 @@ func NewTestJobCodesConfig() *JobCodesConfig {
 		JobCodeTestUser,
 		JobCodeTestAssessment,
 		JobCodeTestMACUser,
-		JobCodeMINTContractor,
+		JobCodeTestMINTContractor,
 	)
 }
 
@@ -155,7 +154,7 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 		jcUser = jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetUserJobCode())
 	}
 
-	//TODO: this should be updated once job codes are updated to only check for the MINTContractor job code.
+	//TODO: once we (maybe) deprecate IDM logins, this should be updated to only check for the MINTContractor job code.
 	jcMAC := (jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMACUserJobCode()) || jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMINTContractorJobCode()))
 
 	// Create a LaunchDarkly user
