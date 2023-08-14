@@ -6,12 +6,14 @@ import { Tooltip as TrussTooltip } from '@trussworks/react-uswds';
 
 type TooltipProps = {
   children: React.ReactNode;
+  className?: string;
   label: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
 };
 
 const Tooltip = ({
   children,
+  className,
   label,
   position = 'top'
 }: TooltipProps): React.ReactElement => {
@@ -22,7 +24,12 @@ const Tooltip = ({
   const CustomDiv = forwardRef<HTMLDivElement>(CustomDivForwardRef);
 
   return (
-    <TrussTooltip label={label} asCustom={CustomDiv} position={position}>
+    <TrussTooltip
+      label={label}
+      asCustom={CustomDiv}
+      position={position}
+      className={className}
+    >
       {children}
     </TrussTooltip>
   );
