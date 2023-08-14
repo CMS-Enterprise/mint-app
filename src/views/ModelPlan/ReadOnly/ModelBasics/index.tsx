@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
@@ -243,22 +243,23 @@ const ReadOnlyModelBasics = ({
             list: true,
             listItems: additionalModelCategories?.map(group => {
               return (
-                <span
-                  className="display-flex flex-align-center"
-                  style={{ gap: '4px' }}
-                >
-                  {planBasicsT(`modelCategory.options.${group}`)}
-
-                  <Tooltip
-                    label={planBasicsT(`modelCategory.tooltip.${group}`)}
-                    position="right"
+                <Fragment key={group}>
+                  <span
+                    className="display-flex flex-align-center"
+                    style={{ gap: '4px' }}
                   >
-                    <IconInfo className="text-base-light" />
-                  </Tooltip>
-                </span>
+                    {planBasicsT(`modelCategory.options.${group}`)}
+
+                    <Tooltip
+                      label={planBasicsT(`modelCategory.tooltip.${group}`)}
+                      position="right"
+                    >
+                      <IconInfo className="text-base-light" />
+                    </Tooltip>
+                  </span>
+                </Fragment>
               );
             })
-            // TODO: tests
           }}
         />
       )}

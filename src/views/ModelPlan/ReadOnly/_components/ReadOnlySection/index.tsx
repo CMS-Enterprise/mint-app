@@ -25,11 +25,20 @@ const ReadOnlySection = ({
     .replace(/\W*$/g, '')
     .replace(/\W/g, '-');
 
-  const isElement = (element: string | number | React.ReactElement) => {
+  const isElement = (
+    element: string | number | React.ReactElement | React.ReactNode
+  ) => {
     return React.isValidElement(element);
   };
 
   const renderCopyOrList = () => {
+    if (isElement(copy)) {
+      return (
+        <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+          {copy || <em className="text-base">{t('na')}</em>}
+        </div>
+      );
+    }
     if (!list || listItems.length === 0) {
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
@@ -43,8 +52,12 @@ const ReadOnlySection = ({
           isElement(listItems[0]) ? '2' : '3'
         }`}
       >
-        {listItems.map(item => (
-          <React.Fragment key={`${sectionName}--${item}`}>
+        {listItems.map((item, index) => (
+          <React.Fragment
+            key={
+              isElement(listItems[index]) ? index : `${sectionName}--${item}`
+            }
+          >
             <li className="font-sans-md line-height-sans-4">{item}</li>
             {item === 'Other' && (
               <ul data-testid="other-entry">
