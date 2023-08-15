@@ -1,11 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
 import GetMilestones from 'queries/Basics/GetMilestones';
 import { GetMilestones_modelPlan_basics as GetMilestonesType } from 'queries/Basics/types/GetMilestones';
 import { TaskStatus } from 'types/graphql-global-types';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import Milestones from './index';
 
@@ -42,6 +42,7 @@ const mocks = [
     result: {
       data: {
         modelPlan: {
+          __typename: 'ModelPlan',
           id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
           modelName: 'My excellent plan that I just initiated',
           basics: milestonesMockData
@@ -59,11 +60,11 @@ describe('Model Plan Documents page', () => {
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/milestones'
         ]}
       >
-        <MockedProvider>
+        <VerboseMockedProvider mocks={mocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/milestones">
             <Milestones />
           </Route>
-        </MockedProvider>
+        </VerboseMockedProvider>
       </MemoryRouter>
     );
 
@@ -71,6 +72,7 @@ describe('Model Plan Documents page', () => {
       expect(screen.getByTestId('model-plan-milestones')).toBeInTheDocument();
     });
   });
+
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
@@ -78,11 +80,11 @@ describe('Model Plan Documents page', () => {
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/milestones'
         ]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
+        <VerboseMockedProvider mocks={mocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/milestones">
             <Milestones />
           </Route>
-        </MockedProvider>
+        </VerboseMockedProvider>
       </MemoryRouter>
     );
 

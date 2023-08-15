@@ -122,14 +122,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-rulemaking-required"
+              data-testid="plan-characteristics-rulemaking-required-true"
+              id="plan-characteristics-rulemaking-required-true"
               name="rulemakingRequired"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-rulemaking-required"
+              for="plan-characteristics-rulemaking-required-true"
             >
               Yes
             </label>
@@ -165,14 +166,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-rulemaking-required-no"
+              data-testid="plan-characteristics-rulemaking-required-false"
+              id="plan-characteristics-rulemaking-required-false"
               name="rulemakingRequired"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-rulemaking-required-no"
+              for="plan-characteristics-rulemaking-required-false"
             >
               No
             </label>
@@ -343,14 +345,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-waivers-required"
+              data-testid="plan-characteristics-waivers-required-true"
+              id="plan-characteristics-waivers-required-true"
               name="waiversRequired"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-waivers-required"
+              for="plan-characteristics-waivers-required-true"
             >
               Yes
             </label>
@@ -361,14 +364,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-waivers-required-no"
+              data-testid="plan-characteristics-waivers-required-false"
+              id="plan-characteristics-waivers-required-false"
               name="waiversRequired"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-waivers-required-no"
+              for="plan-characteristics-waivers-required-false"
             >
               No
             </label>

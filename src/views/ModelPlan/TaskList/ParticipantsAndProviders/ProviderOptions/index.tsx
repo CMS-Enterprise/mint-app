@@ -266,7 +266,7 @@ export const ProviderOptions = () => {
                   >
                     <Label htmlFor="participants-and-providers-additional-frequency">
                       {participantsAndProvidersT(
-                        'providerAdditionFrequency.question'
+                        'providerAdditionFrequency.label'
                       )}
                     </Label>
 
@@ -300,7 +300,7 @@ export const ProviderOptions = () => {
                                     className="text-normal"
                                   >
                                     {participantsAndProvidersT(
-                                      'providerAdditionFrequencyOther.question'
+                                      'providerAdditionFrequencyOther.label'
                                     )}
                                   </Label>
 
@@ -337,11 +337,11 @@ export const ProviderOptions = () => {
                       htmlFor="participants-and-providers-provider-add-method"
                       id="label-participants-and-providers-provider-add-method"
                     >
-                      {participantsAndProvidersT('providerAddMethod.question')}
+                      {participantsAndProvidersT('providerAddMethod.label')}
                     </Label>
 
                     <p className="text-base margin-0 line-height-body-3">
-                      {participantsAndProvidersT('providerAddMethod.hint')}
+                      {participantsAndProvidersT('providerAddMethod.sublabel')}
                     </p>
 
                     <FieldErrorMsg>
@@ -377,7 +377,7 @@ export const ProviderOptions = () => {
                           className="text-normal"
                         >
                           {participantsAndProvidersT(
-                            'providerAddMethodOther.question'
+                            'providerAddMethodOther.label'
                           )}
                         </Label>
 
@@ -408,13 +408,13 @@ export const ProviderOptions = () => {
                       <>
                         <legend className="usa-label">
                           {participantsAndProvidersT(
-                            'providerLeaveMethod.question'
+                            'providerLeaveMethod.label'
                           )}
                         </legend>
 
                         <p className="text-base margin-0 line-height-body-3">
                           {participantsAndProvidersT(
-                            'providerLeaveMethod.hint'
+                            'providerLeaveMethod.sublabel'
                           )}
                         </p>
 
@@ -459,7 +459,7 @@ export const ProviderOptions = () => {
                                         className="text-normal"
                                       >
                                         {participantsAndProvidersT(
-                                          'providerLeaveMethodOther.question'
+                                          'providerLeaveMethodOther.label'
                                         )}
                                       </Label>
 
@@ -494,7 +494,7 @@ export const ProviderOptions = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-provider-overlap">
-                      {participantsAndProvidersT('providerOverlap.question')}
+                      {participantsAndProvidersT('providerOverlap.label')}
                     </Label>
 
                     {itSolutionsStarted && (
@@ -540,7 +540,7 @@ export const ProviderOptions = () => {
                           className="text-normal margin-top-4"
                         >
                           {participantsAndProvidersT(
-                            'providerOverlapHierarchy.question'
+                            'providerOverlapHierarchy.label'
                           )}
                         </Label>
 

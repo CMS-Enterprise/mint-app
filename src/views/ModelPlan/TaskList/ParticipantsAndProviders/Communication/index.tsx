@@ -244,7 +244,7 @@ export const Communication = () => {
                         <>
                           <legend className="usa-label">
                             {participantsAndProvidersT(
-                              'communicationMethod.question'
+                              'communicationMethod.label'
                             )}
                           </legend>
 
@@ -304,7 +304,7 @@ export const Communication = () => {
                                           className="text-normal"
                                         >
                                           {participantsAndProvidersT(
-                                            'communicationMethodOther.question'
+                                            'communicationMethodOther.label'
                                           )}
                                         </Label>
 
@@ -340,9 +340,7 @@ export const Communication = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-risk">
-                      {participantsAndProvidersT(
-                        'participantAssumeRisk.question'
-                      )}
+                      {participantsAndProvidersT('participantAssumeRisk.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -363,7 +361,7 @@ export const Communication = () => {
                           htmlFor="participants-and-providers-risk-type"
                           className="text-normal"
                         >
-                          {participantsAndProvidersT('riskType.question')}
+                          {participantsAndProvidersT('riskType.label')}
                         </Label>
 
                         <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
@@ -390,7 +388,7 @@ export const Communication = () => {
                                       className="text-normal"
                                     >
                                       {participantsAndProvidersT(
-                                        'riskOther.question'
+                                        'riskOther.label'
                                       )}
                                     </Label>
 
@@ -425,7 +423,7 @@ export const Communication = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-risk-change">
-                      {participantsAndProvidersT('willRiskChange.question')}
+                      {participantsAndProvidersT('willRiskChange.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.willRiskChange}</FieldErrorMsg>

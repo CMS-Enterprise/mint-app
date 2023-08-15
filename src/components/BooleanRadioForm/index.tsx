@@ -34,7 +34,8 @@ const BooleanRadio = ({
     <Fieldset className={classNames(className)}>
       <Field
         as={Radio}
-        id={id}
+        id={`${id}-true`}
+        data-testid={`${id}-true`}
         name={fieldName}
         label={options.true}
         value="TRUE"
@@ -51,7 +52,8 @@ const BooleanRadio = ({
 
       <Field
         as={Radio}
-        id={`${id}-no`}
+        id={`${id}-false`}
+        data-testid={`${id}-false`}
         name={fieldName}
         label={options.false}
         value="FALSE"

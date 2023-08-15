@@ -179,7 +179,7 @@ const ReadOnlyModelBasics = ({
               })}
             >
               <p className="text-bold margin-top-0 margin-bottom-1">
-                {basicsT('amsModelID.question')}
+                {basicsT('amsModelID.label')}
               </p>
 
               {amsModelID || (
@@ -190,7 +190,7 @@ const ReadOnlyModelBasics = ({
             </Grid>
             <Grid desktop={{ col: 6 }}>
               <p className="text-bold margin-top-0 margin-bottom-1">
-                {basicsT('demoCode.question')}
+                {basicsT('demoCode.label')}
               </p>
 
               {demoCode || (
@@ -208,7 +208,7 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'modelCategory',
         <ReadOnlySection
-          heading={basicsT('modelCategory.question')}
+          heading={basicsT('modelCategory.label')}
           copy={basicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
         />
       )}
@@ -219,7 +219,7 @@ const ReadOnlyModelBasics = ({
         'cmsCenters',
         <SideBySideReadOnlySection
           firstSection={{
-            heading: basicsT('cmsCenters.question'),
+            heading: basicsT('cmsCenters.label'),
             list: true,
             listItems: cmsCenters?.map((cmsCenter): string =>
               basicsT(`cmsCenters.options.${cmsCenter}`)
@@ -227,7 +227,7 @@ const ReadOnlyModelBasics = ({
             listOtherItem: cmsOther
           }}
           secondSection={{
-            heading: basicsT('cmmiGroups.question'),
+            heading: basicsT('cmmiGroups.label'),
             list: true,
             listItems: cmmiGroups?.map((cmmiGroup): string =>
               basicsT(`cmmiGroups.options.${cmmiGroup}`)
@@ -241,7 +241,7 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'modelType',
         <ReadOnlySection
-          heading={basicsT('modelType.question')}
+          heading={basicsT('modelType.label')}
           copy={basicsT(`modelType.options.${modelType}`, '')}
         />
       )}
@@ -250,14 +250,14 @@ const ReadOnlyModelBasics = ({
         isViewingFilteredView,
         filteredQuestions,
         'problem',
-        <ReadOnlySection heading={basicsT('problem.question')} copy={problem} />
+        <ReadOnlySection heading={basicsT('problem.label')} copy={problem} />
       )}
 
       {checkGroupMap(
         isViewingFilteredView,
         filteredQuestions,
         'goal',
-        <ReadOnlySection heading={basicsT('goal.question')} copy={goal} />
+        <ReadOnlySection heading={basicsT('goal.label')} copy={goal} />
       )}
 
       {checkGroupMap(
@@ -265,7 +265,7 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'testInterventions',
         <ReadOnlySection
-          heading={basicsT('testInterventions.question')}
+          heading={basicsT('testInterventions.label')}
           copy={testInterventions}
         />
       )}
@@ -274,7 +274,7 @@ const ReadOnlyModelBasics = ({
         isViewingFilteredView,
         filteredQuestions,
         'note',
-        <ReadOnlySection heading={basicsT('note.question')} copy={note} />
+        <ReadOnlySection heading={basicsT('note.label')} copy={note} />
       )}
 
       {isViewingFilteredView && filteredView !== 'ipc' ? (
@@ -284,7 +284,7 @@ const ReadOnlyModelBasics = ({
             filteredQuestions,
             'completeICIP',
             <ReadOnlySection
-              heading={basicsT('completeICIP.question')}
+              heading={basicsT('completeICIP.label')}
               copy={completeICIP && formatDateUtc(completeICIP, 'MM/dd/yyyy')}
             />
           )}
@@ -295,13 +295,13 @@ const ReadOnlyModelBasics = ({
             'clearanceStarts',
             <SideBySideReadOnlySection
               firstSection={{
-                heading: basicsT('clearanceStarts.question'),
+                heading: basicsT('clearanceStarts.label'),
                 copy:
                   clearanceStarts &&
                   formatDateUtc(clearanceStarts, 'MM/dd/yyyy')
               }}
               secondSection={{
-                heading: basicsT('clearanceEnds.question'),
+                heading: basicsT('clearanceEnds.label'),
                 copy:
                   clearanceEnds && formatDateUtc(clearanceEnds, 'MM/dd/yyyy')
               }}
@@ -313,7 +313,7 @@ const ReadOnlyModelBasics = ({
             filteredQuestions,
             'announced',
             <ReadOnlySection
-              heading={basicsT('announced.question')}
+              heading={basicsT('announced.label')}
               copy={announced && formatDateUtc(announced, 'MM/dd/yyyy')}
             />
           )}
@@ -324,13 +324,13 @@ const ReadOnlyModelBasics = ({
             'applicationsStart',
             <SideBySideReadOnlySection
               firstSection={{
-                heading: basicsT('applicationsStart.question'),
+                heading: basicsT('applicationsStart.label'),
                 copy:
                   applicationsStart &&
                   formatDateUtc(applicationsStart, 'MM/dd/yyyy')
               }}
               secondSection={{
-                heading: basicsT('applicationsEnd.question'),
+                heading: basicsT('applicationsEnd.label'),
                 copy:
                   applicationsEnd &&
                   formatDateUtc(applicationsEnd, 'MM/dd/yyyy')
@@ -344,13 +344,13 @@ const ReadOnlyModelBasics = ({
             'performancePeriodStarts',
             <SideBySideReadOnlySection
               firstSection={{
-                heading: basicsT('performancePeriodStarts.question'),
+                heading: basicsT('performancePeriodStarts.label'),
                 copy:
                   performancePeriodStarts &&
                   formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy')
               }}
               secondSection={{
-                heading: basicsT('performancePeriodEnds.question'),
+                heading: basicsT('performancePeriodEnds.label'),
                 copy:
                   performancePeriodEnds &&
                   formatDateUtc(performancePeriodEnds, 'MM/dd/yyyy')
@@ -363,7 +363,7 @@ const ReadOnlyModelBasics = ({
             filteredQuestions,
             'wrapUpEnds',
             <ReadOnlySection
-              heading={basicsT('wrapUpEnds.question')}
+              heading={basicsT('wrapUpEnds.label')}
               copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}
             />
           )}
@@ -371,7 +371,7 @@ const ReadOnlyModelBasics = ({
           {filteredQuestions &&
             hasQuestions(filteredQuestions, highLevelTimelineQuestions) && (
               <ReadOnlySection
-                heading={basicsT('highLevelNote.question')}
+                heading={basicsT('highLevelNote.label')}
                 copy={highLevelNote}
               />
             )}
@@ -393,7 +393,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {basicsT('completeICIP.question')}
+                {basicsT('completeICIP.label')}
               </ProcessListHeading>
 
               <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -415,7 +415,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {basicsT('clearanceStarts.question')}
+                    {basicsT('clearanceStarts.label')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -427,7 +427,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {basicsT('clearanceEnds.question')}
+                    {basicsT('clearanceEnds.label')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -441,7 +441,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {basicsT('announced.question')}
+                {basicsT('announced.label')}
               </ProcessListHeading>
 
               <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -463,7 +463,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {basicsT('applicationsStart.question')}
+                    {basicsT('applicationsStart.label')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -475,7 +475,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {basicsT('applicationsEnd.question')}
+                    {basicsT('applicationsEnd.label')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -498,7 +498,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {basicsT('performancePeriodStarts.question')}
+                    {basicsT('performancePeriodStarts.label')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -510,7 +510,7 @@ const ReadOnlyModelBasics = ({
                     type="p"
                     className="font-body-sm line-height-sans-4"
                   >
-                    {basicsT('performancePeriodEnds.question')}
+                    {basicsT('performancePeriodEnds.label')}
                   </ProcessListHeading>
 
                   <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -525,7 +525,7 @@ const ReadOnlyModelBasics = ({
                 type="p"
                 className="font-body-sm line-height-sans-4"
               >
-                {basicsT('wrapUpEnds.question')}
+                {basicsT('wrapUpEnds.label')}
               </ProcessListHeading>
 
               <p className="margin-y-0 font-body-md line-height-sans-4">
@@ -535,7 +535,7 @@ const ReadOnlyModelBasics = ({
           </ProcessList>
 
           <ReadOnlySection
-            heading={basicsT('highLevelNote.question')}
+            heading={basicsT('highLevelNote.label')}
             copy={highLevelNote}
           />
         </SectionWrapper>
@@ -546,7 +546,7 @@ const ReadOnlyModelBasics = ({
         filteredQuestions,
         'phasedIn',
         <ReadOnlySection
-          heading={basicsT('phasedIn.question')}
+          heading={basicsT('phasedIn.label')}
           copy={basicsT(`phasedIn.options.${phasedIn}`, '')} // Default to empty string if bool is null
           notes={phasedInNote}
         />

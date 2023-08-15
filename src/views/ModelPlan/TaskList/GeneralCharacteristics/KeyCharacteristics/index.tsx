@@ -246,7 +246,7 @@ const KeyCharacteristics = () => {
                   >
                     <legend className="usa-label maxw-none">
                       {generalCharacteristicsT(
-                        'alternativePaymentModelTypes.question'
+                        'alternativePaymentModelTypes.label'
                       )}
                     </legend>
 
@@ -257,7 +257,7 @@ const KeyCharacteristics = () => {
                     >
                       <span className="mandatory-fields-alert__text">
                         {generalCharacteristicsT(
-                          'alternativePaymentModelTypes.hint'
+                          'alternativePaymentModelTypes.sublabel'
                         )}
                       </span>
                     </Alert>
@@ -334,7 +334,7 @@ const KeyCharacteristics = () => {
                       htmlFor="plan-characteristics-key-characteristics"
                       id="label-plan-characteristics-key-characteristics"
                     >
-                      {generalCharacteristicsT('keyCharacteristics.question')}
+                      {generalCharacteristicsT('keyCharacteristics.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -379,7 +379,7 @@ const KeyCharacteristics = () => {
 
                       <p className="margin-y-1 margin-top-3">
                         {generalCharacteristicsT(
-                          'keyCharacteristicsOther.question'
+                          'keyCharacteristicsOther.label'
                         )}
                       </p>
 
@@ -414,7 +414,7 @@ const KeyCharacteristics = () => {
                           htmlFor="plan-characteristics-collect-bids"
                           className="text-normal"
                         >
-                          {generalCharacteristicsT('collectPlanBids.question')}
+                          {generalCharacteristicsT('collectPlanBids.label')}
                         </Label>
 
                         {itSolutionsStarted && (
@@ -457,7 +457,7 @@ const KeyCharacteristics = () => {
                           className="text-normal"
                         >
                           {generalCharacteristicsT(
-                            'managePartCDEnrollment.question'
+                            'managePartCDEnrollment.label'
                           )}
                         </Label>
 
@@ -500,9 +500,7 @@ const KeyCharacteristics = () => {
                           htmlFor="plan-characteristics-contact-updated"
                           className="text-normal"
                         >
-                          {generalCharacteristicsT(
-                            'planContractUpdated.question'
-                          )}
+                          {generalCharacteristicsT('planContractUpdated.label')}
                         </Label>
 
                         {itSolutionsStarted && (

@@ -472,14 +472,15 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="participants-and-providers-current-participants"
+                    data-testid="participants-and-providers-current-participants-true"
+                    id="participants-and-providers-current-participants-true"
                     name="participantsCurrentlyInModels"
                     type="radio"
                     value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
-                    for="participants-and-providers-current-participants"
+                    for="participants-and-providers-current-participants-true"
                   >
                     Yes
                   </label>
@@ -490,14 +491,15 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="participants-and-providers-current-participants-no"
+                    data-testid="participants-and-providers-current-participants-false"
+                    id="participants-and-providers-current-participants-false"
                     name="participantsCurrentlyInModels"
                     type="radio"
                     value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
-                    for="participants-and-providers-current-participants-no"
+                    for="participants-and-providers-current-participants-false"
                   >
                     No
                   </label>

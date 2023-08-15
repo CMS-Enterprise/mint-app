@@ -315,7 +315,7 @@ export const CharacteristicsContent = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="plan-characteristics-is-new-model">
-                      {generalCharacteristicsT('isNewModel.question')}
+                      {generalCharacteristicsT('isNewModel.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
@@ -338,11 +338,11 @@ export const CharacteristicsContent = () => {
                           htmlFor="plan-characteristics-existing-model"
                           className="margin-bottom-1 text-normal"
                         >
-                          {generalCharacteristicsT('existingModel.question')}
+                          {generalCharacteristicsT('existingModel.label')}
                         </Label>
 
                         <p className="text-base margin-0">
-                          {generalCharacteristicsT('existingModel.hint')}
+                          {generalCharacteristicsT('existingModel.sublabel')}
                         </p>
 
                         <FieldErrorMsg>
@@ -390,9 +390,7 @@ export const CharacteristicsContent = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="plan-characteristics-resembles-existing-model">
-                      {generalCharacteristicsT(
-                        'resemblesExistingModel.question'
-                      )}
+                      {generalCharacteristicsT('resemblesExistingModel.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -420,12 +418,14 @@ export const CharacteristicsContent = () => {
                             id="label-plan-characteristics-resembles-which-model"
                           >
                             {generalCharacteristicsT(
-                              'existingModelLinks.question'
+                              'existingModelLinks.label'
                             )}
                           </Label>
 
                           <p className="text-base margin-y-1">
-                            {generalCharacteristicsT('existingModelLinks.hint')}
+                            {generalCharacteristicsT(
+                              'existingModelLinks.sublabel'
+                            )}
                           </p>
 
                           <FieldErrorMsg>
@@ -457,7 +457,7 @@ export const CharacteristicsContent = () => {
                             className="text-normal"
                           >
                             {generalCharacteristicsT(
-                              'resemblesExistingModelHow.question'
+                              'resemblesExistingModelHow.label'
                             )}
                           </Label>
 
@@ -488,9 +488,7 @@ export const CharacteristicsContent = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="plan-characteristics-has-component-or-tracks">
-                      {generalCharacteristicsT(
-                        'hasComponentsOrTracks.question'
-                      )}
+                      {generalCharacteristicsT('hasComponentsOrTracks.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -517,7 +515,7 @@ export const CharacteristicsContent = () => {
                               className="margin-bottom-1 text-normal"
                             >
                               {generalCharacteristicsT(
-                                'hasComponentsOrTracksDiffer.question'
+                                'hasComponentsOrTracksDiffer.label'
                               )}
                             </Label>
 

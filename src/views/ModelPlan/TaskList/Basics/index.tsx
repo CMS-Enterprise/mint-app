@@ -280,7 +280,7 @@ const BasicsContent = () => {
                           className="margin-top-4"
                         >
                           <Label htmlFor="plan-basics-model-name">
-                            {modelPlanT('modelName.question')}
+                            {modelPlanT('modelName.label')}
                             <RequiredAsterisk />
                           </Label>
 
@@ -301,11 +301,11 @@ const BasicsContent = () => {
                           className="margin-top-4"
                         >
                           <Label htmlFor="plan-basics-model-name">
-                            {modelPlanT('abbreviation.question')}
+                            {modelPlanT('abbreviation.label')}
                           </Label>
 
                           <span className="usa-hint display-block text-normal margin-top-1">
-                            {modelPlanT('abbreviation.hint')}
+                            {modelPlanT('abbreviation.sublabel')}
                           </span>
 
                           <FieldErrorMsg>
@@ -359,7 +359,7 @@ const BasicsContent = () => {
                                 className="margin-top-0"
                               >
                                 <Label htmlFor="plan-basics-ams-model-id">
-                                  {basicsT('amsModelID.question')}
+                                  {basicsT('amsModelID.label')}
                                 </Label>
 
                                 <FieldErrorMsg>
@@ -382,7 +382,7 @@ const BasicsContent = () => {
                                 className="margin-top-0"
                               >
                                 <Label htmlFor="plan-basics-demo-code">
-                                  {basicsT('demoCode.question')}
+                                  {basicsT('demoCode.label')}
                                 </Label>
 
                                 <FieldErrorMsg>
@@ -407,7 +407,7 @@ const BasicsContent = () => {
                           className="margin-top-4"
                         >
                           <Label htmlFor="plan-basics-model-category">
-                            {basicsT('modelCategory.question')}
+                            {basicsT('modelCategory.label')}
                             <RequiredAsterisk />
                           </Label>
 
@@ -449,13 +449,13 @@ const BasicsContent = () => {
                           error={!!flatErrors['basics.cmsCenters']}
                           className="margin-top-4"
                         >
-                          <Fieldset legend={basicsT('cmsCenters.question')}>
+                          <Fieldset legend={basicsT('cmsCenters.label')}>
                             <FieldArray
                               name="basics.cmsCenters"
                               render={arrayHelpers => (
                                 <>
                                   <Label htmlFor="plan-basics-cmsCenters">
-                                    {basicsT('cmsCenters.question')}
+                                    {basicsT('cmsCenters.label')}
                                     <RequiredAsterisk />
                                   </Label>
 
@@ -544,11 +544,11 @@ const BasicsContent = () => {
                             htmlFor="basics.cmmiGroups"
                             className="text-normal"
                           >
-                            {basicsT('cmmiGroups.question')}
+                            {basicsT('cmmiGroups.label')}
                           </Label>
 
                           <p className="text-base margin-bottom-1 margin-top-1">
-                            {basicsT('cmmiGroups.hint')}
+                            {basicsT('cmmiGroups.sublabel')}
                           </p>
 
                           <FieldErrorMsg>

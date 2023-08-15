@@ -14,13 +14,13 @@ import {
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
-  ProcessListItem,
-  Radio
+  ProcessListItem
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -153,7 +153,7 @@ const Milestones = () => {
   }
 
   return (
-    <div data-testid="model-plan-milestones">
+    <div>
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -229,7 +229,7 @@ const Milestones = () => {
             };
 
             return (
-              <>
+              <div data-testid="model-plan-milestones">
                 {getKeys(errors).length > 0 && (
                   <ErrorAlert
                     testId="formik-validation-errors"
@@ -288,7 +288,7 @@ const Milestones = () => {
                               className="margin-top-0"
                               fieldName="completeICIP"
                               id="Milestone-completeICIP"
-                              label={basicsT('completeICIP.question')}
+                              label={basicsT('completeICIP.label')}
                               placeHolder
                               handleOnBlur={handleOnBlur}
                               formikValue={values.completeICIP}
@@ -320,7 +320,7 @@ const Milestones = () => {
                             <MINTDatePicker
                               fieldName="clearanceStarts"
                               id="Milestone-clearanceStarts"
-                              label={basicsT('clearanceStarts.question')}
+                              label={basicsT('clearanceStarts.label')}
                               boldLabel={false}
                               placeHolder
                               handleOnBlur={handleOnBlur}
@@ -334,7 +334,7 @@ const Milestones = () => {
                             <MINTDatePicker
                               fieldName="clearanceEnds"
                               id="Milestone-clearanceEnds"
-                              label={basicsT('clearanceEnds.question')}
+                              label={basicsT('clearanceEnds.label')}
                               boldLabel={false}
                               placeHolder
                               handleOnBlur={handleOnBlur}
@@ -366,7 +366,7 @@ const Milestones = () => {
                             className="margin-top-0"
                             fieldName="announced"
                             id="Milestone-announced"
-                            label={basicsT('announced.question')}
+                            label={basicsT('announced.label')}
                             placeHolder
                             handleOnBlur={handleOnBlur}
                             formikValue={values.announced}
@@ -391,7 +391,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="applicationsStart"
                             id="Milestone-applicationsStart"
-                            label={basicsT('applicationsStart.question')}
+                            label={basicsT('applicationsStart.label')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -404,7 +404,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="applicationsEnd"
                             id="Milestone-applicationsEnd"
-                            label={basicsT('applicationsEnd.question')}
+                            label={basicsT('applicationsEnd.label')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -444,7 +444,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="performancePeriodStarts"
                             id="Milestone-performancePeriodStarts"
-                            label={basicsT('performancePeriodStarts.question')}
+                            label={basicsT('performancePeriodStarts.label')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -458,7 +458,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="performancePeriodEnds"
                             id="Milestone-performancePeriodEnds"
-                            label={basicsT('performancePeriodEnds.question')}
+                            label={basicsT('performancePeriodEnds.label')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -489,7 +489,7 @@ const Milestones = () => {
                             fieldName="wrapUpEnds"
                             className="margin-top-0"
                             id="Milestone-wrapUpEnds"
-                            label={basicsT('wrapUpEnds.question')}
+                            label={basicsT('wrapUpEnds.label')}
                             placeHolder
                             handleOnBlur={handleOnBlur}
                             formikValue={values.wrapUpEnds}
@@ -512,40 +512,22 @@ const Milestones = () => {
                       className="margin-top-4"
                     >
                       <Label htmlFor="phasedIn">
-                        {basicsT('phasedIn.question')}
+                        {basicsT('phasedIn.label')}
                       </Label>
 
                       <span className="usa-hint display-block text-normal margin-top-1">
-                        {basicsT('phasedIn.hint')}
+                        {basicsT('phasedIn.sublabel')}
                       </span>
 
                       <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
 
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="phasedIn-Yes"
-                          name="phasedIn"
-                          label={phasedInConfig.options.true}
-                          value="YES"
-                          checked={values.phasedIn === true}
-                          onChange={() => {
-                            setFieldValue('phasedIn', true);
-                          }}
-                        />
-
-                        <Field
-                          as={Radio}
-                          id="phasedIn-No"
-                          name="phasedIn"
-                          label={phasedInConfig.options.false}
-                          value="FALSE"
-                          checked={values.phasedIn === false}
-                          onChange={() => {
-                            setFieldValue('phasedIn', false);
-                          }}
-                        />
-                      </Fieldset>
+                      <BooleanRadio
+                        field="phasedIn"
+                        id="phasedIn"
+                        value={values.phasedIn}
+                        setFieldValue={setFieldValue}
+                        options={phasedInConfig.options}
+                      />
                     </FieldGroup>
 
                     <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
@@ -605,7 +587,7 @@ const Milestones = () => {
                     </Button>
                   </Fieldset>
                 </Form>
-              </>
+              </div>
             );
           }}
         </Formik>

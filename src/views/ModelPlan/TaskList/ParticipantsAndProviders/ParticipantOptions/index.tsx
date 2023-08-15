@@ -240,13 +240,13 @@ export const ParticipantOptions = () => {
                   >
                     <Label htmlFor="participants-and-providers-expected-participants">
                       {participantsAndProvidersT(
-                        'expectedNumberOfParticipants.question'
+                        'expectedNumberOfParticipants.label'
                       )}
                     </Label>
 
                     <p className="text-base margin-0 line-height-body-3">
                       {participantsAndProvidersT(
-                        'expectedNumberOfParticipants.hint'
+                        'expectedNumberOfParticipants.sublabel'
                       )}
                     </p>
 
@@ -310,7 +310,7 @@ export const ParticipantOptions = () => {
                       htmlFor="participants-and-providers-current-participants"
                       className="text-normal"
                     >
-                      {participantsAndProvidersT('estimateConfidence.question')}
+                      {participantsAndProvidersT('estimateConfidence.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -345,7 +345,7 @@ export const ParticipantOptions = () => {
                     error={!!flatErrors.recruitmentMethod}
                   >
                     <Label htmlFor="participants-and-providers-recruitment-method">
-                      {participantsAndProvidersT('recruitmentMethod.question')}
+                      {participantsAndProvidersT('recruitmentMethod.label')}
                     </Label>
 
                     {itSolutionsStarted && (
@@ -392,7 +392,7 @@ export const ParticipantOptions = () => {
                                   className="text-normal"
                                 >
                                   {participantsAndProvidersT(
-                                    'recruitmentOther.question'
+                                    'recruitmentOther.label'
                                   )}
                                 </Label>
                                 <FieldErrorMsg>
@@ -426,7 +426,7 @@ export const ParticipantOptions = () => {
                       htmlFor="participants-and-providers-selection-method"
                       id="label-participants-and-providers-selection-method"
                     >
-                      {participantsAndProvidersT('selectionMethod.question')}
+                      {participantsAndProvidersT('selectionMethod.label')}
                     </Label>
 
                     {itSolutionsStarted && (
@@ -470,7 +470,7 @@ export const ParticipantOptions = () => {
                           htmlFor="participants-and-providers-selection-other"
                           className="text-normal"
                         >
-                          {participantsAndProvidersT('selectionOther.question')}
+                          {participantsAndProvidersT('selectionOther.label')}
                         </Label>
 
                         <FieldErrorMsg>

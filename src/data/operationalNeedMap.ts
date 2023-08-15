@@ -17,7 +17,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'characteristics/key-characteristics',
     fieldName: 'managePartCDEnrollment',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:managePartCDEnrollment.question',
+    question: 'generalCharacteristics:managePartCDEnrollment.label',
     answer: 'translateBoolean',
     section: 'generalCharacteristicsMisc'
   },
@@ -25,7 +25,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'characteristics/key-characteristics',
     fieldName: 'collectPlanBids',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:collectPlanBids.question',
+    question: 'generalCharacteristics:collectPlanBids.label',
     answer: 'translateBoolean',
     section: 'generalCharacteristicsMisc'
   },
@@ -33,7 +33,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'characteristics/key-characteristics',
     fieldName: 'planContractUpdated',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:planContractUpdated.question',
+    question: 'generalCharacteristics:planContractUpdated.label',
     answer: 'translateBoolean',
     section: 'generalCharacteristicsMisc'
   },
@@ -41,7 +41,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'characteristics/targets-and-options',
     fieldName: 'agreementTypes',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:agreementTypes.question',
+    question: 'generalCharacteristics:agreementTypes.label',
     answer: 'translateAgreementTypes',
     section: 'generalCharacteristicsMisc'
   },
@@ -49,7 +49,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/participants-options',
     fieldName: 'recruitmentMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:recruitmentMethod.question',
+    question: 'participantsAndProviders:recruitmentMethod.label',
     answer: 'translateRecruitmentType',
     section: 'participantsAndProvidersMisc'
   },
@@ -57,7 +57,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:selectionMethod.question',
+    question: 'participantsAndProviders:selectionMethod.label',
     answer: 'translateParticipantSelectiontType',
     section: 'participantsAndProvidersMisc'
   },
@@ -65,7 +65,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:selectionMethod.question',
+    question: 'participantsAndProviders:selectionMethod.label',
     answer: 'translateParticipantSelectiontType',
     section: 'participantsAndProvidersMisc'
   },
@@ -73,7 +73,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/communication',
     fieldName: 'communicationMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:communicationMethod.question',
+    question: 'participantsAndProviders:communicationMethod.label',
     answer: 'translateCommunicationType',
     section: 'participantsAndProvidersMisc'
   },
@@ -81,7 +81,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/provider-options',
     fieldName: 'providerOverlap',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:providerOverlap.question',
+    question: 'participantsAndProviders:providerOverlap.label',
     answer: 'translateOverlapType',
     section: 'participantsAndProvidersMisc'
   },
@@ -89,7 +89,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'participants-and-providers/coordination',
     fieldName: 'participantsIds',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:participantsIds.question',
+    question: 'participantsAndProviders:participantsIds.label',
     answer: 'translateParticipantIDType',
     section: 'participantsAndProvidersMisc'
   },
@@ -97,33 +97,33 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     route: 'beneficiaries/beneficiary-frequency',
     fieldName: 'beneficiaryOverlap',
     parentField: 'beneficiaries',
-    question: 'beneficiaries:beneficiaryOverlap',
+    question: 'beneficiaries:beneficiaryOverlap.label',
     answer: 'translateOverlapType',
-    section: 'beneficiaries'
+    section: 'beneficiariesMisc'
   },
   HELPDESK_SUPPORT: {
     route: 'ops-eval-and-learning',
     fieldName: 'helpdeskUse',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:helpDesk',
+    question: 'opsEvalAndLearning:helpdeskUse.label',
     answer: 'translateBoolean',
-    section: 'beneficiaries'
+    section: 'opsEvalAndLearningMisc'
   },
   IDDOC_SUPPORT: {
     route: 'ops-eval-and-learning',
     fieldName: 'iddocSupport',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:iddocSupport',
+    question: 'opsEvalAndLearning:iddocSupport.label',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   ESTABLISH_BENCH: {
     route: 'ops-eval-and-learning/performance',
     fieldName: 'benchmarkForPerformance',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:establishBenchmark',
+    question: 'opsEvalAndLearning:benchmarkForPerformance.label',
     answer: 'translateBenchmarkForPerformanceType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluaopsEvalAndLearningMisctionAndLearning'
   },
   PROCESS_PART_APPEALS: {
     route: 'ops-eval-and-learning/performance',
@@ -134,99 +134,99 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
       'appealOther'
     ],
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:participantAppeal',
+    question: 'opsEvalAndLearningMisc:participantAppeal',
     answer: 'translateBoolean',
     multiPart: true,
     multiPartQuestion: 'translateAppealsQuestionType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   ACQUIRE_AN_EVAL_CONT: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'evaluationApproaches',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:evaluationApproach',
+    question: 'opsEvalAndLearning:evaluationApproaches.label',
     answer: 'translateEvaluationApproachType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   QUALITY_PERFORMANCE_SCORES: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeeded',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   CLAIMS_BASED_MEASURES: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeeded',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   DATA_TO_SUPPORT_EVAL: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeeded',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   DATA_TO_MONITOR: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeeded',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   SEND_REPDATA_TO_PART: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataToSendParticicipants',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataToSend',
+    question: 'opsEvalAndLearning:dataToSendParticicipants.label',
     answer: 'translateDataToSendParticipantsType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   PART_TO_PART_COLLAB: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:learningSystem',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearning'
   },
   EDUCATE_BENEF: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:learningSystem',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   ACQUIRE_A_LEARN_CONT: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:learningSystem',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR: {
     route: 'ops-eval-and-learning/ccw-and-quality',
     fieldName: 'developNewQualityMeasures',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:validatedQuality',
+    question: 'opsEvalAndLearning:developNewQualityMeasures.label',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   IT_PLATFORM_FOR_LEARNING: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:learningSystem',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   ADJUST_FFS_CLAIMS: {
     route: 'payment',

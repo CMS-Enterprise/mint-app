@@ -43,20 +43,37 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     beneficiaries: [
       'beneficiarySelectionMethod',
-      'beneficiarySelectionFrequency'
+      'beneficiarySelectionOther',
+      'beneficiarySelectionNote',
+      'beneficiarySelectionFrequency',
+      'beneficiarySelectionFrequencyOther',
+      'beneficiarySelectionFrequencyNote'
     ],
     'ops-eval-and-learning': [
       'benchmarkForPerformance',
+      'benchmarkForPerformanceNote',
       'computePerformanceScores',
+      'computePerformanceScoresNote',
       'riskAdjustPerformance',
+      'riskAdjustNote',
       'riskAdjustPayments',
       'dataNeededForMonitoring',
+      'dataNeededForMonitoringOther',
+      'dataNeededForMonitoringNote',
       'dataToSendParticicipants',
+      'dataToSendParticicipantsOther',
+      'dataToSendParticicipantsNote',
       'shareCclfData',
       'developNewQualityMeasures',
+      'developNewQualityMeasuresNote',
       'qualityPerformanceImpactsPayment',
+      'qualityPerformanceImpactsPaymentNote',
       'dataSharingFrequency',
-      'dataCollectionFrequency'
+      'dataSharingFrequencyOther',
+      'dataSharingFrequencyNote',
+      'dataCollectionFrequency',
+      'dataCollectionFrequencyOther',
+      'dataCollectionFrequencyNote'
     ],
     payments: [
       'payType',
@@ -119,9 +136,15 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     'ops-eval-and-learning': [
       'ccmInvolvment',
+      'ccmInvolvmentOther',
+      'ccmInvolvmentNote',
       'sendFilesBetweenCcw',
+      'sendFilesBetweenCcwNote',
       'appToSendFilesToKnown',
-      'useCcwForFileDistribiutionToParticipants'
+      'appToSendFilesToWhich',
+      'appToSendFilesToNote',
+      'useCcwForFileDistribiutionToParticipants',
+      'useCcwForFileDistribiutionToParticipantsNote'
     ],
     payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
   },
@@ -219,16 +242,27 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     beneficiaries: [
       'treatDualElligibleDifferent',
-      'excludeCertainCharacteristics'
+      'treatDualElligibleDifferentHow',
+      'treatDualElligibleDifferentNote',
+      'excludeCertainCharacteristics',
+      'excludeCertainCharacteristicsCriteria',
+      'excludeCertainCharacteristicsNote'
     ],
     'ops-eval-and-learning': [
       'contractorSupport',
+      'contractorSupportOther',
       'contractorSupportHow',
+      'contractorSupportNote',
       'iddocSupport',
+      'iddocSupportNote',
       'technicalContactsIdentified',
+      'technicalContactsIdentifiedDetail',
+      'technicalContactsIdentifiedNote',
       'captureParticipantInfo',
+      'captureParticipantInfoNote',
       'icdOwner',
       'draftIcdDueDate',
+      'icdNote',
       'uatNeeds',
       'stcNeeds',
       'testingTimelines',
@@ -240,9 +274,15 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'produceBenefitEnhancementFiles',
       'fileNamingConventions',
       'dataNeededForMonitoring',
+      'dataNeededForMonitoringOther',
+      'dataNeededForMonitoringNote',
       'dataSharingStarts',
+      'dataSharingStartsOther',
       'dataSharingFrequency',
+      'dataSharingFrequencyOther',
+      'dataSharingFrequencyNote',
       'dataCollectionStarts',
+      'dataCollectionStartsOther',
       'anticipatedChallenges'
     ],
     payments: [
@@ -300,7 +340,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     beneficiaries: [
       'treatDualElligibleDifferent',
-      'excludeCertainCharacteristics'
+      'treatDualElligibleDifferentHow',
+      'treatDualElligibleDifferentNote',
+      'excludeCertainCharacteristics',
+      'excludeCertainCharacteristicsCriteria',
+      'excludeCertainCharacteristicsNote'
     ],
     'ops-eval-and-learning': [
       'contractorSupport',
@@ -328,9 +372,12 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: ['nameHistory'],
     beneficiaries: [
       'beneficiaries',
+      'beneficiariesOther',
+      'beneficiariesNote',
       'numberPeopleImpacted',
       'estimateConfidence',
       'beneficiaryOverlap',
+      'beneficiaryOverlapNote',
       'precedenceRules'
     ]
   },
@@ -354,9 +401,14 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     'ops-eval-and-learning': [
       'stakeholders',
+      'stakeholdersOther',
+      'stakeholdersNote',
       'helpdeskUse',
+      'helpdeskUseNote',
       'contractorSupport',
-      'contractorSupportHow'
+      'contractorSupportOther',
+      'contractorSupportHow',
+      'contractorSupportNote'
     ]
   }
 };

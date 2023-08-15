@@ -25,6 +25,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetLearning from 'queries/OpsEvalAndLearning/GetLearning';
 import {
@@ -35,12 +36,9 @@ import {
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { ModelLearningSystemType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  sortOtherEnum,
-  translateModelLearningSystemType
-} from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -52,8 +50,17 @@ import {
 } from '..';
 
 const Learning = () => {
-  const { t } = useTranslation('operationsEvaluationAndLearning');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
+
+  const { t: opsEvalAndLearningMiscT } = useTranslation(
+    'opsEvalAndLearningMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    modelLearningSystems: modelLearningSystemsConfig
+  } = usePlanTranslation('opsEvalAndLearning');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
@@ -162,28 +169,30 @@ const Learning = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -208,17 +217,17 @@ const Learning = () => {
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -243,7 +252,7 @@ const Learning = () => {
                       render={arrayHelpers => (
                         <>
                           <legend className="usa-label">
-                            {t('learningSystem')}
+                            {opsEvalAndLearningT('modelLearningSystems.label')}
                           </legend>
 
                           {itSolutionsStarted && (
@@ -261,21 +270,20 @@ const Learning = () => {
                             {flatErrors.modelLearningSystems}
                           </FieldErrorMsg>
 
-                          {Object.keys(ModelLearningSystemType)
-                            .sort(sortOtherEnum)
-                            .map(type => {
+                          {getKeys(modelLearningSystemsConfig.options).map(
+                            type => {
                               return (
                                 <Fragment key={type}>
                                   <Field
                                     as={CheckboxField}
                                     id={`ops-eval-and-learning-learning-systems-${type}`}
                                     name="modelLearningSystems"
-                                    label={translateModelLearningSystemType(
-                                      type
-                                    )}
+                                    label={
+                                      modelLearningSystemsConfig.options[type]
+                                    }
                                     value={type}
                                     checked={values?.modelLearningSystems.includes(
-                                      type as ModelLearningSystemType
+                                      type
                                     )}
                                     onChange={(
                                       e: React.ChangeEvent<HTMLInputElement>
@@ -291,6 +299,7 @@ const Learning = () => {
                                       }
                                     }}
                                   />
+
                                   {type === ModelLearningSystemType.OTHER &&
                                     values.modelLearningSystems.includes(
                                       type
@@ -300,11 +309,15 @@ const Learning = () => {
                                           htmlFor="ops-eval-and-learning-learning-systems-other"
                                           className="text-normal maxw-none"
                                         >
-                                          {h('pleaseSpecify')}
+                                          {opsEvalAndLearningT(
+                                            'modelLearningSystemsOther.label'
+                                          )}
                                         </Label>
+
                                         <FieldErrorMsg>
                                           {flatErrors.modelLearningSystemsOther}
                                         </FieldErrorMsg>
+
                                         <Field
                                           as={TextAreaField}
                                           className="maxw-none mint-textarea"
@@ -316,7 +329,9 @@ const Learning = () => {
                                     )}
                                 </Fragment>
                               );
-                            })}
+                            }
+                          )}
+
                           <AddNote
                             id="ops-eval-and-learning-learning-systems-note"
                             field="modelLearningSystemsNote"
@@ -331,14 +346,17 @@ const Learning = () => {
                     error={!!flatErrors.anticipatedChallenges}
                   >
                     <Label htmlFor="ops-eval-and-learning-learning-anticipated-challenges">
-                      {t('obstacles')}
+                      {opsEvalAndLearningT('anticipatedChallenges.label')}
                     </Label>
+
                     <p className="text-base margin-y-1 margin-top-2 line-height-body-4">
-                      {t('obstaclesInfo')}
+                      {opsEvalAndLearningT('anticipatedChallenges.sublabel')}
                     </p>
+
                     <FieldErrorMsg>
                       {flatErrors.anticipatedChallenges}
                     </FieldErrorMsg>
+
                     <Field
                       as={TextAreaField}
                       className="height-card"
@@ -353,7 +371,7 @@ const Learning = () => {
                     <ReadyForReview
                       id="ops-eval-and-learning-learning-status"
                       field="status"
-                      sectionName={t('heading')}
+                      sectionName={opsEvalAndLearningMiscT('heading')}
                       status={values.status}
                       setFieldValue={setFieldValue}
                       readyForReviewBy={readyForReviewByUserAccount?.commonName}
@@ -369,19 +387,22 @@ const Learning = () => {
                         handleFormSubmit('back');
                       }}
                     >
-                      {h('back')}
+                      {miscellaneousT('back')}
                     </Button>
+
                     <Button type="submit" onClick={() => setErrors({})}>
-                      {h('saveAndStartNext')}
+                      {miscellaneousT('saveAndStartNext')}
                     </Button>
                   </div>
+
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {h('saveAndReturn')}
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
@@ -399,6 +420,7 @@ const Learning = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(
