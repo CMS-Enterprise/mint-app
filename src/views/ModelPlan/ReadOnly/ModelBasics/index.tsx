@@ -213,7 +213,7 @@ const ReadOnlyModelBasics = ({
         'modelCategory',
         <SideBySideReadOnlySection
           firstSection={{
-            heading: basicsT('modelCategory.question'),
+            heading: basicsT('modelCategory.label'),
             copy:
               modelCategory === null ? (
                 ''
@@ -226,7 +226,9 @@ const ReadOnlyModelBasics = ({
 
                   {modelCategory !== ModelCategory.TO_BE_DETERMINED && (
                     <Tooltip
-                      label={basicsT(`modelCategory.tooltip.${modelCategory}`)}
+                      label={basicsT(
+                        `modelCategory.optionsLabels.${modelCategory}`
+                      )}
                       position="right"
                     >
                       <IconInfo className="text-base-light" />
@@ -236,7 +238,7 @@ const ReadOnlyModelBasics = ({
               )
           }}
           secondSection={{
-            heading: basicsT('additionalModelCategories.question'),
+            heading: basicsT('additionalModelCategories.label'),
             list: true,
             listItems: additionalModelCategories?.map(group => {
               return (
@@ -248,7 +250,7 @@ const ReadOnlyModelBasics = ({
                     {basicsT(`modelCategory.options.${group}`)}
 
                     <Tooltip
-                      label={basicsT(`modelCategory.tooltip.${group}`)}
+                      label={basicsT(`modelCategory.optionsLabels.${group}`)}
                       position="right"
                     >
                       <IconInfo className="text-base-light" />

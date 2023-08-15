@@ -62,6 +62,7 @@ const BasicsContent = () => {
 
   const {
     modelCategory: modelCategoryConfig,
+    additionalModelCategories: additionalModelCategoriesConfig,
     cmsCenters: cmsCentersConfig,
     cmmiGroups: cmmiGroupsConfig
   } = usePlanTranslation('basics');
@@ -423,60 +424,53 @@ const BasicsContent = () => {
                           </FieldErrorMsg>
 
                           <Fieldset>
-                            {getKeys(modelCategoryConfig.options).map(
-                              category => (
-                                <Fragment key={category}>
-                                  <Field
-                                    as={Radio}
-                                    id={`plan-basics-model-category-${category}`}
-                                    name="basics.modelCategory"
-                                    label={
-                                      <span
-                                        className="display-flex flex-align-center"
-                                        style={{ gap: '4px' }}
-                                      >
-                                        {modelCategoryConfig.options[category]}
-                                        {category !==
-                                          ModelCategory.TO_BE_DETERMINED && (
-                                          <Tooltip
-                                            label={
-                                              modelCategoryConfig.tooltip[
-                                                category
-                                              ]
-                                            }
-                                            position="right"
-                                          >
-                                            <IconInfo className="text-base-light" />
-                                          </Tooltip>
-                                        )}
-                                      </span>
-                                    }
-                                    value={category}
-                                    checked={
-                                      values.basics.modelCategory === category
-                                    }
-                                    onChange={() => {
-                                      setFieldValue(
-                                        'basics.modelCategory',
-                                        category
+                            {getKeys(modelCategoryConfig.options).map(key => (
+                              <Fragment key={key}>
+                                <Field
+                                  as={Radio}
+                                  id={`plan-basics-model-category-${key}`}
+                                  name="basics.modelCategory"
+                                  label={
+                                    <span
+                                      className="display-flex flex-align-center"
+                                      style={{ gap: '4px' }}
+                                    >
+                                      {modelCategoryConfig.options[key]}
+                                      {key !==
+                                        ModelCategory.TO_BE_DETERMINED && (
+                                        <Tooltip
+                                          label={
+                                            modelCategoryConfig.optionsLabels?.[
+                                              key
+                                            ] || ''
+                                          }
+                                          position="right"
+                                        >
+                                          <IconInfo className="text-base-light" />
+                                        </Tooltip>
+                                      )}
+                                    </span>
+                                  }
+                                  value={key}
+                                  checked={values.basics.modelCategory === key}
+                                  onChange={() => {
+                                    setFieldValue('basics.modelCategory', key);
+                                    if (
+                                      values.basics.additionalModelCategories.includes(
+                                        key
+                                      )
+                                    ) {
+                                      values.basics.additionalModelCategories.splice(
+                                        values.basics.additionalModelCategories.indexOf(
+                                          key
+                                        ),
+                                        1
                                       );
-                                      if (
-                                        values.basics.additionalModelCategories.includes(
-                                          category as ModelCategory
-                                        )
-                                      ) {
-                                        values.basics.additionalModelCategories.splice(
-                                          values.basics.additionalModelCategories.indexOf(
-                                            category as ModelCategory
-                                          ),
-                                          1
-                                        );
-                                      }
-                                    }}
-                                  />
-                                </Fragment>
-                              )
-                            )}
+                                    }
+                                  }}
+                                />
+                              </Fragment>
+                            ))}
                           </Fieldset>
                         </FieldGroup>
 
@@ -490,18 +484,18 @@ const BasicsContent = () => {
                             htmlFor="basics.additionalModelCategories"
                             className="text-normal"
                           >
-                            {basicsT('additionalModelCategories.question')}
+                            {basicsT('additionalModelCategories.label')}
                           </Label>
 
                           <span className="usa-hint display-block text-normal margin-top-1">
-                            {basicsT('additionalModelCategories.hint')}
+                            {basicsT('additionalModelCategories.sublabel')}
                           </span>
 
                           <FieldErrorMsg>
                             {flatErrors['basics.additionalModelCategories']}
                           </FieldErrorMsg>
 
-                          {getKeys(modelCategoryConfig.options)
+                          {getKeys(additionalModelCategoriesConfig.options)
                             .filter(
                               key => key !== ModelCategory.TO_BE_DETERMINED
                             )
@@ -520,11 +514,15 @@ const BasicsContent = () => {
                                         className="display-flex flex-align-center"
                                         style={{ gap: '4px' }}
                                       >
-                                        {modelCategoryConfig.options[group]}
+                                        {
+                                          additionalModelCategoriesConfig
+                                            .options[group]
+                                        }
 
                                         <Tooltip
                                           label={
-                                            modelCategoryConfig.tooltip[group]
+                                            additionalModelCategoriesConfig
+                                              .optionsLabels?.[group] || ''
                                           }
                                           position="right"
                                         >
@@ -534,7 +532,7 @@ const BasicsContent = () => {
                                     }
                                     value={group}
                                     checked={values.basics.additionalModelCategories.includes(
-                                      group as ModelCategory
+                                      group
                                     )}
                                   />
                                 </Fragment>
