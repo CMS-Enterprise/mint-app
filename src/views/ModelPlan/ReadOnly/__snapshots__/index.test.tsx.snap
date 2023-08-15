@@ -705,76 +705,22 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                           data-testid="grid"
                         >
                           <div
-                            className="read-only-section read-only-section--modelcategory-question margin-bottom-3"
+                            className="read-only-section read-only-section--primary-model-category margin-bottom-3"
                           >
                             <p
                               className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                             >
-                              modelCategory.question
+                              Primary model category
                             </p>
-                            <div
+                            <p
                               className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                             >
-                              <span
-                                className="display-flex flex-align-center"
-                                style={
-                                  Object {
-                                    "gap": "4px",
-                                  }
-                                }
+                              <em
+                                className="text-base"
                               >
-                                <span
-                                  className="usa-tooltip"
-                                  data-testid="tooltipWrapper"
-                                >
-                                  <div
-                                    aria-describedby="tooltip"
-                                    className="usa-tooltip__trigger"
-                                    data-testid="triggerElement"
-                                    id="mint-tooltip"
-                                    onBlur={[Function]}
-                                    onFocus={[Function]}
-                                    onKeyDown={[Function]}
-                                    onMouseEnter={[Function]}
-                                    onMouseLeave={[Function]}
-                                    onMouseOver={[Function]}
-                                    position="right"
-                                    tabIndex={0}
-                                    title=""
-                                  >
-                                    <svg
-                                      className="usa-icon text-base-light"
-                                      focusable={false}
-                                      height="1em"
-                                      role="img"
-                                      viewBox="0 0 24 24"
-                                      width="1em"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M0 0h24v24H0z"
-                                        fill="none"
-                                      />
-                                      <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                                      />
-                                    </svg>
-                                  </div>
-                                  <span
-                                    aria-describedby="mint-tooltip"
-                                    aria-hidden={true}
-                                    className="usa-tooltip__body"
-                                    data-testid="tooltipBody"
-                                    id="mint-tooltip-body"
-                                    role="tooltip"
-                                    style={Object {}}
-                                    title="modelCategory.optionsLabels.undefined"
-                                  >
-                                    modelCategory.optionsLabels.undefined
-                                  </span>
-                                </span>
-                              </span>
-                            </div>
+                                No answer entered
+                              </em>
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -787,12 +733,12 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                           data-testid="grid"
                         >
                           <div
-                            className="read-only-section read-only-section--additionalmodelcategories-question margin-bottom-3"
+                            className="read-only-section read-only-section--additional-model-categories margin-bottom-3"
                           >
                             <p
                               className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                             >
-                              additionalModelCategories.question
+                              Additional model categories
                             </p>
                             <p
                               className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"

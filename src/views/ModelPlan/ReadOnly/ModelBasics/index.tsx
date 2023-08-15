@@ -214,28 +214,27 @@ const ReadOnlyModelBasics = ({
         <SideBySideReadOnlySection
           firstSection={{
             heading: basicsT('modelCategory.label'),
-            copy:
-              modelCategory === null ? (
-                ''
-              ) : (
-                <span
-                  className="display-flex flex-align-center"
-                  style={{ gap: '4px' }}
-                >
-                  {basicsT(`modelCategory.options.${modelCategory}`, '')}
+            copy: !modelCategory ? (
+              ''
+            ) : (
+              <span
+                className="display-flex flex-align-center"
+                style={{ gap: '4px' }}
+              >
+                {basicsT(`modelCategory.options.${modelCategory}`, '')}
 
-                  {modelCategory !== ModelCategory.TO_BE_DETERMINED && (
-                    <Tooltip
-                      label={basicsT(
-                        `modelCategory.optionsLabels.${modelCategory}`
-                      )}
-                      position="right"
-                    >
-                      <IconInfo className="text-base-light" />
-                    </Tooltip>
-                  )}
-                </span>
-              )
+                {modelCategory !== ModelCategory.TO_BE_DETERMINED && (
+                  <Tooltip
+                    label={basicsT(
+                      `modelCategory.optionsLabels.${modelCategory}`
+                    )}
+                    position="right"
+                  >
+                    <IconInfo className="text-base-light" />
+                  </Tooltip>
+                )}
+              </span>
+            )
           }}
           secondSection={{
             heading: basicsT('additionalModelCategories.label'),

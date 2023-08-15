@@ -819,12 +819,12 @@ exports[`Model Plan Task List Basics page matches snapshot 1`] = `
                       data-testid="label"
                       htmlFor="basics.additionalModelCategories"
                     >
-                      additionalModelCategories.question
+                      Additional model categories
                     </label>
                     <span
                       className="usa-hint display-block text-normal margin-top-1"
                     >
-                      additionalModelCategories.hint
+                      If your model doesn’t fall into any additional categories, you can skip this.
                     </span>
                     <div
                       className="mint-checkbox usa-checkbox"

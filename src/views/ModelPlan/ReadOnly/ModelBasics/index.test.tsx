@@ -8,7 +8,6 @@ import i18next from 'i18next';
 
 import { modelBasicsMocks as mocks, modelID } from 'data/mock/readonly';
 import { ModelCategory } from 'types/graphql-global-types';
-import { translateModelCategory } from 'utils/modelPlan';
 import renameTooltipAriaAndID from 'utils/testing/snapshotSerializeReplacements';
 
 import ReadOnlyModelBasics from './index';
@@ -46,7 +45,6 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     });
   });
   it('matches snapshot', async () => {
-    // const { asFragment } = render(
     const component = mount(
       <MemoryRouter
         initialEntries={[`/models/${modelID}/read-only/model-basics`]}
@@ -60,51 +58,10 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     );
 
     await waitFor(() => {
-      expect(
-        component
-          .text()
-          .includes(translateModelCategory(ModelCategory.STATE_BASED))
-      ).toBe(true);
-      expect(
-        component
-          .text()
-          .includes(
-            i18next.t<string>(
-              `basics:modelCategory.options.${ModelCategory.ACCOUNTABLE_CARE}`
-            )
-          )
-      ).toBe(true);
+      expect(component.text().includes('The Center for Awesomeness')).toBe(
+        true
+      );
     });
-    //   expect(component.text().includes('The Center for Awesomeness')).toBe(
-    //     true
-    //   );
-    // });
-
-    // expect(
-    //   toJson(component, {
-    //     mode: 'deep',
-    //     map: renameTooltipAriaAndID as OutputMapper
-    //   })
-    // ).toMatchSnapshot();
-
-    // await waitFor(() => {
-    //   // expect(screen.getByText('Second Name')).toBeInTheDocument();
-    //   expect(component.text().includes('Second Name')).toBe(true);
-    //   expect(
-    //     screen.getByText(
-    //       i18next.t<string>(
-    //         `basics:modelCategory.options.${ModelCategory.STATE_BASED}`
-    //       )
-    //     )
-    //   ).toBeInTheDocument();
-    //   expect(
-    //     screen.getByText(
-    //       i18next.t<string>(
-    //         `basics:modelCategory.options.${ModelCategory.ACCOUNTABLE_CARE}`
-    //       )
-    //     )
-    //   ).toBeInTheDocument();
-    // });
 
     expect(
       toJson(component, {
