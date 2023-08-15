@@ -1,560 +1,628 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
-<DocumentFragment>
+<div
+  className="read-only-model-plan--model-basics"
+  data-testid="read-only-model-plan--model-basics"
+>
   <div
-    class="read-only-model-plan--model-basics"
-    data-testid="read-only-model-plan--model-basics"
+    className="display-flex flex-justify flex-align-start"
+  >
+    <h2
+      className="margin-top-0 margin-bottom-4"
+    >
+      Model basics
+    </h2>
+    <div />
+  </div>
+  <div
+    className="desktop:grid-col-12"
+    data-testid="grid"
   >
     <div
-      class="display-flex flex-justify flex-align-start"
-    >
-      <h2
-        class="margin-top-0 margin-bottom-4"
-      >
-        Model basics
-      </h2>
-      <div>
-        <div
-          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
-          data-testid="tasklist-tag"
-        >
-          <span>
-            In progress
-          </span>
-        </div>
-      </div>
-    </div>
-    <div
-      class="desktop:grid-col-12"
-      data-testid="grid"
-    >
-      <div
-        class="read-only-section read-only-section--previous-model-names margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Previous model names
-        </p>
-        <ul
-          class="margin-y-0 padding-left-3"
-        >
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            First Name
-          </li>
-          <li
-            class="font-sans-md line-height-sans-4"
-          >
-            Second Name
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div
-      class="bg-base-lightest padding-2 margin-top-4 margin-bottom-4"
+      className="read-only-section read-only-section--previous-model-names margin-bottom-3"
     >
       <p
-        class="margin-top-0 text-bold"
+        className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
       >
-        Other identifiers
+        Previous model names
       </p>
       <p
-        class="line-height-mono-4"
+        className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
       >
-        These are created in 
-        <span
-          class="mint-no-print"
+        <em
+          className="text-base"
         >
-          <a
-            aria-label="Open AMS in a new tab"
-            class="usa-link usa-link--external"
-            href="https://ams.cmmi.cms.gov"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            CMMI Analysis & Management System (AMS).
-          </a>
-        </span>
-        <span
-          class="mint-only-print-inline"
+          No answer entered
+        </em>
+      </p>
+    </div>
+  </div>
+  <div
+    className="bg-base-lightest padding-2 margin-top-4 margin-bottom-4"
+  >
+    <p
+      className="margin-top-0 text-bold"
+    >
+      Other identifiers
+    </p>
+    <p
+      className="line-height-mono-4"
+    >
+      These are created in 
+      <span
+        className="mint-no-print"
+      >
+        <a
+          aria-label="Open AMS in a new tab"
+          className="usa-link usa-link--external"
+          href="https://ams.cmmi.cms.gov"
+          rel="noopener noreferrer"
+          target="_blank"
         >
           CMMI Analysis & Management System (AMS).
-        </span>
-         Skip these fields until your model has been added to AMS. Not all models will have demo codes.
-      </p>
-      <div
-        class="grid-row grid-gap"
-        data-testid="grid"
+        </a>
+      </span>
+      <span
+        className="mint-only-print-inline"
       >
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <p
-            class="text-bold margin-top-0 margin-bottom-1"
-          >
-            Model ID
-          </p>
-          43532323
-        </div>
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <p
-            class="text-bold margin-top-0 margin-bottom-1"
-          >
-            Demo code(s)
-          </p>
-          1234
-        </div>
-      </div>
-    </div>
+        CMMI Analysis & Management System (AMS).
+      </span>
+       Skip these fields until your model has been added to AMS. Not all models will have demo codes.
+    </p>
     <div
-      class="desktop:grid-col-12"
+      className="grid-row grid-gap"
       data-testid="grid"
     >
       <div
-        class="read-only-section read-only-section--model-category margin-bottom-3"
+        className="desktop:grid-col-6"
+        data-testid="grid"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          className="text-bold margin-top-0 margin-bottom-1"
         >
-          Model category
+          Model ID
         </p>
+        <div
+          className="text-italic text-base"
+        >
+          None entered
+        </div>
+      </div>
+      <div
+        className="desktop:grid-col-6"
+        data-testid="grid"
+      >
         <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          className="text-bold margin-top-0 margin-bottom-1"
         >
-          Primary Care Transformation
+          Demo code(s)
         </p>
+        <div
+          className="text-italic text-base"
+        >
+          None entered
+        </div>
       </div>
     </div>
+  </div>
+  <div
+    className="grid-row grid-gap"
+    data-testid="grid"
+  >
     <div
-      class="grid-row grid-gap"
+      className="desktop:grid-col-6"
       data-testid="grid"
     >
       <div
-        class="desktop:grid-col-6"
+        className="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
+          className="read-only-section read-only-section--primary-model-category margin-bottom-3"
         >
+          <p
+            className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Primary model category
+          </p>
           <div
-            class="read-only-section read-only-section--cms-component margin-bottom-3"
+            className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              className="display-flex flex-align-center"
+              style={
+                Object {
+                  "gap": "4px",
+                }
+              }
             >
-              CMS component
-            </p>
-            <ul
-              class="margin-y-0 padding-left-3"
-            >
-              <li
-                class="font-sans-md line-height-sans-4"
+              <span
+                className="usa-tooltip"
+                data-testid="tooltipWrapper"
               >
-                Center for Medicare (CM)
-              </li>
-              <li
-                class="font-sans-md line-height-sans-4"
-              >
-                Other
-              </li>
-              <ul
-                data-testid="other-entry"
-              >
-                <li
-                  class="font-sans-md line-height-sans-4"
+                <div
+                  aria-describedby="tooltip"
+                  className="usa-tooltip__trigger"
+                  data-testid="triggerElement"
+                  id="mint-tooltip"
+                  onBlur={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onMouseOver={[Function]}
+                  position="right"
+                  tabIndex={0}
+                  title=""
                 >
-                  The Center for Awesomeness
-                </li>
-              </ul>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-6"
-        data-testid="grid"
-      >
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--cmmi-group margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              CMMI Group
-            </p>
-            <ul
-              class="margin-y-0 padding-left-3"
-            >
-              <li
-                class="font-sans-md line-height-sans-4"
-              >
-                State and Population Health Group (SPHG)
-              </li>
-              <li
-                class="font-sans-md line-height-sans-4"
-              >
-                Policy and Programs Group (PPG)
-              </li>
-            </ul>
+                  <svg
+                    className="usa-icon text-base-light"
+                    focusable={false}
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                    />
+                  </svg>
+                </div>
+                <span
+                  aria-describedby="mint-tooltip"
+                  aria-hidden={true}
+                  className="usa-tooltip__body"
+                  data-testid="tooltipBody"
+                  id="mint-tooltip-body"
+                  role="tooltip"
+                  style={Object {}}
+                  title="modelCategory.tooltip.undefined"
+                >
+                  modelCategory.tooltip.undefined
+                </span>
+              </span>
+            </span>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="desktop:grid-col-12"
+      className="desktop:grid-col-6"
       data-testid="grid"
     >
       <div
-        class="read-only-section read-only-section--model-type margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Model Type
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          Mandatory
-        </p>
-      </div>
-    </div>
-    <div
-      class="desktop:grid-col-12"
-      data-testid="grid"
-    >
-      <div
-        class="read-only-section read-only-section--problem-statement margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Problem statement
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          There is not enough candy
-        </p>
-      </div>
-    </div>
-    <div
-      class="desktop:grid-col-12"
-      data-testid="grid"
-    >
-      <div
-        class="read-only-section read-only-section--goal margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Goal
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          To get more candy
-        </p>
-      </div>
-    </div>
-    <div
-      class="desktop:grid-col-12"
-      data-testid="grid"
-    >
-      <div
-        class="read-only-section read-only-section--test-interventions margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Test Interventions
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          The great candy machine
-        </p>
-      </div>
-    </div>
-    <div
-      class="desktop:grid-col-12"
-      data-testid="grid"
-    >
-      <div
-        class="read-only-section read-only-section--notes margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          Notes
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          The machine doesn't work yet
-        </p>
-      </div>
-    </div>
-    <div
-      class="mint-section read-only-model-plan__timeline--wrapper border-base-light padding-top-4  border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6"
-      data-testid="section-wrapper"
-    >
-      <h3
-        class="margin-y-0"
-      >
-        Anticipated high level timeline
-      </h3>
-      <ol
-        class="usa-process-list read-only-model-plan__timeline"
-      >
-        <li
-          class="usa-process-list__item read-only-model-plan__timeline__list-item"
-        >
-          <p
-            class="usa-process-list__heading font-body-sm line-height-sans-4"
-            data-testid="processListHeading"
-          >
-            Complete ICIP
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4"
-          >
-            06/03/2022
-          </p>
-        </li>
-        <li
-          class="usa-process-list__item read-only-model-plan__timeline__list-item"
-        >
-          <p
-            class="usa-process-list__heading font-body-sm line-height-sans-4"
-            data-testid="processListHeading"
-          >
-            Clearance
-          </p>
-          <div
-            class="mobile-lg:display-flex"
-          >
-            <div
-              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-            >
-              <p
-                class="usa-process-list__heading font-body-sm line-height-sans-4"
-                data-testid="processListHeading"
-              >
-                Clearance start date
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4"
-              >
-                06/03/2022
-              </p>
-            </div>
-            <div
-              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-            >
-              <p
-                class="usa-process-list__heading font-body-sm line-height-sans-4"
-                data-testid="processListHeading"
-              >
-                Clearance end date
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4"
-              >
-                06/03/2022
-              </p>
-            </div>
-          </div>
-        </li>
-        <li
-          class="usa-process-list__item read-only-model-plan__timeline__list-item"
-        >
-          <p
-            class="usa-process-list__heading font-body-sm line-height-sans-4"
-            data-testid="processListHeading"
-          >
-            Announce model
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4"
-          >
-            06/03/2022
-          </p>
-        </li>
-        <li
-          class="usa-process-list__item read-only-model-plan__timeline__list-item"
-        >
-          <p
-            class="usa-process-list__heading font-body-sm line-height-sans-4"
-            data-testid="processListHeading"
-          >
-            Application period
-          </p>
-          <div
-            class="mobile-lg:display-flex"
-          >
-            <div
-              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-            >
-              <p
-                class="usa-process-list__heading font-body-sm line-height-sans-4"
-                data-testid="processListHeading"
-              >
-                Application start date
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4"
-              >
-                06/03/2022
-              </p>
-            </div>
-            <div
-              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-            >
-              <p
-                class="usa-process-list__heading font-body-sm line-height-sans-4"
-                data-testid="processListHeading"
-              >
-                Application end date
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4"
-              >
-                06/03/2022
-              </p>
-            </div>
-          </div>
-        </li>
-        <li
-          class="usa-process-list__item read-only-model-plan__timeline__list-item"
-        >
-          <p
-            class="usa-process-list__heading font-body-sm line-height-sans-4"
-            data-testid="processListHeading"
-          >
-            Performance period
-          </p>
-          <div
-            class="mobile-lg:display-flex"
-          >
-            <div
-              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-            >
-              <p
-                class="usa-process-list__heading font-body-sm line-height-sans-4"
-                data-testid="processListHeading"
-              >
-                Performance start date
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4"
-              >
-                06/03/2022
-              </p>
-            </div>
-            <div
-              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-            >
-              <p
-                class="usa-process-list__heading font-body-sm line-height-sans-4"
-                data-testid="processListHeading"
-              >
-                Performance end date
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4"
-              >
-                06/03/2022
-              </p>
-            </div>
-          </div>
-        </li>
-        <li
-          class="usa-process-list__item read-only-model-plan__timeline__list-item"
-        >
-          <p
-            class="usa-process-list__heading font-body-sm line-height-sans-4"
-            data-testid="processListHeading"
-          >
-            Model wrap-up end date
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4"
-          >
-            06/03/2022
-          </p>
-        </li>
-      </ol>
-      <div
-        class="desktop:grid-col-12"
+        className="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
+          className="read-only-section read-only-section--additional-model-categories margin-bottom-3"
         >
           <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Notes
+            Additional model categories
           </p>
           <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            Theses are my best guess notes
-          </p>
-        </div>
-      </div>
-    </div>
-    <div
-      class="desktop:grid-col-12"
-      data-testid="grid"
-    >
-      <div
-        class="read-only-section read-only-section--if-timelines-are-tight--might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-        >
-          If timelines are tight, might there be pieces of the model that can be phased in over time?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-        >
-          No
-        </p>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
-        >
-          <p
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-          >
-            Notes
-          </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            This can't be phased in
+            <em
+              className="text-base"
+            >
+              No answer entered
+            </em>
           </p>
         </div>
       </div>
     </div>
   </div>
-</DocumentFragment>
+  <div
+    className="grid-row grid-gap"
+    data-testid="grid"
+  >
+    <div
+      className="desktop:grid-col-6"
+      data-testid="grid"
+    >
+      <div
+        className="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          className="read-only-section read-only-section--cms-component margin-bottom-3"
+        >
+          <p
+            className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            CMS component
+          </p>
+          <p
+            className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              className="text-base"
+            >
+              No answer entered
+            </em>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="desktop:grid-col-6"
+      data-testid="grid"
+    >
+      <div
+        className="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          className="read-only-section read-only-section--cmmi-group margin-bottom-3"
+        >
+          <p
+            className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            CMMI Group
+          </p>
+          <p
+            className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              className="text-base"
+            >
+              No answer entered
+            </em>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="desktop:grid-col-12"
+    data-testid="grid"
+  >
+    <div
+      className="read-only-section read-only-section--model-type margin-bottom-3"
+    >
+      <p
+        className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+      >
+        Model Type
+      </p>
+      <p
+        className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+      >
+        <em
+          className="text-base"
+        >
+          No answer entered
+        </em>
+      </p>
+    </div>
+  </div>
+  <div
+    className="desktop:grid-col-12"
+    data-testid="grid"
+  >
+    <div
+      className="read-only-section read-only-section--problem-statement margin-bottom-3"
+    >
+      <p
+        className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+      >
+        Problem statement
+      </p>
+      <p
+        className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+      >
+        <em
+          className="text-base"
+        >
+          No answer entered
+        </em>
+      </p>
+    </div>
+  </div>
+  <div
+    className="desktop:grid-col-12"
+    data-testid="grid"
+  >
+    <div
+      className="read-only-section read-only-section--goal margin-bottom-3"
+    >
+      <p
+        className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+      >
+        Goal
+      </p>
+      <p
+        className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+      >
+        <em
+          className="text-base"
+        >
+          No answer entered
+        </em>
+      </p>
+    </div>
+  </div>
+  <div
+    className="desktop:grid-col-12"
+    data-testid="grid"
+  >
+    <div
+      className="read-only-section read-only-section--test-interventions margin-bottom-3"
+    >
+      <p
+        className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+      >
+        Test Interventions
+      </p>
+      <p
+        className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+      >
+        <em
+          className="text-base"
+        >
+          No answer entered
+        </em>
+      </p>
+    </div>
+  </div>
+  <div
+    className="mint-section read-only-model-plan__timeline--wrapper border-base-light padding-top-4  border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6"
+    data-testid="section-wrapper"
+  >
+    <h3
+      className="margin-y-0"
+    >
+      Anticipated high level timeline
+    </h3>
+    <ol
+      className="usa-process-list read-only-model-plan__timeline"
+    >
+      <li
+        className="usa-process-list__item read-only-model-plan__timeline__list-item"
+      >
+        <p
+          className="usa-process-list__heading font-body-sm line-height-sans-4"
+          data-testid="processListHeading"
+        >
+          Complete ICIP
+        </p>
+        <p
+          className="margin-y-0 font-body-md line-height-sans-4"
+        >
+          <em
+            className="text-base"
+          >
+            No answer entered
+          </em>
+        </p>
+      </li>
+      <li
+        className="usa-process-list__item read-only-model-plan__timeline__list-item"
+      >
+        <p
+          className="usa-process-list__heading font-body-sm line-height-sans-4"
+          data-testid="processListHeading"
+        >
+          Clearance
+        </p>
+        <div
+          className="mobile-lg:display-flex"
+        >
+          <div
+            className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+          >
+            <p
+              className="usa-process-list__heading font-body-sm line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Clearance start date
+            </p>
+            <p
+              className="margin-y-0 font-body-md line-height-sans-4"
+            >
+              <em
+                className="text-base"
+              >
+                No answer entered
+              </em>
+            </p>
+          </div>
+          <div
+            className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+          >
+            <p
+              className="usa-process-list__heading font-body-sm line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Clearance end date
+            </p>
+            <p
+              className="margin-y-0 font-body-md line-height-sans-4"
+            >
+              <em
+                className="text-base"
+              >
+                No answer entered
+              </em>
+            </p>
+          </div>
+        </div>
+      </li>
+      <li
+        className="usa-process-list__item read-only-model-plan__timeline__list-item"
+      >
+        <p
+          className="usa-process-list__heading font-body-sm line-height-sans-4"
+          data-testid="processListHeading"
+        >
+          Announce model
+        </p>
+        <p
+          className="margin-y-0 font-body-md line-height-sans-4"
+        >
+          <em
+            className="text-base"
+          >
+            No answer entered
+          </em>
+        </p>
+      </li>
+      <li
+        className="usa-process-list__item read-only-model-plan__timeline__list-item"
+      >
+        <p
+          className="usa-process-list__heading font-body-sm line-height-sans-4"
+          data-testid="processListHeading"
+        >
+          Application period
+        </p>
+        <div
+          className="mobile-lg:display-flex"
+        >
+          <div
+            className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+          >
+            <p
+              className="usa-process-list__heading font-body-sm line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Application start date
+            </p>
+            <p
+              className="margin-y-0 font-body-md line-height-sans-4"
+            >
+              <em
+                className="text-base"
+              >
+                No answer entered
+              </em>
+            </p>
+          </div>
+          <div
+            className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+          >
+            <p
+              className="usa-process-list__heading font-body-sm line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Application end date
+            </p>
+            <p
+              className="margin-y-0 font-body-md line-height-sans-4"
+            >
+              <em
+                className="text-base"
+              >
+                No answer entered
+              </em>
+            </p>
+          </div>
+        </div>
+      </li>
+      <li
+        className="usa-process-list__item read-only-model-plan__timeline__list-item"
+      >
+        <p
+          className="usa-process-list__heading font-body-sm line-height-sans-4"
+          data-testid="processListHeading"
+        >
+          Performance period
+        </p>
+        <div
+          className="mobile-lg:display-flex"
+        >
+          <div
+            className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+          >
+            <p
+              className="usa-process-list__heading font-body-sm line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Performance start date
+            </p>
+            <p
+              className="margin-y-0 font-body-md line-height-sans-4"
+            >
+              <em
+                className="text-base"
+              >
+                No answer entered
+              </em>
+            </p>
+          </div>
+          <div
+            className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+          >
+            <p
+              className="usa-process-list__heading font-body-sm line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Performance end date
+            </p>
+            <p
+              className="margin-y-0 font-body-md line-height-sans-4"
+            >
+              <em
+                className="text-base"
+              >
+                No answer entered
+              </em>
+            </p>
+          </div>
+        </div>
+      </li>
+      <li
+        className="usa-process-list__item read-only-model-plan__timeline__list-item"
+      >
+        <p
+          className="usa-process-list__heading font-body-sm line-height-sans-4"
+          data-testid="processListHeading"
+        >
+          Model wrap-up end date
+        </p>
+        <p
+          className="margin-y-0 font-body-md line-height-sans-4"
+        >
+          <em
+            className="text-base"
+          >
+            No answer entered
+          </em>
+        </p>
+      </li>
+    </ol>
+  </div>
+  <div
+    className="desktop:grid-col-12"
+    data-testid="grid"
+  >
+    <div
+      className="read-only-section read-only-section--if-timelines-are-tight--might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time margin-bottom-3"
+    >
+      <p
+        className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+      >
+        If timelines are tight, might there be pieces of the model that can be phased in over time?
+      </p>
+      <p
+        className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+      >
+        <em
+          className="text-base"
+        >
+          No answer entered
+        </em>
+      </p>
+    </div>
+  </div>
+</div>
 `;

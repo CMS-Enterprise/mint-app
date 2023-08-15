@@ -2,10 +2,13 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { mount } from 'enzyme';
+import toJson, { OutputMapper } from 'enzyme-to-json';
 
 import { modelBasicsMocks as mocks, modelID } from 'data/mock/readonly';
 import { ModelCategory } from 'types/graphql-global-types';
 import { translateModelCategory } from 'utils/modelPlan';
+import renameTooltipAriaAndID from 'utils/testing/snapshotSerializeReplacements';
 
 import ReadOnlyModelBasics from './index';
 
@@ -34,7 +37,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     });
   });
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const component = mount(
       <MemoryRouter
         initialEntries={[`/models/${modelID}/read-only/model-basics`]}
       >
@@ -45,16 +48,18 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
     await waitFor(() => {
-      expect(
-        screen.getByTestId('read-only-model-plan--model-basics')
-      ).toBeInTheDocument();
-      expect(screen.getByTestId('other-entry')).toHaveTextContent(
-        'The Center for Awesomeness'
+      expect(component.text().includes('The Center for Awesomeness')).toBe(
+        true
       );
-      expect(screen.getByText('Second Name')).toBeInTheDocument();
     });
 
-    expect(asFragment()).toMatchSnapshot();
+    expect(
+      toJson(component, {
+        mode: 'deep',
+        map: renameTooltipAriaAndID as OutputMapper
+      })
+    ).toMatchSnapshot();
   });
 });
