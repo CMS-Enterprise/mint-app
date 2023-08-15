@@ -79,13 +79,13 @@ const enUS = {
   modelSummary,
   nda,
   newModel,
-  paymentsOld,
   // Old Translations
   basicsOld,
   generalCharacteristicsOld,
   participantsAndProvidersOld,
   beneficiariesOld,
   opsEvalAndLearningOld,
+  paymentsOld,
   // New Translation
   modelPlan,
   basics,
