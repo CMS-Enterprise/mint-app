@@ -834,11 +834,11 @@ type PlanPayments {
 
   # Page 1
   fundingSource:                      [FundingSource!]!
-  fundingSourceTrustFund:             String
+  fundingSourceTrustFundType:         [TrustFundType!]!
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]!
-  fundingSourceRTrustFund:            String
+  fundingSourceRTrustFundType:        [TrustFundType!]!
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]!
@@ -886,7 +886,6 @@ type PlanPayments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
   planningToUseInnovationPaymentContractorNote:    String
-  fundingStructure:                                String
 
   # Page 6
   expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
@@ -928,11 +927,11 @@ type PlanPayments {
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   fundingSource:                      [FundingSource!]
-  fundingSourceTrustFund:             String
+  fundingSourceTrustFundType:         [TrustFundType!]
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFund:            String
+  fundingSourceRTrustFundType:        [TrustFundType!]
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
@@ -980,7 +979,6 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
   planningToUseInnovationPaymentContractorNote:    String
-  fundingStructure:                                String
 
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
@@ -2099,6 +2097,11 @@ enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
   TRUST_FUND
   OTHER
+}
+
+enum TrustFundType {
+  MEDICARE_PART_A_HI_TRUST_FUND
+  MEDICARE_PART_B_SMI_TRUST_FUND
 }
 
 enum PayRecipient {

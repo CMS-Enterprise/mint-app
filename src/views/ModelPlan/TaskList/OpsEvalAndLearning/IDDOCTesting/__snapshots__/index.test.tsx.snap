@@ -243,6 +243,26 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
+          id="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+          name="dataMonitoringFileTypes"
+          type="checkbox"
+          value="PROVIDER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+        >
+          Provider
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
           id="ops-eval-and-learning-data-monitoring-file-PART_A"
           name="dataMonitoringFileTypes"
           type="checkbox"
@@ -273,26 +293,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           for="ops-eval-and-learning-data-monitoring-file-PART_B"
         >
           Part B
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-data-monitoring-file-PROVIDER"
-          name="dataMonitoringFileTypes"
-          type="checkbox"
-          value="PROVIDER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-data-monitoring-file-PROVIDER"
-        >
-          Provider
         </label>
         <p
           class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

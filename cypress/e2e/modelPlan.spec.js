@@ -156,7 +156,10 @@ describe('The Model Plan Form', () => {
       .type('05/23/2025')
       .should('have.value', '05/23/2025');
 
-    cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
+    cy.get('#phasedIn-true')
+      .first()
+      .check({ force: true })
+      .should('be.checked');
 
     cy.contains('button', 'Save and return to task list').click();
 

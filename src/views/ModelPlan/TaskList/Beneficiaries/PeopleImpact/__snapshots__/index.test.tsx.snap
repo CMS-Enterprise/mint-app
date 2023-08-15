@@ -181,7 +181,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   <input
                     class="usa-radio__input"
                     id="beneficiaries-impact-confidence-NOT_AT_ALL"
-                    name="participantsCurrentlyInModels"
+                    name="estimateConfidence"
                     type="radio"
                     value="NOT_AT_ALL"
                   />
@@ -199,7 +199,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   <input
                     class="usa-radio__input"
                     id="beneficiaries-impact-confidence-SLIGHTLY"
-                    name="participantsCurrentlyInModels"
+                    name="estimateConfidence"
                     type="radio"
                     value="SLIGHTLY"
                   />
@@ -217,7 +217,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   <input
                     class="usa-radio__input"
                     id="beneficiaries-impact-confidence-FAIRLY"
-                    name="participantsCurrentlyInModels"
+                    name="estimateConfidence"
                     type="radio"
                     value="FAIRLY"
                   />
@@ -235,7 +235,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   <input
                     class="usa-radio__input"
                     id="beneficiaries-impact-confidence-COMPLETELY"
-                    name="participantsCurrentlyInModels"
+                    name="estimateConfidence"
                     type="radio"
                     value="COMPLETELY"
                   />

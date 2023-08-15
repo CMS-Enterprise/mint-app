@@ -326,11 +326,9 @@ const csvFields = [
   'payments.anticipatedPaymentFrequencyOther',
   'payments.anticipatedPaymentFrequencyNote',
   'payments.fundingSource', // array
-  'payments.fundingSourceTrustFund',
   'payments.fundingSourceOther',
   'payments.fundingSourceNote',
   'payments.fundingSourceR', // array
-  'payments.fundingSourceRTrustFund',
   'payments.fundingSourceROther',
   'payments.fundingSourceRNote',
   'payments.payRecipients', // array
@@ -345,7 +343,6 @@ const csvFields = [
   'payments.sharedSystemsInvolvedAdditionalClaimPaymentNote',
   'payments.planningToUseInnovationPaymentContractor',
   'payments.planningToUseInnovationPaymentContractorNote',
-  'payments.fundingStructure',
   'payments.willRecoverPayments',
   'payments.willRecoverPaymentsNote',
   'payments.anticipateReconcilingPaymentsRetrospectively',

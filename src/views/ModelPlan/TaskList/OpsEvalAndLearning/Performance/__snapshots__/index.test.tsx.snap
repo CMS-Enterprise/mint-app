@@ -122,24 +122,6 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="ops-eval-and-learning-benchmark-performance-YES_NO_RECONCILE"
-              name="dataFullTimeOrIncremental"
-              type="radio"
-              value="YES_NO_RECONCILE"
-            />
-            <label
-              class="usa-radio__label"
-              for="ops-eval-and-learning-benchmark-performance-YES_NO_RECONCILE"
-            >
-              Yes, but we will not reconcile actual performance against it
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
-          >
-            <input
-              class="usa-radio__input"
               id="ops-eval-and-learning-benchmark-performance-YES_RECONCILE"
               name="dataFullTimeOrIncremental"
               type="radio"
@@ -150,6 +132,24 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
               for="ops-eval-and-learning-benchmark-performance-YES_RECONCILE"
             >
               Yes, and we will reconcile actual performance against it
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              id="ops-eval-and-learning-benchmark-performance-YES_NO_RECONCILE"
+              name="dataFullTimeOrIncremental"
+              type="radio"
+              value="YES_NO_RECONCILE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-benchmark-performance-YES_NO_RECONCILE"
+            >
+              Yes, but we will not reconcile actual performance against it
             </label>
           </div>
           <div
@@ -226,7 +226,7 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
               id="ops-eval-and-learning-compute-performance-true"
               name="computePerformanceScores"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -245,7 +245,7 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
               id="ops-eval-and-learning-compute-performance-false"
               name="computePerformanceScores"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -313,10 +313,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-risk-adjustment-performance-true"
               id="ops-eval-and-learning-risk-adjustment-performance-true"
               name="riskAdjustPerformance"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -331,10 +332,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-risk-adjustment-performance-false"
               id="ops-eval-and-learning-risk-adjustment-performance-false"
               name="riskAdjustPerformance"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -361,10 +363,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-risk-adjustment-feedback-true"
               id="ops-eval-and-learning-risk-adjustment-feedback-true"
               name="riskAdjustFeedback"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -379,10 +382,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-risk-adjustment-feedback-false"
               id="ops-eval-and-learning-risk-adjustment-feedback-false"
               name="riskAdjustFeedback"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -409,10 +413,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-risk-adjustment-payment-true"
               id="ops-eval-and-learning-risk-adjustment-payment-true"
               name="riskAdjustPayments"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -427,10 +432,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-risk-adjustment-payment-false"
               id="ops-eval-and-learning-risk-adjustment-payment-false"
               name="riskAdjustPayments"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -457,10 +463,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-risk-adjustment-other-true"
               id="ops-eval-and-learning-risk-adjustment-other-true"
               name="riskAdjustOther"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -475,10 +482,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-risk-adjustment-other-false"
               id="ops-eval-and-learning-risk-adjustment-other-false"
               name="riskAdjustOther"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -562,10 +570,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-appeal-performance-true"
               id="ops-eval-and-learning-appeal-performance-true"
               name="appealPerformance"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -580,10 +589,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-appeal-performance-false"
               id="ops-eval-and-learning-appeal-performance-false"
               name="appealPerformance"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -610,10 +620,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-appeal-feedback-true"
               id="ops-eval-and-learning-appeal-feedback-true"
               name="appealFeedback"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -628,10 +639,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-appeal-feedback-false"
               id="ops-eval-and-learning-appeal-feedback-false"
               name="appealFeedback"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -658,10 +670,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-appeal-payment-true"
               id="ops-eval-and-learning-appeal-payment-true"
               name="appealPayments"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -676,10 +689,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-appeal-payment-false"
               id="ops-eval-and-learning-appeal-payment-false"
               name="appealPayments"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -706,10 +720,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-appeal-other-true"
               id="ops-eval-and-learning-appeal-other-true"
               name="appealOther"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -724,10 +739,11 @@ exports[`Model Plan Ops Eval and Learning Performance matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-appeal-other-false"
               id="ops-eval-and-learning-appeal-other-false"
               name="appealOther"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"

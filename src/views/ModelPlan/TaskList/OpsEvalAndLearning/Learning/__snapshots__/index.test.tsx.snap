@@ -139,16 +139,16 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+            id="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
             name="modelLearningSystems"
             type="checkbox"
-            value="EDUCATE_BENEFICIARIES"
+            value="LEARNING_CONTRACTOR"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+            for="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
           >
-            We plan to educate beneficiaries
+            We plan to have a learning contractor (cross-model or individual)
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -179,26 +179,6 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
-            name="modelLearningSystems"
-            type="checkbox"
-            value="LEARNING_CONTRACTOR"
-          />
-          <label
-            class="usa-checkbox__label"
-            for="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
-          >
-            We plan to have a learning contractor (cross-model or individual)
-          </label>
-          <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-          />
-        </div>
-        <div
-          class="mint-checkbox usa-checkbox"
-        >
-          <input
-            class="usa-checkbox__input"
             id="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
             name="modelLearningSystems"
             type="checkbox"
@@ -209,6 +189,26 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
             for="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
           >
             We plan to enable participant-to-participant collaboration
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+            name="modelLearningSystems"
+            type="checkbox"
+            value="EDUCATE_BENEFICIARIES"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+          >
+            We plan to educate beneficiaries
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

@@ -7,6 +7,7 @@ import {
   OperationalSolutionKey,
   OperationalSolutionSubtaskStatus
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 
 /**
  * Translate the API enum to a human readable string
@@ -39,9 +40,9 @@ export const translateBooleanOrNull = (type: boolean | null | undefined) => {
 export const translateNewModel = (type: boolean | null | undefined) => {
   switch (type) {
     case true:
-      return i18next.t('generalCharacteristics:newModel');
+      return i18next.t('generalCharacteristicsOld:newModel');
     case false:
-      return i18next.t('generalCharacteristics:newTrack');
+      return i18next.t('generalCharacteristicsOld:newTrack');
     default:
       return null;
   }
@@ -54,7 +55,7 @@ export const translateTriStateAnswer = (type: string) => {
     case 'NO':
       return i18next.t('draftModelPlan:no');
     case 'TBD':
-      return i18next.t('beneficiaries:beneficiariesOptions.na');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.na');
     default:
       return '';
   }
@@ -103,23 +104,23 @@ export const translateComplexityLevel = (
 export const translateModelCategory = (category: string) => {
   switch (category) {
     case 'ACCOUNTABLE_CARE':
-      return i18next.t('basics:modelCategories.accountableCare');
+      return i18next.t('basicsOld:modelCategories.accountableCare');
     case 'DEMONSTRATION':
-      return i18next.t('basics:modelCategories.demonstration');
+      return i18next.t('basicsOld:modelCategories.demonstration');
     case 'EPISODE_BASED_PAYMENT_INITIATIVES':
-      return i18next.t('basics:modelCategories.paymentInitiatives');
+      return i18next.t('basicsOld:modelCategories.paymentInitiatives');
     case 'INIT_ACCEL_DEV_AND_TEST':
-      return i18next.t('basics:modelCategories.devAndTest');
+      return i18next.t('basicsOld:modelCategories.devAndTest');
     case 'INIT_MEDICAID_CHIP_POP':
-      return i18next.t('basics:modelCategories.chipPop');
+      return i18next.t('basicsOld:modelCategories.chipPop');
     case 'INIT_SPEED_ADOPT_BEST_PRACTICE':
-      return i18next.t('basics:modelCategories.speedBestPractice');
+      return i18next.t('basicsOld:modelCategories.speedBestPractice');
     case 'INIT__MEDICARE_MEDICAID_ENROLLEES':
-      return i18next.t('basics:modelCategories.medicareMedicaidEnrollees');
+      return i18next.t('basicsOld:modelCategories.medicareMedicaidEnrollees');
     case 'PRIMARY_CARE_TRANSFORMATION':
-      return i18next.t('basics:modelCategories.primaryCare');
+      return i18next.t('basicsOld:modelCategories.primaryCare');
     case 'UNKNOWN':
-      return i18next.t('basics:modelCategories.unknown');
+      return i18next.t('basicsOld:modelCategories.unknown');
     default:
       return '';
   }
@@ -161,13 +162,13 @@ export const translateModelPlanStatus = (status: string) => {
 export const translateAlternativePaymentTypes = (type: string) => {
   switch (type) {
     case 'REGULAR':
-      return i18next.t('generalCharacteristics:apmTypes.regularAPM');
+      return i18next.t('generalCharacteristicsOld:apmTypes.regularAPM');
     case 'MIPS':
-      return i18next.t('generalCharacteristics:apmTypes.MIPSAPM');
+      return i18next.t('generalCharacteristicsOld:apmTypes.MIPSAPM');
     case 'ADVANCED':
-      return i18next.t('generalCharacteristics:apmTypes.advancedAPM');
+      return i18next.t('generalCharacteristicsOld:apmTypes.advancedAPM');
     case 'NOT_APM':
-      return i18next.t('generalCharacteristics:apmTypes.notAPM');
+      return i18next.t('generalCharacteristicsOld:apmTypes.notAPM');
     default:
       return '';
   }
@@ -176,11 +177,11 @@ export const translateAlternativePaymentTypes = (type: string) => {
 export const translateGeographyTypes = (type: string) => {
   switch (type) {
     case 'STATE':
-      return i18next.t('generalCharacteristics:geoState');
+      return i18next.t('generalCharacteristicsOld:geoState');
     case 'REGION':
-      return i18next.t('generalCharacteristics:geoRegion');
+      return i18next.t('generalCharacteristicsOld:geoRegion');
     case 'OTHER':
-      return i18next.t('generalCharacteristics:other');
+      return i18next.t('generalCharacteristicsOld:other');
     default:
       return '';
   }
@@ -189,13 +190,13 @@ export const translateGeographyTypes = (type: string) => {
 export const translateGeographyApplication = (type: string) => {
   switch (type) {
     case 'PARTICIPANTS':
-      return i18next.t('generalCharacteristics:geoParticipants');
+      return i18next.t('generalCharacteristicsOld:geoParticipants');
     case 'PROVIDERS':
-      return i18next.t('generalCharacteristics:geoProviders');
+      return i18next.t('generalCharacteristicsOld:geoProviders');
     case 'BENEFICIARIES':
-      return i18next.t('generalCharacteristics:geoBeneficiaries');
+      return i18next.t('generalCharacteristicsOld:geoBeneficiaries');
     case 'OTHER':
-      return i18next.t('generalCharacteristics:other');
+      return i18next.t('generalCharacteristicsOld:other');
     default:
       return '';
   }
@@ -221,11 +222,11 @@ export const translatePayRecipient = (type: string) => {
 export const translateAgreementTypes = (type: string) => {
   switch (type) {
     case 'PARTICIPATION':
-      return i18next.t('generalCharacteristics:participationAgreement');
+      return i18next.t('generalCharacteristicsOld:participationAgreement');
     case 'COOPERATIVE':
-      return i18next.t('generalCharacteristics:coopAgreement');
+      return i18next.t('generalCharacteristicsOld:coopAgreement');
     case 'OTHER':
-      return i18next.t('generalCharacteristics:other');
+      return i18next.t('generalCharacteristicsOld:other');
     default:
       return '';
   }
@@ -234,13 +235,13 @@ export const translateAgreementTypes = (type: string) => {
 export const translateAuthorityAllowance = (type: string) => {
   switch (type) {
     case 'ACA':
-      return i18next.t('generalCharacteristics:ACA3021');
+      return i18next.t('generalCharacteristicsOld:ACA3021');
     case 'CONGRESSIONALLY_MANDATED':
-      return i18next.t('generalCharacteristics:mandatedDemonstration');
+      return i18next.t('generalCharacteristicsOld:mandatedDemonstration');
     case 'SSA_PART_B':
-      return i18next.t('generalCharacteristics:section1833');
+      return i18next.t('generalCharacteristicsOld:section1833');
     case 'OTHER':
-      return i18next.t('generalCharacteristics:other');
+      return i18next.t('generalCharacteristicsOld:other');
     default:
       return '';
   }
@@ -249,11 +250,11 @@ export const translateAuthorityAllowance = (type: string) => {
 export const translateWaiverTypes = (type: string) => {
   switch (type) {
     case 'FRAUD_ABUSE':
-      return i18next.t('generalCharacteristics:fraudAndAbuse');
+      return i18next.t('generalCharacteristicsOld:fraudAndAbuse');
     case 'PROGRAM_PAYMENT':
-      return i18next.t('generalCharacteristics:programPayment');
+      return i18next.t('generalCharacteristicsOld:programPayment');
     case 'MEDICAID':
-      return i18next.t('generalCharacteristics:medicaid');
+      return i18next.t('generalCharacteristicsOld:medicaid');
     default:
       return '';
   }
@@ -262,11 +263,11 @@ export const translateWaiverTypes = (type: string) => {
 export const translateWaiverTypesLabel = (type: string) => {
   switch (type) {
     case 'FRAUD_ABUSE':
-      return i18next.t('generalCharacteristics:fraudAndAbuseNote');
+      return i18next.t('generalCharacteristicsOld:fraudAndAbuseNote');
     case 'PROGRAM_PAYMENT':
-      return i18next.t('generalCharacteristics:programPaymentNote');
+      return i18next.t('generalCharacteristicsOld:programPaymentNote');
     case 'MEDICAID':
-      return i18next.t('generalCharacteristics:medicaidNote');
+      return i18next.t('generalCharacteristicsOld:medicaidNote');
     default:
       return '';
   }
@@ -276,32 +277,40 @@ export const translateKeyCharacteristics = (characteristic: string) => {
   switch (characteristic) {
     case 'EPISODE_BASED':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.episodeBased'
+        'generalCharacteristicsOld:keyCharacteristicsTypes.episodeBased'
       );
     case 'PART_C':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partC');
+      return i18next.t(
+        'generalCharacteristicsOld:keyCharacteristicsTypes.partC'
+      );
     case 'PART_D':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partD');
+      return i18next.t(
+        'generalCharacteristicsOld:keyCharacteristicsTypes.partD'
+      );
     case 'PAYMENT':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.payment'
+        'generalCharacteristicsOld:keyCharacteristicsTypes.payment'
       );
     case 'POPULATION_BASED':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.population'
+        'generalCharacteristicsOld:keyCharacteristicsTypes.population'
       );
     case 'PREVENTATIVE':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.preventative'
+        'generalCharacteristicsOld:keyCharacteristicsTypes.preventative'
       );
     case 'SERVICE_DELIVERY':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.service'
+        'generalCharacteristicsOld:keyCharacteristicsTypes.service'
       );
     case 'SHARED_SAVINGS':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+      return i18next.t(
+        'generalCharacteristicsOld:keyCharacteristicsTypes.shared'
+      );
     case 'OTHER':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.other');
+      return i18next.t(
+        'generalCharacteristicsOld:keyCharacteristicsTypes.other'
+      );
     default:
       return '';
   }
@@ -311,46 +320,52 @@ export const translateParticipantsType = (type: string) => {
   switch (type) {
     case 'MEDICARE_PROVIDERS':
       return i18next.t(
-        'participantsAndProviders:participantTypes.medicareProviders'
+        'participantsAndProvidersOld:participantTypes.medicareProviders'
       );
     case 'ENTITIES':
-      return i18next.t('participantsAndProviders:participantTypes.entities');
+      return i18next.t('participantsAndProvidersOld:participantTypes.entities');
     case 'CONVENER':
-      return i18next.t('participantsAndProviders:participantTypes.convener');
+      return i18next.t('participantsAndProvidersOld:participantTypes.convener');
     case 'MEDICARE_ADVANTAGE_PLANS':
       return i18next.t(
-        'participantsAndProviders:participantTypes.medicarePlan'
+        'participantsAndProvidersOld:participantTypes.medicarePlan'
       );
     case 'STANDALONE_PART_D_PLANS':
       return i18next.t(
-        'participantsAndProviders:participantTypes.standalonePartD'
+        'participantsAndProvidersOld:participantTypes.standalonePartD'
       );
     case 'MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS':
       return i18next.t(
-        'participantsAndProviders:participantTypes.medicarePrescription'
+        'participantsAndProvidersOld:participantTypes.medicarePrescription'
       );
     case 'STATE_MEDICAID_AGENCIES':
       return i18next.t(
-        'participantsAndProviders:participantTypes.stateMedicaid'
+        'participantsAndProvidersOld:participantTypes.stateMedicaid'
       );
     case 'MEDICAID_MANAGED_CARE_ORGANIZATIONS':
       return i18next.t(
-        'participantsAndProviders:participantTypes.medicaidManagedCare'
+        'participantsAndProvidersOld:participantTypes.medicaidManagedCare'
       );
     case 'MEDICAID_PROVIDERS':
       return i18next.t(
-        'participantsAndProviders:participantTypes.medicaidProviders'
+        'participantsAndProvidersOld:participantTypes.medicaidProviders'
       );
     case 'STATES':
-      return i18next.t('participantsAndProviders:participantTypes.states');
+      return i18next.t('participantsAndProvidersOld:participantTypes.states');
     case 'COMMUNITY_BASED_ORGANIZATIONS':
-      return i18next.t('participantsAndProviders:participantTypes.community');
+      return i18next.t(
+        'participantsAndProvidersOld:participantTypes.community'
+      );
     case 'NON_PROFIT_ORGANIZATIONS':
-      return i18next.t('participantsAndProviders:participantTypes.nonProfit');
+      return i18next.t(
+        'participantsAndProvidersOld:participantTypes.nonProfit'
+      );
     case 'COMMERCIAL_PAYERS':
-      return i18next.t('participantsAndProviders:participantTypes.commercial');
+      return i18next.t(
+        'participantsAndProvidersOld:participantTypes.commercial'
+      );
     case 'OTHER':
-      return i18next.t('participantsAndProviders:other');
+      return i18next.t('participantsAndProvidersOld:other');
     default:
       return '';
   }
@@ -359,21 +374,23 @@ export const translateParticipantsType = (type: string) => {
 export const translateBeneficiariesType = (type: string) => {
   switch (type) {
     case 'DISEASE_SPECIFIC':
-      return i18next.t('beneficiaries:beneficiariesOptions.diseaseSpecific');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.diseaseSpecific');
     case 'DUALLY_ELIGIBLE':
-      return i18next.t('beneficiaries:beneficiariesOptions.duallyEligible');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.duallyEligible');
     case 'MEDICAID':
-      return i18next.t('beneficiaries:beneficiariesOptions.medicaid');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.medicaid');
     case 'MEDICARE_ADVANTAGE':
-      return i18next.t('beneficiaries:beneficiariesOptions.medicareAdvantage');
+      return i18next.t(
+        'beneficiariesOld:beneficiariesOptions.medicareAdvantage'
+      );
     case 'MEDICARE_FFS':
-      return i18next.t('beneficiaries:beneficiariesOptions.medicareFfs');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.medicareFfs');
     case 'MEDICARE_PART_D':
-      return i18next.t('beneficiaries:beneficiariesOptions.medicarePartD');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.medicarePartD');
     case 'OTHER':
-      return i18next.t('beneficiaries:beneficiariesOptions.other');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.other');
     case 'NA':
-      return i18next.t('beneficiaries:beneficiariesOptions.na');
+      return i18next.t('beneficiariesOld:beneficiariesOptions.na');
     default:
       return '';
   }
@@ -382,19 +399,19 @@ export const translateBeneficiariesType = (type: string) => {
 export const translateSelectionMethodType = (type: string) => {
   switch (type) {
     case 'HISTORICAL':
-      return i18next.t('beneficiaries:selectionMethod.historical');
+      return i18next.t('beneficiariesOld:selectionMethod.historical');
     case 'PROSPECTIVE':
-      return i18next.t('beneficiaries:selectionMethod.prospective');
+      return i18next.t('beneficiariesOld:selectionMethod.prospective');
     case 'PROVIDER_SIGN_UP':
-      return i18next.t('beneficiaries:selectionMethod.retrospective');
+      return i18next.t('beneficiariesOld:selectionMethod.retrospective');
     case 'RETROSPECTIVE':
-      return i18next.t('beneficiaries:selectionMethod.voluntary');
+      return i18next.t('beneficiariesOld:selectionMethod.voluntary');
     case 'VOLUNTARY':
-      return i18next.t('beneficiaries:selectionMethod.providerSignUp');
+      return i18next.t('beneficiariesOld:selectionMethod.providerSignUp');
     case 'OTHER':
-      return i18next.t('beneficiaries:selectionMethod.other');
+      return i18next.t('beneficiariesOld:selectionMethod.other');
     case 'NA':
-      return i18next.t('beneficiaries:selectionMethod.na');
+      return i18next.t('beneficiariesOld:selectionMethod.na');
     default:
       return '';
   }
@@ -514,13 +531,13 @@ export const translateAnticipatedPaymentFrequencyType = (type: string) => {
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':
-      return i18next.t('participantsAndProviders:estimateOptions.notAtAll');
+      return i18next.t('beneficiariesOld:estimateOptions.notAtAll');
     case 'SLIGHTLY':
-      return i18next.t('participantsAndProviders:estimateOptions.slightly');
+      return i18next.t('beneficiariesOld:estimateOptions.slightly');
     case 'FAIRLY':
-      return i18next.t('participantsAndProviders:estimateOptions.fairly');
+      return i18next.t('beneficiariesOld:estimateOptions.fairly');
     case 'COMPLETELY':
-      return i18next.t('participantsAndProviders:estimateOptions.completely');
+      return i18next.t('beneficiariesOld:estimateOptions.completely');
     default:
       return '';
   }
@@ -529,17 +546,19 @@ export const translateConfidenceType = (type: string) => {
 export const translateRecruitmentType = (type: string) => {
   switch (type) {
     case 'LOI':
-      return i18next.t('participantsAndProviders:recruitOptions.loi');
+      return i18next.t('participantsAndProvidersOld:recruitOptions.loi');
     case 'APPLICATION_COLLECTION_TOOL':
       return i18next.t(
-        'participantsAndProviders:recruitOptions.appCollectionTool'
+        'participantsAndProvidersOld:recruitOptions.appCollectionTool'
       );
     case 'NOFO':
-      return i18next.t('participantsAndProviders:recruitOptions.nofo');
+      return i18next.t('participantsAndProvidersOld:recruitOptions.nofo');
     case 'OTHER':
-      return i18next.t('participantsAndProviders:recruitOptions.other');
+      return i18next.t('participantsAndProvidersOld:recruitOptions.other');
     case 'NA':
-      return i18next.t('participantsAndProviders:recruitOptions.notApplicable');
+      return i18next.t(
+        'participantsAndProvidersOld:recruitOptions.notApplicable'
+      );
     default:
       return '';
   }
@@ -549,28 +568,32 @@ export const translateParticipantSelectiontType = (type: string) => {
   switch (type) {
     case 'MODEL_TEAM_REVIEW_APPLICATIONS':
       return i18next.t(
-        'participantsAndProviders:selectOtions.reviewApplications'
+        'participantsAndProvidersOld:selectOtions.reviewApplications'
       );
     case 'SUPPORT_FROM_CMMI':
-      return i18next.t('participantsAndProviders:selectOtions.solicitSupport');
+      return i18next.t(
+        'participantsAndProvidersOld:selectOtions.solicitSupport'
+      );
     case 'CMS_COMPONENT_OR_PROCESS':
       return i18next.t(
-        'participantsAndProviders:selectOtions.anotherComponent'
+        'participantsAndProvidersOld:selectOtions.anotherComponent'
       );
     case 'APPLICATION_REVIEW_AND_SCORING_TOOL':
       return i18next.t(
-        'participantsAndProviders:selectOtions.applicationReview'
+        'participantsAndProvidersOld:selectOtions.applicationReview'
       );
     case 'APPLICATION_SUPPORT_CONTRACTOR':
       return i18next.t(
-        'participantsAndProviders:selectOtions.applicationSupport'
+        'participantsAndProvidersOld:selectOtions.applicationSupport'
       );
     case 'BASIC_CRITERIA':
-      return i18next.t('participantsAndProviders:selectOtions.criteria');
+      return i18next.t('participantsAndProvidersOld:selectOtions.criteria');
     case 'OTHER':
-      return i18next.t('participantsAndProviders:selectOtions.other');
+      return i18next.t('participantsAndProvidersOld:selectOtions.other');
     case 'NO_SELECTING_PARTICIPANTS':
-      return i18next.t('participantsAndProviders:selectOtions.notApplicable');
+      return i18next.t(
+        'participantsAndProvidersOld:selectOtions.notApplicable'
+      );
     default:
       return '';
   }
@@ -580,19 +603,19 @@ export const translateCommunicationType = (type: string) => {
   switch (type) {
     case 'MASS_EMAIL':
       return i18next.t(
-        'participantsAndProviders:participantCommunicationOptions.sendEmails'
+        'participantsAndProvidersOld:participantCommunicationOptions.sendEmails'
       );
     case 'IT_TOOL':
       return i18next.t(
-        'participantsAndProviders:participantCommunicationOptions.itTool'
+        'participantsAndProvidersOld:participantCommunicationOptions.itTool'
       );
     case 'NO_COMMUNICATION':
       return i18next.t(
-        'participantsAndProviders:participantCommunicationOptions.noCommunication'
+        'participantsAndProvidersOld:participantCommunicationOptions.noCommunication'
       );
     case 'OTHER':
       return i18next.t(
-        'participantsAndProviders:participantCommunicationOptions.other'
+        'participantsAndProvidersOld:participantCommunicationOptions.other'
       );
     default:
       return '';
@@ -602,15 +625,15 @@ export const translateCommunicationType = (type: string) => {
 export const translateRiskType = (type: string) => {
   switch (type) {
     case 'TWO_SIDED':
-      return i18next.t('participantsAndProviders:riskTypeOptions.twoSided');
+      return i18next.t('participantsAndProvidersOld:riskTypeOptions.twoSided');
     case 'ONE_SIDED':
-      return i18next.t('participantsAndProviders:riskTypeOptions.oneSided');
+      return i18next.t('participantsAndProvidersOld:riskTypeOptions.oneSided');
     case 'CAPITATION':
       return i18next.t(
-        'participantsAndProviders:riskTypeOptions.capitalization'
+        'participantsAndProvidersOld:riskTypeOptions.capitalization'
       );
     case 'OTHER':
-      return i18next.t('participantsAndProviders:riskTypeOptions.other');
+      return i18next.t('participantsAndProvidersOld:riskTypeOptions.other');
     default:
       return '';
   }
@@ -619,15 +642,15 @@ export const translateRiskType = (type: string) => {
 export const translateParticipantIDType = (type: string) => {
   switch (type) {
     case 'TINS':
-      return i18next.t('participantsAndProviders:collectTINsOptions.tins');
+      return i18next.t('participantsAndProvidersOld:collectTINsOptions.tins');
     case 'NPIS':
-      return i18next.t('participantsAndProviders:collectTINsOptions.npis');
+      return i18next.t('participantsAndProvidersOld:collectTINsOptions.npis');
     case 'CCNS':
-      return i18next.t('participantsAndProviders:collectTINsOptions.ccns');
+      return i18next.t('participantsAndProvidersOld:collectTINsOptions.ccns');
     case 'OTHER':
-      return i18next.t('participantsAndProviders:collectTINsOptions.other');
+      return i18next.t('participantsAndProvidersOld:collectTINsOptions.other');
     case 'NO_IDENTIFIERS':
-      return i18next.t('participantsAndProviders:collectTINsOptions.no');
+      return i18next.t('participantsAndProvidersOld:collectTINsOptions.no');
     default:
       return '';
   }
@@ -636,17 +659,17 @@ export const translateParticipantIDType = (type: string) => {
 export const translateFrequencyType = (type: string) => {
   switch (type) {
     case 'ANNUALLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.annually');
+      return i18next.t('beneficiariesOld:frequencyOptions.annually');
     case 'BIANNUALLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.biannually');
+      return i18next.t('beneficiariesOld:frequencyOptions.biannually');
     case 'QUARTERLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.quarterly');
+      return i18next.t('beneficiariesOld:frequencyOptions.quarterly');
     case 'MONTHLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.monthly');
+      return i18next.t('beneficiariesOld:frequencyOptions.monthly');
     case 'ROLLING':
-      return i18next.t('participantsAndProviders:frequencyOptions.rolling');
+      return i18next.t('beneficiariesOld:frequencyOptions.rolling');
     case 'OTHER':
-      return i18next.t('participantsAndProviders:frequencyOptions.other');
+      return i18next.t('beneficiariesOld:frequencyOptions.other');
     default:
       return '';
   }
@@ -690,28 +713,30 @@ export const translateProviderAddType = (type: string) => {
   switch (type) {
     case 'PROSPECTIVELY':
       return i18next.t(
-        'participantsAndProviders:decideProvidersOptions.prospectively'
+        'participantsAndProvidersOld:decideProvidersOptions.prospectively'
       );
     case 'RETROSPECTIVELY':
       return i18next.t(
-        'participantsAndProviders:decideProvidersOptions.retrospectively'
+        'participantsAndProvidersOld:decideProvidersOptions.retrospectively'
       );
     case 'VOLUNTARILY':
       return i18next.t(
-        'participantsAndProviders:decideProvidersOptions.voluntarily'
+        'participantsAndProvidersOld:decideProvidersOptions.voluntarily'
       );
     case 'MANDATORILY':
       return i18next.t(
-        'participantsAndProviders:decideProvidersOptions.manditorily'
+        'participantsAndProvidersOld:decideProvidersOptions.manditorily'
       );
     case 'ONLINE_TOOLS':
       return i18next.t(
-        'participantsAndProviders:decideProvidersOptions.onlineTools'
+        'participantsAndProvidersOld:decideProvidersOptions.onlineTools'
       );
     case 'OTHER':
-      return i18next.t('participantsAndProviders:decideProvidersOptions.other');
+      return i18next.t(
+        'participantsAndProvidersOld:decideProvidersOptions.other'
+      );
     case 'NA':
-      return i18next.t('participantsAndProviders:decideProvidersOptions.na');
+      return i18next.t('participantsAndProvidersOld:decideProvidersOptions.na');
     default:
       return '';
   }
@@ -721,27 +746,27 @@ export const translateProviderLeaveType = (type: string) => {
   switch (type) {
     case 'VOLUNTARILY_WITHOUT_IMPLICATIONS':
       return i18next.t(
-        'participantsAndProviders:canProvidersLeaveOptions.voluntarily'
+        'participantsAndProvidersOld:canProvidersLeaveOptions.voluntarily'
       );
     case 'AFTER_A_CERTAIN_WITH_IMPLICATIONS':
       return i18next.t(
-        'participantsAndProviders:canProvidersLeaveOptions.certainDate'
+        'participantsAndProvidersOld:canProvidersLeaveOptions.certainDate'
       );
     case 'VARIES_BY_TYPE_OF_PROVIDER':
       return i18next.t(
-        'participantsAndProviders:canProvidersLeaveOptions.varies'
+        'participantsAndProvidersOld:canProvidersLeaveOptions.varies'
       );
     case 'NOT_ALLOWED_TO_LEAVE':
       return i18next.t(
-        'participantsAndProviders:canProvidersLeaveOptions.notAllowed'
+        'participantsAndProvidersOld:canProvidersLeaveOptions.notAllowed'
       );
     case 'OTHER':
       return i18next.t(
-        'participantsAndProviders:canProvidersLeaveOptions.other'
+        'participantsAndProvidersOld:canProvidersLeaveOptions.other'
       );
     case 'NOT_APPLICABLE':
       return i18next.t(
-        'participantsAndProviders:canProvidersLeaveOptions.notApplicable'
+        'participantsAndProvidersOld:canProvidersLeaveOptions.notApplicable'
       );
     default:
       return '';
@@ -751,11 +776,11 @@ export const translateProviderLeaveType = (type: string) => {
 export const translateOverlapType = (type: string) => {
   switch (type) {
     case 'YES_NEED_POLICIES':
-      return i18next.t('participantsAndProviders:overlapOptions.yes');
+      return i18next.t('beneficiariesOld:overlapOptions.yes');
     case 'YES_NO_ISSUES':
-      return i18next.t('participantsAndProviders:overlapOptions.yesNoIssue');
+      return i18next.t('beneficiariesOld:overlapOptions.yesNoIssue');
     case 'NO':
-      return i18next.t('participantsAndProviders:overlapOptions.no');
+      return i18next.t('beneficiariesOld:overlapOptions.no');
     default:
       return '';
   }
@@ -764,25 +789,15 @@ export const translateOverlapType = (type: string) => {
 export const translateAgencyOrStateHelpType = (type: string) => {
   switch (type) {
     case 'YES_STATE':
-      return i18next.t(
-        'operationsEvaluationAndLearning:anotherAgencyOptions.withState'
-      );
+      return i18next.t('opsEvalAndLearningOld:anotherAgencyOptions.withState');
     case 'YES_AGENCY_IDEAS':
-      return i18next.t(
-        'operationsEvaluationAndLearning:anotherAgencyOptions.getIdeas'
-      );
+      return i18next.t('opsEvalAndLearningOld:anotherAgencyOptions.getIdeas');
     case 'YES_AGENCY_IAA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:anotherAgencyOptions.getSupport'
-      );
+      return i18next.t('opsEvalAndLearningOld:anotherAgencyOptions.getSupport');
     case 'NO':
-      return i18next.t(
-        'operationsEvaluationAndLearning:anotherAgencyOptions.no'
-      );
+      return i18next.t('opsEvalAndLearningOld:anotherAgencyOptions.no');
     case 'OTHER':
-      return i18next.t(
-        'operationsEvaluationAndLearning:anotherAgencyOptions.other'
-      );
+      return i18next.t('opsEvalAndLearningOld:anotherAgencyOptions.other');
     default:
       return '';
   }
@@ -792,32 +807,26 @@ export const translateStakeholdersType = (type: string) => {
   switch (type) {
     case 'BENEFICIARIES':
       return i18next.t(
-        'operationsEvaluationAndLearning:stakeholdersOptions.beneficiaries'
+        'opsEvalAndLearningOld:stakeholdersOptions.beneficiaries'
       );
     case 'COMMUNITY_ORGANIZATIONS':
       return i18next.t(
-        'operationsEvaluationAndLearning:stakeholdersOptions.communityOrganizations'
+        'opsEvalAndLearningOld:stakeholdersOptions.communityOrganizations'
       );
     case 'PARTICIPANTS':
       return i18next.t(
-        'operationsEvaluationAndLearning:stakeholdersOptions.participants'
+        'opsEvalAndLearningOld:stakeholdersOptions.participants'
       );
     case 'PROFESSIONAL_ORGANIZATIONS':
       return i18next.t(
-        'operationsEvaluationAndLearning:stakeholdersOptions.professionalOrganizations'
+        'opsEvalAndLearningOld:stakeholdersOptions.professionalOrganizations'
       );
     case 'PROVIDERS':
-      return i18next.t(
-        'operationsEvaluationAndLearning:stakeholdersOptions.providers'
-      );
+      return i18next.t('opsEvalAndLearningOld:stakeholdersOptions.providers');
     case 'STATES':
-      return i18next.t(
-        'operationsEvaluationAndLearning:stakeholdersOptions.states'
-      );
+      return i18next.t('opsEvalAndLearningOld:stakeholdersOptions.states');
     case 'OTHER':
-      return i18next.t(
-        'operationsEvaluationAndLearning:stakeholdersOptions.other'
-      );
+      return i18next.t('opsEvalAndLearningOld:stakeholdersOptions.other');
     default:
       return '';
   }
@@ -826,21 +835,15 @@ export const translateStakeholdersType = (type: string) => {
 export const translateContractorSupportType = (type: string) => {
   switch (type) {
     case 'ONE':
-      return i18next.t(
-        'operationsEvaluationAndLearning:whatContractorsOptions.one'
-      );
+      return i18next.t('opsEvalAndLearningOld:whatContractorsOptions.one');
     case 'MULTIPLE':
-      return i18next.t(
-        'operationsEvaluationAndLearning:whatContractorsOptions.separate'
-      );
+      return i18next.t('opsEvalAndLearningOld:whatContractorsOptions.separate');
     case 'NONE':
       return i18next.t(
-        'operationsEvaluationAndLearning:whatContractorsOptions.noContractor'
+        'opsEvalAndLearningOld:whatContractorsOptions.noContractor'
       );
     case 'OTHER':
-      return i18next.t(
-        'operationsEvaluationAndLearning:whatContractorsOptions.other'
-      );
+      return i18next.t('opsEvalAndLearningOld:whatContractorsOptions.other');
     default:
       return '';
   }
@@ -849,25 +852,15 @@ export const translateContractorSupportType = (type: string) => {
 export const translateMonitoringFileType = (type: string) => {
   switch (type) {
     case 'BENEFICIARY':
-      return i18next.t(
-        'operationsEvaluationAndLearning:fileTypesOptions.beneficiary'
-      );
+      return i18next.t('opsEvalAndLearningOld:fileTypesOptions.beneficiary');
     case 'PROVIDER':
-      return i18next.t(
-        'operationsEvaluationAndLearning:fileTypesOptions.provider'
-      );
+      return i18next.t('opsEvalAndLearningOld:fileTypesOptions.provider');
     case 'PART_A':
-      return i18next.t(
-        'operationsEvaluationAndLearning:fileTypesOptions.partA'
-      );
+      return i18next.t('opsEvalAndLearningOld:fileTypesOptions.partA');
     case 'PART_B':
-      return i18next.t(
-        'operationsEvaluationAndLearning:fileTypesOptions.partB'
-      );
+      return i18next.t('opsEvalAndLearningOld:fileTypesOptions.partB');
     case 'OTHER':
-      return i18next.t(
-        'operationsEvaluationAndLearning:fileTypesOptions.other'
-      );
+      return i18next.t('opsEvalAndLearningOld:fileTypesOptions.other');
     default:
       return '';
   }
@@ -876,9 +869,9 @@ export const translateMonitoringFileType = (type: string) => {
 export const translateDataFullTimeOrIncrementalType = (type: string) => {
   switch (type) {
     case 'FULL_TIME':
-      return i18next.t('operationsEvaluationAndLearning:fullTime');
+      return i18next.t('opsEvalAndLearningOld:fullTime');
     case 'INCREMENTAL':
-      return i18next.t('operationsEvaluationAndLearning:incremental');
+      return i18next.t('opsEvalAndLearningOld:incremental');
     default:
       return '';
   }
@@ -888,16 +881,14 @@ export const translateBenchmarkForPerformanceType = (type: string) => {
   switch (type) {
     case 'YES_RECONCILE':
       return i18next.t(
-        'operationsEvaluationAndLearning:establishBenchmarkOptions.reconcile'
+        'opsEvalAndLearningOld:establishBenchmarkOptions.reconcile'
       );
     case 'YES_NO_RECONCILE':
       return i18next.t(
-        'operationsEvaluationAndLearning:establishBenchmarkOptions.notReconcile'
+        'opsEvalAndLearningOld:establishBenchmarkOptions.notReconcile'
       );
     case 'NO':
-      return i18next.t(
-        'operationsEvaluationAndLearning:establishBenchmarkOptions.no'
-      );
+      return i18next.t('opsEvalAndLearningOld:establishBenchmarkOptions.no');
     default:
       return '';
   }
@@ -906,23 +897,15 @@ export const translateBenchmarkForPerformanceType = (type: string) => {
 export const translateEvaluationApproachType = (type: string) => {
   switch (type) {
     case 'CONTROL_INTERVENTION':
-      return i18next.t(
-        'operationsEvaluationAndLearning:approachOptions.establish'
-      );
+      return i18next.t('opsEvalAndLearningOld:approachOptions.establish');
     case 'COMPARISON_MATCH':
-      return i18next.t(
-        'operationsEvaluationAndLearning:approachOptions.identify'
-      );
+      return i18next.t('opsEvalAndLearningOld:approachOptions.identify');
     case 'INTERRUPTED_TIME':
-      return i18next.t(
-        'operationsEvaluationAndLearning:approachOptions.interrupted'
-      );
+      return i18next.t('opsEvalAndLearningOld:approachOptions.interrupted');
     case 'NON_MEDICARE_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:approachOptions.leverage'
-      );
+      return i18next.t('opsEvalAndLearningOld:approachOptions.leverage');
     case 'OTHER':
-      return i18next.t('operationsEvaluationAndLearning:approachOptions.other');
+      return i18next.t('opsEvalAndLearningOld:approachOptions.other');
     default:
       return '';
   }
@@ -931,13 +914,13 @@ export const translateEvaluationApproachType = (type: string) => {
 export const translateCcmInvolvmentType = (type: string) => {
   switch (type) {
     case 'YES_EVALUATION':
-      return i18next.t('operationsEvaluationAndLearning:ccwOptions.yesEval');
+      return i18next.t('opsEvalAndLearningOld:ccwOptions.yesEval');
     case 'YES__IMPLEMENTATION':
-      return i18next.t('operationsEvaluationAndLearning:ccwOptions.yesImpl');
+      return i18next.t('opsEvalAndLearningOld:ccwOptions.yesImpl');
     case 'NO':
-      return i18next.t('operationsEvaluationAndLearning:ccwOptions.no');
+      return i18next.t('opsEvalAndLearningOld:ccwOptions.no');
     case 'OTHER':
-      return i18next.t('operationsEvaluationAndLearning:ccwOptions.other');
+      return i18next.t('opsEvalAndLearningOld:ccwOptions.other');
     default:
       return '';
   }
@@ -946,52 +929,36 @@ export const translateCcmInvolvmentType = (type: string) => {
 export const translateDataForMonitoringType = (type: string) => {
   switch (type) {
     case 'SITE_VISITS':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.siteVisits'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataNeededOptions.siteVisits');
     case 'MEDICARE_CLAIMS':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.medicareClaims'
+        'opsEvalAndLearningOld:dataNeededOptions.medicareClaims'
       );
     case 'MEDICAID_CLAIMS':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.medicaidClaims'
+        'opsEvalAndLearningOld:dataNeededOptions.medicaidClaims'
       );
     case 'ENCOUNTER_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.encounterData'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataNeededOptions.encounterData');
     case 'NO_PAY_CLAIMS':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.noPayClaims'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataNeededOptions.noPayClaims');
     case 'QUALITY_CLAIMS_BASED_MEASURES':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.qualityClaims'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataNeededOptions.qualityClaims');
     case 'QUALITY_REPORTED_MEASURES':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.qualityReported'
+        'opsEvalAndLearningOld:dataNeededOptions.qualityReported'
       );
     case 'CLINICAL_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.clinicalData'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataNeededOptions.clinicalData');
     case 'NON_CLINICAL_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.nonClinical'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataNeededOptions.nonClinical');
     case 'NON_MEDICAL_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.nonMedical'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataNeededOptions.nonMedical');
     case 'OTHER':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.other'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataNeededOptions.other');
     case 'NOT_PLANNING_TO_COLLECT_DATA':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataNeededOptions.notPlanningToCollect'
+        'opsEvalAndLearningOld:dataNeededOptions.notPlanningToCollect'
       );
     default:
       return '';
@@ -1001,33 +968,19 @@ export const translateDataForMonitoringType = (type: string) => {
 export const translateDataToSendParticipantsType = (type: string) => {
   switch (type) {
     case 'BASELINE_HISTORICAL_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataToSendOptions.baseline'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataToSendOptions.baseline');
     case 'CLAIMS_LEVEL_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataToSendOptions.claims'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataToSendOptions.claims');
     case 'BENEFICIARY_LEVEL_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataToSendOptions.beneficiary'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataToSendOptions.beneficiary');
     case 'PARTICIPANT_LEVEL_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataToSendOptions.participant'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataToSendOptions.participant');
     case 'PROVIDER_LEVEL_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataToSendOptions.provider'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataToSendOptions.provider');
     case 'OTHER_MIPS_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataToSendOptions.other'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataToSendOptions.other');
     case 'NOT_PLANNING_TO_SEND_DATA':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataToSendOptions.notPlanning'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataToSendOptions.notPlanning');
     default:
       return '';
   }
@@ -1036,37 +989,23 @@ export const translateDataToSendParticipantsType = (type: string) => {
 export const translateDataStartsType = (type: string) => {
   switch (type) {
     case 'DURING_APPLICATION_PERIOD':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingOptions.during'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataSharingOptions.during');
     case 'SHORTLY_BEFORE_THE_START_DATE':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingOptions.shortlyBefore'
+        'opsEvalAndLearningOld:dataSharingOptions.shortlyBefore'
       );
     case 'EARLY_IN_THE_FIRST_PERFORMANCE_YEAR':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingOptions.early'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataSharingOptions.early');
     case 'LATER_IN_THE_FIRST_PERFORMANCE_YEAR':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingOptions.later'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataSharingOptions.later');
     case 'IN_THE_SUBSEQUENT_PERFORMANCE_YEAR':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingOptions.subsequent'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataSharingOptions.subsequent');
     case 'AT_SOME_OTHER_POINT_IN_TIME':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingOptions.somePoint'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataSharingOptions.somePoint');
     case 'NOT_PLANNING_TO_DO_THIS':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingOptions.notPlanning'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataSharingOptions.notPlanning');
     case 'OTHER':
-      return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingOptions.other'
-      );
+      return i18next.t('opsEvalAndLearningOld:dataSharingOptions.other');
     default:
       return '';
   }
@@ -1076,39 +1015,39 @@ export const translateDataFrequencyType = (type: string) => {
   switch (type) {
     case 'ANNUALLY':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.annually'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.annually'
       );
     case 'BIANNUALLY':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.bianually'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.bianually'
       );
     case 'QUARTERLY':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.quarterly'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.quarterly'
       );
     case 'MONTHLY':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.monthly'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.monthly'
       );
     case 'SEMI_MONTHLY':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.semiMonthly'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.semiMonthly'
       );
     case 'WEEKLY':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.weekly'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.weekly'
       );
     case 'DAILY':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.daily'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.daily'
       );
     case 'OTHER':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.other'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.other'
       );
     case 'NOT_PLANNING_TO_DO_THIS':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.notPlanning'
+        'opsEvalAndLearningOld:dataSharingHowOftenOptions.notPlanning'
       );
     default:
       return '';
@@ -1118,29 +1057,19 @@ export const translateDataFrequencyType = (type: string) => {
 export const translateModelLearningSystemType = (type: string) => {
   switch (type) {
     case 'LEARNING_CONTRACTOR':
-      return i18next.t(
-        'operationsEvaluationAndLearning:learningSystemOptions.connector'
-      );
+      return i18next.t('opsEvalAndLearningOld:learningSystemOptions.connector');
     case 'IT_PLATFORM_CONNECT':
-      return i18next.t(
-        'operationsEvaluationAndLearning:learningSystemOptions.itConnect'
-      );
+      return i18next.t('opsEvalAndLearningOld:learningSystemOptions.itConnect');
     case 'PARTICIPANT_COLLABORATION':
       return i18next.t(
-        'operationsEvaluationAndLearning:learningSystemOptions.collaboration'
+        'opsEvalAndLearningOld:learningSystemOptions.collaboration'
       );
     case 'EDUCATE_BENEFICIARIES':
-      return i18next.t(
-        'operationsEvaluationAndLearning:learningSystemOptions.educate'
-      );
+      return i18next.t('opsEvalAndLearningOld:learningSystemOptions.educate');
     case 'OTHER':
-      return i18next.t(
-        'operationsEvaluationAndLearning:learningSystemOptions.other'
-      );
+      return i18next.t('opsEvalAndLearningOld:learningSystemOptions.other');
     case 'NO_LEARNING_SYSTEM':
-      return i18next.t(
-        'operationsEvaluationAndLearning:learningSystemOptions.no'
-      );
+      return i18next.t('opsEvalAndLearningOld:learningSystemOptions.no');
     default:
       return '';
   }
@@ -1172,13 +1101,13 @@ export const translateOpNeedsStatusType = (type: string) => {
 export const translateAppealsQuestionType = (type: string) => {
   switch (type) {
     case 'appealPerformance':
-      return i18next.t('operationsEvaluationAndLearning:performanceScores');
+      return i18next.t('opsEvalAndLearningOld:performanceScores');
     case 'appealFeedback':
-      return i18next.t('operationsEvaluationAndLearning:feedbackResults');
+      return i18next.t('opsEvalAndLearningOld:feedbackResults');
     case 'appealPayments':
-      return i18next.t('operationsEvaluationAndLearning:payments');
+      return i18next.t('opsEvalAndLearningOld:payments');
     case 'appealOther':
-      return i18next.t('operationsEvaluationAndLearning:others');
+      return i18next.t('opsEvalAndLearningOld:others');
     default:
       return '';
   }
@@ -1254,6 +1183,17 @@ export const mapMultiSelectOptions = (
       value: key,
       label: translationMethod(key)
     }));
+
+// Used to map MultiSelect options from Enums
+export const composeMultiSelectOptions = (
+  translationObject: Record<string, string>,
+  sublabels?: Record<string, string>
+) =>
+  getKeys(translationObject).map(key => ({
+    value: key,
+    label: translationObject[key],
+    subLabel: sublabels ? sublabels[key] : null
+  }));
 
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
 export const sortOtherEnum = (a: string, b: string) => {

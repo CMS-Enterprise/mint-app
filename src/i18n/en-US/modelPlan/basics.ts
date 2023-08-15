@@ -1,11 +1,11 @@
-import { TranslationPlanBasics } from 'types/translation';
+import { TranslationBasics } from 'types/translation';
 
-export const planBasics: TranslationPlanBasics = {
+export const basics: TranslationBasics = {
   modelCategory: {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
     dbField: 'model_category',
-    question: 'Primary model category',
+    label: 'Primary model category',
     dataType: 'enum',
     formType: 'radio',
     options: {
@@ -36,8 +36,8 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'additionalModelCategories',
     goField: 'AdditionalModelCategories',
     dbField: 'additional_model_categories',
-    question: 'Additional model categories',
-    hint:
+    label: 'Additional model categories',
+    sublabel:
       'If your model doesn’t fall into any additional categories, you can skip this.',
     dataType: 'string',
     formType: 'checkbox'
@@ -46,7 +46,7 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'amsModelID',
     goField: 'AmsModelID',
     dbField: 'ams_model_ID',
-    question: 'Model ID',
+    label: 'Model ID',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -54,7 +54,7 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'demoCode',
     goField: 'DemoCode',
     dbField: 'demo_code',
-    question: 'Demo code(s)',
+    label: 'Demo code(s)',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -62,7 +62,7 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'cmsCenters',
     goField: 'CMMIGroups',
     dbField: 'cmmi_groups',
-    question: 'CMS component',
+    label: 'CMS component',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -73,14 +73,15 @@ export const planBasics: TranslationPlanBasics = {
         'Center for Clinical Standards and Quality (CCSQ)',
       CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)',
       OTHER: 'Other'
-    }
+    },
+    filterGroups: ['ipc']
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
     goField: 'CMSCenters',
     dbField: 'cms_centers',
-    question: 'CMMI Group',
-    hint:
+    label: 'CMMI Group',
+    sublabel:
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: 'enum',
     formType: 'checkbox',
@@ -91,25 +92,28 @@ export const planBasics: TranslationPlanBasics = {
       STATE_AND_POPULATION_HEALTH_GROUP:
         'State and Population Health Group (SPHG)',
       TBD: 'To be determined'
-    }
+    },
+    filterGroups: ['ipc']
   },
   modelType: {
     gqlField: 'modelType',
     goField: 'ModelType',
     dbField: 'model_type',
-    question: 'Model Type',
+    label: 'Model Type',
     dataType: 'enum',
     formType: 'radio',
     options: {
       VOLUNTARY: 'Voluntary',
-      MANDATORY: 'Mandatory'
-    }
+      MANDATORY: 'Mandatory',
+      TBD: 'To be determined'
+    },
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },
   problem: {
     gqlField: 'problem',
     goField: 'Problem',
     dbField: 'problem',
-    question: 'Problem statement',
+    label: 'Problem statement',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -117,17 +121,26 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'goal',
     goField: 'Goal',
     dbField: 'goal',
-    question: 'Goal',
-    hint:
+    label: 'Goal',
+    sublabel:
       'Please include the high level goal of the program and a description of the project.',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },
   testInterventions: {
     gqlField: 'testInterventions',
     goField: 'TestInterventions',
     dbField: 'test_interventions',
-    question: 'Test Interventions',
+    label: 'Test Interventions',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  note: {
+    gqlField: 'note',
+    goField: 'Note',
+    dbField: 'note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -135,71 +148,79 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'completeICIP',
     goField: 'CompleteICIP',
     dbField: 'complete_icip',
-    question: 'Complete ICIP',
+    label: 'Complete ICIP',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   clearanceStarts: {
     gqlField: 'clearanceStarts',
     goField: 'ClearanceStarts',
     dbField: 'clearance_starts',
-    question: 'Clearance start date',
+    label: 'Clearance start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   clearanceEnds: {
     gqlField: 'clearanceEnds',
     goField: 'ClearanceEnds',
     dbField: 'clearance_ends',
-    question: 'Clearance end date',
+    label: 'Clearance end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   announced: {
     gqlField: 'announced',
     goField: 'Announced',
     dbField: 'announced',
-    question: 'Announce model',
+    label: 'Announce model',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc', 'iddoc', 'ipc', 'pbg']
   },
   applicationsStart: {
     gqlField: 'applicationsStart',
     goField: 'ApplicationsStart',
     dbField: 'applications_starts',
-    question: 'Application start date',
+    label: 'Application start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc', 'ipc']
   },
   applicationsEnd: {
     gqlField: 'applicationsEnd',
     goField: 'ApplicationsEnd',
     dbField: 'applications_ends',
-    question: 'Application end date',
+    label: 'Application end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   performancePeriodStarts: {
     gqlField: 'performancePeriodStarts',
     goField: 'PerformancePeriodStarts',
     dbField: 'performance_period_starts',
-    question: 'Performance start date',
+    label: 'Performance start date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['cbosc', 'ccw', 'dfsdm', 'iddoc', 'ipc', 'pbg']
   },
   performancePeriodEnds: {
     gqlField: 'performancePeriodEnds',
     goField: 'PerformancePeriodEnds',
     dbField: 'performance_period_ends',
-    question: 'Performance end date',
+    label: 'Performance end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   highLevelNote: {
     gqlField: 'highLevelNote',
     goField: 'HighLevelNote',
     dbField: 'high_level_note',
-    question: 'Note',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -207,38 +228,41 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'wrapUpEnds',
     goField: 'WrapUpEnds',
     dbField: 'wrap_up_ends',
-    question: 'Model wrap-up end date',
+    label: 'Model wrap-up end date',
     dataType: 'date',
-    formType: 'datePicker'
+    formType: 'datePicker',
+    filterGroups: ['ipc']
   },
   phasedIn: {
     gqlField: 'phasedIn',
     goField: 'PhasedIn',
     dbField: 'phased_in',
-    question:
+    label:
       'If timelines are tight, might there be pieces of the model that can be phased in over time?',
-    hint:
+    sublabel:
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
     dataType: 'boolean',
     formType: 'radio',
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    filterGroups: ['iddoc', 'pbg']
   },
   phasedInNote: {
     gqlField: 'phasedInNote',
     goField: 'PhasedInNote',
     dbField: 'phased_in_note',
-    question: 'Note',
+    label: 'Notes',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'pbg']
   },
   status: {
     gqlField: 'status',
     goField: 'Status',
     dbField: 'status',
-    question: 'Model Plan status',
+    label: 'Model Plan status',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -255,7 +279,7 @@ export const planBasics: TranslationPlanBasics = {
 };
 
 // Miscellaneous translations outside scope of individual questions
-export const planBasicsMisc: Record<string, string> = {
+export const basicsMisc: Record<string, string> = {
   heading: 'Model basics',
   description:
     'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question using the link below.',
@@ -272,11 +296,12 @@ export const planBasicsMisc: Record<string, string> = {
   demonstrationPerformanceInfo:
     'When the model will be active beginning with the go-live date',
   na: 'No answer entered',
-  otherNotSpecificed: 'Other not specified',
+  otherNotSpecified: 'Other not specified',
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
   required1: 'All fields marked with ',
   required2: ' are required.',
+  notes: 'Notes',
   noneEntered: 'None entered',
   otherIdentifiers: 'Other identifiers',
   otherIdentifiersInfo1: 'These are created in ',
@@ -285,4 +310,4 @@ export const planBasicsMisc: Record<string, string> = {
     ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.'
 };
 
-export default planBasics;
+export default basics;

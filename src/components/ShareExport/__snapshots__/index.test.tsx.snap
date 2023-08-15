@@ -175,11 +175,5138 @@ exports[`ShareExportModal matches the snapshot 1`] = `
             </p>
           </div>
         </div>
+<<<<<<< HEAD
       </div>,
     ]
     <div
       className="grid-container padding-x-8 margin-top-4"
       data-testid="gridContainer"
+=======
+      </div>
+      <div
+        class="grid-container padding-x-8 margin-top-4"
+        data-testid="gridContainer"
+      >
+        <div
+          class="page-break"
+        >
+          <div
+            class="read-only-model-plan--model-basics"
+            data-testid="read-only-model-plan--model-basics"
+          >
+            <div
+              class="display-flex flex-justify flex-align-start"
+            >
+              <h2
+                class="margin-top-0 margin-bottom-4"
+              >
+                Model basics
+              </h2>
+              <div>
+                <div
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  data-testid="tasklist-tag"
+                >
+                  <span>
+                    In progress
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--previous-model-names margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Previous model names
+                </p>
+                <ul
+                  class="margin-y-0 padding-left-3"
+                >
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    First Name
+                  </li>
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    Second Name
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="bg-base-lightest padding-2 margin-top-4 margin-bottom-4"
+            >
+              <p
+                class="margin-top-0 text-bold"
+              >
+                Other identifiers
+              </p>
+              <p
+                class="line-height-mono-4"
+              >
+                These are created in 
+                <span
+                  class="mint-no-print"
+                >
+                  <a
+                    aria-label="Open AMS in a new tab"
+                    class="usa-link usa-link--external"
+                    href="https://ams.cmmi.cms.gov"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    CMMI Analysis & Management System (AMS).
+                  </a>
+                </span>
+                <span
+                  class="mint-only-print-inline"
+                >
+                  CMMI Analysis & Management System (AMS).
+                </span>
+                 Skip these fields until your model has been added to AMS. Not all models will have demo codes.
+              </p>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <p
+                    class="text-bold margin-top-0 margin-bottom-1"
+                  >
+                    Model ID
+                  </p>
+                  43532323
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <p
+                    class="text-bold margin-top-0 margin-bottom-1"
+                  >
+                    Demo code(s)
+                  </p>
+                  1234
+                </div>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--model-category margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Model category
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  Primary Care Transformation
+                </p>
+              </div>
+            </div>
+            <div
+              class="grid-row grid-gap"
+              data-testid="grid"
+            >
+              <div
+                class="desktop:grid-col-6"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--cms-component margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      CMS component
+                    </p>
+                    <ul
+                      class="margin-y-0 padding-left-3"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Center for Medicare (CM)
+                      </li>
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other
+                      </li>
+                      <ul
+                        data-testid="other-entry"
+                      >
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          The Center for Awesomeness
+                        </li>
+                      </ul>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-6"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--cmmi-group margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      CMMI Group
+                    </p>
+                    <ul
+                      class="margin-y-0 padding-left-3"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        State and Population Health Group (SPHG)
+                      </li>
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Policy and Programs Group (PPG)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--model-type margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Model Type
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  Mandatory
+                </p>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--problem-statement margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Problem statement
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  There is not enough candy
+                </p>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--goal margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Goal
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  To get more candy
+                </p>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--test-interventions margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Test Interventions
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  The great candy machine
+                </p>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--notes margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Notes
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  The machine doesn't work yet
+                </p>
+              </div>
+            </div>
+            <div
+              class="mint-section read-only-model-plan__timeline--wrapper border-base-light padding-top-4  border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6"
+              data-testid="section-wrapper"
+            >
+              <h3
+                class="margin-y-0"
+              >
+                Anticipated high level timeline
+              </h3>
+              <ol
+                class="usa-process-list read-only-model-plan__timeline"
+              >
+                <li
+                  class="usa-process-list__item read-only-model-plan__timeline__list-item"
+                >
+                  <p
+                    class="usa-process-list__heading font-body-sm line-height-sans-4"
+                    data-testid="processListHeading"
+                  >
+                    Complete ICIP
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4"
+                  >
+                    06/03/2022
+                  </p>
+                </li>
+                <li
+                  class="usa-process-list__item read-only-model-plan__timeline__list-item"
+                >
+                  <p
+                    class="usa-process-list__heading font-body-sm line-height-sans-4"
+                    data-testid="processListHeading"
+                  >
+                    Clearance
+                  </p>
+                  <div
+                    class="mobile-lg:display-flex"
+                  >
+                    <div
+                      class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+                    >
+                      <p
+                        class="usa-process-list__heading font-body-sm line-height-sans-4"
+                        data-testid="processListHeading"
+                      >
+                        Clearance start date
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4"
+                      >
+                        06/03/2022
+                      </p>
+                    </div>
+                    <div
+                      class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+                    >
+                      <p
+                        class="usa-process-list__heading font-body-sm line-height-sans-4"
+                        data-testid="processListHeading"
+                      >
+                        Clearance end date
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4"
+                      >
+                        06/03/2022
+                      </p>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="usa-process-list__item read-only-model-plan__timeline__list-item"
+                >
+                  <p
+                    class="usa-process-list__heading font-body-sm line-height-sans-4"
+                    data-testid="processListHeading"
+                  >
+                    Announce model
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4"
+                  >
+                    06/03/2022
+                  </p>
+                </li>
+                <li
+                  class="usa-process-list__item read-only-model-plan__timeline__list-item"
+                >
+                  <p
+                    class="usa-process-list__heading font-body-sm line-height-sans-4"
+                    data-testid="processListHeading"
+                  >
+                    Application period
+                  </p>
+                  <div
+                    class="mobile-lg:display-flex"
+                  >
+                    <div
+                      class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+                    >
+                      <p
+                        class="usa-process-list__heading font-body-sm line-height-sans-4"
+                        data-testid="processListHeading"
+                      >
+                        Application start date
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4"
+                      >
+                        06/03/2022
+                      </p>
+                    </div>
+                    <div
+                      class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+                    >
+                      <p
+                        class="usa-process-list__heading font-body-sm line-height-sans-4"
+                        data-testid="processListHeading"
+                      >
+                        Application end date
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4"
+                      >
+                        06/03/2022
+                      </p>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="usa-process-list__item read-only-model-plan__timeline__list-item"
+                >
+                  <p
+                    class="usa-process-list__heading font-body-sm line-height-sans-4"
+                    data-testid="processListHeading"
+                  >
+                    Performance period
+                  </p>
+                  <div
+                    class="mobile-lg:display-flex"
+                  >
+                    <div
+                      class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+                    >
+                      <p
+                        class="usa-process-list__heading font-body-sm line-height-sans-4"
+                        data-testid="processListHeading"
+                      >
+                        Performance start date
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4"
+                      >
+                        06/03/2022
+                      </p>
+                    </div>
+                    <div
+                      class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+                    >
+                      <p
+                        class="usa-process-list__heading font-body-sm line-height-sans-4"
+                        data-testid="processListHeading"
+                      >
+                        Performance end date
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4"
+                      >
+                        06/03/2022
+                      </p>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="usa-process-list__item read-only-model-plan__timeline__list-item"
+                >
+                  <p
+                    class="usa-process-list__heading font-body-sm line-height-sans-4"
+                    data-testid="processListHeading"
+                  >
+                    Model wrap-up end date
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4"
+                  >
+                    06/03/2022
+                  </p>
+                </li>
+              </ol>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Theses are my best guess notes
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--if-timelines-are-tight--might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  If timelines are tight, might there be pieces of the model that can be phased in over time?
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  No
+                </p>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    This can't be phased in
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="page-break margin-top-6"
+        >
+          <div
+            class="read-only-model-plan--general-characteristics"
+            data-testid="read-only-model-plan--general-characteristics"
+          >
+            <div
+              class="display-flex flex-justify flex-align-start"
+            >
+              <h2
+                class="margin-top-0 margin-bottom-4"
+              >
+                General characteristics
+              </h2>
+              <div>
+                <div
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  data-testid="tasklist-tag"
+                >
+                  <span>
+                    In progress
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--is-this-a-new-track-of-an-existing-model-or-a-new-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Is this a new track of an existing model or a new model?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    New track of an existing model
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--which-existing-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Which existing model?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Accountable Care Organizations (ACOs): General Information
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--does-your-proposed-track-model-resemble-any-existing-models margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Does your proposed track/model resemble any existing models?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Which existing models does your proposed track/model most closely resemble?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--in-what-way-does-the-new-model-resemble-the-selected-model-s margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    In what way does the new model resemble the selected model(s)?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      THIS IS A NEW NOTE
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--are-there-different-components-tracks margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are there different components/tracks?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-do-the-tracks-differ margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How do the tracks differ?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    In every way
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Tracks note
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-type-of-alternative-payment-model--apm--do-you-think-the-model-could-be margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What type of Alternative Payment Model (APM) do you think the model could be?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Regular APM
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      MIPS APM
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      asdfasd
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-are-the-model-key-characteristics margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What are the model key characteristics?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Population-based Model
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Payment Model
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Service Delivery Model
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Custom characteristic
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      test
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2"
+            >
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--is-care-coordination-involved margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Is care coordination involved?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Care description
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Care note
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--are-additional-services-involved margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are additional services involved?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Lots of additional services
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--are-additional-services-involved margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are additional services involved?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Additional services note
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--are-community-partners-involved margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are community partners involved?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Are community partners involved?
+
+
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    frwegqergqgrqwg planContractUpdatedNote
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--is-the-model-targeted-at-specific-geographies margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Is the model targeted at specific geographies?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--geography-type-is margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Geography type is
+                      </p>
+                      <ul
+                        class="margin-y-0 padding-left-3"
+                      >
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Geography type other
+                          </li>
+                        </ul>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Geographies are applied to
+                      </p>
+                      <ul
+                        class="margin-y-0 padding-left-3"
+                      >
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Beneficiaries
+                        </li>
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Geography applied other
+                          </li>
+                        </ul>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Geography note
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--does-the-model-offer-different-options-for-participation margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Does the model offer different options for participation?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Participation options note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-is-the-agreement-type margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What is the agreement type?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other agreement
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-more-than-one-participation-agreement-be-needed margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will more than one participation agreement be needed?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      We will need agreements
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--is-rulemaking-required margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Is rulemaking required?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--which-rule-do-you-anticipate-using-and-what-is-the-target-date-of-display-for-that-regulation margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Which rule do you anticipate using and what is the target date of display for that regulation?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Lots of rules
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    My rulemaking note
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-authority-allows-cmmi-to-test-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What authority allows CMMI to test the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      3021 (ACA)
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other allowance
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Allowance note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--are-waivers-required margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are waivers required?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--which-types-of-waivers-are-required margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Which types of waivers are required?
+                      </p>
+                      <ul
+                        class="margin-y-0 padding-left-3"
+                      >
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Fraud and Abuse
+                        </li>
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Medicaid
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    My waiver note
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="page-break margin-top-6"
+        >
+          <div
+            class="read-only-model-plan--participants-and-providers"
+            data-testid="read-only-model-plan--participants-and-providers"
+          >
+            <div
+              class="display-flex flex-justify flex-align-start"
+            >
+              <h2
+                class="margin-top-0 margin-bottom-4"
+              >
+                Participants and Providers
+              </h2>
+              <div>
+                <div
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  data-testid="tasklist-tag"
+                >
+                  <span>
+                    In progress
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--who-are-the-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Who are the participants?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Medicaid providers
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      States
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      State Medicaid agencies
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        This is the other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Participant note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--please-describe-how-states-will-engage-with-your-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Please describe how states will engage with your model.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    State
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--are-the-participants-in-cmmi-models-now margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are the participants in CMMI models now?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Parts in model
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--at-what-level-will-the-model-apply margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    At what level will the model apply?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    App level
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-many-participants-do-you-expect margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How many participants do you expect?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        0
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        What is your level of confidence on this estimate?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Fairly confident
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Confidence note
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-will-you-recruit-the-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How will you recruit the participants?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Not applicable
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Recruitment note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-will-you-select-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How will you select participants?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Use an application review and scoring tool
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Another CMS component or process will provide support
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note selection
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How will you communicate with participants?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Manage ongoing communications with participants using an IT tool
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Send mass emails to new participants
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Comm note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will the participants assume risk?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        What type of risk will the participant assume?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Capitalization
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note risk
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-the-risk-arrangement-change-as-the-model-progresses margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the risk arrangement change as the model progresses?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      My risk change ntoe
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-the-participants-coordinate-the-work-of-others margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the participants coordinate the work of others?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Coornidate work note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-there-be-gainsharing-payments margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will there be gainsharing payments?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-you-track-gainsharing-payments margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will you track gainsharing payments?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Track note
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-collect-participant-ids--if-so--select-which-types margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you collect participant IDs? If so, select which types.
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      CCNs
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for particpants
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-providers-added margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are providers added?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Biannually
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note freq
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-will-you-decide-to-add-providers margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How will you decide to add providers?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Add retrospectively (once an interaction happens this year)
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Add note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--can-providers-leave-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Can providers leave the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Not applicable
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note leave
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-the-providers-overlap-with-other-models margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the providers overlap with other models?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    No
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Overlap note
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="page-break margin-top-6"
+        >
+          <div
+            class="read-only-model-plan--beneficiaries"
+            data-testid="read-only-model-plan--beneficiaries"
+          >
+            <div
+              class="display-flex flex-justify flex-align-start"
+            >
+              <h2
+                class="margin-top-0 margin-bottom-4"
+              >
+                Beneficiaries
+              </h2>
+              <div>
+                <div
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  data-testid="tasklist-tag"
+                >
+                  <span>
+                    In progress
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--who-are-the-beneficiaries-of-this-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Who are the beneficiaries of this model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Disease-specific
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Dually-eligible beneficiaries
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note beneficiary
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--should-dually-eligible-beneficiaries-be-treated-differently-than-non-dually-eligibles margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Should dually-eligible beneficiaries be treated differently than non-dually eligibles?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        How so?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        This is how
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Treat note
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--should-beneficiaries-with-certain-characteristics-or-enrollments-be-excluded margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Should beneficiaries with certain characteristics or enrollments be excluded?
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      No
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Exclude note
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How many people do you think will be impacted by this model?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    1234
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What is your level of confidence on this estimate?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Completely confident
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note of confidence
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-will-you-choose-beneficiaries margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How will you choose beneficiaries?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Historical claims
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note selection
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-chosen margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How frequently are beneficiaries chosen?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Annually
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note frequency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-the-beneficiaries-overlap-with-other-models margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the beneficiaries overlap with other models?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes, we expect to develop policies to manage the overlaps
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note overlap
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--are-there-precedence-rules-between-this-model-and-other-model-s margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are there precedence rules between this model and other model(s)?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes precedence rules
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="page-break margin-top-6"
+        >
+          <div
+            class="read-only-model-plan--ops-eval-and-learning"
+            data-testid="read-only-model-plan--ops-eval-and-learning"
+          >
+            <div
+              class="display-flex flex-justify flex-align-start"
+            >
+              <h2
+                class="margin-top-0 margin-bottom-4"
+              >
+                Operations, evaluation, and learning
+              </h2>
+              <div>
+                <div
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  data-testid="tasklist-tag"
+                >
+                  <span>
+                    In progress
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will another Agency or State help design/operate the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Yes, we will partner with states
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Agency other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      State note
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-stakeholders-do-you-plan-to-communicate-with margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What stakeholders do you plan to communicate with?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Beneficiaries
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Participants
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Providers
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note stateholders
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--do-you-plan-to-use-a-helpdesk margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Do you plan to use a helpdesk?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note help desk
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--what-contractors-will-support-your-model margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        What contractors will support your model?
+                      </p>
+                      <ul
+                        class="margin-y-0 padding-left-3"
+                      >
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          May have separate contractors for different implementation functions
+                        </li>
+                        <li
+                          class="font-sans-md line-height-sans-4"
+                        >
+                          Other
+                        </li>
+                        <ul
+                          data-testid="other-entry"
+                        >
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            Support other
+                          </li>
+                        </ul>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--in-what-capacity-will-they-support-your-model margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        In what capacity will they support your model?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Support how
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note for support
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                IDDOC Operations
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--are-you-planning-to-use-iddoc-support margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are you planning to use IDDOC support?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note iddoc support
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--are-technical-contacts-identified margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are technical contacts identified?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--please-specify margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Please specify
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Detail of technical contacts
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note for contacts
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-capture-participant-information margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you capture participant information?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for participants
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                Interface Control Document (ICD)
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--icd-owner margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    ICD owner
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    ICD owner
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--draft-icd-required-by margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Draft ICD required by
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Invalid DateTime
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for icd
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                Testing
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--user-acceptance-testing--uat----test-data-needs margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    User Acceptance Testing (UAT) – test data needs
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    UAT needs
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--stc---test-data-needs margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    STC – test data needs
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    STC needs
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--define-the-testing-timelines margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Define the testing timelines
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Testing timelines
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for testing
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                Data Monitoring
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-types-of-files--select-all-that-apply margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What types of files? Select all that apply.
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Part A
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Part B
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-types-of-responses margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What types of responses?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    File
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--frequency-of-files margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Frequency of files?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Every week
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--full-time-or-incremental margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Full time or incremental?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Full time
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--are-electronic-file-transfer--eft--and-connectivity-set-up margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are Electronic File Transfer (EFT) and connectivity set up?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-unsolicited-adjustments-be-included margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will unsolicited adjustments be included?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--are-data-flow-diagrams-needed margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Are data flow diagrams needed?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-produce-benefit-enhancement-files margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you produce Benefit Enhancement Files?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--file-naming-conventions margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    File naming conventions
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    PDF
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for monitoring
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-establish-a-benchmark-to-capture-performance margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you establish a benchmark to capture performance?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes, and we will reconcile actual performance against it
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for benchmark
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-compute-performance-scores margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you compute performance scores?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for computing
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-you-make-risk-adjustments-to-performance-scores margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will you make risk adjustments to performance scores?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-you-make-risk-adjustments-to-feedback-results margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will you make risk adjustments to feedback results?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will you make risk adjustments to payments?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-you-make-risk-adjustments-to-others margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will you make risk adjustments to others?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--payments margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Payments
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note for risk 
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-participants-be-able-to-appeal-performance-scores margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will participants be able to appeal performance scores?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-participants-be-able-to-appeal-feedback-results margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will participants be able to appeal feedback results?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will participants be able to appeal payments?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-participants-be-able-to-appeal-others margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will participants be able to appeal others?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--payments margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Payments
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note for appeal
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-type-of-evaluation-approach-are-you-considering margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What type of evaluation approach are you considering?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Interrupted time series
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other eval approach
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for approach
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--is-chronic-conditions-warehouse--ccw--involved-in-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Is Chronic Conditions Warehouse (CCW) involved in the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Yes, for evaluation
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        CCM involvement other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for involvement
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-data-do-you-need-to-monitor-the-model margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What data do you need to monitor the model?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Clinical data
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Medicare claims
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Data mon other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for data mon
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-data-will-you-send-to-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What data will you send to participants?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Baseline/historical data
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Beneficiary-level data
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Data to send other
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for data to send
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--does-the-model-require-that-identifiable-claim-and-claim-line-feed--cclfs--data-need-to-be-shared-with-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for cclf
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                Chronic Conditions Warehouse (CCW)
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you need to send files between the CCW and other applications?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for ccw
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Do you know which applications will be on the other sides of the file transfers?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--please-specify margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Please specify
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Which app to send
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Notes
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Note for app to send
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you use the CCW to distribute files to and from model participants?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for ccw disctro
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                Data Sharing, Collection, and Reporting Timing and Frequency
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--data-sharing-starts margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Data sharing starts
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    During application period
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-often-do-you-anticipate-sharing-data margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often do you anticipate sharing data?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Daily
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for data freq
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--data-collection-starts margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Data collection starts
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Early in the first performance year
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-often-do-you-anticipate-collecting-data margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often do you anticipate collecting data?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Monthly
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for data freq
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--quality-reporting-starts margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Quality reporting starts
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Later in the first performance year
+                  </p>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for qual report
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-the-model-have-a-learning-strategy margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the model have a learning strategy?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      We plan to use an IT platform (Connect)
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      No, we will not have a learning strategy
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other learning system
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note for learning system
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-challenges-do-you-anticipate-during-model-design-and-implementation margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What challenges do you anticipate during Model design and implementation?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Some challenges
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="page-break margin-top-6"
+        >
+          <div
+            class="read-only-model-plan--payments"
+            data-testid="read-only-model-plan--payments"
+          >
+            <div
+              class="display-flex flex-justify flex-align-start"
+            >
+              <h2
+                class="margin-top-0 margin-bottom-4"
+              >
+                Payment
+              </h2>
+              <div>
+                <div
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  data-testid="tasklist-tag"
+                >
+                  <span>
+                    In progress
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What will be the funding source for payments?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Patient Protection Affordable Care Act (Sec 3021)
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-is-the-funding-source-for-reconciliation-or-other-expenditures margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What is the funding source for reconciliation or other expenditures?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Patient Protection Affordable Care Act (Sec 3021)
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--who-will-you-pay margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Who will you pay?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Beneficiaries
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-will-you-pay margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What will you pay?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Claims-Based Payments
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <h3>
+                Claims-Based Payments
+              </h3>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--select-which-claims-based-payments-will-you-pay margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Select which claims-based payments will you pay.
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Adjustments to FFS payments
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--should-any-model-providers-be-excluded-from-existing-fee-for-service-payment-systems margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Should any model providers be excluded from existing Fee-for-Service payment systems?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-the-model-change-the-medicare-physician-fee-schedule margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the model change the Medicare Physician Fee Schedule?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--does-the-model-affect-medicare-secondary-payer-claims margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Does the model affect Medicare Secondary Payer claims?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--please-describe margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Please describe
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No answer entered
+                        </em>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-does-the-model-differ-from-current-policy--especially-in-terms-of-payment-rates-and-periodicity-of-payment margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--are-you-anticipating-creating-dependencies-between-services margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are you anticipating creating dependencies between services?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-any-additional-data-need-to-be-collected-for-claims margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will any additional data need to be collected for claims?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-your-contractor-be-providing-data--a-third-party-file--that-will-be-used-in-claims-processing margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will your contractor be providing data (a Third Party File) that will be used in claims processing?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--is-your-contractor-aware-that-test-data-will-be-needed--and-when-that-test-data-must-be-available margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Is your contractor aware that test data will be needed, and when that test data must be available? 
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            />
+            <div
+              class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-the-shared-systems-be-involved-for-additional-payment-of-claims margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will the Shared Systems be involved for additional payment of claims?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-level-of-complexity-do-you-expect-calculations-to-be margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    What level of complexity do you expect calculations to be?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    High level
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Will participants be allowed to select between multiple payment mechanisms?
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        Yes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="desktop:grid-col-6"
+                  data-testid="grid"
+                >
+                  <div
+                    class="desktop:grid-col-12"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="read-only-section read-only-section--please-describe margin-bottom-3"
+                    >
+                      <p
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Please describe
+                      </p>
+                      <p
+                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No answer entered
+                        </em>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--how-often-do-you-anticipate-making-payments margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    How often do you anticipate making payments?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Semiannually
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-recover-the-payments margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you recover the payments?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--do-you-anticipate-reconciling-payments-retrospectively margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Do you anticipate reconciling payments retrospectively?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Yes
+                  </p>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--when-will-payments-start margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    When will payments start?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    06/03/2022
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav
+      aria-label="label"
+      class="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px"
+      data-testid="share-export-navigation-bar"
+>>>>>>> main
     >
       <div
         className="page-break"

@@ -127,14 +127,15 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-coordniate-work"
+              data-testid="participants-and-providers-coordniate-work-true"
+              id="participants-and-providers-coordniate-work-true"
               name="coordinateWork"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="participants-and-providers-coordniate-work"
+              for="participants-and-providers-coordniate-work-true"
             >
               Yes
             </label>
@@ -145,14 +146,15 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-coordniate-work-no"
+              data-testid="participants-and-providers-coordniate-work-false"
+              id="participants-and-providers-coordniate-work-false"
               name="coordinateWork"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="participants-and-providers-coordniate-work-no"
+              for="participants-and-providers-coordniate-work-false"
             >
               No
             </label>
@@ -209,14 +211,15 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-gainshare-payment"
+              data-testid="participants-and-providers-gainshare-payment-true"
+              id="participants-and-providers-gainshare-payment-true"
               name="gainsharePayments"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="participants-and-providers-gainshare-payment"
+              for="participants-and-providers-gainshare-payment-true"
             >
               Yes
             </label>
@@ -227,14 +230,15 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-gainshare-payment-no"
+              data-testid="participants-and-providers-gainshare-payment-false"
+              id="participants-and-providers-gainshare-payment-false"
               name="gainsharePayments"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="participants-and-providers-gainshare-payment-no"
+              for="participants-and-providers-gainshare-payment-false"
             >
               No
             </label>

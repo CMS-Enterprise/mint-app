@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
 import toJson, { OutputMapper } from 'enzyme-to-json';
+import i18next from 'i18next';
 
 import { modelBasicsMocks as mocks, modelID } from 'data/mock/readonly';
 import { ModelCategory } from 'types/graphql-global-types';
@@ -36,7 +37,11 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       expect(
         component
           .text()
-          .includes(translateModelCategory(ModelCategory.ACCOUNTABLE_CARE))
+          .includes(
+            i18next.t<string>(
+              `basics:modelCategory.options.${ModelCategory.ACCOUNTABLE_CARE}`
+            )
+          )
       ).toBe(true);
     });
   });
