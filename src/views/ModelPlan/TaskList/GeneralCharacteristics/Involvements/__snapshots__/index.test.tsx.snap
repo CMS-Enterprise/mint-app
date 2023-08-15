@@ -122,14 +122,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-care-coordination-involved"
+              data-testid="plan-characteristics-care-coordination-involved-true"
+              id="plan-characteristics-care-coordination-involved-true"
               name="careCoordinationInvolved"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-care-coordination-involved"
+              for="plan-characteristics-care-coordination-involved-true"
             >
               Yes
             </label>
@@ -140,14 +141,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-care-coordination-involved-no"
+              data-testid="plan-characteristics-care-coordination-involved-false"
+              id="plan-characteristics-care-coordination-involved-false"
               name="careCoordinationInvolved"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-care-coordination-involved-no"
+              for="plan-characteristics-care-coordination-involved-false"
             >
               No
             </label>
@@ -204,14 +206,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-additional-services"
+              data-testid="plan-characteristics-additional-services-true"
+              id="plan-characteristics-additional-services-true"
               name="additionalServicesInvolved"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-additional-services"
+              for="plan-characteristics-additional-services-true"
             >
               Yes
             </label>
@@ -247,14 +250,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-additional-services-no"
+              data-testid="plan-characteristics-additional-services-false"
+              id="plan-characteristics-additional-services-false"
               name="additionalServicesInvolved"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-additional-services-no"
+              for="plan-characteristics-additional-services-false"
             >
               No
             </label>
@@ -311,14 +315,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-community-partners-involved"
+              data-testid="plan-characteristics-community-partners-involved-true"
+              id="plan-characteristics-community-partners-involved-true"
               name="communityPartnersInvolved"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-community-partners-involved"
+              for="plan-characteristics-community-partners-involved-true"
             >
               Yes
             </label>
@@ -329,14 +334,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-community-partners-no"
+              data-testid="plan-characteristics-community-partners-involved-false"
+              id="plan-characteristics-community-partners-involved-false"
               name="communityPartnersInvolved"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-community-partners-no"
+              for="plan-characteristics-community-partners-involved-false"
             >
               No
             </label>

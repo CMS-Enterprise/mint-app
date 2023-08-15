@@ -12,13 +12,13 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
-  Radio,
   SummaryBox
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -28,6 +28,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetParticipantsAndProviders from 'queries/ParticipantsAndProviders/GetParticipantsAndProviders';
 import {
   GetParticipantsAndProviders as GetParticipantsAndProvidersType,
@@ -39,10 +40,7 @@ import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders
 import { ParticipantsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  mapMultiSelectOptions,
-  translateParticipantsType
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import Communication from './Communication';
@@ -53,11 +51,23 @@ import ProviderOptions from './ProviderOptions';
 import './index.scss';
 
 export const ParticipantsAndProvidersContent = () => {
-  const { t } = useTranslation('participantsAndProviders');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: participantsAndProvidersT } = useTranslation(
+    'participantsAndProviders'
+  );
+  const { t: participantsAndProvidersMiscT } = useTranslation(
+    'participantsAndProvidersMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    participants: participantsConfig,
+    participantsCurrentlyInModels: participantsCurrentlyInModelsConfig
+  } = usePlanTranslation('participantsAndProviders');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ParticipantsAndProvidersFormType>>(null);
+
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -137,28 +147,32 @@ export const ParticipantsAndProvidersContent = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {participantsAndProvidersMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {participantsAndProvidersMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -180,13 +194,14 @@ export const ParticipantsAndProvidersContent = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -219,8 +234,9 @@ export const ParticipantsAndProvidersContent = () => {
                             htmlFor="participants-and-providers-participants"
                             id="label-participants-and-providers-participants"
                           >
-                            {t('whoAreParticipants')}
+                            {participantsAndProvidersT('participants.label')}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.participants}
                           </FieldErrorMsg>
@@ -230,11 +246,12 @@ export const ParticipantsAndProvidersContent = () => {
                             id="participants-and-providers-participants"
                             ariaLabel="label-participants-and-providers-participants"
                             name="participants"
-                            options={mapMultiSelectOptions(
-                              translateParticipantsType,
-                              ParticipantsType
+                            options={composeMultiSelectOptions(
+                              participantsConfig.options
                             )}
-                            selectedLabel={t('selectedParticipants')}
+                            selectedLabel={participantsAndProvidersT(
+                              'participants.multiSelectLabel'
+                            )}
                             onChange={(value: string[] | []) => {
                               setFieldValue('participants', value);
                             }}
@@ -251,7 +268,9 @@ export const ParticipantsAndProvidersContent = () => {
                               ParticipantsType.OTHER
                             )) && (
                             <p className="margin-top-4 text-bold">
-                              {t('participantQuestions')}
+                              {participantsAndProvidersMiscT(
+                                'participantQuestions'
+                              )}
                             </p>
                           )}
 
@@ -266,7 +285,9 @@ export const ParticipantsAndProvidersContent = () => {
                                 htmlFor="participants-and-providers-medicare-type"
                                 className="text-normal"
                               >
-                                {t('typeMedicateProvider')}
+                                {participantsAndProvidersT(
+                                  'medicareProviderType.label'
+                                )}
                               </Label>
                               <FieldErrorMsg>
                                 {flatErrors.medicareProviderType}
@@ -292,7 +313,9 @@ export const ParticipantsAndProvidersContent = () => {
                                 htmlFor="participants-and-providers-states-engagement"
                                 className="text-normal"
                               >
-                                {t('describeStates')}
+                                {participantsAndProvidersT(
+                                  'statesEngagement.label'
+                                )}
                               </Label>
                               <FieldErrorMsg>
                                 {flatErrors.statesEngagement}
@@ -318,7 +341,9 @@ export const ParticipantsAndProvidersContent = () => {
                                 htmlFor="participants-and-providers-participants-other"
                                 className="text-normal"
                               >
-                                {t('describeOther')}
+                                {participantsAndProvidersT(
+                                  'participantsOther.label'
+                                )}
                               </Label>
                               <FieldErrorMsg>
                                 {flatErrors.participantsOther}
@@ -345,48 +370,31 @@ export const ParticipantsAndProvidersContent = () => {
                           className="margin-y-4 margin-bottom-8"
                         >
                           <Label htmlFor="participants-and-providers-current-participants">
-                            {t('participantsCMMI')}
+                            {participantsAndProvidersT(
+                              'participantsCurrentlyInModels.label'
+                            )}
                           </Label>
+
                           <p className="text-base margin-0 line-height-body-3">
-                            {t('participantsCMMIInfo')}
+                            {participantsAndProvidersT(
+                              'participantsCurrentlyInModels.sublabel'
+                            )}
                           </p>
+
                           <FieldErrorMsg>
                             {flatErrors.participantsCurrentlyInModels}
                           </FieldErrorMsg>
-                          <Fieldset>
-                            <Field
-                              as={Radio}
-                              id="participants-and-providers-current-participants"
-                              name="participantsCurrentlyInModels"
-                              label={h('yes')}
-                              value="TRUE"
-                              checked={
-                                values.participantsCurrentlyInModels === true
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'participantsCurrentlyInModels',
-                                  true
-                                );
-                              }}
-                            />
-                            <Field
-                              as={Radio}
-                              id="participants-and-providers-current-participants-no"
-                              name="participantsCurrentlyInModels"
-                              label={h('no')}
-                              value="FALSE"
-                              checked={
-                                values.participantsCurrentlyInModels === false
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'participantsCurrentlyInModels',
-                                  false
-                                );
-                              }}
-                            />
-                          </Fieldset>
+
+                          <BooleanRadio
+                            field="participantsCurrentlyInModels"
+                            id="participants-and-providers-current-participants"
+                            value={values.participantsCurrentlyInModels}
+                            setFieldValue={setFieldValue}
+                            options={
+                              participantsCurrentlyInModelsConfig.options
+                            }
+                          />
+
                           <AddNote
                             id="participants-and-providers-current-participants-note"
                             field="participantsCurrentlyInModelsNote"
@@ -398,14 +406,21 @@ export const ParticipantsAndProvidersContent = () => {
                           error={!!flatErrors.modelApplicationLevel}
                         >
                           <Label htmlFor="participants-and-providers-application-level">
-                            {t('modelLevel')}
+                            {participantsAndProvidersT(
+                              'modelApplicationLevel.label'
+                            )}
                           </Label>
+
                           <p className="text-base margin-0 line-height-body-3">
-                            {t('modelLevelInfo')}
+                            {participantsAndProvidersT(
+                              'modelApplicationLevel.sublabel'
+                            )}
                           </p>
+
                           <FieldErrorMsg>
                             {flatErrors.modelApplicationLevel}
                           </FieldErrorMsg>
+
                           <Field
                             as={TextAreaField}
                             error={flatErrors.modelApplicationLevel}
@@ -416,9 +431,10 @@ export const ParticipantsAndProvidersContent = () => {
 
                         <div className="margin-top-6 margin-bottom-3">
                           <Button type="submit" onClick={() => setErrors({})}>
-                            {h('next')}
+                            {miscellaneousT('next')}
                           </Button>
                         </div>
+
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
@@ -428,28 +444,33 @@ export const ParticipantsAndProvidersContent = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {h('saveAndReturn')}
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
                     </Form>
                   </Grid>
+
                   <Grid desktop={{ col: 6 }}>
                     <SummaryBox
-                      heading={t('participantsDifferenceHeading')}
+                      heading={participantsAndProvidersMiscT(
+                        'participantsDifferenceHeading'
+                      )}
                       className="margin-top-6 "
                     >
                       <ul>
                         <li>
-                          <Trans i18nKey="participantsAndProviders:participantsDifferenceInfo" />
+                          <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo" />
                         </li>
+
                         <li>
-                          <Trans i18nKey="participantsAndProviders:participantsDifferenceInfo2" />
+                          <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo2" />
                         </li>
                       </ul>
                     </SummaryBox>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -463,6 +484,7 @@ export const ParticipantsAndProvidersContent = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={1} totalPages={5} className="margin-y-6" />
     </>
   );

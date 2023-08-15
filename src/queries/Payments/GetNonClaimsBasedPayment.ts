@@ -19,7 +19,6 @@ export default gql`
         sharedSystemsInvolvedAdditionalClaimPaymentNote
         planningToUseInnovationPaymentContractor
         planningToUseInnovationPaymentContractorNote
-        fundingStructure
       }
       operationalNeeds {
         modifiedDts

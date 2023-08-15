@@ -768,9 +768,9 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                                     id="mint-tooltip-body"
                                     role="tooltip"
                                     style={Object {}}
-                                    title="modelCategory.tooltip.undefined"
+                                    title="modelCategory.optionsLabels.undefined"
                                   >
-                                    modelCategory.tooltip.undefined
+                                    modelCategory.optionsLabels.undefined
                                   </span>
                                 </span>
                               </span>

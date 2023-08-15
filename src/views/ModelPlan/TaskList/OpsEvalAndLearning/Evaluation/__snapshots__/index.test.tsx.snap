@@ -105,11 +105,14 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         class="usa-form-group"
         data-scroll="evaluationApproaches"
       >
-        <legend
-          class="usa-label"
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="ops-eval-and-learning-evaluation-approac"
+          id="ops-eval-and-learning-evaluation-approac"
         >
           What type of evaluation approach are you considering? Select all that apply.
-        </legend>
+        </label>
         <div
           class="mint-checkbox usa-checkbox"
         >
@@ -240,11 +243,14 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
           </button>
         </div>
       </div>
-      <legend
-        class="usa-label"
+      <label
+        class="usa-label maxw-none"
+        data-testid="label"
+        for="ops-eval-and-learning-cmmi-involvement"
+        id="ops-eval-and-learning-cmmi-involvement"
       >
         Is Chronic Conditions Warehouse (CCW) involved in the model?
-      </legend>
+      </label>
       <p
         class="text-base margin-y-1"
       >
@@ -295,26 +301,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
-          id="ops-eval-and-learning-cmmi-involvement-OTHER"
-          name="ccmInvolvment"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-cmmi-involvement-OTHER"
-        >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
           id="ops-eval-and-learning-cmmi-involvement-NO"
           name="ccmInvolvment"
           type="checkbox"
@@ -325,6 +311,26 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
           for="ops-eval-and-learning-cmmi-involvement-NO"
         >
           No
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-cmmi-involvement-OTHER"
+          name="ccmInvolvment"
+          type="checkbox"
+          value="OTHER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-cmmi-involvement-OTHER"
+        >
+          Other
         </label>
         <p
           class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -641,7 +647,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
               id="ops-eval-and-learning-share-cclf-data-true"
               name="shareCclfData"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -660,7 +666,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
               id="ops-eval-and-learning-share-cclf-data-false"
               name="shareCclfData"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"

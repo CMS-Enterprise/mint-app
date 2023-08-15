@@ -125,10 +125,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-technical-contacts-identified-use-true"
               id="ops-eval-and-learning-technical-contacts-identified-use-true"
               name="technicalContactsIdentified"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -143,10 +144,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-technical-contacts-identified-use-false"
               id="ops-eval-and-learning-technical-contacts-identified-use-false"
               name="technicalContactsIdentified"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -212,14 +214,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="ops-eval-and-learning-capture-participant-info"
+              data-testid="ops-eval-and-learning-capture-participant-info-true"
+              id="ops-eval-and-learning-capture-participant-info-true"
               name="captureParticipantInfo"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-capture-participant-info"
+              for="ops-eval-and-learning-capture-participant-info-true"
             >
               Yes
             </label>
@@ -230,14 +233,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="ops-eval-and-learning-capture-participant-info-no"
+              data-testid="ops-eval-and-learning-capture-participant-info-false"
+              id="ops-eval-and-learning-capture-participant-info-false"
               name="captureParticipantInfo"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-capture-participant-info-no"
+              for="ops-eval-and-learning-capture-participant-info-false"
             >
               No
             </label>

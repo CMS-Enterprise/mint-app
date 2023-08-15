@@ -366,9 +366,9 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                           id="mint-tooltip-body"
                           role="tooltip"
                           style={Object {}}
-                          title="modelCategory.tooltip.undefined"
+                          title="modelCategory.optionsLabels.undefined"
                         >
-                          modelCategory.tooltip.undefined
+                          modelCategory.optionsLabels.undefined
                         </span>
                       </span>
                     </span>
@@ -846,11 +846,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    className="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  isNewModel.options.undefined
                 </p>
               </div>
             </div>
@@ -892,11 +888,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    className="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  resemblesExistingModel.options.undefined
                 </p>
               </div>
             </div>
@@ -961,11 +953,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <p
                   className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                 >
-                  <em
-                    className="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  hasComponentsOrTracks.options.undefined
                 </p>
               </div>
             </div>
@@ -2426,6 +2414,29 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               </div>
             </div>
             <div
+              className="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                className="read-only-section read-only-section--payments margin-bottom-3"
+              >
+                <p
+                  className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Payments
+                </p>
+                <p
+                  className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  <em
+                    className="text-base"
+                  >
+                    No answer entered
+                  </em>
+                </p>
+              </div>
+            </div>
+            <div
               className="grid-row grid-gap"
               data-testid="grid"
             >
@@ -2545,6 +2556,29 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div
+              className="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                className="read-only-section read-only-section--payments margin-bottom-3"
+              >
+                <p
+                  className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Payments
+                </p>
+                <p
+                  className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  <em
+                    className="text-base"
+                  >
+                    No answer entered
+                  </em>
+                </p>
               </div>
             </div>
           </div>
@@ -2861,59 +2895,49 @@ exports[`ShareExportModal matches the snapshot 1`] = `
             className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
           >
             <div
-              className="grid-row grid-gap"
+              className="desktop:grid-col-12"
               data-testid="grid"
             >
               <div
-                className="desktop:grid-col-12"
-                data-testid="grid"
+                className="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
               >
-                <div
-                  className="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
+                <p
+                  className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
-                  <p
-                    className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  What will be the funding source for payments?
+                </p>
+                <p
+                  className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  <em
+                    className="text-base"
                   >
-                    What will be the funding source for payments?
-                  </p>
-                  <p
-                    className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    <em
-                      className="text-base"
-                    >
-                      No answer entered
-                    </em>
-                  </p>
-                </div>
+                    No answer entered
+                  </em>
+                </p>
               </div>
             </div>
             <div
-              className="grid-row grid-gap"
+              className="desktop:grid-col-12"
               data-testid="grid"
             >
               <div
-                className="desktop:grid-col-12"
-                data-testid="grid"
+                className="read-only-section read-only-section--what-is-the-funding-source-for-reconciliation-or-other-expenditures margin-bottom-3"
               >
-                <div
-                  className="read-only-section read-only-section--what-is-the-funding-source-for-reconciliation-or-other-expenditures margin-bottom-3"
+                <p
+                  className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
-                  <p
-                    className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  What is the funding source for reconciliation or other expenditures?
+                </p>
+                <p
+                  className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  <em
+                    className="text-base"
                   >
-                    What is the funding source for reconciliation or other expenditures?
-                  </p>
-                  <p
-                    className="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                  >
-                    <em
-                      className="text-base"
-                    >
-                      No answer entered
-                    </em>
-                  </p>
-                </div>
+                    No answer entered
+                  </em>
+                </p>
               </div>
             </div>
             <div

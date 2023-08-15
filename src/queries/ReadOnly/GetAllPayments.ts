@@ -6,11 +6,11 @@ export default gql`
       id
       payments {
         fundingSource
-        fundingSourceTrustFund
+        fundingSourceTrustFundType
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
-        fundingSourceRTrustFund
+        fundingSourceRTrustFundType
         fundingSourceROther
         fundingSourceRNote
         payRecipients
@@ -50,7 +50,6 @@ export default gql`
         sharedSystemsInvolvedAdditionalClaimPaymentNote
         planningToUseInnovationPaymentContractor
         planningToUseInnovationPaymentContractorNote
-        fundingStructure
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
         canParticipantsSelectBetweenPaymentMechanisms

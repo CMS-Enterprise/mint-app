@@ -5,7 +5,7 @@ const modelPlan: TranslationModelPlan = {
     gqlField: 'modelName',
     goField: 'ModelName',
     dbField: 'model_name',
-    question: 'Model name',
+    label: 'Model name',
     dataType: 'string',
     formType: 'text'
   },
@@ -13,7 +13,7 @@ const modelPlan: TranslationModelPlan = {
     gqlField: 'previousName',
     goField: 'PreviousName',
     dbField: 'previous_name',
-    question: 'Previous names',
+    label: 'Previous names',
     dataType: 'string',
     formType: 'text'
   },
@@ -21,8 +21,9 @@ const modelPlan: TranslationModelPlan = {
     gqlField: 'abbreviation',
     goField: 'abbreviation',
     dbField: 'abbreviation',
-    question: 'Short name',
-    hint: 'The abbreviation, acronym, or other common name used for the model.',
+    label: 'Short name',
+    sublabel:
+      'The abbreviation, acronym, or other common name used for the model.',
     dataType: 'string',
     formType: 'text'
   }

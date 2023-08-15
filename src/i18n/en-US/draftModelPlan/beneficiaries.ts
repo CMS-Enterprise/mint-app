@@ -39,6 +39,25 @@ const beneficiaries = {
     fairly: 'Fairly confident',
     completely: 'Completely confident'
   },
+  frequencyOptions: {
+    annually: 'Annually',
+    biannually: 'Biannually',
+    quarterly: 'Quarterly',
+    monthly: 'Monthly',
+    rolling: 'Rolling',
+    other: 'Other'
+  },
+  overlapOptions: {
+    yes: 'Yes, we expect to develop policies to manage the overlaps',
+    yesNoIssue: 'Yes, and the overlaps would not be an issue',
+    no: 'No'
+  },
+  estimateOptions: {
+    notAtAll: 'Not at all confident',
+    slightly: 'Slightly confident',
+    fairly: 'Fairly confident',
+    completely: 'Completely confident'
+  },
   chooseBeneficiaries:
     'How will you choose beneficiaries? Select all that apply.',
   chooseBeneficiariesQuestion: 'How will you choose beneficiaries?',

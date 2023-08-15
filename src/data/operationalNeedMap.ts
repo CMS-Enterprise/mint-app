@@ -11,118 +11,119 @@ export interface NeedMap {
   section: string;
 }
 
+// TODO: replance 'answer' translation methods with new mapped translations enums once all work is done
 const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
   MANAGE_CD: {
     route: 'characteristics/key-characteristics',
     fieldName: 'managePartCDEnrollment',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:manageEnrollment',
+    question: 'generalCharacteristics:managePartCDEnrollment.label',
     answer: 'translateBoolean',
-    section: 'beneficiaries'
+    section: 'generalCharacteristicsMisc'
   },
   REV_COL_BIDS: {
     route: 'characteristics/key-characteristics',
     fieldName: 'collectPlanBids',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:reviewPlanBids',
+    question: 'generalCharacteristics:collectPlanBids.label',
     answer: 'translateBoolean',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   UPDATE_CONTRACT: {
     route: 'characteristics/key-characteristics',
     fieldName: 'planContractUpdated',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:updatedContract',
+    question: 'generalCharacteristics:planContractUpdated.label',
     answer: 'translateBoolean',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   SIGN_PARTICIPATION_AGREEMENTS: {
     route: 'characteristics/targets-and-options',
     fieldName: 'agreementTypes',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:agreementType',
+    question: 'generalCharacteristics:agreementTypes.label',
     answer: 'translateAgreementTypes',
-    section: 'generalCharacteristics'
+    section: 'generalCharacteristicsMisc'
   },
   RECRUIT_PARTICIPANTS: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'recruitmentMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:recruitParticipants',
+    question: 'participantsAndProviders:recruitmentMethod.label',
     answer: 'translateRecruitmentType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   APP_SUPPORT_CON: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:howWillYouSelect',
+    question: 'participantsAndProviders:selectionMethod.label',
     answer: 'translateParticipantSelectiontType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   REV_SCORE_APP: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:howWillYouSelect',
+    question: 'participantsAndProviders:selectionMethod.label',
     answer: 'translateParticipantSelectiontType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   COMM_W_PART: {
     route: 'participants-and-providers/communication',
     fieldName: 'communicationMethod',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:participantCommunication',
+    question: 'participantsAndProviders:communicationMethod.label',
     answer: 'translateCommunicationType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   MANAGE_PROV_OVERLAP: {
     route: 'participants-and-providers/provider-options',
     fieldName: 'providerOverlap',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:overlap',
+    question: 'participantsAndProviders:providerOverlap.label',
     answer: 'translateOverlapType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   VET_PROVIDERS_FOR_PROGRAM_INTEGRITY: {
     route: 'participants-and-providers/coordination',
     fieldName: 'participantsIds',
     parentField: 'participantsAndProviders',
-    question: 'participantsAndProviders:collectTINs',
+    question: 'participantsAndProviders:participantsIds.label',
     answer: 'translateParticipantIDType',
-    section: 'participantsAndProviders'
+    section: 'participantsAndProvidersMisc'
   },
   MANAGE_BEN_OVERLAP: {
     route: 'beneficiaries/beneficiary-frequency',
     fieldName: 'beneficiaryOverlap',
     parentField: 'beneficiaries',
-    question: 'beneficiaries:beneficiaryOverlap',
+    question: 'beneficiaries:beneficiaryOverlap.label',
     answer: 'translateOverlapType',
-    section: 'beneficiaries'
+    section: 'beneficiariesMisc'
   },
   HELPDESK_SUPPORT: {
     route: 'ops-eval-and-learning',
     fieldName: 'helpdeskUse',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:helpDesk',
+    question: 'opsEvalAndLearning:helpdeskUse.label',
     answer: 'translateBoolean',
-    section: 'beneficiaries'
+    section: 'opsEvalAndLearningMisc'
   },
   IDDOC_SUPPORT: {
     route: 'ops-eval-and-learning',
     fieldName: 'iddocSupport',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:iddocSupport',
+    question: 'opsEvalAndLearning:iddocSupport.label',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   ESTABLISH_BENCH: {
     route: 'ops-eval-and-learning/performance',
     fieldName: 'benchmarkForPerformance',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:establishBenchmark',
+    question: 'opsEvalAndLearning:benchmarkForPerformance.label',
     answer: 'translateBenchmarkForPerformanceType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'operationsEvaluaopsEvalAndLearningMisctionAndLearning'
   },
   PROCESS_PART_APPEALS: {
     route: 'ops-eval-and-learning/performance',
@@ -133,99 +134,99 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
       'appealOther'
     ],
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:participantAppeal',
+    question: 'opsEvalAndLearningMisc:participantAppeal',
     answer: 'translateBoolean',
     multiPart: true,
     multiPartQuestion: 'translateAppealsQuestionType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   ACQUIRE_AN_EVAL_CONT: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'evaluationApproaches',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:evaluationApproach',
+    question: 'opsEvalAndLearning:evaluationApproaches.label',
     answer: 'translateEvaluationApproachType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   QUALITY_PERFORMANCE_SCORES: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeeded',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   CLAIMS_BASED_MEASURES: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeeded',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   DATA_TO_SUPPORT_EVAL: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeeded',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   DATA_TO_MONITOR: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataNeeded',
+    question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
     answer: 'translateDataForMonitoringType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   SEND_REPDATA_TO_PART: {
     route: 'ops-eval-and-learning/evaluation',
     fieldName: 'dataToSendParticicipants',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:dataToSend',
+    question: 'opsEvalAndLearning:dataToSendParticicipants.label',
     answer: 'translateDataToSendParticipantsType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   PART_TO_PART_COLLAB: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:learningSystem',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearning'
   },
   EDUCATE_BENEF: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:learningSystem',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   ACQUIRE_A_LEARN_CONT: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:learningSystem',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR: {
     route: 'ops-eval-and-learning/ccw-and-quality',
     fieldName: 'developNewQualityMeasures',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:validatedQuality',
+    question: 'opsEvalAndLearning:developNewQualityMeasures.label',
     answer: 'translateBoolean',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   IT_PLATFORM_FOR_LEARNING: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
-    question: 'operationsEvaluationAndLearning:learningSystem',
+    question: 'opsEvalAndLearning:modelLearningSystems.label',
     answer: 'translateModelLearningSystemType',
-    section: 'operationsEvaluationAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   ADJUST_FFS_CLAIMS: {
     route: 'payment',
