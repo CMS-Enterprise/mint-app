@@ -637,6 +637,87 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']
+  },
+  willRecoverPayments: {
+    gqlField: 'willRecoverPayments',
+    goField: 'WillRecoverPayments',
+    dbField: 'will_recover_payments',
+    label: 'Will you recover the payments?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['cmmi', 'ipc']
+  },
+  willRecoverPaymentsNote: {
+    gqlField: 'willRecoverPaymentsNote',
+    goField: 'WillRecoverPaymentsNote',
+    dbField: 'will_recover_payments_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'ipc']
+  },
+  anticipateReconcilingPaymentsRetrospectively: {
+    gqlField: 'anticipateReconcilingPaymentsRetrospectively',
+    goField: 'AnticipateReconcilingPaymentsRetrospectively',
+    dbField: 'anticipate_reconciling_payments_retrospectively',
+    label: 'Do you anticipate reconciling payments retrospectively?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['iddoc', 'ipc', 'pbg']
+  },
+  anticipateReconcilingPaymentsRetrospectivelyNote: {
+    gqlField: 'anticipateReconcilingPaymentsRetrospectivelyNote',
+    goField: 'AnticipateReconcilingPaymentsRetrospectivelyNote',
+    dbField: 'anticipate_reconciling_payments_retrospectively_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['iddoc', 'ipc', 'pbg']
+  },
+  paymentStartDate: {
+    gqlField: 'paymentStartDate',
+    goField: 'PaymentStartDate',
+    dbField: 'payment_start_date',
+    label: 'When will payments start? (Enter an approximate date)',
+    sublabel:
+      'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
+    dataType: 'date',
+    formType: 'datePicker',
+    filterGroups: ['dfsdm', 'ipc']
+  },
+  paymentStartDateNote: {
+    gqlField: 'paymentStartDateNote',
+    goField: 'PaymentStartDateNote',
+    dbField: 'payment_start_date_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    label: 'Model Plan status',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      READY:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      IN_PROGRESS:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_REVIEW:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_CLEARANCE:
+        'This section of the Model Plan (Model basics) is ready for review.'
+    }
   }
 };
 

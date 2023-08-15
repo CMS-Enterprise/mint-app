@@ -90,7 +90,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'anticipatedPaymentFrequency',
       'anticipatedPaymentFrequencyOther',
       'anticipatedPaymentFrequencyNote',
-      'willRecoverPayments'
+      'willRecoverPayments',
+      'willRecoverPaymentsNote'
     ]
   },
   oact: {
@@ -153,7 +154,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'anticipatedPaymentFrequency',
       'anticipatedPaymentFrequencyOther',
       'anticipatedPaymentFrequencyNote',
-      'paymentStartDate'
+      'paymentStartDate',
+      'paymentStartDateNote'
     ]
   },
   ccw: {
@@ -242,8 +244,11 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'anticipatedPaymentFrequencyOther',
       'anticipatedPaymentFrequencyNote',
       'willRecoverPayments',
+      'willRecoverPaymentsNote',
       'anticipateReconcilingPaymentsRetrospectively',
-      'paymentStartDate'
+      'anticipateReconcilingPaymentsRetrospectivelyNote',
+      'paymentStartDate',
+      'paymentStartDateNote'
     ]
   },
   iddoc: {
@@ -356,7 +361,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'waiveBeneficiaryCostSharingNote',
       'planningToUseInnovationPaymentContractor',
       'planningToUseInnovationPaymentContractorNote',
-      'anticipateReconcilingPaymentsRetrospectively'
+      'anticipateReconcilingPaymentsRetrospectively',
+      'anticipateReconcilingPaymentsRetrospectivelyNote'
     ]
   },
   pbg: {
@@ -433,7 +439,8 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'nonClaimsPaymentsNote',
       'planningToUseInnovationPaymentContractor',
       'planningToUseInnovationPaymentContractorNote',
-      'anticipateReconcilingPaymentsRetrospectively'
+      'anticipateReconcilingPaymentsRetrospectively',
+      'anticipateReconcilingPaymentsRetrospectivelyNote'
     ]
   },
   mdm: {

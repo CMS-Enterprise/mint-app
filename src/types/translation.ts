@@ -444,6 +444,14 @@ export type TranslationPayments = {
   anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;
+  // Recover Payment
+  willRecoverPayments: TranslationFieldPropertiesWithOptions<Bool>;
+  willRecoverPaymentsNote: TranslationFieldProperties;
+  anticipateReconcilingPaymentsRetrospectively: TranslationFieldPropertiesWithOptions<Bool>;
+  anticipateReconcilingPaymentsRetrospectivelyNote: TranslationFieldProperties;
+  paymentStartDate: TranslationFieldProperties;
+  paymentStartDateNote: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 export type TranslationPlan = {
