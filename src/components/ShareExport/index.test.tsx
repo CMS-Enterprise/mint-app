@@ -2,9 +2,12 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { mount } from 'enzyme';
+import toJson, { OutputMapper } from 'enzyme-to-json';
 
 import allMocks, { modelID, summaryMock } from 'data/mock/readonly';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
+import renameTooltipAriaAndID from 'utils/testing/snapshotSerializeReplacements';
 
 import ShareExportModal from './index';
 
@@ -52,7 +55,7 @@ describe('ShareExportModal', () => {
   });
 
   it('matches the snapshot', async () => {
-    const { asFragment, getByText } = render(
+    const component = mount(
       <MemoryRouter
         initialEntries={[`/models/${modelID}/read-only/model-basics`]}
       >
@@ -68,9 +71,14 @@ describe('ShareExportModal', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('Testing Model Summary')).toBeInTheDocument();
+      expect(component.text().includes('Testing Model Summary')).toBe(true);
     });
 
-    expect(asFragment()).toMatchSnapshot();
+    expect(
+      toJson(component, {
+        mode: 'deep',
+        map: renameTooltipAriaAndID as OutputMapper
+      })
+    ).toMatchSnapshot();
   });
 });
