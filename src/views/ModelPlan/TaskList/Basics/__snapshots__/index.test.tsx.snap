@@ -60,7 +60,7 @@ exports[`Model Plan Task List Basics page matches snapshot 1`] = `
         </nav>,
         <h1
           aria-live="polite"
-          className="mint-h1 margin-top-4 margin-bottom-0"
+          className="mint-h1 margin-top-4"
           tabIndex={-1}
         >
           Model basics
@@ -819,12 +819,12 @@ exports[`Model Plan Task List Basics page matches snapshot 1`] = `
                       data-testid="label"
                       htmlFor="basics.additionalModelCategories"
                     >
-                      Additional model categories
+                      additionalModelCategories.question
                     </label>
                     <span
                       className="usa-hint display-block text-normal margin-top-1"
                     >
-                      If your model doesn’t fall into any additional categories, you can skip this.
+                      additionalModelCategories.hint
                     </span>
                     <div
                       className="mint-checkbox usa-checkbox"

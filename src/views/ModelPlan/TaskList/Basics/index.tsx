@@ -424,15 +424,6 @@ const BasicsContent = () => {
 
                           <Fieldset>
                             {getKeys(modelCategoryConfig.options).map(
-                              category => {
-                                return (
-                                  <option key={category} value={category}>
-                                    {modelCategoryConfig.options[category]}
-                                  </option>
-                                );
-                              }
-                            )}
-                            {getKeys(modelCategoryConfig.options).map(
                               category => (
                                 <Fragment key={category}>
                                   <Field
