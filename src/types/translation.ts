@@ -8,6 +8,7 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
+  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -15,6 +16,7 @@ import {
   ClaimsBasedPayType,
   CMMIGroup,
   CMSCenter,
+  ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
   DataForMonitoringType,
@@ -32,6 +34,7 @@ import {
   ModelLearningSystemType,
   ModelType,
   MonitoringFileType,
+  NonClaimsBasedPayType,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRiskType,
@@ -421,6 +424,26 @@ export type TranslationPayments = {
   waiveBeneficiaryCostSharingServiceSpecification: TranslationFieldProperties;
   waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptions<Bool>;
   waiveBeneficiaryCostSharingNote: TranslationFieldProperties;
+  // Non-Claims Based Payments
+  nonClaimsPayments: TranslationFieldPropertiesWithOptions<NonClaimsBasedPayType>;
+  nonClaimsPaymentsNote: TranslationFieldProperties;
+  nonClaimsPaymentOther: TranslationFieldProperties;
+  paymentCalculationOwner: TranslationFieldProperties;
+  numberPaymentsPerPayCycle: TranslationFieldProperties;
+  numberPaymentsPerPayCycleNote: TranslationFieldProperties;
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationFieldProperties;
+  planningToUseInnovationPaymentContractor: TranslationFieldPropertiesWithOptions<Bool>;
+  planningToUseInnovationPaymentContractorNote: TranslationFieldProperties;
+  // Complexity
+  expectedCalculationComplexityLevel: TranslationFieldPropertiesWithOptions<ComplexityCalculationLevelType>;
+  expectedCalculationComplexityLevelNote: TranslationFieldProperties;
+  canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
+  canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
+  canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
+  anticipatedPaymentFrequencyOther: TranslationFieldProperties;
+  anticipatedPaymentFrequencyNote: TranslationFieldProperties;
 };
 
 export type TranslationPlan = {

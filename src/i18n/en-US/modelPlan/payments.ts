@@ -430,6 +430,213 @@ export const payments: TranslationPayments = {
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['iddoc', 'oact', 'pbg']
+  },
+  nonClaimsPayments: {
+    gqlField: 'nonClaimsPayments',
+    goField: 'NonClaimsPayments',
+    dbField: 'non_claims_payments',
+    label: 'Select which non-claims-based payments will you pay.',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    multiSelectLabel: 'Selected non-claims-based payments',
+    options: {
+      ADVANCED_PAYMENT: 'Advanced Payment',
+      BUNDLED_EPISODE_OF_CARE: 'Bundled/Episode of Care',
+      CAPITATION_POPULATION_BASED_FULL: 'Capitation/Population Based - Full',
+      CAPITATION_POPULATION_BASED_PARTIAL:
+        'Capitation/Population Based - Partial',
+      CARE_COORDINATION_MANAGEMENT_FEE: 'Care Coordination/Management Fee',
+      GLOBAL_BUDGET: 'Global Budget',
+      GRANTS: 'Grants',
+      INCENTIVE_PAYMENT: 'Incentive Payment',
+      MAPD_SHARED_SAVINGS:
+        'Medicare Advantage Prescription Drug (MAPD) Shared Savings',
+      SHARED_SAVINGS: 'Shared Savings',
+      OTHER: 'Other'
+    },
+    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+  },
+  nonClaimsPaymentOther: {
+    gqlField: 'nonClaimsPaymentOther',
+    goField: 'NonClaimsPaymentOther',
+    dbField: 'non_claims_payments_other',
+    label: 'Please describe the other non-claims-based payments you will pay.',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+  },
+  nonClaimsPaymentsNote: {
+    gqlField: 'nonClaimsPaymentsNote',
+    goField: 'NonClaimsPaymentsNote',
+    dbField: 'non_claims_payments_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'iddoc', 'ipc', 'pbg']
+  },
+  paymentCalculationOwner: {
+    gqlField: 'paymentCalculationOwner',
+    goField: 'PaymentCalculationOwner',
+    dbField: 'payment_calculation_owner',
+    label: 'Who will calculate the non-claims based payments?',
+    dataType: 'string',
+    formType: 'text'
+  },
+  numberPaymentsPerPayCycle: {
+    gqlField: 'numberPaymentsPerPayCycle',
+    goField: 'NumberPaymentsPerPayCycle',
+    dbField: 'number_payments_per_pay_cycle',
+    label: 'Number of payments per payment cycle',
+    sublabel: 'This only applies if you are making non-claims-based payments',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['dfsdm', 'ipc']
+  },
+  numberPaymentsPerPayCycleNote: {
+    gqlField: 'numberPaymentsPerPayCycleNote',
+    goField: 'NumberPaymentsPerPayCycleNote',
+    dbField: 'number_payments_per_pay_cycle_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['dfsdm', 'ipc']
+  },
+  sharedSystemsInvolvedAdditionalClaimPayment: {
+    gqlField: 'sharedSystemsInvolvedAdditionalClaimPayment',
+    goField: 'SharedSystemsInvolvedAdditionalClaimPayment',
+    dbField: 'shared_systems_involved_additional_claim_payment',
+    label:
+      'Will the Shared Systems be involved for additional payment of claims?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['ccw']
+  },
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: {
+    gqlField: 'sharedSystemsInvolvedAdditionalClaimPaymentNote',
+    goField: 'SharedSystemsInvolvedAdditionalClaimPaymentNote',
+    dbField: 'shared_systems_involved_additional_claim_payment_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['ccw']
+  },
+  planningToUseInnovationPaymentContractor: {
+    gqlField: 'planningToUseInnovationPaymentContractor',
+    goField: 'PlanningToUseInnovationPaymentContractor',
+    dbField: 'planning_to_use_innovation_payment_contractor',
+    label: 'Are you planning to use the Innovation Payment Contractor?',
+    sublabel: 'Note: If there will be 30+ payees we recommend a contractor.',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+  },
+  planningToUseInnovationPaymentContractorNote: {
+    gqlField: 'planningToUseInnovationPaymentContractorNote',
+    goField: 'PlanningToUseInnovationPaymentContractorNote',
+    dbField: 'planning_to_use_innovation_payment_contractor_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+  },
+  expectedCalculationComplexityLevel: {
+    gqlField: 'expectedCalculationComplexityLevel',
+    goField: 'ExpectedCalculationComplexityLevel',
+    dbField: 'expected_calculation_complexity_level',
+    label: 'What level of complexity do you expect calculations to be?',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      LOW: 'Low level',
+      MIDDLE: 'Middle level',
+      HIGH: 'High level'
+    }
+  },
+  expectedCalculationComplexityLevelNote: {
+    gqlField: 'expectedCalculationComplexityLevelNote',
+    goField: 'ExpectedCalculationComplexityLevelNote',
+    dbField: 'expected_calculation_complexity_level_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  canParticipantsSelectBetweenPaymentMechanisms: {
+    gqlField: 'canParticipantsSelectBetweenPaymentMechanisms',
+    goField: 'CanParticipantsSelectBetweenPaymentMechanisms',
+    dbField: 'can_participants_select_between_payment_mechanisms',
+    label:
+      'Will participants be allowed to select between multiple payment mechanisms?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: ['cmmi']
+  },
+  canParticipantsSelectBetweenPaymentMechanismsHow: {
+    gqlField: 'canParticipantsSelectBetweenPaymentMechanismsHow',
+    goField: 'CanParticipantsSelectBetweenPaymentMechanismsHow',
+    dbField: 'can_participants_select_between_payment_mechanisms_how',
+    label: 'Please describe',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  canParticipantsSelectBetweenPaymentMechanismsNote: {
+    gqlField: 'canParticipantsSelectBetweenPaymentMechanismsNote',
+    goField: 'CanParticipantsSelectBetweenPaymentMechanismsNote',
+    dbField: 'can_participants_select_between_payment_mechanisms_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi']
+  },
+  anticipatedPaymentFrequency: {
+    gqlField: 'anticipatedPaymentFrequency',
+    goField: 'AnticipatedPaymentFrequency',
+    dbField: 'anticipated_payment_frequency',
+    label: 'How often do you anticipate making payments?',
+    dataType: 'enum',
+    formType: 'multiSelect',
+    multiSelectLabel: 'Selected payment frequency',
+    options: {
+      ANNUALLY: 'Annually',
+      BIANNUALLY: 'Semiannually',
+      QUARTERLY: 'Quarterly',
+      MONTHLY: 'Monthly',
+      SEMIMONTHLY: 'Semi-monthly',
+      WEEKLY: 'Weekly',
+      DAILY: 'Daily',
+      OTHER: 'Other'
+    },
+    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+  },
+  anticipatedPaymentFrequencyOther: {
+    gqlField: 'anticipatedPaymentFrequencyOther',
+    goField: 'AnticipatedPaymentFrequencyOther',
+    dbField: 'anticipated_payment_frequency_other',
+    label: 'Please describe the other payment frequency.',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+  },
+  anticipatedPaymentFrequencyNote: {
+    gqlField: 'anticipatedPaymentFrequencyNote',
+    goField: 'AnticipatedPaymentFrequencyNote',
+    dbField: 'anticipated_payment_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['cmmi', 'dfsdm', 'ipc']
   }
 };
 
@@ -443,7 +650,8 @@ export const paymentsMisc = {
   claimSpecificQuestionsContinued: 'Claims-based payment questions continued',
   alert:
     'Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).',
-  beneficaryCostSharingQuestions: 'Beneficiary cost-sharing questions'
+  beneficaryCostSharingQuestions: 'Beneficiary cost-sharing questions',
+  nonClaimsBasedPaymentQuestion: 'Non-claims-based payment questions'
 };
 
 export default payments;

@@ -82,8 +82,14 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'payClaimsOther',
       'payClaimsNote',
       'nonClaimsPayments',
+      'nonClaimsPaymentOther',
+      'nonClaimsPaymentsNote',
       'canParticipantsSelectBetweenPaymentMechanisms',
+      'canParticipantsSelectBetweenPaymentMechanismsHow',
+      'canParticipantsSelectBetweenPaymentMechanismsNote',
       'anticipatedPaymentFrequency',
+      'anticipatedPaymentFrequencyOther',
+      'anticipatedPaymentFrequencyNote',
       'willRecoverPayments'
     ]
   },
@@ -141,8 +147,12 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'fundingSourceROther',
       'fundingSourceRNote',
       'numberPaymentsPerPayCycle',
+      'numberPaymentsPerPayCycleNote',
       'planningToUseInnovationPaymentContractor',
+      'planningToUseInnovationPaymentContractorNote',
       'anticipatedPaymentFrequency',
+      'anticipatedPaymentFrequencyOther',
+      'anticipatedPaymentFrequencyNote',
       'paymentStartDate'
     ]
   },
@@ -165,7 +175,10 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'useCcwForFileDistribiutionToParticipants',
       'useCcwForFileDistribiutionToParticipantsNote'
     ],
-    payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
+    payments: [
+      'sharedSystemsInvolvedAdditionalClaimPayment',
+      'sharedSystemsInvolvedAdditionalClaimPaymentNote'
+    ]
   },
   ipc: {
     basics: [
@@ -219,9 +232,15 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'payType',
       'payTypeNote',
       'nonClaimsPayments',
+      'nonClaimsPaymentOther',
+      'nonClaimsPaymentsNote',
       'numberPaymentsPerPayCycle',
+      'numberPaymentsPerPayCycleNote',
       'planningToUseInnovationPaymentContractor',
+      'planningToUseInnovationPaymentContractorNote',
       'anticipatedPaymentFrequency',
+      'anticipatedPaymentFrequencyOther',
+      'anticipatedPaymentFrequencyNote',
       'willRecoverPayments',
       'anticipateReconcilingPaymentsRetrospectively',
       'paymentStartDate'
@@ -331,9 +350,12 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'waiveBeneficiaryCostSharingServiceSpecification',
       'waiveBeneficiaryCostSharingNote',
       'nonClaimsPayments',
+      'nonClaimsPaymentOther',
+      'nonClaimsPaymentsNote',
       'waiverOnlyAppliesPartOfPayment',
       'waiveBeneficiaryCostSharingNote',
       'planningToUseInnovationPaymentContractor',
+      'planningToUseInnovationPaymentContractorNote',
       'anticipateReconcilingPaymentsRetrospectively'
     ]
   },
@@ -407,7 +429,10 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'waiveBeneficiaryCostSharingServiceSpecification',
       'waiveBeneficiaryCostSharingNote',
       'nonClaimsPayments',
+      'nonClaimsPaymentOther',
+      'nonClaimsPaymentsNote',
       'planningToUseInnovationPaymentContractor',
+      'planningToUseInnovationPaymentContractorNote',
       'anticipateReconcilingPaymentsRetrospectively'
     ]
   },
