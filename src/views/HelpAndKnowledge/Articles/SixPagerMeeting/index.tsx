@@ -180,6 +180,7 @@ const SixPagerMeeting = () => {
                   </li>
                   <li>
                     {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.three')}
+                    {/* TODO: LDG Resource Panel popup */}
                   </li>
                   <li>
                     {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.four')}
@@ -284,6 +285,19 @@ const SixPagerMeeting = () => {
                 </ul>
               </div>
 
+              <div className="margin-bottom-3">
+                <h3 className="margin-top-0 margin-bottom-1">
+                  {sixPageMeetingT('conceptPaper.stepFour.heading')}
+                </h3>
+                <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                  {stepFour.map(k => (
+                    <li key={k} className="line-height-sans-4">
+                      {k}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               <SummaryBox
                 heading={sixPageMeetingT('tipsSummaryBox.heading')}
                 className="margin-bottom-3"
@@ -317,19 +331,6 @@ const SixPagerMeeting = () => {
                   <li>{sixPageMeetingT('tipsSummaryBox.items.three')}</li>
                 </ul>
               </SummaryBox>
-
-              <div className="margin-bottom-3">
-                <h3 className="margin-top-0 margin-bottom-1">
-                  {sixPageMeetingT('conceptPaper.stepFour.heading')}
-                </h3>
-                <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                  {stepFour.map(k => (
-                    <li key={k} className="line-height-sans-4">
-                      {k}
-                    </li>
-                  ))}
-                </ul>
-              </div>
 
               <div className="margin-bottom-3">
                 <h3 className="margin-top-0 margin-bottom-1">
