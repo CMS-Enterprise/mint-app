@@ -19,6 +19,17 @@ const sixPageMeeting = {
     title: 'Haven’t started a Model Plan yet?',
     body: 'Create a Model Plan now →'
   },
+  crossCuttingGroupsSummaryBox: {
+    title: 'Cross-cutting groups',
+    item: {
+      one: 'Business Services Group (BSG) – for feasibility criteria',
+      two: 'CMMI Front Office (FO) – for health equity',
+      three: 'Learning and Diffusion Group (LDG) – for learning',
+      four:
+        'Policy and Programs Group (PPG) – for quality and stakeholder engagement type things',
+      five: 'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
+    }
+  },
   conceptPaper: {
     introParagraph:
       'The 6-page model overview should address all relevant elements outlined below and should reflect consultation with the cross-cutting groups listed.',

@@ -117,7 +117,7 @@ const SixPagerMeeting = () => {
                     scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
                   />
                 </li>
-                <li>
+                <li className="margin-bottom-1">
                   <Link
                     scrollTo={sixPageMeetingT('summaryBox.listItem.determine')}
                   />
@@ -135,7 +135,7 @@ const SixPagerMeeting = () => {
               id={covertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.listItem.create')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-0"
             >
               <h2 className="margin-bottom-3">
                 {sixPageMeetingT('summaryBox.listItem.create')}
@@ -145,7 +145,10 @@ const SixPagerMeeting = () => {
               </p>
             </div>
 
-            <SummaryBox heading={sixPageMeetingT('startSummaryBox.title')}>
+            <SummaryBox
+              heading={sixPageMeetingT('startSummaryBox.title')}
+              className="margin-bottom-6"
+            >
               <UswdsReactLink to="/models/steps-overview">
                 {sixPageMeetingT('startSummaryBox.body')}
               </UswdsReactLink>
@@ -157,141 +160,184 @@ const SixPagerMeeting = () => {
               )}
               className="margin-bottom-6"
             >
-              <h2 className="margin-bottom-3">
+              <h2 className="margin-top-0 margin-bottom-3">
                 {sixPageMeetingT('summaryBox.listItem.draft')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
                 {sixPageMeetingT('conceptPaper.introParagraph')}
               </p>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {sixPageMeetingT('conceptPaper.stepOne.heading')}
-              </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {modelOverviewAndGoals.map(k => (
-                  <li key={k} className="line-height-sans-4">
-                    {k}
+              <SummaryBox
+                heading={sixPageMeetingT('crossCuttingGroupsSummaryBox.title')}
+                className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-bottom-3"
+              >
+                <ul className="margin-y-0">
+                  <li>
+                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.one')}
                   </li>
-                ))}
-              </ul>
+                  <li>
+                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.two')}
+                  </li>
+                  <li>
+                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.three')}
+                  </li>
+                  <li>
+                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.four')}
+                  </li>
+                  <li>
+                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.five')}
+                  </li>
+                </ul>
+              </SummaryBox>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {sixPageMeetingT('conceptPaper.stepTwo.heading')}
-              </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                <li className="line-height-sans-4">
-                  {sixPageMeetingT('conceptPaper.stepTwo.item')}
-                </li>
-                <ul className="margin-top-0 margin-bottom-3 padding-left-3">
-                  {overviewOfKeyModelDesignElements.map(k => (
+              <div className="margin-bottom-3">
+                <h3 className="margin-top-0 margin-bottom-1">
+                  {sixPageMeetingT('conceptPaper.stepOne.heading')}
+                </h3>
+                <ul className="margin-y-0 padding-left-6">
+                  {modelOverviewAndGoals.map(k => (
                     <li key={k} className="line-height-sans-4">
                       {k}
                     </li>
                   ))}
                 </ul>
-              </ul>
+              </div>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {sixPageMeetingT('conceptPaper.stepThree.heading')}
-              </h3>
-              <ul className="margin-top-0 margin-bottom-5 padding-left-6">
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {sixPageMeetingT('conceptPaper.stepThree.alignment.bold')}
-                  </strong>
-                  <span>
-                    {sixPageMeetingT('conceptPaper.stepThree.alignment.text')}{' '}
-                    <ExternalLink
-                      href="https://innovation.cms.gov/strategic-direction"
-                      aria-label="Open in a new tab"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="external"
-                    >
-                      {sixPageMeetingT('conceptPaper.stepThree.alignment.link')}
-                    </ExternalLink>
-                  </span>
-                  <ol className="padding-left-3 margin-top-05">
-                    {alignmentListItems.map(k => (
-                      <li key={k} className="line-height-sans-4">
-                        {k}
-                      </li>
-                    ))}
-                  </ol>
-                </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {sixPageMeetingT('conceptPaper.stepThree.impact.bold')}
-                  </strong>
-                  {sixPageMeetingT('conceptPaper.stepThree.impact.text')}
-                  <ul className="padding-left-3 margin-top-05">
-                    {impactListItems.map(k => (
+              <div className="margin-bottom-3">
+                <h3 className="margin-top-0 margin-bottom-1">
+                  {sixPageMeetingT('conceptPaper.stepTwo.heading')}
+                </h3>
+                <ul className="margin-y-0 padding-left-6">
+                  <li className="line-height-sans-4">
+                    {sixPageMeetingT('conceptPaper.stepTwo.item')}
+                  </li>
+                  <ul className="margin-y-0 padding-left-3">
+                    {overviewOfKeyModelDesignElements.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
                       </li>
                     ))}
                   </ul>
-                </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {sixPageMeetingT('conceptPaper.stepThree.feasibility.bold')}
-                  </strong>
-                  {sixPageMeetingT('conceptPaper.stepThree.feasibility.text')}
-                </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {sixPageMeetingT('conceptPaper.stepThree.innovation.bold')}
-                  </strong>
-                  {sixPageMeetingT('conceptPaper.stepThree.innovation.text')}
-                </li>
-              </ul>
+                </ul>
+              </div>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {sixPageMeetingT('conceptPaper.stepFour.heading')}
-              </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {stepFour.map(k => (
-                  <li key={k} className="line-height-sans-4">
-                    {k}
+              <div className="margin-bottom-3">
+                <h3 className="margin-top-0 margin-bottom-1">
+                  {sixPageMeetingT('conceptPaper.stepThree.heading')}
+                </h3>
+                <ul className="margin-top-0 padding-left-6">
+                  <li className="line-height-sans-4 margin-bottom-05">
+                    <strong>
+                      {sixPageMeetingT('conceptPaper.stepThree.alignment.bold')}
+                    </strong>
+                    <span>
+                      {sixPageMeetingT('conceptPaper.stepThree.alignment.text')}{' '}
+                      <ExternalLink
+                        href="https://innovation.cms.gov/strategic-direction"
+                        aria-label="Open in a new tab"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="external"
+                      >
+                        {sixPageMeetingT(
+                          'conceptPaper.stepThree.alignment.link'
+                        )}
+                      </ExternalLink>
+                    </span>
+                    <ol className="padding-left-3 margin-top-05">
+                      {alignmentListItems.map(k => (
+                        <li key={k} className="line-height-sans-4">
+                          {k}
+                        </li>
+                      ))}
+                    </ol>
                   </li>
-                ))}
-              </ul>
+                  <li className="line-height-sans-4 margin-bottom-05">
+                    <strong>
+                      {sixPageMeetingT('conceptPaper.stepThree.impact.bold')}
+                    </strong>
+                    {sixPageMeetingT('conceptPaper.stepThree.impact.text')}
+                    <ul className="padding-left-3 margin-top-05">
+                      {impactListItems.map(k => (
+                        <li key={k} className="line-height-sans-4">
+                          {k}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                  <li className="line-height-sans-4 margin-bottom-05">
+                    <strong>
+                      {sixPageMeetingT(
+                        'conceptPaper.stepThree.feasibility.bold'
+                      )}
+                    </strong>
+                    {sixPageMeetingT('conceptPaper.stepThree.feasibility.text')}
+                  </li>
+                  <li className="line-height-sans-4 margin-bottom-05">
+                    <strong>
+                      {sixPageMeetingT(
+                        'conceptPaper.stepThree.innovation.bold'
+                      )}
+                    </strong>
+                    {sixPageMeetingT('conceptPaper.stepThree.innovation.text')}
+                  </li>
+                </ul>
+              </div>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {sixPageMeetingT('conceptPaper.stepFive.heading')}
-              </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {stepFive.map(k => (
-                  <li key={k} className="line-height-sans-4">
-                    {k}
-                  </li>
-                ))}
-              </ul>
+              <div className="margin-bottom-3">
+                <h3 className="margin-top-0 margin-bottom-1">
+                  {sixPageMeetingT('conceptPaper.stepFour.heading')}
+                </h3>
+                <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                  {stepFour.map(k => (
+                    <li key={k} className="line-height-sans-4">
+                      {k}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {sixPageMeetingT('conceptPaper.stepSix.heading')}
-              </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {stepSix.map(k => (
-                  <li key={k} className="line-height-sans-4">
-                    {k}
-                  </li>
-                ))}
-              </ul>
+              <div className="margin-bottom-3">
+                <h3 className="margin-top-0 margin-bottom-1">
+                  {sixPageMeetingT('conceptPaper.stepFive.heading')}
+                </h3>
+                <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                  {stepFive.map(k => (
+                    <li key={k} className="line-height-sans-4">
+                      {k}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {sixPageMeetingT('conceptPaper.stepSeven.heading')}
-              </h3>
-              <p className="padding-left-3 margin-y-0">
-                {sixPageMeetingT('conceptPaper.stepSeven.paragraph')}
-              </p>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {stepSeven.map(k => (
-                  <li key={k} className="line-height-sans-4">
-                    {k}
-                  </li>
-                ))}
-              </ul>
+              <div className="margin-bottom-3">
+                <h3 className="margin-top-0 margin-bottom-1">
+                  {sixPageMeetingT('conceptPaper.stepSix.heading')}
+                </h3>
+                <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                  {stepSix.map(k => (
+                    <li key={k} className="line-height-sans-4">
+                      {k}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="margin-bottom-3">
+                <h3 className="margin-top-0 margin-bottom-1">
+                  {sixPageMeetingT('conceptPaper.stepSeven.heading')}
+                </h3>
+                <p className="padding-left-3 margin-y-0">
+                  {sixPageMeetingT('conceptPaper.stepSeven.paragraph')}
+                </p>
+                <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                  {stepSeven.map(k => (
+                    <li key={k} className="line-height-sans-4">
+                      {k}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <SummaryBox
