@@ -30,35 +30,35 @@ const Link = ({ scrollTo }: { scrollTo: string }) => {
 };
 
 const SixPagerMeeting = () => {
-  const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
+  const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
 
-  const modelOverviewAndGoals: string[] = twoPageMeetingT(
+  const modelOverviewAndGoals: string[] = sixPageMeetingT(
     'conceptPaper.stepOne.items',
     { returnObjects: true }
   );
 
-  const alignmentListItems: string[] = twoPageMeetingT(
+  const alignmentListItems: string[] = sixPageMeetingT(
     'conceptPaper.stepThree.alignment.numberedList',
     { returnObjects: true }
   );
 
-  const impactListItems: string[] = twoPageMeetingT(
+  const impactListItems: string[] = sixPageMeetingT(
     'conceptPaper.stepThree.impact.list',
     { returnObjects: true }
   );
-  const additionalResourcesListItems: string[] = twoPageMeetingT(
+  const additionalResourcesListItems: string[] = sixPageMeetingT(
     'additionalResources.list',
     { returnObjects: true }
   );
-  const additionalResourcesParagraphs: string[] = twoPageMeetingT(
+  const additionalResourcesParagraphs: string[] = sixPageMeetingT(
     'additionalResources.paragraph',
     { returnObjects: true }
   );
-  const tipsList: string[] = twoPageMeetingT(
+  const tipsList: string[] = sixPageMeetingT(
     'reviewMeeting.subheading.tip.list',
     { returnObjects: true }
   );
-  const outcomesParagraphs: string[] = twoPageMeetingT(
+  const outcomesParagraphs: string[] = sixPageMeetingT(
     'reviewMeeting.subheading.outcomes.paragraph',
     { returnObjects: true }
   );
@@ -68,37 +68,37 @@ const SixPagerMeeting = () => {
       <MainContent>
         <GridContainer>
           <Grid>
-            <HelpBreadcrumb text={twoPageMeetingT('title')} />
+            <HelpBreadcrumb text={sixPageMeetingT('title')} />
             <PageHeading className="margin-bottom-1">
-              {twoPageMeetingT('title')}
+              {sixPageMeetingT('title')}
             </PageHeading>
             <HelpAndKnowledgeCategoryTag
               type="gettingStarted"
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
-              {twoPageMeetingT('description')}
+              {sixPageMeetingT('description')}
             </p>
 
             <SummaryBox
-              heading={twoPageMeetingT('summaryBox.title')}
+              heading={sixPageMeetingT('summaryBox.title')}
               className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
             >
               <ul className="margin-y-0">
                 {/* eslint-disable jsx-a11y/anchor-is-valid */}
                 <li className="margin-top-05 margin-bottom-1">
                   <Link
-                    scrollTo={twoPageMeetingT('summaryBox.listItem.draft')}
+                    scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
                   />
                 </li>
                 <li className="margin-bottom-1">
                   <Link
-                    scrollTo={twoPageMeetingT('summaryBox.listItem.start')}
+                    scrollTo={sixPageMeetingT('summaryBox.listItem.start')}
                   />
                 </li>
                 <li>
                   <Link
-                    scrollTo={twoPageMeetingT('summaryBox.listItem.review')}
+                    scrollTo={sixPageMeetingT('summaryBox.listItem.review')}
                   />
                 </li>
                 {/* eslint-enable jsx-a11y/anchor-is-valid */}
@@ -107,19 +107,19 @@ const SixPagerMeeting = () => {
 
             <div
               id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.draft')
+                sixPageMeetingT('summaryBox.listItem.draft')
               )}
               className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.draft')}
+                {sixPageMeetingT('summaryBox.listItem.draft')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
-                {twoPageMeetingT('conceptPaper.introParagraph')}
+                {sixPageMeetingT('conceptPaper.introParagraph')}
               </p>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('conceptPaper.stepOne.heading')}
+                {sixPageMeetingT('conceptPaper.stepOne.heading')}
               </h3>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 {modelOverviewAndGoals.map(k => (
@@ -130,26 +130,26 @@ const SixPagerMeeting = () => {
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('conceptPaper.stepTwo.heading')}
+                {sixPageMeetingT('conceptPaper.stepTwo.heading')}
               </h3>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 <li className="line-height-sans-4">
-                  {twoPageMeetingT('conceptPaper.stepTwo.item')}
+                  {sixPageMeetingT('conceptPaper.stepTwo.item')}
                 </li>
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('conceptPaper.stepThree.heading')}
+                {sixPageMeetingT('conceptPaper.stepThree.heading')}
               </h3>
               <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
-                {twoPageMeetingT('conceptPaper.stepThree.italics')}
+                {sixPageMeetingT('conceptPaper.stepThree.italics')}
               </i>
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
                 <li className="line-height-sans-4 margin-bottom-05">
                   <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.alignment.bold')}
+                    {sixPageMeetingT('conceptPaper.stepThree.alignment.bold')}
                   </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.alignment.text')}
+                  {sixPageMeetingT('conceptPaper.stepThree.alignment.text')}
                   <ol className="padding-left-3 margin-top-05">
                     {alignmentListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
@@ -160,9 +160,9 @@ const SixPagerMeeting = () => {
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
                   <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.impact.bold')}
+                    {sixPageMeetingT('conceptPaper.stepThree.impact.bold')}
                   </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.impact.text')}
+                  {sixPageMeetingT('conceptPaper.stepThree.impact.text')}
                   <ul className="padding-left-3 margin-top-05">
                     {impactListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
@@ -173,35 +173,35 @@ const SixPagerMeeting = () => {
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
                   <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.feasibility.bold')}
+                    {sixPageMeetingT('conceptPaper.stepThree.feasibility.bold')}
                   </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.feasibility.text')}
+                  {sixPageMeetingT('conceptPaper.stepThree.feasibility.text')}
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
                   <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.innovation.bold')}
+                    {sixPageMeetingT('conceptPaper.stepThree.innovation.bold')}
                   </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.innovation.text')}
+                  {sixPageMeetingT('conceptPaper.stepThree.innovation.text')}
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
                   <strong>
-                    {twoPageMeetingT(
+                    {sixPageMeetingT(
                       'conceptPaper.stepThree.stakeholders.bold'
                     )}
                   </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.stakeholders.text')}
+                  {sixPageMeetingT('conceptPaper.stepThree.stakeholders.text')}
                 </li>
               </ul>
             </div>
 
             <SummaryBox
-              heading={twoPageMeetingT(
+              heading={sixPageMeetingT(
                 'conceptPaper.exampleSummaryBox.heading'
               )}
               className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0"
             >
               <p className="margin-y-1">
-                {twoPageMeetingT('conceptPaper.exampleSummaryBox.text')}
+                {sixPageMeetingT('conceptPaper.exampleSummaryBox.text')}
               </p>
               <ul className="margin-top-0">
                 <li>
@@ -212,7 +212,7 @@ const SixPagerMeeting = () => {
                     rel="noopener noreferrer"
                     variant="external"
                   >
-                    {twoPageMeetingT('conceptPaper.exampleSummaryBox.list.one')}
+                    {sixPageMeetingT('conceptPaper.exampleSummaryBox.list.one')}
                   </ExternalLink>
                 </li>
                 <li>
@@ -223,7 +223,7 @@ const SixPagerMeeting = () => {
                     rel="noopener noreferrer"
                     variant="external"
                   >
-                    {twoPageMeetingT('conceptPaper.exampleSummaryBox.list.two')}
+                    {sixPageMeetingT('conceptPaper.exampleSummaryBox.list.two')}
                   </ExternalLink>
                 </li>
                 <li>
@@ -234,7 +234,7 @@ const SixPagerMeeting = () => {
                     rel="noopener noreferrer"
                     variant="external"
                   >
-                    {twoPageMeetingT(
+                    {sixPageMeetingT(
                       'conceptPaper.exampleSummaryBox.list.three'
                     )}
                   </ExternalLink>
@@ -247,14 +247,14 @@ const SixPagerMeeting = () => {
                     rel="noopener noreferrer"
                     variant="external"
                   >
-                    {twoPageMeetingT(
+                    {sixPageMeetingT(
                       'conceptPaper.exampleSummaryBox.list.four'
                     )}
                   </ExternalLink>
                 </li>
               </ul>
               <span className="margin-y-0">
-                {twoPageMeetingT('conceptPaper.exampleSummaryBox.footer')}
+                {sixPageMeetingT('conceptPaper.exampleSummaryBox.footer')}
                 <ExternalLink
                   aria-label="Open in a new tab"
                   href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739"
@@ -262,26 +262,26 @@ const SixPagerMeeting = () => {
                   rel="noopener noreferrer"
                   variant="external"
                 >
-                  {twoPageMeetingT('conceptPaper.exampleSummaryBox.footerLink')}
+                  {sixPageMeetingT('conceptPaper.exampleSummaryBox.footerLink')}
                 </ExternalLink>
               </span>
             </SummaryBox>
 
             <div
               id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.start')
+                sixPageMeetingT('summaryBox.listItem.start')
               )}
               className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.start')}
+                {sixPageMeetingT('summaryBox.listItem.start')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
-                {twoPageMeetingT('additionalResources.intro')}
+                {sixPageMeetingT('additionalResources.intro')}
               </p>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('additionalResources.subheading')}
+                {sixPageMeetingT('additionalResources.subheading')}
               </h3>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 {additionalResourcesListItems.map(k => (
@@ -302,20 +302,20 @@ const SixPagerMeeting = () => {
 
             <div
               id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.review')
+                sixPageMeetingT('summaryBox.listItem.review')
               )}
               className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.review')}
+                {sixPageMeetingT('summaryBox.listItem.review')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
-                {twoPageMeetingT('reviewMeeting.intro')}
-                <i>{twoPageMeetingT('reviewMeeting.italicsNowWhat')}</i>
+                {sixPageMeetingT('reviewMeeting.intro')}
+                <i>{sixPageMeetingT('reviewMeeting.italicsNowWhat')}</i>
               </p>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('reviewMeeting.subheading.tip.text')}
+                {sixPageMeetingT('reviewMeeting.subheading.tip.text')}
               </h3>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 {tipsList.map(k => (
@@ -326,7 +326,7 @@ const SixPagerMeeting = () => {
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('reviewMeeting.subheading.outcomes.text')}
+                {sixPageMeetingT('reviewMeeting.subheading.outcomes.text')}
               </h3>
               {outcomesParagraphs.map(k => (
                 <p
@@ -338,8 +338,8 @@ const SixPagerMeeting = () => {
               ))}
             </div>
 
-            <SummaryBox heading={twoPageMeetingT('footerSummaryBox.title')}>
-              <Trans i18nKey="twoPageMeeting:footerSummaryBox.body">
+            <SummaryBox heading={sixPageMeetingT('footerSummaryBox.title')}>
+              <Trans i18nKey="sixPageMeeting:footerSummaryBox.body">
                 indexZero
                 <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
                   email
@@ -352,7 +352,7 @@ const SixPagerMeeting = () => {
       </MainContent>
       <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
-          currentArticle={twoPageMeetingT('title')}
+          currentArticle={sixPageMeetingT('title')}
           viewAllLink
         />
       </div>
