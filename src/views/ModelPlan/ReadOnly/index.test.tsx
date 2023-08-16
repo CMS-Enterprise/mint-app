@@ -4,6 +4,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
+import Sinon from 'sinon';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { modelID, summaryMock as mocks } from 'data/mock/readonly';
@@ -22,6 +23,8 @@ const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
 describe('Read Only Model Plan Summary', () => {
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders without errors', async () => {
     render(
       <MemoryRouter
