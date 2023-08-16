@@ -60,3 +60,15 @@ const (
 	ModelStatusActive                ModelStatus = "ACTIVE"
 	ModelStatusEnded                 ModelStatus = "ENDED"
 )
+
+// ModelViewFilter represents the possible filters for a model plan view
+type ModelViewFilter string
+
+// These constants represent the different values of ModelViewFilter
+const (
+	ModelViewFilterAllModelPlanInformation                      ModelViewFilter = "ALL_MODEL_PLAN_INFORMATION"
+	ModelViewFilterChronicConditionsWarehouse                   ModelViewFilter = "CHRONIC_CONDITIONS_WAREHOUSE"
+	ModelViewFilterCmmiCostEstimate                             ModelViewFilter = "CMMI_COST_ESTIMATE"
+	ModelViewFilterConsolidatedBusinessOperationsSupportCenter  ModelViewFilter = "CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER"
+	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement ModelViewFilter = "DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT"
+)

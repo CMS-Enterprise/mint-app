@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -278,4 +279,104 @@ func ModelPlanNameHistory(logger *zap.Logger, modelPlanID uuid.UUID, sortDir mod
 	}
 
 	return nameHistory, nil
+}
+
+// ModelPlanShare implements resolver logic to share a model plan with a list of emails
+func ModelPlanShare(
+	ctx context.Context,
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	modelPlanID uuid.UUID,
+	viewFilter models.ModelViewFilter,
+	receiverEmails []string,
+	optionalMessage *string,
+) (bool, error) {
+	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
+	if err != nil {
+		return false, fmt.Errorf("failed to fetch the model plan: %w", err)
+	}
+
+	planBasics, err := store.PlanBasicsGetByID(logger, modelPlanID)
+	if err != nil {
+		return false, fmt.Errorf("failed to fetch the plan basics: %w", err)
+	}
+
+	// Get client address
+	clientAddress := emailService.GetConfig().GetClientAddress()
+
+	// Get sender
+	sender := principal.Account().Email
+
+	// Get email template
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanShareTemplateName)
+	if err != nil {
+		return false, fmt.Errorf("failed to get email template: %w", err)
+	}
+
+	// Get email subject
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanShareSubjectContent{
+		UserName: principal.Account().CommonName,
+	})
+	if err != nil {
+		return false, fmt.Errorf("failed to execute email subject: %w", err)
+	}
+
+	var modelPlanCategories []models.ModelCategory
+	if planBasics.ModelCategory != nil {
+		modelPlanCategories = append(modelPlanCategories, *planBasics.ModelCategory)
+	}
+
+	lastModified := modelPlan.CreatedDts
+	if modelPlan.ModifiedDts != nil {
+		lastModified = *modelPlan.ModifiedDts
+	}
+
+	loaderArgs := make(map[string]interface{})
+	loaderArgs["model_plan_id"] = modelPlanID
+	loaderArgsBytes, _ := json.Marshal(loaderArgs)
+
+	planCollaborators, err := store.PlanCollaboratorGetByModelPlanIDLOADER(
+		logger,
+		string(loaderArgsBytes),
+	)
+
+	if err != nil {
+		return false, fmt.Errorf("failed to get plan collaborators: %w", err)
+	}
+
+	var modelLeads []string
+	for _, collaborator := range planCollaborators {
+		if collaborator.TeamRole == models.TeamRoleModelTeam {
+			modelLeads = append(modelLeads, collaborator.UserAccount(ctx).CommonName)
+		}
+	}
+
+	// Get email body
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
+		UserName:         principal.Account().CommonName,
+		OptionalMessage:  optionalMessage,
+		ModelName:        modelPlan.ModelName,
+		ModelShortName:   modelPlan.Abbreviation, // TODO: Is this correct for the shortName?
+		ModelCategories:  modelPlanCategories,
+		ModelStatus:      planBasics.Status,
+		ModelLastUpdated: lastModified,
+		ModelLeads:       modelLeads,
+		ModelViewFilter:  viewFilter,
+		ClientAddress:    clientAddress,
+		ModelID:          modelPlan.ID.String(),
+	})
+	if err != nil {
+		return false, fmt.Errorf("failed to execute email body: %w", err)
+	}
+
+	// Send email
+	err = emailService.Send(sender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return false, fmt.Errorf("failed to send email: %w", err)
+	}
+
+	return true, nil
 }

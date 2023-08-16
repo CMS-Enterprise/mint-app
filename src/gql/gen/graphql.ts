@@ -588,6 +588,14 @@ export enum ModelType {
   VOLUNTARY = 'VOLUNTARY'
 }
 
+export enum ModelViewFilter {
+  ALL_MODEL_PLAN_INFORMATION = 'ALL_MODEL_PLAN_INFORMATION',
+  CHRONIC_CONDITIONS_WAREHOUSE = 'CHRONIC_CONDITIONS_WAREHOUSE',
+  CMMI_COST_ESTIMATE = 'CMMI_COST_ESTIMATE',
+  CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER = 'CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER',
+  DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT = 'DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT'
+}
+
 export enum MonitoringFileType {
   BENEFICIARY = 'BENEFICIARY',
   OTHER = 'OTHER',
@@ -619,6 +627,7 @@ export type Mutation = {
   deletePlanFavorite: PlanFavorite;
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
+  shareModelPlans: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
@@ -765,6 +774,15 @@ export type MutationLockTaskListSectionArgs = {
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationShareModelPlansArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  optionalMessage?: InputMaybe<Scalars['String']['input']>;
+  receiverEmails: Array<Scalars['String']['input']>;
+  viewFilter: ModelViewFilter;
 };
 
 
