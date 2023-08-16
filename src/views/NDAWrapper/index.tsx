@@ -25,7 +25,19 @@ const NDAWrapper = ({ children }: NDAWrapperProps) => {
     }
   }, [history, pathname, search, user?.acceptedNDA]);
 
-  return <>{children}</>;
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => {
+          window.Beacon('open');
+        }}
+      >
+        CLICK MEE
+      </button>
+      {children}
+    </>
+  );
 };
 
 export default NDAWrapper;
