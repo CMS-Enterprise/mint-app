@@ -61,6 +61,7 @@ const paymentMock = [
 ];
 
 describe('Model Plan Payment', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
   Sinon.stub(Math, 'random').returns(0.5);
 
   it('renders without errors', async () => {

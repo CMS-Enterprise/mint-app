@@ -23,6 +23,7 @@ const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
 describe('Read Only Model Plan Summary', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
   Sinon.stub(Math, 'random').returns(0.5);
 
   it('renders without errors', async () => {
