@@ -38,6 +38,11 @@ const SixPagerMeeting = () => {
     { returnObjects: true }
   );
 
+  const overviewOfKeyModelDesignElements: string[] = sixPageMeetingT(
+    'conceptPaper.stepTwo.subitems',
+    { returnObjects: true }
+  );
+
   const alignmentListItems: string[] = sixPageMeetingT(
     'conceptPaper.stepThree.alignment.numberedList',
     { returnObjects: true }
@@ -162,20 +167,35 @@ const SixPagerMeeting = () => {
                 <li className="line-height-sans-4">
                   {sixPageMeetingT('conceptPaper.stepTwo.item')}
                 </li>
+                <ul className="margin-top-0 margin-bottom-3 padding-left-3">
+                  {overviewOfKeyModelDesignElements.map(k => (
+                    <li key={k} className="line-height-sans-4">
+                      {k}
+                    </li>
+                  ))}
+                </ul>
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
                 {sixPageMeetingT('conceptPaper.stepThree.heading')}
               </h3>
-              <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
-                {sixPageMeetingT('conceptPaper.stepThree.italics')}
-              </i>
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
                 <li className="line-height-sans-4 margin-bottom-05">
                   <strong>
                     {sixPageMeetingT('conceptPaper.stepThree.alignment.bold')}
                   </strong>
-                  {sixPageMeetingT('conceptPaper.stepThree.alignment.text')}
+                  <span>
+                    {sixPageMeetingT('conceptPaper.stepThree.alignment.text')}{' '}
+                    <ExternalLink
+                      href="https://innovation.cms.gov/strategic-direction"
+                      aria-label="Open in a new tab"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="external"
+                    >
+                      {sixPageMeetingT('conceptPaper.stepThree.alignment.link')}
+                    </ExternalLink>
+                  </span>
                   <ol className="padding-left-3 margin-top-05">
                     {alignmentListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
@@ -209,14 +229,6 @@ const SixPagerMeeting = () => {
                   </strong>
                   {sixPageMeetingT('conceptPaper.stepThree.innovation.text')}
                 </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {sixPageMeetingT(
-                      'conceptPaper.stepThree.stakeholders.bold'
-                    )}
-                  </strong>
-                  {sixPageMeetingT('conceptPaper.stepThree.stakeholders.text')}
-                </li>
               </ul>
             </div>
 
@@ -227,7 +239,7 @@ const SixPagerMeeting = () => {
               className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0"
             >
               <p className="margin-y-1">
-                {sixPageMeetingT('conceptPaper.exampleSummaryBox.text')}
+                {sixPageMeetingT('conceptPaper.exampleSummaryBox.paragraph')}
               </p>
               <ul className="margin-top-0">
                 <li>
@@ -238,57 +250,50 @@ const SixPagerMeeting = () => {
                     rel="noopener noreferrer"
                     variant="external"
                   >
-                    {sixPageMeetingT('conceptPaper.exampleSummaryBox.list.one')}
-                  </ExternalLink>
-                </li>
-                <li>
-                  <ExternalLink
-                    aria-label="Open in a new tab"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="external"
-                  >
-                    {sixPageMeetingT('conceptPaper.exampleSummaryBox.list.two')}
-                  </ExternalLink>
-                </li>
-                <li>
-                  <ExternalLink
-                    aria-label="Open in a new tab"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Innovation%20in%20Behavioral%20Health%20(formerly%20BHI)%20Model%202-pager_FINAL.docx?d=wf5dc9e25276945278f98c2c8efc31e16"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="external"
-                  >
                     {sixPageMeetingT(
-                      'conceptPaper.exampleSummaryBox.list.three'
+                      'conceptPaper.exampleSummaryBox.items.one'
                     )}
                   </ExternalLink>
                 </li>
                 <li>
                   <ExternalLink
                     aria-label="Open in a new tab"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/New%20Primary%20Care%20Model%20Concept%202-pager%20Final%20for%20FO.docx?d=webcc03b8baa74b11bc9cd28c264a6178"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/AHEAD%206-page%20concept_Clean.docx?d=wbdf205743dac4ebaa2a99ea37af6b5a7"
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="external"
                   >
                     {sixPageMeetingT(
-                      'conceptPaper.exampleSummaryBox.list.four'
+                      'conceptPaper.exampleSummaryBox.items.two'
+                    )}
+                  </ExternalLink>
+                </li>
+                <li>
+                  <ExternalLink
+                    aria-label="Open in a new tab"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20OncT)%206-pager_10252021_clean.docx?d=w1e0f202072d14d8fb64366aff294e415"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="external"
+                  >
+                    {sixPageMeetingT(
+                      'conceptPaper.exampleSummaryBox.items.three'
                     )}
                   </ExternalLink>
                 </li>
               </ul>
               <span className="margin-y-0">
-                {sixPageMeetingT('conceptPaper.exampleSummaryBox.footer')}
+                {sixPageMeetingT('conceptPaper.exampleSummaryBox.footer.copy')}
                 <ExternalLink
                   aria-label="Open in a new tab"
-                  href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739"
+                  href="https://share.cms.gov/center/CMMI/SR/ModelDev/Forms/AllItems.aspx"
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="external"
                 >
-                  {sixPageMeetingT('conceptPaper.exampleSummaryBox.footerLink')}
+                  {sixPageMeetingT(
+                    'conceptPaper.exampleSummaryBox.footer.link'
+                  )}
                 </ExternalLink>
               </span>
             </SummaryBox>

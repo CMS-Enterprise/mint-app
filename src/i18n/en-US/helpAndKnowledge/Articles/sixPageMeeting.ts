@@ -124,11 +124,11 @@ const sixPageMeeting = {
       heading: 'Example 6-pagers',
       paragraph:
         'While all models are different, and therefore the content within a 6-pager will vary drastically, it might be helpful to see examples of what other teams have put together for their models in the past.',
-      items: [
-        'AHEAD 6-pager',
-        'Enhancing Oncology Model 6-pager',
-        'Making Care Primary 6-pager'
-      ],
+      items: {
+        one: 'AHEAD 6-pager',
+        two: 'Enhancing Oncology Model 6-pager',
+        three: 'Making Care Primary 6-pager'
+      },
       footer: {
         copy: 'To view the links above, you will need access to the ',
         link: 'Model Resources area of SharePoint'
