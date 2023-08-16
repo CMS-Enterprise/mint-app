@@ -3,15 +3,13 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor, within } from '@testing-library/react';
-import { mount } from 'enzyme';
-import toJSON, { OutputMapper } from 'enzyme-to-json';
 import configureMockStore from 'redux-mock-store';
+import Sinon from 'sinon';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { modelID, summaryMock as mocks } from 'data/mock/readonly';
 import { ModelStatus } from 'types/graphql-global-types';
 import { translateModelPlanStatus } from 'utils/modelPlan';
-import renameTooltipAriaAndID from 'utils/testing/snapshotSerializeReplacements';
 
 import ReadOnly from './index';
 
@@ -25,6 +23,9 @@ const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
 describe('Read Only Model Plan Summary', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders without errors', async () => {
     render(
       <MemoryRouter
@@ -56,7 +57,7 @@ describe('Read Only Model Plan Summary', () => {
   });
 
   it('matches snapshot', async () => {
-    const component = mount(
+    const { asFragment } = render(
       <MemoryRouter
         initialEntries={[`/models/${modelID}/read-only/model-basics`]}
       >
@@ -71,15 +72,16 @@ describe('Read Only Model Plan Summary', () => {
     );
 
     await waitFor(() => {
-      expect(component.text().includes('Testing Model Summary')).toBe(true);
+      const { getByText } = within(screen.getByTestId('task-list-status'));
+      expect(
+        getByText(translateModelPlanStatus(ModelStatus.PLAN_DRAFT))
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('read-only-side-nav__wrapper')
+      ).toBeInTheDocument();
     });
 
-    expect(
-      toJSON(component, {
-        mode: 'deep',
-        map: renameTooltipAriaAndID as OutputMapper
-      })
-    ).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Status Tag updates', () => {
