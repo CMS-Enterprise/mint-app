@@ -52,6 +52,21 @@ const SixPagerMeeting = () => {
     'conceptPaper.stepThree.impact.list',
     { returnObjects: true }
   );
+
+  const stepFour: string[] = sixPageMeetingT('conceptPaper.stepFour.items', {
+    returnObjects: true
+  });
+
+  const stepFive: string[] = sixPageMeetingT('conceptPaper.stepFive.items', {
+    returnObjects: true
+  });
+  const stepSix: string[] = sixPageMeetingT('conceptPaper.stepSix.items', {
+    returnObjects: true
+  });
+  const stepSeven: string[] = sixPageMeetingT('conceptPaper.stepSeven.items', {
+    returnObjects: true
+  });
+
   const additionalResourcesListItems: string[] = sixPageMeetingT(
     'additionalResources.list',
     { returnObjects: true }
@@ -230,6 +245,53 @@ const SixPagerMeeting = () => {
                   {sixPageMeetingT('conceptPaper.stepThree.innovation.text')}
                 </li>
               </ul>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {sixPageMeetingT('conceptPaper.stepFour.heading')}
+              </h3>
+              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                {stepFour.map(k => (
+                  <li key={k} className="line-height-sans-4">
+                    {k}
+                  </li>
+                ))}
+              </ul>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {sixPageMeetingT('conceptPaper.stepFive.heading')}
+              </h3>
+              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                {stepFive.map(k => (
+                  <li key={k} className="line-height-sans-4">
+                    {k}
+                  </li>
+                ))}
+              </ul>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {sixPageMeetingT('conceptPaper.stepSix.heading')}
+              </h3>
+              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                {stepSix.map(k => (
+                  <li key={k} className="line-height-sans-4">
+                    {k}
+                  </li>
+                ))}
+              </ul>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {sixPageMeetingT('conceptPaper.stepSeven.heading')}
+              </h3>
+              <p className="padding-left-3 margin-y-0">
+                {sixPageMeetingT('conceptPaper.stepSeven.paragraph')}
+              </p>
+              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                {stepSeven.map(k => (
+                  <li key={k} className="line-height-sans-4">
+                    {k}
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <SummaryBox
@@ -300,12 +362,12 @@ const SixPagerMeeting = () => {
 
             <div
               id={covertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.listItem.start')
+                sixPageMeetingT('summaryBox.listItem.determine')
               )}
               className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
-                {sixPageMeetingT('summaryBox.listItem.start')}
+                {sixPageMeetingT('summaryBox.listItem.determine')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
                 {sixPageMeetingT('additionalResources.intro')}
