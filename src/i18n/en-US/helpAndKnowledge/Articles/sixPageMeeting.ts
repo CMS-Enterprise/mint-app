@@ -1,40 +1,56 @@
 const sixPageMeeting = {
-  title: 'How to have a successful 2-pager meeting',
+  title: 'How to have a successful 6-pager meeting',
   description:
-    'Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).',
+    'Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-pager. Use this article to ensure you’re fully prepared for your 6-page concept review meeting with CMMI FO.',
   summaryBox: {
     title: 'Recommendations',
     listItem: {
-      draft: 'Draft your 2-page concept paper',
-      start: 'Start thinking about additional resources',
+      create: 'Create your Model Plan within MINT',
+      draft: 'Draft your 6-page concept paper',
+      determine: 'Determine additional resources needed',
       review: 'The review meeting'
     }
   },
+  create: {
+    paragraph:
+      'If you haven’t already created a Model Plan within MINT, you should start one now. By this point, many of the details of your model concept are beginning to take shape. The operational details in your 6-page concept paper are captured within the Model Plan. Additionally, you will be working with various cross-cutting groups as you plan and refine your model, so it will be helpful to everyone involved if you update your Model Plan as you iterate.'
+  },
+  startSummaryBox: {
+    title: 'Haven’t started a Model Plan yet?',
+    body: 'Create a Model Plan now →'
+  },
   conceptPaper: {
     introParagraph:
-      'A 2-page overview of a model concept may or may not include all of the elements listed below. The following is intended as a guide. Teams can focus on the most relevant and impactful information to decide if a model concept should move to the next development phase.',
+      'The 6-page model overview should address all relevant elements outlined below and should reflect consultation with the cross-cutting groups listed.',
     stepOne: {
-      heading: '1. Proposed model overview and goals',
+      heading: '1. Model overview and goals',
       items: [
-        'Briefly describe the need for the model, including the challenges the target population faces',
-        'Describe the preliminary theory of change for the model',
-        'Provide background or context on if the proposed model has been tested before or is a follow-on model, incorporates learnings from external stakeholders, and/or where the concept originated (e.g., private sector, academia, state or regional efforts)'
+        'Describe the need for the model, the challenges the target population faces, the related cost and quality/outcomes challenges, and any gaps in CMMI’s portfolio this model might address.',
+        'Briefly describe the theory of change for the model (i.e., the problem the model is trying to solve and the anticipated impacts the model may have).',
+        'Provide information on how this model may interact with other CMMI models.',
+        'In addition to the statutory requirements, consider other potential outcomes following the model test (e.g., spread to Medicare, Medicaid or commercial payers, next-generation model, etc.)'
       ]
     },
     stepTwo: {
-      heading: '2. High-level description of model elements',
-      item:
-        'Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement'
+      heading: '2. Description of model elements',
+      item: 'Provide an overview of key model design elements including',
+      subitems: [
+        'Target population, including underserved populations',
+        'Beneficiary attribution or alignment to model',
+        'Target provider types, including safety net providers',
+        'Participation eligibility requirements for providers or entities',
+        'Payment approach, including any precedent for approach (i.e., CMMI, CM, Medicaid, commercial)',
+        'Quality/performance measurement(s)'
+      ]
     },
     stepThree: {
       heading:
-        '3. Preliminary analysis of the proposed model relative to selection criteria',
-      italics:
-        'Not all of these may be answerable early in model development/consideration',
+        '3. Analysis of the proposed model relative to selection criteria',
       alignment: {
         bold: 'Alignment: ',
         text:
-          'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level:',
+          'Describe how the proposed model would support or advance one (or more) of the ',
+        link: 'strategy refresh pillars',
         numberedList: [
           'Drive accountable care',
           'Advance health equity',
@@ -45,45 +61,83 @@ const sixPageMeeting = {
       },
       impact: {
         bold: 'Impact: ',
-        text: 'Potential for the model to impact the following dimensions:',
+        text: 'The model’s anticipated impact on the following dimensions:',
         list: [
-          'Participation – number of providers, beneficiaries, Medicare and Medicaid spending',
-          'Transformation – cost reduction, quality and outcomes improvements, advancements in equity and reduction in disparities, and delivery system change'
+          'Participation – number of providers, percent of providers within relevant specialty, beneficiaries, Medicare spending and/or Medicaid spending (federal and state)',
+          'Transformation – reduction in health spending, quality and outcomes improvements, advancements in equity and reduction in disparities, delivery system change, and multi-payer alignment, market impacts '
         ]
       },
       feasibility: {
         bold: 'Feasibility: ',
         text:
-          'Consider the likelihood of successful execution of the model including initial operational or feasibility limitations, and potential for scaling'
+          'Likelihood of successful execution of the model including any operations or feasibility limitations and potential for adoption and scaling by non-participants (i.e., spillover effects).'
       },
       innovation: {
         bold: 'Innovation: ',
         text:
           'The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation'
-      },
-      stakeholders: {
-        bold: 'Stakeholders: ',
-        text:
-          'Include a brief description of any stakeholder engagement in the model concept'
       }
     },
+    stepFour: {
+      heading: '4. Impacts and opportunities to advance health equity',
+      items: [
+        'Provide a brief overview of health disparities, differences in access to care among different populations, and affordability or other challenges related to the proposed model’s target population.',
+        'Discuss in greater detail the potential impacts of the models on increasing participation among safety net providers, in closing disparities and addressing gaps in care for historically underserved populations, and contributions to research and improved understanding of health status and needs of underserved populations.'
+      ]
+    },
+    stepFive: {
+      heading: '5. Evaluability of the model',
+      items: [
+        'Discuss the evaluability of the proposed model and general approaches to studying design.',
+        'Describe how evaluation could assess progress on CMMI’s strategic pillars and broader transformation metrics.',
+        'Discuss the potential for adoption and scaling by non-participants, particularly in light of the likelihood that the evaluation findings would be generalizable.'
+      ]
+    },
+    stepSix: {
+      heading: '6. Stakeholder reactions/issues',
+      items: [
+        'Provide a brief overview of constituencies affected by the model, including those likely to support or voice opposition to or concerns with the proposed model.',
+        'Discuss what may be known regarding supporters/partners across the government – CMS, HHS, OMB, DPC, Congress – as well as areas of government that may voice concern with the proposed model.'
+      ]
+    },
+    stepSeven: {
+      heading: '7. Operational and financial considerations',
+      paragraph:
+        'Discuss any details related to possible operational and financial needs, such as:',
+      items: [
+        'Potential staffing and contractor needs to support model',
+        'Overlap issues with existing models and how potential overlap or conflict could be resolved',
+        'Opportunity or need for cross-CMMI collaboration and staffing',
+        'Legal considerations',
+        'Anticipated contracting and technology needs '
+      ]
+    },
+    tipsSummaryBox: {
+      heading: 'Tips to learn more about health equity',
+      items: [
+        'View the Health Equity Resources on the Quality Vertical SharePoint',
+        'View the CMS Framework for Health Equity',
+        'Work with CMMI FO'
+      ]
+    },
     exampleSummaryBox: {
-      heading: 'Example 2-pagers',
-      text:
-        'While all models are different, and therefore the content within a 2-pager will vary drastically, it might be helpful to see examples of what other teams have put together for their models in the past.',
-      list: {
-        one: 'AHEAD 2-pager',
-        two: 'Enhancing Oncology Model 2-pager',
-        three: 'Innovation in Behavioral Health 2-pager',
-        four: 'Making Care Primary 2-pager'
-      },
-      footer: 'To view the links above, you will need access to the ',
-      footerLink: 'Model Resources area of SharePoint.'
+      heading: 'Example 6-pagers',
+      paragraph:
+        'While all models are different, and therefore the content within a 6-pager will vary drastically, it might be helpful to see examples of what other teams have put together for their models in the past.',
+      items: [
+        'AHEAD 6-pager',
+        'Enhancing Oncology Model 6-pager',
+        'Making Care Primary 6-pager'
+      ],
+      footer: {
+        copy: 'To view the links above, you will need access to the ',
+        link: 'Model Resources area of SharePoint'
+      }
     }
   },
   additionalResources: {
     intro:
-      'This early in the process, it can be hard for model teams to know exactly what they’ll need regarding contractor support during the model concept and design phase. Not sure where to start? Below are some things to consider.',
+      'You may have already spoken with CMMI FO about potential contractor support during the 2-pager meeting. If not, you should generally have a better idea of the support you will need during the model concept and design phase since your 6-pager should also address contractor support. Below are some things to consider.',
     subheading: 'Things to consider',
     list: [
       'Do you need an in-house expert on data? ',
@@ -108,16 +162,17 @@ const sixPageMeeting = {
       tip: {
         text: 'Tips for the meeting',
         list: [
-          'Before the meeting, attach your 2-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your Model Plan within MINT.',
+          'Before the meeting, attach your 6-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your Model Plan within MINT.',
           'Come prepared to discuss your model concept.',
-          'If you think you’ll need a pipeline contractor, flag this during the meeting. CMMI FO may have a preference for which contractor to use and will ultimately need to approve the request.'
+          'If you think you’ll need a pipeline contractor, and haven’t already spoken to CMMI FO about this, definitely flag this during the meeting. As mentioned above, they will need to approve the request.',
+          'If CMMI FO has not requested many revisions to the 6-pager and approves the forward progress, it might be a good to have thought through a general mock up of a timeframe with proposed approximate dates for ICIP draft, potential clearance, etc.'
         ]
       },
       outcomes: {
         text: 'Possible outcomes',
         paragraph: [
-          'Since the 2-pager meeting is still pretty high level in terms of model design, CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 2-pager review after they’ve had time to ideate and address their considerations. Some concepts require multiple rounds of iteration, so don’t be discouraged if your concept isn’t approved the first time around.',
-          'If during the meeting CMMI FO decides the model concept is feasible, they will approve the 2-pager. Model teams will then work on ironing out additional details of their model design that will go into their 6-page concept paper. If you haven’t already started filling out a Model Plan within MINT, this would be a great time to do that. Many of the details that will go into the 6-pager concept paper are a part of the Model Plan.'
+          'CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 6-pager review after they’ve had time to ideate and address their considerations. Some concepts require multiple rounds of iteration, so don’t be discouraged if your concept isn’t approved the first time around. Additionally, if CMMI FO determines the concept isn’t a path they’re comfortable exploring, the concept may be shelved.',
+          'If during the meeting CMMI FO decides the model concept is feasible, they will approve the 6-pager. Model teams will then continue to refine and solidify aspects of their model and can start writing their ICIP paper. As you work through and refine the details of your model, make sure you’re updating your Model Plan within MINT.'
         ]
       }
     }
