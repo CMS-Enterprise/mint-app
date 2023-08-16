@@ -2,16 +2,17 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mount } from 'enzyme';
-import toJson, { OutputMapper } from 'enzyme-to-json';
+import Sinon from 'sinon';
 
 import allMocks, { modelID, summaryMock } from 'data/mock/readonly';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
-import renameTooltipAriaAndID from 'utils/testing/snapshotSerializeReplacements';
 
 import ShareExportModal from './index';
 
 describe('ShareExportModal', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders modal with prepopulated filter', async () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter
@@ -55,7 +56,7 @@ describe('ShareExportModal', () => {
   });
 
   it('matches the snapshot', async () => {
-    const component = mount(
+    const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[`/models/${modelID}/read-only/model-basics`]}
       >
@@ -71,14 +72,9 @@ describe('ShareExportModal', () => {
     );
 
     await waitFor(() => {
-      expect(component.text().includes('Testing Model Summary')).toBe(true);
+      expect(getByText('Testing Model Summary')).toBeInTheDocument();
     });
 
-    expect(
-      toJson(component, {
-        mode: 'deep',
-        map: renameTooltipAriaAndID as OutputMapper
-      })
-    ).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });
