@@ -10,6 +10,7 @@ import {
 
 import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
@@ -88,12 +89,17 @@ const SixPagerMeeting = () => {
                 {/* eslint-disable jsx-a11y/anchor-is-valid */}
                 <li className="margin-top-05 margin-bottom-1">
                   <Link
-                    scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
+                    scrollTo={sixPageMeetingT('summaryBox.listItem.create')}
                   />
                 </li>
                 <li className="margin-bottom-1">
                   <Link
-                    scrollTo={sixPageMeetingT('summaryBox.listItem.start')}
+                    scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
+                  />
+                </li>
+                <li>
+                  <Link
+                    scrollTo={sixPageMeetingT('summaryBox.listItem.determine')}
                   />
                 </li>
                 <li>
@@ -103,6 +109,26 @@ const SixPagerMeeting = () => {
                 </li>
                 {/* eslint-enable jsx-a11y/anchor-is-valid */}
               </ul>
+            </SummaryBox>
+
+            <div
+              id={covertToLowercaseAndDashes(
+                sixPageMeetingT('summaryBox.listItem.create')
+              )}
+              className="margin-bottom-6"
+            >
+              <h2 className="margin-bottom-3">
+                {sixPageMeetingT('summaryBox.listItem.create')}
+              </h2>
+              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+                {sixPageMeetingT('create.paragraph')}
+              </p>
+            </div>
+
+            <SummaryBox heading={sixPageMeetingT('startSummaryBox.title')}>
+              <UswdsReactLink to="/models/steps-overview">
+                {sixPageMeetingT('startSummaryBox.body')}
+              </UswdsReactLink>
             </SummaryBox>
 
             <div
