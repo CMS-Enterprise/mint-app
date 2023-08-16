@@ -24,7 +24,8 @@ const sixPageMeeting = {
     item: {
       one: 'Business Services Group (BSG) – for feasibility criteria',
       two: 'CMMI Front Office (FO) – for health equity',
-      three: 'Learning and Diffusion Group (LDG) – for learning',
+      ldg: 'Learning and Diffusion Group (LDG)',
+      learning: ' – for learning',
       four:
         'Policy and Programs Group (PPG) – for quality and stakeholder engagement type things',
       five: 'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'

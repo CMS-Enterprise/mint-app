@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Button,
   Grid,
   GridContainer,
   IconArrowForward,
@@ -14,6 +15,9 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
+import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
+import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
@@ -32,6 +36,7 @@ const Link = ({ scrollTo }: { scrollTo: string }) => {
 
 const SixPagerMeeting = () => {
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
+  const [LDGmodal, setLDGmodal] = useState(false);
 
   const modelOverviewAndGoals: string[] = sixPageMeetingT(
     'conceptPaper.stepOne.items',
@@ -84,8 +89,20 @@ const SixPagerMeeting = () => {
     { returnObjects: true }
   );
 
+  const selectedSolution = findSolutionByRouteParam(
+    'learning-and-diffusion-group',
+    helpSolutions
+  );
+
   return (
     <>
+      {LDGmodal && selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={undefined}
+          closeRoute="/help-and-knowledge/how-to-have-a-successful-6-pager-meeting"
+        />
+      )}
       <MainContent>
         <GridContainer>
           <Grid>
@@ -179,7 +196,16 @@ const SixPagerMeeting = () => {
                     {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.two')}
                   </li>
                   <li>
-                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.three')}
+                    <Button
+                      type="button"
+                      unstyled
+                      onClick={() => setLDGmodal(true)}
+                    >
+                      {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.ldg')}
+                    </Button>
+                    {sixPageMeetingT(
+                      'crossCuttingGroupsSummaryBox.item.learning'
+                    )}
                     {/* TODO: LDG Resource Panel popup */}
                   </li>
                   <li>
