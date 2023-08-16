@@ -2,8 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { mount } from 'enzyme';
-import toJson, { OutputMapper } from 'enzyme-to-json';
+import Sinon from 'sinon';
 
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import { GetModelPlanInfo_modelPlan as GetModelPlanInfoType } from 'queries/Basics/types/GetModelPlanInfo';
@@ -12,7 +11,6 @@ import {
   CMSCenter,
   ModelCategory
 } from 'types/graphql-global-types';
-import renameTooltipAriaAndID from 'utils/testing/snapshotSerializeReplacements';
 
 import Basics from './index';
 
@@ -53,6 +51,9 @@ const mocks = [
 ];
 
 describe('Model Plan Task List Basics page', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders without errors', async () => {
     render(
       <MemoryRouter
@@ -75,8 +76,9 @@ describe('Model Plan Task List Basics page', () => {
       ).toBeInTheDocument();
     });
   });
+
   it('matches snapshot', async () => {
-    const component = mount(
+    const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/basics'
@@ -91,14 +93,12 @@ describe('Model Plan Task List Basics page', () => {
     );
 
     await waitFor(() => {
-      expect(component.text().includes('State-Based')).toBe(true);
+      expect(screen.getByTestId('model-plan-basics')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('summary-box--previous-name')
+      ).toBeInTheDocument();
     });
 
-    expect(
-      toJson(component, {
-        mode: 'deep',
-        map: renameTooltipAriaAndID as OutputMapper
-      })
-    ).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });
