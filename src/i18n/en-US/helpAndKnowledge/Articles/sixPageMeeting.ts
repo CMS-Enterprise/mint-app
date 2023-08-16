@@ -30,6 +30,15 @@ const sixPageMeeting = {
       five: 'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
     }
   },
+  tipsSummaryBox: {
+    heading: 'Tips to learn more about health equity',
+    items: {
+      view: 'View the ',
+      one: 'Health Equity Resources on the Quality Vertical SharePoint',
+      two: 'CMS Framework for Health Equity',
+      three: 'Work with CMMI FO'
+    }
+  },
   conceptPaper: {
     introParagraph:
       'The 6-page model overview should address all relevant elements outlined below and should reflect consultation with the cross-cutting groups listed.',
@@ -123,14 +132,7 @@ const sixPageMeeting = {
         'Anticipated contracting and technology needs '
       ]
     },
-    tipsSummaryBox: {
-      heading: 'Tips to learn more about health equity',
-      items: [
-        'View the Health Equity Resources on the Quality Vertical SharePoint',
-        'View the CMS Framework for Health Equity',
-        'Work with CMMI FO'
-      ]
-    },
+
     exampleSummaryBox: {
       heading: 'Example 6-pagers',
       paragraph:

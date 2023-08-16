@@ -284,6 +284,40 @@ const SixPagerMeeting = () => {
                 </ul>
               </div>
 
+              <SummaryBox
+                heading={sixPageMeetingT('tipsSummaryBox.heading')}
+                className="margin-bottom-3"
+              >
+                <ul className="margin-top-1 margin-bottom-0">
+                  <li>
+                    {sixPageMeetingT('tipsSummaryBox.items.view')}
+
+                    <ExternalLink
+                      aria-label="Open in a new tab"
+                      href="https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="external"
+                    >
+                      {sixPageMeetingT('tipsSummaryBox.items.one')}
+                    </ExternalLink>
+                  </li>
+                  <li>
+                    {sixPageMeetingT('tipsSummaryBox.items.view')}
+                    <ExternalLink
+                      aria-label="Open in a new tab"
+                      href="https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="external"
+                    >
+                      {sixPageMeetingT('tipsSummaryBox.items.two')}
+                    </ExternalLink>
+                  </li>
+                  <li>{sixPageMeetingT('tipsSummaryBox.items.three')}</li>
+                </ul>
+              </SummaryBox>
+
               <div className="margin-bottom-3">
                 <h3 className="margin-top-0 margin-bottom-1">
                   {sixPageMeetingT('conceptPaper.stepFour.heading')}
