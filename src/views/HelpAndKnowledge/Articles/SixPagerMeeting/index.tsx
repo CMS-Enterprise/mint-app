@@ -99,8 +99,9 @@ const SixPagerMeeting = () => {
       {LDGmodal && selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
-          openedFrom={undefined}
+          openedFrom="help-article"
           closeRoute="/help-and-knowledge/how-to-have-a-successful-6-pager-meeting"
+          setLDGmodal={setLDGmodal}
         />
       )}
       <MainContent>

@@ -60,12 +60,14 @@ type SolutionDetailsModalProps = {
   solution: HelpSolutionType;
   openedFrom: string | undefined;
   closeRoute: string;
+  setLDGmodal?: (val: boolean) => void;
 };
 
 const SolutionDetailsModal = ({
   solution,
   openedFrom,
-  closeRoute
+  closeRoute,
+  setLDGmodal
 }: SolutionDetailsModalProps) => {
   const location = useLocation();
 
@@ -98,9 +100,14 @@ const SolutionDetailsModal = ({
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
-    history.push(prevRoute || closeRoute, {
-      fromModal: true
-    });
+    if (prevRoute === 'help-article' && setLDGmodal) {
+      setIsOpen(false);
+      setLDGmodal(false);
+    } else {
+      history.push(prevRoute || closeRoute, {
+        fromModal: true
+      });
+    }
   };
 
   if (!solution) {
