@@ -6,7 +6,8 @@ import {
   Link,
   ProcessList,
   ProcessListHeading,
-  ProcessListItem
+  ProcessListItem,
+  Table
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import i18next from 'i18next';
@@ -55,6 +56,14 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
   const { currentHash, setCurrenHash, isScrolling } = useHashScroll(
     'div.nav-anchor'
   );
+
+  const rowTwo: string[] = t('jobcodes.table.rowTwo.roles', {
+    returnObjects: true
+  });
+
+  const rowThree: string[] = t('jobcodes.table.rowThree.roles', {
+    returnObjects: true
+  });
 
   return (
     <div className="usa-in-page-nav-container">
@@ -111,7 +120,123 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           >
             {t('jobcodes.heading')}
           </PageHeading>
-          <p>{t('jobcodes.description')}</p>
+          <p className="font-body-md line-height-sans-4">
+            {t('jobcodes.description')}
+          </p>
+
+          <Table bordered={false} fullWidth fixed>
+            <thead>
+              <tr>
+                <th scope="col" className="padding-y-1">
+                  {t('jobcodes.table.rowHeader.role')}
+                </th>
+                <th scope="col" className="padding-y-1">
+                  {t('jobcodes.table.rowHeader.jobCodeToRequest')}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" className="padding-y-1">
+                  <ul className="margin-y-0">
+                    <li>{t('jobcodes.table.rowOne.role')}</li>
+                  </ul>
+                </th>
+                <td className="text-baseline">
+                  <Trans i18nKey="getAccess:jobcodes.table.rowOne.jobCodeToRequest">
+                    <Link
+                      aria-label="Open EUA in a new tab"
+                      href="https://eua.cms.gov"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="external"
+                    >
+                      indexZero
+                    </Link>
+                  </Trans>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="padding-y-1">
+                  <p className="margin-y-0">
+                    <Trans i18nKey="getAccess:jobcodes.table.rowTwo.paragraph">
+                      <span className="text-bold text-italic">indexZero</span>
+                    </Trans>
+                  </p>
+                  <ul className="margin-y-0">
+                    {rowTwo.map(k => (
+                      <li key={k} className="line-height-sans-4">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+                </th>
+                <td className="text-baseline">
+                  <Trans i18nKey="getAccess:jobcodes.table.rowTwo.jobCodeToRequest">
+                    <Link
+                      aria-label="Open EUA in a new tab"
+                      // href="https://home.idm.cms.gov/"
+                      href="https://eua.cms.gov"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="external"
+                    >
+                      indexZero
+                    </Link>
+                  </Trans>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="padding-y-1">
+                  <p className="margin-y-0">
+                    <Trans i18nKey="getAccess:jobcodes.table.rowThree.paragraph">
+                      <span className="text-bold text-italic">indexZero</span>
+                    </Trans>
+                  </p>
+                  <ul className="margin-y-0">
+                    {rowThree.map(k => (
+                      <li key={k} className="line-height-sans-4">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+                </th>
+                <td className="text-baseline">
+                  <Trans i18nKey="getAccess:jobcodes.table.rowThree.jobCodeToRequest">
+                    <Link
+                      aria-label="Open IDM in a new tab"
+                      href="https://home.idm.cms.gov/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="external"
+                    >
+                      indexZero
+                    </Link>
+                  </Trans>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="padding-y-1">
+                  <ul className="margin-y-0">
+                    <li>{t('jobcodes.table.rowFour.role')}</li>
+                  </ul>
+                </th>
+                <td className="text-baseline">
+                  <Trans i18nKey="getAccess:jobcodes.table.rowFour.jobCodeToRequest">
+                    <Link
+                      aria-label="Open IDM in a new tab"
+                      href="https://home.idm.cms.gov/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="external"
+                    >
+                      indexZero
+                    </Link>
+                  </Trans>
+                </td>
+              </tr>
+            </tbody>
+          </Table>
         </div>
 
         <div className="nav-anchor" id="access-through-eua">

@@ -9,6 +9,10 @@ const getAccess = {
     description:
       'Use this chart to determine what job code to request by selecting the role that aligns most closely with what you do.',
     table: {
+      rowHeader: {
+        role: 'Your role',
+        jobCodeToRequest: 'Job code to request'
+      },
       rowOne: {
         role: 'CMS employees',
         jobCodeToRequest: 'MINT_USER in <0>EUA</0>'
@@ -39,7 +43,7 @@ const getAccess = {
     }
   },
   stepsEUA: {
-    heading: 'Access through EUA',
+    heading: 'Requesting access through EUA',
     description:
       'Below is an overview of the process involved in creating your draft model plan.',
     first: {
@@ -74,7 +78,7 @@ const getAccess = {
         'After you’ve received an email that your job code request is approved, you can <0>sign in to MINT</0> using your EUA credentials (this is your four-character user ID and password).'
     }
   },
-  accessThroughIDM: 'Access through IDM',
+  accessThroughIDM: 'Requesting access through IDM',
   accessInfo1:
     'If you’re a contractor and don’t have an IDM account or your current IDM account uses your EUA credentials (your four-character user ID and password), you must create a new one.',
   accessInfo2:
