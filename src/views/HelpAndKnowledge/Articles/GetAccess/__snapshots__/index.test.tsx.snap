@@ -396,13 +396,19 @@ exports[`Get Access Article matches snapshot 1`] = `
                        button.
                     </li>
                     <li>
-                      Type 
+                      Type the name of the job code into the search box (either 
                       <span
                         class="text-bold text-italic"
                       >
                         MINT_USER
                       </span>
-                       into the search box and click the 
+                       or 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        MINT_CONTRACTOR_FFS
+                      </span>
+                       determined using the chart above) and click the 
                       <span
                         class="text-bold text-italic"
                       >
@@ -411,7 +417,7 @@ exports[`Get Access Article matches snapshot 1`] = `
                        button.
                     </li>
                     <li>
-                      Check the box next to MINT_USER, then click the 
+                      Check the box next to the job code, then click the 
                       <span
                         class="text-bold text-italic"
                       >
