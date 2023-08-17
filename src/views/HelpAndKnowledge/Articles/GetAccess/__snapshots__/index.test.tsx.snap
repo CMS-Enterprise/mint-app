@@ -68,9 +68,9 @@ exports[`Get Access Article matches snapshot 1`] = `
                 >
                   <a
                     class="usa-in-page-nav__link"
-                    href="#should-i-request-access"
+                    href="#which-job-code-should-i-request"
                   >
-                    Should I request access through EUA or IDM?
+                    Which job code should I request?
                   </a>
                 </li>
                 <li
@@ -80,7 +80,7 @@ exports[`Get Access Article matches snapshot 1`] = `
                     class="usa-in-page-nav__link"
                     href="#access-through-eua"
                   >
-                    Access through EUA
+                    Requesting access through EUA
                   </a>
                 </li>
                 <li
@@ -90,7 +90,7 @@ exports[`Get Access Article matches snapshot 1`] = `
                     class="usa-in-page-nav__link"
                     href="#access-through-idm"
                   >
-                    Access through IDM
+                    Requesting access through IDM
                   </a>
                 </li>
                 <li
@@ -121,36 +121,201 @@ exports[`Get Access Article matches snapshot 1`] = `
             </p>
             <div
               class="nav-anchor"
-              id="should-i-request-access"
+              id="which-job-code-should-i-request"
             >
-              <div
-                class="usa-summary-box padding-3"
-                data-testid="summary-box"
+              <h2
+                aria-live="polite"
+                class="mint-h1 margin-top-4 margin-bottom-1"
+                tabindex="-1"
               >
-                <div
-                  class="usa-summary-box__body"
-                >
-                  <h3
-                    class="usa-summary-box__heading"
-                  >
-                    Should I request access through EUA or IDM?
-                  </h3>
-                  <div
-                    class="usa-summary-box__text"
-                  >
-                    <ul
-                      class="padding-left-3 margin-bottom-0 margin-top-2 margin-left-1"
+                Which job code should I request?
+              </h2>
+              <p
+                class="font-body-md line-height-sans-4"
+              >
+                Use this chart to determine what job code to request by selecting the role that aligns most closely with what you do.
+              </p>
+              <table
+                class="usa-table usa-table--borderless src-components-Table-Table-module__fullwidth--fOyj6 src-components-Table-Table-module__fixed--RFjRe"
+                data-testid="table"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="col"
                     >
-                      <li>
-                        CMS employees should request access through EUA.
-                      </li>
-                      <li>
-                        CMS contractors with an approved need for access to MINT, Medicare Administrative Contractors, Shared System Maintainers, and Medicare Integrated Systems Testers should request access through IDM.
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                      Your role
+                    </th>
+                    <th
+                      class="padding-y-1"
+                      scope="col"
+                    >
+                      Job code to request
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="row"
+                    >
+                      <ul
+                        class="margin-y-0"
+                      >
+                        <li>
+                          CMS employees
+                        </li>
+                      </ul>
+                    </th>
+                    <td
+                      class="text-baseline"
+                    >
+                      MINT_USER in 
+                      <a
+                        aria-label="Open EUA in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://eua.cms.gov"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        EUA
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="row"
+                    >
+                      <p
+                        class="margin-y-0"
+                      >
+                        These contractors 
+                        <span
+                          class="text-bold text-italic"
+                        >
+                          with
+                        </span>
+                         EUA access
+                      </p>
+                      <ul
+                        class="margin-y-0"
+                      >
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Medicare Administrative Contractors
+                        </li>
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Shared System Maintainers
+                        </li>
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Medicare Integrated Systems Testers
+                        </li>
+                      </ul>
+                    </th>
+                    <td
+                      class="text-baseline"
+                    >
+                      MINT_CONTRACTOR_FFS in 
+                      <a
+                        aria-label="Open EUA in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://eua.cms.gov"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        EUA
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="row"
+                    >
+                      <p
+                        class="margin-y-0"
+                      >
+                        These contractors 
+                        <span
+                          class="text-bold text-italic"
+                        >
+                          without
+                        </span>
+                         EUA access
+                      </p>
+                      <ul
+                        class="margin-y-0"
+                      >
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Medicare Administrative Contractors
+                        </li>
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Shared System Maintainers
+                        </li>
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Medicare Integrated Systems Testers
+                        </li>
+                      </ul>
+                    </th>
+                    <td
+                      class="text-baseline"
+                    >
+                      MINT Contractor in 
+                      <a
+                        aria-label="Open IDM in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://home.idm.cms.gov/"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        IDM
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="row"
+                    >
+                      <ul
+                        class="margin-y-0"
+                      >
+                        <li>
+                          Any other CMS contractors with an approved need for access to MINT
+                        </li>
+                      </ul>
+                    </th>
+                    <td
+                      class="text-baseline"
+                    >
+                      MINT Contractor in 
+                      <a
+                        aria-label="Open IDM in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://home.idm.cms.gov/"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        IDM
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div
               class="nav-anchor"
@@ -161,7 +326,7 @@ exports[`Get Access Article matches snapshot 1`] = `
                 class="mint-h1 margin-top-4 margin-bottom-1"
                 tabindex="-1"
               >
-                Access through EUA
+                Requesting access through EUA
               </h2>
               <ol
                 class="usa-process-list"
@@ -303,7 +468,7 @@ exports[`Get Access Article matches snapshot 1`] = `
               id="access-through-idm"
             >
               <h2>
-                Access through IDM
+                Requesting access through IDM
               </h2>
               <div
                 class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-2"
@@ -409,7 +574,7 @@ exports[`Get Access Article matches snapshot 1`] = `
                       <span
                         class="text-bold text-italic"
                       >
-                        MINT Medicare Administrative Contractor
+                        MINT Contractor
                       </span>
                       .
                     </li>
