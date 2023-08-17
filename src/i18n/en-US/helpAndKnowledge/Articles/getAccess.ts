@@ -60,9 +60,9 @@ const getAccess = {
         three:
           'You’ll see a screen with all of your active job codes. Below the list, click the <0>Add a Job Code</0> button.',
         four:
-          'Type <0>MINT_USER</0> into the search box and click the <0>Search</0> button.',
+          'Type the name of the job code into the search box (either <0>MINT_USER</0> or <0>MINT_CONTRACTOR_FFS</0> determined using the chart above) and click the <0>Search</0> button.',
         five:
-          'Check the box next to MINT_USER, then click the <0>Select</0> button.',
+          'Check the box next to the job code, then click the <0>Select</0> button.',
         six:
           'Enter a justification reason, then click the <0>Finish</0> button.'
       }
@@ -79,10 +79,6 @@ const getAccess = {
     }
   },
   accessThroughIDM: 'Requesting access through IDM',
-  accessInfo1:
-    'If you’re a contractor and don’t have an IDM account or your current IDM account uses your EUA credentials (your four-character user ID and password), you must create a new one.',
-  accessInfo2:
-    'Visit <0>home.idm.cms.gov</0> and click <1>New User Registration</1> to create an account. We recommend using an email address for your new user ID, so it’s easy to remember.',
   stepsIDM: {
     first: {
       heading: 'Sign in to IDM',
