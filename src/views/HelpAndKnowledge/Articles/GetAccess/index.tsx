@@ -6,8 +6,7 @@ import {
   Link,
   ProcessList,
   ProcessListHeading,
-  ProcessListItem,
-  SummaryBox
+  ProcessListItem
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import i18next from 'i18next';
@@ -31,8 +30,8 @@ type AnchorLink = {
 
 const anchorLinks: AnchorLink[] = [
   {
-    anchor: '#should-i-request-access',
-    text: i18next.t('getAccess:summaryBox.copy')
+    anchor: '#which-job-code-should-i-request',
+    text: i18next.t('getAccess:jobcodes.heading')
   },
   {
     anchor: '#access-through-eua',
@@ -105,14 +104,14 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           {t('description')}
         </p>
 
-        <div className="nav-anchor" id="should-i-request-access">
-          <SummaryBox heading={t('summaryBox.copy')} className="padding-3">
-            <ul className="padding-left-3 margin-bottom-0 margin-top-2 margin-left-1">
-              <li>{t('summaryBox.listItem.employees')}</li>
-
-              <li>{t('summaryBox.listItem.contractors')}</li>
-            </ul>
-          </SummaryBox>
+        <div className="nav-anchor" id="which-job-code-should-i-request">
+          <PageHeading
+            className="margin-top-4 margin-bottom-1"
+            headingLevel="h2"
+          >
+            {t('jobcodes.heading')}
+          </PageHeading>
+          <p>{t('jobcodes.description')}</p>
         </div>
 
         <div className="nav-anchor" id="access-through-eua">

@@ -4,12 +4,38 @@ const getAccess = {
   title: 'How to get access to MINT',
   description:
     'This guide covers the steps to get access to MINT through Enterprise User Administration (EUA) or Identity Management (IDM).',
-  summaryBox: {
-    copy: 'Should I request access through EUA or IDM?',
-    listItem: {
-      employees: 'CMS employees should request access through EUA.',
-      contractors:
-        'CMS contractors with an approved need for access to MINT, Medicare Administrative Contractors, Shared System Maintainers, and Medicare Integrated Systems Testers should request access through IDM.'
+  jobcodes: {
+    heading: 'Which job code should I request?',
+    description:
+      'Use this chart to determine what job code to request by selecting the role that aligns most closely with what you do.',
+    table: {
+      rowOne: {
+        role: 'CMS employees',
+        jobCodeToRequest: 'MINT_USER in <0>EUA</0>'
+      },
+      rowTwo: {
+        paragraph: 'These contractors <0>with</0> EUA access',
+        roles: [
+          'Medicare Administrative Contractors',
+          'Shared System Maintainers',
+          'Medicare Integrated Systems Testers'
+        ],
+        jobCodeToRequest: 'MINT_CONTRACTOR_FFS in <0>EUA</0>'
+      },
+      rowThree: {
+        paragraph: 'These contractors <0>without</0> EUA access',
+        roles: [
+          'Medicare Administrative Contractors',
+          'Shared System Maintainers',
+          'Medicare Integrated Systems Testers'
+        ],
+        jobCodeToRequest: 'MINT Contractor in <0>IDM</0>'
+      },
+      rowFour: {
+        role:
+          'Any other CMS contractors with an approved need for access to MINT',
+        jobCodeToRequest: 'MINT Contractor in <0>IDM</0>'
+      }
     }
   },
   stepsEUA: {
@@ -69,8 +95,7 @@ const getAccess = {
         one: 'Click the <0>Role Request</0> button.',
         two:
           'The Role Request window will appear with a dropdown to select an application. Select <0>Model Innovation Tool (MINT)</0>.',
-        three:
-          'Then, select the role <0>MINT Medicare Administrative Contractor</0>.'
+        three: 'Then, select the role <0>MINT Contractor</0>.'
       }
     },
     third: {
