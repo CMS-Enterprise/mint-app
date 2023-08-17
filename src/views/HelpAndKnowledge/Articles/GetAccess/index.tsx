@@ -335,25 +335,6 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
         <div className="nav-anchor margin-bottom-4" id="access-through-idm">
           <h2>{t('accessThroughIDM')}</h2>
 
-          <Alert type="info" noIcon className="margin-bottom-2">
-            {t('accessInfo1')}
-
-            <dt className="margin-bottom-0 margin-top-2">
-              <Trans i18nKey="getAccess:accessInfo2">
-                <Link
-                  aria-label="Open IDM in a new tab"
-                  href="https://home.idm.cms.gov"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="external"
-                >
-                  indexZero
-                </Link>
-                <span className="text-bold text-italic">indexOne</span>
-              </Trans>
-            </dt>
-          </Alert>
-
           <ProcessList>
             <ProcessListItem className="maxw-none">
               <ProcessListHeading type="h3">

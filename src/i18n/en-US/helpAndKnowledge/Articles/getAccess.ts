@@ -79,10 +79,6 @@ const getAccess = {
     }
   },
   accessThroughIDM: 'Requesting access through IDM',
-  accessInfo1:
-    'If you’re a contractor and don’t have an IDM account or your current IDM account uses your EUA credentials (your four-character user ID and password), you must create a new one.',
-  accessInfo2:
-    'Visit <0>home.idm.cms.gov</0> and click <1>New User Registration</1> to create an account. We recommend using an email address for your new user ID, so it’s easy to remember.',
   stepsIDM: {
     first: {
       heading: 'Sign in to IDM',
