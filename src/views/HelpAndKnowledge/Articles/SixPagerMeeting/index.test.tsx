@@ -2,13 +2,13 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import TwoPagerMeeting from './index';
+import SixPagerMeeting from './index';
 
-describe('TwoPagerMeeting', () => {
+describe('SixPagerMeeting', () => {
   it('matches the snapshot', () => {
     const { asFragment } = render(
       <MemoryRouter>
-        <TwoPagerMeeting />
+        <SixPagerMeeting />
       </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
