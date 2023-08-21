@@ -1677,7 +1677,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 
-shareModelPlans(modelPlanID: UUID!, viewFilter: ModelViewFilter!, receiverEmails: [String!]!, optionalMessage: String): Boolean!
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter!, receiverEmails: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
 }
 

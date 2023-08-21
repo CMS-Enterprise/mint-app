@@ -2,7 +2,8 @@ package resolvers
 
 import (
 	"context"
-	"encoding/json"
+	"database/sql"
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -296,11 +297,23 @@ func ModelPlanShare(
 ) (bool, error) {
 	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			logger.Warn("No model plan found for the given modelPlanID",
+				zap.String("modelPlanID", modelPlanID.String()))
+			return false, fmt.Errorf("no model plan found for the given modelPlanID: %w", err)
+		}
+
 		return false, fmt.Errorf("failed to fetch the model plan: %w", err)
 	}
 
-	planBasics, err := store.PlanBasicsGetByID(logger, modelPlanID)
+	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			logger.Warn("No plan basics found for the given modelPlanID",
+				zap.String("modelPlanID", modelPlanID.String()))
+			return false, fmt.Errorf("no plan basics found for the given modelPlanID: %w", err)
+		}
+
 		return false, fmt.Errorf("failed to fetch the plan basics: %w", err)
 	}
 
@@ -334,22 +347,14 @@ func ModelPlanShare(
 		lastModified = *modelPlan.ModifiedDts
 	}
 
-	loaderArgs := make(map[string]interface{})
-	loaderArgs["model_plan_id"] = modelPlanID
-	loaderArgsBytes, _ := json.Marshal(loaderArgs)
-
-	planCollaborators, err := store.PlanCollaboratorGetByModelPlanIDLOADER(
-		logger,
-		string(loaderArgsBytes),
-	)
-
+	planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return false, fmt.Errorf("failed to get plan collaborators: %w", err)
 	}
 
 	var modelLeads []string
 	for _, collaborator := range planCollaborators {
-		if collaborator.TeamRole == models.TeamRoleModelTeam {
+		if collaborator.TeamRole == models.TeamRoleModelLead {
 			modelLeads = append(modelLeads, collaborator.UserAccount(ctx).CommonName)
 		}
 	}

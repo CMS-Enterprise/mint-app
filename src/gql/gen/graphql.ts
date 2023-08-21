@@ -627,7 +627,7 @@ export type Mutation = {
   deletePlanFavorite: PlanFavorite;
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
-  shareModelPlans: Scalars['Boolean']['output'];
+  shareModelPlan: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
@@ -778,7 +778,7 @@ export type MutationRemovePlanDocumentSolutionLinksArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationShareModelPlansArgs = {
+export type MutationShareModelPlanArgs = {
   modelPlanID: Scalars['UUID']['input'];
   optionalMessage?: InputMaybe<Scalars['String']['input']>;
   receiverEmails: Array<Scalars['String']['input']>;
