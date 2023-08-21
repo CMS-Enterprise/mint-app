@@ -109,7 +109,7 @@
                   {{$element}}
               {{- end -}}
           {{else}}
-            No category selected
+            To be determined
           {{end}}
       </p>
       <br/>
@@ -130,7 +130,7 @@
                   {{$element}}
               {{- end -}}
           {{else}}
-            No model leads selected
+            To be determined
           {{end}}
       </p>
       <br/>
@@ -140,13 +140,14 @@
 
 <br/>
 <p style="padding-top: 14pt;">
-  <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list/" class="link">
-    <!-- Implement the logic for the link text -->
-      {{if eq .ModelViewFilter "ALL_MODEL_PLAN_INFORMATION"}}
+    {{if .ModelViewFilter}}
+      <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}" class="link">
+        View {{.HumanizedModelViewFilter}} details in MINT
+      </a>
+    {{else}}
+      <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
         View more details in MINT
-      {{else}}
-        View {{.ModelViewFilter}} details in MINT
-      {{end}}
-  </a>
+      </a>
+    {{end}}
 </p>
 </body>

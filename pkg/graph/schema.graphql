@@ -1677,7 +1677,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 
-shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter!, receiverEmails: [String!]!, optionalMessage: String): Boolean!
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
 }
 
@@ -2423,9 +2423,13 @@ enum DiscussionUserRole {
 }
 
 enum ModelViewFilter {
-  ALL_MODEL_PLAN_INFORMATION,
-  CHRONIC_CONDITIONS_WAREHOUSE, # CCW
-  CMMI_COST_ESTIMATE,
-  CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER, # CBOSC
-  DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT, # DFSDM
+  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
+  CMMI, # CMMI_COST_ESTIMATE
+  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
+  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
+  IPC, # INNOVATION_PAYMENT_CONTRACTOR
+  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
+  IDR, # INTEGRATED_DATA_REPOSITORY
+  OACT, # OFFICE_OF_THE_ACTUARY
+  PBG, # PROVIDER_BILLING_GROUP
 }

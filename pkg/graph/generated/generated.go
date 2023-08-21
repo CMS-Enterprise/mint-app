@@ -234,7 +234,7 @@ type ComplexityRoot struct {
 		DeletePlanFavorite                 func(childComplexity int, modelPlanID uuid.UUID) int
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
-		ShareModelPlan                     func(childComplexity int, modelPlanID uuid.UUID, viewFilter models.ModelViewFilter, receiverEmails []string, optionalMessage *string) int
+		ShareModelPlan                     func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		UpdateCustomOperationalNeedByID    func(childComplexity int, id uuid.UUID, customNeedType *string, needed bool) int
@@ -981,7 +981,7 @@ type MutationResolver interface {
 	UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error)
 	DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error)
-	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error)
+	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -2144,7 +2144,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.ShareModelPlan(childComplexity, args["modelPlanID"].(uuid.UUID), args["viewFilter"].(models.ModelViewFilter), args["receiverEmails"].([]string), args["optionalMessage"].(*string)), true
+		return e.complexity.Mutation.ShareModelPlan(childComplexity, args["modelPlanID"].(uuid.UUID), args["viewFilter"].(*models.ModelViewFilter), args["receiverEmails"].([]string), args["optionalMessage"].(*string)), true
 
 	case "Mutation.unlockAllTaskListSections":
 		if e.complexity.Mutation.UnlockAllTaskListSections == nil {
@@ -8392,7 +8392,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 
-shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter!, receiverEmails: [String!]!, optionalMessage: String): Boolean!
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
 }
 
@@ -9138,11 +9138,15 @@ enum DiscussionUserRole {
 }
 
 enum ModelViewFilter {
-  ALL_MODEL_PLAN_INFORMATION,
-  CHRONIC_CONDITIONS_WAREHOUSE, # CCW
-  CMMI_COST_ESTIMATE,
-  CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER, # CBOSC
-  DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT, # DFSDM
+  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
+  CMMI, # CMMI_COST_ESTIMATE
+  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
+  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
+  IPC, # INNOVATION_PAYMENT_CONTRACTOR
+  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
+  IDR, # INTEGRATED_DATA_REPOSITORY
+  OACT, # OFFICE_OF_THE_ACTUARY
+  PBG, # PROVIDER_BILLING_GROUP
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -9580,10 +9584,10 @@ func (ec *executionContext) field_Mutation_shareModelPlan_args(ctx context.Conte
 		}
 	}
 	args["modelPlanID"] = arg0
-	var arg1 models.ModelViewFilter
+	var arg1 *models.ModelViewFilter
 	if tmp, ok := rawArgs["viewFilter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("viewFilter"))
-		arg1, err = ec.unmarshalNModelViewFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx, tmp)
+		arg1, err = ec.unmarshalOModelViewFilter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -21184,7 +21188,7 @@ func (ec *executionContext) _Mutation_shareModelPlan(ctx context.Context, field 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(models.ModelViewFilter), fc.Args["receiverEmails"].([]string), fc.Args["optionalMessage"].(*string))
+			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(*models.ModelViewFilter), fc.Args["receiverEmails"].([]string), fc.Args["optionalMessage"].(*string))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -62073,22 +62077,6 @@ func (ec *executionContext) marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑa
 	return res
 }
 
-func (ec *executionContext) unmarshalNModelViewFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx context.Context, v interface{}) (models.ModelViewFilter, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.ModelViewFilter(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNModelViewFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx context.Context, sel ast.SelectionSet, v models.ModelViewFilter) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
 func (ec *executionContext) unmarshalNMonitoringFileType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileType(ctx context.Context, v interface{}) (model.MonitoringFileType, error) {
 	var res model.MonitoringFileType
 	err := res.UnmarshalGQL(v)
@@ -66268,6 +66256,23 @@ func (ec *executionContext) unmarshalOModelType2ᚖgithubᚗcomᚋcmsgovᚋmint�
 }
 
 func (ec *executionContext) marshalOModelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelType(ctx context.Context, sel ast.SelectionSet, v *models.ModelType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalOModelViewFilter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx context.Context, v interface{}) (*models.ModelViewFilter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ModelViewFilter(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOModelViewFilter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx context.Context, sel ast.SelectionSet, v *models.ModelViewFilter) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

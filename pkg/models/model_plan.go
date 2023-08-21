@@ -66,9 +66,26 @@ type ModelViewFilter string
 
 // These constants represent the different values of ModelViewFilter
 const (
-	ModelViewFilterAllModelPlanInformation                      ModelViewFilter = "ALL_MODEL_PLAN_INFORMATION"
-	ModelViewFilterChronicConditionsWarehouse                   ModelViewFilter = "CHRONIC_CONDITIONS_WAREHOUSE"
-	ModelViewFilterCmmiCostEstimate                             ModelViewFilter = "CMMI_COST_ESTIMATE"
-	ModelViewFilterConsolidatedBusinessOperationsSupportCenter  ModelViewFilter = "CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER"
-	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement ModelViewFilter = "DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT"
+	ModelViewFilterChronicConditionsWarehouse                       ModelViewFilter = "CCW"
+	ModelViewFilterCmmiCostEstimate                                 ModelViewFilter = "CMMI"
+	ModelViewFilterConsolidatedBusinessOperationsSupportCenter      ModelViewFilter = "CBOSC"
+	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement     ModelViewFilter = "DFSDM"
+	ModelViewFilterInnovationPaymentContractor                      ModelViewFilter = "IPC"
+	ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract ModelViewFilter = "IDDOC"
+	ModelViewFilterIntegratedDataRepository                         ModelViewFilter = "IDR"
+	ModelViewFilterOfficeOfTheActuary                               ModelViewFilter = "OACT"
+	ModelViewFilterProviderBillingGroup                             ModelViewFilter = "PBG"
 )
+
+// ModelViewFilterHumanized maps ModelViewFilter to a human-readable string
+var ModelViewFilterHumanized = map[ModelViewFilter]string{
+	ModelViewFilterChronicConditionsWarehouse:                       "Chronic Conditions Warehouse",
+	ModelViewFilterCmmiCostEstimate:                                 "CMMI Cost Estimate",
+	ModelViewFilterConsolidatedBusinessOperationsSupportCenter:      "Consolidated Business Operations Support Center",
+	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement:     "Division of Financial Services and Debt Management",
+	ModelViewFilterInnovationPaymentContractor:                      "Innovation Payment Contractor",
+	ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract: "Innovative Design Development and Operations Contract",
+	ModelViewFilterIntegratedDataRepository:                         "Integrated Data Repository",
+	ModelViewFilterOfficeOfTheActuary:                               "Office of the Actuary",
+	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
+}

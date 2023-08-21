@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -291,7 +292,7 @@ func ModelPlanShare(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	modelPlanID uuid.UUID,
-	viewFilter models.ModelViewFilter,
+	viewFilter *models.ModelViewFilter,
 	receiverEmails []string,
 	optionalMessage *string,
 ) (bool, error) {
@@ -359,19 +360,30 @@ func ModelPlanShare(
 		}
 	}
 
+	var humanizedViewFilter *string
+	var lowercasedViewFilter *string
+	if viewFilter != nil {
+		humanizedViewFilter = models.StringPointer(
+			models.ModelViewFilterHumanized[*viewFilter])
+
+		lowercasedViewFilter = models.StringPointer(
+			strings.ToLower(string(*viewFilter)))
+	}
+
 	// Get email body
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
-		UserName:         principal.Account().CommonName,
-		OptionalMessage:  optionalMessage,
-		ModelName:        modelPlan.ModelName,
-		ModelShortName:   modelPlan.Abbreviation, // TODO: Is this correct for the shortName?
-		ModelCategories:  modelPlanCategories,
-		ModelStatus:      planBasics.Status,
-		ModelLastUpdated: lastModified,
-		ModelLeads:       modelLeads,
-		ModelViewFilter:  viewFilter,
-		ClientAddress:    clientAddress,
-		ModelID:          modelPlan.ID.String(),
+		UserName:                 principal.Account().CommonName,
+		OptionalMessage:          optionalMessage,
+		ModelName:                modelPlan.ModelName,
+		ModelShortName:           modelPlan.Abbreviation, // TODO: Is this correct for the shortName?
+		ModelCategories:          modelPlanCategories,
+		ModelStatus:              planBasics.Status,
+		ModelLastUpdated:         lastModified,
+		ModelLeads:               modelLeads,
+		ModelViewFilter:          lowercasedViewFilter,
+		HumanizedModelViewFilter: humanizedViewFilter,
+		ClientAddress:            clientAddress,
+		ModelID:                  modelPlan.ID.String(),
 	})
 	if err != nil {
 		return false, fmt.Errorf("failed to execute email body: %w", err)
