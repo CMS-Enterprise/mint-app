@@ -51,7 +51,7 @@ const Table = ({
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('modelSummary');
   const { t: f } = useTranslation('home');
-  const { t: planBasicsT } = useTranslation('planBasics');
+  const { t: basicsT } = useTranslation('basics');
 
   const columns = useMemo(() => {
     return [
@@ -126,16 +126,16 @@ const Table = ({
             if (additionalModelCategory.length !== 0) {
               const newArray = additionalModelCategory.map(
                 (group: ModelCategory) => {
-                  return planBasicsT(`modelCategory.options.${group}`);
+                  return basicsT(`modelCategory.options.${group}`);
                 }
               );
 
-              return `${planBasicsT(
+              return `${basicsT(
                 `modelCategory.options.${value}`
               )}, ${newArray.join(', ')}`;
             }
           }
-          return planBasicsT(`modelCategory.options.${value}`);
+          return basicsT(`modelCategory.options.${value}`);
         }
       },
       {
@@ -176,7 +176,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, updateFavorite, planBasicsT, h]);
+  }, [t, updateFavorite, basicsT, h]);
 
   const {
     getTableProps,
