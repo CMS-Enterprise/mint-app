@@ -505,6 +505,12 @@ func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Co
 	return resolvers.OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx, obj.ID)
 }
 
+// AdditionalModelCategories is the resolver for the additionalModelCategories field.
+func (r *planBasicsResolver) AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error) {
+	modelCategories := models.ConvertEnums[models.ModelCategory](obj.AdditionalModelCategories)
+	return modelCategories, nil
+}
+
 // CmsCenters is the resolver for the cmsCenters field.
 func (r *planBasicsResolver) CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error) {
 	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)

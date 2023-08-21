@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
 
 export type ReadOnlySectionProps = {
-  copy?: string | null;
+  copy?: string | null | React.ReactNode;
   heading: string;
   list?: boolean;
-  listItems?: (string | number)[];
+  listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
   notes?: string | null;
 };
@@ -19,30 +19,53 @@ const ReadOnlySection = ({
   listOtherItem,
   notes
 }: ReadOnlySectionProps) => {
-  const { t } = useTranslation('basics');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const sectionName = heading
     .toLowerCase()
     .replace(/\W*$/g, '')
     .replace(/\W/g, '-');
 
+  const isElement = (
+    element: string | number | React.ReactElement | React.ReactNode
+  ) => {
+    return React.isValidElement(element);
+  };
+
   const renderCopyOrList = () => {
+    if (isElement(copy)) {
+      return (
+        <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+          {copy || <em className="text-base">{miscellaneousT('na')}</em>}
+        </div>
+      );
+    }
     if (!list || listItems.length === 0) {
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-          {copy || <em className="text-base">{t('na')}</em>}
+          {copy || <em className="text-base">{miscellaneousT('na')}</em>}
         </p>
       );
     }
     return (
-      <ul className="margin-y-0 padding-left-3">
-        {listItems.map(item => (
-          <React.Fragment key={`${sectionName}--${item}`}>
+      <ul
+        className={`margin-y-0 padding-left-${
+          isElement(listItems[0]) ? '2' : '3'
+        }`}
+      >
+        {listItems.map((item, index) => (
+          <React.Fragment
+            key={
+              isElement(listItems[index]) ? index : `${sectionName}--${item}`
+            }
+          >
             <li className="font-sans-md line-height-sans-4">{item}</li>
             {item === 'Other' && (
               <ul data-testid="other-entry">
                 <li className="font-sans-md line-height-sans-4">
                   {listOtherItem || (
-                    <em className="text-base">{t('otherNotSpecificed')}</em>
+                    <em className="text-base">
+                      {miscellaneousT('otherNotSpecified')}
+                    </em>
                   )}
                 </li>
               </ul>
@@ -54,7 +77,7 @@ const ReadOnlySection = ({
   };
 
   // If no notes are written, do not render
-  if (heading === t('notes') && !copy) {
+  if (heading === miscellaneousT('notes') && !copy) {
     return null;
   }
 
@@ -68,7 +91,9 @@ const ReadOnlySection = ({
         </p>
         {renderCopyOrList()}
       </div>
-      {notes && <ReadOnlySection heading={t('notes')} copy={notes} />}
+      {notes && (
+        <ReadOnlySection heading={miscellaneousT('notes')} copy={notes} />
+      )}
     </Grid>
   );
 };

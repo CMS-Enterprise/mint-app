@@ -12,6 +12,7 @@ export default gql`
       basics {
         performancePeriodStarts
         modelCategory
+        additionalModelCategories
         goal
       }
       collaborators {

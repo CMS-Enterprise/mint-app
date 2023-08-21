@@ -57,7 +57,7 @@ describe('The Model Plan Participants and Providers Form', () => {
       .type('The candy people')
       .should('have.value', 'The candy people');
 
-    cy.get('#participants-and-providers-current-participants')
+    cy.get('#participants-and-providers-current-participants-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -114,7 +114,7 @@ describe('The Model Plan Participants and Providers Form', () => {
       .check({ force: true });
     cy.get('@communication').should('be.checked');
 
-    cy.get('#participants-and-providers-risk')
+    cy.get('#participants-and-providers-risk-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -126,7 +126,7 @@ describe('The Model Plan Participants and Providers Form', () => {
       .type('Programmatic Risk')
       .should('have.value', 'Programmatic Risk');
 
-    cy.get('#participants-and-providers-risk-change')
+    cy.get('#participants-and-providers-risk-change-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -134,16 +134,16 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/coordination
 
-    cy.get('#participants-and-providers-coordniate-work')
+    cy.get('#participants-and-providers-coordniate-work-true')
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#participants-and-providers-gainshare-payment')
+    cy.get('#participants-and-providers-gainshare-payment-true')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#participants-and-providers-gainshare-track')
+    cy.get('#participants-and-providers-gainshare-track-true')
       .check({ force: true })
       .should('be.checked');
 

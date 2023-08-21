@@ -16,6 +16,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -25,6 +26,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
 import {
@@ -38,18 +40,27 @@ import {
   ParticipantCommunicationType,
   ParticipantRiskType
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  sortOtherEnum,
-  translateCommunicationType,
-  translateRiskType
-} from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 export const Communication = () => {
-  const { t } = useTranslation('participantsAndProviders');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: participantsAndProvidersT } = useTranslation(
+    'participantsAndProviders'
+  );
+  const { t: participantsAndProvidersMiscT } = useTranslation(
+    'participantsAndProvidersMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    communicationMethod: communicationMethodConfig,
+    participantAssumeRisk: participantAssumeRiskConfig,
+    riskType: riskTypeConfig,
+    willRiskChange: willRiskChangeConfig
+  } = usePlanTranslation('participantsAndProviders');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CommunicationFormType>>(null);
@@ -148,28 +159,31 @@ export const Communication = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {participantsAndProvidersMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {participantsAndProvidersMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -191,25 +205,27 @@ export const Communication = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <Form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-communication-form"
@@ -227,8 +243,11 @@ export const Communication = () => {
                       render={arrayHelpers => (
                         <>
                           <legend className="usa-label">
-                            {t('participantCommunication')}
+                            {participantsAndProvidersT(
+                              'communicationMethod.label'
+                            )}
                           </legend>
+
                           {itSolutionsStarted && (
                             <ITSolutionsWarning
                               id="participants-and-providers-communication-method-warning"
@@ -239,23 +258,25 @@ export const Communication = () => {
                               }
                             />
                           )}
+
                           <FieldErrorMsg>
                             {flatErrors.communicationMethod}
                           </FieldErrorMsg>
 
-                          {Object.keys(ParticipantCommunicationType)
-                            .sort(sortOtherEnum)
-                            .map(type => {
+                          {getKeys(communicationMethodConfig.options).map(
+                            type => {
                               return (
                                 <Fragment key={type}>
                                   <Field
                                     as={CheckboxField}
                                     id={`participants-and-providers-communication-method-${type}`}
                                     name="communicationMethod"
-                                    label={translateCommunicationType(type)}
+                                    label={
+                                      communicationMethodConfig.options[type]
+                                    }
                                     value={type}
                                     checked={values?.communicationMethod.includes(
-                                      type as ParticipantCommunicationType
+                                      type
                                     )}
                                     onChange={(
                                       e: React.ChangeEvent<HTMLInputElement>
@@ -271,20 +292,26 @@ export const Communication = () => {
                                       }
                                     }}
                                   />
-                                  {type === 'OTHER' &&
+
+                                  {type ===
+                                    ParticipantCommunicationType.OTHER &&
                                     values.communicationMethod.includes(
-                                      'OTHER' as ParticipantCommunicationType
+                                      ParticipantCommunicationType.OTHER
                                     ) && (
-                                      <div className="margin-left-4 margin-top-neg-3">
+                                      <div className="margin-left-4">
                                         <Label
                                           htmlFor="participants-and-providers-communication-method-other"
                                           className="text-normal"
                                         >
-                                          {h('pleaseSpecify')}
+                                          {participantsAndProvidersT(
+                                            'communicationMethodOther.label'
+                                          )}
                                         </Label>
+
                                         <FieldErrorMsg>
                                           {flatErrors.communicationMethodOther}
                                         </FieldErrorMsg>
+
                                         <Field
                                           as={TextAreaField}
                                           className="maxw-none mint-textarea"
@@ -296,7 +323,8 @@ export const Communication = () => {
                                     )}
                                 </Fragment>
                               );
-                            })}
+                            }
+                          )}
                           <AddNote
                             id="participants-and-providers-communication-method-note"
                             field="communicationNote"
@@ -312,35 +340,20 @@ export const Communication = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-risk">
-                      {t('assumeRisk')}
+                      {participantsAndProvidersT('participantAssumeRisk.label')}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.participantAssumeRisk}
                     </FieldErrorMsg>
-                    <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="participants-and-providers-risk"
-                        name="participantAssumeRisk"
-                        label={h('yes')}
-                        value="TRUE"
-                        checked={values.participantAssumeRisk === true}
-                        onChange={() => {
-                          setFieldValue('participantAssumeRisk', true);
-                        }}
-                      />
-                      <Field
-                        as={Radio}
-                        id="participants-and-providers-risk-no"
-                        name="participantAssumeRisk"
-                        label={h('no')}
-                        value="FALSE"
-                        checked={values.participantAssumeRisk === false}
-                        onChange={() => {
-                          setFieldValue('participantAssumeRisk', false);
-                        }}
-                      />
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="participantAssumeRisk"
+                      id="participants-and-providers-risk"
+                      value={values.participantAssumeRisk}
+                      setFieldValue={setFieldValue}
+                      options={participantAssumeRiskConfig.options}
+                    />
 
                     {values.participantAssumeRisk && (
                       <>
@@ -348,36 +361,41 @@ export const Communication = () => {
                           htmlFor="participants-and-providers-risk-type"
                           className="text-normal"
                         >
-                          {t('riskType')}
+                          {participantsAndProvidersT('riskType.label')}
                         </Label>
+
                         <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
+
                         <Fieldset>
-                          {Object.keys(ParticipantRiskType)
-                            .sort(sortOtherEnum)
-                            .map(key => (
-                              <Fragment key={key}>
-                                <Field
-                                  as={Radio}
-                                  id={`participants-and-providers-risk-type-${key}`}
-                                  name="riskType"
-                                  label={translateRiskType(key)}
-                                  value={key}
-                                  checked={values.riskType === key}
-                                  onChange={() => {
-                                    setFieldValue('riskType', key);
-                                  }}
-                                />
-                                {key === 'OTHER' && values.riskType === key && (
+                          {getKeys(riskTypeConfig.options).map(key => (
+                            <Fragment key={key}>
+                              <Field
+                                as={Radio}
+                                id={`participants-and-providers-risk-type-${key}`}
+                                name="riskType"
+                                label={riskTypeConfig.options[key]}
+                                value={key}
+                                checked={values.riskType === key}
+                                onChange={() => {
+                                  setFieldValue('riskType', key);
+                                }}
+                              />
+                              {key === ParticipantRiskType.OTHER &&
+                                values.riskType === key && (
                                   <div className="margin-left-4 margin-top-2">
                                     <Label
                                       htmlFor="participants-and-providers-risk-type-other"
                                       className="text-normal"
                                     >
-                                      {h('pleaseSpecify')}
+                                      {participantsAndProvidersT(
+                                        'riskOther.label'
+                                      )}
                                     </Label>
+
                                     <FieldErrorMsg>
                                       {flatErrors.riskOther}
                                     </FieldErrorMsg>
+
                                     <Field
                                       as={TextAreaField}
                                       className="maxw-none mint-textarea"
@@ -388,8 +406,8 @@ export const Communication = () => {
                                     />
                                   </div>
                                 )}
-                              </Fragment>
-                            ))}
+                            </Fragment>
+                          ))}
                         </Fieldset>
                       </>
                     )}
@@ -405,33 +423,19 @@ export const Communication = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-risk-change">
-                      {t('changeRisk')}
+                      {participantsAndProvidersT('willRiskChange.label')}
                     </Label>
+
                     <FieldErrorMsg>{flatErrors.willRiskChange}</FieldErrorMsg>
-                    <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="participants-and-providers-risk-change"
-                        name="willRiskChange"
-                        label={h('yes')}
-                        value="TRUE"
-                        checked={values.willRiskChange === true}
-                        onChange={() => {
-                          setFieldValue('willRiskChange', true);
-                        }}
-                      />
-                      <Field
-                        as={Radio}
-                        id="participants-and-providers-risk-change-no"
-                        name="willRiskChange"
-                        label={h('no')}
-                        value="FALSE"
-                        checked={values.willRiskChange === false}
-                        onChange={() => {
-                          setFieldValue('willRiskChange', false);
-                        }}
-                      />
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="willRiskChange"
+                      id="participants-and-providers-risk-change"
+                      value={values.willRiskChange}
+                      setFieldValue={setFieldValue}
+                      options={willRiskChangeConfig.options}
+                    />
+
                     <AddNote
                       id="participants-and-providers-risk-change-note"
                       field="willRiskChangeNote"
@@ -446,22 +450,26 @@ export const Communication = () => {
                         handleFormSubmit('back');
                       }}
                     >
-                      {h('back')}
+                      {miscellaneousT('back')}
                     </Button>
+
                     <Button type="submit" onClick={() => setErrors({})}>
-                      {h('next')}
+                      {miscellaneousT('next')}
                     </Button>
                   </div>
+
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {h('saveAndReturn')}
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -475,6 +483,7 @@ export const Communication = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={4} totalPages={5} className="margin-y-6" />
     </>
   );

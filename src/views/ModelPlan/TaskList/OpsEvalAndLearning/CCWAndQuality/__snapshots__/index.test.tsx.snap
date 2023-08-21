@@ -125,10 +125,11 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-send-files-true"
               id="ops-eval-and-learning-send-files-true"
               name="sendFilesBetweenCcw"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -143,10 +144,11 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-send-files-false"
               id="ops-eval-and-learning-send-files-false"
               name="sendFilesBetweenCcw"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -207,10 +209,11 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-app-to-send-files-true"
               id="ops-eval-and-learning-app-to-send-files-true"
               name="appToSendFilesToKnown"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -225,10 +228,11 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-app-to-send-files-false"
               id="ops-eval-and-learning-app-to-send-files-false"
               name="appToSendFilesToKnown"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -289,10 +293,11 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-distribute-files-true"
               id="ops-eval-and-learning-distribute-files-true"
               name="useCcwForFileDistribiutionToParticipants"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -307,10 +312,11 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-distribute-files-false"
               id="ops-eval-and-learning-distribute-files-false"
               name="useCcwForFileDistribiutionToParticipants"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -398,10 +404,11 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-develop-measures-true"
               id="ops-eval-and-learning-develop-measures-true"
               name="developNewQualityMeasures"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -416,10 +423,11 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-develop-measures-false"
               id="ops-eval-and-learning-develop-measures-false"
               name="developNewQualityMeasures"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -484,7 +492,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
               id="ops-eval-and-learning-performance-impact-true"
               name="qualityPerformanceImpactsPayment"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -503,7 +511,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
               id="ops-eval-and-learning-performance-impact-false"
               name="qualityPerformanceImpactsPayment"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"

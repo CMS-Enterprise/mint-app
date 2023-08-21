@@ -18,8 +18,11 @@ import { GetAllPayments_modelPlan_payments as PaymentTypes } from 'queries/ReadO
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 import {
   AgencyOrStateHelpType,
+  AgreementType,
   AlternativePaymentModelType,
   AnticipatedPaymentFrequencyType,
+  AuthorityAllowance,
+  BenchmarkForPerformanceType,
   BeneficiariesType,
   CcmInvolvmentType,
   ClaimsBasedPayType,
@@ -30,10 +33,14 @@ import {
   ContractorSupportType,
   DataForMonitoringType,
   DataFrequencyType,
+  DataFullTimeOrIncrementalType,
+  DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
+  GeographyApplication,
+  GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -43,6 +50,7 @@ import {
   NonClaimsBasedPayType,
   OverlapType,
   ParticipantCommunicationType,
+  ParticipantRiskType,
   ParticipantSelectionType,
   ParticipantsIDType,
   ParticipantsType,
@@ -55,148 +63,19 @@ import {
   StakeholdersType,
   TaskStatus,
   TeamRole,
-  TriStateAnswer
+  TriStateAnswer,
+  WaiverType
 } from 'types/graphql-global-types';
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
-
-const beneficiaryData: AllBeneficiariesTypes = {
-  __typename: 'PlanBeneficiaries',
-  id: '123',
-  modelPlanID: modelID,
-  beneficiaries: [
-    BeneficiariesType.DISEASE_SPECIFIC,
-    BeneficiariesType.DUALLY_ELIGIBLE
-  ],
-  beneficiariesOther: null,
-  beneficiariesNote: null,
-  treatDualElligibleDifferent: TriStateAnswer.YES,
-  treatDualElligibleDifferentHow: 'null',
-  treatDualElligibleDifferentNote: null,
-  excludeCertainCharacteristics: TriStateAnswer.NO,
-  excludeCertainCharacteristicsCriteria: null,
-  excludeCertainCharacteristicsNote: null,
-  numberPeopleImpacted: 1234,
-  estimateConfidence: ConfidenceType.COMPLETELY,
-  confidenceNote: null,
-  beneficiarySelectionMethod: [SelectionMethodType.HISTORICAL],
-  beneficiarySelectionOther: null,
-  beneficiarySelectionNote: null,
-  beneficiarySelectionFrequency: FrequencyType.ANNUALLY,
-  beneficiarySelectionFrequencyOther: null,
-  beneficiarySelectionFrequencyNote: null,
-  beneficiaryOverlap: OverlapType.YES_NEED_POLICIES,
-  beneficiaryOverlapNote: null,
-  precedenceRules: null,
-  status: TaskStatus.IN_PROGRESS
-};
-
-export const benficiaryMocks = [
-  {
-    request: {
-      query: GetAllBeneficiaries,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          beneficiaries: beneficiaryData
-        }
-      }
-    }
-  }
-];
-
-const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
-  __typename: 'PlanGeneralCharacteristics',
-  id: '123',
-  isNewModel: false,
-  existingModel: 'Accountable Care Organizations (ACOs): General Information',
-  resemblesExistingModel: true,
-  resemblesExistingModelHow: null,
-  resemblesExistingModelNote: 'THIS IS A NEW NOTE',
-  hasComponentsOrTracks: false,
-  hasComponentsOrTracksDiffer: null,
-  hasComponentsOrTracksNote: null,
-  alternativePaymentModelTypes: [
-    AlternativePaymentModelType.REGULAR,
-    AlternativePaymentModelType.MIPS
-  ],
-  alternativePaymentModelNote: 'asdfasd',
-  keyCharacteristics: [
-    KeyCharacteristic.POPULATION_BASED,
-    KeyCharacteristic.PAYMENT,
-    KeyCharacteristic.SERVICE_DELIVERY,
-    KeyCharacteristic.OTHER
-  ],
-  keyCharacteristicsOther: null,
-  keyCharacteristicsNote: 'test',
-  collectPlanBids: null,
-  collectPlanBidsNote: null,
-  managePartCDEnrollment: null,
-  managePartCDEnrollmentNote: null,
-  planContractUpdated: null,
-  planContractUpdatedNote: null,
-  careCoordinationInvolved: false,
-  careCoordinationInvolvedDescription: null,
-  careCoordinationInvolvedNote: null,
-  additionalServicesInvolved: true,
-  additionalServicesInvolvedDescription: 'Lots of additional services',
-  additionalServicesInvolvedNote: null,
-  communityPartnersInvolved: true,
-  communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
-  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
-  geographiesTargeted: false,
-  geographiesTargetedTypes: [],
-  geographiesTargetedTypesOther: null,
-  geographiesTargetedAppliedTo: [],
-  geographiesTargetedAppliedToOther: null,
-  geographiesTargetedNote: null,
-  participationOptions: false,
-  participationOptionsNote: null,
-  agreementTypes: [],
-  agreementTypesOther: null,
-  multiplePatricipationAgreementsNeeded: null,
-  multiplePatricipationAgreementsNeededNote: null,
-  rulemakingRequired: true,
-  rulemakingRequiredDescription: 'Lots of rules',
-  rulemakingRequiredNote: null,
-  authorityAllowances: [],
-  authorityAllowancesOther: null,
-  authorityAllowancesNote: null,
-  waiversRequired: false,
-  waiversRequiredTypes: [],
-  waiversRequiredNote: null,
-  status: TaskStatus.IN_PROGRESS
-};
-
-export const generalCharacteristicMocks = [
-  {
-    request: {
-      query: GetAllGeneralCharacteristics,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          existingModelLinks: [],
-          generalCharacteristics: generalCharacteristicData
-        }
-      }
-    }
-  }
-];
 
 const modelBasicsData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
   id: '123',
   demoCode: '1234',
   amsModelID: '43532323',
-  modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
+  modelCategory: ModelCategory.STATE_BASED,
+  additionalModelCategories: [ModelCategory.ACCOUNTABLE_CARE],
   cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
   cmsOther: 'The Center for Awesomeness',
   cmmiGroups: [
@@ -242,138 +121,76 @@ export const modelBasicsMocks = [
   }
 ];
 
-const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
-  __typename: 'PlanOpsEvalAndLearning',
+const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
+  __typename: 'PlanGeneralCharacteristics',
   id: '123',
-  modelPlanID: modelID,
-  status: TaskStatus.IN_PROGRESS,
-  agencyOrStateHelp: [
-    AgencyOrStateHelpType.YES_STATE,
-    AgencyOrStateHelpType.OTHER
+  isNewModel: false,
+  existingModel: 'Accountable Care Organizations (ACOs): General Information',
+  resemblesExistingModel: true,
+  resemblesExistingModelHow: null,
+  resemblesExistingModelNote: 'THIS IS A NEW NOTE',
+  hasComponentsOrTracks: true,
+  hasComponentsOrTracksDiffer: 'In every way',
+  hasComponentsOrTracksNote: 'Tracks note',
+  alternativePaymentModelTypes: [
+    AlternativePaymentModelType.REGULAR,
+    AlternativePaymentModelType.MIPS
   ],
-  agencyOrStateHelpOther: null,
-  agencyOrStateHelpNote: null,
-  stakeholders: [
-    StakeholdersType.BENEFICIARIES,
-    StakeholdersType.PARTICIPANTS,
-    StakeholdersType.PROVIDERS
+  alternativePaymentModelNote: 'asdfasd',
+  keyCharacteristics: [
+    KeyCharacteristic.POPULATION_BASED,
+    KeyCharacteristic.PAYMENT,
+    KeyCharacteristic.SERVICE_DELIVERY,
+    KeyCharacteristic.OTHER
   ],
-  stakeholdersOther: null,
-  stakeholdersNote: null,
-  helpdeskUse: null,
-  helpdeskUseNote: null,
-  contractorSupport: [
-    ContractorSupportType.MULTIPLE,
-    ContractorSupportType.OTHER
+  keyCharacteristicsOther: 'Custom characteristic',
+  keyCharacteristicsNote: 'test',
+  collectPlanBids: true,
+  collectPlanBidsNote: 'Collect bids note',
+  managePartCDEnrollment: true,
+  managePartCDEnrollmentNote: 'Manage enrollment note',
+  planContractUpdated: true,
+  planContractUpdatedNote: 'Contract updated note',
+  careCoordinationInvolved: true,
+  careCoordinationInvolvedDescription: 'Care description',
+  careCoordinationInvolvedNote: 'Care note',
+  additionalServicesInvolved: true,
+  additionalServicesInvolvedDescription: 'Lots of additional services',
+  additionalServicesInvolvedNote: 'Additional services note',
+  communityPartnersInvolved: true,
+  communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
+  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
+  geographiesTargeted: true,
+  geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesTargetedTypesOther: 'Geography type other',
+  geographiesTargetedAppliedTo: [
+    GeographyApplication.BENEFICIARIES,
+    GeographyApplication.OTHER
   ],
-  contractorSupportOther: null,
-  contractorSupportHow: null,
-  contractorSupportNote: null,
-  iddocSupport: null,
-  iddocSupportNote: null,
-  technicalContactsIdentified: null,
-  technicalContactsIdentifiedDetail: null,
-  technicalContactsIdentifiedNote: null,
-  captureParticipantInfo: null,
-  captureParticipantInfoNote: null,
-  icdOwner: null,
-  draftIcdDueDate: null,
-  icdNote: null,
-  uatNeeds: null,
-  stcNeeds: null,
-  testingTimelines: null,
-  testingNote: null,
-  dataMonitoringFileTypes: [
-    MonitoringFileType.PART_A,
-    MonitoringFileType.PART_B
-  ],
-  dataMonitoringFileOther: null,
-  dataResponseType: null,
-  dataResponseFileFrequency: null,
-  dataFullTimeOrIncremental: null,
-  eftSetUp: null,
-  unsolicitedAdjustmentsIncluded: null,
-  dataFlowDiagramsNeeded: null,
-  produceBenefitEnhancementFiles: null,
-  fileNamingConventions: null,
-  dataMonitoringNote: null,
-  benchmarkForPerformance: null,
-  benchmarkForPerformanceNote: null,
-  computePerformanceScores: null,
-  computePerformanceScoresNote: null,
-  riskAdjustPerformance: null,
-  riskAdjustFeedback: null,
-  riskAdjustPayments: null,
-  riskAdjustOther: null,
-  riskAdjustNote: null,
-  appealPerformance: null,
-  appealFeedback: null,
-  appealPayments: null,
-  appealOther: null,
-  appealNote: null,
-  evaluationApproaches: [
-    EvaluationApproachType.INTERRUPTED_TIME,
-    EvaluationApproachType.OTHER
-  ],
-  evaluationApproachOther: null,
-  evalutaionApproachNote: null,
-  ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION, CcmInvolvmentType.OTHER],
-  ccmInvolvmentOther: null,
-  ccmInvolvmentNote: null,
-  dataNeededForMonitoring: [
-    DataForMonitoringType.CLINICAL_DATA,
-    DataForMonitoringType.MEDICARE_CLAIMS,
-    DataForMonitoringType.OTHER
-  ],
-  dataNeededForMonitoringOther: null,
-  dataNeededForMonitoringNote: null,
-  dataToSendParticicipants: [
-    DataToSendParticipantsType.BASELINE_HISTORICAL_DATA,
-    DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA,
-    DataToSendParticipantsType.OTHER_MIPS_DATA
-  ],
-  dataToSendParticicipantsOther: null,
-  dataToSendParticicipantsNote: null,
-  shareCclfData: null,
-  shareCclfDataNote: null,
-  sendFilesBetweenCcw: null,
-  sendFilesBetweenCcwNote: null,
-  appToSendFilesToKnown: null,
-  appToSendFilesToWhich: null,
-  appToSendFilesToNote: null,
-  useCcwForFileDistribiutionToParticipants: null,
-  useCcwForFileDistribiutionToParticipantsNote: null,
-  developNewQualityMeasures: null,
-  developNewQualityMeasuresNote: null,
-  qualityPerformanceImpactsPayment: null,
-  qualityPerformanceImpactsPaymentNote: null,
-  dataSharingStarts: null,
-  dataSharingStartsOther: null,
-  dataSharingFrequency: [DataFrequencyType.DAILY],
-  dataSharingFrequencyOther: null,
-  dataSharingStartsNote: null,
-  dataCollectionStarts: null,
-  dataCollectionStartsOther: null,
-  dataCollectionFrequency: [DataFrequencyType.MONTHLY],
-  dataCollectionFrequencyOther: null,
-  dataCollectionFrequencyNote: null,
-  qualityReportingStarts: null,
-  qualityReportingStartsOther: null,
-  qualityReportingStartsNote: null,
-  modelLearningSystems: [
-    ModelLearningSystemType.IT_PLATFORM_CONNECT,
-    ModelLearningSystemType.NO_LEARNING_SYSTEM,
-    ModelLearningSystemType.OTHER
-  ],
-  modelLearningSystemsOther: null,
-  modelLearningSystemsNote: null,
-  anticipatedChallenges: null
+  geographiesTargetedAppliedToOther: 'Geography applied other',
+  geographiesTargetedNote: 'Geography note',
+  participationOptions: true,
+  participationOptionsNote: 'Participation options note',
+  agreementTypes: [AgreementType.OTHER],
+  agreementTypesOther: 'Other agreement',
+  multiplePatricipationAgreementsNeeded: true,
+  multiplePatricipationAgreementsNeededNote: 'We will need agreements',
+  rulemakingRequired: true,
+  rulemakingRequiredDescription: 'Lots of rules',
+  rulemakingRequiredNote: 'My rulemaking note',
+  authorityAllowances: [AuthorityAllowance.ACA, AuthorityAllowance.OTHER],
+  authorityAllowancesOther: 'Other allowance',
+  authorityAllowancesNote: 'Allowance note',
+  waiversRequired: true,
+  waiversRequiredTypes: [WaiverType.FRAUD_ABUSE, WaiverType.MEDICAID],
+  waiversRequiredNote: 'My waiver note',
+  status: TaskStatus.IN_PROGRESS
 };
 
-export const opsEvalAndLearningMocks = [
+export const generalCharacteristicMocks = [
   {
     request: {
-      query: GetAllOpsEvalAndLearning,
+      query: GetAllGeneralCharacteristics,
       variables: { id: modelID }
     },
     result: {
@@ -381,7 +198,8 @@ export const opsEvalAndLearningMocks = [
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
-          opsEvalAndLearning: opsEvalAndLearningData
+          existingModelLinks: [],
+          generalCharacteristics: generalCharacteristicData
         }
       }
     }
@@ -400,54 +218,54 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   medicareProviderType: null,
   statesEngagement: 'State',
   participantsOther: 'This is the other',
-  participantsNote: null,
+  participantsNote: 'Participant note',
   participantsCurrentlyInModels: true,
-  participantsCurrentlyInModelsNote: null,
-  modelApplicationLevel: 'ojnjklnmjknjkn',
+  participantsCurrentlyInModelsNote: 'Parts in model',
+  modelApplicationLevel: 'App level',
   expectedNumberOfParticipants: 0,
   estimateConfidence: ConfidenceType.FAIRLY,
-  confidenceNote: null,
+  confidenceNote: 'Confidence note',
   recruitmentMethod: RecruitmentType.NA,
-  recruitmentOther: null,
-  recruitmentNote: null,
+  recruitmentOther: 'Other recruitment',
+  recruitmentNote: 'Recruitment note',
   selectionMethod: [
     ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL,
     ParticipantSelectionType.CMS_COMPONENT_OR_PROCESS
   ],
-  selectionOther: null,
-  selectionNote: null,
+  selectionOther: 'Selection other',
+  selectionNote: 'Note selection',
   communicationMethod: [
     ParticipantCommunicationType.IT_TOOL,
     ParticipantCommunicationType.MASS_EMAIL
   ],
-  communicationMethodOther: null,
-  communicationNote: null,
-  participantAssumeRisk: null,
-  riskType: null,
-  riskOther: null,
-  riskNote: null,
-  willRiskChange: null,
-  willRiskChangeNote: null,
-  coordinateWork: null,
-  coordinateWorkNote: null,
-  gainsharePayments: null,
-  gainsharePaymentsTrack: null,
-  gainsharePaymentsNote: null,
+  communicationMethodOther: 'Comm method other',
+  communicationNote: 'Comm note',
+  participantAssumeRisk: true,
+  riskType: ParticipantRiskType.CAPITATION,
+  riskOther: 'Risk other',
+  riskNote: 'Note risk',
+  willRiskChange: true,
+  willRiskChangeNote: 'My risk change ntoe',
+  coordinateWork: true,
+  coordinateWorkNote: 'Coornidate work note',
+  gainsharePayments: true,
+  gainsharePaymentsTrack: true,
+  gainsharePaymentsNote: 'Track note',
   participantsIds: [ParticipantsIDType.CCNS],
-  participantsIdsOther: null,
-  participantsIDSNote: null,
+  participantsIdsOther: 'PArt ids other',
+  participantsIDSNote: 'Note for particpants',
   providerAdditionFrequency: FrequencyType.BIANNUALLY,
-  providerAdditionFrequencyOther: null,
-  providerAdditionFrequencyNote: null,
+  providerAdditionFrequencyOther: 'Freq other',
+  providerAdditionFrequencyNote: 'Note freq',
   providerAddMethod: [ProviderAddType.RETROSPECTIVELY],
-  providerAddMethodOther: null,
-  providerAddMethodNote: null,
+  providerAddMethodOther: 'Add other',
+  providerAddMethodNote: 'Add note',
   providerLeaveMethod: [ProviderLeaveType.NOT_APPLICABLE],
-  providerLeaveMethodOther: null,
-  providerLeaveMethodNote: null,
+  providerLeaveMethodOther: 'Leave other',
+  providerLeaveMethodNote: 'Note leave',
   providerOverlap: OverlapType.NO,
-  providerOverlapHierarchy: null,
-  providerOverlapNote: null,
+  providerOverlapHierarchy: 'This is the hierarchy',
+  providerOverlapNote: 'Overlap note',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -463,6 +281,201 @@ export const participantsAndProvidersMocks = [
           __typename: 'ModelPlan',
           id: modelID,
           participantsAndProviders: participantsAndProvidersData
+        }
+      }
+    }
+  }
+];
+
+const beneficiaryData: AllBeneficiariesTypes = {
+  __typename: 'PlanBeneficiaries',
+  id: '123',
+  modelPlanID: modelID,
+  beneficiaries: [
+    BeneficiariesType.DISEASE_SPECIFIC,
+    BeneficiariesType.DUALLY_ELIGIBLE
+  ],
+  beneficiariesOther: 'Other beneficiary',
+  beneficiariesNote: 'Note beneficiary',
+  treatDualElligibleDifferent: TriStateAnswer.YES,
+  treatDualElligibleDifferentHow: 'This is how',
+  treatDualElligibleDifferentNote: 'Treat note',
+  excludeCertainCharacteristics: TriStateAnswer.NO,
+  excludeCertainCharacteristicsCriteria: 'Certain criteria',
+  excludeCertainCharacteristicsNote: 'Exclude note',
+  numberPeopleImpacted: 1234,
+  estimateConfidence: ConfidenceType.COMPLETELY,
+  confidenceNote: 'Note of confidence',
+  beneficiarySelectionMethod: [SelectionMethodType.HISTORICAL],
+  beneficiarySelectionOther: 'Selection other',
+  beneficiarySelectionNote: 'Note selection',
+  beneficiarySelectionFrequency: FrequencyType.ANNUALLY,
+  beneficiarySelectionFrequencyOther: 'Frequency other',
+  beneficiarySelectionFrequencyNote: 'Note frequency',
+  beneficiaryOverlap: OverlapType.YES_NEED_POLICIES,
+  beneficiaryOverlapNote: 'Note overlap',
+  precedenceRules: 'Yes precedence rules',
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const benficiaryMocks = [
+  {
+    request: {
+      query: GetAllBeneficiaries,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          beneficiaries: beneficiaryData
+        }
+      }
+    }
+  }
+];
+
+const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
+  __typename: 'PlanOpsEvalAndLearning',
+  id: '123',
+  modelPlanID: modelID,
+  status: TaskStatus.IN_PROGRESS,
+  agencyOrStateHelp: [
+    AgencyOrStateHelpType.YES_STATE,
+    AgencyOrStateHelpType.OTHER
+  ],
+  agencyOrStateHelpOther: 'Agency other',
+  agencyOrStateHelpNote: 'State note',
+  stakeholders: [
+    StakeholdersType.BENEFICIARIES,
+    StakeholdersType.PARTICIPANTS,
+    StakeholdersType.PROVIDERS
+  ],
+  stakeholdersOther: 'Stateholders other',
+  stakeholdersNote: 'Note stateholders',
+  helpdeskUse: true,
+  helpdeskUseNote: 'Note help desk',
+  contractorSupport: [
+    ContractorSupportType.MULTIPLE,
+    ContractorSupportType.OTHER
+  ],
+  contractorSupportOther: 'Support other',
+  contractorSupportHow: 'Support how',
+  contractorSupportNote: 'Note for support',
+  iddocSupport: true,
+  iddocSupportNote: 'Note iddoc support',
+  technicalContactsIdentified: true,
+  technicalContactsIdentifiedDetail: 'Detail of technical contacts',
+  technicalContactsIdentifiedNote: 'Note for contacts',
+  captureParticipantInfo: true,
+  captureParticipantInfoNote: 'Note for participants',
+  icdOwner: 'ICD owner',
+  draftIcdDueDate: '12/12/2026',
+  icdNote: 'Note for icd',
+  uatNeeds: 'UAT needs',
+  stcNeeds: 'STC needs',
+  testingTimelines: 'Testing timelines',
+  testingNote: 'Note for testing',
+  dataMonitoringFileTypes: [
+    MonitoringFileType.PART_A,
+    MonitoringFileType.PART_B
+  ],
+  dataMonitoringFileOther: 'Other data monitoring',
+  dataResponseType: 'File',
+  dataResponseFileFrequency: 'Every week',
+  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType.FULL_TIME,
+  eftSetUp: true,
+  unsolicitedAdjustmentsIncluded: true,
+  dataFlowDiagramsNeeded: true,
+  produceBenefitEnhancementFiles: true,
+  fileNamingConventions: 'PDF',
+  dataMonitoringNote: 'Note for monitoring',
+  benchmarkForPerformance: BenchmarkForPerformanceType.YES_RECONCILE,
+  benchmarkForPerformanceNote: 'Note for benchmark',
+  computePerformanceScores: true,
+  computePerformanceScoresNote: 'Note for computing',
+  riskAdjustPerformance: true,
+  riskAdjustFeedback: true,
+  riskAdjustPayments: true,
+  riskAdjustOther: true,
+  riskAdjustNote: 'Note for risk ',
+  appealPerformance: true,
+  appealFeedback: true,
+  appealPayments: true,
+  appealOther: true,
+  appealNote: 'Note for appeal',
+  evaluationApproaches: [
+    EvaluationApproachType.INTERRUPTED_TIME,
+    EvaluationApproachType.OTHER
+  ],
+  evaluationApproachOther: 'Other eval approach',
+  evalutaionApproachNote: 'Note for approach',
+  ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION, CcmInvolvmentType.OTHER],
+  ccmInvolvmentOther: 'CCM involvement other',
+  ccmInvolvmentNote: 'Note for involvement',
+  dataNeededForMonitoring: [
+    DataForMonitoringType.CLINICAL_DATA,
+    DataForMonitoringType.MEDICARE_CLAIMS,
+    DataForMonitoringType.OTHER
+  ],
+  dataNeededForMonitoringOther: 'Data mon other',
+  dataNeededForMonitoringNote: 'Note for data mon',
+  dataToSendParticicipants: [
+    DataToSendParticipantsType.BASELINE_HISTORICAL_DATA,
+    DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA,
+    DataToSendParticipantsType.OTHER_MIPS_DATA
+  ],
+  dataToSendParticicipantsOther: 'Data to send other',
+  dataToSendParticicipantsNote: 'Note for data to send',
+  shareCclfData: true,
+  shareCclfDataNote: 'Note for cclf',
+  sendFilesBetweenCcw: true,
+  sendFilesBetweenCcwNote: 'Note for ccw',
+  appToSendFilesToKnown: true,
+  appToSendFilesToWhich: 'Which app to send',
+  appToSendFilesToNote: 'Note for app to send',
+  useCcwForFileDistribiutionToParticipants: true,
+  useCcwForFileDistribiutionToParticipantsNote: 'Note for ccw disctro',
+  developNewQualityMeasures: true,
+  developNewQualityMeasuresNote: 'Note for develop measures',
+  qualityPerformanceImpactsPayment: true,
+  qualityPerformanceImpactsPaymentNote: 'Note for qual perf',
+  dataSharingStarts: DataStartsType.DURING_APPLICATION_PERIOD,
+  dataSharingStartsOther: 'Data sharing starts other',
+  dataSharingFrequency: [DataFrequencyType.DAILY],
+  dataSharingFrequencyOther: 'Data frequency other',
+  dataSharingStartsNote: 'Note for data freq',
+  dataCollectionStarts: DataStartsType.EARLY_IN_THE_FIRST_PERFORMANCE_YEAR,
+  dataCollectionStartsOther: 'Other collection start',
+  dataCollectionFrequency: [DataFrequencyType.MONTHLY],
+  dataCollectionFrequencyOther: 'Data freq other',
+  dataCollectionFrequencyNote: 'Note for data freq',
+  qualityReportingStarts: DataStartsType.LATER_IN_THE_FIRST_PERFORMANCE_YEAR,
+  qualityReportingStartsOther: 'Other qual report',
+  qualityReportingStartsNote: 'Note for qual report',
+  modelLearningSystems: [
+    ModelLearningSystemType.IT_PLATFORM_CONNECT,
+    ModelLearningSystemType.NO_LEARNING_SYSTEM,
+    ModelLearningSystemType.OTHER
+  ],
+  modelLearningSystemsOther: 'Other learning system',
+  modelLearningSystemsNote: 'Note for learning system',
+  anticipatedChallenges: 'Some challenges'
+};
+
+export const opsEvalAndLearningMocks = [
+  {
+    request: {
+      query: GetAllOpsEvalAndLearning,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          opsEvalAndLearning: opsEvalAndLearningData
         }
       }
     }

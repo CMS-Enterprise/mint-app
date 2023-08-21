@@ -9,13 +9,13 @@ import {
   Button,
   Fieldset,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -25,6 +25,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetCoordination from 'queries/ParticipantsAndProviders/GetCoordination';
 import {
@@ -35,14 +36,27 @@ import {
 import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import { ParticipantsIDType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import { sortOtherEnum, translateParticipantIDType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 export const Coordination = () => {
-  const { t } = useTranslation('participantsAndProviders');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: participantsAndProvidersT } = useTranslation(
+    'participantsAndProviders'
+  );
+  const { t: participantsAndProvidersMiscT } = useTranslation(
+    'participantsAndProvidersMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    coordinateWork: coordinateWorkConfig,
+    gainsharePayments: gainsharePaymentsConfig,
+    gainsharePaymentsTrack: gainsharePaymentsTrackConfig,
+    participantsIds: participantsIdsConfig
+  } = usePlanTranslation('participantsAndProviders');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CoordinationFormType>>(null);
@@ -136,28 +150,31 @@ export const Coordination = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {participantsAndProvidersMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {participantsAndProvidersMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -179,19 +196,20 @@ export const Coordination = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -212,36 +230,23 @@ export const Coordination = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-coordniate-work">
-                      {t('workCoordination')}
+                      {participantsAndProvidersT('coordinateWork.label')}
                     </Label>
+
                     <p className="text-base margin-0 line-height-body-3">
-                      {t('workCoordinationNote')}
+                      {participantsAndProvidersT('coordinateWork.sublabel')}
                     </p>
+
                     <FieldErrorMsg>{flatErrors.coordinateWork}</FieldErrorMsg>
-                    <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="participants-and-providers-coordniate-work"
-                        name="coordinateWork"
-                        label={h('yes')}
-                        value="TRUE"
-                        checked={values.coordinateWork === true}
-                        onChange={() => {
-                          setFieldValue('coordinateWork', true);
-                        }}
-                      />
-                      <Field
-                        as={Radio}
-                        id="participants-and-providers-coordniate-work-no"
-                        name="coordinateWork"
-                        label={h('no')}
-                        value="FALSE"
-                        checked={values.coordinateWork === false}
-                        onChange={() => {
-                          setFieldValue('coordinateWork', false);
-                        }}
-                      />
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="coordinateWork"
+                      id="participants-and-providers-coordniate-work"
+                      value={values.coordinateWork}
+                      setFieldValue={setFieldValue}
+                      options={coordinateWorkConfig.options}
+                    />
+
                     <AddNote
                       id="participants-and-providers-coordniate-work-note"
                       field="coordinateWorkNote"
@@ -254,35 +259,20 @@ export const Coordination = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-gainshare-payment">
-                      {t('gainsharing')}
+                      {participantsAndProvidersT('gainsharePayments.label')}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.gainsharePayments}
                     </FieldErrorMsg>
-                    <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="participants-and-providers-gainshare-payment"
-                        name="gainsharePayments"
-                        label={h('yes')}
-                        value="TRUE"
-                        checked={values.gainsharePayments === true}
-                        onChange={() => {
-                          setFieldValue('gainsharePayments', true);
-                        }}
-                      />
-                      <Field
-                        as={Radio}
-                        id="participants-and-providers-gainshare-payment-no"
-                        name="gainsharePayments"
-                        label={h('no')}
-                        value="FALSE"
-                        checked={values.gainsharePayments === false}
-                        onChange={() => {
-                          setFieldValue('gainsharePayments', false);
-                        }}
-                      />
-                    </Fieldset>
+
+                    <BooleanRadio
+                      field="gainsharePayments"
+                      id="participants-and-providers-gainshare-payment"
+                      value={values.gainsharePayments}
+                      setFieldValue={setFieldValue}
+                      options={gainsharePaymentsConfig.options}
+                    />
 
                     {values.gainsharePayments && (
                       <>
@@ -290,35 +280,22 @@ export const Coordination = () => {
                           htmlFor="participants-and-providers-gainshare-track"
                           className="text-normal"
                         >
-                          {t('trackPayments')}
+                          {participantsAndProvidersT(
+                            'gainsharePaymentsTrack.label'
+                          )}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.gainsharePaymentsTrack}
                         </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="participants-and-providers-gainshare-track"
-                            name="gainsharePaymentsTrack"
-                            label={h('yes')}
-                            value="TRUE"
-                            checked={values.gainsharePaymentsTrack === true}
-                            onChange={() => {
-                              setFieldValue('gainsharePaymentsTrack', true);
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="participants-and-providers-gainshare-track-no"
-                            name="gainsharePaymentsTrack"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={values.gainsharePaymentsTrack === false}
-                            onChange={() => {
-                              setFieldValue('gainsharePaymentsTrack', false);
-                            }}
-                          />
-                        </Fieldset>
+
+                        <BooleanRadio
+                          field="gainsharePaymentsTrack"
+                          id="participants-and-providers-gainshare-track"
+                          value={values.gainsharePaymentsTrack}
+                          setFieldValue={setFieldValue}
+                          options={gainsharePaymentsTrackConfig.options}
+                        />
                       </>
                     )}
                     <AddNote
@@ -336,7 +313,7 @@ export const Coordination = () => {
                       render={arrayHelpers => (
                         <>
                           <legend className="usa-label">
-                            {t('collectTINs')}
+                            {participantsAndProvidersT('participantsIds.label')}
                           </legend>
 
                           {itSolutionsStarted && (
@@ -351,65 +328,70 @@ export const Coordination = () => {
                           )}
 
                           <p className="text-base margin-0 line-height-body-3">
-                            {t('collectTINsInfo')}
+                            {participantsAndProvidersT(
+                              'participantsIds.sublabel'
+                            )}
                           </p>
 
                           <FieldErrorMsg>
                             {flatErrors.participantsIds}
                           </FieldErrorMsg>
 
-                          {Object.keys(ParticipantsIDType)
-                            .sort(sortOtherEnum)
-                            .map(type => {
-                              return (
-                                <Fragment key={type}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`participants-and-providers-participant-id-${type}`}
-                                    name="participantsIds"
-                                    label={translateParticipantIDType(type)}
-                                    value={type}
-                                    checked={values?.participantsIds.includes(
-                                      type as ParticipantsIDType
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.participantsIds.indexOf(
-                                          e.target.value as ParticipantsIDType
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                    }}
-                                  />
-                                  {type === ('OTHER' as ParticipantsIDType) &&
-                                    values.participantsIds.includes(type) && (
-                                      <div className="margin-left-4">
-                                        <Label
-                                          htmlFor="participants-and-providers-participant-id-other"
-                                          className="text-normal margin-top-1"
-                                        >
-                                          {h('pleaseSpecify')}
-                                        </Label>
-                                        <FieldErrorMsg>
-                                          {flatErrors.participantsIdsOther}
-                                        </FieldErrorMsg>
-                                        <Field
-                                          as={TextAreaField}
-                                          className="maxw-none mint-textarea"
-                                          id="participants-and-providers-participant-id-other"
-                                          data-testid="participants-and-providers-participant-id-other"
-                                          maxLength={5000}
-                                          name="participantsIdsOther"
-                                        />
-                                      </div>
-                                    )}
-                                </Fragment>
-                              );
-                            })}
+                          {getKeys(participantsIdsConfig.options).map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`participants-and-providers-participant-id-${type}`}
+                                  name="participantsIds"
+                                  label={participantsIdsConfig.options[type]}
+                                  value={type}
+                                  checked={values?.participantsIds.includes(
+                                    type
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.participantsIds.indexOf(
+                                        e.target.value as ParticipantsIDType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+
+                                {type === ParticipantsIDType.OTHER &&
+                                  values.participantsIds.includes(type) && (
+                                    <div className="margin-left-4">
+                                      <Label
+                                        htmlFor="participants-and-providers-participant-id-other"
+                                        className="text-normal margin-top-1"
+                                      >
+                                        {participantsAndProvidersT(
+                                          'participantsIdsOther.label'
+                                        )}
+                                      </Label>
+
+                                      <FieldErrorMsg>
+                                        {flatErrors.participantsIdsOther}
+                                      </FieldErrorMsg>
+
+                                      <Field
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
+                                        id="participants-and-providers-participant-id-other"
+                                        data-testid="participants-and-providers-participant-id-other"
+                                        maxLength={5000}
+                                        name="participantsIdsOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
                           <AddNote
                             id="participants-and-providers-participant-id-note"
                             field="participantsIDSNote"
@@ -427,22 +409,26 @@ export const Coordination = () => {
                         handleFormSubmit('back');
                       }}
                     >
-                      {h('back')}
+                      {miscellaneousT('back')}
                     </Button>
+
                     <Button type="submit" onClick={() => setErrors({})}>
-                      {h('next')}
+                      {miscellaneousT('next')}
                     </Button>
                   </div>
+
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {h('saveAndReturn')}
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -456,6 +442,7 @@ export const Coordination = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={4} totalPages={5} className="margin-y-6" />
     </>
   );

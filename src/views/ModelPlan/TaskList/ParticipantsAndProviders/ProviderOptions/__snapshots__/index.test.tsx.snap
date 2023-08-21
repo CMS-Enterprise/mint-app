@@ -149,7 +149,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
               class="usa-radio__label"
               for="participants-and-providers-additional-frequency-BIANNUALLY"
             >
-              Semiannually
+              Biannually
             </label>
           </div>
           <div
@@ -386,7 +386,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
             <h4
               class="text-normal margin-bottom-1"
             >
-              Selected participants
+              How will you add providers?
             </h4>
             <ul
               class="usa-list--unstyled"

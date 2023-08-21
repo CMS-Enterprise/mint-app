@@ -111,16 +111,16 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
-          id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
+          id="ops-eval-and-learning-agency-or-state-help-YES_STATE"
           name="agencyOrStateHelp"
           type="checkbox"
-          value="YES_AGENCY_IAA"
+          value="YES_STATE"
         />
         <label
           class="usa-checkbox__label"
-          for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
+          for="ops-eval-and-learning-agency-or-state-help-YES_STATE"
         >
-          Yes, we will get support from another agency through Inter Agency Agreement (IAA)
+          Yes, we will partner with states
         </label>
         <p
           class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -151,36 +151,16 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
-          id="ops-eval-and-learning-agency-or-state-help-YES_STATE"
+          id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
           name="agencyOrStateHelp"
           type="checkbox"
-          value="YES_STATE"
+          value="YES_AGENCY_IAA"
         />
         <label
           class="usa-checkbox__label"
-          for="ops-eval-and-learning-agency-or-state-help-YES_STATE"
+          for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
         >
-          Yes, we will partner with states
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-agency-or-state-help-OTHER"
-          name="agencyOrStateHelp"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-agency-or-state-help-OTHER"
-        >
-          Other
+          Yes, we will get support from another agency through Inter Agency Agreement (IAA)
         </label>
         <p
           class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -201,6 +181,26 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
           for="ops-eval-and-learning-agency-or-state-help-NO"
         >
           No
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-agency-or-state-help-OTHER"
+          name="agencyOrStateHelp"
+          type="checkbox"
+          value="OTHER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-agency-or-state-help-OTHER"
+        >
+          Other
         </label>
         <p
           class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -382,10 +382,11 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-help-desk-use-true"
               id="ops-eval-and-learning-help-desk-use-true"
               name="helpdeskUse"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -400,10 +401,11 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-help-desk-use-false"
               id="ops-eval-and-learning-help-desk-use-false"
               name="helpdeskUse"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -614,14 +616,15 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="ops-eval-and-learning-iddoc-support"
+              data-testid="ops-eval-and-learning-iddoc-support-true"
+              id="ops-eval-and-learning-iddoc-support-true"
               name="iddocSupport"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-iddoc-support"
+              for="ops-eval-and-learning-iddoc-support-true"
             >
               Yes
             </label>
@@ -632,14 +635,15 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="ops-eval-and-learning-iddoc-support-no"
+              data-testid="ops-eval-and-learning-iddoc-support-false"
+              id="ops-eval-and-learning-iddoc-support-false"
               name="iddocSupport"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-iddoc-support-no"
+              for="ops-eval-and-learning-iddoc-support-false"
             >
               No
             </label>

@@ -24,6 +24,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetDataSharing from 'queries/OpsEvalAndLearning/GetDataSharing';
 import {
   GetDataSharing as GetDataSharingType,
@@ -33,12 +34,10 @@ import {
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { DataFrequencyType, DataStartsType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  translateDataFrequencyType,
-  translateDataStartsType
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -48,32 +47,22 @@ import {
   renderTotalPages
 } from '..';
 
-const dataSharingOptions: DataStartsType[] = [
-  DataStartsType.DURING_APPLICATION_PERIOD,
-  DataStartsType.SHORTLY_BEFORE_THE_START_DATE,
-  DataStartsType.EARLY_IN_THE_FIRST_PERFORMANCE_YEAR,
-  DataStartsType.LATER_IN_THE_FIRST_PERFORMANCE_YEAR,
-  DataStartsType.IN_THE_SUBSEQUENT_PERFORMANCE_YEAR,
-  DataStartsType.AT_SOME_OTHER_POINT_IN_TIME,
-  DataStartsType.NOT_PLANNING_TO_DO_THIS,
-  DataStartsType.OTHER
-];
-
-const dataFrequencyOptions: DataFrequencyType[] = [
-  DataFrequencyType.ANNUALLY,
-  DataFrequencyType.BIANNUALLY,
-  DataFrequencyType.QUARTERLY,
-  DataFrequencyType.MONTHLY,
-  DataFrequencyType.SEMI_MONTHLY,
-  DataFrequencyType.WEEKLY,
-  DataFrequencyType.DAILY,
-  DataFrequencyType.OTHER,
-  DataFrequencyType.NOT_PLANNING_TO_DO_THIS
-];
-
 const DataSharing = () => {
-  const { t } = useTranslation('operationsEvaluationAndLearning');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
+
+  const { t: opsEvalAndLearningMiscT } = useTranslation(
+    'opsEvalAndLearningMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    dataSharingStarts: dataSharingStartsConfig,
+    dataSharingFrequency: dataSharingFrequencyConfig,
+    dataCollectionStarts: dataCollectionStartsConfig,
+    dataCollectionFrequency: dataCollectionFrequencyConfig,
+    qualityReportingStarts: qualityReportingStartsConfig
+  } = usePlanTranslation('opsEvalAndLearning');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<GetDataSharingFormType>>(null);
@@ -185,28 +174,29 @@ const DataSharing = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -231,17 +221,17 @@ const DataSharing = () => {
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -261,19 +251,25 @@ const DataSharing = () => {
                     scrollElement="dataSharingStarts"
                     error={!!flatErrors.dataSharingStarts}
                   >
-                    <strong>{t('reportingTiming')}</strong>
+                    <strong>
+                      {opsEvalAndLearningMiscT('reportingTiming')}
+                    </strong>
+
                     <Label
                       htmlFor="ops-eval-and-learning-data-sharing-starts"
                       className="text-normal margin-top-2"
                     >
-                      {t('dataSharing')}
+                      {opsEvalAndLearningT('dataSharingStarts.label')}
                     </Label>
+
                     <p className="text-base margin-y-1 line-height-body-4">
-                      {t('dataSharingInfo')}
+                      {opsEvalAndLearningT('dataSharingStarts.sublabel')}
                     </p>
+
                     <FieldErrorMsg>
                       {flatErrors.dataSharingStarts}
                     </FieldErrorMsg>
+
                     <Field
                       as={Dropdown}
                       id="ops-eval-and-learning-data-sharing-starts"
@@ -284,28 +280,31 @@ const DataSharing = () => {
                       }}
                     >
                       <option key="default-select" disabled value="">
-                        {`-${h('select')}-`}
+                        {`-${miscellaneousT('select')}-`}
                       </option>
-                      {dataSharingOptions.map(type => {
+
+                      {getKeys(dataSharingStartsConfig.options).map(type => {
                         return (
-                          <option key={type} value={type || ''}>
-                            {translateDataStartsType(type)}
+                          <option key={type} value={type}>
+                            {dataSharingStartsConfig.options[type]}
                           </option>
                         );
                       })}
                     </Field>
 
-                    {values.dataSharingStarts === 'OTHER' && (
+                    {values.dataSharingStarts === DataStartsType.OTHER && (
                       <div className="margin-top-3">
                         <Label
                           htmlFor="ops-eval-and-learning-data-sharing-starts-other"
                           className="text-normal"
                         >
-                          {h('pleaseSpecify')}
+                          {opsEvalAndLearningT('dataSharingStartsOther.label')}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.dataSharingStartsOther}
                         </FieldErrorMsg>
+
                         <Field
                           as={TextAreaField}
                           className="maxw-none mint-textarea"
@@ -327,27 +326,30 @@ const DataSharing = () => {
                       className="maxw-none text-normal"
                       id="label-ops-eval-and-learning-data-sharing-frequency"
                     >
-                      {t('dataSharingHowOften')}
+                      {opsEvalAndLearningT('dataSharingFrequency.label')}
                     </Label>
 
                     <FieldErrorMsg>
                       {flatErrors.dataSharingFrequency}
                     </FieldErrorMsg>
+
                     <Field
                       as={MultiSelect}
                       id="ops-eval-and-learning-data-sharing-frequency"
                       name="dataSharingFrequency"
                       ariaLabel="label-ops-eval-and-learning-data-sharing-frequency"
-                      options={dataFrequencyOptions.map(key => ({
-                        value: key,
-                        label: translateDataFrequencyType(key)
-                      }))}
-                      selectedLabel={t('dataSharingHowOftenSeleted')}
+                      options={composeMultiSelectOptions(
+                        dataSharingFrequencyConfig.options
+                      )}
+                      selectedLabel={opsEvalAndLearningT(
+                        'dataSharingFrequency.multiSelectLabel'
+                      )}
                       onChange={(value: string[] | []) => {
                         setFieldValue('dataSharingFrequency', value);
                       }}
                       initialValues={initialValues.dataSharingFrequency}
                     />
+
                     {(values?.dataSharingFrequency || []).includes(
                       DataFrequencyType.OTHER
                     ) && (
@@ -356,11 +358,15 @@ const DataSharing = () => {
                           htmlFor="ops-eval-and-learning-data-sharing-frequency-other"
                           className="text-normal"
                         >
-                          {h('pleaseSpecify')}
+                          {opsEvalAndLearningT(
+                            'dataSharingFrequencyOther.label'
+                          )}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.dataSharingFrequencyOther}
                         </FieldErrorMsg>
+
                         <Field
                           as={TextAreaField}
                           maxLength={5000}
@@ -382,16 +388,21 @@ const DataSharing = () => {
                     scrollElement="dataCollectionStarts"
                     error={!!flatErrors.dataCollectionStarts}
                   >
-                    <strong>{t('dataCollectionTiming')}</strong>
+                    <strong>
+                      {opsEvalAndLearningMiscT('dataCollectionTiming')}
+                    </strong>
+
                     <Label
                       htmlFor="ops-eval-and-learning-data-collection-starts"
                       className="text-normal margin-top-2"
                     >
-                      {t('dataCollection')}
+                      {opsEvalAndLearningT('dataCollectionStarts.label')}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.dataCollectionStarts}
                     </FieldErrorMsg>
+
                     <Field
                       as={Dropdown}
                       id="ops-eval-and-learning-data-collection-starts"
@@ -402,28 +413,33 @@ const DataSharing = () => {
                       }}
                     >
                       <option key="default-select" disabled value="">
-                        {`-${h('select')}-`}
+                        {`-${miscellaneousT('select')}-`}
                       </option>
-                      {dataSharingOptions.map(type => {
+
+                      {getKeys(dataCollectionStartsConfig.options).map(type => {
                         return (
-                          <option key={type} value={type || ''}>
-                            {translateDataStartsType(type)}
+                          <option key={type} value={type}>
+                            {dataCollectionStartsConfig.options[type]}
                           </option>
                         );
                       })}
                     </Field>
 
-                    {values.dataCollectionStarts === 'OTHER' && (
+                    {values.dataCollectionStarts === DataStartsType.OTHER && (
                       <div className="margin-top-3">
                         <Label
                           htmlFor="ops-eval-and-learning-data-collection-starts-other"
                           className="text-normal"
                         >
-                          {h('pleaseSpecify')}
+                          {opsEvalAndLearningT(
+                            'dataCollectionStartsOther.label'
+                          )}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.dataCollectionStartsOther}
                         </FieldErrorMsg>
+
                         <Field
                           as={TextAreaField}
                           className="maxw-none mint-textarea"
@@ -445,27 +461,30 @@ const DataSharing = () => {
                       id="label-ops-eval-and-learning-data-collection-frequency"
                       className="maxw-none text-normal"
                     >
-                      {t('dataCollectionHowOften')}
+                      {opsEvalAndLearningT('dataCollectionFrequency.label')}
                     </Label>
 
                     <FieldErrorMsg>
                       {flatErrors.dataCollectionFrequency}
                     </FieldErrorMsg>
+
                     <Field
                       as={MultiSelect}
                       id="ops-eval-and-learning-data-collection-frequency"
                       name="dataCollectionFrequency"
                       ariaLabel="label-ops-eval-and-learning-data-collection-frequency"
-                      options={dataFrequencyOptions.map(key => ({
-                        value: key,
-                        label: translateDataFrequencyType(key)
-                      }))}
-                      selectedLabel={t('dataSharingHowOftenSeleted')}
+                      options={composeMultiSelectOptions(
+                        dataCollectionFrequencyConfig.options
+                      )}
+                      selectedLabel={opsEvalAndLearningT(
+                        'dataCollectionFrequency.multiSelectLabel'
+                      )}
                       onChange={(value: string[] | []) => {
                         setFieldValue('dataCollectionFrequency', value);
                       }}
                       initialValues={initialValues.dataCollectionFrequency}
                     />
+
                     {(values?.dataCollectionFrequency || []).includes(
                       DataFrequencyType.OTHER
                     ) && (
@@ -474,11 +493,15 @@ const DataSharing = () => {
                           htmlFor="ops-eval-and-learning-data-collection-frequency-other"
                           className="text-normal"
                         >
-                          {h('pleaseSpecify')}
+                          {opsEvalAndLearningT(
+                            'dataCollectionFrequencyOther.label'
+                          )}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.dataCollectionFrequencyOther}
                         </FieldErrorMsg>
+
                         <Field
                           as={TextAreaField}
                           maxLength={5000}
@@ -504,11 +527,13 @@ const DataSharing = () => {
                       htmlFor="ops-eval-and-learning-data-reporting-starts"
                       className="margin-top-2"
                     >
-                      {t('dataReporting')}
+                      {opsEvalAndLearningT('qualityReportingStarts.label')}
                     </Label>
+
                     <FieldErrorMsg>
                       {flatErrors.qualityReportingStarts}
                     </FieldErrorMsg>
+
                     <Field
                       as={Dropdown}
                       id="ops-eval-and-learning-data-reporting-starts"
@@ -519,28 +544,35 @@ const DataSharing = () => {
                       }}
                     >
                       <option key="default-select" disabled value="">
-                        {`-${h('select')}-`}
+                        {`-${miscellaneousT('select')}-`}
                       </option>
-                      {dataSharingOptions.map(type => {
-                        return (
-                          <option key={type} value={type || ''}>
-                            {translateDataStartsType(type)}
-                          </option>
-                        );
-                      })}
+
+                      {getKeys(qualityReportingStartsConfig.options).map(
+                        type => {
+                          return (
+                            <option key={type} value={type}>
+                              {qualityReportingStartsConfig.options[type]}
+                            </option>
+                          );
+                        }
+                      )}
                     </Field>
 
-                    {values.qualityReportingStarts === 'OTHER' && (
+                    {values.qualityReportingStarts === DataStartsType.OTHER && (
                       <div className="margin-top-3">
                         <Label
                           htmlFor="ops-eval-and-learning-data-reporting-starts-other"
                           className="text-normal"
                         >
-                          {h('pleaseSpecify')}
+                          {opsEvalAndLearningT(
+                            'qualityReportingStartsOther.label'
+                          )}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors.qualityReportingStartsOther}
                         </FieldErrorMsg>
+
                         <Field
                           as={TextAreaField}
                           className="maxw-none mint-textarea"
@@ -566,19 +598,22 @@ const DataSharing = () => {
                         handleFormSubmit('back');
                       }}
                     >
-                      {h('back')}
+                      {miscellaneousT('back')}
                     </Button>
+
                     <Button type="submit" onClick={() => setErrors({})}>
-                      {h('next')}
+                      {miscellaneousT('next')}
                     </Button>
                   </div>
+
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {h('saveAndReturn')}
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
@@ -596,6 +631,7 @@ const DataSharing = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

@@ -73,9 +73,15 @@ describe('The Model Plan Form', () => {
       .type('933245623')
       .should('have.value', '933245623');
 
-    cy.get('#plan-basics-model-category').select('Demonstration');
+    cy.get('#plan-basics-model-category-ACCOUNTABLE_CARE')
+      .check({ force: true })
+      .should('be.checked');
 
-    cy.get('#plan-basics-model-category').contains('Demonstration');
+    cy.get(
+      '#plan-basics-model-additional-category-DISEASE_SPECIFIC_AND_EPISODIC'
+    )
+      .check({ force: true })
+      .should('be.checked');
 
     cy.get('#new-plan-cmsCenters-CENTER_FOR_MEDICARE')
       .check({ force: true })
@@ -156,7 +162,10 @@ describe('The Model Plan Form', () => {
       .type('05/23/2025')
       .should('have.value', '05/23/2025');
 
-    cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
+    cy.get('#phasedIn-true')
+      .first()
+      .check({ force: true })
+      .should('be.checked');
 
     cy.contains('button', 'Save and return to task list').click();
 
