@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
   Grid,
+  IconInfo,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
@@ -11,9 +12,11 @@ import {
 import classNames from 'classnames';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
+import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
+import { ModelCategory } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -72,6 +75,7 @@ const ReadOnlyModelBasics = ({
     demoCode,
     amsModelID,
     modelCategory,
+    additionalModelCategories,
     cmsCenters,
     cmsOther,
     cmmiGroups,
@@ -207,9 +211,55 @@ const ReadOnlyModelBasics = ({
         isViewingFilteredView,
         filteredQuestions,
         'modelCategory',
-        <ReadOnlySection
-          heading={basicsT('modelCategory.label')}
-          copy={basicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: basicsT('modelCategory.label'),
+            copy: !modelCategory ? (
+              ''
+            ) : (
+              <span
+                className="display-flex flex-align-center"
+                style={{ gap: '4px' }}
+              >
+                {basicsT(`modelCategory.options.${modelCategory}`, '')}
+
+                {modelCategory !== ModelCategory.TO_BE_DETERMINED && (
+                  <Tooltip
+                    label={basicsT(
+                      `modelCategory.optionsLabels.${modelCategory}`
+                    )}
+                    position="right"
+                    className="mint-no-print"
+                  >
+                    <IconInfo className="text-base-light" />
+                  </Tooltip>
+                )}
+              </span>
+            )
+          }}
+          secondSection={{
+            heading: basicsT('additionalModelCategories.label'),
+            list: true,
+            listItems: additionalModelCategories?.map(group => {
+              return (
+                <Fragment key={group}>
+                  <span
+                    className="display-flex flex-align-center"
+                    style={{ gap: '4px' }}
+                  >
+                    {basicsT(`modelCategory.options.${group}`)}
+
+                    <Tooltip
+                      label={basicsT(`modelCategory.optionsLabels.${group}`)}
+                      position="right"
+                    >
+                      <IconInfo className="text-base-light" />
+                    </Tooltip>
+                  </span>
+                </Fragment>
+              );
+            })
+          }}
         />
       )}
 

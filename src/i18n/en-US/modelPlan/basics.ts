@@ -5,25 +5,65 @@ export const basics: TranslationBasics = {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
     dbField: 'model_category',
-    label: 'Model category',
+    label: 'Primary model category',
     dataType: 'enum',
-    formType: 'select',
+    formType: 'radio',
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
-      DEMONSTRATION: 'Demonstration',
-      EPISODE_BASED_PAYMENT_INITIATIVES: 'Episode-based Payment Initiatives',
-      INIT_ACCEL_DEV_AND_TEST:
-        'Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models',
-      INIT_MEDICAID_CHIP_POP:
-        'Initiatives Focused on the Medicaid and CHIP Population',
-      INIT_SPEED_ADOPT_BEST_PRACTICE:
-        'Initiatives to Speed the Adoption of Best Practices',
-      INIT__MEDICARE_MEDICAID_ENROLLEES:
-        'Initiatives Focused on the Medicare and Medicaid Enrollees',
-      PRIMARY_CARE_TRANSFORMATION: 'Primary Care Transformation',
-      UNKNOWN: 'Unknown'
+      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episodic',
+      HEALTH_PLAN: 'Health Plan',
+      PRESCRIPTION_DRUG: 'Prescription Drug',
+      STATE_BASED: 'State-Based',
+      STATUTORY: 'Statutory',
+      TO_BE_DETERMINED: 'To be determined'
     },
-    filterGroups: ['ipc']
+    optionsLabels: {
+      ACCOUNTABLE_CARE:
+        'Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system',
+      DISEASE_SPECIFIC_AND_EPISODIC:
+        'Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode',
+      HEALTH_PLAN: 'Models comprising Medicare Advantage plans',
+      PRESCRIPTION_DRUG:
+        'Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars',
+      STATE_BASED:
+        'Models in which a state serves as the main contractual participant',
+      STATUTORY:
+        'Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A',
+      TO_BE_DETERMINED: 'To be determined'
+    }
+  },
+  additionalModelCategories: {
+    gqlField: 'additionalModelCategories',
+    goField: 'AdditionalModelCategories',
+    dbField: 'additional_model_categories',
+    label: 'Additional model categories',
+    sublabel:
+      'If your model doesn’t fall into any additional categories, you can skip this.',
+    dataType: 'string',
+    formType: 'checkbox',
+    options: {
+      ACCOUNTABLE_CARE: 'Accountable Care',
+      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episodic',
+      HEALTH_PLAN: 'Health Plan',
+      PRESCRIPTION_DRUG: 'Prescription Drug',
+      STATE_BASED: 'State-Based',
+      STATUTORY: 'Statutory',
+      TO_BE_DETERMINED: 'To be determined'
+    },
+    optionsLabels: {
+      ACCOUNTABLE_CARE:
+        'Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system',
+      DISEASE_SPECIFIC_AND_EPISODIC:
+        'Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode',
+      HEALTH_PLAN: 'Models comprising Medicare Advantage plans',
+      PRESCRIPTION_DRUG:
+        'Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars',
+      STATE_BASED:
+        'Models in which a state serves as the main contractual participant',
+      STATUTORY:
+        'Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A',
+      TO_BE_DETERMINED: 'To be determined'
+    }
   },
   amsModelID: {
     gqlField: 'amsModelID',
@@ -264,6 +304,8 @@ export const basics: TranslationBasics = {
 // Miscellaneous translations outside scope of individual questions
 export const basicsMisc: Record<string, string> = {
   heading: 'Model basics',
+  description:
+    'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question using the link below.',
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
   previousNames: 'Previous model names',

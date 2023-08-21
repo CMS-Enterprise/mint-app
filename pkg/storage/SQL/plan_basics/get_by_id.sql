@@ -4,6 +4,7 @@ SELECT
     demo_code,
     ams_model_id,
     model_category,
+    additional_model_categories,
     cms_centers,
     cms_other,
     cmmi_groups,

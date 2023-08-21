@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import Sinon from 'sinon';
 
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import { GetModelPlanInfo_modelPlan as GetModelPlanInfoType } from 'queries/Basics/types/GetModelPlanInfo';
@@ -24,7 +25,8 @@ const basicMockData: GetModelPlanInfoType = {
     __typename: 'PlanBasics',
     demoCode: '123',
     amsModelID: '2414213',
-    modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
+    modelCategory: ModelCategory.STATE_BASED,
+    additionalModelCategories: [],
     cmmiGroups: [
       CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,
       CMMIGroup.POLICY_AND_PROGRAMS_GROUP
@@ -48,7 +50,10 @@ const mocks = [
   }
 ];
 
-describe('Model Plan Documents page', () => {
+describe('Model Plan Task List Basics page', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders without errors', async () => {
     render(
       <MemoryRouter
@@ -71,6 +76,68 @@ describe('Model Plan Documents page', () => {
       ).toBeInTheDocument();
     });
   });
+
+  it('disables and clears checkbox when user selects corresponding radio button', async () => {
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[
+          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/basics'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/task-list/basics">
+            <Basics />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Page loaded
+      expect(screen.getByTestId('model-plan-basics')).toBeInTheDocument();
+
+      // Ensure the radio element is checked (based on Mock Data)
+      expect(
+        screen.getByTestId('plan-basics-model-category-STATE_BASED')
+      ).toBeChecked();
+
+      // Corresponding checkbox should be unchecked and disabled
+      expect(
+        screen.getByTestId('plan-basics-model-additional-category-STATE_BASED')
+      ).not.toBeChecked();
+      expect(
+        screen.getByTestId('plan-basics-model-additional-category-STATE_BASED')
+      ).toBeDisabled();
+
+      // Check a different checkbox (Accountable Care)
+      screen
+        .getByTestId('plan-basics-model-additional-category-ACCOUNTABLE_CARE')
+        .click();
+      expect(
+        screen.getByTestId(
+          'plan-basics-model-additional-category-ACCOUNTABLE_CARE'
+        )
+      ).toBeChecked();
+
+      // Click accountable care radio button, which should clear previous checkbox
+      screen.getByTestId('plan-basics-model-category-ACCOUNTABLE_CARE').click();
+
+      // Ensure checkbox is now unchecked and disabled
+      expect(
+        screen.getByTestId(
+          'plan-basics-model-additional-category-ACCOUNTABLE_CARE'
+        )
+      ).not.toBeChecked();
+      expect(
+        screen.getByTestId(
+          'plan-basics-model-additional-category-ACCOUNTABLE_CARE'
+        )
+      ).toBeDisabled();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
@@ -85,12 +152,14 @@ describe('Model Plan Documents page', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
     await waitFor(() => {
       expect(screen.getByTestId('model-plan-basics')).toBeInTheDocument();
       expect(
         screen.getByTestId('summary-box--previous-name')
       ).toBeInTheDocument();
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });
