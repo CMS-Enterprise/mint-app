@@ -119,21 +119,21 @@ const Table = ({
           const additionalModelCategory =
             row.original.basics.additionalModelCategories;
 
+          // Handle no value with an early return
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
-          if (value) {
-            if (additionalModelCategory.length !== 0) {
-              const newArray = additionalModelCategory.map(
-                (group: ModelCategory) => {
-                  return basicsT(`modelCategory.options.${group}`);
-                }
-              );
 
-              return `${basicsT(
-                `modelCategory.options.${value}`
-              )}, ${newArray.join(', ')}`;
-            }
+          if (additionalModelCategory.length !== 0) {
+            const newArray = additionalModelCategory.map(
+              (group: ModelCategory) => {
+                return basicsT(`modelCategory.options.${group}`);
+              }
+            );
+
+            return `${basicsT(
+              `modelCategory.options.${value}`
+            )}, ${newArray.join(', ')}`;
           }
           return basicsT(`modelCategory.options.${value}`);
         }
