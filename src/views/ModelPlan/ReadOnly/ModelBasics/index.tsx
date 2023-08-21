@@ -229,6 +229,7 @@ const ReadOnlyModelBasics = ({
                       `modelCategory.optionsLabels.${modelCategory}`
                     )}
                     position="right"
+                    className="mint-no-print"
                   >
                     <IconInfo className="text-base-light" />
                   </Tooltip>

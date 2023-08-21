@@ -77,6 +77,67 @@ describe('Model Plan Task List Basics page', () => {
     });
   });
 
+  it('disables and clears checkbox when user selects corresponding radio button', async () => {
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[
+          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/basics'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/task-list/basics">
+            <Basics />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Page loaded
+      expect(screen.getByTestId('model-plan-basics')).toBeInTheDocument();
+
+      // Ensure the radio element is checked (based on Mock Data)
+      expect(
+        screen.getByTestId('plan-basics-model-category-STATE_BASED')
+      ).toBeChecked();
+
+      // Corresponding checkbox should be unchecked and disabled
+      expect(
+        screen.getByTestId('plan-basics-model-additional-category-STATE_BASED')
+      ).not.toBeChecked();
+      expect(
+        screen.getByTestId('plan-basics-model-additional-category-STATE_BASED')
+      ).toBeDisabled();
+
+      // Check a different checkbox (Accountable Care)
+      screen
+        .getByTestId('plan-basics-model-additional-category-ACCOUNTABLE_CARE')
+        .click();
+      expect(
+        screen.getByTestId(
+          'plan-basics-model-additional-category-ACCOUNTABLE_CARE'
+        )
+      ).toBeChecked();
+
+      // Click accountable care radio button, which should clear previous checkbox
+      screen.getByTestId('plan-basics-model-category-ACCOUNTABLE_CARE').click();
+
+      // Ensure checkbox is now unchecked and disabled
+      expect(
+        screen.getByTestId(
+          'plan-basics-model-additional-category-ACCOUNTABLE_CARE'
+        )
+      ).not.toBeChecked();
+      expect(
+        screen.getByTestId(
+          'plan-basics-model-additional-category-ACCOUNTABLE_CARE'
+        )
+      ).toBeDisabled();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter

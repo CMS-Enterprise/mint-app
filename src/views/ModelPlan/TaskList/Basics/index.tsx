@@ -429,6 +429,7 @@ const BasicsContent = () => {
                                 <Field
                                   as={Radio}
                                   id={`plan-basics-model-category-${key}`}
+                                  data-testid={`plan-basics-model-category-${key}`}
                                   name="basics.modelCategory"
                                   label={
                                     <span
@@ -505,6 +506,7 @@ const BasicsContent = () => {
                                   <Field
                                     as={CheckboxField}
                                     id={`plan-basics-model-additional-category-${group}`}
+                                    testid={`plan-basics-model-additional-category-${group}`}
                                     name="basics.additionalModelCategories"
                                     disabled={
                                       values.basics.modelCategory === group
