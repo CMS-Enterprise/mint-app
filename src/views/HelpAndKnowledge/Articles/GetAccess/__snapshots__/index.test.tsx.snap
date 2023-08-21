@@ -396,13 +396,19 @@ exports[`Get Access Article matches snapshot 1`] = `
                        button.
                     </li>
                     <li>
-                      Type 
+                      Type the name of the job code into the search box (either 
                       <span
                         class="text-bold text-italic"
                       >
                         MINT_USER
                       </span>
-                       into the search box and click the 
+                       or 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        MINT_CONTRACTOR_FFS
+                      </span>
+                       determined using the chart above) and click the 
                       <span
                         class="text-bold text-italic"
                       >
@@ -411,7 +417,7 @@ exports[`Get Access Article matches snapshot 1`] = `
                        button.
                     </li>
                     <li>
-                      Check the box next to MINT_USER, then click the 
+                      Check the box next to the job code, then click the 
                       <span
                         class="text-bold text-italic"
                       >
@@ -470,44 +476,6 @@ exports[`Get Access Article matches snapshot 1`] = `
               <h2>
                 Requesting access through IDM
               </h2>
-              <div
-                class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-2"
-                data-testid="alert"
-              >
-                <div
-                  class="usa-alert__body"
-                >
-                  <p
-                    class="usa-alert__text"
-                  >
-                    <span>
-                      If you’re a contractor and don’t have an IDM account or your current IDM account uses your EUA credentials (your four-character user ID and password), you must create a new one.
-                    </span>
-                  </p>
-                  <dt
-                    class="margin-bottom-0 margin-top-2"
-                  >
-                    Visit 
-                    <a
-                      aria-label="Open IDM in a new tab"
-                      class="usa-link usa-link--external"
-                      href="https://home.idm.cms.gov"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      home.idm.cms.gov
-                    </a>
-                     and click 
-                    <span
-                      class="text-bold text-italic"
-                    >
-                      New User Registration
-                    </span>
-                     to create an account. We recommend using an email address for your new user ID, so it’s easy to remember.
-                  </dt>
-                  <p />
-                </div>
-              </div>
               <ol
                 class="usa-process-list"
               >
