@@ -687,6 +687,7 @@ export const payments: TranslationPayments = {
     goField: 'PaymentStartDate',
     dbField: 'payment_start_date',
     label: 'When will payments start? (Enter an approximate date)',
+    readonlyLabel: 'When will payments start?',
     sublabel:
       'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: 'date',

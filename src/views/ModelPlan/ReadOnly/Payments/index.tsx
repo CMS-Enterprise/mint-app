@@ -153,7 +153,7 @@ const ReadOnlyPayments = ({
           filteredQuestions,
           'fundingSource',
           <ReadOnlySection
-            heading={paymentsT('fundingSource.label')}
+            heading={paymentsT('fundingSource.readonlyLabel')}
             list
             listItems={fundingSource?.map((type): string =>
               paymentsT(`fundingSource.options.${type}`)
@@ -192,7 +192,7 @@ const ReadOnlyPayments = ({
           filteredQuestions,
           'fundingSourceR',
           <ReadOnlySection
-            heading={paymentsT('fundingSourceR.label')}
+            heading={paymentsT('fundingSourceR.readonlyLabel')}
             list
             listItems={fundingSourceR?.map((type): string =>
               paymentsT(`fundingSourceR.options.${type}`)
@@ -231,7 +231,7 @@ const ReadOnlyPayments = ({
           filteredQuestions,
           'payRecipients',
           <ReadOnlySection
-            heading={paymentsT('payRecipients.label')}
+            heading={paymentsT('payRecipients.readonlyLabel')}
             list
             listItems={payRecipients?.map((type): string =>
               paymentsT(`payRecipients.options.${type}`)
@@ -680,7 +680,7 @@ const ReadOnlyPayments = ({
           filteredQuestions,
           'paymentStartDate',
           <ReadOnlySection
-            heading={paymentsT('paymentStartDate.label')}
+            heading={paymentsT('paymentStartDate.readonlyLabel')}
             copy={
               paymentStartDate && formatDateUtc(paymentStartDate, 'MM/dd/yyyy')
             }

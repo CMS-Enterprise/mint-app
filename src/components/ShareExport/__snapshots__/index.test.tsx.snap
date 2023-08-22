@@ -5106,12 +5106,12 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                     data-testid="grid"
                   >
                     <div
-                      class="read-only-section read-only-section--please-describe margin-bottom-3"
+                      class="read-only-section read-only-section--how-so margin-bottom-3"
                     >
                       <p
                         class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                       >
-                        Please describe
+                        How so?
                       </p>
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -5216,7 +5216,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Is your contractor aware that test data will be needed, and when that test data must be available? 
+                    Is your contractor aware that test data will be needed, and when that test data must be available?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"

@@ -150,7 +150,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                     id="payment-creating-dependencies-between-services-true"
                     name="creatingDependenciesBetweenServices"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -169,7 +169,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                     id="payment-creating-dependencies-between-services-false"
                     name="creatingDependenciesBetweenServices"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
@@ -239,7 +239,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                     id="payment-needs-claims-data-collection-true"
                     name="needsClaimsDataCollection"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -258,7 +258,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                     id="payment-needs-claims-data-collection-false"
                     name="needsClaimsDataCollection"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
@@ -323,7 +323,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                     id="payment-providing-third-party-file-true"
                     name="providingThirdPartyFile"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -342,7 +342,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                     id="payment-providing-third-party-file-false"
                     name="providingThirdPartyFile"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
@@ -378,7 +378,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                 data-testid="label"
                 for="isContractorAwareTestDataRequirements"
               >
-                Is your contractor aware that test data will be needed, and when that test data must be available? 
+                Is your contractor aware that test data will be needed, and when that test data must be available?
               </label>
               <fieldset
                 class="usa-fieldset"
@@ -394,7 +394,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                     id="payment-contractor-aware-test-data-requirements-true"
                     name="isContractorAwareTestDataRequirements"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -413,7 +413,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
                     id="payment-contractor-aware-test-data-requirements-false"
                     name="isContractorAwareTestDataRequirements"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
