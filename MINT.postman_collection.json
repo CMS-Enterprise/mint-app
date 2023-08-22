@@ -45,6 +45,38 @@
 					"response": []
 				},
 				{
+					"name": "Share Model Plan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation shareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $receiverEmails: [String!]!, $optionalMessage: String) {\n    shareModelPlan(modelPlanID: $modelPlanID, viewFilter: $viewFilter, receiverEmails: $receiverEmails, optionalMessage: $optionalMessage)\n}\n",
+								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"receiverEmails\": [\"example1@example.com\", \"example2@example.com\"],\n  \"optionalMessage\": \"\"\n}\n"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Model Plan",
 					"request": {
 						"method": "POST",
