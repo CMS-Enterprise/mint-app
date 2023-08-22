@@ -18,7 +18,7 @@ import {
   generalCharacteristicsMisc
 } from './modelPlan/generalCharacteristics';
 import miscellaneous from './modelPlan/miscellaneous';
-import modelPlan from './modelPlan/modelPlan';
+import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
 import {
   opsEvalAndLearning,
   opsEvalAndLearningMisc
@@ -75,6 +75,7 @@ const enUS = {
   newModel,
   // New Translation
   modelPlan,
+  modelPlanMisc,
   basics,
   basicsMisc,
   generalCharacteristics,

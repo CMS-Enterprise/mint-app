@@ -32,6 +32,7 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
+  ModelStatus,
   ModelType,
   MonitoringFileType,
   NonClaimsBasedPayType,
@@ -104,6 +105,7 @@ export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
   previousName: TranslationFieldProperties;
   abbreviation: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<ModelStatus>;
 };
 
 // Basics

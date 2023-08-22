@@ -35,7 +35,6 @@ import {
 import { formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalFilterCellText from 'utils/globalFilterCellText';
-import { translateModelPlanStatus } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -98,6 +97,7 @@ const DraftModelPlansTable = ({
   tableHidden
 }: TableProps) => {
   const { t } = useTranslation('home');
+  const { t: modelPlanT } = useTranslation('modelPlan');
 
   let queryType = ModelPlanFilter.COLLAB_ONLY;
 
@@ -188,7 +188,7 @@ const DraftModelPlansTable = ({
         Header: t('requestsTable.headers.status'),
         accessor: 'status',
         Cell: ({ value }: { value: ModelStatus }) => {
-          return translateModelPlanStatus(value);
+          return modelPlanT(`status.options.${value}`);
         }
       },
       {
@@ -207,7 +207,7 @@ const DraftModelPlansTable = ({
         }
       }
     ];
-  }, [t, isMAC]);
+  }, [t, isMAC, modelPlanT]);
 
   const macColumns = useMemo(() => {
     return [

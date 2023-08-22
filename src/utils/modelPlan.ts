@@ -12,39 +12,6 @@ import { getKeys } from 'types/translation';
  * Translate the API enum to a human readable string
  */
 
-export const translateModelPlanStatus = (status: string) => {
-  switch (status) {
-    case 'PLAN_DRAFT':
-      return i18next.t('plan:planStatuses.planDraft');
-    case 'PLAN_COMPLETE':
-      return i18next.t('plan:planStatuses.planComplete');
-    case 'ICIP_COMPLETE':
-      return i18next.t('plan:planStatuses.icipComplete');
-    case 'INTERNAL_CMMI_CLEARANCE':
-      return i18next.t('plan:planStatuses.cmmiClearance');
-    case 'CMS_CLEARANCE':
-      return i18next.t('plan:planStatuses.cmsClearance');
-    case 'HHS_CLEARANCE':
-      return i18next.t('plan:planStatuses.hhsClearance');
-    case 'OMB_ASRF_CLEARANCE':
-      return i18next.t('plan:planStatuses.ombASRFClearance');
-    case 'CLEARED':
-      return i18next.t('plan:planStatuses.cleared');
-    case 'ANNOUNCED':
-      return i18next.t('plan:planStatuses.announced');
-    case 'PAUSED':
-      return i18next.t('plan:planStatuses.paused');
-    case 'CANCELED':
-      return i18next.t('plan:planStatuses.canceled');
-    case 'ACTIVE':
-      return i18next.t('plan:planStatuses.active');
-    case 'ENDED':
-      return i18next.t('plan:planStatuses.ended');
-    default:
-      return '';
-  }
-};
-
 export const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'EVALUATION':
