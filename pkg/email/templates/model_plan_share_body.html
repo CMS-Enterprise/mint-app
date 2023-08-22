@@ -84,7 +84,7 @@
 <h2 style="padding-top: 14pt;">{{.UserName}} has shared a Model Plan with you:</h2>
 <br/>
 <!-- Only show the optional message if it exists -->
-{{if .OptionalMessage}}
+{{if and .OptionalMessage (gt (len .OptionalMessage) 0)}}
   <p style="font-size: 15.5pt;
       font-weight: normal;
       font-style: normal;
