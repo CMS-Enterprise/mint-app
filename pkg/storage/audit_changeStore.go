@@ -23,7 +23,7 @@ var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
 func (s *Store) AuditChangeCollectionByIDAndTable(logger *zap.Logger, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
 	auditChanges := []*models.AuditChange{}
 
-	stmt, err := s.db.PrepareNamed(auditChangeCollectionByIDAndTable)
+	stmt, err := s.statements.Get(auditChangeCollectionByIDAndTable)
 	if err != nil {
 		return nil, err
 
@@ -54,7 +54,7 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(logger *zap.Logger, ta
 
 	orderedQuery = orderedQuery + orderClause
 
-	stmt, err := s.db.PrepareNamed(orderedQuery)
+	stmt, err := s.statements.Get(orderedQuery)
 	if err != nil {
 		return nil, err
 
@@ -86,7 +86,7 @@ func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap
 
 	orderedQuery = orderedQuery + orderClause
 
-	stmt, err := s.db.PrepareNamed(orderedQuery)
+	stmt, err := s.statements.Get(orderedQuery)
 	if err != nil {
 		return nil, err
 

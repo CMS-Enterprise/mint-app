@@ -17,7 +17,7 @@ var prepareForClearanceGetByModelPlanID string
 func (s *Store) ReadyForClearanceGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PrepareForClearanceResponse, error) {
 	dbResult := &models.PrepareForClearanceResponse{}
 
-	statement, err := s.db.PrepareNamed(prepareForClearanceGetByModelPlanID)
+	statement, err := s.statements.Get(prepareForClearanceGetByModelPlanID)
 	if err != nil {
 		return nil, err
 	}

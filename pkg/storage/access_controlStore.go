@@ -24,7 +24,7 @@ func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID uuid.UUID, m
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(checkIfCollaboratorSQL)
+	stmt, err := s.statements.Get(checkIfCollaboratorSQL)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -46,7 +46,7 @@ func (s *Store) CheckIfCollaboratorByDiscussionID(logger *zap.Logger, principalI
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(checkIfCollaboratorDiscussionIDSQL)
+	stmt, err := s.statements.Get(checkIfCollaboratorDiscussionIDSQL)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -73,7 +73,7 @@ func (s *Store) CheckIfCollaboratorBySolutionID(
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(checkIfCollaboratorBySolutionIDSQL)
+	stmt, err := s.statements.Get(checkIfCollaboratorBySolutionIDSQL)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -100,7 +100,7 @@ func (s *Store) CheckIfCollaboratorByOperationalNeedID(
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(checkIfCollaboratorByOperationalNeedIDSQL)
+	stmt, err := s.statements.Get(checkIfCollaboratorByOperationalNeedIDSQL)
 	if err != nil {
 		return isCollaborator, err
 	}

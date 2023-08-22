@@ -28,7 +28,7 @@ var planParticipantsAndProvidersGetByModelPlanIDLoaderSQL string
 func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanParticipantsAndProviders, error) {
 	pAndPSlice := []*models.PlanParticipantsAndProviders{}
 
-	stmt, err := s.db.PrepareNamed(planParticipantsAndProvidersGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(planParticipantsAndProvidersGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger *zap.L
 func (s *Store) PlanParticipantsAndProvidersCreate(logger *zap.Logger, gc *models.PlanParticipantsAndProviders) (*models.PlanParticipantsAndProviders, error) {
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
 
-	statement, err := s.db.PrepareNamed(planParticipantsAndProvidersCreateSQL)
+	statement, err := s.statements.Get(planParticipantsAndProvidersCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
@@ -66,7 +66,7 @@ func (s *Store) PlanParticipantsAndProvidersCreate(logger *zap.Logger, gc *model
 
 // PlanParticipantsAndProvidersUpdate updates the plan providers_and_participants for a given id
 func (s *Store) PlanParticipantsAndProvidersUpdate(logger *zap.Logger, gc *models.PlanParticipantsAndProviders) (*models.PlanParticipantsAndProviders, error) {
-	statement, err := s.db.PrepareNamed(planParticipantsAndProvidersUpdateSQL)
+	statement, err := s.statements.Get(planParticipantsAndProvidersUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
 	}
@@ -83,7 +83,7 @@ func (s *Store) PlanParticipantsAndProvidersUpdate(logger *zap.Logger, gc *model
 func (s *Store) PlanParticipantsAndProvidersGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanParticipantsAndProviders, error) {
 	gc := models.PlanParticipantsAndProviders{}
 
-	statement, err := s.db.PrepareNamed(planParticipantsAndProvidersGetByIDSQL)
+	statement, err := s.statements.Get(planParticipantsAndProvidersGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}

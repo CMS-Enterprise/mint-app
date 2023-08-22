@@ -28,7 +28,7 @@ var planOpsEvalAndLearningGetByModelPlanIDLoaderSQL string
 func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanOpsEvalAndLearning, error) {
 	oelSlice := []*models.PlanOpsEvalAndLearning{}
 
-	stmt, err := s.db.PrepareNamed(planOpsEvalAndLearningGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(planOpsEvalAndLearningGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(logger *zap.Logger,
 func (s *Store) PlanOpsEvalAndLearningCreate(logger *zap.Logger, oel *models.PlanOpsEvalAndLearning) (*models.PlanOpsEvalAndLearning, error) {
 	oel.ID = utilityUUID.ValueOrNewUUID(oel.ID)
 
-	statement, err := s.db.PrepareNamed(planOpsEvalAndLearningCreateSQL)
+	statement, err := s.statements.Get(planOpsEvalAndLearningCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, oel)
 	}
@@ -66,7 +66,7 @@ func (s *Store) PlanOpsEvalAndLearningCreate(logger *zap.Logger, oel *models.Pla
 
 // PlanOpsEvalAndLearningUpdate updates the plan providers_and_participants for a given id
 func (s *Store) PlanOpsEvalAndLearningUpdate(logger *zap.Logger, oel *models.PlanOpsEvalAndLearning) (*models.PlanOpsEvalAndLearning, error) {
-	statement, err := s.db.PrepareNamed(planOpsEvalAndLearningUpdateSQL)
+	statement, err := s.statements.Get(planOpsEvalAndLearningUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, oel)
 	}
@@ -83,7 +83,7 @@ func (s *Store) PlanOpsEvalAndLearningUpdate(logger *zap.Logger, oel *models.Pla
 func (s *Store) PlanOpsEvalAndLearningGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanOpsEvalAndLearning, error) {
 	oel := models.PlanOpsEvalAndLearning{}
 
-	statement, err := s.db.PrepareNamed(planOpsEvalAndLearningGetByIDSQL)
+	statement, err := s.statements.Get(planOpsEvalAndLearningGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}

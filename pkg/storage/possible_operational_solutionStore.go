@@ -24,7 +24,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.L
 
 	posSols := []*models.PossibleOperationalSolution{}
 
-	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionCollectionByNeedTypeSQL)
+	stmt, err := s.statements.Get(possibleOperationalSolutionCollectionByNeedTypeSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.L
 // PossibleOperationalSolutionCollectionGetAll returns all possible operational solutions
 func (s *Store) PossibleOperationalSolutionCollectionGetAll(logger *zap.Logger) ([]*models.PossibleOperationalSolution, error) {
 	posSols := []*models.PossibleOperationalSolution{}
-	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionCollectionGelAllSQL)
+	stmt, err := s.statements.Get(possibleOperationalSolutionCollectionGelAllSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByOperationalNeedID(logg
 
 	posSols := []*models.PossibleOperationalSolution{}
 
-	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionCollectionByOperationalNeedIDSQL)
+	stmt, err := s.statements.Get(possibleOperationalSolutionCollectionByOperationalNeedIDSQL)
 	if err != nil {
 		return nil, err
 	}

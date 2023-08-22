@@ -32,7 +32,7 @@ func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl *models.PlanCrTdl)
 	if planCrTdl.ID == uuid.Nil {
 		planCrTdl.ID = uuid.New()
 	}
-	stmt, err := s.db.PrepareNamed(planCrTdlCreateSQL)
+	stmt, err := s.statements.Get(planCrTdlCreateSQL)
 
 	if err != nil {
 		logger.Error(
@@ -59,7 +59,7 @@ func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl *models.PlanCrTdl)
 // PlanCrTdlUpdate updates and returns a plan_cr_tdl object
 func (s *Store) PlanCrTdlUpdate(logger *zap.Logger, planCrTdl *models.PlanCrTdl) (*models.PlanCrTdl, error) {
 
-	statement, err := s.db.PrepareNamed(planCrTdlUpdateSQL)
+	statement, err := s.statements.Get(planCrTdlUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, planCrTdl)
 	}
@@ -104,7 +104,7 @@ func (s *Store) PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UU
 
 // PlanCrTdlGetByID returns a plan_cr_tdl
 func (s *Store) PlanCrTdlGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanCrTdl, error) {
-	stmt, err := s.db.PrepareNamed(planCrTdlGetSQL)
+	stmt, err := s.statements.Get(planCrTdlGetSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func (s *Store) PlanCrTdlGetByID(logger *zap.Logger, id uuid.UUID) (*models.Plan
 func (s *Store) PlanCrTdlsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCrTdl, error) {
 	planCrTdls := []*models.PlanCrTdl{}
 
-	stmt, err := s.db.PrepareNamed(planCrTdlCollectionByModelPlanIDSQL)
+	stmt, err := s.statements.Get(planCrTdlCollectionByModelPlanIDSQL)
 	if err != nil {
 		return nil, err
 	}

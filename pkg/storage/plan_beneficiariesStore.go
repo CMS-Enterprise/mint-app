@@ -28,7 +28,7 @@ var planBeneficiariesGetByModelPlanIDLoaderSQL string
 func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanBeneficiaries, error) {
 	benesSlice := []*models.PlanBeneficiaries{}
 
-	stmt, err := s.db.PrepareNamed(planBeneficiariesGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(planBeneficiariesGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(logger *zap.Logger, para
 func (s *Store) PlanBeneficiariesCreate(logger *zap.Logger, b *models.PlanBeneficiaries) (*models.PlanBeneficiaries, error) {
 	b.ID = utilityUUID.ValueOrNewUUID(b.ID)
 
-	statement, err := s.db.PrepareNamed(planBeneficiariesCreateSQL)
+	statement, err := s.statements.Get(planBeneficiariesCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, b)
 	}
@@ -66,7 +66,7 @@ func (s *Store) PlanBeneficiariesCreate(logger *zap.Logger, b *models.PlanBenefi
 
 // PlanBeneficiariesUpdate updates the plan general characteristics for a given id
 func (s *Store) PlanBeneficiariesUpdate(logger *zap.Logger, b *models.PlanBeneficiaries) (*models.PlanBeneficiaries, error) {
-	statement, err := s.db.PrepareNamed(planBeneficiariesUpdateSQL)
+	statement, err := s.statements.Get(planBeneficiariesUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, b)
 	}
@@ -83,7 +83,7 @@ func (s *Store) PlanBeneficiariesUpdate(logger *zap.Logger, b *models.PlanBenefi
 func (s *Store) PlanBeneficiariesGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanBeneficiaries, error) {
 	b := models.PlanBeneficiaries{}
 
-	statement, err := s.db.PrepareNamed(planBeneficiariesGetByIDSQL)
+	statement, err := s.statements.Get(planBeneficiariesGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}

@@ -29,7 +29,7 @@ var planPaymentsGetByModelPlanIDLoaderSQL string
 func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanPayments, error) {
 	paySlice := []*models.PlanPayments{}
 
-	stmt, err := s.db.PrepareNamed(planPaymentsGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(planPaymentsGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func (s *Store) PlanPaymentsCreate(
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
 	payments.ID = utilityUUID.ValueOrNewUUID(payments.ID)
 
-	statement, err := s.db.PrepareNamed(planPaymentsCreateSQL)
+	statement, err := s.statements.Get(planPaymentsCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
 	}
@@ -74,7 +74,7 @@ func (s *Store) PlanPaymentsRead(
 	id uuid.UUID) (*models.PlanPayments, error) {
 	modelInstance := models.PlanPayments{}
 
-	statement, err := s.db.PrepareNamed(planPaymentsGetByIDSQL)
+	statement, err := s.statements.Get(planPaymentsGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func (s *Store) PlanPaymentsRead(
 func (s *Store) PlanPaymentsUpdate(
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
-	statement, err := s.db.PrepareNamed(planPaymentsUpdateSQL)
+	statement, err := s.statements.Get(planPaymentsUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, payments)
 	}

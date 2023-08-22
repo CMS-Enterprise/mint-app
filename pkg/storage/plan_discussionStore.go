@@ -52,7 +52,7 @@ var discussionReplyGetByDiscussionIDLoaderSQL string
 func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.DiscussionReply, error) {
 	discRSlice := []*models.DiscussionReply{}
 
-	stmt, err := s.db.PrepareNamed(discussionReplyGetByDiscussionIDLoaderSQL)
+	stmt, err := s.statements.Get(discussionReplyGetByDiscussionIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(logger *zap.Logger, param
 func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanDiscussion, error) {
 	discSlice := []*models.PlanDiscussion{}
 
-	stmt, err := s.db.PrepareNamed(planDiscussionGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(planDiscussionGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(logger *zap.Logger, paramTa
 func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
 	discussion.ID = utilityUUID.ValueOrNewUUID(discussion.ID)
 
-	statement, err := s.db.PrepareNamed(planDiscussionCreateSQL)
+	statement, err := s.statements.Get(planDiscussionCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
@@ -114,7 +114,7 @@ func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.Plan
 func (s *Store) DiscussionReplyCreate(logger *zap.Logger, reply *models.DiscussionReply) (*models.DiscussionReply, error) {
 	reply.ID = utilityUUID.ValueOrNewUUID(reply.ID)
 
-	statement, err := s.db.PrepareNamed(discussionReplyCreateSQL)
+	statement, err := s.statements.Get(discussionReplyCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, reply)
 	}
@@ -129,7 +129,7 @@ func (s *Store) DiscussionReplyCreate(logger *zap.Logger, reply *models.Discussi
 
 // PlanDiscussionUpdate updates a plan discussion object
 func (s *Store) PlanDiscussionUpdate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
-	statement, err := s.db.PrepareNamed(planDiscussionUpdateSQL)
+	statement, err := s.statements.Get(planDiscussionUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, discussion)
 	}
@@ -144,7 +144,7 @@ func (s *Store) PlanDiscussionUpdate(logger *zap.Logger, discussion *models.Plan
 
 // DiscussionReplyUpdate updates a discussion reply object
 func (s *Store) DiscussionReplyUpdate(logger *zap.Logger, reply *models.DiscussionReply) (*models.DiscussionReply, error) {
-	statement, err := s.db.PrepareNamed(discussionReplyUpdateSQL)
+	statement, err := s.statements.Get(discussionReplyUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, reply)
 	}
@@ -187,7 +187,7 @@ func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID, userID uu
 
 // PlanDiscussionByID retrieves the plan discussion for a given id
 func (s *Store) PlanDiscussionByID(logger *zap.Logger, id uuid.UUID) (*models.PlanDiscussion, error) {
-	statement, err := s.db.PrepareNamed(planDiscussionGetByID)
+	statement, err := s.statements.Get(planDiscussionGetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +234,7 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 
 // DiscussionReplyByID retrieves the discussion reply for a given id
 func (s *Store) DiscussionReplyByID(logger *zap.Logger, id uuid.UUID) (*models.DiscussionReply, error) {
-	statement, err := s.db.PrepareNamed(discussionReplyGetByID)
+	statement, err := s.statements.Get(discussionReplyGetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -253,7 +253,7 @@ func (s *Store) GetMostRecentDiscussionRoleSelection(
 	logger *zap.Logger,
 	userID uuid.UUID,
 ) (*models.DiscussionRoleSelection, error) {
-	statement, err := s.db.PrepareNamed(getUserRoleSQL)
+	statement, err := s.statements.Get(getUserRoleSQL)
 	if err != nil {
 		logger.Error("failed to prepare SQL statement", zap.Error(err))
 		return nil, err

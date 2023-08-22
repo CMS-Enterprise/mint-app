@@ -32,7 +32,7 @@ var planCollaboratorGetByModelPlanIDLoaderSQL string
 func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanCollaborator, error) {
 	collabSlice := []*models.PlanCollaborator{}
 
-	stmt, err := s.db.PrepareNamed(planCollaboratorGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(planCollaboratorGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanC
 
 	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
-	statement, err := s.db.PrepareNamed(planCollaboratorCreateSQL)
+	statement, err := s.statements.Get(planCollaboratorCreateSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanC
 
 // PlanCollaboratorUpdate updates the plan collaborator for a given id
 func (s *Store) PlanCollaboratorUpdate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
-	statement, err := s.db.PrepareNamed(planCollaboratorUpdateSQL)
+	statement, err := s.statements.Get(planCollaboratorUpdateSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, id uuid.UUID, userID uuid.
 
 // PlanCollaboratorFetchByID returns a plan collaborator for a given database ID, or nil if none found
 func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborator, error) {
-	statement, err := s.db.PrepareNamed(planCollaboratorFetchByIDSQL)
+	statement, err := s.statements.Get(planCollaboratorFetchByIDSQL)
 	if err != nil {
 		return nil, err
 	}

@@ -17,7 +17,7 @@ func (s *Store) PossibleOperationalNeedCollectionGetByModelPlanID(logger *zap.Lo
 
 	posNeeds := []*models.PossibleOperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(possibleOperationalNeedCollectionByModelPlanIDSQL)
+	stmt, err := s.statements.Get(possibleOperationalNeedCollectionByModelPlanIDSQL)
 	if err != nil {
 		return nil, err
 	}

@@ -28,7 +28,7 @@ var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
 func (s *Store) PlanGeneralCharacteristicsCreate(logger *zap.Logger, gc *models.PlanGeneralCharacteristics) (*models.PlanGeneralCharacteristics, error) {
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
 
-	statement, err := s.db.PrepareNamed(planGeneralCharacteristicsCreateSQL)
+	statement, err := s.statements.Get(planGeneralCharacteristicsCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
@@ -45,7 +45,7 @@ func (s *Store) PlanGeneralCharacteristicsCreate(logger *zap.Logger, gc *models.
 
 // PlanGeneralCharacteristicsUpdate updates the plan general characteristics for a given id
 func (s *Store) PlanGeneralCharacteristicsUpdate(logger *zap.Logger, gc *models.PlanGeneralCharacteristics) (*models.PlanGeneralCharacteristics, error) {
-	statement, err := s.db.PrepareNamed(planGeneralCharacteristicsUpdateSQL)
+	statement, err := s.statements.Get(planGeneralCharacteristicsUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
 	}
@@ -62,7 +62,7 @@ func (s *Store) PlanGeneralCharacteristicsUpdate(logger *zap.Logger, gc *models.
 func (s *Store) PlanGeneralCharacteristicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanGeneralCharacteristics, error) {
 	gc := models.PlanGeneralCharacteristics{}
 
-	statement, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByIDSQL)
+	statement, err := s.statements.Get(planGeneralCharacteristicsGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (s *Store) PlanGeneralCharacteristicsGetByID(logger *zap.Logger, id uuid.UU
 func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanGeneralCharacteristics, error) {
 	genCharSlice := []*models.PlanGeneralCharacteristics{}
 
-	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(planGeneralCharacteristicsGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}

@@ -32,7 +32,7 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()
 	}
-	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL) //TODO, look to refactor this SQL to make it clearer
+	stmt, err := s.statements.Get(planFavoriteCreateSQL) //TODO, look to refactor this SQL to make it clearer
 
 	if err != nil {
 		logger.Error(
@@ -87,7 +87,7 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, 
 
 // PlanFavoriteGetByModelIDAndUserAccountID returns a plan favorite
 func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(logger *zap.Logger, userAccountID uuid.UUID, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
-	stmt, err := s.db.PrepareNamed(planFavoriteGetSQL)
+	stmt, err := s.statements.Get(planFavoriteGetSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +111,7 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(logger *zap.Logger, use
 func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 
 	userIDs := []uuid.UUID{}
-	stmt, err := s.db.PrepareNamed(planFavoriteGetUniqueUserIDsSQL)
+	stmt, err := s.statements.Get(planFavoriteGetUniqueUserIDsSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +130,7 @@ func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 func (s *Store) PlanFavoriteGetCollectionByUserID(logger *zap.Logger, userAccountID uuid.UUID) ([]*models.PlanFavorite, error) {
 
 	planFavorites := []*models.PlanFavorite{}
-	stmt, err := s.db.PrepareNamed(planFavoriteGetCollectionByUserIDSQL)
+	stmt, err := s.statements.Get(planFavoriteGetCollectionByUserIDSQL)
 	if err != nil {
 		return nil, err
 	}

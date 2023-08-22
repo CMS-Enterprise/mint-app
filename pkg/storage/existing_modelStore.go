@@ -18,7 +18,7 @@ var existingModelGetByModelPlanIDLoaderSQL string
 func (s *Store) ExistingModelGetByIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModel, error) {
 	eMSlice := []*models.ExistingModel{}
 
-	stmt, err := s.db.PrepareNamed(existingModelGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(existingModelGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func (s *Store) ExistingModelGetByIDLOADER(logger *zap.Logger, paramTableJSON st
 // ExistingModelCollectionGet returns a list of existing models
 func (s *Store) ExistingModelCollectionGet(logger *zap.Logger) ([]*models.ExistingModel, error) {
 	existingModels := []*models.ExistingModel{}
-	stmt, err := s.db.PrepareNamed(existingModelCollectionGetSQL)
+	stmt, err := s.statements.Get(existingModelCollectionGetSQL)
 	if err != nil {
 		return nil, err
 	}

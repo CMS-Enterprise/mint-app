@@ -30,7 +30,7 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 	if AnalyzedAudit.ID == uuid.Nil {
 		AnalyzedAudit.ID = uuid.New()
 	}
-	stmt, err := s.db.PrepareNamed(analyzedAuditCreate)
+	stmt, err := s.statements.Get(analyzedAuditCreate)
 
 	if err != nil {
 		logger.Error(
@@ -57,7 +57,7 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(logger *zap.Logger, modelPlanID uuid.UUID, date time.Time) (*models.AnalyzedAudit, error) {
 	analyzedAudit := models.AnalyzedAudit{}
 
-	stmt, err := s.db.PrepareNamed(analyzedAuditGetByModelPlanIDAndDate)
+	stmt, err := s.statements.Get(analyzedAuditGetByModelPlanIDAndDate)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(logger *zap.Logger, modelPl
 func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(logger *zap.Logger, modelPlanIDs []uuid.UUID, date time.Time) ([]*models.AnalyzedAudit, error) {
 	analyzedAudits := []*models.AnalyzedAudit{}
 
-	stmt, err := s.db.PrepareNamed(analyzedAuditGetByModelPlanIDsAndDate)
+	stmt, err := s.statements.Get(analyzedAuditGetByModelPlanIDsAndDate)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(logger *zap.Logger, modelP
 func (s *Store) AnalyzedAuditGetByDate(_ *zap.Logger, date time.Time) ([]*models.AnalyzedAudit, error) {
 	var analyzedAudits []*models.AnalyzedAudit
 
-	stmt, err := s.db.PrepareNamed(analyzedAuditGetByDate)
+	stmt, err := s.statements.Get(analyzedAuditGetByDate)
 	if err != nil {
 		return nil, err
 	}

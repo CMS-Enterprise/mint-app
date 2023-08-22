@@ -47,7 +47,7 @@ var modelPlanGetByIDLoaderSQL string
 func (s *Store) ModelPlanGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
 	var planSlice []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(modelPlanGetByIDLoaderSQL)
+	stmt, err := s.statements.Get(modelPlanGetByIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
-	stmt, err := s.db.PrepareNamed(modelPlanCreateSQL)
+	stmt, err := s.statements.Get(modelPlanCreateSQL)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -99,7 +99,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 // ModelPlanUpdate updates a model plan
 func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
-	stmt, err := s.db.PrepareNamed(modelPlanUpdateSQL)
+	stmt, err := s.statements.Get(modelPlanUpdateSQL)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
@@ -130,7 +130,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 // ModelPlanGetByID returns a model plan for a given ID
 func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 	plan := models.ModelPlan{}
-	stmt, err := s.db.PrepareNamed(modelPlanGetByIDSQL)
+	stmt, err := s.statements.Get(modelPlanGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 // ModelPlanGetByName returns a model plan for a given ID
 func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
 	plan := models.ModelPlan{}
-	stmt, err := s.db.PrepareNamed(modelPlanGetByNameSQL)
+	stmt, err := s.statements.Get(modelPlanGetByNameSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
 	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionWhereArchivedSQL)
+	stmt, err := s.statements.Get(modelPlanCollectionWhereArchivedSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*model
 func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, userID uuid.UUID) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionByCollaboratorSQL)
+	stmt, err := s.statements.Get(modelPlanCollectionByCollaboratorSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -246,10 +246,11 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived
 func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionWithCRTDlSQL)
+	stmt, err := s.statements.Get(modelPlanCollectionWithCRTDlSQL)
 	if err != nil {
 		return nil, err
 	}
+
 	arg := map[string]interface{}{
 		"archived": archived,
 	}
@@ -273,7 +274,7 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 
 // ModelPlanDeleteByID deletes a model plan for a given ID
 func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
-	statement, err := s.db.PrepareNamed(modelPlanDeleteByID)
+	statement, err := s.statements.Get(modelPlanDeleteByID)
 	if err != nil {
 		return nil, err
 	}

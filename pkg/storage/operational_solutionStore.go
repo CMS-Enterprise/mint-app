@@ -27,7 +27,7 @@ var operationalSolutionInsertSQL string
 func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalSolution, error) {
 	solutions := []*models.OperationalSolution{}
 
-	stmt, err := s.db.PrepareNamed(operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL)
+	stmt, err := s.statements.Get(operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLO
 func (s *Store) OperationalSolutionGetByID(logger *zap.Logger, id uuid.UUID) (*models.OperationalSolution, error) {
 	solution := models.OperationalSolution{}
 
-	stmt, err := s.db.PrepareNamed(operationalSolutionGetByIDSQL)
+	stmt, err := s.statements.Get(operationalSolutionGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (s *Store) OperationalSolutionGetByID(logger *zap.Logger, id uuid.UUID) (*m
 
 // OperationalSolutionInsert inserts an operational solution if it already exists
 func (s *Store) OperationalSolutionInsert(logger *zap.Logger, solution *models.OperationalSolution, solutionTypeKey *models.OperationalSolutionKey) (*models.OperationalSolution, error) {
-	statement, err := s.db.PrepareNamed(operationalSolutionInsertSQL)
+	statement, err := s.statements.Get(operationalSolutionInsertSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
 	}
@@ -81,7 +81,7 @@ func (s *Store) OperationalSolutionInsert(logger *zap.Logger, solution *models.O
 
 // OperationalSolutionUpdateByID updates an operational solution by it's ID
 func (s *Store) OperationalSolutionUpdateByID(logger *zap.Logger, solution *models.OperationalSolution) (*models.OperationalSolution, error) {
-	statement, err := s.db.PrepareNamed(operationalSolutionUpdateByIDSQL)
+	statement, err := s.statements.Get(operationalSolutionUpdateByIDSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
 	}

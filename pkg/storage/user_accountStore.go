@@ -28,7 +28,7 @@ var userAccountUpdateByUsername string
 func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	statement, err := s.db.PrepareNamed(userAccountGetByUsername)
+	statement, err := s.statements.Get(userAccountGetByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserA
 func (s *Store) UserAccountGetByID(id uuid.UUID) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	statement, err := s.db.PrepareNamed(userAccountGetByID)
+	statement, err := s.statements.Get(userAccountGetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (s *Store) UserAccountGetByID(id uuid.UUID) (*authentication.UserAccount, e
 func (s *Store) UserAccountGetByIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*authentication.UserAccount, error) {
 	userSlice := []*authentication.UserAccount{}
 
-	stmt, err := s.db.PrepareNamed(userAccountGetByIDLOADER)
+	stmt, err := s.statements.Get(userAccountGetByIDLOADER)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (s *Store) UserAccountInsertByUsername(userAccount *authentication.UserAcco
 		userAccount.ID = uuid.New()
 	}
 
-	statement, err := s.db.PrepareNamed(userAccountInsertByUsername)
+	statement, err := s.statements.Get(userAccountInsertByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func (s *Store) UserAccountUpdateByUserName(userAccount *authentication.UserAcco
 		userAccount.ID = uuid.New()
 	}
 
-	statement, err := s.db.PrepareNamed(userAccountUpdateByUsername)
+	statement, err := s.statements.Get(userAccountUpdateByUsername)
 	if err != nil {
 		return nil, err
 	}

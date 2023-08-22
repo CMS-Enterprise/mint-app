@@ -24,7 +24,7 @@ var ndaAgreementInsertSQL string
 func (s *Store) NDAAgreementGetByUserID(logger *zap.Logger, userID uuid.UUID) (*models.NDAAgreement, error) {
 	nda := models.NDAAgreement{}
 
-	statement, err := s.db.PrepareNamed(ndaAgreementGetByUserIDSQL)
+	statement, err := s.statements.Get(ndaAgreementGetByUserIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (s *Store) NDAAgreementGetByUserID(logger *zap.Logger, userID uuid.UUID) (*
 // NDAAgreementUpdate updates an nda agreement based on userID
 func (s *Store) NDAAgreementUpdate(logger *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
 
-	statement, err := s.db.PrepareNamed(ndaAgreementUpdateSQL)
+	statement, err := s.statements.Get(ndaAgreementUpdateSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (s *Store) NDAAgreementCreate(logger *zap.Logger, nda *models.NDAAgreement)
 
 	nda.ID = utilityUUID.ValueOrNewUUID(nda.ID)
 
-	statement, err := s.db.PrepareNamed(ndaAgreementInsertSQL)
+	statement, err := s.statements.Get(ndaAgreementInsertSQL)
 	if err != nil {
 		return nil, err
 	}

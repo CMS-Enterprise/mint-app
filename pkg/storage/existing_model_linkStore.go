@@ -25,7 +25,7 @@ var existingModelLinkGetByModelPlanIDLoaderSQL string
 func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModelLink, error) {
 	var linkSlice []*models.ExistingModelLink
 
-	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDLoaderSQL)
+	stmt, err := s.statements.Get(existingModelLinkGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, m
 func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*models.ExistingModelLink, error) {
 	link := models.ExistingModelLink{}
 
-	statement, err := s.db.PrepareNamed(existingModelLinkGetByIDSQL)
+	statement, err := s.statements.Get(existingModelLinkGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}

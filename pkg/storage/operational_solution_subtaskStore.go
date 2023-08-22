@@ -35,7 +35,7 @@ var operationalSolutionSubtaskGetBySolutionIDLoaderSQL string
 func (s *Store) OperationalSolutionSubtaskGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalSolutionSubtask, error) {
 	OpSolSSlice := []*models.OperationalSolutionSubtask{}
 
-	stmt, err := s.db.PrepareNamed(operationalSolutionSubtaskGetBySolutionIDLoaderSQL)
+	stmt, err := s.statements.Get(operationalSolutionSubtaskGetBySolutionIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (s *Store) OperationalSolutionSubtasksCreate(
 
 // OperationalSolutionSubtaskGetByID gets a models.OperationalSolutionSubtask by ID
 func (s *Store) OperationalSolutionSubtaskGetByID(_ *zap.Logger, subtaskID uuid.UUID) (*models.OperationalSolutionSubtask, error) {
-	statement, err := s.db.PrepareNamed(operationalSolutionSubtaskGetByIDSQL)
+	statement, err := s.statements.Get(operationalSolutionSubtaskGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}

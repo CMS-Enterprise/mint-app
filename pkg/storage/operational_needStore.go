@@ -42,7 +42,7 @@ var operationalNeedInsertOrUpdateOtherSQL string
 func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
 	needs := []*models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDSQL)
+	stmt, err := s.statements.Get(operationalNeedCollectionByModelPlanIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, mo
 func (s *Store) OperationalNeedCollectionGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalNeed, error) {
 	needs := []*models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDLOADERSQL)
+	stmt, err := s.statements.Get(operationalNeedCollectionByModelPlanIDLOADERSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanIDLOADER(logger *zap.Logg
 func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, modelPlanID uuid.UUID, needKey models.OperationalNeedKey) (*models.OperationalNeed, error) {
 	need := models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedGetByModelPlanIDAndTypeSQL)
+	stmt, err := s.statements.Get(operationalNeedGetByModelPlanIDAndTypeSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, model
 func (s *Store) OperationalNeedGetByModelPlanIDAndOtherType(logger *zap.Logger, modelPlanID uuid.UUID, customNeedType string) (*models.OperationalNeed, error) {
 	need := models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedGetByModelPlanIDAndOtherTypeSQL)
+	stmt, err := s.statements.Get(operationalNeedGetByModelPlanIDAndOtherTypeSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +140,7 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndOtherType(logger *zap.Logger, 
 func (s *Store) OperationalNeedGetByID(logger *zap.Logger, id uuid.UUID) (*models.OperationalNeed, error) {
 	need := models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedGetByIDSQL)
+	stmt, err := s.statements.Get(operationalNeedGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +160,7 @@ func (s *Store) OperationalNeedGetByID(logger *zap.Logger, id uuid.UUID) (*model
 
 // OperationalNeedInsertOrUpdate either inserts or updates an operational need in the DB
 func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.OperationalNeed, needTypeKey models.OperationalNeedKey) (*models.OperationalNeed, error) {
-	statement, err := s.db.PrepareNamed(operationalNeedInsertOrUpdateSQL)
+	statement, err := s.statements.Get(operationalNeedInsertOrUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
@@ -177,7 +177,7 @@ func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.O
 
 // OperationalNeedInsertOrUpdateOther either inserts or updates a custom operational need in the DB
 func (s *Store) OperationalNeedInsertOrUpdateOther(logger *zap.Logger, need *models.OperationalNeed, customNeedType string) (*models.OperationalNeed, error) {
-	statement, err := s.db.PrepareNamed(operationalNeedInsertOrUpdateOtherSQL)
+	statement, err := s.statements.Get(operationalNeedInsertOrUpdateOtherSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
@@ -194,7 +194,7 @@ func (s *Store) OperationalNeedInsertOrUpdateOther(logger *zap.Logger, need *mod
 
 // OperationalNeedUpdateByID will update an operational need in the DB
 func (s *Store) OperationalNeedUpdateByID(logger *zap.Logger, need *models.OperationalNeed) (*models.OperationalNeed, error) {
-	statement, err := s.db.PrepareNamed(operationalNeedUpdateByIDSQL)
+	statement, err := s.statements.Get(operationalNeedUpdateByIDSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
@@ -211,7 +211,7 @@ func (s *Store) OperationalNeedUpdateByID(logger *zap.Logger, need *models.Opera
 func (s *Store) OperationalNeedInsertAllPossible(logger *zap.Logger, modelPlanID uuid.UUID, createdBy uuid.UUID) ([]*models.OperationalNeed, error) {
 
 	needs := []*models.OperationalNeed{}
-	statement, err := s.db.PrepareNamed(operationalNeedInsertAllPossibleSQL)
+	statement, err := s.statements.Get(operationalNeedInsertAllPossibleSQL)
 	if err != nil {
 		return nil, err
 	}
