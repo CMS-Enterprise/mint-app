@@ -196,7 +196,7 @@ export const payments: TranslationPayments = {
     gqlField: 'payClaimsOther',
     goField: 'PayClaimsOther',
     dbField: 'pay_claims_other',
-    label: 'Please describe the other payment frequency..',
+    label: 'Please describe the other payment frequency.',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'oact']
@@ -732,7 +732,11 @@ export const paymentsMisc = {
   alert:
     'Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).',
   beneficaryCostSharingQuestions: 'Beneficiary cost-sharing questions',
-  nonClaimsBasedPaymentQuestion: 'Non-claims-based payment questions'
+  nonClaimsBasedPaymentQuestion: 'Non-claims-based payment questions',
+  claims: 'Claims-Based Payments',
+  nonClaims: 'Non-Claims-Based Payments',
+  grants: 'Grants',
+  continueToITSolutions: 'Continue to IT solutions and implementation status'
 };
 
 export default payments;

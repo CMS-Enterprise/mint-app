@@ -397,7 +397,7 @@ const Recover = () => {
 
                           {!flags.hideITLeadExperience && (
                             <Button type="submit" onClick={() => setErrors({})}>
-                              {paymentsT('continueToITSolutions')}
+                              {paymentsMiscT('continueToITSolutions')}
                             </Button>
                           )}
                         </div>
