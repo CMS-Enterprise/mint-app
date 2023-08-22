@@ -10,7 +10,6 @@ import {
 } from '@trussworks/react-uswds';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
-import teamRoles from 'constants/enums/teamRoles';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
   GetModelCollaborators,
@@ -142,8 +141,8 @@ const ReadOnlyTeamInfo = ({
     []) as CollaboratorsType[];
 
   const sortModelLeadFirst = [
-    ...Object.keys(teamRoles).filter(c => c === 'MODEL_LEAD'),
-    ...Object.keys(teamRoles).filter(c => c !== 'MODEL_LEAD')
+    ...Object.keys(TeamRole).filter(c => c === TeamRole.MODEL_LEAD),
+    ...Object.keys(TeamRole).filter(c => c !== TeamRole.MODEL_LEAD)
   ];
 
   return (
