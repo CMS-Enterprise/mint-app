@@ -329,6 +329,10 @@ func ModelPlanShare(
 		modelPlanCategories = append(modelPlanCategories, *planBasics.ModelCategory)
 	}
 
+	for _, category := range planBasics.AdditionalModelCategories {
+		modelPlanCategories = append(modelPlanCategories, models.ModelCategory(category))
+	}
+
 	lastModified := modelPlan.CreatedDts
 	if modelPlan.ModifiedDts != nil {
 		lastModified = *modelPlan.ModifiedDts
