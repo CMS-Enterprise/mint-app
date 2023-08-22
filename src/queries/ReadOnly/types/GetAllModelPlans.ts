@@ -13,6 +13,7 @@ export interface GetAllModelPlans_modelPlanCollection_basics {
   __typename: "PlanBasics";
   performancePeriodStarts: Time | null;
   modelCategory: ModelCategory | null;
+  additionalModelCategories: ModelCategory[];
   goal: string | null;
 }
 

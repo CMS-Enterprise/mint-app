@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
 
 export type ReadOnlySectionProps = {
-  copy?: string | null;
+  copy?: string | null | React.ReactNode;
   heading: string;
   list?: boolean;
-  listItems?: (string | number)[];
+  listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
   notes?: string | null;
 };
@@ -25,7 +25,20 @@ const ReadOnlySection = ({
     .replace(/\W*$/g, '')
     .replace(/\W/g, '-');
 
+  const isElement = (
+    element: string | number | React.ReactElement | React.ReactNode
+  ) => {
+    return React.isValidElement(element);
+  };
+
   const renderCopyOrList = () => {
+    if (isElement(copy)) {
+      return (
+        <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+          {copy || <em className="text-base">{miscellaneousT('na')}</em>}
+        </div>
+      );
+    }
     if (!list || listItems.length === 0) {
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
@@ -34,9 +47,17 @@ const ReadOnlySection = ({
       );
     }
     return (
-      <ul className="margin-y-0 padding-left-3">
-        {listItems.map(item => (
-          <React.Fragment key={`${sectionName}--${item}`}>
+      <ul
+        className={`margin-y-0 padding-left-${
+          isElement(listItems[0]) ? '2' : '3'
+        }`}
+      >
+        {listItems.map((item, index) => (
+          <React.Fragment
+            key={
+              isElement(listItems[index]) ? index : `${sectionName}--${item}`
+            }
+          >
             <li className="font-sans-md line-height-sans-4">{item}</li>
             {item === 'Other' && (
               <ul data-testid="other-entry">

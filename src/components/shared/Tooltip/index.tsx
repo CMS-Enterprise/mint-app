@@ -6,16 +6,16 @@ import { Tooltip as TrussTooltip } from '@trussworks/react-uswds';
 
 type TooltipProps = {
   children: React.ReactNode;
+  className?: string;
   label: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
-  className?: string;
 };
 
 const Tooltip = ({
   children,
+  className,
   label,
-  position = 'top',
-  className
+  position = 'top'
 }: TooltipProps): React.ReactElement => {
   const CustomDivForwardRef: React.ForwardRefRenderFunction<HTMLDivElement> = (
     { ...tooltipProps },
