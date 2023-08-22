@@ -5,7 +5,6 @@ export interface NeedMap {
   fieldName: string | string[];
   parentField: string;
   question: string; // Translation function name to a need question
-  answer: string; // Translation function name for the answer to a need question
   multiPart?: boolean; // Used to idenfify if multiple question pertain to a single need
   multiPartQuestion?: string; // Used to identify translations of each quest that pertains to this need,
   section: string;
@@ -18,7 +17,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'managePartCDEnrollment',
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:managePartCDEnrollment.label',
-    answer: 'translateBoolean',
     section: 'generalCharacteristicsMisc'
   },
   REV_COL_BIDS: {
@@ -26,7 +24,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'collectPlanBids',
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:collectPlanBids.label',
-    answer: 'translateBoolean',
     section: 'generalCharacteristicsMisc'
   },
   UPDATE_CONTRACT: {
@@ -34,7 +31,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'planContractUpdated',
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:planContractUpdated.label',
-    answer: 'translateBoolean',
     section: 'generalCharacteristicsMisc'
   },
   SIGN_PARTICIPATION_AGREEMENTS: {
@@ -42,7 +38,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'agreementTypes',
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:agreementTypes.label',
-    answer: 'translateAgreementTypes',
     section: 'generalCharacteristicsMisc'
   },
   RECRUIT_PARTICIPANTS: {
@@ -50,7 +45,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'recruitmentMethod',
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:recruitmentMethod.label',
-    answer: 'translateRecruitmentType',
     section: 'participantsAndProvidersMisc'
   },
   APP_SUPPORT_CON: {
@@ -58,7 +52,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:selectionMethod.label',
-    answer: 'translateParticipantSelectiontType',
     section: 'participantsAndProvidersMisc'
   },
   REV_SCORE_APP: {
@@ -66,7 +59,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:selectionMethod.label',
-    answer: 'translateParticipantSelectiontType',
     section: 'participantsAndProvidersMisc'
   },
   COMM_W_PART: {
@@ -74,7 +66,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'communicationMethod',
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:communicationMethod.label',
-    answer: 'translateCommunicationType',
     section: 'participantsAndProvidersMisc'
   },
   MANAGE_PROV_OVERLAP: {
@@ -82,7 +73,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'providerOverlap',
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:providerOverlap.label',
-    answer: 'translateOverlapType',
     section: 'participantsAndProvidersMisc'
   },
   VET_PROVIDERS_FOR_PROGRAM_INTEGRITY: {
@@ -90,7 +80,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'participantsIds',
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:participantsIds.label',
-    answer: 'translateParticipantIDType',
     section: 'participantsAndProvidersMisc'
   },
   MANAGE_BEN_OVERLAP: {
@@ -98,7 +87,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'beneficiaryOverlap',
     parentField: 'beneficiaries',
     question: 'beneficiaries:beneficiaryOverlap.label',
-    answer: 'translateOverlapType',
     section: 'beneficiariesMisc'
   },
   HELPDESK_SUPPORT: {
@@ -106,7 +94,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'helpdeskUse',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:helpdeskUse.label',
-    answer: 'translateBoolean',
     section: 'opsEvalAndLearningMisc'
   },
   IDDOC_SUPPORT: {
@@ -114,7 +101,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'iddocSupport',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:iddocSupport.label',
-    answer: 'translateBoolean',
     section: 'opsEvalAndLearningMisc'
   },
   ESTABLISH_BENCH: {
@@ -122,7 +108,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'benchmarkForPerformance',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:benchmarkForPerformance.label',
-    answer: 'translateBenchmarkForPerformanceType',
     section: 'operationsEvaluaopsEvalAndLearningMisctionAndLearning'
   },
   PROCESS_PART_APPEALS: {
@@ -135,7 +120,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     ],
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearningMisc:participantAppeal',
-    answer: 'translateBoolean',
     multiPart: true,
     multiPartQuestion: 'translateAppealsQuestionType',
     section: 'opsEvalAndLearningMisc'
@@ -145,7 +129,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'evaluationApproaches',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:evaluationApproaches.label',
-    answer: 'translateEvaluationApproachType',
     section: 'opsEvalAndLearningMisc'
   },
   QUALITY_PERFORMANCE_SCORES: {
@@ -153,7 +136,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
-    answer: 'translateDataForMonitoringType',
     section: 'opsEvalAndLearningMisc'
   },
   CLAIMS_BASED_MEASURES: {
@@ -161,7 +143,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
-    answer: 'translateDataForMonitoringType',
     section: 'opsEvalAndLearningMisc'
   },
   DATA_TO_SUPPORT_EVAL: {
@@ -169,7 +150,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
-    answer: 'translateDataForMonitoringType',
     section: 'opsEvalAndLearningMisc'
   },
   DATA_TO_MONITOR: {
@@ -177,7 +157,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'dataNeededForMonitoring',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:dataNeededForMonitoring.label',
-    answer: 'translateDataForMonitoringType',
     section: 'opsEvalAndLearningMisc'
   },
   SEND_REPDATA_TO_PART: {
@@ -185,7 +164,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'dataToSendParticicipants',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:dataToSendParticicipants.label',
-    answer: 'translateDataToSendParticipantsType',
     section: 'opsEvalAndLearningMisc'
   },
   PART_TO_PART_COLLAB: {
@@ -193,7 +171,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:modelLearningSystems.label',
-    answer: 'translateModelLearningSystemType',
     section: 'opsEvalAndLearning'
   },
   EDUCATE_BENEF: {
@@ -201,7 +178,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:modelLearningSystems.label',
-    answer: 'translateModelLearningSystemType',
     section: 'opsEvalAndLearningMisc'
   },
   ACQUIRE_A_LEARN_CONT: {
@@ -209,7 +185,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:modelLearningSystems.label',
-    answer: 'translateModelLearningSystemType',
     section: 'opsEvalAndLearningMisc'
   },
   UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR: {
@@ -217,7 +192,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'developNewQualityMeasures',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:developNewQualityMeasures.label',
-    answer: 'translateBoolean',
     section: 'opsEvalAndLearningMisc'
   },
   IT_PLATFORM_FOR_LEARNING: {
@@ -225,7 +199,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:modelLearningSystems.label',
-    answer: 'translateModelLearningSystemType',
     section: 'opsEvalAndLearningMisc'
   },
   ADJUST_FFS_CLAIMS: {
@@ -233,7 +206,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'payType',
     parentField: 'payments',
     question: 'payments:payType.label',
-    answer: 'translatePayType',
     section: 'paymentsMisc'
   },
   MANAGE_FFS_EXCL_PAYMENTS: {
@@ -241,7 +213,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'shouldAnyProvidersExcludedFFSSystems',
     parentField: 'payments',
     question: 'payments:shouldAnyProvidersExcludedFFSSystems.label',
-    answer: 'translateBoolean',
     section: 'paymentsMisc'
   },
   MAKE_NON_CLAIMS_BASED_PAYMENTS: {
@@ -249,7 +220,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'payType',
     parentField: 'payments',
     question: 'payments:payType.label',
-    answer: 'translatePayType',
     section: 'paymentsMisc'
   },
   COMPUTE_SHARED_SAVINGS_PAYMENT: {
@@ -257,7 +227,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'nonClaimsPayments',
     parentField: 'payments',
     question: 'payments:nonClaimsPayments.label',
-    answer: 'translateNonClaimsBasedPayType',
     section: 'paymentsMisc'
   },
   RECOVER_PAYMENTS: {
@@ -265,7 +234,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'willRecoverPayments',
     parentField: 'payments',
     question: 'payments:willRecoverPayments.label',
-    answer: 'translateBoolean',
     section: 'paymentsMisc'
   }
 };

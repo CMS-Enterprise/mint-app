@@ -94,7 +94,7 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-affects-medicare-secondary-payer-claims-Yes')
+    cy.get('#payment-affects-medicare-secondary-payer-claims-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -148,7 +148,7 @@ describe('The Model Plan Payment Form', () => {
       .type('Bill in accounting')
       .should('have.value', 'Bill in accounting');
 
-    cy.get('#payment-waive-any-service-Yes')
+    cy.get('#payment-waive-any-service-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -213,7 +213,7 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-multiple-payments-Yes')
+    cy.get('#payment-multiple-payments-true')
       .check({ force: true })
       .should('be.checked');
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconExpandLess, IconExpandMore } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { NeedMap } from 'data/operationalNeedMap';
@@ -108,7 +109,9 @@ const InfoToggle = ({
                       key={answer.toString()}
                       data-testid={answer.toString()}
                     >
-                      {needsTranslations[needConfig.answer](answer)}
+                      {i18next.t(
+                        `${needConfig.parentField}:${needConfig.fieldName}.options.${answer}`
+                      )}
                     </li>
                   ))}
 
@@ -119,7 +122,10 @@ const InfoToggle = ({
                       {needsTranslations[needConfig.multiPartQuestion!](
                         answer.question
                       )}{' '}
-                      - {needsTranslations[needConfig.answer](answer.answer)}
+                      -{' '}
+                      {i18next.t(
+                        `${needConfig.parentField}:${answer.question}.options.${answer.answer}`
+                      )}
                     </li>
                   ))}
               </ul>
