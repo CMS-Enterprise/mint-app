@@ -10,7 +10,6 @@ export interface NeedMap {
   section: string;
 }
 
-// TODO: replance 'answer' translation methods with new mapped translations enums once all work is done
 const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
   MANAGE_CD: {
     route: 'characteristics/key-characteristics',
