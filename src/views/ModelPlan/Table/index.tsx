@@ -12,6 +12,7 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -34,10 +35,7 @@ import {
 import { formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalFilterCellText from 'utils/globalFilterCellText';
-import {
-  translateKeyCharacteristics,
-  translateModelPlanStatus
-} from 'utils/modelPlan';
+import { translateModelPlanStatus } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -277,9 +275,11 @@ const DraftModelPlansTable = ({
         Cell: ({ value }: { value: KeyCharacteristic[] }) => {
           if (value) {
             return value
-              .map(characteristics =>
-                translateKeyCharacteristics(characteristics)
-              )
+              .map(characteristics => {
+                return i18next.t<string>(
+                  `generalCharacteristics:keyCharacteristics.options.${characteristics}`
+                );
+              })
               .join(', ');
           }
           return null;

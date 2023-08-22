@@ -6,7 +6,6 @@ export interface NeedMap {
   parentField: string;
   question: string; // Translation function name to a need question
   multiPart?: boolean; // Used to idenfify if multiple question pertain to a single need
-  multiPartQuestion?: string; // Used to identify translations of each quest that pertains to this need,
   section: string;
 }
 
@@ -120,7 +119,6 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearningMisc:participantAppeal',
     multiPart: true,
-    multiPartQuestion: 'translateAppealsQuestionType',
     section: 'opsEvalAndLearningMisc'
   },
   ACQUIRE_AN_EVAL_CONT: {

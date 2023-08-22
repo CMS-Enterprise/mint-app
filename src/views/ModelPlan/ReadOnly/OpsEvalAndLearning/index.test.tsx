@@ -2,10 +2,10 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import i18next from 'i18next';
 
 import { modelID, opsEvalAndLearningMocks as mocks } from 'data/mock/readonly';
 import { DataToSendParticipantsType } from 'types/graphql-global-types';
-import { translateDataToSendParticipantsType } from 'utils/modelPlan';
 
 import ReadOnlyOpsEvalAndLearning from './index';
 
@@ -31,8 +31,8 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
       );
       expect(
         screen.getByText(
-          translateDataToSendParticipantsType(
-            DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA
+          i18next.t<string>(
+            `opsEvalAndLearning:dataToSendParticicipants.options.${DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA}`
           )
         )
       ).toBeInTheDocument();
@@ -58,8 +58,8 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
       );
       expect(
         screen.getByText(
-          translateDataToSendParticipantsType(
-            DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA
+          i18next.t<string>(
+            `opsEvalAndLearning:dataToSendParticicipants.options.${DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA}`
           )
         )
       ).toBeInTheDocument();
