@@ -259,14 +259,12 @@ export enum KeyCharacteristic {
 
 export enum ModelCategory {
   ACCOUNTABLE_CARE = "ACCOUNTABLE_CARE",
-  DEMONSTRATION = "DEMONSTRATION",
-  EPISODE_BASED_PAYMENT_INITIATIVES = "EPISODE_BASED_PAYMENT_INITIATIVES",
-  INIT_ACCEL_DEV_AND_TEST = "INIT_ACCEL_DEV_AND_TEST",
-  INIT_MEDICAID_CHIP_POP = "INIT_MEDICAID_CHIP_POP",
-  INIT_SPEED_ADOPT_BEST_PRACTICE = "INIT_SPEED_ADOPT_BEST_PRACTICE",
-  INIT__MEDICARE_MEDICAID_ENROLLEES = "INIT__MEDICARE_MEDICAID_ENROLLEES",
-  PRIMARY_CARE_TRANSFORMATION = "PRIMARY_CARE_TRANSFORMATION",
-  UNKNOWN = "UNKNOWN",
+  DISEASE_SPECIFIC_AND_EPISODIC = "DISEASE_SPECIFIC_AND_EPISODIC",
+  HEALTH_PLAN = "HEALTH_PLAN",
+  PRESCRIPTION_DRUG = "PRESCRIPTION_DRUG",
+  STATE_BASED = "STATE_BASED",
+  STATUTORY = "STATUTORY",
+  TO_BE_DETERMINED = "TO_BE_DETERMINED",
 }
 
 export enum ModelLearningSystemType {
@@ -642,6 +640,7 @@ export interface PlanBasicsChanges {
   demoCode?: string | null;
   amsModelID?: string | null;
   modelCategory?: ModelCategory | null;
+  additionalModelCategories?: ModelCategory[] | null;
   cmsCenters?: CMSCenter[] | null;
   cmsOther?: string | null;
   cmmiGroups?: CMMIGroup[] | null;

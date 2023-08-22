@@ -15,6 +15,7 @@ export interface GetAllBasics_modelPlan_basics {
   demoCode: string | null;
   amsModelID: string | null;
   modelCategory: ModelCategory | null;
+  additionalModelCategories: ModelCategory[];
   cmsCenters: CMSCenter[];
   cmsOther: string | null;
   cmmiGroups: CMMIGroup[];

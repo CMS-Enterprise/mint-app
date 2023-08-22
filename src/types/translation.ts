@@ -112,6 +112,7 @@ export type TranslationBasics = {
   amsModelID: TranslationFieldProperties;
   demoCode: TranslationFieldProperties;
   modelCategory: TranslationFieldPropertiesWithOptions<ModelCategory>;
+  additionalModelCategories: TranslationFieldPropertiesWithOptions<ModelCategory>;
   cmsCenters: TranslationFieldPropertiesWithOptions<CMSCenter>;
   cmmiGroups: TranslationFieldPropertiesWithOptions<CMMIGroup>;
   // Overview
