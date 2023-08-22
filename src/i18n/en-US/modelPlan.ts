@@ -1,16 +1,5 @@
 const plan = {
   home: 'Home',
-  teamRoles: {
-    modelLead: 'Model Lead',
-    leadership: 'Leadership',
-    evaluation: 'Evaluation',
-    learning: 'Learning',
-    modelTeam: 'Model Team',
-    itLead: 'IT Lead',
-    oact: 'OACT',
-    payment: 'Payment',
-    quality: 'Quality'
-  },
   favorite: {
     modelLead: 'Model lead(s)',
     startDate: 'Start date',

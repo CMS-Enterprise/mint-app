@@ -12,31 +12,6 @@ import { getKeys } from 'types/translation';
  * Translate the API enum to a human readable string
  */
 
-export const translateTeamRole = (teamRole: string) => {
-  switch (teamRole) {
-    case 'EVALUATION':
-      return i18next.t('plan:teamRoles.evaluation');
-    case 'IT_LEAD':
-      return i18next.t('plan:teamRoles.itLead');
-    case 'LEADERSHIP':
-      return i18next.t('plan:teamRoles.leadership');
-    case 'LEARNING':
-      return i18next.t('plan:teamRoles.learning');
-    case 'MODEL_LEAD':
-      return i18next.t('plan:teamRoles.modelLead');
-    case 'MODEL_TEAM':
-      return i18next.t('plan:teamRoles.modelTeam');
-    case 'OACT':
-      return i18next.t('plan:teamRoles.oact');
-    case 'PAYMENT':
-      return i18next.t('plan:teamRoles.payment');
-    case 'QUALITY':
-      return i18next.t('plan:teamRoles.quality');
-    default:
-      return '';
-  }
-};
-
 export const translateSubtasks = (status: string) => {
   switch (status) {
     case OperationalSolutionSubtaskStatus.TODO:

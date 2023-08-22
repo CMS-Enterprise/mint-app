@@ -17,7 +17,6 @@ import {
   GetModelCollaborators_modelPlan_collaborators as CollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
 import { TeamRole } from 'types/graphql-global-types';
-import { translateTeamRole } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
@@ -30,12 +29,14 @@ const TeamGroupings = ({
   collaborators: CollaboratorsType[];
 }) => {
   const { t } = useTranslation('generalReadOnly');
+  const { t: collaboratorsT } = useTranslation('collaborators');
+
   return (
     <SectionWrapper className="team-groupings--section-wrapper padding-bottom-3 border-base-light margin-bottom-4">
       <h2 className="margin-top-0 margin-bottom-4">
         {role === TeamRole.MODEL_LEAD
           ? t('contactInfo.modelLeads')
-          : translateTeamRole(role)}
+          : collaboratorsT(`teamRole.options.${role}`)}
       </h2>
       {collaborators
         .filter(c => c.teamRole === role)

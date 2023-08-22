@@ -3,7 +3,6 @@ import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import itSolutions from './draftModelPlan/itSolutions';
-import newModel from './draftModelPlan/newModel';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
@@ -13,6 +12,7 @@ import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
+import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
 import {
   generalCharacteristics,
   generalCharacteristicsMisc
@@ -72,7 +72,6 @@ const enUS = {
   modelPlanTaskList,
   modelSummary,
   nda,
-  newModel,
   // New Translation
   modelPlan,
   modelPlanMisc,
@@ -88,6 +87,8 @@ const enUS = {
   opsEvalAndLearningMisc,
   payments,
   paymentsMisc,
+  collaborators,
+  collaboratorsMisc,
   miscellaneous,
   // End new translation
   prepareForClearance,

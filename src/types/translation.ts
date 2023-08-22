@@ -50,6 +50,7 @@ import {
   SelectionMethodType,
   StakeholdersType,
   TaskStatus,
+  TeamRole,
   TriStateAnswer,
   TrustFundType,
   WaiverType
@@ -74,7 +75,7 @@ export type TranslationFieldProperties = {
   readonlyLabel?: string;
   sublabel?: string;
   multiSelectLabel?: string;
-  dataType: 'string' | 'number' | 'boolean' | 'date' | 'enum';
+  dataType: 'string' | 'number' | 'boolean' | 'date' | 'enum' | 'object';
   isArray?: boolean;
   formType:
     | 'text'
@@ -457,6 +458,12 @@ export type TranslationPayments = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+// Collaborators
+export type TranslationCollaborators = {
+  teamRole: TranslationFieldPropertiesWithOptions<TeamRole>;
+  username: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -465,4 +472,5 @@ export type TranslationPlan = {
   beneficiaries: TranslationBeneficiaries;
   opsEvalAndLearning: TranslationOpsEvalAndLearning;
   payments: TranslationPayments;
+  collaborators: TranslationCollaborators;
 };

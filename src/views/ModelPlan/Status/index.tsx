@@ -86,11 +86,11 @@ const Status = () => {
                 <span>{miscellaneousT('tasklistBreadcrumb')}</span>
               </BreadcrumbLink>
             </Breadcrumb>
-            <Breadcrumb current>{modelPlanMiscT('heading')}</Breadcrumb>
+            <Breadcrumb current>{modelPlanMiscT('headingStatus')}</Breadcrumb>
           </BreadcrumbBar>
 
           <PageHeading className="margin-bottom-1">
-            {modelPlanMiscT('heading')}
+            {modelPlanMiscT('headingStatus')}
           </PageHeading>
 
           <p className="margin-bottom-6 line-height-body-5">
