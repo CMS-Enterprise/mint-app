@@ -27,6 +27,7 @@ declare global {
 
    interface Window {
     Cypress: any;
+    Beacon: any;
     store: any;
   }
 }

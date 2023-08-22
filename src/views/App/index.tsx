@@ -17,6 +17,7 @@ import { MessageProvider } from 'hooks/useMessage';
 import usePrevLocation from 'hooks/usePrevious';
 import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
+import BeaconWrapper from 'views/BeaconWrapper';
 import Cookies from 'views/Cookies';
 import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
@@ -232,22 +233,24 @@ const App = () => {
                 <MessageProvider>
                   <FlagsWrapper>
                     <UserInfoWrapper>
-                      <NDAWrapper>
-                        <ModelAccessWrapper>
-                          <ModelInfoWrapper>
-                            <TimeOutWrapper>
-                              <NavContextProvider>
-                                <PageWrapper>
-                                  <Header />
-                                  <TaskListBannerAlert />
-                                  <AppRoutes />
-                                  <Footer />
-                                </PageWrapper>
-                              </NavContextProvider>
-                            </TimeOutWrapper>
-                          </ModelInfoWrapper>
-                        </ModelAccessWrapper>
-                      </NDAWrapper>
+                      <BeaconWrapper>
+                        <NDAWrapper>
+                          <ModelAccessWrapper>
+                            <ModelInfoWrapper>
+                              <TimeOutWrapper>
+                                <NavContextProvider>
+                                  <PageWrapper>
+                                    <Header />
+                                    <TaskListBannerAlert />
+                                    <AppRoutes />
+                                    <Footer />
+                                  </PageWrapper>
+                                </NavContextProvider>
+                              </TimeOutWrapper>
+                            </ModelInfoWrapper>
+                          </ModelAccessWrapper>
+                        </NDAWrapper>
+                      </BeaconWrapper>
                     </UserInfoWrapper>
                   </FlagsWrapper>
                 </MessageProvider>
