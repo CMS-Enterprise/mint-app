@@ -2,6 +2,9 @@ package resolvers
 
 import (
 	"context"
+	"database/sql"
+	"errors"
+	"fmt"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -200,7 +203,11 @@ func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID
 	result, err := thunk()
 
 	if err != nil {
-		return nil, err
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, fmt.Errorf("no plan basics found for the given modelPlanID: %w", err)
+		}
+
+		return nil, fmt.Errorf("failed to fetch the plan basics: %w", err)
 	}
 
 	return result.(*models.PlanBasics), nil

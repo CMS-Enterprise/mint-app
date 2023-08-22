@@ -2,8 +2,6 @@ package resolvers
 
 import (
 	"context"
-	"database/sql"
-	"errors"
 	"fmt"
 	"strings"
 
@@ -298,24 +296,12 @@ func ModelPlanShare(
 ) (bool, error) {
 	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			logger.Warn("No model plan found for the given modelPlanID",
-				zap.String("modelPlanID", modelPlanID.String()))
-			return false, fmt.Errorf("no model plan found for the given modelPlanID: %w", err)
-		}
-
-		return false, fmt.Errorf("failed to fetch the model plan: %w", err)
+		return false, err
 	}
 
 	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			logger.Warn("No plan basics found for the given modelPlanID",
-				zap.String("modelPlanID", modelPlanID.String()))
-			return false, fmt.Errorf("no plan basics found for the given modelPlanID: %w", err)
-		}
-
-		return false, fmt.Errorf("failed to fetch the plan basics: %w", err)
+		return false, err
 	}
 
 	// Get client address
