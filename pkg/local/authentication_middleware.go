@@ -79,7 +79,7 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	// NOTE: We only allow nonprod job codes here. This is reflected in src/views/AuthenticationWrapper/DevLogin.tsx only pulling nonprod job codes
 	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
 	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
-	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT_CTR_FFS_NONPROD"))
+	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT_CTR_FFS_NONPROD") || swag.ContainsStrings(config.JobCodes, "MINT_CONTRACTOR_FFS"))
 
 	// Always set assessment users to have base user permissions
 	if jcAssessment {
