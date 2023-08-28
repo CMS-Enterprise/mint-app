@@ -270,13 +270,12 @@ exports[`SixPagerMeeting matches the snapshot 1`] = `
                     CMMI Front Office (FO) – for health equity
                   </li>
                   <li>
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/?solution=learning-and-diffusion-group&section=about"
                     >
                       Learning and Diffusion Group (LDG)
-                    </button>
+                    </a>
                      – for learning
                   </li>
                   <li>
