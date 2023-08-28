@@ -203,25 +203,15 @@ const SixPagerMeeting = () => {
                     {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.two')}
                   </li>
                   <li>
-                    {/* <Button
-                      type="button"
-                      unstyled
-                      onClick={() => setLDGmodal(true)}
-                    >
-                      {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.ldg')}
-                    </Button>
-                    {sixPageMeetingT(
-                      'crossCuttingGroupsSummaryBox.item.learning'
-                    )} */}
-
                     <UswdsReactLink
-                      className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                      className="usa-button usa-button--unstyled"
                       to={ldgRoute}
                     >
                       {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.ldg')}
-                      <IconArrowForward className="margin-left-1" />
                     </UswdsReactLink>
-                    {/* TODO: LDG Resource Panel popup */}
+                    {sixPageMeetingT(
+                      'crossCuttingGroupsSummaryBox.item.learning'
+                    )}
                   </li>
                   <li>
                     {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.four')}
