@@ -7,13 +7,14 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Dropdown,
   Fieldset,
   Grid,
   GridContainer,
   IconArrowBack,
+  IconInfo,
   Label,
   Link as TrussLink,
+  Radio,
   SummaryBox,
   TextInput
 } from '@trussworks/react-uswds';
@@ -31,6 +32,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
+import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
@@ -41,7 +43,7 @@ import {
 } from 'queries/Basics/types/GetModelPlanInfo';
 import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
 import UpdateModelPlanAndBasics from 'queries/UpdateModelPlanAndBasics';
-import { CMSCenter } from 'types/graphql-global-types';
+import { CMSCenter, ModelCategory } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
@@ -60,6 +62,7 @@ const BasicsContent = () => {
 
   const {
     modelCategory: modelCategoryConfig,
+    additionalModelCategories: additionalModelCategoriesConfig,
     cmsCenters: cmsCentersConfig,
     cmmiGroups: cmmiGroupsConfig
   } = usePlanTranslation('basics');
@@ -100,6 +103,7 @@ const BasicsContent = () => {
     demoCode,
     amsModelID,
     modelCategory,
+    additionalModelCategories,
     cmsCenters,
     cmmiGroups,
     cmsOther
@@ -135,6 +139,7 @@ const BasicsContent = () => {
           demoCode: updateBasics.demoCode,
           amsModelID: updateBasics.amsModelID,
           modelCategory: updateBasics.modelCategory,
+          additionalModelCategories: updateBasics.additionalModelCategories,
           cmsCenters: updateBasics.cmsCenters,
           cmmiGroups: updateBasics.cmmiGroups,
           cmsOther: updateBasics.cmsOther
@@ -166,6 +171,7 @@ const BasicsContent = () => {
       demoCode: demoCode ?? '',
       amsModelID: amsModelID ?? '',
       modelCategory: modelCategory ?? null,
+      additionalModelCategories: additionalModelCategories ?? [],
       cmsCenters: cmsCenters ?? [],
       cmmiGroups: cmmiGroups ?? [],
       cmsOther: cmsOther ?? ''
@@ -211,6 +217,9 @@ const BasicsContent = () => {
       <PageHeading className="margin-top-4">
         {basicsMiscT('heading')}
       </PageHeading>
+      <p className="margin-top-1 margin-bottom-2 line-height-sans-3">
+        {basicsMiscT('description')}
+      </p>
 
       <AskAQuestion modelID={modelID} />
 
@@ -267,7 +276,6 @@ const BasicsContent = () => {
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
                     <Form
-                      className="margin-top-4"
                       onSubmit={e => {
                         handleSubmit(e);
                         window.scrollTo(0, 0);
@@ -415,33 +423,123 @@ const BasicsContent = () => {
                             {flatErrors['basics.modelCategory']}
                           </FieldErrorMsg>
 
-                          <Field
-                            as={Dropdown}
-                            id="plan-basics-model-category"
-                            name="basics.modelCategory"
-                            value={values.basics.modelCategory || ''}
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setFieldValue(
-                                'basics.modelCategory',
-                                e.target.value
-                              );
-                            }}
+                          <Fieldset>
+                            {getKeys(modelCategoryConfig.options).map(key => (
+                              <Fragment key={key}>
+                                <Field
+                                  as={Radio}
+                                  id={`plan-basics-model-category-${key}`}
+                                  data-testid={`plan-basics-model-category-${key}`}
+                                  name="basics.modelCategory"
+                                  label={
+                                    <span
+                                      className="display-flex flex-align-center"
+                                      style={{ gap: '4px' }}
+                                    >
+                                      {modelCategoryConfig.options[key]}
+                                      {key !==
+                                        ModelCategory.TO_BE_DETERMINED && (
+                                        <Tooltip
+                                          label={
+                                            modelCategoryConfig.optionsLabels?.[
+                                              key
+                                            ] || ''
+                                          }
+                                          position="right"
+                                        >
+                                          <IconInfo className="text-base-light" />
+                                        </Tooltip>
+                                      )}
+                                    </span>
+                                  }
+                                  value={key}
+                                  checked={values.basics.modelCategory === key}
+                                  onChange={() => {
+                                    setFieldValue('basics.modelCategory', key);
+                                    if (
+                                      values.basics.additionalModelCategories.includes(
+                                        key
+                                      )
+                                    ) {
+                                      values.basics.additionalModelCategories.splice(
+                                        values.basics.additionalModelCategories.indexOf(
+                                          key
+                                        ),
+                                        1
+                                      );
+                                    }
+                                  }}
+                                />
+                              </Fragment>
+                            ))}
+                          </Fieldset>
+                        </FieldGroup>
+
+                        <FieldGroup
+                          error={
+                            !!flatErrors['basics.additionalModelCategories']
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="basics.additionalModelCategories"
+                            className="text-normal"
                           >
-                            <option key="default-select" disabled value="">
-                              {`-${miscellaneousT('select')}-`}
-                            </option>
-                            {getKeys(modelCategoryConfig.options).map(
-                              category => {
-                                return (
-                                  <option key={category} value={category}>
-                                    {modelCategoryConfig.options[category]}
-                                  </option>
-                                );
-                              }
-                            )}
-                          </Field>
+                            {basicsT('additionalModelCategories.label')}
+                          </Label>
+
+                          <span className="usa-hint display-block text-normal margin-top-1">
+                            {basicsT('additionalModelCategories.sublabel')}
+                          </span>
+
+                          <FieldErrorMsg>
+                            {flatErrors['basics.additionalModelCategories']}
+                          </FieldErrorMsg>
+
+                          {getKeys(additionalModelCategoriesConfig.options)
+                            .filter(
+                              key => key !== ModelCategory.TO_BE_DETERMINED
+                            )
+                            .map(group => {
+                              return (
+                                <Fragment key={group}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`plan-basics-model-additional-category-${group}`}
+                                    testid={`plan-basics-model-additional-category-${group}`}
+                                    name="basics.additionalModelCategories"
+                                    disabled={
+                                      values.basics.modelCategory === group
+                                    }
+                                    label={
+                                      <span
+                                        className="display-flex flex-align-center"
+                                        style={{ gap: '4px' }}
+                                      >
+                                        {
+                                          additionalModelCategoriesConfig
+                                            .options[group]
+                                        }
+
+                                        <Tooltip
+                                          label={
+                                            additionalModelCategoriesConfig
+                                              .optionsLabels?.[group] || ''
+                                          }
+                                          position="right"
+                                        >
+                                          <IconInfo className="text-base-light" />
+                                        </Tooltip>
+                                      </span>
+                                    }
+                                    value={group}
+                                    checked={values.basics.additionalModelCategories.includes(
+                                      group
+                                    )}
+                                  />
+                                </Fragment>
+                              );
+                            })}
                         </FieldGroup>
 
                         <FieldGroup
@@ -449,7 +547,7 @@ const BasicsContent = () => {
                           error={!!flatErrors['basics.cmsCenters']}
                           className="margin-top-4"
                         >
-                          <Fieldset legend={basicsT('cmsCenters.label')}>
+                          <Fieldset>
                             <FieldArray
                               name="basics.cmsCenters"
                               render={arrayHelpers => (

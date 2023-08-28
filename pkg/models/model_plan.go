@@ -32,15 +32,13 @@ type ModelCategory string
 
 // These constants represent the different values of ModelCategory
 const (
-	MCAccountableCare           ModelCategory = "ACCOUNTABLE_CARE"
-	MCDemonstration             ModelCategory = "DEMONSTRATION"
-	MCEBPaymentInitiatives      ModelCategory = "EPISODE_BASED_PAYMENT_INITIATIVES"
-	MCMedicaidAndChip           ModelCategory = "INIT_MEDICAID_CHIP_POP"
-	MCMedicareAndMedicaid       ModelCategory = "INIT__MEDICARE_MEDICAID_ENROLLEES"
-	MCAccelerateDevAndTest      ModelCategory = "INIT_ACCEL_DEV_AND_TEST"
-	MCSpeedBestPracticeAdopt    ModelCategory = "INIT_SPEED_ADOPT_BEST_PRACTICE"
-	MCPrimaryCareTransformation ModelCategory = "PRIMARY_CARE_TRANSFORMATION"
-	MCTBD                       ModelCategory = "UNKNOWN"
+	MCAccountableCare            ModelCategory = "ACCOUNTABLE_CARE"
+	MCDiseaseSpecificAndEpisodic ModelCategory = "DISEASE_SPECIFIC_AND_EPISODIC"
+	MCHealthPlan                 ModelCategory = "HEALTH_PLAN"
+	MCPrescriptionDrug           ModelCategory = "PRESCRIPTION_DRUG"
+	MCStateBased                 ModelCategory = "STATE_BASED"
+	MCStatutory                  ModelCategory = "STATUTORY"
+	MCToBeDetermined             ModelCategory = "TO_BE_DETERMINED"
 )
 
 // ModelStatus represents the possible statuses of a Model Plan

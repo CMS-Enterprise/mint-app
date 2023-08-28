@@ -4,16 +4,46 @@ const getAccess = {
   title: 'How to get access to MINT',
   description:
     'This guide covers the steps to get access to MINT through Enterprise User Administration (EUA) or Identity Management (IDM).',
-  summaryBox: {
-    copy: 'Should I request access through EUA or IDM?',
-    listItem: {
-      employees: 'CMS employees should request access through EUA.',
-      contractors:
-        'CMS contractors with an approved need for access to MINT, Medicare Administrative Contractors, Shared System Maintainers, and Medicare Integrated Systems Testers should request access through IDM.'
+  jobcodes: {
+    heading: 'Which job code should I request?',
+    description:
+      'Use this chart to determine what job code to request by selecting the role that aligns most closely with what you do.',
+    table: {
+      rowHeader: {
+        role: 'Your role',
+        jobCodeToRequest: 'Job code to request'
+      },
+      rowOne: {
+        role: 'CMS employees',
+        jobCodeToRequest: 'MINT_USER in <0>EUA</0>'
+      },
+      rowTwo: {
+        paragraph: 'These contractors <0>with</0> EUA access',
+        roles: [
+          'Medicare Administrative Contractors',
+          'Shared System Maintainers',
+          'Medicare Integrated Systems Testers'
+        ],
+        jobCodeToRequest: 'MINT_CONTRACTOR_FFS in <0>EUA</0>'
+      },
+      rowThree: {
+        paragraph: 'These contractors <0>without</0> EUA access',
+        roles: [
+          'Medicare Administrative Contractors',
+          'Shared System Maintainers',
+          'Medicare Integrated Systems Testers'
+        ],
+        jobCodeToRequest: 'MINT Contractor in <0>IDM</0>'
+      },
+      rowFour: {
+        role:
+          'Any other CMS contractors with an approved need for access to MINT',
+        jobCodeToRequest: 'MINT Contractor in <0>IDM</0>'
+      }
     }
   },
   stepsEUA: {
-    heading: 'Access through EUA',
+    heading: 'Requesting access through EUA',
     description:
       'Below is an overview of the process involved in creating your draft model plan.',
     first: {
@@ -30,9 +60,9 @@ const getAccess = {
         three:
           'You’ll see a screen with all of your active job codes. Below the list, click the <0>Add a Job Code</0> button.',
         four:
-          'Type <0>MINT_USER</0> into the search box and click the <0>Search</0> button.',
+          'Type the name of the job code into the search box (either <0>MINT_USER</0> or <0>MINT_CONTRACTOR_FFS</0> determined using the chart above) and click the <0>Search</0> button.',
         five:
-          'Check the box next to MINT_USER, then click the <0>Select</0> button.',
+          'Check the box next to the job code, then click the <0>Select</0> button.',
         six:
           'Enter a justification reason, then click the <0>Finish</0> button.'
       }
@@ -48,11 +78,7 @@ const getAccess = {
         'After you’ve received an email that your job code request is approved, you can <0>sign in to MINT</0> using your EUA credentials (this is your four-character user ID and password).'
     }
   },
-  accessThroughIDM: 'Access through IDM',
-  accessInfo1:
-    'If you’re a contractor and don’t have an IDM account or your current IDM account uses your EUA credentials (your four-character user ID and password), you must create a new one.',
-  accessInfo2:
-    'Visit <0>home.idm.cms.gov</0> and click <1>New User Registration</1> to create an account. We recommend using an email address for your new user ID, so it’s easy to remember.',
+  accessThroughIDM: 'Requesting access through IDM',
   stepsIDM: {
     first: {
       heading: 'Sign in to IDM',
@@ -69,8 +95,7 @@ const getAccess = {
         one: 'Click the <0>Role Request</0> button.',
         two:
           'The Role Request window will appear with a dropdown to select an application. Select <0>Model Innovation Tool (MINT)</0>.',
-        three:
-          'Then, select the role <0>MINT Medicare Administrative Contractor</0>.'
+        three: 'Then, select the role <0>MINT Contractor</0>.'
       }
     },
     third: {

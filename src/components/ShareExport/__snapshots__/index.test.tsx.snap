@@ -288,22 +288,152 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               </div>
             </div>
             <div
-              class="desktop:grid-col-12"
+              class="grid-row grid-gap"
               data-testid="grid"
             >
               <div
-                class="read-only-section read-only-section--model-category margin-bottom-3"
+                class="desktop:grid-col-6"
+                data-testid="grid"
               >
-                <p
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  Model category
-                </p>
-                <p
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <div
+                    class="read-only-section read-only-section--primary-model-category margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Primary model category
+                    </p>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        State-Based
+                        <span
+                          class="usa-tooltip"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger mint-no-print"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                            title="Models in which a state serves as the main contractual participant"
+                          >
+                            Models in which a state serves as the main contractual participant
+                          </span>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-6"
+                data-testid="grid"
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
                 >
-                  Primary Care Transformation
-                </p>
+                  <div
+                    class="read-only-section read-only-section--additional-model-categories margin-bottom-3"
+                  >
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Additional model categories
+                    </p>
+                    <ul
+                      class="margin-y-0 padding-left-2"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <span
+                          class="display-flex flex-align-center"
+                          style="gap: 4px;"
+                        >
+                          Accountable Care
+                          <span
+                            class="usa-tooltip"
+                            data-testid="tooltipWrapper"
+                          >
+                            <div
+                              aria-describedby="tooltip-550000"
+                              class="usa-tooltip__trigger"
+                              data-testid="triggerElement"
+                              position="right"
+                              tabindex="0"
+                              title=""
+                            >
+                              <svg
+                                class="usa-icon text-base-light"
+                                focusable="false"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              aria-hidden="true"
+                              class="usa-tooltip__body"
+                              data-testid="tooltipBody"
+                              id="tooltip-550000"
+                              role="tooltip"
+                              title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
+                            >
+                              Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
+                            </span>
+                          </span>
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
             <div

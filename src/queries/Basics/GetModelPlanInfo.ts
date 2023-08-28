@@ -12,6 +12,7 @@ export default gql`
         demoCode
         amsModelID
         modelCategory
+        additionalModelCategories
         cmsCenters
         cmsOther
         cmmiGroups
