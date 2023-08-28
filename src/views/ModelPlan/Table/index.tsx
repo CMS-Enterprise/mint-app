@@ -12,6 +12,7 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -34,10 +35,6 @@ import {
 import { formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalFilterCellText from 'utils/globalFilterCellText';
-import {
-  translateKeyCharacteristics,
-  translateModelPlanStatus
-} from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -100,6 +97,7 @@ const DraftModelPlansTable = ({
   tableHidden
 }: TableProps) => {
   const { t } = useTranslation('home');
+  const { t: modelPlanT } = useTranslation('modelPlan');
 
   let queryType = ModelPlanFilter.COLLAB_ONLY;
 
@@ -190,7 +188,7 @@ const DraftModelPlansTable = ({
         Header: t('requestsTable.headers.status'),
         accessor: 'status',
         Cell: ({ value }: { value: ModelStatus }) => {
-          return translateModelPlanStatus(value);
+          return modelPlanT(`status.options.${value}`);
         }
       },
       {
@@ -209,7 +207,7 @@ const DraftModelPlansTable = ({
         }
       }
     ];
-  }, [t, isMAC]);
+  }, [t, isMAC, modelPlanT]);
 
   const macColumns = useMemo(() => {
     return [
@@ -277,9 +275,11 @@ const DraftModelPlansTable = ({
         Cell: ({ value }: { value: KeyCharacteristic[] }) => {
           if (value) {
             return value
-              .map(characteristics =>
-                translateKeyCharacteristics(characteristics)
-              )
+              .map(characteristics => {
+                return i18next.t<string>(
+                  `generalCharacteristics:keyCharacteristics.options.${characteristics}`
+                );
+              })
               .join(', ');
           }
           return null;

@@ -27,7 +27,6 @@ import {
 import { ModelCategory } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
-import { translateModelPlanStatus } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -52,6 +51,7 @@ const Table = ({
   const { t: h } = useTranslation('modelSummary');
   const { t: f } = useTranslation('home');
   const { t: basicsT } = useTranslation('basics');
+  const { t: modelPlanT } = useTranslation('modelPlan');
 
   const columns = useMemo(() => {
     return [
@@ -141,7 +141,7 @@ const Table = ({
       {
         Header: t('allModels.tableHeading.status'),
         accessor: ({ status }: any) => {
-          return translateModelPlanStatus(status);
+          return modelPlanT(`status.options.${status}`);
         },
         Cell: ({ value }: any) => {
           return value;
@@ -176,7 +176,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, updateFavorite, basicsT, h]);
+  }, [t, updateFavorite, basicsT, h, modelPlanT]);
 
   const {
     getTableProps,

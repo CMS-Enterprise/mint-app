@@ -138,7 +138,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                     id="payment-recover-payment-true"
                     name="willRecoverPayments"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -157,7 +157,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                     id="payment-recover-payment-false"
                     name="willRecoverPayments"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
@@ -217,7 +217,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                     id="payment-anticipate-reconciling-payment-retro-true"
                     name="anticipateReconcilingPaymentsRetrospectively"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -236,7 +236,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                     id="payment-anticipate-reconciling-payment-retro-false"
                     name="anticipateReconcilingPaymentsRetrospectively"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"

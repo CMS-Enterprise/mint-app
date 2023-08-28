@@ -488,6 +488,26 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   <input
                     class="usa-checkbox__input"
+                    id="payment-pay-recipients-PROVIDERS"
+                    name="payRecipients"
+                    type="checkbox"
+                    value="PROVIDERS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-PROVIDERS"
+                  >
+                    Providers
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
                     id="payment-pay-recipients-BENEFICIARIES"
                     name="payRecipients"
                     type="checkbox"
@@ -518,26 +538,6 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                     for="payment-pay-recipients-PARTICIPANTS"
                   >
                     Participants
-                  </label>
-                  <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                  />
-                </div>
-                <div
-                  class="mint-checkbox usa-checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    id="payment-pay-recipients-PROVIDERS"
-                    name="payRecipients"
-                    type="checkbox"
-                    value="PROVIDERS"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="payment-pay-recipients-PROVIDERS"
-                  >
-                    Providers
                   </label>
                   <p
                     class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

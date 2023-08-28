@@ -8362,7 +8362,7 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
 @hasRole(role: MINT_USER)
@@ -19761,14 +19761,14 @@ func (ec *executionContext) _Mutation_deletePlanFavorite(ctx context.Context, fi
 			return ec.resolvers.Mutation().DeletePlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
 			if err != nil {
 				return nil, err
 			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
 		}
 
 		tmp, err := directive1(rctx)

@@ -77,11 +77,21 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'payType',
+      'payTypeNote',
       'payClaims',
+      'payClaimsOther',
+      'payClaimsNote',
       'nonClaimsPayments',
+      'nonClaimsPaymentOther',
+      'nonClaimsPaymentsNote',
       'canParticipantsSelectBetweenPaymentMechanisms',
+      'canParticipantsSelectBetweenPaymentMechanismsHow',
+      'canParticipantsSelectBetweenPaymentMechanismsNote',
       'anticipatedPaymentFrequency',
-      'willRecoverPayments'
+      'anticipatedPaymentFrequencyOther',
+      'anticipatedPaymentFrequencyNote',
+      'willRecoverPayments',
+      'willRecoverPaymentsNote'
     ]
   },
   oact: {
@@ -104,11 +114,21 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     beneficiaries: ['precedenceRules'],
     payments: [
       'fundingSource',
+      'fundingSourceTrustFundType',
+      'fundingSourceOther',
+      'fundingSourceNote',
       'fundingSourceR',
+      'fundingSourceRTrustFundType',
+      'fundingSourceROther',
+      'fundingSourceRNote',
       'payClaims',
+      'payClaimsOther',
+      'payClaimsNote',
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
-      'waiveBeneficiaryCostSharingForAnyServices'
+      'waiveBeneficiaryCostSharingForAnyServices',
+      'waiveBeneficiaryCostSharingServiceSpecification',
+      'waiveBeneficiaryCostSharingNote'
     ]
   },
   dfsdm: {
@@ -120,11 +140,22 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'fundingSource',
+      'fundingSourceTrustFundType',
+      'fundingSourceOther',
+      'fundingSourceNote',
       'fundingSourceR',
+      'fundingSourceRTrustFundType',
+      'fundingSourceROther',
+      'fundingSourceRNote',
       'numberPaymentsPerPayCycle',
+      'numberPaymentsPerPayCycleNote',
       'planningToUseInnovationPaymentContractor',
+      'planningToUseInnovationPaymentContractorNote',
       'anticipatedPaymentFrequency',
-      'paymentStartDate'
+      'anticipatedPaymentFrequencyOther',
+      'anticipatedPaymentFrequencyNote',
+      'paymentStartDate',
+      'paymentStartDateNote'
     ]
   },
   ccw: {
@@ -146,7 +177,10 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'useCcwForFileDistribiutionToParticipants',
       'useCcwForFileDistribiutionToParticipantsNote'
     ],
-    payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
+    payments: [
+      'sharedSystemsInvolvedAdditionalClaimPayment',
+      'sharedSystemsInvolvedAdditionalClaimPaymentNote'
+    ]
   },
   ipc: {
     basics: [
@@ -190,15 +224,31 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'fundingSource',
+      'fundingSourceTrustFundType',
+      'fundingSourceOther',
+      'fundingSourceNote',
       'fundingSourceR',
+      'fundingSourceRTrustFundType',
+      'fundingSourceROther',
+      'fundingSourceRNote',
       'payType',
+      'payTypeNote',
       'nonClaimsPayments',
+      'nonClaimsPaymentOther',
+      'nonClaimsPaymentsNote',
       'numberPaymentsPerPayCycle',
+      'numberPaymentsPerPayCycleNote',
       'planningToUseInnovationPaymentContractor',
+      'planningToUseInnovationPaymentContractorNote',
       'anticipatedPaymentFrequency',
+      'anticipatedPaymentFrequencyOther',
+      'anticipatedPaymentFrequencyNote',
       'willRecoverPayments',
+      'willRecoverPaymentsNote',
       'anticipateReconcilingPaymentsRetrospectively',
-      'paymentStartDate'
+      'anticipateReconcilingPaymentsRetrospectivelyNote',
+      'paymentStartDate',
+      'paymentStartDateNote'
     ]
   },
   iddoc: {
@@ -287,19 +337,32 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'shouldAnyProvidersExcludedFFSSystems',
+      'shouldAnyProviderExcludedFFSSystemsNote',
       'changesMedicarePhysicianFeeSchedule',
+      'changesMedicarePhysicianFeeScheduleNote',
       'affectsMedicareSecondaryPayerClaims',
+      'affectsMedicareSecondaryPayerClaimsHow',
+      'affectsMedicareSecondaryPayerClaimsNote',
       'payModelDifferentiation',
       'creatingDependenciesBetweenServices',
+      'creatingDependenciesBetweenServicesNote',
       'needsClaimsDataCollection',
+      'needsClaimsDataCollectionNote',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
+      'waiveBeneficiaryCostSharingServiceSpecification',
+      'waiveBeneficiaryCostSharingNote',
       'nonClaimsPayments',
+      'nonClaimsPaymentOther',
+      'nonClaimsPaymentsNote',
       'waiverOnlyAppliesPartOfPayment',
+      'waiveBeneficiaryCostSharingNote',
       'planningToUseInnovationPaymentContractor',
-      'anticipateReconcilingPaymentsRetrospectively'
+      'planningToUseInnovationPaymentContractorNote',
+      'anticipateReconcilingPaymentsRetrospectively',
+      'anticipateReconcilingPaymentsRetrospectivelyNote'
     ]
   },
   pbg: {
@@ -353,19 +416,31 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     payments: [
       'shouldAnyProvidersExcludedFFSSystems',
+      'shouldAnyProviderExcludedFFSSystemsNote',
       'changesMedicarePhysicianFeeSchedule',
+      'changesMedicarePhysicianFeeScheduleNote',
       'affectsMedicareSecondaryPayerClaims',
+      'affectsMedicareSecondaryPayerClaimsHow',
+      'affectsMedicareSecondaryPayerClaimsNote',
       'payModelDifferentiation',
       'creatingDependenciesBetweenServices',
+      'creatingDependenciesBetweenServicesNote',
       'needsClaimsDataCollection',
+      'needsClaimsDataCollectionNote',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
       'waiverOnlyAppliesPartOfPayment',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
+      'waiveBeneficiaryCostSharingServiceSpecification',
+      'waiveBeneficiaryCostSharingNote',
       'nonClaimsPayments',
+      'nonClaimsPaymentOther',
+      'nonClaimsPaymentsNote',
       'planningToUseInnovationPaymentContractor',
-      'anticipateReconcilingPaymentsRetrospectively'
+      'planningToUseInnovationPaymentContractorNote',
+      'anticipateReconcilingPaymentsRetrospectively',
+      'anticipateReconcilingPaymentsRetrospectivelyNote'
     ]
   },
   mdm: {

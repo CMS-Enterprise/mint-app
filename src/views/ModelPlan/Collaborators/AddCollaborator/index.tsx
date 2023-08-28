@@ -20,8 +20,8 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import Spinner from 'components/Spinner';
-import teamRoles from 'constants/enums/teamRoles';
 import useMessage from 'hooks/useMessage';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
 import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
 import {
@@ -37,15 +37,23 @@ import {
   UpdateModelPlanCollaboratorVariables
 } from 'queries/Collaborators/types/UpdateModelPlanCollaborator';
 import UpdateModelPlanCollaborator from 'queries/Collaborators/UpdateModelPlanCollaborator';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { translateTeamRole } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 const Collaborators = () => {
+  const { t: collaboratorsT } = useTranslation('collaborators');
+
+  const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const { teamRole: teamRoleConfig } = usePlanTranslation('collaborators');
+
   const { modelID } = useParams<{ modelID: string }>();
+
   const { collaboratorId } = useParams<{ collaboratorId: string }>();
-  const { t: h } = useTranslation('draftModelPlan');
-  const { t } = useTranslation('newModel');
+
   const formikRef = useRef<FormikProps<CollaboratorFormType>>(null);
 
   const { showMessageOnNextPage } = useMessage();
@@ -98,9 +106,9 @@ const Collaborators = () => {
                   data-testid="success-collaborator-alert"
                   className="margin-y-4"
                 >
-                  {t('successUpdateMessage', {
+                  {collaboratorsMiscT('successUpdateMessage', {
                     collaborator: commonName,
-                    role: translateTeamRole(teamRole!)
+                    role: collaboratorsT(`teamRole.options.${teamRole}`)
                   })}
                 </Alert>
               </>
@@ -131,9 +139,9 @@ const Collaborators = () => {
                   data-testid="success-collaborator-alert"
                   className="margin-y-4"
                 >
-                  {t('successMessage', {
+                  {collaboratorsMiscT('successMessage', {
                     collaborator: commonName,
-                    role: translateTeamRole(teamRole!)
+                    role: collaboratorsT(`teamRole.options.${teamRole}`)
                   })}
                 </Alert>
               </>
@@ -148,7 +156,7 @@ const Collaborators = () => {
           if (collaboratorExistingError) {
             formikRef?.current?.setErrors({
               userAccount: {
-                username: t('existingMember')
+                username: collaboratorsMiscT('existingMember')
               }
             });
           } else {
@@ -165,10 +173,14 @@ const Collaborators = () => {
       <div className="grid-container">
         <div className="desktop:grid-col-6">
           <PageHeading className="margin-top-6 margin-bottom-2">
-            {collaboratorId ? t('updateATeamMember') : t('addATeamMember')}
+            {collaboratorId
+              ? collaboratorsMiscT('updateATeamMember')
+              : collaboratorsMiscT('addATeamMember')}
           </PageHeading>
+
           <div className="margin-bottom-6 line-height-body-6">
-            {!collaboratorId && t('searchTeamInfo')} {t('teamInfo')}
+            {!collaboratorId && collaboratorsMiscT('searchTeamInfo')}{' '}
+            {collaboratorsMiscT('teamInfo')}
           </div>
 
           <Formik
@@ -189,19 +201,20 @@ const Collaborators = () => {
                 handleSubmit
               } = formikProps;
               const flatErrors = flattenErrors(errors);
+
               return (
                 <>
-                  {Object.keys(errors).length > 0 && (
+                  {getKeys(errors).length > 0 && (
                     <ErrorAlert
                       testId="formik-validation-errors"
                       classNames="margin-top-3"
-                      heading={h('checkAndFix')}
+                      heading={miscellaneousT('checkAndFix')}
                     >
-                      {Object.keys(flatErrors).map(key => {
+                      {getKeys(flatErrors).map(key => {
                         return (
                           <ErrorAlertMessage
                             key={`Error.${key}`}
-                            errorKey={key}
+                            errorKey={`${key}`}
                             message={flatErrors[key]}
                           />
                         );
@@ -224,8 +237,9 @@ const Collaborators = () => {
                           htmlFor="model-team-cedar-contact"
                           id="label-model-team-cedar-contact"
                         >
-                          {t('teamMemberName')}
+                          {collaboratorsT('username.label')}
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors['userAccount.commonName']}
                         </FieldErrorMsg>
@@ -247,7 +261,7 @@ const Collaborators = () => {
                               className="text-normal margin-top-1 margin-bottom-105 text-base"
                               hint
                             >
-                              {t('startTyping')}
+                              {collaboratorsMiscT('startTyping')}
                             </Label>
 
                             <OktaUserSelect
@@ -275,9 +289,11 @@ const Collaborators = () => {
                         error={!!flatErrors.teamRole}
                       >
                         <Label htmlFor="collaborator-role">
-                          {t('teamMemberRole')}
+                          {collaboratorsT('teamRole.label')}
                         </Label>
+
                         <FieldErrorMsg>{flatErrors.teamRole}</FieldErrorMsg>
+
                         <Field
                           as={Dropdown}
                           id="collaborator-role"
@@ -290,17 +306,16 @@ const Collaborators = () => {
                           }}
                         >
                           <option key="default-select" disabled value="">
-                            {`-${h('select')}-`}
+                            {`-${miscellaneousT('select')}-`}
                           </option>
-                          {Object.keys(teamRoles).map(role => {
+
+                          {getKeys(teamRoleConfig.options).map(role => {
                             return (
                               <option
-                                key={`Collaborator-Role-${translateTeamRole(
-                                  teamRoles[role]
-                                )}`}
+                                key={`Collaborator-Role-${teamRoleConfig.options[role]}`}
                                 value={role || ''}
                               >
-                                {translateTeamRole(teamRoles[role])}
+                                {teamRoleConfig.options[role]}
                               </option>
                             );
                           })}
@@ -314,7 +329,7 @@ const Collaborators = () => {
                         className="margin-y-4"
                       >
                         <span className="mandatory-fields-alert__text">
-                          {t('searchMemberInfo')}
+                          {collaboratorsMiscT('searchMemberInfo')}
                         </span>
                       </Alert>
 
@@ -326,9 +341,10 @@ const Collaborators = () => {
                           }
                         >
                           {!collaboratorId
-                            ? t('addTeamMemberButton')
-                            : t('updateTeamMember')}
+                            ? collaboratorsMiscT('addTeamMemberButton')
+                            : collaboratorsMiscT('updateTeamMember')}
                         </Button>
+
                         {(loading || updateLoading) && (
                           <Spinner className="margin-left-2" />
                         )}
@@ -339,11 +355,12 @@ const Collaborators = () => {
               );
             }}
           </Formik>
+
           <UswdsReactLink to={`/models/${modelID}/collaborators`}>
             <span>&larr; </span>{' '}
             {!collaboratorId
-              ? t('dontAddTeamMember')
-              : t('dontUpdateTeamMember')}
+              ? collaboratorsMiscT('dontAddTeamMember')
+              : collaboratorsMiscT('dontUpdateTeamMember')}
           </UswdsReactLink>
         </div>
       </div>

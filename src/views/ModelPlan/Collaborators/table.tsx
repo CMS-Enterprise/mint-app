@@ -8,7 +8,6 @@ import UswdsReactLink from 'components/LinkWrapper';
 import IconInitial from 'components/shared/IconInitial';
 import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { formatDateLocal } from 'utils/date';
-import { translateTeamRole } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -30,12 +29,14 @@ const CollaboratorsTable = ({
   isLastLead
 }: TableProps) => {
   const { modelID } = useParams<{ modelID: string }>();
-  const { t } = useTranslation('newModel');
+
+  const { t: collaboratorsT } = useTranslation('collaborators');
+  const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
   const columns: any = useMemo(() => {
     return [
       {
-        Header: t('table.name'),
+        Header: collaboratorsMiscT('table.name'),
         accessor: 'userAccount.commonName',
         Cell: ({ row, value }: any) => {
           return (
@@ -48,21 +49,21 @@ const CollaboratorsTable = ({
         }
       },
       {
-        Header: t('table.role'),
+        Header: collaboratorsMiscT('table.role'),
         accessor: 'teamRole',
         Cell: ({ row, value }: any) => {
-          return <>{translateTeamRole(value)}</>;
+          return <>{collaboratorsT(`teamRole.options.${value}`)}</>;
         }
       },
       {
-        Header: t('table.dateAdded'),
+        Header: collaboratorsMiscT('table.dateAdded'),
         accessor: 'createdDts',
         Cell: ({ value }: any) => {
           return formatDateLocal(value, 'MMMM d, yyyy');
         }
       },
       {
-        Header: t('table.actions'),
+        Header: collaboratorsMiscT('table.actions'),
         Cell: ({ row }: any) => {
           if (row.original.teamRole === 'MODEL_LEAD' && isLastLead) {
             return <></>;
@@ -72,18 +73,18 @@ const CollaboratorsTable = ({
               <UswdsReactLink
                 className="margin-right-2"
                 to={`/models/${modelID}/collaborators/add-collaborator/${row.original.id}`}
-                aria-label={`${t('table.edit')} ${
+                aria-label={`${collaboratorsMiscT('table.edit')} ${
                   row.original.userAccount.commonName
                 }`}
               >
-                {t('table.edit')}
+                {collaboratorsMiscT('table.edit')}
               </UswdsReactLink>
 
               {collaborators.length > 1 && (
                 <button
                   className="usa-button usa-button--unstyled line-height-body-5 text-red"
                   type="button"
-                  aria-label={`${t('modal.remove')} ${
+                  aria-label={`${collaboratorsMiscT('modal.remove')} ${
                     row.original.userAccount.commonName
                   }`}
                   onClick={() => {
@@ -91,7 +92,7 @@ const CollaboratorsTable = ({
                     setModalOpen(true);
                   }}
                 >
-                  {t('modal.remove')}
+                  {collaboratorsMiscT('modal.remove')}
                 </button>
               )}
             </>
@@ -100,7 +101,8 @@ const CollaboratorsTable = ({
       }
     ];
   }, [
-    t,
+    collaboratorsT,
+    collaboratorsMiscT,
     modelID,
     setModalOpen,
     setRemoveCollaborator,
@@ -142,7 +144,9 @@ const CollaboratorsTable = ({
   return (
     <div className="collaborator-table">
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
-        <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
+        <caption className="usa-sr-only">
+          {collaboratorsMiscT('requestsTable.caption')}
+        </caption>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>

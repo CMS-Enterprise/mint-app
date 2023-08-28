@@ -2,6 +2,7 @@ import React, { RefObject, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, IconExpandMore } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import i18next from 'i18next';
 
 import CollapsableLink from 'components/shared/CollapsableLink';
 import {
@@ -14,7 +15,6 @@ import {
   GetModelSummary_modelPlan_generalCharacteristics as CharacteristicsType
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { formatDateLocal } from 'utils/date';
-import { translateKeyCharacteristics } from 'utils/modelPlan';
 
 type ModelSummaryProps = {
   characteristics: CharacteristicsType;
@@ -44,13 +44,13 @@ const ModelSummary = ({
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
   // Formatting the data
-  const formattedKeyCharacteristics = characteristics?.keyCharacteristics.map(
-    (item, index) => {
-      return `${translateKeyCharacteristics(item)}${
-        index === characteristics?.keyCharacteristics.length - 1 ? '' : ', '
-      }`;
-    }
-  );
+  const formattedKeyCharacteristics = characteristics?.keyCharacteristics
+    .map((item, index) => {
+      return i18next.t<string>(
+        `generalCharacteristics:keyCharacteristics.options.${item}`
+      );
+    })
+    .join(', ');
 
   const formattedPerformanceStartDate =
     performancePeriodStarts &&

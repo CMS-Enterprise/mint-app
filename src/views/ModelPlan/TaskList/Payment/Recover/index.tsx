@@ -11,14 +11,14 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -28,6 +28,7 @@ import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetRecover from 'queries/Payments/GetRecover';
 import {
@@ -38,6 +39,7 @@ import {
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import sanitizeStatus from 'utils/status';
@@ -46,10 +48,20 @@ import { NotFoundPartial } from 'views/NotFound';
 import { renderCurrentPage, renderTotalPages } from '..';
 
 const Recover = () => {
-  const flags = useFlags();
-  const { t } = useTranslation('payments');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: paymentsT } = useTranslation('payments');
+
+  const { t: paymentsMiscT } = useTranslation('paymentsMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    willRecoverPayments: willRecoverPaymentsConfig,
+    anticipateReconcilingPaymentsRetrospectively: anticipateReconcilingPaymentsRetrospectivelyConfig
+  } = usePlanTranslation('payments');
+
   const { modelID } = useParams<{ modelID: string }>();
+
+  const flags = useFlags();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
@@ -159,18 +171,19 @@ const Recover = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {paymentsMiscT('heading')}
       </PageHeading>
 
       <p
@@ -181,8 +194,9 @@ const Recover = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -218,29 +232,30 @@ const Recover = () => {
               setFieldValue(field, new Date(e.target.value).toISOString());
               delete errors[field as keyof InitialValueType];
             } catch (err) {
-              setFieldError(field, t('validDate'));
+              setFieldError(field, paymentsT('validDate'));
             }
           };
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
@@ -261,7 +276,7 @@ const Recover = () => {
                             htmlFor="payment-recover-payment"
                             className="maxw-none"
                           >
-                            {t('willRecoverPayments')}
+                            {paymentsT('willRecoverPayments.label')}
                           </Label>
 
                           {itSolutionsStarted && (
@@ -278,23 +293,15 @@ const Recover = () => {
                           <FieldErrorMsg>
                             {flatErrors.willRecoverPayments}
                           </FieldErrorMsg>
-                          <Fieldset>
-                            {[true, false].map(key => (
-                              <Field
-                                as={Radio}
-                                key={key}
-                                id={`payment-recover-payment-${key}`}
-                                data-testid={`payment-recover-payment-${key}`}
-                                name="willRecoverPayments"
-                                label={key ? h('yes') : h('no')}
-                                value={key ? 'YES' : 'NO'}
-                                checked={values.willRecoverPayments === key}
-                                onChange={() => {
-                                  setFieldValue('willRecoverPayments', key);
-                                }}
-                              />
-                            ))}
-                          </Fieldset>
+
+                          <BooleanRadio
+                            field="willRecoverPayments"
+                            id="payment-recover-payment"
+                            value={values.willRecoverPayments}
+                            setFieldValue={setFieldValue}
+                            options={willRecoverPaymentsConfig.options}
+                          />
+
                           <AddNote
                             id="payment-recover-payment-note"
                             field="willRecoverPaymentsNote"
@@ -312,36 +319,29 @@ const Recover = () => {
                             htmlFor="payment-anticipate-reconciling-payment-retro"
                             className="maxw-none"
                           >
-                            {t('anticipateReconcilingPaymentsRetrospectively')}
+                            {paymentsT(
+                              'anticipateReconcilingPaymentsRetrospectively.label'
+                            )}
                           </Label>
+
                           <FieldErrorMsg>
                             {
                               flatErrors.anticipateReconcilingPaymentsRetrospectively
                             }
                           </FieldErrorMsg>
-                          <Fieldset>
-                            {[true, false].map(key => (
-                              <Field
-                                as={Radio}
-                                key={key}
-                                id={`payment-anticipate-reconciling-payment-retro-${key}`}
-                                data-testid={`payment-anticipate-reconciling-payment-retro-${key}`}
-                                name="anticipateReconcilingPaymentsRetrospectively"
-                                label={key ? h('yes') : h('no')}
-                                value={key ? 'YES' : 'NO'}
-                                checked={
-                                  values.anticipateReconcilingPaymentsRetrospectively ===
-                                  key
-                                }
-                                onChange={() => {
-                                  setFieldValue(
-                                    'anticipateReconcilingPaymentsRetrospectively',
-                                    key
-                                  );
-                                }}
-                              />
-                            ))}
-                          </Fieldset>
+
+                          <BooleanRadio
+                            field="anticipateReconcilingPaymentsRetrospectively"
+                            id="payment-anticipate-reconciling-payment-retro"
+                            value={
+                              values.anticipateReconcilingPaymentsRetrospectively
+                            }
+                            setFieldValue={setFieldValue}
+                            options={
+                              anticipateReconcilingPaymentsRetrospectivelyConfig.options
+                            }
+                          />
+
                           <AddNote
                             id="payment-anticipate-reconciling-payment-retro-note"
                             field="anticipateReconcilingPaymentsRetrospectivelyNote"
@@ -354,8 +354,8 @@ const Recover = () => {
                               fieldName="paymentStartDate"
                               id="payment-payment-start-date"
                               className="margin-top-6"
-                              label={t('paymentStartDate')}
-                              subLabel={t('paymentStartDateSubcopy')}
+                              label={paymentsT('paymentStartDate.label')}
+                              subLabel={paymentsT('paymentStartDate.sublabel')}
                               placeHolder
                               handleOnBlur={handleOnBlur}
                               formikValue={values.paymentStartDate}
@@ -374,7 +374,7 @@ const Recover = () => {
                           <ReadyForReview
                             id="payment-status"
                             field="status"
-                            sectionName={t('heading')}
+                            sectionName={paymentsMiscT('heading')}
                             status={values.status}
                             setFieldValue={setFieldValue}
                             readyForReviewBy={
@@ -392,14 +392,16 @@ const Recover = () => {
                               handleFormSubmit('back');
                             }}
                           >
-                            {h('back')}
+                            {miscellaneousT('back')}
                           </Button>
+
                           {!flags.hideITLeadExperience && (
                             <Button type="submit" onClick={() => setErrors({})}>
-                              {t('continueToITSolutions')}
+                              {paymentsMiscT('continueToITSolutions')}
                             </Button>
                           )}
                         </div>
+
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
@@ -409,13 +411,15 @@ const Recover = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {h('saveAndReturn')}
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -429,6 +433,7 @@ const Recover = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

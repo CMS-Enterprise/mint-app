@@ -1638,7 +1638,7 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
 @hasRole(role: MINT_USER)
