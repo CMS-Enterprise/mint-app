@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import {
-  Button,
   Grid,
   GridContainer,
   IconArrowForward,
@@ -15,9 +15,9 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
-import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
+import useModalSolutionState from 'hooks/useModalSolutionState';
+import { OperationalSolutionKey } from 'types/graphql-global-types';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
@@ -36,7 +36,18 @@ const Link = ({ scrollTo }: { scrollTo: string }) => {
 
 const SixPagerMeeting = () => {
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
-  const [LDGmodal, setLDGmodal] = useState(false);
+
+  const location = useLocation();
+
+  const [initLocation] = useState<string>(location.pathname);
+
+  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
+    OperationalSolutionKey.LDG
+  );
+
+  const ldgRoute = `${initLocation}${location.search}${
+    location.search ? '&' : '?'
+  }solution=learning-and-diffusion-group&section=about`;
 
   const modelOverviewAndGoals: string[] = sixPageMeetingT(
     'conceptPaper.stepOne.items',
@@ -89,21 +100,16 @@ const SixPagerMeeting = () => {
     { returnObjects: true }
   );
 
-  const selectedSolution = findSolutionByRouteParam(
-    'learning-and-diffusion-group',
-    helpSolutions
-  );
-
   return (
     <>
-      {LDGmodal && selectedSolution && (
+      {renderModal && selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
-          openedFrom="help-article"
+          openedFrom={prevPathname}
           closeRoute="/help-and-knowledge/how-to-have-a-successful-6-pager-meeting"
-          setLDGmodal={setLDGmodal}
         />
       )}
+
       <MainContent>
         <GridContainer>
           <Grid>
@@ -197,7 +203,7 @@ const SixPagerMeeting = () => {
                     {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.two')}
                   </li>
                   <li>
-                    <Button
+                    {/* <Button
                       type="button"
                       unstyled
                       onClick={() => setLDGmodal(true)}
@@ -206,7 +212,15 @@ const SixPagerMeeting = () => {
                     </Button>
                     {sixPageMeetingT(
                       'crossCuttingGroupsSummaryBox.item.learning'
-                    )}
+                    )} */}
+
+                    <UswdsReactLink
+                      className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                      to={ldgRoute}
+                    >
+                      {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.ldg')}
+                      <IconArrowForward className="margin-left-1" />
+                    </UswdsReactLink>
                     {/* TODO: LDG Resource Panel popup */}
                   </li>
                   <li>
