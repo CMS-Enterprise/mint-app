@@ -3,13 +3,13 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor, within } from '@testing-library/react';
+import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { modelID, summaryMock as mocks } from 'data/mock/readonly';
 import { ModelStatus } from 'types/graphql-global-types';
-import { translateModelPlanStatus } from 'utils/modelPlan';
 
 import ReadOnly from './index';
 
@@ -48,7 +48,11 @@ describe('Read Only Model Plan Summary', () => {
     await waitFor(() => {
       const { getByText } = within(screen.getByTestId('task-list-status'));
       expect(
-        getByText(translateModelPlanStatus(ModelStatus.PLAN_DRAFT))
+        getByText(
+          i18next.t<string>(
+            `modelPlan:status.options.${ModelStatus.PLAN_DRAFT}`
+          )
+        )
       ).toBeInTheDocument();
       expect(
         screen.getByTestId('read-only-side-nav__wrapper')
@@ -74,7 +78,11 @@ describe('Read Only Model Plan Summary', () => {
     await waitFor(() => {
       const { getByText } = within(screen.getByTestId('task-list-status'));
       expect(
-        getByText(translateModelPlanStatus(ModelStatus.PLAN_DRAFT))
+        getByText(
+          i18next.t<string>(
+            `modelPlan:status.options.${ModelStatus.PLAN_DRAFT}`
+          )
+        )
       ).toBeInTheDocument();
       expect(
         screen.getByTestId('read-only-side-nav__wrapper')

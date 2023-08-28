@@ -27,8 +27,9 @@ import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound from 'views/NotFound';
 
 const NewPlanContent = () => {
-  const { t: h } = useTranslation('draftModelPlan');
-  const { t } = useTranslation('newModel');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
+
   const history = useHistory();
   const [mutate] = useMutation(CreateDraftModelPlan);
 
@@ -53,12 +54,16 @@ const NewPlanContent = () => {
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
+                <span>{miscellaneousT('home')}</span>
               </BreadcrumbLink>
             </Breadcrumb>
-            <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+            <Breadcrumb current>{modelPlanMiscT('breadcrumb')}</Breadcrumb>
           </BreadcrumbBar>
-          <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
+
+          <PageHeading className="margin-top-4">
+            {modelPlanMiscT('heading')}
+          </PageHeading>
+
           <Alert
             type="info"
             slim
@@ -66,9 +71,10 @@ const NewPlanContent = () => {
             className="margin-bottom-4"
           >
             <span className="mandatory-fields-alert__text">
-              {t('modelNameInfo')}
+              {modelPlanMiscT('modelNameInfo')}
             </span>
           </Alert>
+
           <Formik
             initialValues={{ modelName: '' }}
             onSubmit={handleCreateDraftModelPlan}
@@ -80,13 +86,14 @@ const NewPlanContent = () => {
             {(formikProps: FormikProps<{ modelName: string }>) => {
               const { errors, setErrors, handleSubmit, dirty } = formikProps;
               const flatErrors = flattenErrors(errors);
+
               return (
                 <>
                   {Object.keys(errors).length > 0 && (
                     <ErrorAlert
                       testId="formik-validation-errors"
                       classNames="margin-top-3"
-                      heading={h('checkAndFix')}
+                      heading={miscellaneousT('checkAndFix')}
                     >
                       {Object.keys(flatErrors).map(key => {
                         return (
@@ -111,9 +118,11 @@ const NewPlanContent = () => {
                       error={!!flatErrors.modelName}
                     >
                       <Label htmlFor="new-plan-model-name">
-                        {t('modeName')}
+                        {modelPlanMiscT('modeName')}
                       </Label>
+
                       <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+
                       <Field
                         as={TextInput}
                         error={!!flatErrors.modelName}
@@ -122,20 +131,22 @@ const NewPlanContent = () => {
                         name="modelName"
                       />
                     </FieldGroup>
+
                     <div className="margin-top-5 display-block">
                       <UswdsReactLink
                         className="usa-button usa-button--outline margin-bottom-1"
                         variant="unstyled"
                         to="/models/steps-overview"
                       >
-                        {h('cancel')}
+                        {miscellaneousT('cancel')}
                       </UswdsReactLink>
+
                       <Button
                         type="submit"
                         disabled={!dirty}
                         onClick={() => setErrors({})}
                       >
-                        {h('next')}
+                        {miscellaneousT('next')}
                       </Button>
                     </div>
                   </Form>

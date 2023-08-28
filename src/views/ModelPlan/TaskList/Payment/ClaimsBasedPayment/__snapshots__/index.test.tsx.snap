@@ -365,7 +365,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
                     id="payment-provider-exclusion-ffs-system-true"
                     name="shouldAnyProvidersExcludedFFSSystems"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -384,7 +384,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
                     id="payment-provider-exclusion-ffs-system-false"
                     name="shouldAnyProvidersExcludedFFSSystems"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
@@ -454,7 +454,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
                     id="payment-change-medicare-phyisican-fee-schedule-true"
                     name="changesMedicarePhysicianFeeSchedule"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -473,7 +473,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
                     id="payment-change-medicare-phyisican-fee-schedule-false"
                     name="changesMedicarePhysicianFeeSchedule"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
@@ -534,14 +534,15 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="payment-affects-medicare-secondary-payer-claims-Yes"
+                    data-testid="payment-affects-medicare-secondary-payer-claims-true"
+                    id="payment-affects-medicare-secondary-payer-claims-true"
                     name="affectsMedicareSecondaryPayerClaims"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
-                    for="payment-affects-medicare-secondary-payer-claims-Yes"
+                    for="payment-affects-medicare-secondary-payer-claims-true"
                   >
                     Yes
                   </label>
@@ -552,14 +553,15 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="payment-affects-medicare-secondary-payer-claims-No"
+                    data-testid="payment-affects-medicare-secondary-payer-claims-false"
+                    id="payment-affects-medicare-secondary-payer-claims-false"
                     name="affectsMedicareSecondaryPayerClaims"
                     type="radio"
                     value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
-                    for="payment-affects-medicare-secondary-payer-claims-No"
+                    for="payment-affects-medicare-secondary-payer-claims-false"
                   >
                     No
                   </label>

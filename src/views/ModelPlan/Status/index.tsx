@@ -19,11 +19,11 @@ import * as Yup from 'yup';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
-import modelStatus from 'constants/enums/modelPlanStatuses';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
-import { translateModelPlanStatus } from 'utils/modelPlan';
+import { getKeys } from 'types/translation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 type StatusFormProps = {
@@ -31,8 +31,12 @@ type StatusFormProps = {
 };
 
 const Status = () => {
-  const { t } = useTranslation('plan');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: modelPlanT } = useTranslation('modelPlan');
+  const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const { status: statusConfig } = usePlanTranslation('modelPlan');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
@@ -71,7 +75,7 @@ const Status = () => {
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
+                <span>{miscellaneousT('home')}</span>
               </BreadcrumbLink>
             </Breadcrumb>
             <Breadcrumb>
@@ -79,17 +83,20 @@ const Status = () => {
                 asCustom={Link}
                 to={`/models/${modelID}/task-list/`}
               >
-                <span>{h('tasklistBreadcrumb')}</span>
+                <span>{miscellaneousT('tasklistBreadcrumb')}</span>
               </BreadcrumbLink>
             </Breadcrumb>
-            <Breadcrumb current>{t('status.heading')}</Breadcrumb>
+            <Breadcrumb current>{modelPlanMiscT('headingStatus')}</Breadcrumb>
           </BreadcrumbBar>
+
           <PageHeading className="margin-bottom-1">
-            {t('status.heading')}
+            {modelPlanMiscT('headingStatus')}
           </PageHeading>
+
           <p className="margin-bottom-6 line-height-body-5">
-            {t('status.copy')}
+            {modelPlanMiscT('copy')}
           </p>
+
           <Formik
             initialValues={{ status }}
             enableReinitialize
@@ -119,9 +126,11 @@ const Status = () => {
                   >
                     <FieldGroup scrollElement="status" error={!!errors.status}>
                       <Label htmlFor="Status-Dropdown">
-                        {t('status.label')}
+                        {modelPlanT('status.label')}
                       </Label>
+
                       <ErrorMessage name="status" />
+
                       <Field
                         as={Dropdown}
                         id="Status-Dropdown"
@@ -131,20 +140,19 @@ const Status = () => {
                           setFieldValue('status', e.target.value);
                         }}
                       >
-                        {Object.keys(modelStatus).map(role => {
+                        {getKeys(statusConfig.options).map(role => {
                           return (
                             <option
-                              key={`Status-Dropdown-${translateModelPlanStatus(
-                                modelStatus[role]
-                              )}`}
+                              key={`Status-Dropdown-${statusConfig.options[role]})}`}
                               value={role}
                             >
-                              {translateModelPlanStatus(modelStatus[role])}
+                              {statusConfig.options[role]}
                             </option>
                           );
                         })}
                       </Field>
                     </FieldGroup>
+
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
@@ -152,9 +160,10 @@ const Status = () => {
                         className=""
                         onClick={() => setErrors({})}
                       >
-                        {t('status.updateButton')}
+                        {modelPlanMiscT('updateButton')}
                       </Button>
                     </div>
+
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
@@ -163,7 +172,8 @@ const Status = () => {
                       }
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
-                      {t('status.return')}
+
+                      {modelPlanMiscT('return')}
                     </Button>
                   </Form>
                 </>

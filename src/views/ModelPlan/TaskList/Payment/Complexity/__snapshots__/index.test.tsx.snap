@@ -237,14 +237,15 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="payment-multiple-payments-Yes"
+                    data-testid="payment-multiple-payments-true"
+                    id="payment-multiple-payments-true"
                     name="canParticipantsSelectBetweenPaymentMechanisms"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
-                    for="payment-multiple-payments-Yes"
+                    for="payment-multiple-payments-true"
                   >
                     Yes
                   </label>
@@ -274,14 +275,15 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="payment-multiple-payments-No"
+                    data-testid="payment-multiple-payments-false"
+                    id="payment-multiple-payments-false"
                     name="canParticipantsSelectBetweenPaymentMechanisms"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
-                    for="payment-multiple-payments-No"
+                    for="payment-multiple-payments-false"
                   >
                     No
                   </label>
