@@ -34,7 +34,10 @@ export const HelpAndKnowledgeHome = () => {
 
         <p className="margin-bottom-3 font-body-md">{t('instructions')}</p>
 
-        <HelpCardGroup className="margin-top-2 margin-bottom-1" />
+        <HelpCardGroup
+          className="margin-top-2 margin-bottom-1"
+          showFirstThree
+        />
         <ArticlePageInfo />
       </GridContainer>
 
