@@ -13,7 +13,10 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
+import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
@@ -148,6 +151,131 @@ const ShareExportModal = ({
     </div>
   ));
 
+  const FilterGroupSelect = (
+    <ComboBox
+      ref={comboboxRef}
+      id={`${modalElementId}-filter-group`}
+      name="filterGroup"
+      onChange={value => {
+        if (value !== 'all') {
+          setExportCSV(false);
+        }
+        setFilteredGroup(value as FitlerGroup);
+      }}
+      defaultValue={filteredGroup || 'all'}
+      options={[
+        {
+          value: 'all',
+          label: generalReadOnlyT('modal.allModels')
+        },
+        ...groupOptions
+      ]}
+    />
+  );
+
+  const ShareForm = () => {
+    const [receiverEmails, setReceiverEmails] = useState<string>('');
+    const [optionalMessage, setOptionalMessage] = useState<string>('');
+
+    return (
+      <div data-testid={`${modalElementId}-form`}>
+        <Form
+          className={`${modalElementId}__form`}
+          onSubmit={e => {
+            e.preventDefault();
+            // TODO: call mutation
+          }}
+        >
+          <div className="filter-view__body display-block padding-3 padding-x-4">
+            <h3 className="margin-bottom-05 margin-top-0">
+              {generalReadOnlyT('modal.sharePlan')}
+            </h3>
+
+            <p className="margin-top-0 margin-bottom-3 text-base line-height-sans-2">
+              {generalReadOnlyT('modal.shareDescription')}
+            </p>
+
+            <Alert
+              type="info"
+              className="margin-top-0 margin-bottom-3 text-base line-height-sans-2"
+            >
+              {generalReadOnlyT('modal.shareInfo')}
+            </Alert>
+
+            {/* Filter group select */}
+            <Label
+              htmlFor={`${modalElementId}-filter-group`}
+              className="margin-y-0 text-normal"
+            >
+              {generalReadOnlyT('modal.shareSelectInfo')}
+            </Label>
+
+            {FilterGroupSelect}
+
+            {/* Email address recipient textarea */}
+            <FieldGroup className="margin-top-4">
+              <Label htmlFor="share-model-recipients" className="text-normal">
+                {generalReadOnlyT('modal.sharePlan')}
+              </Label>
+
+              <p className="text-base margin-y-1">
+                {generalReadOnlyT('modal.shareDescription')}
+              </p>
+
+              <TextAreaField
+                className="height-8"
+                id="share-model-recipients"
+                name="receiverEmails"
+                onBlur={() => null}
+                onChange={e => setReceiverEmails(e.currentTarget.value)}
+                value={receiverEmails}
+              />
+            </FieldGroup>
+
+            {/* Optional message textarea */}
+            <FieldGroup className="margin-top-4">
+              <Label
+                htmlFor="share-model-optional-message"
+                className="text-normal"
+              >
+                {generalReadOnlyT('modal.shareOptional')}
+              </Label>
+
+              <TextAreaField
+                className="share-export-modal__optional-message-textarea"
+                id="share-model--optional-message"
+                name="receiverEmails"
+                onBlur={() => null}
+                onChange={e => setOptionalMessage(e.currentTarget.value)}
+                value={optionalMessage}
+              />
+            </FieldGroup>
+          </div>
+
+          {/* Cancel/Export */}
+          <ButtonGroup className="display-flex flex-justify border-top-2px border-base-lighter padding-x-4 padding-y-105 margin-top-4 margin-x-0">
+            <Button
+              type="button"
+              className="usa-button--unstyled margin-top-0 display-flex flex-justify-center"
+              onClick={() => closeModal()}
+            >
+              {generalReadOnlyT('modal.cancel')}
+            </Button>
+
+            <Button
+              type="submit"
+              data-testid="export-model-plan"
+              disabled={!filteredGroup}
+              className="margin-top-0"
+            >
+              {generalReadOnlyT('modal.export')}
+            </Button>
+          </ButtonGroup>
+        </Form>
+      </div>
+    );
+  };
+
   const ExportForm = (
     <div data-testid={`${modalElementId}-form`}>
       <Form
@@ -179,25 +307,7 @@ const ShareExportModal = ({
             {generalReadOnlyT('modal.exportSelectInfo')}
           </Label>
 
-          <ComboBox
-            ref={comboboxRef}
-            id={`${modalElementId}-filter-group`}
-            name="filterGroup"
-            onChange={value => {
-              if (value !== 'all') {
-                setExportCSV(false);
-              }
-              setFilteredGroup(value as FitlerGroup);
-            }}
-            defaultValue={filteredGroup || 'all'}
-            options={[
-              {
-                value: 'all',
-                label: generalReadOnlyT('modal.allModels')
-              },
-              ...groupOptions
-            ]}
-          />
+          {FilterGroupSelect}
 
           {/* Checkbox File type select */}
           <Label
@@ -281,9 +391,8 @@ const ShareExportModal = ({
         </button>
       </nav>
 
-      {/* Export from */}
-      {/* TODO: toggle Share component once created */}
-      <div>{ExportForm}</div>
+      {/* Render share or export form */}
+      <div>{isActive === 'share' ? <ShareForm /> : ExportForm}</div>
     </div>
   );
 };
