@@ -148,6 +148,7 @@ const ShareExportModal = ({
         type="button"
         className="mint-nav__link padding-bottom-0 padding-top-2 margin-x-1 padding-x-1 share-export-modal__nav usa-button--unstyled position-relative width-auto"
         onClick={() => setIsActive(route)}
+        data-testid={`${route}-button`}
       >
         <em
           className={classNames(

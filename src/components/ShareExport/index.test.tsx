@@ -35,6 +35,10 @@ describe('ShareExportModal', () => {
     );
 
     await waitFor(() => {
+      // Select new filter group option
+      const exportButton = getByTestId('export-button');
+      userEvent.click(exportButton);
+
       // Renders default Fitler group option if supplied
       expect(getByText('Testing Model Summary')).toBeInTheDocument();
       const combobox = getByTestId('combo-box-select');
@@ -54,6 +58,33 @@ describe('ShareExportModal', () => {
 
       expect(exportSubmit).not.toBeDisabled();
     });
+  });
+
+  it('matches the snapshot', async () => {
+    const { asFragment, getByText } = render(
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+      >
+        <VerboseMockedProvider
+          mocks={[...allMocks, ...summaryMock]}
+          addTypename={false}
+        >
+          <Route path="/models/:modelID/read-only/model-basics">
+            <ShareExportModal
+              modelID={modelID}
+              closeModal={() => null}
+              setStatusMessage={() => null}
+            />
+          </Route>
+        </VerboseMockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(getByText('Testing Model Summary')).toBeInTheDocument();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('matches the snapshot', async () => {
