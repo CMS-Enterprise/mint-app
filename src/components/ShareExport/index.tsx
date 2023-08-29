@@ -392,7 +392,7 @@ const ShareExportModal = ({
               checked={file === 'csv' ? exportCSV : exportPDF}
               onBlur={() => null}
               disabled={
-                file === 'csv' && filteredGroup && filteredGroup !== 'all'
+                file === 'csv' && !!filteredGroup && filteredGroup !== 'all'
               }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (file === 'csv') {
