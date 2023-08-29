@@ -315,7 +315,12 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         })}
       >
         {statusMessage && (
-          <Alert slim type={statusMessage.status} className="margin-bottom-4">
+          <Alert
+            slim
+            type={statusMessage.status}
+            className="margin-bottom-4"
+            closeAlert={setStatusMessage}
+          >
             {statusMessage.message}
           </Alert>
         )}

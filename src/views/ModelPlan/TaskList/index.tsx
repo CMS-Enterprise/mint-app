@@ -238,7 +238,7 @@ const TaskList = () => {
         )}
 
         {statusMessage && (
-          <Alert slim type={statusMessage.status}>
+          <Alert slim type={statusMessage.status} closeAlert={setStatusMessage}>
             {statusMessage.message}
           </Alert>
         )}
