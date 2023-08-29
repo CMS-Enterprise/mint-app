@@ -12,6 +12,7 @@ import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag'
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import RelatedArticles from 'components/RelatedArticles';
 
 interface AccordionItemProps {
   title: React.ReactNode | string;
@@ -74,6 +75,9 @@ const HighLevelProjectPlan = () => {
           <Accordion bordered={false} multiselectable items={accordionItems} />
         </Grid>
       </GridContainer>
+      <div className="margin-top-6 margin-bottom-neg-7">
+        <RelatedArticles currentArticle={highLevelT('title')} viewAllLink />
+      </div>
     </MainContent>
   );
 };
