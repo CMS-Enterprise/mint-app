@@ -27,6 +27,7 @@ describe('ShareExportModal', () => {
               modelID={modelID}
               closeModal={() => null}
               filteredView="ccw"
+              setStatusMessage={() => null}
             />
           </Route>
         </VerboseMockedProvider>
@@ -65,7 +66,11 @@ describe('ShareExportModal', () => {
           addTypename={false}
         >
           <Route path="/models/:modelID/read-only/model-basics">
-            <ShareExportModal modelID={modelID} closeModal={() => null} />
+            <ShareExportModal
+              modelID={modelID}
+              closeModal={() => null}
+              setStatusMessage={() => null}
+            />
           </Route>
         </VerboseMockedProvider>
       </MemoryRouter>

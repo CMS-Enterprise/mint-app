@@ -27,6 +27,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GetModelPlan from 'queries/GetModelPlan';
@@ -109,6 +110,11 @@ export const getLatestModifiedDate = (
   return null;
 };
 
+export type StatusMessageType = {
+  message: string;
+  status: 'success' | 'error';
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
@@ -122,7 +128,10 @@ const TaskList = () => {
 
   const flags = useFlags();
 
-  const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+  const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
+  const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
+    null
+  );
 
   const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
 
@@ -214,6 +223,7 @@ const TaskList = () => {
             <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
           </BreadcrumbBar>
         </Grid>
+
         {error && (
           <ErrorAlert
             testId="formik-validation-errors"
@@ -226,11 +236,19 @@ const TaskList = () => {
             />
           </ErrorAlert>
         )}
+
+        {statusMessage && (
+          <Alert slim type={statusMessage.status}>
+            {statusMessage.message}
+          </Alert>
+        )}
+
         {loading && (
           <div className="height-viewport">
             <PageLoading />
           </div>
         )}
+
         {!loading && data && (
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
@@ -360,6 +378,7 @@ const TaskList = () => {
               <TaskListSideNav
                 modelPlan={modelPlan}
                 collaborators={collaborators}
+                setStatusMessage={setStatusMessage}
               />
             </Grid>
           </Grid>
