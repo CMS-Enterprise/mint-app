@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'views/NotFound';
 
 import GettingStarted from './Articles/GettingStarted';
+import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ITImplementation from './Articles/ITImplementation';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import SampleModelPlan from './Articles/SampleModelPlan';
@@ -25,6 +26,10 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/operational-solutions" exact>
         <SolutionsHelp />
+      </Route>
+
+      <Route path="/help-and-knowledge/high-level-project-plan" exact>
+        <HighLevelProjectPlan />
       </Route>
 
       <Route
