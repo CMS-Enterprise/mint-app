@@ -70,7 +70,7 @@ const (
 	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement     ModelViewFilter = "DFSDM"
 	ModelViewFilterInnovationPaymentContractor                      ModelViewFilter = "IPC"
 	ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract ModelViewFilter = "IDDOC"
-	ModelViewFilterIntegratedDataRepository                         ModelViewFilter = "IDR"
+	ModelViewFilterMasterDataManagement                             ModelViewFilter = "MDM"
 	ModelViewFilterOfficeOfTheActuary                               ModelViewFilter = "OACT"
 	ModelViewFilterProviderBillingGroup                             ModelViewFilter = "PBG"
 )
@@ -83,7 +83,7 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement:     "Division of Financial Services and Debt Management",
 	ModelViewFilterInnovationPaymentContractor:                      "Innovation Payment Contractor",
 	ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract: "Innovative Design Development and Operations Contract",
-	ModelViewFilterIntegratedDataRepository:                         "Integrated Data Repository",
+	ModelViewFilterMasterDataManagement:                             "Master Data Management",
 	ModelViewFilterOfficeOfTheActuary:                               "Office of the Actuary",
 	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
 }

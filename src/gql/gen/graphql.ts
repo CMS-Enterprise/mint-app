@@ -592,8 +592,8 @@ export enum ModelViewFilter {
   CMMI = 'CMMI',
   DFSDM = 'DFSDM',
   IDDOC = 'IDDOC',
-  IDR = 'IDR',
   IPC = 'IPC',
+  MDM = 'MDM',
   OACT = 'OACT',
   PBG = 'PBG'
 }
