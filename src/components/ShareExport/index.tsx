@@ -200,11 +200,16 @@ const ShareExportModal = ({
               ? (filteredGroup.toUpperCase() as ModelViewFilter)
               : undefined;
 
+          // Converts comma-separated string into an array of trimmed email strings
+          const receiverEmailsArray: string[] = receiverEmails
+            .split(',')
+            .map(email => email.trim());
+
           shareModelPlan({
             variables: {
               modelPlanID: modelID,
               viewFilter,
-              receiverEmails,
+              receiverEmails: receiverEmailsArray,
               optionalMessage
             }
           })
@@ -329,7 +334,7 @@ const ShareExportModal = ({
             <Button
               type="submit"
               data-testid="export-model-plan"
-              disabled={!filteredGroup || loading}
+              disabled={!filteredGroup || !receiverEmails || loading}
               className="margin-top-0"
             >
               {generalReadOnlyT('modal.share')}
