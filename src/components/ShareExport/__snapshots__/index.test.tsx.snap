@@ -6121,7 +6121,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
               <p
                 class="text-base margin-y-1"
               >
-                This will email a link to view this Model Plan within MINT.
+                If entering more than one address, separate with commas
               </p>
               <textarea
                 aria-labelledby="label-share-model-recipients hint-share-model-recipients"
@@ -6195,6 +6195,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
                 <button
                   class="usa-button margin-top-0"
                   data-testid="export-model-plan"
+                  disabled=""
                   type="submit"
                 >
                   Share
@@ -12330,7 +12331,7 @@ exports[`ShareExportModal matches the snapshot 2`] = `
               <p
                 class="text-base margin-y-1"
               >
-                This will email a link to view this Model Plan within MINT.
+                If entering more than one address, separate with commas
               </p>
               <textarea
                 aria-labelledby="label-share-model-recipients hint-share-model-recipients"
@@ -12404,6 +12405,7 @@ exports[`ShareExportModal matches the snapshot 2`] = `
                 <button
                   class="usa-button margin-top-0"
                   data-testid="export-model-plan"
+                  disabled=""
                   type="submit"
                 >
                   Share

@@ -268,7 +268,7 @@ const ShareExportModal = ({
             </Label>
 
             <p className="text-base margin-y-1">
-              {generalReadOnlyT('modal.shareDescription')}
+              {generalReadOnlyT('modal.shareEmailInfo')}
             </p>
 
             <TextAreaField
