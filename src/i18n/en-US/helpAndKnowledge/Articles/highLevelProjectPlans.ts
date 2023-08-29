@@ -16,7 +16,77 @@ const highLevelProjectPlans = {
       'Payment',
       'Learning & Diffusion',
       'Evaluation'
-    ]
+    ],
+    table: {
+      header: ['Activity/function', 'Responsible party/solution'],
+      common: {
+        modelTeam: 'Model Team',
+        mintTeam: 'MINT Team'
+      },
+      'cmmi-model-operational-planning': [
+        {
+          activity: 'Start a Model Plan in MINT',
+          party: 'Model Team'
+        },
+        {
+          // TODO: this one is special I need to figure it out
+          activity: 'special i will figirei iut out',
+          party:
+            'ARDS (available through BSG/DCCS), MITRE (available through PPG)'
+        },
+        {
+          activity: '2-pager review with CMMI FO',
+          party: 'Model Team'
+        },
+        {
+          activity: 'Conduct kick-off meeting',
+          party: 'Mint Team'
+        },
+        {
+          activity: '6-pager review with CMMI FO',
+          party: 'Model Team'
+        },
+        {
+          activity: 'Perform iterative analysis of IT plans',
+          party: 'Model Team, MINT Team'
+        },
+        {
+          activity: 'Draft IT cost estimates',
+          party: 'MINT Team'
+        },
+        {
+          activity: 'Draft implementation cost estimates',
+          party: 'BSG Budget Team'
+        },
+        {
+          activity: 'Draft evaluation cost estimates',
+          party: 'Evaluation'
+        },
+        {
+          activity: 'Draft learning cost estimates',
+          party: 'LDG'
+        },
+        {
+          activity: 'Draft high-level project plan (upon request)',
+          party: 'MINT Team'
+        },
+        {
+          activity: 'Draft Innovation Center Investment Proposal (ICIP)',
+          party:
+            'Model Team, MITRE (if this support is requested/approved by CMMI FO)'
+        },
+        {
+          activity:
+            'Collect/review and distribute deliverables to model team, SMEs, and stakeholders',
+          party: 'MINT Team'
+        },
+        {
+          activity:
+            'Deliver final version of all BSG deliverables to model team, SMEs, and stakeholders',
+          party: 'MINT Team'
+        }
+      ]
+    }
   }
 };
 

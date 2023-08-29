@@ -14,6 +14,8 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
 
+import Table from './table';
+
 interface AccordionItemProps {
   title: React.ReactNode | string;
   content: React.ReactNode;
@@ -33,7 +35,7 @@ const HighLevelProjectPlan = () => {
 
   const accordionItemsMap = accordionTitles.map((item, index) => ({
     title: item,
-    content: <p>{item}</p>,
+    content: <Table />,
     expanded: index === 0,
     id: `${item.toLowerCase().replace(/\s+/g, '-')}`
   }));
