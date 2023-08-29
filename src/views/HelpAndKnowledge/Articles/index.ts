@@ -27,6 +27,12 @@ const helpAndKnowledgeArticles: (ArticleProps & ArticleTypeProps)[] = [
     route: '/how-to-have-a-successful-2-pager-meeting',
     translation: 'twoPageMeeting',
     type: 'gettingStarted'
+  },
+  {
+    name: 'How to have a successful 6-pager meeting',
+    route: '/how-to-have-a-successful-6-pager-meeting',
+    translation: 'sixPageMeeting',
+    type: 'gettingStarted'
   }
 ];
 
