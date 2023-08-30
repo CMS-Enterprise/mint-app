@@ -7,19 +7,27 @@ type TableItemType = {
   party: string;
 };
 
-const Table = () => {
+type TableType = {
+  content: string;
+};
+
+const Table = ({ content }: TableType) => {
   const { t: tableT } = useTranslation('highLevelProjectPlans');
 
   const headers: string[] = tableT('accordionItems.table.header', {
     returnObjects: true
   });
 
-  const modelOperationalPlanning: TableItemType[] = tableT(
-    'accordionItems.table.cmmi-model-operational-planning',
-    {
-      returnObjects: true
+  const contentMap = (contentText: string): TableItemType[] => {
+    switch (contentText) {
+      case 'cmmi-model-operational-planning':
+        return tableT('accordionItems.table.cmmi-model-operational-planning', {
+          returnObjects: true
+        });
+      default:
+        return [];
     }
-  );
+  };
 
   return (
     <TrussTable bordered={false} fullWidth fixed>
@@ -33,7 +41,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {modelOperationalPlanning.map(item => {
+        {contentMap(content).map(item => {
           return (
             <tr>
               <th scope="row" className="padding-y-1">

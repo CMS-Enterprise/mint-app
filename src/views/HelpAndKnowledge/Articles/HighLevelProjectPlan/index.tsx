@@ -35,7 +35,7 @@ const HighLevelProjectPlan = () => {
 
   const accordionItemsMap = accordionTitles.map((item, index) => ({
     title: item,
-    content: <Table />,
+    content: <Table content={`${item.toLowerCase().replace(/\s+/g, '-')}`} />,
     expanded: index === 0,
     id: `${item.toLowerCase().replace(/\s+/g, '-')}`
   }));
