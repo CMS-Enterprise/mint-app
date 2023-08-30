@@ -12,6 +12,15 @@ const highLevelProjectPlans = {
         href:
           'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
         copy: 'Learn more about CMMI Internal Clearance on SharePoint'
+      },
+      documents: {
+        copy:
+          'Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance. ',
+        link: {
+          href:
+            'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
+          copy: 'Learn more about Clearance on SharePoint'
+        }
       }
     },
     titles: [

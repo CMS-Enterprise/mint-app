@@ -56,6 +56,18 @@ const HighLevelProjectPlan = () => {
             {highLevelT('accordionItems.copy.cmmi.copy')}
           </ExternalLink>
         )}
+        {item === 'Clearance of Documents' && (
+          <>
+            <p className="margin-top-0 margin-bottom-1">
+              {highLevelT('accordionItems.copy.documents.copy')}
+            </p>
+            <ExternalLink
+              href={highLevelT('accordionItems.copy.documents.link.href')}
+            >
+              {highLevelT('accordionItems.copy.documents.link.copy')}
+            </ExternalLink>
+          </>
+        )}
         {item === 'Legal' && <p>{highLevelT('accordionItems.copy.legal')}</p>}
         <Table content={`${item.toLowerCase().replace(/\s+/g, '-')}`} />
       </>
