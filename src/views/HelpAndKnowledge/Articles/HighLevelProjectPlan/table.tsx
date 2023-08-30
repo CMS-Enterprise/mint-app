@@ -1,9 +1,10 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Table as TrussTable } from '@trussworks/react-uswds';
+import { Link, Table as TrussTable } from '@trussworks/react-uswds';
 
 type TableItemType = {
   activity: string;
+  link?: string;
   party: string;
 };
 
@@ -47,6 +48,34 @@ const Table = ({ content }: TableType) => {
         return tableT('accordionItems.table.cmmi-internal-clearance-process', {
           returnObjects: true
         });
+      case 'clearance-of-documents':
+        return tableT('accordionItems.table.clearance-of-documents', {
+          returnObjects: true
+        });
+      case 'legal':
+        return tableT('accordionItems.table.legal', {
+          returnObjects: true
+        });
+      case 'participants':
+        return tableT('accordionItems.table.participants', {
+          returnObjects: true
+        });
+      case 'model-operations':
+        return tableT('accordionItems.table.model-operations', {
+          returnObjects: true
+        });
+      case 'payment':
+        return tableT('accordionItems.table.payment', {
+          returnObjects: true
+        });
+      case 'learning-&-diffusion':
+        return tableT('accordionItems.table.learning-&-diffusion', {
+          returnObjects: true
+        });
+      case 'evaluation':
+        return tableT('accordionItems.table.evaluation', {
+          returnObjects: true
+        });
       default:
         return [];
     }
@@ -55,7 +84,7 @@ const Table = ({ content }: TableType) => {
   return (
     <TrussTable bordered={false} fullWidth fixed>
       <thead>
-        <tr>
+        <tr className="border-bottom-2px">
           {headers.map(k => (
             <th key={k} scope="col" className="padding-y-1">
               <strong>{k}</strong>
@@ -69,6 +98,19 @@ const Table = ({ content }: TableType) => {
             <tr>
               <th scope="row" className="padding-y-1">
                 <TransOrPrint copy={item.activity} />
+                {item.link && (
+                  <div className="display-flex flex-align-center">
+                    <Link
+                      href="https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx"
+                      aria-label="Open in a new tab"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="external"
+                    >
+                      {tableT(item.link)}
+                    </Link>
+                  </div>
+                )}
               </th>
               <td className="text-baseline">
                 <TransOrPrint copy={item.party} />

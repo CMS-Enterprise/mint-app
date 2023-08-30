@@ -117,6 +117,218 @@ const highLevelProjectPlans = {
           activity: '<pd-left>Strategy</pd-left>',
           party: '<pd-left>Chief Strategy Officer</pd-left>'
         }
+      ],
+      'clearance-of-documents': [
+        {
+          activity:
+            'Submit Model documents completed/signed form and model clearance package to Executive Operations Staff (EOS)',
+          party: 'Model Team'
+        },
+        {
+          activity: 'ICIP',
+          party: 'Model Team and MITRE write, EOS clears'
+        },
+        {
+          activity: 'Cooperative Agreement',
+          party:
+            'Legal Vertical writes, Office of the General Council (OGC) approves, EOS clears'
+        },
+        {
+          activity: 'Participation Agreement',
+          party: 'Legal Vertical writes, OGC approves, EOS clears'
+        },
+        {
+          activity: 'Terms & Conditions',
+          party: 'Legal Vertical writes, OGC approves, EOS clears'
+        },
+        {
+          activity:
+            'Notice of Proposed Rulemaking (NPRM) <italics>(mandatory models only)</italics>',
+          party:
+            'OGC writes, EOS clears, staff publishes, and OGC processes and responds to comments'
+        },
+        {
+          activity: 'Final Rule <italics>(mandatory models only)</italics>',
+          party: 'EOS clears, staff publishes'
+        },
+        {
+          activity: '<paragraph>Announcement materials</paragraph>',
+          link: 'Learn more about announcement materials on SharePoint',
+          party:
+            'Model Team, Front Office, PPG Division of Stakeholder Engagement and Policy (DSEP), Office of Communications (OC)'
+        }
+      ],
+      legal: [
+        {
+          activity: 'Fraud, Waste, Abuse Waivers',
+          party:
+            'Federal Waiver Team writes, Office of Inspector General (OIG) and CM approve'
+        },
+        {
+          activity:
+            'Program/Payment Waivers <italics>(included in ICIP)</italics>',
+          party: 'CMMI, OGC'
+        },
+        {
+          activity: 'Medicaid Waivers/State Plan Amendments',
+          party: 'Center for Medicaid and CHIP Services (CMCS), OGC'
+        },
+        {
+          activity:
+            'Request for Applications (RFA) or Notice of Funding Opportunity (NOFO)',
+          party: 'Model Team writes, OGC approves'
+        }
+      ],
+      participants: [
+        {
+          activity:
+            'Obtain an application support contractor <italics>(as necessary if there are large volumes of applications)</italics>',
+          party: 'RMADA'
+        },
+        {
+          activity: 'Recruit participants',
+          party: 'GrantSolutions, CMS Qualtrics, Salesforce LOI, Salesforce RFA'
+        },
+        {
+          activity: 'Review and score applications',
+          party: 'GrantSolutions, Salesforce ARS'
+        },
+        {
+          activity: 'Establish a benchmark with participants',
+          party: 'CCW, IDR'
+        },
+        {
+          activity: 'Provide participant access to model platforms',
+          party: 'Innovation Center (IC) Landing Page'
+        },
+        {
+          activity: 'Communicate with participants',
+          party: 'Outlook Mailbox, GovDelivery, Salesforce POST'
+        },
+        {
+          activity: 'Vet providers for program integrity',
+          party: 'CPI Vetting'
+        },
+        {
+          activity: 'Sign participation agreements',
+          party: '4i, through a contractor'
+        },
+        {
+          activity:
+            'Manage Part C/D enrollment <italics>(MAPD models only)</italics>',
+          party: 'MARx'
+        },
+        {
+          activity:
+            'Review and collect plan bids <italics>(MAPD models only)</italics>',
+          party: 'HPMS'
+        },
+        {
+          activity:
+            'Update the plan’s contract <italics>(MAPD models only)</italics>',
+          party: 'HPMS'
+        },
+        {
+          activity: 'Helpdesk support',
+          party: 'CBOSC, through a contractor'
+        },
+        {
+          activity:
+            'Develop methodologies for providers and beneficiaries as needed',
+          party: 'Implementation contractor'
+        },
+        {
+          activity: 'Manage provider overlaps',
+          party: 'MDM'
+        },
+        {
+          activity: 'Manage beneficiary overlaps',
+          party: 'MDM'
+        }
+      ],
+      'model-operations': [
+        {
+          activity: 'Decide on contracting strategy',
+          party: 'Division of Central Contracts Services (DCCS)'
+        },
+        {
+          activity: 'Acquire implementation contractor',
+          party: 'DCCS, Office of Acquisition and Grants Management (OAGM)'
+        },
+        {
+          activity: 'Utilize quality measures development contractor',
+          party: 'Quality Vertical'
+        },
+        {
+          activity: 'Collect quality measures data',
+          party:
+            'CCSQ contracts and systems, HDR, Patient Activation Measure (PAM)'
+        },
+        {
+          activity:
+            'Innovative Design, Development, and Operations Contract (IDDOC) support',
+          party: '4i, ACO-OS'
+        },
+        { activity: 'Claims-based measures', party: 'CCW, IDR' },
+        {
+          activity: 'Quality performance scores',
+          party: 'Existing CMS data and process, HDR, other new process'
+        },
+        {
+          activity: 'Data to monitor the model',
+          party: 'CCW, CDX, HDR, IDR, Salesforce POST, another contractor'
+        },
+        {
+          activity: 'Data to support model evaluation',
+          party: 'CCW, CDX, HDR, Salesforce POST'
+        },
+        {
+          activity: 'Send reports/data to participants',
+          party:
+            '4i, BCDA, CDX, CMS Box, eDFR, EFT, RMADA, Salesforce POST, internal staff'
+        },
+        {
+          activity: 'Participate in CMMI data sharing',
+          party: 'CMMI Analysis & Management System (AMS)'
+        },
+        { activity: 'Process participant appeals', party: 'Legal Vertical' }
+      ],
+      payment: [
+        {
+          activity: 'Adjust how FFS claims are paid',
+          party: 'Shared Systems / CR, HIGLAS'
+        },
+        {
+          activity: 'Manage FFS excluded payments',
+          party: 'Shared Systems / CR'
+        },
+        { activity: 'MAPD payments', party: 'MAPD Systems / CR' },
+        {
+          activity: 'Make non-claims based payment',
+          party: 'APPS, HIGLAS, IPC'
+        },
+        { activity: 'Compute shared savings payment', party: 'RMADA' },
+        { activity: 'Recover payments', party: 'APPS, IPC, Shared Systems' }
+      ],
+      'learning-&-diffusion': [
+        { activity: 'Develop a learning strategy', party: 'LDG' },
+        { activity: 'Educate beneficiaries', party: 'LDG' },
+        {
+          activity: 'Acquire a learning contractor',
+          party: 'RMADA, a cross-model contract'
+        },
+        { activity: 'IT platform for learning', party: 'Salesforce CONNECT' },
+        {
+          activity: 'Participant-to-participant collaboration',
+          party: 'Salesforce CONNECT'
+        }
+      ],
+      evaluation: [
+        { activity: 'Acquire an evaluation contractor', party: 'RMADA' },
+        {
+          activity: 'Obtain data access for evaluation contractor',
+          party: 'CCW'
+        }
       ]
     }
   }
