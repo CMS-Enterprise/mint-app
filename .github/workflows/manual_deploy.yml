@@ -28,6 +28,12 @@ jobs:
     uses: ./.github/workflows/build_application_images.yml
     secrets: inherit
 
+  build_frontend_assets:
+    uses: ./.github/workflows/build_frontend_assets.yaml
+    secrets: inherit
+    with:
+      env: ${{ inputs.env }}
+
   run_tests:
     uses: ./.github/workflows/run_tests.yml
     needs: build_application_images
