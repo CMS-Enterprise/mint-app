@@ -1,12 +1,12 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../Generic/timeline';
@@ -50,15 +50,9 @@ const ChronicConditionsTimeline = ({
           {timelineConfig.items[0].description}
 
           <p>
-            <Link
-              aria-label="Open in a new tab"
-              href="https://www.cms.gov/research-statistics-data-and-systems/files-for-order/data-disclosures-data-agreements/overview"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="external"
-            >
+            <ExternalLink href="https://www.cms.gov/research-statistics-data-and-systems/files-for-order/data-disclosures-data-agreements/overview">
               {timelineConfig.links && timelineConfig.links[0]}
-            </Link>
+            </ExternalLink>
           </p>
         </ProcessListItem>
 
@@ -79,14 +73,9 @@ const ChronicConditionsTimeline = ({
             Contact Cheryl Brown, and she’ll send the Employee CCW Access
             Request form to complete. Once completed, email it with the
             supervisor’s approval to OEDA{' '}
-            <Link
-              aria-label="Open in a new tab"
-              href="mailto:CCWAccess@cms.hhs.gov"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
               CCWAccess@cms.hhs.gov
-            </Link>{' '}
+            </ExternalLink>{' '}
             and Cheryl.
           </Trans>
         </ProcessListItem>
@@ -137,14 +126,9 @@ const ChronicConditionsTimeline = ({
               Contact Cheryl Brown, and she’ll send the Employee CCW Access
               Request form to complete. Once completed, email it with the
               supervisor’s approval to OEDA{' '}
-              <Link
-                aria-label="Open in a new tab"
-                href="mailto:CCWAccess@cms.hhs.gov"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
                 CCWAccess@cms.hhs.gov
-              </Link>{' '}
+              </ExternalLink>{' '}
               and Cheryl.
             </Trans>
           </ProcessListItem>

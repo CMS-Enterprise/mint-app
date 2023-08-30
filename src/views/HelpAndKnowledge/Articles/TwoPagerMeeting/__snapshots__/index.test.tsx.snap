@@ -548,8 +548,11 @@ exports[`TwoPagerMeeting matches the snapshot 1`] = `
             >
               Contact the MINT team at 
               <a
-                class="usa-link"
+                aria-label="Open in a new tab"
+                class="usa-link usa-link--external"
                 href="mailto:MINTTeam@cms.hhs.gov"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 MINTTeam@cms.hhs.gov
               </a>
