@@ -13,6 +13,7 @@ import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
+import ExternalLink from 'components/shared/ExternalLink';
 
 import Table from './table';
 
@@ -50,6 +51,12 @@ const HighLevelProjectPlan = () => {
             'accordionItems.table.cmmi-internal-clearance-process.link'
           )}
         </Link> */}
+        {item === 'CMMI Internal Clearance Process' && (
+          <ExternalLink href={highLevelT('accordionItems.copy.cmmi.href')}>
+            {highLevelT('accordionItems.copy.cmmi.copy')}
+          </ExternalLink>
+        )}
+        {item === 'Legal' && <p>{highLevelT('accordionItems.copy.legal')}</p>}
         <Table content={`${item.toLowerCase().replace(/\s+/g, '-')}`} />
       </>
     ),

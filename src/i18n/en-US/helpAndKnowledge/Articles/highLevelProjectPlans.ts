@@ -6,6 +6,14 @@ const highLevelProjectPlans = {
   accordionHelp:
     'Click to expand each accordion to reveal more information about each phase within the project plan.',
   accordionItems: {
+    copy: {
+      legal: 'These activities may not apply to all models.',
+      cmmi: {
+        href:
+          'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
+        copy: 'Learn more about CMMI Internal Clearance on SharePoint'
+      }
+    },
     titles: [
       'CMMI Model Operational Planning',
       'CMMI Internal Clearance Process',
