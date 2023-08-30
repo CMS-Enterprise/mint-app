@@ -7,6 +7,7 @@ import ExternalLink from 'components/shared/ExternalLink';
 type TableItemType = {
   activity: string;
   link?: string;
+  href?: string;
   party: string;
 };
 
@@ -100,9 +101,9 @@ const Table = ({ content }: TableType) => {
             <tr>
               <th scope="row" className="padding-y-1">
                 <TransOrPrint copy={item.activity} />
-                {item.link && (
+                {item.link && item.href && (
                   <div className="display-flex flex-align-center">
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx">
+                    <ExternalLink href={item.href}>
                       {tableT(item.link)}
                     </ExternalLink>
                   </div>

@@ -154,6 +154,8 @@ const highLevelProjectPlans = {
         {
           activity: '<paragraph>Announcement materials</paragraph>',
           link: 'Learn more about announcement materials on SharePoint',
+          href:
+            'https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx',
           party:
             'Model Team, Front Office, PPG Division of Stakeholder Engagement and Policy (DSEP), Office of Communications (OC)'
         }
@@ -161,6 +163,9 @@ const highLevelProjectPlans = {
       legal: [
         {
           activity: 'Fraud, Waste, Abuse Waivers',
+          link: 'Learn more about Fraud, Waste, Abuse Waivers on SharePoint',
+          href:
+            'https://share.cms.gov/center/cmmi/PP/Model%20Design%20Resources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FPP%2FModel%20Design%20Resources%2FModel%20Agreement%20and%20Rule%20Resources%2FTemplate%20Participation%20Agreement%2FWaiver%20Resources&FolderCTID=0x012000A975146B83F0F045969E1B4CCF269310&View=%7B05D9040E%2DF2A4%2D4351%2D8D9E%2D2F0DBF3CD595%7D',
           party:
             'Federal Waiver Team writes, Office of Inspector General (OIG) and CM approve'
         },
