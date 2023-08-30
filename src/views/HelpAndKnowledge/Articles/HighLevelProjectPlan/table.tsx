@@ -1,6 +1,8 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, Table as TrussTable } from '@trussworks/react-uswds';
+import { Table as TrussTable } from '@trussworks/react-uswds';
+
+import ExternalLink from 'components/shared/ExternalLink';
 
 type TableItemType = {
   activity: string;
@@ -100,15 +102,9 @@ const Table = ({ content }: TableType) => {
                 <TransOrPrint copy={item.activity} />
                 {item.link && (
                   <div className="display-flex flex-align-center">
-                    <Link
-                      href="https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx"
-                      aria-label="Open in a new tab"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="external"
-                    >
+                    <ExternalLink href="https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx">
                       {tableT(item.link)}
-                    </Link>
+                    </ExternalLink>
                   </div>
                 )}
               </th>
