@@ -19,10 +19,6 @@ const highLevelProjectPlans = {
     ],
     table: {
       header: ['Activity/function', 'Responsible party/solution'],
-      common: {
-        modelTeam: 'Model Team',
-        mintTeam: 'MINT Team'
-      },
       'cmmi-model-operational-planning': [
         {
           activity: 'Start a Model Plan in MINT',
@@ -30,7 +26,8 @@ const highLevelProjectPlans = {
         },
         {
           // TODO: this one is special I need to figure it out
-          activity: 'special i will figirei iut out',
+          activity:
+            '<paragraph>Contractor support prior to clearance</paragraph><italics> We recommend discussing pre- clearance contractor support needs during your 2-pager or 6-pager review with the CMMI Front Office(FO), as CMMI FO will need to approve this request.</italics>',
           party:
             'ARDS (available through BSG/DCCS), MITRE (available through PPG)'
         },
