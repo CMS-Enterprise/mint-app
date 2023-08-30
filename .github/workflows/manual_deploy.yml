@@ -44,7 +44,7 @@ jobs:
     # 1. We're not deploying to prod
     # 2. We're deploying to prod, and you've confirmed (with the confirm_production_deploy checkbox) that you actually mean to deploy to prod!
     if: ${{ github.event.inputs.env != 'prod' || (github.event.inputs.env == 'prod' && github.event.inputs.confirm_production_deploy == true) }}
-    needs: run_tests
+    needs: [run_tests, build_frontend_assets]
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: ${{ inputs.env }}
