@@ -81,6 +81,42 @@ const highLevelProjectPlans = {
             'Deliver final version of all BSG deliverables to model team, SMEs, and stakeholders',
           party: 'MINT Team'
         }
+      ],
+      'cmmi-internal-clearance-process': [
+        {
+          activity:
+            'Submit documents to clearance designees <italics>(CMMI Clearance form)</italics>',
+          party: 'MINT Team'
+        },
+        {
+          activity: 'Provide Model with complete CMMI clearance',
+          party: 'CMMI designees and reviewers'
+        },
+        {
+          activity:
+            '<pd-left><paragraph>ICIP Budget</paragraph><italics>Model Teams will meet with CMMI FO to review the ICIP cost estimates</italics></pd-left>',
+          party: '<pd-left>CMMI Deputy Director of Operations</pd-left>'
+        },
+        {
+          activity: '<pd-left>Quality</pd-left>',
+          party: '<pd-left>Supervisory Medical Officer</pd-left>'
+        },
+        {
+          activity: '<pd-left>Financial Methodology</pd-left>',
+          party: '<pd-left>Division of Data Analytics Representative</pd-left>'
+        },
+        {
+          activity: '<pd-left>QPP Status</pd-left>',
+          party: '<pd-left>QPP SME</pd-left>'
+        },
+        {
+          activity: '<pd-left>Technology</pd-left>',
+          party: '<pd-left>Chief Technology Officer or SME</pd-left>'
+        },
+        {
+          activity: '<pd-left>Strategy</pd-left>',
+          party: '<pd-left>Chief Strategy Officer</pd-left>'
+        }
       ]
     }
   }
