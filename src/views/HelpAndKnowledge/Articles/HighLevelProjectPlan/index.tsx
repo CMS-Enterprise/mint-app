@@ -35,7 +35,24 @@ const HighLevelProjectPlan = () => {
 
   const accordionItemsMap = accordionTitles.map((item, index) => ({
     title: item,
-    content: <Table content={`${item.toLowerCase().replace(/\s+/g, '-')}`} />,
+    content: (
+      <>
+        {/* TODO: incorporate the link and copy */}
+        {/* <Link
+          href="https://innovation.cms.gov/strategic-direction"
+          aria-label="Open in a new tab"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="display-flex flex-align-center width-fit-content margin-bottom-3"
+          variant="external"
+        >
+          {highLevelT(
+            'accordionItems.table.cmmi-internal-clearance-process.link'
+          )}
+        </Link> */}
+        <Table content={`${item.toLowerCase().replace(/\s+/g, '-')}`} />
+      </>
+    ),
     expanded: index === 0,
     id: `${item.toLowerCase().replace(/\s+/g, '-')}`
   }));
