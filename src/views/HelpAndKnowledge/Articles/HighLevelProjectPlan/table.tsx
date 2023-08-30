@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Table as TrussTable } from '@trussworks/react-uswds';
 
 type TableItemType = {
@@ -33,14 +33,40 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {modelOperationalPlanning.map(item => (
-          <tr>
-            <th scope="row" className="padding-y-1">
-              {item.activity}
-            </th>
-            <td className="text-baseline">{item.party}</td>
-          </tr>
-        ))}
+        {modelOperationalPlanning.map(item => {
+          return (
+            <tr>
+              <th scope="row" className="padding-y-1">
+                {item.activity.includes('<paragraph>') ||
+                item.activity.includes('<italics>') ? (
+                  <Trans
+                    i18nKey={item.activity}
+                    components={{
+                      paragraph: <p className="margin-y-0" />,
+                      italics: <i />
+                    }}
+                  />
+                ) : (
+                  item.activity
+                )}
+              </th>
+              <td className="text-baseline">
+                {item.party.includes('<paragraph>') ||
+                item.party.includes('<italics>') ? (
+                  <Trans
+                    i18nKey={item.party}
+                    components={{
+                      paragraph: <p className="margin-y-0" />,
+                      italics: <i />
+                    }}
+                  />
+                ) : (
+                  item.party
+                )}
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </TrussTable>
   );

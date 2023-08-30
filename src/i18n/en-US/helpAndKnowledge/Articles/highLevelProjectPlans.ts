@@ -25,7 +25,6 @@ const highLevelProjectPlans = {
           party: 'Model Team'
         },
         {
-          // TODO: this one is special I need to figure it out
           activity:
             '<paragraph>Contractor support prior to clearance</paragraph><italics> We recommend discussing pre- clearance contractor support needs during your 2-pager or 6-pager review with the CMMI Front Office(FO), as CMMI FO will need to approve this request.</italics>',
           party:
@@ -70,7 +69,7 @@ const highLevelProjectPlans = {
         {
           activity: 'Draft Innovation Center Investment Proposal (ICIP)',
           party:
-            'Model Team, MITRE (if this support is requested/approved by CMMI FO)'
+            'Model Team, MITRE <italics>(if this support is requested/approved by CMMI FO)</italics>'
         },
         {
           activity:
