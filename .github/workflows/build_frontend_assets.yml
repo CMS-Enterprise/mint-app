@@ -42,7 +42,7 @@ jobs:
           STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
           REACT_APP_BEACON_ID: ${{ secrets.REACT_APP_BEACON_ID }}
         run: |
-          ./scripts/release_static
+          ./scripts/build_static.sh
       - name: Upload Frontend assets
         uses: actions/upload-artifact@v3
         with:
