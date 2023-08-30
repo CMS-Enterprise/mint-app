@@ -75,9 +75,8 @@ const HighLevelProjectPlan = () => {
             {highLevelT('description')}
           </p>
 
-          {/* TODO: Change link to the shared drive excel sheet */}
           <Link
-            href="https://innovation.cms.gov/strategic-direction"
+            href="https://docs.google.com/spreadsheets/d/143yWa6QmW44c5BWZVWc8Zl2jkg7VQM8io5xEn17lna4/edit?usp=sharing"
             aria-label="Open in a new tab"
             target="_blank"
             rel="noopener noreferrer"
