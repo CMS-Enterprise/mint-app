@@ -23,8 +23,6 @@ interface AccordionItemProps {
   expanded: boolean;
   id: string;
   className?: string;
-  headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  handleToggle?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const HighLevelProjectPlan = () => {
@@ -38,19 +36,6 @@ const HighLevelProjectPlan = () => {
     title: item,
     content: (
       <>
-        {/* TODO: incorporate the link and copy */}
-        {/* <Link
-          href="https://innovation.cms.gov/strategic-direction"
-          aria-label="Open in a new tab"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="display-flex flex-align-center width-fit-content margin-bottom-3"
-          variant="external"
-        >
-          {highLevelT(
-            'accordionItems.table.cmmi-internal-clearance-process.link'
-          )}
-        </Link> */}
         {item === 'CMMI Internal Clearance Process' && (
           <ExternalLink href={highLevelT('accordionItems.copy.cmmi.href')}>
             {highLevelT('accordionItems.copy.cmmi.copy')}
