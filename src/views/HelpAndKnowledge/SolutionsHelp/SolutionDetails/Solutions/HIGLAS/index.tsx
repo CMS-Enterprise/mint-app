@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
-import { Link } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import '../index.scss';
@@ -13,14 +13,9 @@ const HIGLASTimeline = ({ solution }: { solution: HelpSolutionType }) => {
         Any necessary setup for HIGLAS will be taken care of when working with
         the Innovation Payment Contractor (IPC) or the Shared Systems. Contact
         Donna Schmidt at{' '}
-        <Link
-          aria-label="Open in a new tab"
-          href="mailto:donna.schmidt@cms.hhs.gov"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="mailto:donna.schmidt@cms.hhs.gov">
           donna.schmidt@cms.hhs.gov
-        </Link>{' '}
+        </ExternalLink>{' '}
         if you have questions.
       </Trans>
     </div>
