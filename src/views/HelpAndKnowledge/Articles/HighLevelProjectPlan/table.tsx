@@ -11,6 +11,25 @@ type TableType = {
   content: string;
 };
 
+const TransOrPrint = ({ copy }: { copy: string }) => {
+  return (
+    <>
+      {copy.includes('</') ? (
+        <Trans
+          i18nKey={copy}
+          components={{
+            paragraph: <p className="margin-y-0" />,
+            italics: <i />,
+            'pd-left': <div className="padding-left-2" />
+          }}
+        />
+      ) : (
+        copy
+      )}
+    </>
+  );
+};
+
 const Table = ({ content }: TableType) => {
   const { t: tableT } = useTranslation('highLevelProjectPlans');
 
@@ -22,6 +41,10 @@ const Table = ({ content }: TableType) => {
     switch (contentText) {
       case 'cmmi-model-operational-planning':
         return tableT('accordionItems.table.cmmi-model-operational-planning', {
+          returnObjects: true
+        });
+      case 'cmmi-internal-clearance-process':
+        return tableT('accordionItems.table.cmmi-internal-clearance-process', {
           returnObjects: true
         });
       default:
@@ -45,32 +68,10 @@ const Table = ({ content }: TableType) => {
           return (
             <tr>
               <th scope="row" className="padding-y-1">
-                {item.activity.includes('<paragraph>') ||
-                item.activity.includes('<italics>') ? (
-                  <Trans
-                    i18nKey={item.activity}
-                    components={{
-                      paragraph: <p className="margin-y-0" />,
-                      italics: <i />
-                    }}
-                  />
-                ) : (
-                  item.activity
-                )}
+                <TransOrPrint copy={item.activity} />
               </th>
               <td className="text-baseline">
-                {item.party.includes('<paragraph>') ||
-                item.party.includes('<italics>') ? (
-                  <Trans
-                    i18nKey={item.party}
-                    components={{
-                      paragraph: <p className="margin-y-0" />,
-                      italics: <i />
-                    }}
-                  />
-                ) : (
-                  item.party
-                )}
+                <TransOrPrint copy={item.party} />
               </td>
             </tr>
           );
