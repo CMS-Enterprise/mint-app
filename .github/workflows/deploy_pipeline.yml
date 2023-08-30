@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         env: [dev, test, impl, prod]
-    uses: ./.github/workflows/build_frontend_assets.yaml
+    uses: ./.github/workflows/build_frontend_assets.yml
     with:
       env: ${{ matrix.env }}
     secrets: inherit

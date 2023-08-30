@@ -29,7 +29,7 @@ jobs:
     secrets: inherit
 
   build_frontend_assets:
-    uses: ./.github/workflows/build_frontend_assets.yaml
+    uses: ./.github/workflows/build_frontend_assets.yml
     secrets: inherit
     with:
       env: ${{ inputs.env }}
