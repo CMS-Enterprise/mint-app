@@ -278,7 +278,8 @@ const highLevelProjectPlans = {
           party: 'DCCS, Office of Acquisition and Grants Management (OAGM)'
         },
         {
-          activity: 'Utilize quality measures development contractor',
+          activity:
+            'Utilize quality measures development contractor <italics>(if new measure development is necessary)</italics>',
           party: 'Quality Vertical'
         },
         {
