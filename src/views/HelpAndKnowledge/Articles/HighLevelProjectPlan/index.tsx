@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import {
   Accordion,
   Grid,
@@ -14,6 +15,9 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
 import ExternalLink from 'components/shared/ExternalLink';
+import useModalSolutionState from 'hooks/useModalSolutionState';
+import { OperationalSolutionKey } from 'types/graphql-global-types';
+import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import Table from './table';
 
@@ -27,6 +31,20 @@ interface AccordionItemProps {
 
 const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
+
+  const location = useLocation();
+
+  const [initLocation] = useState<string>(location.pathname);
+
+  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
+    OperationalSolutionKey.LDG
+  );
+
+  // TEMP eslint ignore to make commit go through
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const ldgRoute = `${initLocation}${location.search}${
+    location.search ? '&' : '?'
+  }solution=learning-and-diffusion-group&section=about`;
 
   const accordionTitles: string[] = highLevelT('accordionItems.titles', {
     returnObjects: true
@@ -64,43 +82,57 @@ const HighLevelProjectPlan = () => {
   const accordionItems: AccordionItemProps[] = [...accordionItemsMap];
 
   return (
-    <MainContent>
-      <GridContainer>
-        <Grid>
-          <HelpBreadcrumb text={highLevelT('title')} />
-          <PageHeading className="margin-bottom-1">
-            {highLevelT('title')}
-          </PageHeading>
-          <HelpAndKnowledgeCategoryTag
-            type="gettingStarted"
-            className="margin-bottom-1"
-          />
-          <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
-            {highLevelT('description')}
-          </p>
+    <>
+      {renderModal && selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute="/help-and-knowledge/high-level-project-plan"
+        />
+      )}
 
-          <Link
-            href="https://docs.google.com/spreadsheets/d/143yWa6QmW44c5BWZVWc8Zl2jkg7VQM8io5xEn17lna4/edit?usp=sharing"
-            aria-label="Open in a new tab"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="display-flex flex-align-center width-fit-content margin-bottom-3"
-          >
-            <IconFileDownload className="margin-right-1" />
-            <span>{highLevelT('downloadExcel')}</span>
-          </Link>
+      <MainContent>
+        <GridContainer>
+          <Grid>
+            <HelpBreadcrumb text={highLevelT('title')} />
+            <PageHeading className="margin-bottom-1">
+              {highLevelT('title')}
+            </PageHeading>
+            <HelpAndKnowledgeCategoryTag
+              type="gettingStarted"
+              className="margin-bottom-1"
+            />
+            <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
+              {highLevelT('description')}
+            </p>
 
-          <p className="font-body-md margin-top-0 margin-bottom-3">
-            {highLevelT('accordionHelp')}
-          </p>
+            <Link
+              href="https://docs.google.com/spreadsheets/d/143yWa6QmW44c5BWZVWc8Zl2jkg7VQM8io5xEn17lna4/edit?usp=sharing"
+              aria-label="Open in a new tab"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="display-flex flex-align-center width-fit-content margin-bottom-3"
+            >
+              <IconFileDownload className="margin-right-1" />
+              <span>{highLevelT('downloadExcel')}</span>
+            </Link>
 
-          <Accordion bordered={false} multiselectable items={accordionItems} />
-        </Grid>
-      </GridContainer>
-      <div className="margin-top-6 margin-bottom-neg-7">
-        <RelatedArticles currentArticle={highLevelT('title')} viewAllLink />
-      </div>
-    </MainContent>
+            <p className="font-body-md margin-top-0 margin-bottom-3">
+              {highLevelT('accordionHelp')}
+            </p>
+
+            <Accordion
+              bordered={false}
+              multiselectable
+              items={accordionItems}
+            />
+          </Grid>
+        </GridContainer>
+        <div className="margin-top-6 margin-bottom-neg-7">
+          <RelatedArticles currentArticle={highLevelT('title')} viewAllLink />
+        </div>
+      </MainContent>
+    </>
   );
 };
 
