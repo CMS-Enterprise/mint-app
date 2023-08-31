@@ -15,15 +15,15 @@ const ArticlePageInfo = ({ className }: ArticlePageInfoProps) => {
     <div className="display-flex">
       <p className="text-base margin-top-0 margin-right-4">
         {t('pageInfo', {
-          pageStart: '2',
+          pageStart: '3',
           totalPages: helpAndKnowledgeArticles.length
         })}
       </p>
 
       {/* TODO: add link for all articles */}
-      <UswdsReactLink to="/help-and-knowledge" className="margin-right-4">
+      {/* <UswdsReactLink to="/help-and-knowledge" className="margin-right-4">
         {t('browseAll')}
-      </UswdsReactLink>
+      </UswdsReactLink> */}
 
       <div className="border-right margin-bottom-2 text-base-lighter margin-right-4" />
 
@@ -34,12 +34,13 @@ const ArticlePageInfo = ({ className }: ArticlePageInfoProps) => {
         {t('viewGettingStarted')}
       </UswdsReactLink>
 
-      <UswdsReactLink
+      {/* TODO: reimplement the below link when IT Implentation is available */}
+      {/* <UswdsReactLink
         to="/help-and-knowledge/getting-started"
         className="margin-right-4"
       >
         {t('viewITImplementation')}
-      </UswdsReactLink>
+      </UswdsReactLink> */}
     </div>
   );
 };

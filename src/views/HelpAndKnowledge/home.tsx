@@ -5,7 +5,7 @@ import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
-// import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
+import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 
@@ -34,9 +34,11 @@ export const HelpAndKnowledgeHome = () => {
 
         <p className="margin-bottom-3 font-body-md">{t('instructions')}</p>
 
-        <HelpCardGroup className="margin-top-2 margin-bottom-1" />
-
-        {/* <ArticlePageInfo /> */}
+        <HelpCardGroup
+          className="margin-top-2 margin-bottom-1"
+          showFirstThree
+        />
+        <ArticlePageInfo />
       </GridContainer>
 
       <SolutionCategories />

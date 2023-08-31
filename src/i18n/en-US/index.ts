@@ -8,6 +8,7 @@ import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
+import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
@@ -96,6 +97,7 @@ const enUS = {
   readOnlyModelPlan,
   sampleModelPlan,
   twoPageMeeting,
+  sixPageMeeting,
   subtasks,
   tableAndPagination,
   termsAndConditions
