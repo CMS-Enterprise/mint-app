@@ -28,19 +28,16 @@ jobs:
     uses: ./.github/workflows/run_tests.yml
     secrets: inherit
 
-  build_application_images:
-    uses: ./.github/workflows/build_application_images.yml
-    needs: [run_tests]
-    secrets: inherit
-
   build_frontend_assets:
     uses: ./.github/workflows/build_frontend_assets.yml
-    needs: [run_tests]
     secrets: inherit
     with:
       env: ${{ inputs.env }}
 
-
+  build_application_images:
+    uses: ./.github/workflows/build_application_images.yml
+    needs: [run_tests]
+    secrets: inherit
 
   deploy:
     # Only deploy if one of the two cases is true:
