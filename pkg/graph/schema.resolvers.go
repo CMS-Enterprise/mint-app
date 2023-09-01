@@ -475,6 +475,7 @@ func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.
 		principal,
 		r.emailService,
 		r.emailTemplateService,
+		r.addressBook,
 		modelPlanID,
 		viewFilter,
 		receiverEmails,
