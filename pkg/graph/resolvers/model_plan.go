@@ -322,13 +322,14 @@ func ModelPlanShare(
 		return false, fmt.Errorf("failed to execute email subject: %w", err)
 	}
 
-	var modelPlanCategories []models.ModelCategory
+	var modelPlanCategoriesHumainzed []string
 	if planBasics.ModelCategory != nil {
-		modelPlanCategories = append(modelPlanCategories, *planBasics.ModelCategory)
+		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[*planBasics.ModelCategory])
 	}
 
 	for _, category := range planBasics.AdditionalModelCategories {
-		modelPlanCategories = append(modelPlanCategories, models.ModelCategory(category))
+		// Have to cast the additional category as a models.ModelCategory so we can fetch it from the models.ModelCategoryHumanized map
+		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[models.ModelCategory(category)])
 	}
 
 	lastModified := modelPlan.CreatedDts
@@ -348,6 +349,8 @@ func ModelPlanShare(
 		}
 	}
 
+	humanizedModelStatus := models.ModelStatusHumanized[modelPlan.Status]
+
 	var humanizedViewFilter *string
 	var lowercasedViewFilter *string
 	if viewFilter != nil {
@@ -363,9 +366,9 @@ func ModelPlanShare(
 		UserName:                 principal.Account().CommonName,
 		OptionalMessage:          optionalMessage,
 		ModelName:                modelPlan.ModelName,
-		ModelShortName:           modelPlan.Abbreviation, // TODO: Is this correct for the shortName?
-		ModelCategories:          modelPlanCategories,
-		ModelStatus:              planBasics.Status,
+		ModelShortName:           modelPlan.Abbreviation,
+		ModelCategories:          modelPlanCategoriesHumainzed,
+		ModelStatus:              humanizedModelStatus,
 		ModelLastUpdated:         lastModified,
 		ModelLeads:               modelLeads,
 		ModelViewFilter:          lowercasedViewFilter,
