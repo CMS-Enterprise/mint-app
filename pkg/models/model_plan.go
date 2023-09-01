@@ -41,6 +41,17 @@ const (
 	MCToBeDetermined             ModelCategory = "TO_BE_DETERMINED"
 )
 
+// ModelCategoryHumanized maps ModelCategory to a human-readable string
+var ModelCategoryHumanized = map[ModelCategory]string{
+	MCAccountableCare:            "Accountable Care",
+	MCDiseaseSpecificAndEpisodic: "Disease-Specific & Episodic",
+	MCHealthPlan:                 "Health Plan",
+	MCPrescriptionDrug:           "Prescription Drug",
+	MCStateBased:                 "State-Based",
+	MCStatutory:                  "Statutory",
+	MCToBeDetermined:             "To be determined",
+}
+
 // ModelStatus represents the possible statuses of a Model Plan
 type ModelStatus string
 

@@ -2,8 +2,6 @@ package email
 
 import (
 	"time"
-
-	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // ModelPlanShareSubjectContent defines the parameters necessary for the corresponding email subject
@@ -17,7 +15,7 @@ type ModelPlanShareBodyContent struct {
 	OptionalMessage          *string
 	ModelName                string
 	ModelShortName           *string
-	ModelCategories          []models.ModelCategory
+	ModelCategories          []string
 	ModelStatus              string
 	ModelLastUpdated         time.Time
 	ModelLeads               []string

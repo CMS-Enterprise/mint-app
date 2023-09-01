@@ -105,7 +105,7 @@
       <p>
           {{if .ModelCategories}}
               {{- range $index, $element := .ModelCategories -}}
-                  {{- if $index -}}, {{- end -}}
+                  {{ if $index }}, {{ end }}
                   {{$element}}
               {{- end -}}
           {{else}}

@@ -322,13 +322,14 @@ func ModelPlanShare(
 		return false, fmt.Errorf("failed to execute email subject: %w", err)
 	}
 
-	var modelPlanCategories []models.ModelCategory
+	var modelPlanCategoriesHumainzed []string
 	if planBasics.ModelCategory != nil {
-		modelPlanCategories = append(modelPlanCategories, *planBasics.ModelCategory)
+		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[*planBasics.ModelCategory])
 	}
 
 	for _, category := range planBasics.AdditionalModelCategories {
-		modelPlanCategories = append(modelPlanCategories, models.ModelCategory(category))
+		// Have to cast the additional category as a models.ModelCategory so we can fetch it from the models.ModelCategoryHumanized map
+		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[models.ModelCategory(category)])
 	}
 
 	lastModified := modelPlan.CreatedDts
@@ -366,7 +367,7 @@ func ModelPlanShare(
 		OptionalMessage:          optionalMessage,
 		ModelName:                modelPlan.ModelName,
 		ModelShortName:           modelPlan.Abbreviation,
-		ModelCategories:          modelPlanCategories,
+		ModelCategories:          modelPlanCategoriesHumainzed,
 		ModelStatus:              humanizedModelStatus,
 		ModelLastUpdated:         lastModified,
 		ModelLeads:               modelLeads,
