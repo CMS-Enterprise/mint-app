@@ -289,6 +289,7 @@ func ModelPlanShare(
 	principal authentication.Principal,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	viewFilter *models.ModelViewFilter,
 	receiverEmails []string,
@@ -306,9 +307,6 @@ func ModelPlanShare(
 
 	// Get client address
 	clientAddress := emailService.GetConfig().GetClientAddress()
-
-	// Get sender
-	sender := principal.Account().Email
 
 	// Get email template
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanShareTemplateName)
@@ -380,7 +378,7 @@ func ModelPlanShare(
 	}
 
 	// Send email
-	err = emailService.Send(sender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return false, fmt.Errorf("failed to send email: %w", err)
 	}
