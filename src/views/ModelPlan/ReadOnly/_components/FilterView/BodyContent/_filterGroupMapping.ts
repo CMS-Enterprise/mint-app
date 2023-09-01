@@ -1,14 +1,11 @@
-export const filterGroups = [
-  'cmmi',
-  'oact',
-  'dfsdm',
-  'ccw',
-  'ipc',
-  'iddoc',
-  'pbg',
-  'mdm',
-  'cbosc'
-] as const;
+import { ModelViewFilter } from 'gql/gen/graphql';
+
+import { getKeys } from 'types/translation';
+
+// Importing ModelViewFilter enum and converting to lowercase to work easily with FE routes
+export const filterGroups = getKeys(ModelViewFilter).map(filter =>
+  filter.toLowerCase()
+);
 
 export type FilterGroup = typeof filterGroups[number];
 

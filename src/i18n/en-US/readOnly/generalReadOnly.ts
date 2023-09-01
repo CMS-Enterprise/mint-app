@@ -33,6 +33,10 @@ const generalReadOnly = {
     shareEmail: 'Email address(es)',
     shareEmailInfo: 'If entering more than one address, separate with commas',
     shareOptional: 'Optional message to include in the email',
+    shareSuccess:
+      'Success! This Model Plan has been emailed to the specified recipients.',
+    shareError:
+      'There was an error emailing this Model Plan to the specified recipients.',
     copyLinkReadView: 'Copy link to Read View',
     copyLinkFilteredReadView: 'Copy link to filtered Read View',
     cancel: 'Cancel',

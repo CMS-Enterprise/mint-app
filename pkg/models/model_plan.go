@@ -58,3 +58,32 @@ const (
 	ModelStatusActive                ModelStatus = "ACTIVE"
 	ModelStatusEnded                 ModelStatus = "ENDED"
 )
+
+// ModelViewFilter represents the possible filters for a model plan view
+type ModelViewFilter string
+
+// These constants represent the different values of ModelViewFilter
+const (
+	ModelViewFilterChronicConditionsWarehouse                       ModelViewFilter = "CCW"
+	ModelViewFilterCmmiCostEstimate                                 ModelViewFilter = "CMMI"
+	ModelViewFilterConsolidatedBusinessOperationsSupportCenter      ModelViewFilter = "CBOSC"
+	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement     ModelViewFilter = "DFSDM"
+	ModelViewFilterInnovationPaymentContractor                      ModelViewFilter = "IPC"
+	ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract ModelViewFilter = "IDDOC"
+	ModelViewFilterMasterDataManagement                             ModelViewFilter = "MDM"
+	ModelViewFilterOfficeOfTheActuary                               ModelViewFilter = "OACT"
+	ModelViewFilterProviderBillingGroup                             ModelViewFilter = "PBG"
+)
+
+// ModelViewFilterHumanized maps ModelViewFilter to a human-readable string
+var ModelViewFilterHumanized = map[ModelViewFilter]string{
+	ModelViewFilterChronicConditionsWarehouse:                       "Chronic Conditions Warehouse",
+	ModelViewFilterCmmiCostEstimate:                                 "CMMI Cost Estimate",
+	ModelViewFilterConsolidatedBusinessOperationsSupportCenter:      "Consolidated Business Operations Support Center",
+	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement:     "Division of Financial Services and Debt Management",
+	ModelViewFilterInnovationPaymentContractor:                      "Innovation Payment Contractor",
+	ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract: "Innovative Design Development and Operations Contract",
+	ModelViewFilterMasterDataManagement:                             "Master Data Management",
+	ModelViewFilterOfficeOfTheActuary:                               "Office of the Actuary",
+	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
+}
