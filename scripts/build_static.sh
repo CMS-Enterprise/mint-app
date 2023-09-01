@@ -22,7 +22,7 @@ case "$APP_ENV" in
     ;;
   *)
     echo "APP_ENV value not recognized: ${APP_ENV:-unset}"
-    echo "Allowed values: 'dev', 'impl', 'prod'"
+    echo "Allowed values: 'dev', 'test', 'impl', 'prod'"
     exit 1
     ;;
 esac
@@ -38,19 +38,7 @@ export REACT_APP_API_ADDRESS="${MINT_URL}/api/v1"
 export REACT_APP_GRAPHQL_ADDRESS="${MINT_URL}/api/graph/query"
 export REACT_APP_LOCAL_AUTH_ENABLED="false" # Disable deploying local auth
 
-# Check if we have any access to the s3 bucket
-# Since `s3 ls` returns zero even if the command failed, we assume failure if this command prints anything to stderr
-s3_err="$(aws s3 ls "$STATIC_S3_BUCKET" 1>/dev/null 2>&1)"
-if [[ -z "$s3_err" ]] ; then
-  ( set -x -u ;
-    yarn install --frozen-lockfile
-    yarn run build || exit
-    aws s3 sync --no-progress --delete build/ s3://"$STATIC_S3_BUCKET"/
-  )
-else
-  echo "+ aws s3 ls $STATIC_S3_BUCKET"
-  echo "$s3_err"
-  echo "--"
-  echo "Error reading the S3 bucket. Are you authenticated?" 1>&2
-  exit 1
-fi
+( set -x -u ;
+  yarn install --frozen-lockfile
+  yarn run build || exit
+)
