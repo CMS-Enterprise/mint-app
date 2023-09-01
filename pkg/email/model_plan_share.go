@@ -18,7 +18,7 @@ type ModelPlanShareBodyContent struct {
 	ModelName                string
 	ModelShortName           *string
 	ModelCategories          []models.ModelCategory
-	ModelStatus              models.TaskStatus
+	ModelStatus              string
 	ModelLastUpdated         time.Time
 	ModelLeads               []string
 	ModelViewFilter          *string

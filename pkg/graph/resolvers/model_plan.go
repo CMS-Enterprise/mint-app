@@ -348,6 +348,8 @@ func ModelPlanShare(
 		}
 	}
 
+	humanizedModelStatus := models.ModelStatusHumanized[modelPlan.Status]
+
 	var humanizedViewFilter *string
 	var lowercasedViewFilter *string
 	if viewFilter != nil {
@@ -363,9 +365,9 @@ func ModelPlanShare(
 		UserName:                 principal.Account().CommonName,
 		OptionalMessage:          optionalMessage,
 		ModelName:                modelPlan.ModelName,
-		ModelShortName:           modelPlan.Abbreviation, // TODO: Is this correct for the shortName?
+		ModelShortName:           modelPlan.Abbreviation,
 		ModelCategories:          modelPlanCategories,
-		ModelStatus:              planBasics.Status,
+		ModelStatus:              humanizedModelStatus,
 		ModelLastUpdated:         lastModified,
 		ModelLeads:               modelLeads,
 		ModelViewFilter:          lowercasedViewFilter,

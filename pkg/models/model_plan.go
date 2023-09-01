@@ -57,7 +57,26 @@ const (
 	ModelStatusAnnounced             ModelStatus = "ANNOUNCED"
 	ModelStatusActive                ModelStatus = "ACTIVE"
 	ModelStatusEnded                 ModelStatus = "ENDED"
+	ModelStatusPaused                ModelStatus = "PAUSED"
+	ModelStatusCanceled              ModelStatus = "CANCELED"
 )
+
+// ModelStatusHumanized maps ModelStatus to a human-readable string
+var ModelStatusHumanized = map[ModelStatus]string{
+	ModelStatusPlanDraft:             "Draft model plan",
+	ModelStatusPlanComplete:          "Model plan complete",
+	ModelStatusIcipComplete:          "ICIP complete",
+	ModelStatusInternalCmmiClearance: "Internal (CMMI) clearance",
+	ModelStatusCmsClearance:          "CMS clearance",
+	ModelStatusHhsClearance:          "HHS clearance",
+	ModelStatusOmbAsrfClearance:      "OMB/ASRF clearance",
+	ModelStatusCleared:               "Cleared",
+	ModelStatusAnnounced:             "Announced",
+	ModelStatusActive:                "Active",
+	ModelStatusEnded:                 "Ended",
+	ModelStatusPaused:                "Paused",
+	ModelStatusCanceled:              "Canceled",
+}
 
 // ModelViewFilter represents the possible filters for a model plan view
 type ModelViewFilter string
