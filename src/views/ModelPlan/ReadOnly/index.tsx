@@ -33,6 +33,7 @@ import { isAssessment, isMAC } from 'utils/user';
 import NotFound from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
+import { StatusMessageType } from '../TaskList';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
@@ -217,6 +218,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     setIsDescriptionExpandable
   ] = useState<boolean>(false);
 
+  const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
+    null
+  );
+
   const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState<boolean>(
     false
   );
@@ -309,6 +314,17 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           'padding-x-2': isTablet
         })}
       >
+        {statusMessage && (
+          <Alert
+            slim
+            type={statusMessage.status}
+            className="margin-bottom-4"
+            closeAlert={setStatusMessage}
+          >
+            {statusMessage.message}
+          </Alert>
+        )}
+
         {!isHelpArticle && (
           <div className="mint-no-print">
             <div className="display-flex flex-justify">
@@ -412,6 +428,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           closeModal={() => setIsExportModalOpen(false)}
           modelID={modelID}
           filteredView={filteredView}
+          setStatusMessage={setStatusMessage}
         />
       </Modal>
 
