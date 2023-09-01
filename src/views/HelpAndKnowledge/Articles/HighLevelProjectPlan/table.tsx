@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Table as TrussTable } from '@trussworks/react-uswds';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import ExternalLink from 'components/shared/ExternalLink';
 
 type TableItemType = {
@@ -9,6 +10,8 @@ type TableItemType = {
   link?: string;
   href?: string;
   party: string;
+  modalLink?: string;
+  modalCategory?: string;
 };
 
 type TableType = {
@@ -84,6 +87,23 @@ const Table = ({ content }: TableType) => {
     }
   };
 
+  const ModalLink = ({
+    solutionRoute,
+    children
+  }: {
+    solutionRoute: string;
+    children: React.ReactNode;
+  }) => {
+    return (
+      <UswdsReactLink
+        className="usa-button usa-button--unstyled"
+        to={`high-level-project-plan?solution=${solutionRoute}&section=about`}
+      >
+        {children}
+      </UswdsReactLink>
+    );
+  };
+
   return (
     <TrussTable bordered={false} fullWidth fixed>
       <thead>
@@ -110,7 +130,20 @@ const Table = ({ content }: TableType) => {
                 )}
               </th>
               <td className="text-baseline">
-                <TransOrPrint copy={item.party} />
+                {item.modalLink && item.modalCategory ? (
+                  <Trans
+                    i18nKey={item.modalLink}
+                    components={{
+                      ml: (
+                        <ModalLink solutionRoute={item.modalCategory}>
+                          {item.modalLink}
+                        </ModalLink>
+                      )
+                    }}
+                  />
+                ) : (
+                  <TransOrPrint copy={item.party} />
+                )}
               </td>
             </tr>
           );

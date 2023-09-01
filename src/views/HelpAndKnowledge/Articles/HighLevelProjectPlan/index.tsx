@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import {
   Accordion,
   Grid,
@@ -16,8 +15,9 @@ import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
 import ExternalLink from 'components/shared/ExternalLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import { OperationalSolutionKey } from 'types/graphql-global-types';
+import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Table from './table';
 
@@ -32,19 +32,15 @@ interface AccordionItemProps {
 const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
 
-  const location = useLocation();
-
-  const [initLocation] = useState<string>(location.pathname);
-
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    OperationalSolutionKey.LDG
+  const { prevPathname, selectedSolution: solution } = useModalSolutionState(
+    null
   );
 
-  // TEMP eslint ignore to make commit go through
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const ldgRoute = `${initLocation}${location.search}${
-    location.search ? '&' : '?'
-  }solution=learning-and-diffusion-group&section=about`;
+  // Solution to render in modal
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.route || null,
+    helpSolutions
+  );
 
   const accordionTitles: string[] = highLevelT('accordionItems.titles', {
     returnObjects: true
@@ -83,7 +79,7 @@ const HighLevelProjectPlan = () => {
 
   return (
     <>
-      {renderModal && selectedSolution && (
+      {selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}

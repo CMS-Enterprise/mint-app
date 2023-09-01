@@ -205,7 +205,8 @@ const highLevelProjectPlans = {
         {
           activity:
             'Obtain an application support contractor <italics>(as necessary if there are large volumes of applications)</italics>',
-          party: 'RMADA'
+          modalLink: '<ml>RMADA</ml>',
+          modalCategory: 'research-measurement-assessment-design-and-analysis'
         },
         {
           activity: 'Recruit participants',
