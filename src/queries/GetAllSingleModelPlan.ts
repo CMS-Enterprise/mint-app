@@ -8,7 +8,9 @@ export default gql`
       nameHistory(sort: DESC)
       abbreviation
       archived
-      createdBy
+      createdByUserAccount {
+        commonName
+      }
       createdDts
       modifiedBy
       modifiedDts
@@ -40,10 +42,6 @@ export default gql`
         phasedInNote
         readyForReviewBy
         readyForReviewDts
-        createdBy
-        createdDts
-        modifiedBy
-        modifiedDts
         status
       }
       generalCharacteristics {
@@ -357,14 +355,18 @@ export default gql`
       discussions {
         id
         content
-        createdBy
+        createdByUserAccount {
+          commonName
+        }
         createdDts
         status
         replies {
           id
           discussionID
           content
-          createdBy
+          createdByUserAccount {
+            commonName
+          }
           createdDts
           resolution
         }

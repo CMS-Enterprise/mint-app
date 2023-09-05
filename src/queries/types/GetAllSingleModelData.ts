@@ -9,6 +9,11 @@ import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus
 // GraphQL query operation: GetAllSingleModelData
 // ====================================================
 
+export interface GetAllSingleModelData_modelPlan_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetAllSingleModelData_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
@@ -37,10 +42,6 @@ export interface GetAllSingleModelData_modelPlan_basics {
   phasedInNote: string | null;
   readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
-  createdBy: UUID;
-  createdDts: Time;
-  modifiedBy: UUID | null;
-  modifiedDts: Time | null;
   status: TaskStatus;
 }
 
@@ -367,12 +368,22 @@ export interface GetAllSingleModelData_modelPlan_collaborators {
   createdDts: Time;
 }
 
+export interface GetAllSingleModelData_modelPlan_discussions_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetAllSingleModelData_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: UUID;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount;
   createdDts: Time;
   resolution: boolean | null;
 }
@@ -381,7 +392,7 @@ export interface GetAllSingleModelData_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: UUID;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_createdByUserAccount;
   createdDts: Time;
   status: DiscussionStatus;
   replies: GetAllSingleModelData_modelPlan_discussions_replies[];
@@ -394,7 +405,7 @@ export interface GetAllSingleModelData_modelPlan {
   nameHistory: string[];
   abbreviation: string | null;
   archived: boolean;
-  createdBy: UUID;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_createdByUserAccount;
   createdDts: Time;
   modifiedBy: UUID | null;
   modifiedDts: Time | null;

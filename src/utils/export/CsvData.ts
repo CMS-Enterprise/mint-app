@@ -21,7 +21,7 @@ const csvFields = [
   },
   {
     label: 'Created By',
-    value: 'createdBy'
+    value: 'createdByUserAccount.commonName'
   },
   {
     label: 'Created At',
@@ -360,14 +360,14 @@ const csvFields = [
 
   // Discussions
   'discussions.content',
-  'discussions.createdBy',
+  'discussions.createdByUserAccount.commonName',
   'discussions.createdDts',
   'discussions.status',
 
   // Discussion Replies
   'discussions.replies.discussionID',
   'discussions.replies.content',
-  'discussions.replies.createdBy',
+  'discussions.replies.createdByUserAccount.commonName',
   'discussions.replies.createdDts',
   'discussions.replies.resolution'
 ];

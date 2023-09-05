@@ -9,6 +9,11 @@ import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, Beneficiari
 // GraphQL query operation: GetAllModelData
 // ====================================================
 
+export interface GetAllModelData_modelPlanCollection_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetAllModelData_modelPlanCollection_basics {
   __typename: "PlanBasics";
   id: UUID;
@@ -37,10 +42,6 @@ export interface GetAllModelData_modelPlanCollection_basics {
   phasedInNote: string | null;
   readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
-  createdBy: UUID;
-  createdDts: Time;
-  modifiedBy: UUID | null;
-  modifiedDts: Time | null;
   status: TaskStatus;
 }
 
@@ -73,12 +74,22 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   beneficiarySelectionMethod: SelectionMethodType[];
 }
 
+export interface GetAllModelData_modelPlanCollection_discussions_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllModelData_modelPlanCollection_discussions_replies_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetAllModelData_modelPlanCollection_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: UUID;
+  createdByUserAccount: GetAllModelData_modelPlanCollection_discussions_replies_createdByUserAccount;
   createdDts: Time;
   resolution: boolean | null;
 }
@@ -87,7 +98,7 @@ export interface GetAllModelData_modelPlanCollection_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: UUID;
+  createdByUserAccount: GetAllModelData_modelPlanCollection_discussions_createdByUserAccount;
   createdDts: Time;
   status: DiscussionStatus;
   replies: GetAllModelData_modelPlanCollection_discussions_replies[];
@@ -394,7 +405,7 @@ export interface GetAllModelData_modelPlanCollection {
   nameHistory: string[];
   abbreviation: string | null;
   archived: boolean;
-  createdBy: UUID;
+  createdByUserAccount: GetAllModelData_modelPlanCollection_createdByUserAccount;
   createdDts: Time;
   modifiedBy: UUID | null;
   modifiedDts: Time | null;
