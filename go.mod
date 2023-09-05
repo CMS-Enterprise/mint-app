@@ -35,6 +35,7 @@ require github.com/xhit/go-simple-mail/v2 v2.15.0
 
 require (
 	github.com/aquasecurity/esquery v0.2.0
+	github.com/cmsgov/easi-shared v0.0.6
 	github.com/contribsys/faktory v1.6.2
 	github.com/iancoleman/strcase v0.2.0
 )

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/storage/namedstatements"
+	"github.com/cmsgov/easi-shared/go/namedstatements"
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/facebookgo/clock"
