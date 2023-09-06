@@ -230,16 +230,19 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Vet providers for program integrity',
-          party: 'CPI Vetting'
+          modalLink: '<ml>CPI Vetting</ml>',
+          modalCategory: 'cpi-vetting'
         },
         {
           activity: 'Sign participation agreements',
-          party: '4i, through a contractor'
+          modalLink: '<ml>4i</ml>, through a contractor',
+          modalCategory: '4-innovation'
         },
         {
           activity:
             'Manage Part C/D enrollment <italics>(MAPD models only)</italics>',
-          party: 'MARx'
+          modalLink: '<ml>MARx</ml>',
+          modalCategory: 'medicare-advantage-prescription-drug-system'
         },
         {
           activity:
