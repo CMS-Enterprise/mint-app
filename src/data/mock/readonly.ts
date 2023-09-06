@@ -571,13 +571,13 @@ const summaryData: GetModelSummaryTypes = {
   isFavorite: false,
   modelName: 'Testing Model Summary',
   abbreviation: 'TMS',
-  createdDts: '2022-08-23T04:12:00Z',
-  modifiedDts: '2022-08-27T04:12:00Z',
+  createdDts: '2022-08-23T04:00:00Z',
+  modifiedDts: '2022-08-27T04:00:00Z',
   status: ModelStatus.PLAN_DRAFT,
   basics: {
     __typename: 'PlanBasics',
     goal: 'This is the goal',
-    performancePeriodStarts: '2022-08-20T04:12:00Z'
+    performancePeriodStarts: '2022-08-20T04:00:00Z'
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
