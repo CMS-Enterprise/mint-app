@@ -1,12 +1,12 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../Generic/timeline';
@@ -48,14 +48,9 @@ const CentralizedDataExhangeTimeline = ({
           >
             If you’re interested in using CDX for your model or would like to
             learn more about the system, please contact{' '}
-            <Link
-              aria-label="Open in a new tab"
-              href="mailto:MINTTeam@cms.hhs.gov"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
               MINTTeam@cms.hhs.gov
-            </Link>{' '}
+            </ExternalLink>{' '}
             to learn more.
           </Trans>
         </ProcessListItem>
@@ -77,15 +72,9 @@ const CentralizedDataExhangeTimeline = ({
                   i18nKey={`solutions.${solution.key}.timeline.items[1].items[0]`}
                 >
                   Register as New User in the{' '}
-                  <Link
-                    aria-label="Open in a new tab"
-                    href="https://portalval.cms.gov/portal/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="external"
-                  >
+                  <ExternalLink href="https://portalval.cms.gov/portal/">
                     {timelineConfig.links && timelineConfig.links[0]}
-                  </Link>
+                  </ExternalLink>
                 </Trans>
               </li>
               <li>{timelineConfig.items[1].items[1]}</li>

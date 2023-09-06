@@ -1,17 +1,15 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { mount } from 'enzyme';
-import toJSON, { OutputMapper } from 'enzyme-to-json';
 import GetFunding from 'gql/apolloGQL/Payments/GetFunding';
 import { GetFundingQuery, TrustFundType } from 'gql/gen/graphql';
+import Sinon from 'sinon';
 
 import {
   FundingSource as FundingSourceType,
   PayType
 } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
-import renameTooltipAriaAndID from 'utils/testing/snapshotSerializeReplacements';
 
 import FundingSource from './index';
 
@@ -63,6 +61,9 @@ const paymentMock = [
 ];
 
 describe('Model Plan Payment', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders without errors', async () => {
     const { getAllByRole } = render(
       <MemoryRouter
@@ -89,7 +90,7 @@ describe('Model Plan Payment', () => {
   });
 
   it('matches snapshot', async () => {
-    const component = mount(
+    const { asFragment, getAllByRole } = render(
       <MemoryRouter
         initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
       >
@@ -102,16 +103,10 @@ describe('Model Plan Payment', () => {
     );
 
     await waitFor(() => {
-      expect(
-        component.text().includes('My excellent plan that I just initiated')
-      ).toBe(true);
+      const checkbox = getAllByRole('checkbox', { name: /Trust Fund/i })[0];
+      expect(checkbox).toBeChecked();
     });
 
-    expect(
-      toJSON(component, {
-        mode: 'deep',
-        map: renameTooltipAriaAndID as OutputMapper
-      })
-    ).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

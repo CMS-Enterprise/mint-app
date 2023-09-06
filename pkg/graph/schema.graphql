@@ -272,6 +272,7 @@ type PlanBasics {
   amsModelID: String
 
   modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]!
   cmsCenters: [CMSCenter!]!
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
@@ -322,6 +323,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   amsModelID: String
 
   modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]
   cmsCenters: [CMSCenter!]
   cmsOther: String
   cmmiGroups: [CMMIGroup!]
@@ -1636,7 +1638,7 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
 @hasRole(role: MINT_USER)
@@ -1675,6 +1677,9 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
+@hasRole(role: MINT_USER)
+
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
 }
 
@@ -1742,15 +1747,13 @@ enum ModelType
 }
 
 enum ModelCategory {
-	ACCOUNTABLE_CARE
-	DEMONSTRATION
-	EPISODE_BASED_PAYMENT_INITIATIVES
-	INIT_MEDICAID_CHIP_POP
-	INIT__MEDICARE_MEDICAID_ENROLLEES
-	INIT_ACCEL_DEV_AND_TEST
-	INIT_SPEED_ADOPT_BEST_PRACTICE
-	PRIMARY_CARE_TRANSFORMATION
-	UNKNOWN
+  ACCOUNTABLE_CARE
+  DISEASE_SPECIFIC_AND_EPISODIC
+  HEALTH_PLAN
+  PRESCRIPTION_DRUG
+  STATE_BASED
+  STATUTORY
+  TO_BE_DETERMINED
 }
 
 enum ModelStatus {
@@ -2417,4 +2420,16 @@ enum DiscussionUserRole {
   MODEL_TEAM,
   SHARED_SYSTEM_MAINTAINER,
   NONE_OF_THE_ABOVE,
+}
+
+enum ModelViewFilter {
+  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
+  CMMI, # CMMI_COST_ESTIMATE
+  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
+  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
+  IPC, # INNOVATION_PAYMENT_CONTRACTOR
+  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
+  MDM, # MASTER_DATA_MANAGEMENT
+  OACT, # OFFICE_OF_THE_ACTUARY
+  PBG, # PROVIDER_BILLING_GROUP
 }

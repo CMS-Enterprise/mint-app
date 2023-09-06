@@ -241,14 +241,15 @@ exports[`Model Plan Communication matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-risk"
+              data-testid="participants-and-providers-risk-true"
+              id="participants-and-providers-risk-true"
               name="participantAssumeRisk"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="participants-and-providers-risk"
+              for="participants-and-providers-risk-true"
             >
               Yes
             </label>
@@ -259,14 +260,15 @@ exports[`Model Plan Communication matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-risk-no"
+              data-testid="participants-and-providers-risk-false"
+              id="participants-and-providers-risk-false"
               name="participantAssumeRisk"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="participants-and-providers-risk-no"
+              for="participants-and-providers-risk-false"
             >
               No
             </label>
@@ -429,14 +431,15 @@ exports[`Model Plan Communication matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-risk-change"
+              data-testid="participants-and-providers-risk-change-true"
+              id="participants-and-providers-risk-change-true"
               name="willRiskChange"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="participants-and-providers-risk-change"
+              for="participants-and-providers-risk-change-true"
             >
               Yes
             </label>
@@ -447,14 +450,15 @@ exports[`Model Plan Communication matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="participants-and-providers-risk-change-no"
+              data-testid="participants-and-providers-risk-change-false"
+              id="participants-and-providers-risk-change-false"
               name="willRiskChange"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="participants-and-providers-risk-change-no"
+              for="participants-and-providers-risk-change-false"
             >
               No
             </label>

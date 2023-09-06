@@ -24,12 +24,9 @@ import {
   GetAllModelPlans_modelPlanCollection as AllModelPlansType,
   GetAllModelPlans_modelPlanCollection_crTdls as CRTDLType
 } from 'queries/ReadOnly/types/GetAllModelPlans';
+import { ModelCategory } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
-import {
-  translateModelCategory,
-  translateModelPlanStatus
-} from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -53,6 +50,8 @@ const Table = ({
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('modelSummary');
   const { t: f } = useTranslation('home');
+  const { t: basicsT } = useTranslation('basics');
+  const { t: modelPlanT } = useTranslation('modelPlan');
 
   const columns = useMemo(() => {
     return [
@@ -116,17 +115,33 @@ const Table = ({
       {
         Header: t('allModels.tableHeading.category'),
         accessor: 'basics.modelCategory',
-        Cell: ({ value }: any) => {
+        Cell: ({ row, value }: any) => {
+          const additionalModelCategory =
+            row.original.basics.additionalModelCategories;
+
+          // Handle no value with an early return
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
-          return translateModelCategory(value);
+
+          if (additionalModelCategory.length !== 0) {
+            const newArray = additionalModelCategory.map(
+              (group: ModelCategory) => {
+                return basicsT(`modelCategory.options.${group}`);
+              }
+            );
+
+            return `${basicsT(
+              `modelCategory.options.${value}`
+            )}, ${newArray.join(', ')}`;
+          }
+          return basicsT(`modelCategory.options.${value}`);
         }
       },
       {
         Header: t('allModels.tableHeading.status'),
         accessor: ({ status }: any) => {
-          return translateModelPlanStatus(status);
+          return modelPlanT(`status.options.${status}`);
         },
         Cell: ({ value }: any) => {
           return value;
@@ -161,7 +176,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, h, updateFavorite]);
+  }, [t, updateFavorite, basicsT, h, modelPlanT]);
 
   const {
     getTableProps,

@@ -3,6 +3,7 @@ export type Flags = {
   downgradeAssessmentTeam: boolean;
   hideGroupView: boolean;
   shareExportEnabled: boolean;
+  helpScoutEnabled: boolean;
 };
 
 export type FlagsState = {

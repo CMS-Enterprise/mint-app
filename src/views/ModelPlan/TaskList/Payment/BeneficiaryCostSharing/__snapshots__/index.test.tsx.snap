@@ -162,14 +162,15 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="payment-waive-any-service-Yes"
+                    data-testid="payment-waive-any-service-true"
+                    id="payment-waive-any-service-true"
                     name="waiveBeneficiaryCostSharingForAnyServices"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
-                    for="payment-waive-any-service-Yes"
+                    for="payment-waive-any-service-true"
                   >
                     Yes
                   </label>
@@ -199,14 +200,15 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="payment-waive-any-service-No"
+                    data-testid="payment-waive-any-service-false"
+                    id="payment-waive-any-service-false"
                     name="waiveBeneficiaryCostSharingForAnyServices"
                     type="radio"
                     value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
-                    for="payment-waive-any-service-No"
+                    for="payment-waive-any-service-false"
                   >
                     No
                   </label>
@@ -242,7 +244,7 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                       id="payment-waive-part-of-payment-true"
                       name="waiverOnlyAppliesPartOfPayment"
                       type="radio"
-                      value="YES"
+                      value="TRUE"
                     />
                     <label
                       class="usa-radio__label"
@@ -261,7 +263,7 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                       id="payment-waive-part-of-payment-false"
                       name="waiverOnlyAppliesPartOfPayment"
                       type="radio"
-                      value="NO"
+                      value="FALSE"
                     />
                     <label
                       class="usa-radio__label"

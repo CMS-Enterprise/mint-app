@@ -11,13 +11,13 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -27,6 +27,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetNonClaimsBasedPayment from 'queries/Payments/GetNonClaimsBasedPayment';
 import {
@@ -41,19 +42,27 @@ import {
   NonClaimsBasedPayType,
   PayType
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  mapMultiSelectOptions,
-  translateNonClaimsBasedPayType
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
 const NonClaimsBasedPayment = () => {
-  const { t } = useTranslation('payments');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: paymentsT } = useTranslation('payments');
+
+  const { t: paymentsMiscT } = useTranslation('paymentsMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    nonClaimsPayments: nonClaimsPaymentsConfig,
+    sharedSystemsInvolvedAdditionalClaimPayment: sharedSystemsInvolvedAdditionalClaimPaymentConfig,
+    planningToUseInnovationPaymentContractor: planningToUseInnovationPaymentContractorConfig
+  } = usePlanTranslation('payments');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<NonClaimsBasedPaymentFormType>>(null);
@@ -173,18 +182,19 @@ const NonClaimsBasedPayment = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {paymentsMiscT('heading')}
       </PageHeading>
 
       <p
@@ -195,8 +205,9 @@ const NonClaimsBasedPayment = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -218,25 +229,27 @@ const NonClaimsBasedPayment = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
@@ -252,7 +265,7 @@ const NonClaimsBasedPayment = () => {
                           headingLevel="h3"
                           className="margin-bottom-3"
                         >
-                          {t('nonClaimsBasedPaymentQuestion')}
+                          {paymentsMiscT('nonClaimsBasedPaymentQuestion')}
                         </PageHeading>
 
                         <FieldGroup
@@ -264,8 +277,9 @@ const NonClaimsBasedPayment = () => {
                             htmlFor="payment-nonclaims-payments"
                             id="label-payment-nonclaims-payments"
                           >
-                            {t('nonClaimsPayments')}
+                            {paymentsT('nonClaimsPayments.label')}
                           </Label>
+
                           {itSolutionsStarted && (
                             <ITSolutionsWarning
                               id="payment-nonclaims-payments-warning"
@@ -276,6 +290,7 @@ const NonClaimsBasedPayment = () => {
                               }
                             />
                           )}
+
                           <FieldErrorMsg>
                             {flatErrors.nonClaimsPayments}
                           </FieldErrorMsg>
@@ -285,11 +300,12 @@ const NonClaimsBasedPayment = () => {
                             id="payment-nonclaims-payments"
                             name="payment-nonclaims-payments"
                             ariaLabel="label-payment-nonclaims-payments"
-                            options={mapMultiSelectOptions(
-                              translateNonClaimsBasedPayType,
-                              NonClaimsBasedPayType
+                            options={composeMultiSelectOptions(
+                              nonClaimsPaymentsConfig.options
                             )}
-                            selectedLabel={t('selectedNonClaimsPayments')}
+                            selectedLabel={paymentsT(
+                              'nonClaimsPayments.multiSelectLabel'
+                            )}
                             onChange={(value: string[] | []) => {
                               setFieldValue('nonClaimsPayments', value);
                             }}
@@ -307,11 +323,13 @@ const NonClaimsBasedPayment = () => {
                                 htmlFor="nonClaimsPaymentOther"
                                 className="text-normal"
                               >
-                                {t('selectClaimsOther')}
+                                {paymentsT('nonClaimsPaymentOther.label')}
                               </Label>
+
                               <FieldErrorMsg>
                                 {flatErrors.nonClaimsPaymentOther}
                               </FieldErrorMsg>
+
                               <Field
                                 as={TextField}
                                 error={flatErrors.nonClaimsPaymentOther}
@@ -333,11 +351,13 @@ const NonClaimsBasedPayment = () => {
                           error={!!flatErrors.paymentCalculationOwner}
                         >
                           <Label htmlFor="paymentCalculationOwner">
-                            {t('paymentCalculationOwner')}
+                            {paymentsT('paymentCalculationOwner.label')}
                           </Label>
+
                           <FieldErrorMsg>
                             {flatErrors.paymentCalculationOwner}
                           </FieldErrorMsg>
+
                           <Field
                             as={TextField}
                             error={flatErrors.paymentCalculationOwner}
@@ -352,14 +372,17 @@ const NonClaimsBasedPayment = () => {
                           error={!!flatErrors.numberPaymentsPerPayCycle}
                         >
                           <Label htmlFor="numberPaymentsPerPayCycle">
-                            {t('numberPaymentsPerPayCycle')}
+                            {paymentsT('numberPaymentsPerPayCycle.label')}
                           </Label>
+
                           <p className="text-base margin-y-1">
-                            {t('numberPaymentsPerPayCycleSubcopy')}
+                            {paymentsT('numberPaymentsPerPayCycle.sublabel')}
                           </p>
+
                           <FieldErrorMsg>
                             {flatErrors.numberPaymentsPerPayCycle}
                           </FieldErrorMsg>
+
                           <Field
                             as={TextField}
                             error={flatErrors.numberPaymentsPerPayCycle}
@@ -367,6 +390,7 @@ const NonClaimsBasedPayment = () => {
                             data-testid="payment-nonclaims-payments-paycycle"
                             name="numberPaymentsPerPayCycle"
                           />
+
                           <AddNote
                             id="payment-nonclaims-payments-paycycle-note"
                             field="numberPaymentsPerPayCycleNote"
@@ -384,36 +408,29 @@ const NonClaimsBasedPayment = () => {
                             htmlFor="payment-nonclaims-shared-involvement"
                             className="maxw-none"
                           >
-                            {t('sharedSystemsInvolvedAdditionalClaimPayment')}
+                            {paymentsT(
+                              'sharedSystemsInvolvedAdditionalClaimPayment.label'
+                            )}
                           </Label>
+
                           <FieldErrorMsg>
                             {
                               flatErrors.sharedSystemsInvolvedAdditionalClaimPayment
                             }
                           </FieldErrorMsg>
-                          <Fieldset>
-                            {[true, false].map(key => (
-                              <Field
-                                as={Radio}
-                                key={key}
-                                id={`payment-nonclaims-shared-involvement-${key}`}
-                                data-testid={`payment-nonclaims-shared-involvement-${key}`}
-                                name="sharedSystemsInvolvedAdditionalClaimPayment"
-                                label={key ? h('yes') : h('no')}
-                                value={key ? 'YES' : 'NO'}
-                                checked={
-                                  values.sharedSystemsInvolvedAdditionalClaimPayment ===
-                                  key
-                                }
-                                onChange={() => {
-                                  setFieldValue(
-                                    'sharedSystemsInvolvedAdditionalClaimPayment',
-                                    key
-                                  );
-                                }}
-                              />
-                            ))}
-                          </Fieldset>
+
+                          <BooleanRadio
+                            field="sharedSystemsInvolvedAdditionalClaimPayment"
+                            id="payment-nonclaims-shared-involvement"
+                            value={
+                              values.sharedSystemsInvolvedAdditionalClaimPayment
+                            }
+                            setFieldValue={setFieldValue}
+                            options={
+                              sharedSystemsInvolvedAdditionalClaimPaymentConfig.options
+                            }
+                          />
+
                           <AddNote
                             id="payment-nonclaims-shared-involvement-note"
                             field="sharedSystemsInvolvedAdditionalClaimPaymentNote"
@@ -431,41 +448,35 @@ const NonClaimsBasedPayment = () => {
                             htmlFor="payment-use-innovation-payment-contractor"
                             className="maxw-none"
                           >
-                            {t('planningToUseInnovationPaymentContractor')}
+                            {paymentsT(
+                              'planningToUseInnovationPaymentContractor.label'
+                            )}
                           </Label>
+
                           <p className="text-base margin-y-1">
-                            {t(
-                              'planningToUseInnovationPaymentContractorSubcopy'
+                            {paymentsT(
+                              'planningToUseInnovationPaymentContractor.sublabel'
                             )}
                           </p>
+
                           <FieldErrorMsg>
                             {
                               flatErrors.planningToUseInnovationPaymentContractor
                             }
                           </FieldErrorMsg>
-                          <Fieldset>
-                            {[true, false].map(key => (
-                              <Field
-                                as={Radio}
-                                key={key}
-                                id={`payment-use-innovation-payment-contractor-${key}`}
-                                data-testid={`payment-use-innovation-payment-contractor-${key}`}
-                                name="planningToUseInnovationPaymentContractor"
-                                label={key ? h('yes') : h('no')}
-                                value={key ? 'YES' : 'NO'}
-                                checked={
-                                  values.planningToUseInnovationPaymentContractor ===
-                                  key
-                                }
-                                onChange={() => {
-                                  setFieldValue(
-                                    'planningToUseInnovationPaymentContractor',
-                                    key
-                                  );
-                                }}
-                              />
-                            ))}
-                          </Fieldset>
+
+                          <BooleanRadio
+                            field="planningToUseInnovationPaymentContractor"
+                            id="payment-use-innovation-payment-contractor"
+                            value={
+                              values.planningToUseInnovationPaymentContractor
+                            }
+                            setFieldValue={setFieldValue}
+                            options={
+                              planningToUseInnovationPaymentContractorConfig.options
+                            }
+                          />
+
                           <AddNote
                             id="payment-use-innovation-payment-contractor-note"
                             field="planningToUseInnovationPaymentContractorNote"
@@ -480,12 +491,14 @@ const NonClaimsBasedPayment = () => {
                               handleFormSubmit('back');
                             }}
                           >
-                            {h('back')}
+                            {miscellaneousT('back')}
                           </Button>
+
                           <Button type="submit" onClick={() => setErrors({})}>
-                            {h('next')}
+                            {miscellaneousT('next')}
                           </Button>
                         </div>
+
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
@@ -495,13 +508,15 @@ const NonClaimsBasedPayment = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {h('saveAndReturn')}
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -515,6 +530,7 @@ const NonClaimsBasedPayment = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

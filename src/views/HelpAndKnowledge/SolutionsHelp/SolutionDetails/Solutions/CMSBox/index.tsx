@@ -1,12 +1,12 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../Generic/timeline';
@@ -28,14 +28,9 @@ const CMSBoxTimeline = ({ solution }: { solution: HelpSolutionType }) => {
       <Trans i18nKey={`solutions.${solution.key}.timeline.description`}>
         Since this is a self service tool, you can work at your own pace. If you
         have questions or need help using CMS Box, contact the MINT Team at{' '}
-        <Link
-          aria-label="Open in a new tab"
-          href="mailto:MINTTeam@cms.hhs.gov"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
           MINTTeam@cms.hhs.gov
-        </Link>
+        </ExternalLink>
         .
       </Trans>
 
@@ -54,15 +49,9 @@ const CMSBoxTimeline = ({ solution }: { solution: HelpSolutionType }) => {
           {timelineConfig.items[0].description}
 
           <p>
-            <Link
-              aria-label="Open in a new tab"
-              href="https://cmsbox.account.box.com/login"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="external"
-            >
+            <ExternalLink href="https://cmsbox.account.box.com/login">
               {timelineConfig.links && timelineConfig.links[0]}
-            </Link>
+            </ExternalLink>
           </p>
         </ProcessListItem>
 
@@ -80,15 +69,9 @@ const CMSBoxTimeline = ({ solution }: { solution: HelpSolutionType }) => {
           {timelineConfig.items[1].description}
 
           <p>
-            <Link
-              aria-label="Open in a new tab"
-              href="https://cmsintranet.share.cms.gov/CT/Pages/BoxInformation.aspx"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="external"
-            >
+            <ExternalLink href="https://cmsintranet.share.cms.gov/CT/Pages/BoxInformation.aspx">
               {timelineConfig.links && timelineConfig.links[1]}
-            </Link>
+            </ExternalLink>
           </p>
         </ProcessListItem>
       </ProcessList>

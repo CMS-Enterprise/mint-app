@@ -240,7 +240,7 @@ const Authority = () => {
                     className="margin-y-4"
                   >
                     <Label htmlFor="plan-characteristics-rulemaking-required">
-                      {generalCharacteristicsT('rulemakingRequired.question')}
+                      {generalCharacteristicsT('rulemakingRequired.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -267,7 +267,7 @@ const Authority = () => {
                               className="margin-bottom-1 text-normal"
                             >
                               {generalCharacteristicsT(
-                                'rulemakingRequiredDescription.question'
+                                'rulemakingRequiredDescription.label'
                               )}
                             </Label>
 
@@ -301,9 +301,7 @@ const Authority = () => {
                     render={arrayHelpers => (
                       <>
                         <legend className="usa-label">
-                          {generalCharacteristicsT(
-                            'authorityAllowances.question'
-                          )}
+                          {generalCharacteristicsT('authorityAllowances.label')}
                         </legend>
 
                         <FieldErrorMsg>
@@ -351,7 +349,7 @@ const Authority = () => {
                                         className="text-normal"
                                       >
                                         {generalCharacteristicsT(
-                                          'authorityAllowancesOther.question'
+                                          'authorityAllowancesOther.label'
                                         )}
                                       </Label>
 
@@ -387,7 +385,7 @@ const Authority = () => {
                     className="margin-y-4"
                   >
                     <Label htmlFor="plan-characteristics-waivers-required">
-                      {generalCharacteristicsT('waiversRequired.question')}
+                      {generalCharacteristicsT('waiversRequired.label')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.waiversRequired}</FieldErrorMsg>
@@ -408,7 +406,7 @@ const Authority = () => {
                         <>
                           <legend className="usa-label text-normal">
                             {generalCharacteristicsT(
-                              'waiversRequiredTypes.question'
+                              'waiversRequiredTypes.label'
                             )}
                           </legend>
 

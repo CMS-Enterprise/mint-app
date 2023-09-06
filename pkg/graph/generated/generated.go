@@ -234,6 +234,7 @@ type ComplexityRoot struct {
 		DeletePlanFavorite                 func(childComplexity int, modelPlanID uuid.UUID) int
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
+		ShareModelPlan                     func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		UpdateCustomOperationalNeedByID    func(childComplexity int, id uuid.UUID, customNeedType *string, needed bool) int
@@ -316,6 +317,7 @@ type ComplexityRoot struct {
 	}
 
 	PlanBasics struct {
+		AdditionalModelCategories      func(childComplexity int) int
 		AmsModelID                     func(childComplexity int) int
 		Announced                      func(childComplexity int) int
 		ApplicationsEnd                func(childComplexity int) int
@@ -980,6 +982,7 @@ type MutationResolver interface {
 	UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error)
 	DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error)
+	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -989,6 +992,7 @@ type OperationalSolutionResolver interface {
 	OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error)
 }
 type PlanBasicsResolver interface {
+	AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error)
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
 
 	CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error)
@@ -2132,6 +2136,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.RemovePlanDocumentSolutionLinks(childComplexity, args["solutionID"].(uuid.UUID), args["documentIDs"].([]uuid.UUID)), true
 
+	case "Mutation.shareModelPlan":
+		if e.complexity.Mutation.ShareModelPlan == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_shareModelPlan_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.ShareModelPlan(childComplexity, args["modelPlanID"].(uuid.UUID), args["viewFilter"].(*models.ModelViewFilter), args["receiverEmails"].([]string), args["optionalMessage"].(*string)), true
+
 	case "Mutation.unlockAllTaskListSections":
 		if e.complexity.Mutation.UnlockAllTaskListSections == nil {
 			break
@@ -2695,6 +2711,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OperationalSolutionSubtask.Status(childComplexity), true
+
+	case "PlanBasics.additionalModelCategories":
+		if e.complexity.PlanBasics.AdditionalModelCategories == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.AdditionalModelCategories(childComplexity), true
 
 	case "PlanBasics.amsModelID":
 		if e.complexity.PlanBasics.AmsModelID == nil {
@@ -6973,6 +6996,7 @@ type PlanBasics {
   amsModelID: String
 
   modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]!
   cmsCenters: [CMSCenter!]!
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
@@ -7023,6 +7047,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   amsModelID: String
 
   modelCategory: ModelCategory
+  additionalModelCategories: [ModelCategory!]
   cmsCenters: [CMSCenter!]
   cmsOther: String
   cmmiGroups: [CMMIGroup!]
@@ -8337,7 +8362,7 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
 @hasRole(role: MINT_USER)
@@ -8376,6 +8401,9 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
+@hasRole(role: MINT_USER)
+
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
 }
 
@@ -8443,15 +8471,13 @@ enum ModelType
 }
 
 enum ModelCategory {
-	ACCOUNTABLE_CARE
-	DEMONSTRATION
-	EPISODE_BASED_PAYMENT_INITIATIVES
-	INIT_MEDICAID_CHIP_POP
-	INIT__MEDICARE_MEDICAID_ENROLLEES
-	INIT_ACCEL_DEV_AND_TEST
-	INIT_SPEED_ADOPT_BEST_PRACTICE
-	PRIMARY_CARE_TRANSFORMATION
-	UNKNOWN
+  ACCOUNTABLE_CARE
+  DISEASE_SPECIFIC_AND_EPISODIC
+  HEALTH_PLAN
+  PRESCRIPTION_DRUG
+  STATE_BASED
+  STATUTORY
+  TO_BE_DETERMINED
 }
 
 enum ModelStatus {
@@ -9118,6 +9144,18 @@ enum DiscussionUserRole {
   MODEL_TEAM,
   SHARED_SYSTEM_MAINTAINER,
   NONE_OF_THE_ABOVE,
+}
+
+enum ModelViewFilter {
+  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
+  CMMI, # CMMI_COST_ESTIMATE
+  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
+  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
+  IPC, # INNOVATION_PAYMENT_CONTRACTOR
+  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
+  MDM, # MASTER_DATA_MANAGEMENT
+  OACT, # OFFICE_OF_THE_ACTUARY
+  PBG, # PROVIDER_BILLING_GROUP
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -9540,6 +9578,48 @@ func (ec *executionContext) field_Mutation_removePlanDocumentSolutionLinks_args(
 		}
 	}
 	args["documentIDs"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_shareModelPlan_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	var arg1 *models.ModelViewFilter
+	if tmp, ok := rawArgs["viewFilter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("viewFilter"))
+		arg1, err = ec.unmarshalOModelViewFilter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["viewFilter"] = arg1
+	var arg2 []string
+	if tmp, ok := rawArgs["receiverEmails"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("receiverEmails"))
+		arg2, err = ec.unmarshalNString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["receiverEmails"] = arg2
+	var arg3 *string
+	if tmp, ok := rawArgs["optionalMessage"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("optionalMessage"))
+		arg3, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["optionalMessage"] = arg3
 	return args, nil
 }
 
@@ -14875,6 +14955,8 @@ func (ec *executionContext) fieldContext_ModelPlan_basics(ctx context.Context, f
 				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
 			case "modelCategory":
 				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
+			case "additionalModelCategories":
+				return ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
 			case "cmsCenters":
 				return ec.fieldContext_PlanBasics_cmsCenters(ctx, field)
 			case "cmsOther":
@@ -17199,6 +17281,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
 			case "modelCategory":
 				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
+			case "additionalModelCategories":
+				return ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
 			case "cmsCenters":
 				return ec.fieldContext_PlanBasics_cmsCenters(ctx, field)
 			case "cmsOther":
@@ -19677,14 +19761,14 @@ func (ec *executionContext) _Mutation_deletePlanFavorite(ctx context.Context, fi
 			return ec.resolvers.Mutation().DeletePlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
 			if err != nil {
 				return nil, err
 			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
 		}
 
 		tmp, err := directive1(rctx)
@@ -21096,6 +21180,85 @@ func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx c
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updateExistingModelLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_shareModelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(*models.ModelViewFilter), fc.Args["receiverEmails"].([]string), fc.Args["optionalMessage"].(*string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_shareModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_shareModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -23646,6 +23809,50 @@ func (ec *executionContext) fieldContext_PlanBasics_modelCategory(ctx context.Co
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ModelCategory does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasics_additionalModelCategories(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanBasics().AdditionalModelCategories(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.ModelCategory)
+	fc.Result = res
+	return ec.marshalNModelCategory2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategoryᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasics_additionalModelCategories(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ModelCategory does not have child fields")
 		},
@@ -53302,6 +53509,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "shareModelPlan":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_shareModelPlan(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -53937,6 +54151,42 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 			out.Values[i] = ec._PlanBasics_amsModelID(ctx, field, obj)
 		case "modelCategory":
 			out.Values[i] = ec._PlanBasics_modelCategory(ctx, field, obj)
+		case "additionalModelCategories":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBasics_additionalModelCategories(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "cmsCenters":
 			field := field
 
@@ -61761,6 +62011,83 @@ func (ec *executionContext) marshalNMap2map(ctx context.Context, sel ast.Selecti
 	return res
 }
 
+func (ec *executionContext) unmarshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (models.ModelCategory, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ModelCategory(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, sel ast.SelectionSet, v models.ModelCategory) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNModelCategory2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategoryᚄ(ctx context.Context, v interface{}) ([]models.ModelCategory, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.ModelCategory, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNModelCategory2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategoryᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ModelCategory) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNModelLearningSystemType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemType(ctx context.Context, v interface{}) (model.ModelLearningSystemType, error) {
 	var res model.ModelLearningSystemType
 	err := res.UnmarshalGQL(v)
@@ -65981,6 +66308,73 @@ func (ec *executionContext) marshalOKeyCharacteristic2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
+func (ec *executionContext) unmarshalOModelCategory2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategoryᚄ(ctx context.Context, v interface{}) ([]models.ModelCategory, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.ModelCategory, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOModelCategory2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategoryᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ModelCategory) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (*models.ModelCategory, error) {
 	if v == nil {
 		return nil, nil
@@ -66099,6 +66493,23 @@ func (ec *executionContext) unmarshalOModelType2ᚖgithubᚗcomᚋcmsgovᚋmint�
 }
 
 func (ec *executionContext) marshalOModelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelType(ctx context.Context, sel ast.SelectionSet, v *models.ModelType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalOModelViewFilter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx context.Context, v interface{}) (*models.ModelViewFilter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ModelViewFilter(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOModelViewFilter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelViewFilter(ctx context.Context, sel ast.SelectionSet, v *models.ModelViewFilter) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

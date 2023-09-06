@@ -29,36 +29,6 @@ const readOnlyModelPlan = {
       subheading:
         'Double check your search for typos or try a different search.'
     }
-  },
-  opsEvalAndLearning: {
-    headings: {
-      iddoc: 'IDDOC Operations',
-      icd: 'Interface Control Document (ICD)',
-      testing: 'Testing',
-      dataMonitoring: 'Data Monitoring',
-      ccw: 'Chronic Conditions Warehouse (CCW)',
-      quality: 'Quality',
-      data: 'Data Sharing, Collection, and Reporting Timing and Frequency'
-    },
-    anotherAgency:
-      'Will another Agency or State help design/operate the model?',
-    evaluationApproach: 'What type of evaluation approach are you considering?',
-    dataNeeded: 'What data do you need to monitor the model?',
-    dataToSend: 'What data will you send to participants?',
-    riskAdj: {
-      performanceScores:
-        'Will you make risk adjustments to performance scores?',
-      feedbackResults: 'Will you make risk adjustments to feedback results?',
-      payments: 'Will you make risk adjustments to payments?',
-      others: 'Will you make risk adjustments to others?'
-    },
-    appeal: {
-      performanceScores:
-        'Will participants be able to appeal performance scores?',
-      feedbackResults: 'Will participants be able to appeal feedback results?',
-      payments: 'Will participants be able to appeal payments?',
-      others: 'Will participants be able to appeal others?'
-    }
   }
 };
 

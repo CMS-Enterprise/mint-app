@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
-import { Link } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import '../index.scss';
@@ -11,15 +11,9 @@ const RMADATimeline = ({ solution }: { solution: HelpSolutionType }) => {
     <div className="line-height-body-5 font-body-md">
       <Trans i18nKey={`solutions.${solution.key}.timeline.description`}>
         Model teams should follow the{' '}
-        <Link
-          aria-label="Open in a new tab"
-          href="https://agx.cms.gov/FirstVisitPage/GovernmentAgreement.aspx?ReturnUrl=http%3a%2f%2fagx.cms.gov%2fLibraries%2fLibrary.aspx%3fSearchTerm%3dPALT"
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="external"
-        >
+        <ExternalLink href="https://agx.cms.gov/FirstVisitPage/GovernmentAgreement.aspx?ReturnUrl=http%3a%2f%2fagx.cms.gov%2fLibraries%2fLibrary.aspx%3fSearchTerm%3dPALT">
           Procurement Administrative Lead Time (PALT)
-        </Link>{' '}
+        </ExternalLink>{' '}
         standards to determine when to being working with RMADA.
       </Trans>
     </div>

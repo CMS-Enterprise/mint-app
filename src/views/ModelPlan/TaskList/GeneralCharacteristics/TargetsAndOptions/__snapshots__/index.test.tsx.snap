@@ -122,14 +122,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-geographies-targeted"
+              data-testid="plan-characteristics-geographies-targeted-true"
+              id="plan-characteristics-geographies-targeted-true"
               name="geographiesTargeted"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-geographies-targeted"
+              for="plan-characteristics-geographies-targeted-true"
             >
               Yes
             </label>
@@ -140,14 +141,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-geographies-targeted-no"
+              data-testid="plan-characteristics-geographies-targeted-false"
+              id="plan-characteristics-geographies-targeted-false"
               name="geographiesTargeted"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-geographies-targeted-no"
+              for="plan-characteristics-geographies-targeted-false"
             >
               No
             </label>
@@ -376,14 +378,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-participation"
+              data-testid="plan-characteristics-participation-true"
+              id="plan-characteristics-participation-true"
               name="participationOptions"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-participation"
+              for="plan-characteristics-participation-true"
             >
               Yes
             </label>
@@ -394,14 +397,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-participation-no"
+              data-testid="plan-characteristics-participation-false"
+              id="plan-characteristics-participation-false"
               name="participationOptions"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-participation-no"
+              for="plan-characteristics-participation-false"
             >
               No
             </label>

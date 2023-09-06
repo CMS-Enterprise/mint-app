@@ -122,14 +122,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-is-new-model"
+              data-testid="plan-characteristics-is-new-model-true"
+              id="plan-characteristics-is-new-model-true"
               name="isNewModel"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-is-new-model"
+              for="plan-characteristics-is-new-model-true"
             >
               New model
             </label>
@@ -140,14 +141,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-is-new-model-no"
+              data-testid="plan-characteristics-is-new-model-false"
+              id="plan-characteristics-is-new-model-false"
               name="isNewModel"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-is-new-model-no"
+              for="plan-characteristics-is-new-model-false"
             >
               New track of an existing model
             </label>
@@ -284,14 +286,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-resembles-existing-model"
+              data-testid="plan-characteristics-resembles-existing-model-true"
+              id="plan-characteristics-resembles-existing-model-true"
               name="resemblesExistingModel"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-resembles-existing-model"
+              for="plan-characteristics-resembles-existing-model-true"
             >
               Yes
             </label>
@@ -302,14 +305,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-resembles-existing-model-no"
+              data-testid="plan-characteristics-resembles-existing-model-false"
+              id="plan-characteristics-resembles-existing-model-false"
               name="resemblesExistingModel"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-resembles-existing-model-no"
+              for="plan-characteristics-resembles-existing-model-false"
             >
               No
             </label>
@@ -337,14 +341,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-has-component-or-tracks"
+              data-testid="plan-characteristics-has-component-or-tracks-true"
+              id="plan-characteristics-has-component-or-tracks-true"
               name="hasComponentsOrTracks"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-has-component-or-tracks"
+              for="plan-characteristics-has-component-or-tracks-true"
             >
               Yes
             </label>
@@ -380,14 +385,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="plan-characteristics-has-component-or-tracks-no"
+              data-testid="plan-characteristics-has-component-or-tracks-false"
+              id="plan-characteristics-has-component-or-tracks-false"
               name="hasComponentsOrTracks"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="plan-characteristics-has-component-or-tracks-no"
+              for="plan-characteristics-has-component-or-tracks-false"
             >
               No
             </label>

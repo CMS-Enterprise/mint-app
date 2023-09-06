@@ -178,10 +178,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-eft-setup-true"
               id="ops-eval-and-learning-eft-setup-true"
               name="eftSetUp"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -196,10 +197,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-eft-setup-false"
               id="ops-eval-and-learning-eft-setup-false"
               name="eftSetUp"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -231,10 +233,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-unsolicted-adjustment-included-true"
               id="ops-eval-and-learning-unsolicted-adjustment-included-true"
               name="unsolicitedAdjustmentsIncluded"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -249,10 +252,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-unsolicted-adjustment-included-false"
               id="ops-eval-and-learning-unsolicted-adjustment-included-false"
               name="unsolicitedAdjustmentsIncluded"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -284,10 +288,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-diagrams-needed-true"
               id="ops-eval-and-learning-diagrams-needed-true"
               name="dataFlowDiagramsNeeded"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -302,10 +307,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-diagrams-needed-false"
               id="ops-eval-and-learning-diagrams-needed-false"
               name="dataFlowDiagramsNeeded"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"
@@ -342,10 +348,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-produce-benefit-files-true"
               id="ops-eval-and-learning-produce-benefit-files-true"
               name="produceBenefitEnhancementFiles"
               type="radio"
-              value="YES"
+              value="TRUE"
             />
             <label
               class="usa-radio__label"
@@ -360,10 +367,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
+              data-testid="ops-eval-and-learning-produce-benefit-files-false"
               id="ops-eval-and-learning-produce-benefit-files-false"
               name="produceBenefitEnhancementFiles"
               type="radio"
-              value="NO"
+              value="FALSE"
             />
             <label
               class="usa-radio__label"

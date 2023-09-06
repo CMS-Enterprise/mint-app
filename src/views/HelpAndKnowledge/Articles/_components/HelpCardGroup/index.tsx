@@ -8,17 +8,25 @@ import helpAndKnowledgeArticles from '../..';
 type HelpCardGroupType = {
   className?: string;
   filter?: string;
+  showFirstThree?: boolean;
   tag?: boolean;
 };
 
-const HelpCardGroup = ({ className, filter, tag }: HelpCardGroupType) => {
+const HelpCardGroup = ({
+  className,
+  filter,
+  showFirstThree,
+  tag
+}: HelpCardGroupType) => {
   const articles = filter
     ? helpAndKnowledgeArticles.filter(article => article.type === filter)
     : helpAndKnowledgeArticles;
 
+  const firstThreeArticles = showFirstThree ? articles.slice(0, 3) : articles;
+
   return (
     <CardGroup className={className}>
-      {articles.map(article => (
+      {firstThreeArticles.map(article => (
         <ArticleCard
           key={article.route}
           {...article}

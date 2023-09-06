@@ -463,6 +463,26 @@ func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPl
 	return resolvers.ExistingModelLinksUpdate(logger, r.store, principal, modelPlanID, existingModelIDs, currentModelPlanIDs)
 }
 
+// ShareModelPlan is the resolver for the shareModelPlan field.
+func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.ModelPlanShare(
+		ctx,
+		logger,
+		r.store,
+		principal,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		modelPlanID,
+		viewFilter,
+		receiverEmails,
+		optionalMessage,
+	)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
@@ -484,6 +504,12 @@ func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models
 // OperationalSolutionSubtasks is the resolver for the operationalSolutionSubtasks field.
 func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error) {
 	return resolvers.OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx, obj.ID)
+}
+
+// AdditionalModelCategories is the resolver for the additionalModelCategories field.
+func (r *planBasicsResolver) AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error) {
+	modelCategories := models.ConvertEnums[models.ModelCategory](obj.AdditionalModelCategories)
+	return modelCategories, nil
 }
 
 // CmsCenters is the resolver for the cmsCenters field.

@@ -230,11 +230,11 @@ export const Coordination = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-coordniate-work">
-                      {participantsAndProvidersT('coordinateWork.question')}
+                      {participantsAndProvidersT('coordinateWork.label')}
                     </Label>
 
                     <p className="text-base margin-0 line-height-body-3">
-                      {participantsAndProvidersT('coordinateWork.hint')}
+                      {participantsAndProvidersT('coordinateWork.sublabel')}
                     </p>
 
                     <FieldErrorMsg>{flatErrors.coordinateWork}</FieldErrorMsg>
@@ -259,7 +259,7 @@ export const Coordination = () => {
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-gainshare-payment">
-                      {participantsAndProvidersT('gainsharePayments.question')}
+                      {participantsAndProvidersT('gainsharePayments.label')}
                     </Label>
 
                     <FieldErrorMsg>
@@ -281,7 +281,7 @@ export const Coordination = () => {
                           className="text-normal"
                         >
                           {participantsAndProvidersT(
-                            'gainsharePaymentsTrack.question'
+                            'gainsharePaymentsTrack.label'
                           )}
                         </Label>
 
@@ -313,9 +313,7 @@ export const Coordination = () => {
                       render={arrayHelpers => (
                         <>
                           <legend className="usa-label">
-                            {participantsAndProvidersT(
-                              'participantsIds.question'
-                            )}
+                            {participantsAndProvidersT('participantsIds.label')}
                           </legend>
 
                           {itSolutionsStarted && (
@@ -330,7 +328,9 @@ export const Coordination = () => {
                           )}
 
                           <p className="text-base margin-0 line-height-body-3">
-                            {participantsAndProvidersT('participantsIds.hint')}
+                            {participantsAndProvidersT(
+                              'participantsIds.sublabel'
+                            )}
                           </p>
 
                           <FieldErrorMsg>
@@ -371,7 +371,7 @@ export const Coordination = () => {
                                         className="text-normal margin-top-1"
                                       >
                                         {participantsAndProvidersT(
-                                          'participantsIdsOther.question'
+                                          'participantsIdsOther.label'
                                         )}
                                       </Label>
 
