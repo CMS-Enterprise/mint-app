@@ -214,11 +214,37 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Recruit participants',
-          party: 'GrantSolutions, CMS Qualtrics, Salesforce LOI, Salesforce RFA'
+          modalLinks: [
+            {
+              copy: '<ml>GrantSolutions</ml>',
+              route: 'grant-solutions'
+            },
+            {
+              copy: '<ml>CMS Qualtrics</ml>',
+              route: 'cms-qualtrics'
+            },
+            {
+              copy: '<ml>Salesforce LOI</ml>',
+              route: 'salesforce-letter-of-intent'
+            },
+            {
+              copy: '<ml>Salesforce RFA</ml>',
+              route: 'salesforce-request-for-application'
+            }
+          ]
         },
         {
           activity: 'Review and score applications',
-          party: 'GrantSolutions, Salesforce ARS'
+          modalLinks: [
+            {
+              copy: '<ml>GrantSolutions</ml>',
+              route: 'grant-solutions'
+            },
+            {
+              copy: '<ml>Salesforce ARS</ml>',
+              route: 'salesforce-application-review-and-scoring'
+            }
+          ]
         },
         {
           activity: 'Establish a benchmark with participants',
