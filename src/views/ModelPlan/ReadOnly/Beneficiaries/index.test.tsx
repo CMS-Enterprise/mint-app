@@ -2,10 +2,10 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import i18next from 'i18next';
 
 import { benficiaryMocks as mocks, modelID } from 'data/mock/readonly';
 import { BeneficiariesType } from 'types/graphql-global-types';
-import { translateBeneficiariesType } from 'utils/modelPlan';
 
 import ReadOnlyBeneficiaries from './index';
 
@@ -29,7 +29,9 @@ describe('Read Only Model Plan Summary -- Beneficiaries', () => {
       );
       expect(
         screen.getByText(
-          translateBeneficiariesType(BeneficiariesType.DISEASE_SPECIFIC)
+          i18next.t<string>(
+            `beneficiaries:beneficiaries.options.${BeneficiariesType.DISEASE_SPECIFIC}`
+          )
         )
       ).toBeInTheDocument();
     });
@@ -52,7 +54,9 @@ describe('Read Only Model Plan Summary -- Beneficiaries', () => {
       );
       expect(
         screen.getByText(
-          translateBeneficiariesType(BeneficiariesType.DISEASE_SPECIFIC)
+          i18next.t<string>(
+            `beneficiaries:beneficiaries.options.${BeneficiariesType.DISEASE_SPECIFIC}`
+          )
         )
       ).toBeInTheDocument();
       expect(asFragment()).toMatchSnapshot();

@@ -294,7 +294,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                   data-testid="label"
                   for="nonClaimsPaymentOther"
                 >
-                  Please describe the other payment frequency.
+                  Please describe the other non-claims-based payments you will pay.
                 </label>
                 <input
                   class="usa-input"
@@ -434,7 +434,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                     id="payment-nonclaims-shared-involvement-true"
                     name="sharedSystemsInvolvedAdditionalClaimPayment"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -453,7 +453,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                     id="payment-nonclaims-shared-involvement-false"
                     name="sharedSystemsInvolvedAdditionalClaimPayment"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"
@@ -507,7 +507,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               <p
                 class="text-base margin-y-1"
               >
-                Note: If there will be 30+ payees we recommend a contractor. 
+                Note: If there will be 30+ payees we recommend a contractor.
               </p>
               <fieldset
                 class="usa-fieldset"
@@ -523,7 +523,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                     id="payment-use-innovation-payment-contractor-true"
                     name="planningToUseInnovationPaymentContractor"
                     type="radio"
-                    value="YES"
+                    value="TRUE"
                   />
                   <label
                     class="usa-radio__label"
@@ -542,7 +542,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                     id="payment-use-innovation-payment-contractor-false"
                     name="planningToUseInnovationPaymentContractor"
                     type="radio"
-                    value="NO"
+                    value="FALSE"
                   />
                   <label
                     class="usa-radio__label"

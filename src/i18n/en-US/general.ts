@@ -20,7 +20,8 @@ const general = {
   },
   taskListLockBanner:
     'Model Plan sections can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.',
-  noResults: 'No results'
+  noResults: 'No results',
+  newTab: 'Open in a new tab'
 };
 
 export default general;

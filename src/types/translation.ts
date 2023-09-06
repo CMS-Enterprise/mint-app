@@ -8,12 +8,15 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
+  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
   CcmInvolvmentType,
+  ClaimsBasedPayType,
   CMMIGroup,
   CMSCenter,
+  ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
   DataForMonitoringType,
@@ -23,26 +26,33 @@ import {
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
+  FundingSource,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
+  ModelStatus,
   ModelType,
   MonitoringFileType,
+  NonClaimsBasedPayType,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRiskType,
   ParticipantSelectionType,
   ParticipantsIDType,
   ParticipantsType,
+  PayRecipient,
+  PayType,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
   TaskStatus,
+  TeamRole,
   TriStateAnswer,
+  TrustFundType,
   WaiverType
 } from './graphql-global-types';
 
@@ -65,7 +75,7 @@ export type TranslationFieldProperties = {
   readonlyLabel?: string;
   sublabel?: string;
   multiSelectLabel?: string;
-  dataType: 'string' | 'number' | 'boolean' | 'date' | 'enum';
+  dataType: 'string' | 'number' | 'boolean' | 'date' | 'enum' | 'object';
   isArray?: boolean;
   formType:
     | 'text'
@@ -96,6 +106,7 @@ export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
   previousName: TranslationFieldProperties;
   abbreviation: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<ModelStatus>;
 };
 
 // Basics
@@ -377,6 +388,82 @@ export type TranslationOpsEvalAndLearning = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
+// Payments
+export type TranslationPayments = {
+  fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
+  fundingSourceTrustFundType: TranslationFieldPropertiesWithOptions<TrustFundType>;
+  fundingSourceOther: TranslationFieldProperties;
+  fundingSourceNote: TranslationFieldProperties;
+  fundingSourceR: TranslationFieldPropertiesWithOptions<FundingSource>;
+  fundingSourceRTrustFundType: TranslationFieldPropertiesWithOptions<TrustFundType>;
+  fundingSourceROther: TranslationFieldProperties;
+  fundingSourceRNote: TranslationFieldProperties;
+  payRecipients: TranslationFieldPropertiesWithOptions<PayRecipient>;
+  payRecipientsOtherSpecification: TranslationFieldProperties;
+  payRecipientsNote: TranslationFieldProperties;
+  payType: TranslationFieldPropertiesWithOptions<PayType>;
+  payTypeNote: TranslationFieldProperties;
+  // Claims Based Payment
+  payClaims: TranslationFieldPropertiesWithOptions<ClaimsBasedPayType>;
+  payClaimsOther: TranslationFieldProperties;
+  payClaimsNote: TranslationFieldProperties;
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldPropertiesWithOptions<Bool>;
+  shouldAnyProviderExcludedFFSSystemsNote: TranslationFieldProperties;
+  changesMedicarePhysicianFeeSchedule: TranslationFieldPropertiesWithOptions<Bool>;
+  changesMedicarePhysicianFeeScheduleNote: TranslationFieldProperties;
+  affectsMedicareSecondaryPayerClaims: TranslationFieldPropertiesWithOptions<Bool>;
+  affectsMedicareSecondaryPayerClaimsHow: TranslationFieldProperties;
+  affectsMedicareSecondaryPayerClaimsNote: TranslationFieldProperties;
+  payModelDifferentiation: TranslationFieldProperties;
+  // Anticipating Dependencies
+  creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptions<Bool>;
+  creatingDependenciesBetweenServicesNote: TranslationFieldProperties;
+  needsClaimsDataCollection: TranslationFieldPropertiesWithOptions<Bool>;
+  needsClaimsDataCollectionNote: TranslationFieldProperties;
+  providingThirdPartyFile: TranslationFieldPropertiesWithOptions<Bool>;
+  isContractorAwareTestDataRequirements: TranslationFieldPropertiesWithOptions<Bool>;
+  // Beneficiary Cost Sharing
+  beneficiaryCostSharingLevelAndHandling: TranslationFieldProperties;
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldPropertiesWithOptions<Bool>;
+  waiveBeneficiaryCostSharingServiceSpecification: TranslationFieldProperties;
+  waiverOnlyAppliesPartOfPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  waiveBeneficiaryCostSharingNote: TranslationFieldProperties;
+  // Non-Claims Based Payments
+  nonClaimsPayments: TranslationFieldPropertiesWithOptions<NonClaimsBasedPayType>;
+  nonClaimsPaymentsNote: TranslationFieldProperties;
+  nonClaimsPaymentOther: TranslationFieldProperties;
+  paymentCalculationOwner: TranslationFieldProperties;
+  numberPaymentsPerPayCycle: TranslationFieldProperties;
+  numberPaymentsPerPayCycleNote: TranslationFieldProperties;
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationFieldProperties;
+  planningToUseInnovationPaymentContractor: TranslationFieldPropertiesWithOptions<Bool>;
+  planningToUseInnovationPaymentContractorNote: TranslationFieldProperties;
+  // Complexity
+  expectedCalculationComplexityLevel: TranslationFieldPropertiesWithOptions<ComplexityCalculationLevelType>;
+  expectedCalculationComplexityLevelNote: TranslationFieldProperties;
+  canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
+  canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
+  canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
+  anticipatedPaymentFrequencyOther: TranslationFieldProperties;
+  anticipatedPaymentFrequencyNote: TranslationFieldProperties;
+  // Recover Payment
+  willRecoverPayments: TranslationFieldPropertiesWithOptions<Bool>;
+  willRecoverPaymentsNote: TranslationFieldProperties;
+  anticipateReconcilingPaymentsRetrospectively: TranslationFieldPropertiesWithOptions<Bool>;
+  anticipateReconcilingPaymentsRetrospectivelyNote: TranslationFieldProperties;
+  paymentStartDate: TranslationFieldProperties;
+  paymentStartDateNote: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+};
+
+// Collaborators
+export type TranslationCollaborators = {
+  teamRole: TranslationFieldPropertiesWithOptions<TeamRole>;
+  username: TranslationFieldProperties;
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -384,4 +471,6 @@ export type TranslationPlan = {
   participantsAndProviders: TranslationParticipantsAndProviders;
   beneficiaries: TranslationBeneficiaries;
   opsEvalAndLearning: TranslationOpsEvalAndLearning;
+  payments: TranslationPayments;
+  collaborators: TranslationCollaborators;
 };

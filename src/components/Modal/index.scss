@@ -28,6 +28,10 @@
       width: 668px;
       height: auto;
     }
+
+    @media screen and (max-width: $tablet) {
+      overflow: scroll;
+    }
   }
 
   &__x-button {

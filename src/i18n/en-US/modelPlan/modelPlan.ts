@@ -1,6 +1,6 @@
 import { TranslationModelPlan } from 'types/translation';
 
-const modelPlan: TranslationModelPlan = {
+export const modelPlan: TranslationModelPlan = {
   modelName: {
     gqlField: 'modelName',
     goField: 'ModelName',
@@ -26,7 +26,43 @@ const modelPlan: TranslationModelPlan = {
       'The abbreviation, acronym, or other common name used for the model.',
     dataType: 'string',
     formType: 'text'
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    label: 'What is the status of your Model Plan?',
+    dataType: 'enum',
+    formType: 'select',
+    options: {
+      PLAN_DRAFT: 'Draft model plan',
+      PLAN_COMPLETE: 'Model plan complete',
+      ICIP_COMPLETE: 'ICIP complete',
+      INTERNAL_CMMI_CLEARANCE: 'Internal (CMMI) clearance',
+      CMS_CLEARANCE: 'CMS clearance',
+      HHS_CLEARANCE: 'HHS clearance',
+      OMB_ASRF_CLEARANCE: 'OMB/ASRF clearance',
+      CLEARED: 'Cleared',
+      ANNOUNCED: 'Announced',
+      ACTIVE: 'Active',
+      ENDED: 'Ended',
+      PAUSED: 'Paused',
+      CANCELED: 'Canceled'
+    }
   }
+};
+
+export const modelPlanMisc: Record<string, string> = {
+  heading: 'Model name',
+  breadcrumb: 'Start a new Model Plan',
+  modeName: 'What is the name of your model?',
+  modelNameInfo:
+    'This is not a permanent name. If needed, you may update it later.',
+  headingStatus: 'Update status',
+  copy:
+    'After you’ve iterated on your Model Plan, update the status so others know what stage it’s at in the design and clearance process.',
+  updateButton: 'Update status',
+  return: 'Don’t update status and return to task list'
 };
 
 export default modelPlan;

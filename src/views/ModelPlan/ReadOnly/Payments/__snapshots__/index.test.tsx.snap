@@ -56,6 +56,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
         data-testid="grid"
       >
         <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Funding source note
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
           class="read-only-section read-only-section--what-is-the-funding-source-for-reconciliation-or-other-expenditures margin-bottom-3"
         >
           <p
@@ -72,6 +91,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
               Patient Protection Affordable Care Act (Sec 3021)
             </li>
           </ul>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Funding r note
+          </p>
         </div>
       </div>
       <div
@@ -96,6 +134,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             </li>
           </ul>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Recipient note
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -118,6 +175,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
               Claims-Based Payments
             </li>
           </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Pay type note
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -149,6 +225,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             </li>
           </ul>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Pay claims note
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -168,6 +263,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             Yes
           </p>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              FFSS Note
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -186,6 +300,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
           >
             Yes
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Change medicare note
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -225,24 +358,39 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             data-testid="grid"
           >
             <div
-              class="read-only-section read-only-section--please-describe margin-bottom-3"
+              class="read-only-section read-only-section--how-so margin-bottom-3"
             >
               <p
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                Please describe
+                How so?
               </p>
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Affect how
               </p>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Affect payer note
+          </p>
         </div>
       </div>
       <div
@@ -260,11 +408,7 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <em
-              class="text-base"
-            >
-              No answer entered
-            </em>
+            Differ pay model
           </p>
         </div>
       </div>
@@ -286,6 +430,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             Yes
           </p>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Creating dependencies note
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -304,6 +467,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
           >
             Yes
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Need claims note
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -335,7 +517,7 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Is your contractor aware that test data will be needed, and when that test data must be available? 
+            Is your contractor aware that test data will be needed, and when that test data must be available?
           </p>
           <p
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -369,6 +551,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             Yes
           </p>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Shared systems note
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -391,6 +592,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
           >
             High level
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Expected complexity note
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -440,14 +660,29 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Can participants select how
               </p>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Payment mechanisms note
+          </p>
         </div>
       </div>
       <div
@@ -472,6 +707,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             </li>
           </ul>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Payment frequency note
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     <div>
@@ -493,6 +747,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             Yes
           </p>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Will recover note
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -512,6 +785,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
             Yes
           </p>
         </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Anticipate note
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="desktop:grid-col-12"
@@ -530,6 +822,25 @@ exports[`Read Only Model Plan Summary -- Payment matches snapshot 1`] = `
           >
             06/03/2022
           </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for payment start date
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -41,6 +41,17 @@ const (
 	MCToBeDetermined             ModelCategory = "TO_BE_DETERMINED"
 )
 
+// ModelCategoryHumanized maps ModelCategory to a human-readable string
+var ModelCategoryHumanized = map[ModelCategory]string{
+	MCAccountableCare:            "Accountable Care",
+	MCDiseaseSpecificAndEpisodic: "Disease-Specific & Episodic",
+	MCHealthPlan:                 "Health Plan",
+	MCPrescriptionDrug:           "Prescription Drug",
+	MCStateBased:                 "State-Based",
+	MCStatutory:                  "Statutory",
+	MCToBeDetermined:             "To be determined",
+}
+
 // ModelStatus represents the possible statuses of a Model Plan
 type ModelStatus string
 
@@ -57,4 +68,52 @@ const (
 	ModelStatusAnnounced             ModelStatus = "ANNOUNCED"
 	ModelStatusActive                ModelStatus = "ACTIVE"
 	ModelStatusEnded                 ModelStatus = "ENDED"
+	ModelStatusPaused                ModelStatus = "PAUSED"
+	ModelStatusCanceled              ModelStatus = "CANCELED"
 )
+
+// ModelStatusHumanized maps ModelStatus to a human-readable string
+var ModelStatusHumanized = map[ModelStatus]string{
+	ModelStatusPlanDraft:             "Draft model plan",
+	ModelStatusPlanComplete:          "Model plan complete",
+	ModelStatusIcipComplete:          "ICIP complete",
+	ModelStatusInternalCmmiClearance: "Internal (CMMI) clearance",
+	ModelStatusCmsClearance:          "CMS clearance",
+	ModelStatusHhsClearance:          "HHS clearance",
+	ModelStatusOmbAsrfClearance:      "OMB/ASRF clearance",
+	ModelStatusCleared:               "Cleared",
+	ModelStatusAnnounced:             "Announced",
+	ModelStatusActive:                "Active",
+	ModelStatusEnded:                 "Ended",
+	ModelStatusPaused:                "Paused",
+	ModelStatusCanceled:              "Canceled",
+}
+
+// ModelViewFilter represents the possible filters for a model plan view
+type ModelViewFilter string
+
+// These constants represent the different values of ModelViewFilter
+const (
+	ModelViewFilterChronicConditionsWarehouse                       ModelViewFilter = "CCW"
+	ModelViewFilterCmmiCostEstimate                                 ModelViewFilter = "CMMI"
+	ModelViewFilterConsolidatedBusinessOperationsSupportCenter      ModelViewFilter = "CBOSC"
+	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement     ModelViewFilter = "DFSDM"
+	ModelViewFilterInnovationPaymentContractor                      ModelViewFilter = "IPC"
+	ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract ModelViewFilter = "IDDOC"
+	ModelViewFilterMasterDataManagement                             ModelViewFilter = "MDM"
+	ModelViewFilterOfficeOfTheActuary                               ModelViewFilter = "OACT"
+	ModelViewFilterProviderBillingGroup                             ModelViewFilter = "PBG"
+)
+
+// ModelViewFilterHumanized maps ModelViewFilter to a human-readable string
+var ModelViewFilterHumanized = map[ModelViewFilter]string{
+	ModelViewFilterChronicConditionsWarehouse:                       "Chronic Conditions Warehouse",
+	ModelViewFilterCmmiCostEstimate:                                 "CMMI Cost Estimate",
+	ModelViewFilterConsolidatedBusinessOperationsSupportCenter:      "Consolidated Business Operations Support Center",
+	ModelViewFilterDivisionOfFinancialServicesAndDebtManagement:     "Division of Financial Services and Debt Management",
+	ModelViewFilterInnovationPaymentContractor:                      "Innovation Payment Contractor",
+	ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract: "Innovative Design Development and Operations Contract",
+	ModelViewFilterMasterDataManagement:                             "Master Data Management",
+	ModelViewFilterOfficeOfTheActuary:                               "Office of the Actuary",
+	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
+}

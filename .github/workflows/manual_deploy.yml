@@ -24,13 +24,19 @@ permissions:
   contents: read
 
 jobs:
-  build_application_images:
-    uses: ./.github/workflows/build_application_images.yml
-    secrets: inherit
-
   run_tests:
     uses: ./.github/workflows/run_tests.yml
-    needs: build_application_images
+    secrets: inherit
+
+  build_frontend_assets:
+    uses: ./.github/workflows/build_frontend_assets.yml
+    secrets: inherit
+    with:
+      env: ${{ inputs.env }}
+
+  build_application_images:
+    uses: ./.github/workflows/build_application_images.yml
+    needs: [run_tests]
     secrets: inherit
 
   deploy:
@@ -38,7 +44,7 @@ jobs:
     # 1. We're not deploying to prod
     # 2. We're deploying to prod, and you've confirmed (with the confirm_production_deploy checkbox) that you actually mean to deploy to prod!
     if: ${{ github.event.inputs.env != 'prod' || (github.event.inputs.env == 'prod' && github.event.inputs.confirm_production_deploy == true) }}
-    needs: run_tests
+    needs: [build_application_images, build_frontend_assets]
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: ${{ inputs.env }}

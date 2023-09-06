@@ -6,7 +6,6 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
 import { ModelStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
-import { translateModelPlanStatus } from 'utils/modelPlan';
 
 type TaskListStatusProps = {
   icon?: boolean;
@@ -33,6 +32,7 @@ const TaskListStatus = ({
 }: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: modelPlanT } = useTranslation('modelPlan');
 
   return (
     <div className="padding-0" data-testid="task-list-status">
@@ -43,7 +43,7 @@ const TaskListStatus = ({
         >
           {statusLabel && <p className="margin-y-0">{t('status')}</p>}
           <Tag className="bg-base text-white margin-right-0">
-            {translateModelPlanStatus(status)}
+            {modelPlanT(`status.options.${status}`)}
           </Tag>
         </Grid>
         <Grid className="display-flex flex-align-center flex-wrap">

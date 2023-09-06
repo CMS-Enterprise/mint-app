@@ -29,7 +29,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: 4innovation 1`] 
           Send an email to 
           <a
             aria-label="Open in a new tab"
-            class="usa-link"
+            class="usa-link usa-link--external"
             href="mailto:ACO-OIT@cms.hhs.gov"
             rel="noopener noreferrer"
             target="_blank"
@@ -204,7 +204,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Accountable Care
           Send an email to 
           <a
             aria-label="Open in a new tab"
-            class="usa-link"
+            class="usa-link usa-link--external"
             href="mailto:ACO-OIT@cms.hhs.gov"
             rel="noopener noreferrer"
             target="_blank"
@@ -504,7 +504,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: CMS Box 1`] = `
       Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at 
       <a
         aria-label="Open in a new tab"
-        class="usa-link"
+        class="usa-link usa-link--external"
         href="mailto:MINTTeam@cms.hhs.gov"
         rel="noopener noreferrer"
         target="_blank"
@@ -579,7 +579,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: CMS Qualtrics 1`
       Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at 
       <a
         aria-label="Open in a new tab"
-        class="usa-link"
+        class="usa-link usa-link--external"
         href="mailto:MINTTeam@cms.hhs.gov"
         rel="noopener noreferrer"
         target="_blank"
@@ -667,7 +667,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: CPI Vetting 1`] 
             In the meantime, contact the MINT Team at 
             <a
               aria-label="Open in a new tab"
-              class="usa-link"
+              class="usa-link usa-link--external"
               href="mailto:MINTTeam@cms.hhs.gov"
               rel="noopener noreferrer"
               target="_blank"
@@ -710,7 +710,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Centralized Data
           If you’re interested in using CDX for your model or would like to learn more about the system, please contact 
           <a
             aria-label="Open in a new tab"
-            class="usa-link"
+            class="usa-link usa-link--external"
             href="mailto:MINTTeam@cms.hhs.gov"
             rel="noopener noreferrer"
             target="_blank"
@@ -827,7 +827,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Chronic Conditio
           Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA 
           <a
             aria-label="Open in a new tab"
-            class="usa-link"
+            class="usa-link usa-link--external"
             href="mailto:CCWAccess@cms.hhs.gov"
             rel="noopener noreferrer"
             target="_blank"
@@ -883,7 +883,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Chronic Conditio
           Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA 
           <a
             aria-label="Open in a new tab"
-            class="usa-link"
+            class="usa-link usa-link--external"
             href="mailto:CCWAccess@cms.hhs.gov"
             rel="noopener noreferrer"
             target="_blank"
@@ -1079,7 +1079,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Electronic File 
             In the meantime, contact the MINT Team at 
             <a
               aria-label="Open in a new tab"
-              class="usa-link"
+              class="usa-link usa-link--external"
               href="mailto:MINTTeam@cms.hhs.gov"
               rel="noopener noreferrer"
               target="_blank"
@@ -1421,7 +1421,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Health Plan Mana
             In the meantime, contact the MINT Team at 
             <a
               aria-label="Open in a new tab"
-              class="usa-link"
+              class="usa-link usa-link--external"
               href="mailto:MINTTeam@cms.hhs.gov"
               rel="noopener noreferrer"
               target="_blank"
@@ -1451,7 +1451,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Healthcare Integ
       Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at 
       <a
         aria-label="Open in a new tab"
-        class="usa-link"
+        class="usa-link usa-link--external"
         href="mailto:donna.schmidt@cms.hhs.gov"
         rel="noopener noreferrer"
         target="_blank"
@@ -1767,7 +1767,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Integrated Data 
             In the meantime, contact the MINT Team at 
             <a
               aria-label="Open in a new tab"
-              class="usa-link"
+              class="usa-link usa-link--external"
               href="mailto:MINTTeam@cms.hhs.gov"
               rel="noopener noreferrer"
               target="_blank"
@@ -2154,7 +2154,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Medicare Advanta
             In the meantime, contact the MINT Team at 
             <a
               aria-label="Open in a new tab"
-              class="usa-link"
+              class="usa-link usa-link--external"
               href="mailto:MINTTeam@cms.hhs.gov"
               rel="noopener noreferrer"
               target="_blank"
@@ -2278,7 +2278,7 @@ exports[`IT Solutions Timeline Components matches the snapshot: Outlook Mailbox 
           If you’d rather submit a request by email, please send the above information to 
           <a
             aria-label="Open in a new tab"
-            class="usa-link"
+            class="usa-link usa-link--external"
             href="mailto:cms_it_service_desk@cms.hhs.gov."
             rel="noopener noreferrer"
             target="_blank"

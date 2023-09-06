@@ -2,6 +2,7 @@ package storage
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
@@ -132,27 +133,35 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 	plan := models.ModelPlan{}
 	stmt, err := s.statements.Get(modelPlanGetByIDSQL)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{"id": id}
 
 	err = stmt.Get(&plan, arg)
 
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			logger.Warn("No model plan found for the given modelPlanID",
+				zap.String("modelPlanID", id.String()))
+			return nil, fmt.Errorf("no model plan found for the given modelPlanID: %w", err)
+		}
+
 		logger.Error(
-			"Failed to fetch model plan",
+			"failed to fetch model plan",
 			zap.Error(err),
 			zap.String("id", id.String()),
 		)
+
 		return nil, &apperrors.QueryError{
-			Err:       err,
+			Err:       fmt.Errorf("failed to fetch the model plan: %w", err),
 			Model:     plan,
 			Operation: apperrors.QueryFetch,
 		}
 	}
 
 	return &plan, nil
-
 }
 
 // ModelPlanGetByName returns a model plan for a given ID
