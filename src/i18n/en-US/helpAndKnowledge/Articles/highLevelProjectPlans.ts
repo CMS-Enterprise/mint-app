@@ -247,12 +247,14 @@ const highLevelProjectPlans = {
         {
           activity:
             'Review and collect plan bids <italics>(MAPD models only)</italics>',
-          party: 'HPMS'
+          modalLink: '<ml>HPMS</ml>',
+          modalCategory: 'health-plan-management-system'
         },
         {
           activity:
             'Update the plan’s contract <italics>(MAPD models only)</italics>',
-          party: 'HPMS'
+          modalLink: '<ml>HPMS</ml>',
+          modalCategory: 'health-plan-management-system'
         },
         {
           activity: 'Helpdesk support',
@@ -265,11 +267,13 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Manage provider overlaps',
-          party: 'MDM'
+          modalLink: '<ml>MDM</ml>',
+          modalCategory: 'master-data-management'
         },
         {
           activity: 'Manage beneficiary overlaps',
-          party: 'MDM'
+          modalLink: '<ml>MDM</ml>',
+          modalCategory: 'master-data-management'
         }
       ],
       'model-operations': [
