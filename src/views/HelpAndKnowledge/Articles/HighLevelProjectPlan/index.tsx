@@ -31,6 +31,7 @@ interface AccordionItemProps {
 
 const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
+  const { t: generalT } = useTranslation('general');
 
   const { prevPathname, selectedSolution: solution } = useModalSolutionState(
     null
@@ -104,7 +105,7 @@ const HighLevelProjectPlan = () => {
 
             <Link
               href="https://docs.google.com/spreadsheets/d/143yWa6QmW44c5BWZVWc8Zl2jkg7VQM8io5xEn17lna4/edit?usp=sharing"
-              aria-label="Open in a new tab"
+              aria-label={generalT('newTab')}
               target="_blank"
               rel="noopener noreferrer"
               className="display-flex flex-align-center width-fit-content margin-bottom-3"
