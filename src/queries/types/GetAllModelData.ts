@@ -3,11 +3,16 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, BeneficiariesType, TriStateAnswer, FrequencyType, OverlapType, ConfidenceType, SelectionMethodType, DiscussionStatus, TeamRole, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, ModelStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, BeneficiariesType, TriStateAnswer, FrequencyType, OverlapType, ConfidenceType, SelectionMethodType, DiscussionStatus, TeamRole, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllModelData
 // ====================================================
+
+export interface GetAllModelData_modelPlanCollection_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
 
 export interface GetAllModelData_modelPlanCollection_basics {
   __typename: "PlanBasics";
@@ -394,10 +399,9 @@ export interface GetAllModelData_modelPlanCollection {
   nameHistory: string[];
   abbreviation: string | null;
   archived: boolean;
-  createdBy: UUID;
+  createdByUserAccount: GetAllModelData_modelPlanCollection_createdByUserAccount;
   createdDts: Time;
-  modifiedBy: UUID | null;
-  modifiedDts: Time | null;
+  status: ModelStatus;
   basics: GetAllModelData_modelPlanCollection_basics;
   beneficiaries: GetAllModelData_modelPlanCollection_beneficiaries;
   discussions: GetAllModelData_modelPlanCollection_discussions[];
@@ -406,7 +410,6 @@ export interface GetAllModelData_modelPlanCollection {
   opsEvalAndLearning: GetAllModelData_modelPlanCollection_opsEvalAndLearning;
   participantsAndProviders: GetAllModelData_modelPlanCollection_participantsAndProviders;
   payments: GetAllModelData_modelPlanCollection_payments;
-  status: ModelStatus;
 }
 
 export interface GetAllModelData {

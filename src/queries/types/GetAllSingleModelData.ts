@@ -9,6 +9,11 @@ import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus
 // GraphQL query operation: GetAllSingleModelData
 // ====================================================
 
+export interface GetAllSingleModelData_modelPlan_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetAllSingleModelData_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
@@ -394,10 +399,8 @@ export interface GetAllSingleModelData_modelPlan {
   nameHistory: string[];
   abbreviation: string | null;
   archived: boolean;
-  createdBy: UUID;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_createdByUserAccount;
   createdDts: Time;
-  modifiedBy: UUID | null;
-  modifiedDts: Time | null;
   status: ModelStatus;
   basics: GetAllSingleModelData_modelPlan_basics;
   generalCharacteristics: GetAllSingleModelData_modelPlan_generalCharacteristics;

@@ -12,7 +12,7 @@ const csvFields = [
   'status',
   {
     label: 'Created By',
-    value: 'createdBy'
+    value: 'createdByUserAccount.commonName'
   },
   {
     label: 'Created At',

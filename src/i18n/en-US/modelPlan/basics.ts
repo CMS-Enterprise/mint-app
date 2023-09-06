@@ -99,6 +99,14 @@ export const basics: TranslationBasics = {
     },
     filterGroups: ['ipc']
   },
+  cmsOther: {
+    gqlField: 'cmsOther',
+    goField: 'CmsOther',
+    dbField: 'cms_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
     goField: 'CMSCenters',

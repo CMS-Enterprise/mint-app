@@ -9,10 +9,11 @@ export default gql`
       nameHistory(sort: DESC)
       abbreviation
       archived
-      createdBy
+      createdByUserAccount {
+        commonName
+      }
       createdDts
-      modifiedBy
-      modifiedDts
+      status
       basics {
         id
         amsModelID
@@ -369,7 +370,6 @@ export default gql`
         readyForReviewDts
         status
       }
-      status
     }
   }
 `;
