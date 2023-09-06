@@ -289,6 +289,7 @@ func ModelPlanShare(
 	principal authentication.Principal,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	viewFilter *models.ModelViewFilter,
 	receiverEmails []string,
@@ -307,9 +308,6 @@ func ModelPlanShare(
 	// Get client address
 	clientAddress := emailService.GetConfig().GetClientAddress()
 
-	// Get sender
-	sender := principal.Account().Email
-
 	// Get email template
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanShareTemplateName)
 	if err != nil {
@@ -324,13 +322,14 @@ func ModelPlanShare(
 		return false, fmt.Errorf("failed to execute email subject: %w", err)
 	}
 
-	var modelPlanCategories []models.ModelCategory
+	var modelPlanCategoriesHumainzed []string
 	if planBasics.ModelCategory != nil {
-		modelPlanCategories = append(modelPlanCategories, *planBasics.ModelCategory)
+		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[*planBasics.ModelCategory])
 	}
 
 	for _, category := range planBasics.AdditionalModelCategories {
-		modelPlanCategories = append(modelPlanCategories, models.ModelCategory(category))
+		// Have to cast the additional category as a models.ModelCategory so we can fetch it from the models.ModelCategoryHumanized map
+		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[models.ModelCategory(category)])
 	}
 
 	lastModified := modelPlan.CreatedDts
@@ -350,6 +349,8 @@ func ModelPlanShare(
 		}
 	}
 
+	humanizedModelStatus := models.ModelStatusHumanized[modelPlan.Status]
+
 	var humanizedViewFilter *string
 	var lowercasedViewFilter *string
 	if viewFilter != nil {
@@ -365,9 +366,9 @@ func ModelPlanShare(
 		UserName:                 principal.Account().CommonName,
 		OptionalMessage:          optionalMessage,
 		ModelName:                modelPlan.ModelName,
-		ModelShortName:           modelPlan.Abbreviation, // TODO: Is this correct for the shortName?
-		ModelCategories:          modelPlanCategories,
-		ModelStatus:              planBasics.Status,
+		ModelShortName:           modelPlan.Abbreviation,
+		ModelCategories:          modelPlanCategoriesHumainzed,
+		ModelStatus:              humanizedModelStatus,
 		ModelLastUpdated:         lastModified,
 		ModelLeads:               modelLeads,
 		ModelViewFilter:          lowercasedViewFilter,
@@ -380,7 +381,7 @@ func ModelPlanShare(
 	}
 
 	// Send email
-	err = emailService.Send(sender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return false, fmt.Errorf("failed to send email: %w", err)
 	}

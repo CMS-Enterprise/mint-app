@@ -1,12 +1,12 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../Generic/timeline';
@@ -86,14 +86,9 @@ const OutlookMailboxTimeLine = ({
           <Trans i18nKey={`solutions.${solution.key}.timeline.description`}>
             If you’d rather submit a request by email, please send the above
             information to{' '}
-            <Link
-              aria-label="Open in a new tab"
-              href="mailto:cms_it_service_desk@cms.hhs.gov."
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink href="mailto:cms_it_service_desk@cms.hhs.gov.">
               cms_it_service_desk@cms.hhs.gov.
-            </Link>
+            </ExternalLink>
             .
           </Trans>
         </ProcessListItem>
