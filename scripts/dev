@@ -453,7 +453,7 @@ end
 desc "Build the Go application"
 task :build do
 
-  sh("go build -buildvcs=false -a -o bin/mint ./cmd/mint")
+  sh("go build -a -o bin/mint ./cmd/mint")
 end
 
 task :default do

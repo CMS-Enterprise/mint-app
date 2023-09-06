@@ -39,7 +39,7 @@ As part of exploration of the use of temporal tables, [a POC branch was made her
 
 A [utility](https://github.com/CMSgov/mint-app/tree/EASI-2900/temporal_tables_poc/cmd/temporalSimulator) was created to explore how the database would handle migrations.
 
-To explore the functionality, you can build it like this ` go build -buildvcs=false -a -o bin/tSim ./cmd/temporalSimulator    `
+To explore the functionality, you can build it like this ` go build -a -o bin/tSim ./cmd/temporalSimulator    `
 
 Once built, you can bring up the application, seed the data and experiment with running various scenarios for modifying the database structure. For example, you can add a new column to `model_plan` and `model_plan_history` by calling `tsim addCol `
 

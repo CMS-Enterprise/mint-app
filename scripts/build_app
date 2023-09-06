@@ -5,4 +5,4 @@
 
 builddir="$(git rev-parse --show-toplevel)"
 
-( set -x -u ; go build -buildvcs=false -a -o "$builddir"/bin/mint "$builddir"/cmd/mint )
+( set -x -u ; go build -a -o "$builddir"/bin/mint "$builddir"/cmd/mint )

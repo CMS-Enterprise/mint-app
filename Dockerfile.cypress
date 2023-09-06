@@ -13,7 +13,7 @@ FROM modules AS build
 COPY cmd ./cmd
 COPY pkg ./pkg
 
-RUN CGO_ENABLED=0 GOOS=linux go build -buildvcs=false -a -o bin/seed ./cmd/seed
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/seed ./cmd/seed
 
 FROM cypress/base:12.19.0
 

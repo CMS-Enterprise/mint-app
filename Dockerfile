@@ -13,7 +13,7 @@ FROM modules AS build
 COPY cmd ./cmd
 COPY pkg ./pkg
 
-RUN CGO_ENABLED=0 GOOS=linux go build -buildvcs=false -a -o bin/mint ./cmd/mint
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/mint ./cmd/mint
 
 COPY config/tls/rds-ca-2019-root.pem /usr/local/share/ca-certificates/rds-ca-2019-root.crt
 COPY config/tls/hhs-fpki-intermediate-ca.pem /usr/local/share/ca-certificates/hhs-fpki-intermediate-ca.crt
