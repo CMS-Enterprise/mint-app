@@ -248,7 +248,16 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Establish a benchmark with participants',
-          party: 'CCW, IDR'
+          modalLinks: [
+            {
+              copy: '<ml>CCW</ml>',
+              route: 'chronic-conditions-warehouse'
+            },
+            {
+              copy: '<ml>IDR</ml>',
+              route: 'integrated-data-repository'
+            }
+          ]
         },
         {
           activity: 'Provide participant access to model platforms',
@@ -256,7 +265,20 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Communicate with participants',
-          party: 'Outlook Mailbox, GovDelivery, Salesforce POST'
+          modalLinks: [
+            {
+              copy: '<ml>Outlook Mailbox</ml>',
+              route: 'outlook-mailbox'
+            },
+            {
+              copy: '<ml>GovDelivery</ml>',
+              route: 'gov-delivery'
+            },
+            {
+              copy: '<ml>Salesforce POST</ml>',
+              route: 'salesforce-project-officer-support-tool-portal'
+            }
+          ]
         },
         {
           activity: 'Vet providers for program integrity',
@@ -360,14 +382,27 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Collect quality measures data',
-          modalLink:
-            'CCSQ contracts and systems, <ml>HDR</ml>, Patient Activation Measure (PAM)',
-          modalCategory: 'health-data-reporting'
+          modalLinks: [
+            {
+              copy:
+                'CCSQ contracts and systems, <ml>HDR</ml>, Patient Activation Measure (PAM)',
+              route: 'health-data-reporting'
+            }
+          ]
         },
         {
           activity:
             'Innovative Design, Development, and Operations Contract (IDDOC) support',
-          party: '4i, ACO-OS'
+          modalLinks: [
+            {
+              copy: '<ml>4i</ml>',
+              route: '4-innovation'
+            },
+            {
+              copy: 'ACO-OS',
+              route: 'accountable-care-organization'
+            }
+          ]
         },
         { activity: 'Claims-based measures', party: 'CCW, IDR' },
         {
