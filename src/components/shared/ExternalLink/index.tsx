@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from '@trussworks/react-uswds';
 
 interface ExternalLinkProps {
@@ -8,10 +9,12 @@ interface ExternalLinkProps {
 }
 
 const ExternalLink = ({ children, className, href }: ExternalLinkProps) => {
+  const { t } = useTranslation('general');
+
   return (
     <Link
       href={href}
-      aria-label="Open in a new tab"
+      aria-label={t('newTab')}
       target="_blank"
       rel="noopener noreferrer"
       className={className}
