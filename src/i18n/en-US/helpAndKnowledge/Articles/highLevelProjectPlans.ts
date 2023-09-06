@@ -205,8 +205,12 @@ const highLevelProjectPlans = {
         {
           activity:
             'Obtain an application support contractor <italics>(as necessary if there are large volumes of applications)</italics>',
-          modalLink: '<ml>RMADA</ml>',
-          modalCategory: 'research-measurement-assessment-design-and-analysis'
+          modalLinks: [
+            {
+              copy: '<ml>RMADA</ml>',
+              route: 'research-measurement-assessment-design-and-analysis'
+            }
+          ]
         },
         {
           activity: 'Recruit participants',
@@ -230,36 +234,60 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Vet providers for program integrity',
-          modalLink: '<ml>CPI Vetting</ml>',
-          modalCategory: 'cpi-vetting'
+          modalLinks: [
+            {
+              copy: '<ml>CPI Vetting</ml>',
+              route: 'cpi-vetting'
+            }
+          ]
         },
         {
           activity: 'Sign participation agreements',
-          modalLink: '<ml>4i</ml>, through a contractor',
-          modalCategory: '4-innovation'
+          modalLinks: [
+            {
+              copy: '<ml>4i</ml>, through a contractor',
+              route: '4-innovation'
+            }
+          ]
         },
         {
           activity:
             'Manage Part C/D enrollment <italics>(MAPD models only)</italics>',
-          modalLink: '<ml>MARx</ml>',
-          modalCategory: 'medicare-advantage-prescription-drug-system'
+          modalLinks: [
+            {
+              copy: '<ml>MARx</ml>',
+              route: 'medicare-advantage-prescription-drug-system'
+            }
+          ]
         },
         {
           activity:
             'Review and collect plan bids <italics>(MAPD models only)</italics>',
-          modalLink: '<ml>HPMS</ml>',
-          modalCategory: 'health-plan-management-system'
+          modalLinks: [
+            {
+              copy: '<ml>HPMS</ml>',
+              route: 'health-plan-management-system'
+            }
+          ]
         },
         {
           activity:
             'Update the plan’s contract <italics>(MAPD models only)</italics>',
-          modalLink: '<ml>HPMS</ml>',
-          modalCategory: 'health-plan-management-system'
+          modalLinks: [
+            {
+              copy: '<ml>HPMS</ml>',
+              route: 'health-plan-management-system'
+            }
+          ]
         },
         {
           activity: 'Helpdesk support',
-          modalLink: '<ml>CBOSC</ml>, through a contractor',
-          modalCategory: 'consolidated-business-operations-support-center'
+          modalLinks: [
+            {
+              copy: '<ml>CBOSC</ml>, through a contractor',
+              route: 'consolidated-business-operations-support-center'
+            }
+          ]
         },
         {
           activity:
@@ -268,13 +296,21 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Manage provider overlaps',
-          modalLink: '<ml>MDM</ml>',
-          modalCategory: 'master-data-management'
+          modalLinks: [
+            {
+              copy: '<ml>MDM</ml>',
+              route: 'master-data-management'
+            }
+          ]
         },
         {
           activity: 'Manage beneficiary overlaps',
-          modalLink: '<ml>MDM</ml>',
-          modalCategory: 'master-data-management'
+          modalLinks: [
+            {
+              copy: '<ml>MDM</ml>',
+              route: 'master-data-management'
+            }
+          ]
         }
       ],
       'model-operations': [
@@ -289,8 +325,12 @@ const highLevelProjectPlans = {
         {
           activity:
             'Utilize quality measures development contractor <italics>(if new measure development is necessary)</italics>',
-          modalLink: '<ml>Quality Vertical</ml>',
-          modalCategory: 'quality-vertical'
+          modalLinks: [
+            {
+              copy: '<ml>Quality Vertical</ml>',
+              route: 'quality-vertical'
+            }
+          ]
         },
         {
           activity: 'Collect quality measures data',
@@ -306,9 +346,13 @@ const highLevelProjectPlans = {
         { activity: 'Claims-based measures', party: 'CCW, IDR' },
         {
           activity: 'Quality performance scores',
-          modalLink:
-            'Existing CMS data and process, <ml>HDR</ml>, other new process',
-          modalCategory: 'health-data-reporting'
+          modalLinks: [
+            {
+              copy:
+                'Existing CMS data and process, <ml>HDR</ml>, other new process',
+              route: 'health-data-reporting'
+            }
+          ]
         },
         {
           activity: 'Data to monitor the model',
@@ -329,8 +373,12 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Process participant appeals',
-          modalLink: '<ml>Legal Vertical</ml>',
-          modalCategory: 'legal-vertical'
+          modalLinks: [
+            {
+              copy: '<ml>Legal Vertical</ml>',
+              route: 'legal-vertical'
+            }
+          ]
         }
       ],
       payment: [
@@ -340,8 +388,12 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Manage FFS excluded payments',
-          modalLink: '<ml>Shared Systems </ml> / CR',
-          modalCategory: 'shared-systems'
+          modalLinks: [
+            {
+              copy: '<ml>Shared Systems </ml> / CR',
+              route: 'shared-systems'
+            }
+          ]
         },
         { activity: 'MAPD payments', party: 'MAPD Systems / CR' },
         {
@@ -375,18 +427,30 @@ const highLevelProjectPlans = {
       'learning-&-diffusion': [
         {
           activity: 'Develop a learning strategy',
-          modalLink: '<ml>LDG</ml>',
-          modalCategory: 'learning-and-diffusion-group'
+          modalLinks: [
+            {
+              copy: '<ml>LDG</ml>',
+              route: 'learning-and-diffusion-group'
+            }
+          ]
         },
         {
           activity: 'Educate beneficiaries',
-          modalLink: '<ml>LDG</ml>',
-          modalCategory: 'learning-and-diffusion-group'
+          modalLinks: [
+            {
+              copy: '<ml>LDG</ml>',
+              route: 'learning-and-diffusion-group'
+            }
+          ]
         },
         {
           activity: 'Acquire a learning contractor',
-          modalLink: '<ml>RMADA</ml>, a cross-model contract',
-          modalCategory: 'research-measurement-assessment-design-and-analysis'
+          modalLinks: [
+            {
+              copy: '<ml>RMADA</ml>, a cross-model contract',
+              route: 'research-measurement-assessment-design-and-analysis'
+            }
+          ]
         },
         {
           activity: 'IT platform for learning',
