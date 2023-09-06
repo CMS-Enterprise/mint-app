@@ -137,7 +137,7 @@ const Discussions = ({
   const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
 
   // State used to manage alert rendering
-  const [alertClosed, closeAlert] = useState<boolean>(false);
+  const [alertClosed, closeAlert] = useState<boolean | null>(false);
 
   // Hook used to open reply form if discussionID present
   useEffect(() => {

@@ -18,7 +18,7 @@ type AlertProps = {
   noIcon?: boolean;
   inline?: boolean;
   isClosable?: boolean;
-  closeAlert?: (closed: boolean) => void;
+  closeAlert?: (closed: any) => void;
 } & JSX.IntrinsicElements['div'];
 
 export const Alert = ({
@@ -49,7 +49,7 @@ export const Alert = ({
 
   // closeAlert is a state setter passed down to conditionally render alert component from parent
   useEffect(() => {
-    if (closeAlert && isClosed) closeAlert(false);
+    if (closeAlert && isClosed) closeAlert(null);
   }, [isClosed, closeAlert]);
 
   return (

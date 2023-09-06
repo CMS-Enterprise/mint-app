@@ -19,12 +19,16 @@ import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetMod
 import { TeamRole } from 'types/graphql-global-types';
 import CsvExportLink from 'utils/export/CsvExportLink';
 
+import { StatusMessageType } from '../..';
+
 const TaskListSideNav = ({
   modelPlan,
-  collaborators
+  collaborators,
+  setStatusMessage
 }: {
   modelPlan: GetModelPlanType;
   collaborators: GetCollaboratorsType[];
+  setStatusMessage: (message: StatusMessageType) => void;
 }) => {
   const { id: modelID } = modelPlan;
 
@@ -121,6 +125,7 @@ const TaskListSideNav = ({
         <ShareExportModal
           closeModal={() => setIsExportModalOpen(false)}
           modelID={modelID}
+          setStatusMessage={setStatusMessage}
         />
       </Modal>
       <div
