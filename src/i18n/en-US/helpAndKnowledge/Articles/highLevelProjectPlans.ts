@@ -355,11 +355,20 @@ const highLevelProjectPlans = {
         { activity: 'Recover payments', party: 'APPS, IPC, Shared Systems' }
       ],
       'learning-&-diffusion': [
-        { activity: 'Develop a learning strategy', party: 'LDG' },
-        { activity: 'Educate beneficiaries', party: 'LDG' },
+        {
+          activity: 'Develop a learning strategy',
+          modalLink: '<ml>LDG</ml>',
+          modalCategory: 'learning-and-diffusion-group'
+        },
+        {
+          activity: 'Educate beneficiaries',
+          modalLink: '<ml>LDG</ml>',
+          modalCategory: 'learning-and-diffusion-group'
+        },
         {
           activity: 'Acquire a learning contractor',
-          party: 'RMADA, a cross-model contract'
+          modalLink: '<ml>RMADA</ml>, a cross-model contract',
+          modalCategory: 'research-measurement-assessment-design-and-analysis'
         },
         { activity: 'IT platform for learning', party: 'Salesforce CONNECT' },
         {
