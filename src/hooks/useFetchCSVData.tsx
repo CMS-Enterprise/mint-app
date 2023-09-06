@@ -7,6 +7,7 @@ import { useCallback } from 'react';
 import { FetchResult, useLazyQuery } from '@apollo/client';
 import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
+import i18next from 'i18next';
 
 import GetAllModelPlans from 'queries/GetAllModelData';
 import GetAllSingleModelPlan from 'queries/GetAllSingleModelPlan';
@@ -23,6 +24,36 @@ import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
+type HeaderType = {
+  label: string;
+  value: string;
+};
+
+const headerFormatter = (dataFields: (string | HeaderType)[]) => {
+  const formattedHeaders = dataFields.map((field: string | HeaderType) => {
+    if (typeof field === 'string') {
+      const sectionIndex = field.indexOf('.');
+
+      let section: string = 'modelPlan';
+
+      if (sectionIndex !== -1) {
+        section = field.substring(0, sectionIndex);
+      }
+
+      const translation = i18next.t<string>(
+        `${section}:${field.slice(sectionIndex + 1)}.label`
+      );
+
+      return {
+        label: translation,
+        value: field
+      };
+    }
+    return field;
+  });
+  return formattedHeaders;
+};
+
 // Initiates the downloading of the formatted csv data
 const downloadFile = (data: string) => {
   const element = document.createElement('a');
@@ -37,14 +68,16 @@ const downloadFile = (data: string) => {
 
 const csvFormatter = (csvData: CSVModelPlanType[]) => {
   try {
-    const transform = [unwind({ paths: fieldsToUnwind, blankOut: true })];
+    const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
 
     const parser = new Parser({
-      fields: csvFields, // @ts-ignore
-      transforms: transform // @ts-ignore
-      // formatters: {
-      //   string: (str: any) => console.log(str)
-      // }
+      fields: headerFormatter(csvFields),
+      transforms: [transform],
+      formatters: {
+        string: (str: any) => {
+          return str;
+        }
+      }
     });
     const csv = parser.parse(csvData);
     downloadFile(csv);

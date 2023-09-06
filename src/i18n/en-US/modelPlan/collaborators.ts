@@ -5,7 +5,7 @@ export const collaborators: TranslationCollaborators = {
     gqlField: 'username',
     goField: 'Username',
     dbField: 'username',
-    label: 'Team member name',
+    label: 'User name',
     dataType: 'string',
     formType: 'select'
   },

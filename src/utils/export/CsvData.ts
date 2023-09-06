@@ -3,22 +3,13 @@ const csvFields = [
     label: 'Model ID',
     value: 'id'
   },
-  {
-    label: 'Model name',
-    value: 'modelName'
-  },
+  'modelName',
   {
     label: 'Previous name',
     value: 'nameHistory'
   },
-  {
-    label: 'Short name',
-    value: 'abbreviation'
-  },
-  {
-    label: 'Status',
-    value: 'status'
-  },
+  'abbreviation',
+  'status',
   {
     label: 'Created By',
     value: 'createdBy'
@@ -349,27 +340,61 @@ const csvFields = [
   'payments.anticipateReconcilingPaymentsRetrospectivelyNote',
   'payments.paymentStartDate',
   'payments.paymentStartDateNote',
-  'payments.readyForReviewBy',
-  'payments.readyForReviewDts',
   'payments.status',
 
   // Collaborators
-  'collaborators.userAccount.username',
-  'collaborators.userAccount.commonName',
-  'collaborators.teamRole',
+  {
+    label: 'Collaborator EUA ID',
+    value: 'collaborators.userAccount.username'
+  },
+  {
+    label: 'Collaborator User name',
+    value: 'collaborators.userAccount.commonName'
+  },
+  {
+    label: 'Collaborator Team member role',
+    value: 'collaborators.userAccount.username'
+  },
 
   // Discussions
-  'discussions.content',
-  'discussions.createdBy',
-  'discussions.createdDts',
-  'discussions.status',
+  {
+    label: 'Discussion content',
+    value: 'discussions.content'
+  },
+  {
+    label: 'Discussion Created by',
+    value: 'discussions.createdBy'
+  },
+  {
+    label: 'Discussion Created',
+    value: 'discussions.createdDts'
+  },
+  {
+    label: 'Discussion Status',
+    value: 'discussions.status'
+  },
 
   // Discussion Replies
-  'discussions.replies.discussionID',
-  'discussions.replies.content',
-  'discussions.replies.createdBy',
-  'discussions.replies.createdDts',
-  'discussions.replies.resolution'
+  {
+    label: 'Discussion ID',
+    value: 'replies.content'
+  },
+  {
+    label: 'Discussion content',
+    value: 'replies.content'
+  },
+  {
+    label: 'Reply created by',
+    value: 'replies.createdBy'
+  },
+  {
+    label: 'Reply Created',
+    value: 'replies.createdDts'
+  },
+  {
+    label: 'Reply resolution',
+    value: 'replies.resolution'
+  }
 ];
 
 const fieldsToUnwind = [
