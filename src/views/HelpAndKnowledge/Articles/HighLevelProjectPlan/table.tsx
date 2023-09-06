@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Table as TrussTable } from '@trussworks/react-uswds';
 
@@ -7,11 +7,11 @@ import ExternalLink from 'components/shared/ExternalLink';
 
 type TableItemType = {
   activity: string;
-  link?: string;
   href?: string;
-  party: string;
-  modalLinks?: { copy: string; route: string }[];
+  link?: string;
   modalCategory?: string;
+  modalLinks?: { copy: string; route: string }[];
+  party?: string;
 };
 
 type TableType = {
@@ -116,9 +116,10 @@ const Table = ({ content }: TableType) => {
         </tr>
       </thead>
       <tbody>
-        {contentMap(content).map(item => {
+        {contentMap(content).map((item, contentMapIndex) => {
           return (
-            <tr>
+            // eslint-disable-next-line react/no-array-index-key
+            <tr key={contentMapIndex}>
               <th scope="row" className="padding-y-1">
                 <TransOrPrint copy={item.activity} />
                 {item.link && item.href && (
@@ -134,7 +135,8 @@ const Table = ({ content }: TableType) => {
                 {item.modalLinks &&
                   item.modalLinks.map((i, index) => {
                     return (
-                      <>
+                      // eslint-disable-next-line react/no-array-index-key
+                      <Fragment key={index}>
                         <Trans
                           i18nKey={i.copy}
                           components={{
@@ -148,7 +150,7 @@ const Table = ({ content }: TableType) => {
                         {item.modalLinks && index !== item.modalLinks.length - 1
                           ? ', '
                           : ''}
-                      </>
+                      </Fragment>
                     );
                   })}
               </td>
