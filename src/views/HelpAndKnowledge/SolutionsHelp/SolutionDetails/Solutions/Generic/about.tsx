@@ -1,9 +1,9 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import '../index.scss';
@@ -64,15 +64,7 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
   if (links) {
     links.forEach((link, index) => {
       linkObj[`link${index + 1}`] = link.external ? (
-        <Link
-          aria-label="Open in a new tab"
-          href={link.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="external"
-        >
-          link
-        </Link>
+        <ExternalLink href={link.link}>link</ExternalLink>
       ) : (
         <UswdsReactLink to={link.link}>link</UswdsReactLink>
       );

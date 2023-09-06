@@ -5,7 +5,6 @@ import {
   Grid,
   GridContainer,
   IconArrowForward,
-  Link as ExternalLink,
   SummaryBox
 } from '@trussworks/react-uswds';
 
@@ -15,6 +14,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
+import ExternalLink from 'components/shared/ExternalLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
@@ -264,13 +264,7 @@ const SixPagerMeeting = () => {
                     </strong>
                     <span>
                       {sixPageMeetingT('conceptPaper.stepThree.alignment.text')}{' '}
-                      <ExternalLink
-                        href="https://innovation.cms.gov/strategic-direction"
-                        aria-label="Open in a new tab"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variant="external"
-                      >
+                      <ExternalLink href="https://innovation.cms.gov/strategic-direction">
                         {sixPageMeetingT(
                           'conceptPaper.stepThree.alignment.link'
                         )}
@@ -337,25 +331,13 @@ const SixPagerMeeting = () => {
                   <li>
                     {sixPageMeetingT('tipsSummaryBox.items.view')}
 
-                    <ExternalLink
-                      aria-label="Open in a new tab"
-                      href="https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="external"
-                    >
+                    <ExternalLink href="https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D">
                       {sixPageMeetingT('tipsSummaryBox.items.one')}
                     </ExternalLink>
                   </li>
                   <li>
                     {sixPageMeetingT('tipsSummaryBox.items.view')}
-                    <ExternalLink
-                      aria-label="Open in a new tab"
-                      href="https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="external"
-                    >
+                    <ExternalLink href="https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity">
                       {sixPageMeetingT('tipsSummaryBox.items.two')}
                     </ExternalLink>
                   </li>
@@ -417,39 +399,21 @@ const SixPagerMeeting = () => {
               </p>
               <ul className="margin-top-0">
                 <li>
-                  <ExternalLink
-                    aria-label="Open in a new tab"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="external"
-                  >
+                  <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
                     {sixPageMeetingT(
                       'conceptPaper.exampleSummaryBox.items.one'
                     )}
                   </ExternalLink>
                 </li>
                 <li>
-                  <ExternalLink
-                    aria-label="Open in a new tab"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/AHEAD%206-page%20concept_Clean.docx?d=wbdf205743dac4ebaa2a99ea37af6b5a7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="external"
-                  >
+                  <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/AHEAD%206-page%20concept_Clean.docx?d=wbdf205743dac4ebaa2a99ea37af6b5a7">
                     {sixPageMeetingT(
                       'conceptPaper.exampleSummaryBox.items.two'
                     )}
                   </ExternalLink>
                 </li>
                 <li>
-                  <ExternalLink
-                    aria-label="Open in a new tab"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20OncT)%206-pager_10252021_clean.docx?d=w1e0f202072d14d8fb64366aff294e415"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="external"
-                  >
+                  <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20OncT)%206-pager_10252021_clean.docx?d=w1e0f202072d14d8fb64366aff294e415">
                     {sixPageMeetingT(
                       'conceptPaper.exampleSummaryBox.items.three'
                     )}
@@ -458,13 +422,7 @@ const SixPagerMeeting = () => {
               </ul>
               <span className="margin-y-0">
                 {sixPageMeetingT('conceptPaper.exampleSummaryBox.footer.copy')}
-                <ExternalLink
-                  aria-label="Open in a new tab"
-                  href="https://share.cms.gov/center/CMMI/SR/ModelDev/Forms/AllItems.aspx"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="external"
-                >
+                <ExternalLink href="https://share.cms.gov/center/CMMI/SR/ModelDev/Forms/AllItems.aspx">
                   {sixPageMeetingT(
                     'conceptPaper.exampleSummaryBox.footer.link'
                   )}

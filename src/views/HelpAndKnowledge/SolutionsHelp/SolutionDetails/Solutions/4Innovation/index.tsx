@@ -1,12 +1,12 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../Generic/timeline';
@@ -63,14 +63,9 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
             i18nKey={`solutions.${solution.key}.timeline.items[0].description`}
           >
             Send an email to{' '}
-            <Link
-              aria-label="Open in a new tab"
-              href="mailto:ACO-OIT@cms.hhs.gov"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink href="mailto:ACO-OIT@cms.hhs.gov">
               ACO-OIT@cms.hhs.gov
-            </Link>{' '}
+            </ExternalLink>{' '}
             if interested in using 4i and ACO-OS for your model. Please also
             include Ashley Corbin and Nora Fleming on the email.
           </Trans>
