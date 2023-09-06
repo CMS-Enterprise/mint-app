@@ -11,7 +11,7 @@ This implementation works fairly well, but does have some features that could be
 
 It works by creating a history table that corresponds to every record that is desired to be audited. The versioning trigger is a called before the update of a row, and it inserts the values of the row into the table. It has a date range column that it updates to show for what time period the record was the listed value. With this implementation, the most up to date record is always the record that is in the main table, not the history table.
 
-The trigger also has functionality to only create a record if the data was actually changed. In practice, this doesn't work for our implementation as meta data columns like `modified_by` and `modified_dts` can be changed without changing any other actual data. This effectively results in multiple empty historic entries. 
+The trigger also has functionality to only create a record if the data was actually changed. In practice, this doesn't work for our implementation as meta data columns like `modified_by` and `modified_dts` can be changed without changing any other actual data. This effectively results in multiple empty historic entries.
 
 
 ### Handling data migrations
@@ -31,15 +31,15 @@ The solution natively handles data changes in a variety of ways.
         a. Other attempts were made to have two separate types, one with historic values ( all past values, and all new current ones)
            i. This didn't work, as the trigger currently requires the data to be the same type in the main table and the historic table
            ii. Similarly, this didn't work when trying to insert an enum value in the main table to a string value in the history table as the types were changed.
-    
+
 
 ### POC Branch
 
 As part of exploration of the use of temporal tables, [a POC branch was made here](https://github.com/CMSgov/mint-app/tree/EASI-2900/temporal_tables_poc).
 
-A [utility](https://github.com/CMSgov/mint-app/tree/EASI-2900/temporal_tables_poc/cmd/temporalSimulator) was created to explore how the database would handle migrations. 
+A [utility](https://github.com/CMSgov/mint-app/tree/EASI-2900/temporal_tables_poc/cmd/temporalSimulator) was created to explore how the database would handle migrations.
 
-To explore the functionality, you can build it like this ` go build -a -o bin/tSim ./cmd/temporalSimulator    `
+To explore the functionality, you can build it like this ` go build -buildvcs=false -a -o bin/tSim ./cmd/temporalSimulator    `
 
 Once built, you can bring up the application, seed the data and experiment with running various scenarios for modifying the database structure. For example, you can add a new column to `model_plan` and `model_plan_history` by calling `tsim addCol `
 
@@ -48,7 +48,7 @@ This branch also has a couple different versions of the trigger to highlight som
 ### Possible Implementation Changes
 1. Update the trigger to use a configuration like exists in `audit.table_config` currently to specify additional columns to ignore. ([implemented here](https://github.com/CMSgov/mint-app/blob/EASI-2900/temporal_tables_poc/migrations/V96__Temporal_Tables_Modified.sql))
 2. Update the trigger to be run after an update instead of before. Insert the current up to date value in the table, with an indefinite time range.
-    
+
     a. This would have the benefit of only needing to search the one table to get the entire view of an object in just one table instead of needing to query the main table and the history table. (This also introduces complexity, so it's benefit needs to be weighed)
 3. Combine the audit paradigms. Temporal tables provide us a moment in time snapshot. The audit change table current provides the benefit of clearly showing who made a change, and when.
 
