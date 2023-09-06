@@ -10,7 +10,6 @@ type TableItemType = {
   link?: string;
   href?: string;
   party: string;
-  modalLink?: string;
   modalLinks?: { copy: string; route: string }[];
   modalCategory?: string;
 };
@@ -131,18 +130,6 @@ const Table = ({ content }: TableType) => {
                 )}
               </th>
               <td className="text-baseline">
-                {item.modalLink && item.modalCategory && (
-                  <Trans
-                    i18nKey={item.modalLink}
-                    components={{
-                      ml: (
-                        <ModalLink solutionRoute={item.modalCategory}>
-                          {item.modalLink}
-                        </ModalLink>
-                      )
-                    }}
-                  />
-                )}
                 {item.party && <TransOrPrint copy={item.party} />}
                 {item.modalLinks &&
                   item.modalLinks.map((i, index) => {
