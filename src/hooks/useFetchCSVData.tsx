@@ -5,7 +5,8 @@ Then processes the data into CSV format as well as initiates a download
 
 import { useCallback } from 'react';
 import { FetchResult, useLazyQuery } from '@apollo/client';
-import { Parser, transforms } from 'json2csv';
+import { Parser } from '@json2csv/plainjs';
+import { unwind } from '@json2csv/transforms';
 
 import GetAllModelPlans from 'queries/GetAllModelData';
 import GetAllSingleModelPlan from 'queries/GetAllSingleModelPlan';
@@ -36,12 +37,14 @@ const downloadFile = (data: string) => {
 
 const csvFormatter = (csvData: CSVModelPlanType[]) => {
   try {
-    const transform = [
-      transforms.unwind({ paths: fieldsToUnwind, blankOut: true })
-    ];
+    const transform = [unwind({ paths: fieldsToUnwind, blankOut: true })];
+
     const parser = new Parser({
-      fields: csvFields,
-      transforms: transform
+      fields: csvFields, // @ts-ignore
+      transforms: transform // @ts-ignore
+      // formatters: {
+      //   string: (str: any) => console.log(str)
+      // }
     });
     const csv = parser.parse(csvData);
     downloadFile(csv);
