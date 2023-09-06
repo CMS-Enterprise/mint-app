@@ -340,17 +340,35 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Manage FFS excluded payments',
-          party: 'Shared Systems / CR'
+          modalLink: '<ml>Shared Systems </ml> / CR',
+          modalCategory: 'shared-systems'
         },
         { activity: 'MAPD payments', party: 'MAPD Systems / CR' },
         {
           activity: 'Make non-claims based payment',
-          party: 'APPS, HIGLAS, IPC'
+          modalLinks: [
+            {
+              copy: '<ml>APPS</ml>',
+              route: 'automated-plan-payment-system'
+            },
+            {
+              copy: '<ml>HIGLAS</ml>',
+              route: 'healthcare-integrated-general-kedger-accounting-system'
+            },
+            {
+              copy: '<ml>IPC</ml>',
+              route: 'innovation-payment-contract'
+            }
+          ]
         },
         {
           activity: 'Compute shared savings payment',
-          modalLink: '<ml>RMADA</ml>',
-          modalCategory: 'research-measurement-assessment-design-and-analysis'
+          modalLinks: [
+            {
+              copy: '<ml>RMADA</ml>',
+              route: 'research-measurement-assessment-design-and-analysis'
+            }
+          ]
         },
         { activity: 'Recover payments', party: 'APPS, IPC, Shared Systems' }
       ],
@@ -372,25 +390,41 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'IT platform for learning',
-          modalLink: '<ml>Salesforce CONNECT</ml>',
-          modalCategory: 'salesforce-connect'
+          modalLinks: [
+            {
+              copy: '<ml>Salesforce CONNECT</ml>',
+              route: 'salesforce-connect'
+            }
+          ]
         },
         {
           activity: 'Participant-to-participant collaboration',
-          modalLink: '<ml>Salesforce CONNECT</ml>',
-          modalCategory: 'salesforce-connect'
+          modalLinks: [
+            {
+              copy: '<ml>Salesforce CONNECT</ml>',
+              route: 'salesforce-connect'
+            }
+          ]
         }
       ],
       evaluation: [
         {
           activity: 'Acquire an evaluation contractor',
-          modalLink: '<ml>RMADA</ml>',
-          modalCategory: 'research-measurement-assessment-design-and-analysis'
+          modalLinks: [
+            {
+              copy: '<ml>RMADA</ml>',
+              route: 'research-measurement-assessment-design-and-analysis'
+            }
+          ]
         },
         {
           activity: 'Obtain data access for evaluation contractor',
-          modalLink: '<ml>CCW</ml>',
-          modalCategory: 'chronic-conditions-warehouse chrome'
+          modalLinks: [
+            {
+              copy: '<ml>CCW</ml>',
+              route: 'chronic-conditions-warehouse'
+            }
+          ]
         }
       ]
     }

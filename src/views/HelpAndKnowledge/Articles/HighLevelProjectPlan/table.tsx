@@ -11,6 +11,7 @@ type TableItemType = {
   href?: string;
   party: string;
   modalLink?: string;
+  modalLinks?: { copy: string; route: string }[];
   modalCategory?: string;
 };
 
@@ -143,6 +144,26 @@ const Table = ({ content }: TableType) => {
                   />
                 )}
                 {item.party && <TransOrPrint copy={item.party} />}
+                {item.modalLinks &&
+                  item.modalLinks.map((i, index) => {
+                    return (
+                      <>
+                        <Trans
+                          i18nKey={i.copy}
+                          components={{
+                            ml: (
+                              <ModalLink solutionRoute={i.route}>
+                                {i.copy}
+                              </ModalLink>
+                            )
+                          }}
+                        />
+                        {item.modalLinks && index !== item.modalLinks.length - 1
+                          ? ', '
+                          : ''}
+                      </>
+                    );
+                  })}
               </td>
             </tr>
           );
