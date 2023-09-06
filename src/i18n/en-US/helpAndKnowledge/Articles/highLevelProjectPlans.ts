@@ -370,10 +370,15 @@ const highLevelProjectPlans = {
           modalLink: '<ml>RMADA</ml>, a cross-model contract',
           modalCategory: 'research-measurement-assessment-design-and-analysis'
         },
-        { activity: 'IT platform for learning', party: 'Salesforce CONNECT' },
+        {
+          activity: 'IT platform for learning',
+          modalLink: '<ml>Salesforce CONNECT</ml>',
+          modalCategory: 'salesforce-connect'
+        },
         {
           activity: 'Participant-to-participant collaboration',
-          party: 'Salesforce CONNECT'
+          modalLink: '<ml>Salesforce CONNECT</ml>',
+          modalCategory: 'salesforce-connect'
         }
       ],
       evaluation: [
@@ -384,7 +389,8 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Obtain data access for evaluation contractor',
-          party: 'CCW'
+          modalLink: '<ml>CCW</ml>',
+          modalCategory: 'chronic-conditions-warehouse chrome'
         }
       ]
     }
