@@ -130,7 +130,7 @@ const Table = ({ content }: TableType) => {
                 )}
               </th>
               <td className="text-baseline">
-                {item.modalLink && item.modalCategory ? (
+                {item.modalLink && item.modalCategory && (
                   <Trans
                     i18nKey={item.modalLink}
                     components={{
@@ -141,9 +141,8 @@ const Table = ({ content }: TableType) => {
                       )
                     }}
                   />
-                ) : (
-                  <TransOrPrint copy={item.party} />
                 )}
+                {item.party && <TransOrPrint copy={item.party} />}
               </td>
             </tr>
           );

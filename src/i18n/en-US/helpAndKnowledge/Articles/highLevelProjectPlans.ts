@@ -258,7 +258,8 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Helpdesk support',
-          party: 'CBOSC, through a contractor'
+          modalLink: '<ml>CBOSC</ml>, through a contractor',
+          modalCategory: 'consolidated-business-operations-support-center'
         },
         {
           activity:
@@ -288,12 +289,14 @@ const highLevelProjectPlans = {
         {
           activity:
             'Utilize quality measures development contractor <italics>(if new measure development is necessary)</italics>',
-          party: 'Quality Vertical'
+          modalLink: '<ml>Quality Vertical</ml>',
+          modalCategory: 'quality-vertical'
         },
         {
           activity: 'Collect quality measures data',
-          party:
-            'CCSQ contracts and systems, HDR, Patient Activation Measure (PAM)'
+          modalLink:
+            'CCSQ contracts and systems, <ml>HDR</ml>, Patient Activation Measure (PAM)',
+          modalCategory: 'health-data-reporting'
         },
         {
           activity:
@@ -303,7 +306,9 @@ const highLevelProjectPlans = {
         { activity: 'Claims-based measures', party: 'CCW, IDR' },
         {
           activity: 'Quality performance scores',
-          party: 'Existing CMS data and process, HDR, other new process'
+          modalLink:
+            'Existing CMS data and process, <ml>HDR</ml>, other new process',
+          modalCategory: 'health-data-reporting'
         },
         {
           activity: 'Data to monitor the model',
@@ -322,7 +327,11 @@ const highLevelProjectPlans = {
           activity: 'Participate in CMMI data sharing',
           party: 'CMMI Analysis & Management System (AMS)'
         },
-        { activity: 'Process participant appeals', party: 'Legal Vertical' }
+        {
+          activity: 'Process participant appeals',
+          modalLink: '<ml>Legal Vertical</ml>',
+          modalCategory: 'legal-vertical'
+        }
       ],
       payment: [
         {
@@ -338,7 +347,11 @@ const highLevelProjectPlans = {
           activity: 'Make non-claims based payment',
           party: 'APPS, HIGLAS, IPC'
         },
-        { activity: 'Compute shared savings payment', party: 'RMADA' },
+        {
+          activity: 'Compute shared savings payment',
+          modalLink: '<ml>RMADA</ml>',
+          modalCategory: 'research-measurement-assessment-design-and-analysis'
+        },
         { activity: 'Recover payments', party: 'APPS, IPC, Shared Systems' }
       ],
       'learning-&-diffusion': [
@@ -355,7 +368,11 @@ const highLevelProjectPlans = {
         }
       ],
       evaluation: [
-        { activity: 'Acquire an evaluation contractor', party: 'RMADA' },
+        {
+          activity: 'Acquire an evaluation contractor',
+          modalLink: '<ml>RMADA</ml>',
+          modalCategory: 'research-measurement-assessment-design-and-analysis'
+        },
         {
           activity: 'Obtain data access for evaluation contractor',
           party: 'CCW'
