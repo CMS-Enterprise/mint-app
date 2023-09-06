@@ -404,7 +404,19 @@ const highLevelProjectPlans = {
             }
           ]
         },
-        { activity: 'Claims-based measures', party: 'CCW, IDR' },
+        {
+          activity: 'Claims-based measures',
+          modalLinks: [
+            {
+              copy: '<ml>CCW</ml>',
+              route: 'chronic-conditions-warehouse'
+            },
+            {
+              copy: '<ml>IDR</ml>',
+              route: 'integrated-data-repository'
+            }
+          ]
+        },
         {
           activity: 'Quality performance scores',
           modalLinks: [
@@ -417,16 +429,90 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Data to monitor the model',
-          party: 'CCW, CDX, HDR, IDR, Salesforce POST, another contractor'
+          modalLinks: [
+            {
+              copy: '<ml>CCW</ml>',
+              route: 'chronic-conditions-warehouse'
+            },
+            {
+              copy: '<ml>CDX</ml>',
+              route: 'centralized-data-exchange'
+            },
+            {
+              copy: '<ml>HDR</ml>',
+              route: 'health-data-reporting'
+            },
+            {
+              copy: '<ml>IDR</ml>',
+              route: 'integrated-data-repository'
+            },
+            {
+              copy: '<ml>Salesforce POST</ml>',
+              route: 'salesforce-project-officer-support-tool-portal'
+            }
+          ]
         },
         {
           activity: 'Data to support model evaluation',
-          party: 'CCW, CDX, HDR, Salesforce POST'
+          modalLinks: [
+            {
+              copy: '<ml>CCW</ml>',
+              route: 'chronic-conditions-warehouse'
+            },
+            {
+              copy: '<ml>CDX</ml>',
+              route: 'centralized-data-exchange'
+            },
+            {
+              copy: '<ml>HDR</ml>',
+              route: 'health-data-reporting'
+            },
+            {
+              copy: '<ml>Salesforce POST</ml>',
+              route: 'salesforce-project-officer-support-tool-portal'
+            }
+          ]
         },
         {
           activity: 'Send reports/data to participants',
-          party:
-            '4i, BCDA, CDX, CMS Box, eDFR, EFT, RMADA, Salesforce POST, internal staff'
+          modalLinks: [
+            {
+              copy: '<ml>4i</ml>',
+              route: '4-innovation'
+            },
+            {
+              copy: '<ml>BCDA</ml>',
+              route: 'beneficiary-claims-data-api'
+            },
+            {
+              copy: '<ml>CDX</ml>',
+              route: 'centralized-data-exchange'
+            },
+            {
+              copy: '<ml>CMS Box</ml>',
+              route: 'cms-box'
+            },
+            {
+              copy: '<ml>eDFR</ml>',
+              route: 'expanded-data-feedback-reporting'
+            },
+            {
+              copy: '<ml>EFT</ml>',
+              route: 'electronic-file-transfer'
+            },
+            {
+              copy: '<ml>RMADA</ml>',
+              route: 'research-measurement-assessment-design-and-analysis'
+            },
+            {
+              copy: '<ml>Salesforce POST</ml>',
+              route: 'salesforce-project-officer-support-tool-portal'
+            },
+            {
+              copy: 'internal staff',
+              route: ''
+            }
+          ]
         },
         {
           activity: 'Participate in CMMI data sharing',
@@ -445,7 +531,16 @@ const highLevelProjectPlans = {
       payment: [
         {
           activity: 'Adjust how FFS claims are paid',
-          party: 'Shared Systems / CR, HIGLAS'
+          modalLinks: [
+            {
+              copy: '<ml>Shared Systems </ml> / CR',
+              route: 'shared-systems'
+            },
+            {
+              copy: '<ml>HIGLAS</ml>',
+              route: 'healthcare-integrated-general-kedger-accounting-system'
+            }
+          ]
         },
         {
           activity: 'Manage FFS excluded payments',
@@ -483,7 +578,23 @@ const highLevelProjectPlans = {
             }
           ]
         },
-        { activity: 'Recover payments', party: 'APPS, IPC, Shared Systems' }
+        {
+          activity: 'Recover payments',
+          modalLinks: [
+            {
+              copy: '<ml>APPS</ml>',
+              route: 'automated-plan-payment-system'
+            },
+            {
+              copy: '<ml>IPC</ml>',
+              route: 'innovation-payment-contract'
+            },
+            {
+              copy: '<ml>Shared Systems </ml>',
+              route: 'shared-systems'
+            }
+          ]
+        }
       ],
       'learning-&-diffusion': [
         {
