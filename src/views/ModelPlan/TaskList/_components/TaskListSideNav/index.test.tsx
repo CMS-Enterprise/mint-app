@@ -24,7 +24,11 @@ describe('The TaskListSideNavActions', () => {
         <MockedProvider>
           <Route path="models/:modelID/task-list">
             <MessageProvider>
-              <TaskListSideNav modelPlan={modelPlan} collaborators={[]} />
+              <TaskListSideNav
+                modelPlan={modelPlan}
+                collaborators={[]}
+                setStatusMessage={() => null}
+              />
             </MessageProvider>
           </Route>
         </MockedProvider>

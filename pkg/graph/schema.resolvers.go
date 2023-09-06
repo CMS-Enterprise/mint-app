@@ -463,6 +463,26 @@ func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPl
 	return resolvers.ExistingModelLinksUpdate(logger, r.store, principal, modelPlanID, existingModelIDs, currentModelPlanIDs)
 }
 
+// ShareModelPlan is the resolver for the shareModelPlan field.
+func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.ModelPlanShare(
+		ctx,
+		logger,
+		r.store,
+		principal,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		modelPlanID,
+		viewFilter,
+		receiverEmails,
+		optionalMessage,
+	)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
