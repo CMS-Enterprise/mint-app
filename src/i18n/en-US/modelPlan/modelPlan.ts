@@ -19,13 +19,25 @@ export const modelPlan: TranslationModelPlan = {
   },
   abbreviation: {
     gqlField: 'abbreviation',
-    goField: 'abbreviation',
+    goField: 'Abbreviation',
     dbField: 'abbreviation',
     label: 'Short name',
     sublabel:
       'The abbreviation, acronym, or other common name used for the model.',
     dataType: 'string',
     formType: 'text'
+  },
+  archived: {
+    gqlField: 'archived',
+    goField: 'Archived',
+    dbField: 'archived',
+    label: 'Archived',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'False'
+    }
   },
   status: {
     gqlField: 'status',

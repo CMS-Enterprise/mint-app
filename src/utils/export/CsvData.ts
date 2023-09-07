@@ -9,7 +9,10 @@ const csvFields = [
     value: 'nameHistory'
   },
   'abbreviation',
-  'status',
+  {
+    label: 'Archived',
+    value: 'archived'
+  },
   {
     label: 'Created By',
     value: 'createdByUserAccount.commonName'
@@ -18,14 +21,7 @@ const csvFields = [
     label: 'Created At',
     value: 'createdDts'
   },
-  {
-    label: 'Modified By',
-    value: 'modifiedBy'
-  },
-  {
-    label: 'Modified At',
-    value: 'modifiedDts'
-  },
+  'status',
 
   // Basics
   'basics.modelCategory',
@@ -51,6 +47,8 @@ const csvFields = [
   'basics.wrapUpEnds',
   'basics.phasedIn',
   'basics.phasedInNote',
+  'basics.readyForReviewByUserAccount.commonName',
+  'basics.readyForReviewDts',
   'basics.status',
 
   // General Characteristics
@@ -63,9 +61,6 @@ const csvFields = [
   'generalCharacteristics.waiversRequired',
   'generalCharacteristics.waiversRequiredTypes', // array
   'generalCharacteristics.waiversRequiredNote',
-  'generalCharacteristics.readyForReviewBy',
-  'generalCharacteristics.readyForReviewDts',
-  'generalCharacteristics.status',
   'generalCharacteristics.isNewModel',
   'generalCharacteristics.existingModel',
   'generalCharacteristics.resemblesExistingModel',
@@ -108,6 +103,9 @@ const csvFields = [
   'generalCharacteristics.agreementTypesOther',
   'generalCharacteristics.multiplePatricipationAgreementsNeeded',
   'generalCharacteristics.multiplePatricipationAgreementsNeededNote',
+  'generalCharacteristics.readyForReviewByUserAccount.commonName',
+  'generalCharacteristics.readyForReviewDts',
+  'generalCharacteristics.status',
 
   // Participants and Providers
   'participantsAndProviders.communicationMethod', // array
@@ -162,14 +160,13 @@ const csvFields = [
 
   // Beneficiaries
   'beneficiaries.beneficiaries', // array
-  'beneficiaries.beneficiarySelectionMethod', // array
   'beneficiaries.beneficiariesNote',
   'beneficiaries.beneficiariesOther',
   'beneficiaries.beneficiaryOverlap',
   'beneficiaries.beneficiaryOverlapNote',
   'beneficiaries.beneficiarySelectionNote',
   'beneficiaries.beneficiarySelectionOther',
-  'beneficiaries.beneficiarySelectionMethod',
+  'beneficiaries.beneficiarySelectionMethod', // array
   'beneficiaries.treatDualElligibleDifferent',
   'beneficiaries.treatDualElligibleDifferentHow',
   'beneficiaries.treatDualElligibleDifferentNote',
@@ -180,10 +177,12 @@ const csvFields = [
   'beneficiaries.beneficiarySelectionFrequencyNote',
   'beneficiaries.beneficiarySelectionFrequencyOther',
   'beneficiaries.precedenceRules',
-  'beneficiaries.status',
   'beneficiaries.numberPeopleImpacted',
   'beneficiaries.estimateConfidence',
   'beneficiaries.confidenceNote',
+  'beneficiaries.readyForReviewByUserAccount.commonName',
+  'beneficiaries.readyForReviewDts',
+  'beneficiaries.status',
 
   // Ops and Eval Learning
   'opsEvalAndLearning.ccmInvolvment', // array
@@ -253,8 +252,6 @@ const csvFields = [
   'opsEvalAndLearning.modelLearningSystemsOther',
   'opsEvalAndLearning.modelLearningSystemsNote',
   'opsEvalAndLearning.anticipatedChallenges',
-  'opsEvalAndLearning.readyForReviewBy',
-  'opsEvalAndLearning.readyForReviewDts',
   'opsEvalAndLearning.agencyOrStateHelp', // array
   'opsEvalAndLearning.agencyOrStateHelpOther',
   'opsEvalAndLearning.agencyOrStateHelpNote',
@@ -281,6 +278,8 @@ const csvFields = [
   'opsEvalAndLearning.appealPayments',
   'opsEvalAndLearning.appealOther',
   'opsEvalAndLearning.appealNote',
+  'opsEvalAndLearning.readyForReviewByUserAccount.commonName',
+  'opsEvalAndLearning.readyForReviewDts',
   'opsEvalAndLearning.status',
 
   // Payments
@@ -340,6 +339,8 @@ const csvFields = [
   'payments.anticipateReconcilingPaymentsRetrospectivelyNote',
   'payments.paymentStartDate',
   'payments.paymentStartDateNote',
+  'payments.readyForReviewByUserAccount.commonName',
+  'payments.readyForReviewDts',
   'payments.status',
 
   // Collaborators

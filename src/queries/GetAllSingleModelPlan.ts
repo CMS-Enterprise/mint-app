@@ -15,12 +15,12 @@ export default gql`
       status
       basics {
         id
+        modelCategory
         amsModelID
         demoCode
-        modelCategory
         cmsCenters
-        cmsOther
         cmmiGroups
+        cmsOther
         modelType
         problem
         goal
@@ -38,12 +38,10 @@ export default gql`
         wrapUpEnds
         phasedIn
         phasedInNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          commonName
+        }
         readyForReviewDts
-        createdBy
-        createdDts
-        modifiedBy
-        modifiedDts
         status
       }
       generalCharacteristics {
@@ -57,9 +55,6 @@ export default gql`
         waiversRequired
         waiversRequiredTypes
         waiversRequiredNote
-        readyForReviewBy
-        readyForReviewDts
-        status
         isNewModel
         existingModel
         resemblesExistingModel
@@ -100,6 +95,11 @@ export default gql`
         agreementTypesOther
         multiplePatricipationAgreementsNeeded
         multiplePatricipationAgreementsNeededNote
+        readyForReviewByUserAccount {
+          commonName
+        }
+        readyForReviewDts
+        status
       }
       participantsAndProviders {
         id
@@ -149,15 +149,22 @@ export default gql`
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          commonName
+        }
         readyForReviewDts
         status
       }
       beneficiaries {
         id
         beneficiaries
-        beneficiariesOther
         beneficiariesNote
+        beneficiariesOther
+        beneficiaryOverlap
+        beneficiaryOverlapNote
+        beneficiarySelectionNote
+        beneficiarySelectionOther
+        beneficiarySelectionMethod
         treatDualElligibleDifferent
         treatDualElligibleDifferentHow
         treatDualElligibleDifferentNote
@@ -167,23 +174,23 @@ export default gql`
         beneficiarySelectionFrequency
         beneficiarySelectionFrequencyNote
         beneficiarySelectionFrequencyOther
-        beneficiaryOverlap
-        beneficiaryOverlapNote
         precedenceRules
-        readyForReviewBy
-        readyForReviewDts
-        status
         numberPeopleImpacted
         estimateConfidence
         confidenceNote
-        beneficiarySelectionNote
-        beneficiarySelectionOther
-        beneficiarySelectionMethod
+        readyForReviewByUserAccount {
+          commonName
+        }
+        readyForReviewDts
+        status
       }
       opsEvalAndLearning {
         id
         ccmInvolvment
+        ccmInvolvmentOther
+        ccmInvolvmentNote
         iddocSupport
+        iddocSupportNote
         sendFilesBetweenCcw
         sendFilesBetweenCcwNote
         appToSendFilesToKnown
@@ -211,8 +218,6 @@ export default gql`
         evaluationApproaches
         evaluationApproachOther
         evalutaionApproachNote
-        ccmInvolvmentOther
-        ccmInvolvmentNote
         dataNeededForMonitoring
         dataNeededForMonitoringOther
         dataNeededForMonitoringNote
@@ -248,9 +253,6 @@ export default gql`
         modelLearningSystemsOther
         modelLearningSystemsNote
         anticipatedChallenges
-        readyForReviewBy
-        readyForReviewDts
-        status
         agencyOrStateHelp
         agencyOrStateHelpOther
         agencyOrStateHelpNote
@@ -263,7 +265,6 @@ export default gql`
         contractorSupportOther
         contractorSupportHow
         contractorSupportNote
-        iddocSupportNote
         benchmarkForPerformance
         benchmarkForPerformanceNote
         computePerformanceScores
@@ -278,6 +279,11 @@ export default gql`
         appealPayments
         appealOther
         appealNote
+        readyForReviewByUserAccount {
+          commonName
+        }
+        readyForReviewDts
+        status
       }
       payments {
         id
@@ -337,7 +343,9 @@ export default gql`
         anticipateReconcilingPaymentsRetrospectivelyNote
         paymentStartDate
         paymentStartDateNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          commonName
+        }
         readyForReviewDts
         status
       }
@@ -357,14 +365,18 @@ export default gql`
       discussions {
         id
         content
-        createdBy
+        createdByUserAccount {
+          commonName
+        }
         createdDts
         status
         replies {
           id
           discussionID
           content
-          createdBy
+          createdByUserAccount {
+            commonName
+          }
           createdDts
           resolution
         }

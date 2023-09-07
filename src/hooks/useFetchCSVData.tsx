@@ -110,7 +110,7 @@ const csvFormatter = (csvData: CSVModelPlanType[], allPlanTranslation: any) => {
     const parser = new Parser({
       fields: csvFields,
       transforms: [
-        transform,
+        // transform,
         (transformObj: any) => {
           const mappedTransformObj = dataFormatter(
             transformObj,
@@ -121,8 +121,8 @@ const csvFormatter = (csvData: CSVModelPlanType[], allPlanTranslation: any) => {
       ],
       formatters: {
         header: (value: any) => {
-          const mappedTransformObj = headerFormatter(value, allPlanTranslation);
-          return mappedTransformObj;
+          const translatedHeader = headerFormatter(value, allPlanTranslation);
+          return translatedHeader;
         }
       }
     });
