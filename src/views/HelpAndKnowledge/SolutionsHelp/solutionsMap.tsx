@@ -114,7 +114,8 @@ export type ContactRoles =
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
   | 'Director, Division of Budget and Administrative Services (DBAS)'
-  | 'Product Manager';
+  | 'Product Manager'
+  | 'Director, Division of Budget Operations & Management (DBOM)';
 
 export type SolutionContactType = {
   name: string;
@@ -656,7 +657,7 @@ export const helpSolutions: HelpSolutionType[] = [
       {
         name: 'Ron Topper',
         email: 'ronald.topper@cms.hhs.gov',
-        role: 'Director, Division of Budget and Administrative Services (DBAS)'
+        role: 'Director, Division of Budget Operations & Management (DBOM)'
       },
       {
         name: 'Sue Nonemaker',
@@ -676,7 +677,7 @@ export const helpSolutions: HelpSolutionType[] = [
     ],
     systemOwner: {
       name:
-        'Business Services Group, Division of Budget and Administrative Services',
+        'Business Services Group, Division of Budget Operations & Management',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [

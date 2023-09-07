@@ -645,7 +645,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
     },
     timeline: {
       description:
-        'The setup for GovDelivery is very quick and can take as little as an hour.',
+        'The setup for GovDelivery is very quick and takes one business day in most cases.',
       items: [
         {
           header: 'Reach out to GovDelivery Admin',
@@ -659,7 +659,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
         {
           header: 'Configure GovDelivery and discuss guidelines',
           description:
-            'One of the GovDelivery Admins will set up your topic based on the information you provided. Then, they’ll talk you through some of the basic guidelines set by the Office of Communications for template designs and things like that.'
+            'One of the GovDelivery Admins will set up your topic based on the information you provided. They can also talk you through some of the basic guidelines set by the Office of Communications if necessary.'
         },
         {
           header: 'Access granted',
