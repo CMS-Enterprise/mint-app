@@ -110,6 +110,7 @@ export type ContactRoles =
   | 'OIT Point of Contact'
   | 'OIT Government Task Lead'
   | 'Quality Vertical'
+  | 'Quality Vertical Program Analyst'
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
@@ -887,7 +888,7 @@ export const helpSolutions: HelpSolutionType[] = [
       {
         name: 'Dustin Allison',
         email: 'dustin.allison@cms.hhs.gov',
-        role: 'Quality Vertical'
+        role: 'Quality Vertical Program Analyst'
       },
       {
         name: 'Teresa Winder-Wells',
