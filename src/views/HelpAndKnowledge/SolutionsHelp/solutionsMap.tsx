@@ -349,8 +349,8 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Chronic Conditions Warehouse',
     pointsOfContact: [
       {
-        name: 'Cheryl Brown',
-        email: 'cheryl.brown@cms.hhs.gov',
+        name: 'Velda McGhee',
+        email: 'velda.mcghee@cms.hhs.gov',
         role: 'CMMI Government Task Lead'
       }
     ],
@@ -839,8 +839,8 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Master Data Management',
     pointsOfContact: [
       {
-        name: 'Cheryl Brown',
-        email: 'cheryl.brown@cms.hhs.gov',
+        name: 'Celia Shaunessy',
+        email: 'celia.shaunessy@cms.hhs.gov',
         role: 'CMMI/BSG Point of Contact'
       },
       {
@@ -860,7 +860,7 @@ export const helpSolutions: HelpSolutionType[] = [
       },
       {
         name: 'Glenn Eyler',
-        email: 'cglenn.eyler@cms.hhs.gov',
+        email: 'glenn.eyler@cms.hhs.gov',
         role: 'OIT Government Task Lead'
       }
     ],

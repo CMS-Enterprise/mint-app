@@ -405,7 +405,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete CCW VRDC Access Request worksheet',
           description:
-            'Contact Cheryl Brown, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<1>{{email}}</1>) and Cheryl.'
+            'Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<1>{{email}}</1>) and Velda.'
         },
         {
           header: 'Complete CCW CARS application',
@@ -423,7 +423,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete Employee CCW Access Request form',
           description:
-            'Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<1>{{email}}</1>) and Cheryl.'
+            'Contact Velda McGhee, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<1>{{email}}</1>) and Velda.'
         },
         {
           header: 'Complete CCW CARS application',
@@ -1251,7 +1251,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'CMMI/BSG will reach out',
           description:
-            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Cheryl Brown.'
+            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Celia Shaunessy.'
         },
         {
           header: 'Discussion with the model team',
