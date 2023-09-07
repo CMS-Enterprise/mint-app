@@ -381,7 +381,7 @@ const csvFields = [
     value: 'replies.content'
   },
   {
-    label: 'Discussion content',
+    label: 'Reply content',
     value: 'replies.content'
   },
   {
@@ -398,47 +398,6 @@ const csvFields = [
   }
 ];
 
-const fieldsToUnwind = [
-  'collaborators',
-  'nameHistory',
-  'basics.cmsCenters',
-  'basics.cmmiGroups',
-  'beneficiaries.beneficiaries',
-  'beneficiaries.beneficiarySelectionMethod',
-  'discussions',
-  'discussions.replies',
-  'generalCharacteristics.authorityAllowances',
-  'generalCharacteristics.waiversRequiredTypes',
-  'generalCharacteristics.resemblesExistingModelWhich',
-  'generalCharacteristics.alternativePaymentModelTypes',
-  'generalCharacteristics.keyCharacteristics',
-  'generalCharacteristics.geographiesTargetedTypes',
-  'generalCharacteristics.geographiesTargetedAppliedTo',
-  'generalCharacteristics.agreementTypes',
-  'opsEvalAndLearning.agencyOrStateHelp',
-  'opsEvalAndLearning.ccmInvolvment',
-  'opsEvalAndLearning.contractorSupport',
-  'opsEvalAndLearning.dataCollectionFrequency',
-  'opsEvalAndLearning.dataMonitoringFileTypes',
-  'opsEvalAndLearning.dataNeededForMonitoring',
-  'opsEvalAndLearning.dataSharingFrequency',
-  'opsEvalAndLearning.dataToSendParticicipants',
-  'opsEvalAndLearning.evaluationApproaches',
-  'opsEvalAndLearning.modelLearningSystems',
-  'opsEvalAndLearning.stakeholders',
-  'participantsAndProviders.communicationMethod',
-  'participantsAndProviders.participants',
-  'participantsAndProviders.participantsIds',
-  'participantsAndProviders.providerAddMethod',
-  'participantsAndProviders.providerLeaveMethod',
-  'participantsAndProviders.selectionMethod',
-  'payments.anticipatedPaymentFrequency',
-  'payments.fundingSource',
-  'payments.fundingSourceR',
-  'payments.nonClaimsPayments',
-  'payments.payClaims',
-  'payments.payRecipients',
-  'payments.payType'
-];
+const fieldsToUnwind = ['collaborators', 'discussions', 'discussions.replies'];
 
 export { csvFields, fieldsToUnwind };

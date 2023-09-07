@@ -47,47 +47,78 @@ const headerFormatter = (dataField: string, allPlanTranslation: any) => {
 
   // Gets the label value from translation object
   if (allPlanTranslation[section][fieldName]?.label) {
-    translation = allPlanTranslation[section][fieldName].label;
+    translation = allPlanTranslation[section][fieldName].label.replace(
+      /[^a-zA-Z ]/g,
+      ''
+    );
+  } else if (fieldName === 'readyForReviewByUserAccount.commonName') {
+    translation = 'Ready for review by';
+  } else if (fieldName === 'readyForReviewDts') {
+    translation = 'Ready for review';
+  } else {
+    translation = dataField;
   }
 
   return translation;
 };
 
+// Recursive function to map through data and apply translation transforms
 const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
   const mappedObj: any = { ...transformObj };
-  getKeys(transformObj).forEach(key1 => {
-    // Used to mapped Status/etc field on parent level of model plan
-    if (allPlanTranslation.modelPlan[key1]?.options) {
-      mappedObj[key1] =
-        allPlanTranslation.modelPlan[key1].options[transformObj[key1]];
+
+  getKeys(transformObj).forEach(key => {
+    // Used to map any general date/createdDts to a human readable date
+    if (key === 'createdDts' || key === 'readyForReviewDts') {
+      mappedObj[key] = transformObj[key]
+        ? formatDateUtc(transformObj[key], 'MM/dd/yyyy')
+        : transformObj[key];
+    }
+    // Translates any enum values - either single value or an array
+    else if (allPlanTranslation?.[key]?.options) {
+      if (Array.isArray(transformObj[key])) {
+        mappedObj[key] = transformObj[key]
+          .map((field: any) => allPlanTranslation[key].options[field])
+          .join(',');
+      } else {
+        mappedObj[key] = allPlanTranslation[key].options[transformObj[key]];
+      }
+    }
+    // Translates and predefined/custom date field to human readable date
+    else if (
+      allPlanTranslation?.[key]?.dataType === 'date' &&
+      transformObj[key]
+    ) {
+      mappedObj[key] = formatDateLocal(transformObj[key], 'MM/dd/yyyy');
+    }
+    // Converts any arrays of entered text into a comma-separated array - ex: Previous names
+    else if (
+      Array.isArray(transformObj[key]) &&
+      !allPlanTranslation?.[key]?.options
+    ) {
+      mappedObj[key] = transformObj[key].join(',');
+    }
+    // If the value is a nested task list item - Basics, Payments, etc - apply it to the current value
+    else if (
+      transformObj[key] &&
+      typeof transformObj[key] === 'object' &&
+      !Array.isArray(transformObj[key])
+    ) {
+      mappedObj[key] = transformObj[key];
     }
 
-    if (key1 === 'createdDts') {
-      mappedObj[key1] = formatDateUtc(transformObj[key1], 'MM/dd/yyyy');
-    }
-
-    if (transformObj[key1] && typeof transformObj[key1] === 'object') {
-      mappedObj[key1] = { ...transformObj[key1] };
-
-      getKeys(transformObj[key1]).forEach(key2 => {
-        if (allPlanTranslation[key1]?.[key2]?.options) {
-          mappedObj[key1][key2] =
-            allPlanTranslation[key1][key2].options[transformObj[key1][key2]];
-        } else if (
-          allPlanTranslation[key1]?.[key2]?.dataType === 'date' &&
-          transformObj[key1][key2]
-        ) {
-          mappedObj[key1][key2] = formatDateLocal(
-            transformObj[key1][key2],
-            'MM/dd/yyyy'
-          );
-        } else {
-          mappedObj[key1][key2] = transformObj[key1][key2];
-        }
-      });
+    // If the current value can be further iterated and translated, call the recursive function again
+    if (
+      transformObj[key] &&
+      typeof transformObj[key] === 'object' &&
+      !allPlanTranslation?.[key]?.options &&
+      !Array.isArray(transformObj[key])
+    ) {
+      mappedObj[key] = dataFormatter(
+        transformObj[key],
+        allPlanTranslation?.[key]
+      );
     }
   });
-
   return mappedObj;
 };
 
@@ -110,7 +141,7 @@ const csvFormatter = (csvData: CSVModelPlanType[], allPlanTranslation: any) => {
     const parser = new Parser({
       fields: csvFields,
       transforms: [
-        // transform,
+        transform,
         (transformObj: any) => {
           const mappedTransformObj = dataFormatter(
             transformObj,
