@@ -264,7 +264,7 @@ const ShareExportModal = ({
           {/* Email address recipient textarea */}
           <FieldGroup className="margin-top-4">
             <Label htmlFor="share-model-recipients" className="text-normal">
-              {generalReadOnlyT('modal.sharePlan')}
+              {generalReadOnlyT('modal.shareEmail')}
             </Label>
 
             <p className="text-base margin-y-1">
