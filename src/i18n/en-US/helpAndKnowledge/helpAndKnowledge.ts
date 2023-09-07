@@ -1300,7 +1300,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Reach out to Quality Vertical',
           description:
-            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
+            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison.Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract.The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work.Dustin will meet with the QV team to review the request and determine if the work should move forward.If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
         },
         {
           header: 'COR meets with the model team',
@@ -1449,7 +1449,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Reach out to Quality Vertical',
           description:
-            'Early in model development, model teams should reach out to one of the Quality Vertical leads, Alesia Hovatter, Susannah Bernheim, or Dustin Allison. The QV team meets Wednesdays to discuss, so new models should be prepared to join and share information about their model concept. '
+            'Early in modal development, model teams should reach out Susannah Bernheim. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.'
         },
         {
           header: 'QV assists the model team',

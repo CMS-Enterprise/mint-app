@@ -80,8 +80,8 @@ export const operationalSolutionSubCategoryMap: Record<
 export type ContactRoles =
   | 'Product Owner'
   | 'Senior Lead'
-  | 'Chief Quality Officer and Lead'
-  | 'Interim Lead'
+  | 'Chief Quality Officer and Senior Advisor to the CMMI Front Office, Quality Vertical Lead'
+  | 'Program Analyst'
   | 'Quality Analyst'
   | 'Technical Lead'
   | 'Platform Lead'
@@ -962,19 +962,15 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Quality Vertical',
     pointsOfContact: [
       {
-        name: 'Alesia Hovatter',
-        email: 'alesia.hovatter@cms.hhs.gov',
-        role: 'Senior Lead'
-      },
-      {
         name: 'Susannah Bernheim',
         email: 'susannah.bernheim@cms.hhs.gov',
-        role: 'Chief Quality Officer and Lead'
+        role:
+          'Chief Quality Officer and Senior Advisor to the CMMI Front Office, Quality Vertical Lead'
       },
       {
         name: 'Dustin Allison',
         email: 'dustin.allison1@cms.hhs.gov',
-        role: 'Interim Lead'
+        role: 'Program Analyst'
       },
       {
         name: 'Sasha Gibbel',
