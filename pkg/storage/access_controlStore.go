@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
