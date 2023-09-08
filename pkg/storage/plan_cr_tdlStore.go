@@ -29,21 +29,13 @@ var planCrTdlCollectionByModelPlanIDSQL string
 
 // PlanCrTdlCreate creates  returns a plan_cr_tdl object
 func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl *models.PlanCrTdl) (*models.PlanCrTdl, error) {
+
 	if planCrTdl.ID == uuid.Nil {
 		planCrTdl.ID = uuid.New()
 	}
-	stmt, err := s.statements.Get(planCrTdlCreateSQL)
-
-	if err != nil {
-		logger.Error(
-			fmt.Sprintf("Failed to create cr__tdl with error %s", err),
-			zap.String("user", planCrTdl.CreatedBy.String()),
-		)
-		return nil, err
-	}
 
 	retCrTdl := models.PlanCrTdl{}
-	err = stmt.Get(&retCrTdl, planCrTdl)
+	err := s.db.Get(&retCrTdl, planCrTdlCreateSQL, planCrTdl)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to cr__tdl with error %s", err),
@@ -59,12 +51,7 @@ func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl *models.PlanCrTdl)
 // PlanCrTdlUpdate updates and returns a plan_cr_tdl object
 func (s *Store) PlanCrTdlUpdate(logger *zap.Logger, planCrTdl *models.PlanCrTdl) (*models.PlanCrTdl, error) {
 
-	statement, err := s.statements.Get(planCrTdlUpdateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelQueryError(logger, err, planCrTdl)
-	}
-
-	err = statement.Get(planCrTdl, planCrTdl)
+	err := s.db.Get(planCrTdl, planCrTdlUpdateSQL, planCrTdl)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, planCrTdl)
 	}
@@ -104,15 +91,13 @@ func (s *Store) PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UU
 
 // PlanCrTdlGetByID returns a plan_cr_tdl
 func (s *Store) PlanCrTdlGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanCrTdl, error) {
-	stmt, err := s.statements.Get(planCrTdlGetSQL)
-	if err != nil {
-		return nil, err
-	}
+
 	arg := map[string]interface{}{
 		"id": id,
 	}
 	retCrTdl := models.PlanCrTdl{}
-	err = stmt.Get(&retCrTdl, arg)
+
+	err := s.db.Get(&retCrTdl, planCrTdlGetSQL, arg)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
 			return nil, nil
@@ -125,17 +110,13 @@ func (s *Store) PlanCrTdlGetByID(logger *zap.Logger, id uuid.UUID) (*models.Plan
 
 // PlanCrTdlsGetByModelPlanID returns all plan_cr_tdls associated with a model plan
 func (s *Store) PlanCrTdlsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCrTdl, error) {
-	planCrTdls := []*models.PlanCrTdl{}
 
-	stmt, err := s.statements.Get(planCrTdlCollectionByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
+	var planCrTdls []*models.PlanCrTdl
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
 	}
 
-	err = stmt.Select(&planCrTdls, arg)
+	err := s.db.Select(&planCrTdls, planCrTdlCollectionByModelPlanIDSQL, arg)
 
 	if err != nil {
 		return nil, err

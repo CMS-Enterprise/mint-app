@@ -23,18 +23,14 @@ var existingModelLinkGetByModelPlanIDLoaderSQL string
 
 // ExistingModelLinkGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModelLink, error) {
-	var linkSlice []*models.ExistingModelLink
 
-	stmt, err := s.statements.Get(existingModelLinkGetByModelPlanIDLoaderSQL)
-	if err != nil {
-		return nil, err
-	}
+	var linkSlice []*models.ExistingModelLink
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	err = stmt.Select(&linkSlice, arg) //this returns more than one
-
+	// This returns more than one
+	err := s.db.Select(&linkSlice, existingModelLinkGetByModelPlanIDLoaderSQL, arg)
 	if err != nil {
 		logger.Error("failed to get Model Links by modelPlanID", zap.Error(err))
 		return nil, err
@@ -82,18 +78,13 @@ func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, m
 
 // ExistingModelLinkGetByID returns an an existing model link by ID
 func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*models.ExistingModelLink, error) {
+
 	link := models.ExistingModelLink{}
 
-	statement, err := s.statements.Get(existingModelLinkGetByIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	err = statement.Get(&link, utilitySQL.CreateIDQueryMap(id))
+	err := s.db.Get(&link, existingModelLinkGetByIDSQL, utilitySQL.CreateIDQueryMap(id))
 
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, id)
 	}
 	return &link, nil
-
 }

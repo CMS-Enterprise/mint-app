@@ -103,6 +103,8 @@ func seed(config *viper.Viper) {
 func (s *Seeder) SeedData() {
 	links, err := resolvers.ExistingModelCollectionGet(s.Config.Logger, s.Config.Store)
 	if err != nil {
+		// Add traceback
+		fmt.Printf("Error getting existing model collection: %v", err)
 		panic(err)
 	}
 

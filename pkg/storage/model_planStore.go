@@ -45,19 +45,18 @@ var modelPlanDeleteByID string
 var modelPlanGetByIDLoaderSQL string
 
 // ModelPlanGetByModelPlanIDLOADER returns the model pland for a slice of ids
-func (s *Store) ModelPlanGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
-	var planSlice []*models.ModelPlan
+func (s *Store) ModelPlanGetByModelPlanIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.ModelPlan, error) {
 
-	stmt, err := s.statements.Get(modelPlanGetByIDLoaderSQL)
-	if err != nil {
-		return nil, err
-	}
+	var planSlice []*models.ModelPlan
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	err = stmt.Select(&planSlice, arg) //this returns more than one
-
+	// This returns more than one
+	err := s.db.Select(&planSlice, modelPlanGetByIDLoaderSQL, arg)
 	if err != nil {
 		return nil, err
 	}
@@ -71,20 +70,12 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
-	stmt, err := s.statements.Get(modelPlanCreateSQL)
-	if err != nil {
-		logger.Error(
-			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.CreatedBy.String()),
-		)
-		return nil, err
-	}
 	retPlan := models.ModelPlan{}
 
 	plan.ModifiedBy = nil
 	plan.ModifiedDts = nil
 
-	err = stmt.Get(&retPlan, plan)
+	err := s.db.Get(&retPlan, modelPlanCreateSQL, plan)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -100,17 +91,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 // ModelPlanUpdate updates a model plan
 func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
-	stmt, err := s.statements.Get(modelPlanUpdateSQL)
-	if err != nil {
-		logger.Error(
-			fmt.Sprintf("Failed to update system intake %s", err),
-			zap.String("id", plan.ID.String()),
-			zap.String("user", models.UUIDValueOrEmpty(plan.ModifiedBy)),
-		)
-		return nil, err
-	}
-
-	err = stmt.Get(plan, plan)
+	err := s.db.Get(plan, modelPlanUpdateSQL, plan)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
@@ -125,21 +106,15 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	}
 
 	return plan, nil
-
 }
 
 // ModelPlanGetByID returns a model plan for a given ID
 func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
-	plan := models.ModelPlan{}
-	stmt, err := s.statements.Get(modelPlanGetByIDSQL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
-	}
-	defer stmt.Close()
 
+	plan := models.ModelPlan{}
 	arg := map[string]interface{}{"id": id}
 
-	err = stmt.Get(&plan, arg)
+	err := s.db.Get(&plan, modelPlanGetByIDSQL, modelPlanGetByIDSQL, arg)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -166,14 +141,11 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 
 // ModelPlanGetByName returns a model plan for a given ID
 func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
+
 	plan := models.ModelPlan{}
-	stmt, err := s.statements.Get(modelPlanGetByNameSQL)
-	if err != nil {
-		return nil, err
-	}
 	arg := map[string]interface{}{"model_name": modelName}
 
-	err = stmt.Get(&plan, arg)
+	err := s.db.Get(&plan, modelPlanGetByNameSQL, arg)
 
 	if err != nil {
 		logger.Error(
@@ -194,17 +166,13 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 
 // ModelPlanCollection returns a list of all model plans (whether or not you're a collaborator)
 func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
-	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.statements.Get(modelPlanCollectionWhereArchivedSQL)
-	if err != nil {
-		return nil, err
-	}
+	var modelPlans []*models.ModelPlan
 	arg := map[string]interface{}{
 		"archived": archived,
 	}
 
-	err = stmt.Select(&modelPlans, arg)
+	err := s.db.Select(&modelPlans, modelPlanCollectionWhereArchivedSQL, arg)
 
 	if err != nil {
 		logger.Error(
@@ -223,18 +191,14 @@ func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*model
 
 // ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the user_accountID supplied is a collaborator.
 func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, userID uuid.UUID) ([]*models.ModelPlan, error) {
-	modelPlans := []*models.ModelPlan{}
 
-	stmt, err := s.statements.Get(modelPlanCollectionByCollaboratorSQL)
-	if err != nil {
-		return nil, err
-	}
+	var modelPlans []*models.ModelPlan
 	arg := map[string]interface{}{
 		"archived": archived,
 		"user_id":  userID,
 	}
 
-	err = stmt.Select(&modelPlans, arg)
+	err := s.db.Select(&modelPlans, modelPlanCollectionByCollaboratorSQL, arg)
 
 	if err != nil {
 		logger.Error(
@@ -253,18 +217,13 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived
 
 // ModelPlanCollectionWithCRTDLS returns a list of all model plans for which the there are CRTDls
 func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
-	modelPlans := []*models.ModelPlan{}
 
-	stmt, err := s.statements.Get(modelPlanCollectionWithCRTDlSQL)
-	if err != nil {
-		return nil, err
-	}
-
+	var modelPlans []*models.ModelPlan
 	arg := map[string]interface{}{
 		"archived": archived,
 	}
 
-	err = stmt.Select(&modelPlans, arg)
+	err := s.db.Select(&modelPlans, modelPlanCollectionWithCRTDlSQL, arg)
 
 	if err != nil {
 		logger.Error(
@@ -283,12 +242,8 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 
 // ModelPlanDeleteByID deletes a model plan for a given ID
 func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
-	statement, err := s.statements.Get(modelPlanDeleteByID)
-	if err != nil {
-		return nil, err
-	}
 
-	sqlResult, err := statement.Exec(utilitySQL.CreateIDQueryMap(id))
+	sqlResult, err := s.db.Exec(modelPlanDeleteByID, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}

@@ -23,44 +23,32 @@ var checkIfCollaboratorByOperationalNeedIDSQL string
 func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
 
 	isCollaborator := false
-
-	stmt, err := s.statements.Get(checkIfCollaboratorSQL)
-	if err != nil {
-		return isCollaborator, err
-	}
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
 		"user_id":       principalID,
 	}
 
-	err = stmt.Get(&isCollaborator, arg)
+	err := s.db.Get(&isCollaborator, checkIfCollaboratorSQL, arg)
 	if err != nil {
 		return isCollaborator, err
 	}
 	return isCollaborator, nil
-
 }
 
 // CheckIfCollaboratorByDiscussionID returns true if the principal is a collaborator on a model plan, by the relation on the plan discussion
 func (s *Store) CheckIfCollaboratorByDiscussionID(logger *zap.Logger, principalID uuid.UUID, discussionID uuid.UUID) (bool, error) { //TODO provie
 
 	isCollaborator := false
-
-	stmt, err := s.statements.Get(checkIfCollaboratorDiscussionIDSQL)
-	if err != nil {
-		return isCollaborator, err
-	}
 	arg := map[string]interface{}{
 		"discussion_id": discussionID,
 		"user_id":       principalID,
 	}
 
-	err = stmt.Get(&isCollaborator, arg)
+	err := s.db.Get(&isCollaborator, checkIfCollaboratorDiscussionIDSQL, arg)
 	if err != nil {
 		return isCollaborator, err
 	}
 	return isCollaborator, nil
-
 }
 
 // CheckIfCollaboratorBySolutionID returns true if the principal is a collaborator on a model plan associated
@@ -72,17 +60,12 @@ func (s *Store) CheckIfCollaboratorBySolutionID(
 ) (bool, error) {
 
 	isCollaborator := false
-
-	stmt, err := s.statements.Get(checkIfCollaboratorBySolutionIDSQL)
-	if err != nil {
-		return isCollaborator, err
-	}
 	arg := map[string]interface{}{
 		"solution_id": solutionID,
 		"user_id":     principalID,
 	}
 
-	err = stmt.Get(&isCollaborator, arg)
+	err := s.db.Get(&isCollaborator, checkIfCollaboratorBySolutionIDSQL, arg)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -99,17 +82,12 @@ func (s *Store) CheckIfCollaboratorByOperationalNeedID(
 ) (bool, error) {
 
 	isCollaborator := false
-
-	stmt, err := s.statements.Get(checkIfCollaboratorByOperationalNeedIDSQL)
-	if err != nil {
-		return isCollaborator, err
-	}
 	arg := map[string]interface{}{
 		"need_id": operationalNeedID,
 		"user_id": principalID,
 	}
 
-	err = stmt.Get(&isCollaborator, arg)
+	err := s.db.Get(&isCollaborator, checkIfCollaboratorByOperationalNeedIDSQL, arg)
 	if err != nil {
 		return isCollaborator, err
 	}

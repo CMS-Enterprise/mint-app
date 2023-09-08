@@ -3,7 +3,7 @@ package storage
 import (
 	_ "embed"
 
-	"github.com/google/uuid"
+	uuid "github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -25,19 +25,18 @@ var planParticipantsAndProvidersGetByIDSQL string
 var planParticipantsAndProvidersGetByModelPlanIDLoaderSQL string
 
 // PlanParticipantsAndProvidersGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanParticipantsAndProviders, error) {
-	pAndPSlice := []*models.PlanParticipantsAndProviders{}
+func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
+	logger *zap.Logger,
+	paramTableJSON string,
+) ([]*models.PlanParticipantsAndProviders, error) {
 
-	stmt, err := s.statements.Get(planParticipantsAndProvidersGetByModelPlanIDLoaderSQL)
-	if err != nil {
-		return nil, err
-	}
+	var pAndPSlice []*models.PlanParticipantsAndProviders
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	err = stmt.Select(&pAndPSlice, arg) //this returns more than one
-
+	// This returns more than one
+	err := s.db.Select(&pAndPSlice, planParticipantsAndProvidersGetByModelPlanIDLoaderSQL, arg)
 	if err != nil {
 		return nil, err
 	}
@@ -46,17 +45,16 @@ func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger *zap.L
 }
 
 // PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object
-func (s *Store) PlanParticipantsAndProvidersCreate(logger *zap.Logger, gc *models.PlanParticipantsAndProviders) (*models.PlanParticipantsAndProviders, error) {
+func (s *Store) PlanParticipantsAndProvidersCreate(
+	logger *zap.Logger,
+	gc *models.PlanParticipantsAndProviders,
+) (*models.PlanParticipantsAndProviders, error) {
+
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
-
-	statement, err := s.statements.Get(planParticipantsAndProvidersCreateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
-	}
-
 	gc.ModifiedBy = nil
 	gc.ModifiedDts = nil
-	err = statement.Get(gc, gc)
+
+	err := s.db.Get(gc, planParticipantsAndProvidersCreateSQL, gc)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
@@ -65,13 +63,12 @@ func (s *Store) PlanParticipantsAndProvidersCreate(logger *zap.Logger, gc *model
 }
 
 // PlanParticipantsAndProvidersUpdate updates the plan providers_and_participants for a given id
-func (s *Store) PlanParticipantsAndProvidersUpdate(logger *zap.Logger, gc *models.PlanParticipantsAndProviders) (*models.PlanParticipantsAndProviders, error) {
-	statement, err := s.statements.Get(planParticipantsAndProvidersUpdateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
-	}
+func (s *Store) PlanParticipantsAndProvidersUpdate(
+	logger *zap.Logger,
+	gc *models.PlanParticipantsAndProviders,
+) (*models.PlanParticipantsAndProviders, error) {
 
-	err = statement.Get(gc, gc)
+	err := s.db.Get(gc, planParticipantsAndProvidersUpdateSQL, gc)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, gc)
 	}
@@ -80,16 +77,14 @@ func (s *Store) PlanParticipantsAndProvidersUpdate(logger *zap.Logger, gc *model
 }
 
 // PlanParticipantsAndProvidersGetByID returns the plan providers_and_participants for a given id
-func (s *Store) PlanParticipantsAndProvidersGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanParticipantsAndProviders, error) {
+func (s *Store) PlanParticipantsAndProvidersGetByID(
+	logger *zap.Logger,
+	id uuid.UUID,
+) (*models.PlanParticipantsAndProviders, error) {
+
 	gc := models.PlanParticipantsAndProviders{}
 
-	statement, err := s.statements.Get(planParticipantsAndProvidersGetByIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	err = statement.Get(&gc, utilitySQL.CreateIDQueryMap(id))
-
+	err := s.db.Get(&gc, planParticipantsAndProvidersGetByIDSQL, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}

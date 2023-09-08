@@ -54,14 +54,9 @@ func (s *Store) PlanDocumentCreate(
 	inputDocument.ID = utilityUUID.ValueOrNewUUID(inputDocument.ID)
 	inputDocument.ModifiedBy = nil
 	inputDocument.ModifiedDts = nil
-
 	retDoc := &models.PlanDocument{}
-	statement, err := s.statements.Get(planDocumentCreateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
-	}
 
-	err = statement.Get(retDoc, inputDocument)
+	err := s.db.Get(retDoc, planDocumentCreateSQL, inputDocument)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 	}
@@ -70,14 +65,14 @@ func (s *Store) PlanDocumentCreate(
 }
 
 // PlanDocumentRead reads a plan document object by id
-func (s *Store) PlanDocumentRead(logger *zap.Logger, s3Client *upload.S3Client, id uuid.UUID) (*models.PlanDocument, error) {
-	statement, err := s.statements.Get(planDocumentGetByIDSQL)
-	if err != nil {
-		return nil, err
-	}
+func (s *Store) PlanDocumentRead(
+	logger *zap.Logger,
+	s3Client *upload.S3Client,
+	id uuid.UUID,
+) (*models.PlanDocument, error) {
 
 	var document models.PlanDocument
-	err = statement.Get(&document, utilitySQL.CreateIDQueryMap(id))
+	err := s.db.Get(&document, planDocumentGetByIDSQL, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -96,13 +91,8 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 	modelPlanID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	statement, err := s.statements.Get(planDocumentGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	err := s.db.Select(&documents, planDocumentGetByModelPlanIDSQL, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
 	}
@@ -122,13 +112,9 @@ func (s *Store) PlanDocumentsReadBySolutionID(
 	solutionID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	statement, err := s.statements.Get(planDocumentsGetBySolutionIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+
+	err := s.db.Select(&documents, planDocumentsGetBySolutionIDSQL, utilitySQL.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
@@ -148,13 +134,12 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	modelPlanID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	statement, err := s.statements.Get(planDocumentGetByModelPlanIDNotRestrictedSQL)
-	if err != nil {
-		return nil, err
-	}
-
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	err := s.db.Select(
+		&documents,
+		planDocumentGetByModelPlanIDNotRestrictedSQL,
+		utilitySQL.CreateModelPlanIDQueryMap(modelPlanID),
+	)
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
 	}
@@ -174,13 +159,12 @@ func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
 	solutionID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	statement, err := s.statements.Get(planDocumentGetBySolutionIDNotRestrictedSQL)
-	if err != nil {
-		return nil, err
-	}
-
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	err := s.db.Select(
+		&documents,
+		planDocumentGetBySolutionIDNotRestrictedSQL,
+		utilitySQL.CreateSolutionIDQueryMap(solutionID),
+	)
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
@@ -243,12 +227,8 @@ func logIfNoRowsFetched(logger *zap.Logger, modelPlanID uuid.UUID, documents []*
 
 // PlanDocumentUpdate updates a plan document object by id with provided values
 func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument) (*models.PlanDocument, error) {
-	statement, err := s.statements.Get(planDocumentUpdateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
-	}
 
-	err = statement.Get(plan, plan)
+	err := s.db.Get(plan, planDocumentUpdateSQL, plan)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, plan)
 	}
