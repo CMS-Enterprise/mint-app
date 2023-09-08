@@ -28,17 +28,17 @@ var userAccountUpdateByUsername string
 func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	statement, err := s.statements.Get(userAccountGetByUsername)
+	stmt, err := s.db.PrepareNamed(userAccountGetByUsername)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	arg := map[string]interface{}{
 		"username": username,
 	}
 
-	err = statement.Get(user, arg)
-
+	err = stmt.Get(user, arg)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
 			return nil, nil
@@ -49,21 +49,21 @@ func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserA
 	return user, nil
 }
 
-// UserAccountGetByID gets a User account from the database by it's internal id.
+// UserAccountGetByID gets a User account from the database by its internal id.
 func (s *Store) UserAccountGetByID(id uuid.UUID) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	statement, err := s.statements.Get(userAccountGetByID)
+	stmt, err := s.db.PrepareNamed(userAccountGetByID)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	arg := map[string]interface{}{
 		"id": id,
 	}
 
-	err = statement.Get(user, arg)
-
+	err = stmt.Get(user, arg)
 	if err != nil {
 		return nil, err
 	}
@@ -71,20 +71,25 @@ func (s *Store) UserAccountGetByID(id uuid.UUID) (*authentication.UserAccount, e
 	return user, nil
 }
 
-// UserAccountGetByIDLOADER gets multiple User account from the database by it's internal id.
-func (s *Store) UserAccountGetByIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*authentication.UserAccount, error) {
-	userSlice := []*authentication.UserAccount{}
+// UserAccountGetByIDLOADER gets multiple User account from the database by its internal id.
+func (s *Store) UserAccountGetByIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*authentication.UserAccount, error) {
 
-	stmt, err := s.statements.Get(userAccountGetByIDLOADER)
+	var userSlice []*authentication.UserAccount
+
+	stmt, err := s.db.PrepareNamed(userAccountGetByIDLOADER)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
 	err = stmt.Select(&userSlice, arg)
-
 	if err != nil {
 		return nil, err
 	}
@@ -93,20 +98,23 @@ func (s *Store) UserAccountGetByIDLOADER(logger *zap.Logger, paramTableJSON stri
 }
 
 // UserAccountInsertByUsername creates a new user account for a given EUAID
-func (s *Store) UserAccountInsertByUsername(userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
-	user := &authentication.UserAccount{}
+func (s *Store) UserAccountInsertByUsername(userAccount *authentication.UserAccount) (
+	*authentication.UserAccount,
+	error,
+) {
 
+	user := &authentication.UserAccount{}
 	if userAccount.ID == uuid.Nil {
 		userAccount.ID = uuid.New()
 	}
 
-	statement, err := s.statements.Get(userAccountInsertByUsername)
+	stmt, err := s.db.PrepareNamed(userAccountInsertByUsername)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Get(user, userAccount)
-
+	err = stmt.Get(user, userAccount)
 	if err != nil {
 		return nil, err
 	}
@@ -115,20 +123,23 @@ func (s *Store) UserAccountInsertByUsername(userAccount *authentication.UserAcco
 }
 
 // UserAccountUpdateByUserName updates an existing user account for a given username
-func (s *Store) UserAccountUpdateByUserName(userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
-	user := &authentication.UserAccount{}
+func (s *Store) UserAccountUpdateByUserName(userAccount *authentication.UserAccount) (
+	*authentication.UserAccount,
+	error,
+) {
 
+	user := &authentication.UserAccount{}
 	if userAccount.ID == uuid.Nil {
 		userAccount.ID = uuid.New()
 	}
 
-	statement, err := s.statements.Get(userAccountUpdateByUsername)
+	stmt, err := s.db.PrepareNamed(userAccountUpdateByUsername)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Get(user, userAccount)
-
+	err = stmt.Get(user, userAccount)
 	if err != nil {
 		return nil, err
 	}

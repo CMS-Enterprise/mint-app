@@ -22,19 +22,24 @@ var existingModelLinkGetByIDSQL string
 var existingModelLinkGetByModelPlanIDLoaderSQL string
 
 // ExistingModelLinkGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModelLink, error) {
+func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(
+	logger *zap.Logger,
+	paramTableJSON string,
+) ([]*models.ExistingModelLink, error) {
+
 	var linkSlice []*models.ExistingModelLink
 
-	stmt, err := s.statements.Get(existingModelLinkGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
 	err = stmt.Select(&linkSlice, arg) //this returns more than one
-
 	if err != nil {
 		logger.Error("failed to get Model Links by modelPlanID", zap.Error(err))
 		return nil, err
@@ -44,13 +49,22 @@ func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(logger *zap.Logger, para
 }
 
 // ExistingModelLinksUpdate creates a new links that don't yet exist, deletes ones that are no longer provided,
-func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
+func (s *Store) ExistingModelLinksUpdate(
+	logger *zap.Logger,
+	userID uuid.UUID,
+	modelPlanID uuid.UUID,
+	existingModelIDs []int,
+	currentModelPlanIDs []uuid.UUID,
+) ([]*models.ExistingModelLink, error) {
+
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
+
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
 	}
+
 	currentModelPlanIDsArray := convertToStringArray(currentModelPlanIDs)
 	existingModelIDsArray := convertIntToPQStringArray(existingModelIDs)
 	arg := map[string]interface{}{
@@ -59,14 +73,16 @@ func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, m
 		"existing_model_ids":     existingModelIDsArray,
 		"created_by":             userID,
 	}
-	linkSlice := []*models.ExistingModelLink{}
-	statement, err := tx.PrepareNamed(existingModelLinkMergeSQL)
+	var linkSlice []*models.ExistingModelLink
+
+	stmt, err := tx.PrepareNamed(existingModelLinkMergeSQL)
 	if err != nil {
 		logger.Error("failed to prepare Existing Model Links update query", zap.Error(err))
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Select(&linkSlice, arg)
+	err = stmt.Select(&linkSlice, arg)
 	if err != nil {
 		logger.Error("failed to update Existing Model Links", zap.Error(err))
 		return nil, err
@@ -76,24 +92,25 @@ func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, m
 	if err != nil {
 		return nil, err
 	}
-	return linkSlice, nil
 
+	return linkSlice, nil
 }
 
 // ExistingModelLinkGetByID returns an an existing model link by ID
 func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*models.ExistingModelLink, error) {
+
 	link := models.ExistingModelLink{}
 
-	statement, err := s.statements.Get(existingModelLinkGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(existingModelLinkGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Get(&link, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&link, utilitySQL.CreateIDQueryMap(id))
 
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, id)
 	}
 	return &link, nil
-
 }

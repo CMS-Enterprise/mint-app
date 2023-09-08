@@ -26,19 +26,24 @@ var planPaymentsGetByIDSQL string
 var planPaymentsGetByModelPlanIDLoaderSQL string
 
 // PlanPaymentsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanPayments, error) {
-	paySlice := []*models.PlanPayments{}
+func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.PlanPayments, error) {
 
-	stmt, err := s.statements.Get(planPaymentsGetByModelPlanIDLoaderSQL)
+	var paySlice []*models.PlanPayments
+
+	stmt, err := s.db.PrepareNamed(planPaymentsGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	err = stmt.Select(&paySlice, arg) //this returns more than one
-
+	err = stmt.Select(&paySlice, arg) // This returns more than one
 	if err != nil {
 		return nil, err
 	}
@@ -50,17 +55,19 @@ func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(logger *zap.Logger, paramTabl
 func (s *Store) PlanPaymentsCreate(
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
+
 	payments.ID = utilityUUID.ValueOrNewUUID(payments.ID)
 
-	statement, err := s.statements.Get(planPaymentsCreateSQL)
+	stmt, err := s.db.PrepareNamed(planPaymentsCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
 	}
+	defer stmt.Close()
 
 	payments.ModifiedBy = nil
 	payments.ModifiedDts = nil
 
-	err = statement.Get(payments, payments)
+	err = stmt.Get(payments, payments)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
 	}
@@ -74,12 +81,13 @@ func (s *Store) PlanPaymentsRead(
 	id uuid.UUID) (*models.PlanPayments, error) {
 	modelInstance := models.PlanPayments{}
 
-	statement, err := s.statements.Get(planPaymentsGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(planPaymentsGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Get(&modelInstance, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&modelInstance, utilitySQL.CreateIDQueryMap(id))
 
 	if err != nil {
 		return nil, err
@@ -92,12 +100,14 @@ func (s *Store) PlanPaymentsRead(
 func (s *Store) PlanPaymentsUpdate(
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
-	statement, err := s.statements.Get(planPaymentsUpdateSQL)
+
+	stmt, err := s.db.PrepareNamed(planPaymentsUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, payments)
 	}
+	defer stmt.Close()
 
-	err = statement.Get(payments, payments)
+	err = stmt.Get(payments, payments)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, payments)
 	}

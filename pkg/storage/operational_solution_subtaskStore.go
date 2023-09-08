@@ -32,19 +32,24 @@ var operationalSolutionSubtaskDeleteByIDSQL string
 var operationalSolutionSubtaskGetBySolutionIDLoaderSQL string
 
 // OperationalSolutionSubtaskGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) OperationalSolutionSubtaskGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalSolutionSubtask, error) {
-	OpSolSSlice := []*models.OperationalSolutionSubtask{}
+func (s *Store) OperationalSolutionSubtaskGetByModelPlanIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.OperationalSolutionSubtask, error) {
 
-	stmt, err := s.statements.Get(operationalSolutionSubtaskGetBySolutionIDLoaderSQL)
+	var OpSolSSlice []*models.OperationalSolutionSubtask
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionSubtaskGetBySolutionIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
 	err = stmt.Select(&OpSolSSlice, arg) //this returns more than one
-
 	if err != nil {
 		return nil, err
 	}
@@ -54,16 +59,18 @@ func (s *Store) OperationalSolutionSubtaskGetByModelPlanIDLOADER(logger *zap.Log
 
 // OperationalSolutionSubtasksCreate creates a models.OperationalSolutionSubtask
 func (s *Store) OperationalSolutionSubtasksCreate(
-	logger *zap.Logger,
+	_ *zap.Logger,
 	subtasks []*models.OperationalSolutionSubtask,
 ) ([]*models.OperationalSolutionSubtask, error) {
+
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 
-	statement, err := tx.PrepareNamed(operationalSolutionSubtaskCreateSQL)
+	stmt, err := tx.PrepareNamed(operationalSolutionSubtaskCreateSQL)
 	if err != nil {
 		return nil, fmt.Errorf("could not prepare subtask creation statement: %w", err)
 	}
+	defer stmt.Close()
 
 	var results []*models.OperationalSolutionSubtask
 	for _, subtask := range subtasks {
@@ -72,7 +79,7 @@ func (s *Store) OperationalSolutionSubtasksCreate(
 		subtask.ModifiedDts = nil
 
 		var resultSubtask models.OperationalSolutionSubtask
-		err = statement.Get(&resultSubtask, subtask)
+		err = stmt.Get(&resultSubtask, subtask)
 		if err != nil {
 			return nil, fmt.Errorf("could not execute subtask statement: %w", err)
 		}
@@ -89,14 +96,19 @@ func (s *Store) OperationalSolutionSubtasksCreate(
 }
 
 // OperationalSolutionSubtaskGetByID gets a models.OperationalSolutionSubtask by ID
-func (s *Store) OperationalSolutionSubtaskGetByID(_ *zap.Logger, subtaskID uuid.UUID) (*models.OperationalSolutionSubtask, error) {
-	statement, err := s.statements.Get(operationalSolutionSubtaskGetByIDSQL)
+func (s *Store) OperationalSolutionSubtaskGetByID(
+	_ *zap.Logger,
+	subtaskID uuid.UUID,
+) (*models.OperationalSolutionSubtask, error) {
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionSubtaskGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	var subtask models.OperationalSolutionSubtask
-	err = statement.Get(
+	err = stmt.Get(
 		&subtask,
 		utilitySQL.CreateIDQueryMap(subtaskID),
 	)
@@ -108,19 +120,27 @@ func (s *Store) OperationalSolutionSubtaskGetByID(_ *zap.Logger, subtaskID uuid.
 }
 
 // OperationalSolutionSubtaskDelete deletes an operational solution subtask by id
-func (s *Store) OperationalSolutionSubtaskDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (sql.Result, error) {
+func (s *Store) OperationalSolutionSubtaskDelete(
+	logger *zap.Logger,
+	id uuid.UUID,
+	userID uuid.UUID,
+) (sql.Result, error) {
+
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
+
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
 	}
-	statement, err := tx.PrepareNamed(operationalSolutionSubtaskDeleteByIDSQL)
+
+	stmt, err := tx.PrepareNamed(operationalSolutionSubtaskDeleteByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	sqlResult, err := statement.Exec(utilitySQL.CreateIDQueryMap(id))
+	sqlResult, err := stmt.Exec(utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}
@@ -129,6 +149,7 @@ func (s *Store) OperationalSolutionSubtaskDelete(logger *zap.Logger, id uuid.UUI
 	if err != nil {
 		return nil, fmt.Errorf("could not commit solution subtask delete transaction: %w", err)
 	}
+
 	return sqlResult, nil
 }
 
@@ -137,16 +158,18 @@ func (s *Store) OperationalSolutionSubtasksUpdate(
 	_ *zap.Logger,
 	subtasks []*models.OperationalSolutionSubtask,
 ) ([]*models.OperationalSolutionSubtask, error) {
+
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 
-	statement, err := tx.PrepareNamed(operationalSolutionSubtaskUpdateByIDSQL)
+	stmt, err := tx.PrepareNamed(operationalSolutionSubtaskUpdateByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	for _, subtask := range subtasks {
-		err = statement.Get(subtask, subtask)
+		err = stmt.Get(subtask, subtask)
 		if err != nil {
 			return nil, err
 		}

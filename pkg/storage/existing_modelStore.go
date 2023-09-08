@@ -15,19 +15,24 @@ var existingModelCollectionGetSQL string
 var existingModelGetByModelPlanIDLoaderSQL string
 
 // ExistingModelGetByIDLOADER returns the existing model for a slice of model plan ids
-func (s *Store) ExistingModelGetByIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModel, error) {
-	eMSlice := []*models.ExistingModel{}
+func (s *Store) ExistingModelGetByIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.ExistingModel, error) {
 
-	stmt, err := s.statements.Get(existingModelGetByModelPlanIDLoaderSQL)
+	var eMSlice []*models.ExistingModel
+
+	stmt, err := s.db.PrepareNamed(existingModelGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	err = stmt.Select(&eMSlice, arg) //this returns more than one
-
+	err = stmt.Select(&eMSlice, arg) // This returns more than one
 	if err != nil {
 		return nil, err
 	}
@@ -36,18 +41,22 @@ func (s *Store) ExistingModelGetByIDLOADER(logger *zap.Logger, paramTableJSON st
 }
 
 // ExistingModelCollectionGet returns a list of existing models
-func (s *Store) ExistingModelCollectionGet(logger *zap.Logger) ([]*models.ExistingModel, error) {
-	existingModels := []*models.ExistingModel{}
-	stmt, err := s.statements.Get(existingModelCollectionGetSQL)
+func (s *Store) ExistingModelCollectionGet(_ *zap.Logger) ([]*models.ExistingModel, error) {
+
+	var existingModels []*models.ExistingModel
+	stmt, err := s.db.PrepareNamed(existingModelCollectionGetSQL)
+
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{}
 
 	err = stmt.Select(&existingModels, arg)
 	if err != nil {
 		return nil, err
 	}
-	return existingModels, nil
 
+	return existingModels, nil
 }

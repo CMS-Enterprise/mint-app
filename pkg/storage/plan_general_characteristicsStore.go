@@ -25,17 +25,23 @@ var planGeneralCharacteristicsGetByIDSQL string
 var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics
-func (s *Store) PlanGeneralCharacteristicsCreate(logger *zap.Logger, gc *models.PlanGeneralCharacteristics) (*models.PlanGeneralCharacteristics, error) {
+func (s *Store) PlanGeneralCharacteristicsCreate(
+	logger *zap.Logger,
+	gc *models.PlanGeneralCharacteristics,
+) (*models.PlanGeneralCharacteristics, error) {
+
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
 
-	statement, err := s.statements.Get(planGeneralCharacteristicsCreateSQL)
+	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
+	defer stmt.Close()
 
 	gc.ModifiedBy = nil
 	gc.ModifiedDts = nil
-	err = statement.Get(gc, gc)
+
+	err = stmt.Get(gc, gc)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
@@ -44,13 +50,18 @@ func (s *Store) PlanGeneralCharacteristicsCreate(logger *zap.Logger, gc *models.
 }
 
 // PlanGeneralCharacteristicsUpdate updates the plan general characteristics for a given id
-func (s *Store) PlanGeneralCharacteristicsUpdate(logger *zap.Logger, gc *models.PlanGeneralCharacteristics) (*models.PlanGeneralCharacteristics, error) {
-	statement, err := s.statements.Get(planGeneralCharacteristicsUpdateSQL)
+func (s *Store) PlanGeneralCharacteristicsUpdate(
+	logger *zap.Logger,
+	gc *models.PlanGeneralCharacteristics,
+) (*models.PlanGeneralCharacteristics, error) {
+
+	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
 	}
+	defer stmt.Close()
 
-	err = statement.Get(gc, gc)
+	err = stmt.Get(gc, gc)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, gc)
 	}
@@ -59,16 +70,20 @@ func (s *Store) PlanGeneralCharacteristicsUpdate(logger *zap.Logger, gc *models.
 }
 
 // PlanGeneralCharacteristicsGetByID returns the plan general characteristics for a given id
-func (s *Store) PlanGeneralCharacteristicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanGeneralCharacteristics, error) {
+func (s *Store) PlanGeneralCharacteristicsGetByID(
+	_ *zap.Logger,
+	id uuid.UUID,
+) (*models.PlanGeneralCharacteristics, error) {
+
 	gc := models.PlanGeneralCharacteristics{}
 
-	statement, err := s.statements.Get(planGeneralCharacteristicsGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Get(&gc, utilitySQL.CreateIDQueryMap(id))
-
+	err = stmt.Get(&gc, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -76,19 +91,26 @@ func (s *Store) PlanGeneralCharacteristicsGetByID(logger *zap.Logger, id uuid.UU
 	return &gc, nil
 }
 
-// PlanGeneralCharacteristicsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanGeneralCharacteristics, error) {
-	genCharSlice := []*models.PlanGeneralCharacteristics{}
+// PlanGeneralCharacteristicsGetByModelPlanIDLOADER returns the plan
+// GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.PlanGeneralCharacteristics, error) {
 
-	stmt, err := s.statements.Get(planGeneralCharacteristicsGetByModelPlanIDLoaderSQL)
+	var genCharSlice []*models.PlanGeneralCharacteristics
+
+	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	err = stmt.Select(&genCharSlice, arg) //this returns more than one
+	err = stmt.Select(&genCharSlice, arg) // This returns more than one
 
 	if err != nil {
 		return nil, err
