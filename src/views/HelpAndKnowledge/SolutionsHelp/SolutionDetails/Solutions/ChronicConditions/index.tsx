@@ -70,13 +70,13 @@ const ChronicConditionsTimeline = ({
           <Trans
             i18nKey={`solutions.${solution.key}.timeline.items[1].items[0]`}
           >
-            Contact Cheryl Brown, and she’ll send the Employee CCW Access
+            Contact Velda McGhee, and she’ll send the Employee CCW Access
             Request form to complete. Once completed, email it with the
             supervisor’s approval to OEDA{' '}
             <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
               CCWAccess@cms.hhs.gov
             </ExternalLink>{' '}
-            and Cheryl.
+            and Velda.
           </Trans>
         </ProcessListItem>
 
@@ -123,13 +123,13 @@ const ChronicConditionsTimeline = ({
             <Trans
               i18nKey={`solutions.${solution.key}.timeline.items[1].items[0]`}
             >
-              Contact Cheryl Brown, and she’ll send the Employee CCW Access
+              Contact Velda McGhee, and she’ll send the Employee CCW Access
               Request form to complete. Once completed, email it with the
               supervisor’s approval to OEDA{' '}
               <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
                 CCWAccess@cms.hhs.gov
               </ExternalLink>{' '}
-              and Cheryl.
+              and Velda.
             </Trans>
           </ProcessListItem>
 
