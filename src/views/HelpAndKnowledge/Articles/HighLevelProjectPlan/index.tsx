@@ -8,6 +8,7 @@ import {
   Link
 } from '@trussworks/react-uswds';
 
+import ExcelFile from 'assets/files/highLevelProjectPlan.xlsx';
 import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
@@ -104,7 +105,7 @@ const HighLevelProjectPlan = () => {
             </p>
 
             <Link
-              href="https://docs.google.com/spreadsheets/d/143yWa6QmW44c5BWZVWc8Zl2jkg7VQM8io5xEn17lna4/edit?usp=sharing"
+              href={ExcelFile}
               aria-label={generalT('newTab')}
               target="_blank"
               rel="noopener noreferrer"
