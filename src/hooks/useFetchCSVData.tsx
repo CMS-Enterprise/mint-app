@@ -27,10 +27,13 @@ import usePlanTranslation from './usePlanTranslation';
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
+/**
+ * @param dataField Dot notation of the nested field to be mapped to the header - ex: 'basics.goal'
+ * @param allPlanTranslation Parent level obj containing all model plan tranlsation objects
+ */
+
 // Formats headers for data from translations or hardcoded labels
 const headerFormatter = (dataField: string, allPlanTranslation: any) => {
-  // If no hardcoded label, format using translation
-
   // Gets the tasklist section from the csv map
   const sectionIndex = dataField.indexOf('.');
 
@@ -39,6 +42,7 @@ const headerFormatter = (dataField: string, allPlanTranslation: any) => {
 
   const fieldName = dataField.slice(sectionIndex + 1);
 
+  // If the first item in datafield is a valid model plan field
   if (sectionIndex !== -1) {
     section = dataField.substring(0, sectionIndex);
   }
@@ -48,25 +52,43 @@ const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   // Gets the label value from translation object
   if (allPlanTranslation[section][fieldName]?.label) {
     translation = allPlanTranslation[section][fieldName].label.replace(
-      /[^a-zA-Z ]/g,
+      /[^a-zA-Z ]/g, // TODO:  figure out why sanitization of string is needed to render some headers correctly
       ''
     );
-  } else if (fieldName === 'readyForReviewByUserAccount.commonName') {
+  }
+  // Generic translation for Ready for review fields
+  else if (fieldName === 'readyForReviewByUserAccount.commonName') {
     translation = 'Ready for review by';
   } else if (fieldName === 'readyForReviewDts') {
     translation = 'Ready for review';
-  } else {
+  }
+  // If no translation, format using hardcoded label in csvFields
+  else {
     translation = dataField;
   }
 
   return translation;
 };
 
+const parentFieldsToTranslate = ['archived', 'status'];
+
+/**
+ * @param transformObj Data obj to transform from gql query for all/single model plan
+ * @param allPlanTranslation Parent level obj containing all model plan tranlsation objects
+ */
+
 // Recursive function to map through data and apply translation transforms
 const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
   const mappedObj: any = { ...transformObj };
 
-  getKeys(transformObj).forEach(key => {
+  getKeys(transformObj).forEach((key: any) => {
+    // Used to map fields on the parent level of the model plan
+    // These fields exists under 'modelPlan' translation/ not on any parent level translation
+    if (parentFieldsToTranslate.includes(key)) {
+      mappedObj[key] =
+        allPlanTranslation?.modelPlan?.[key]?.options?.[transformObj[key]];
+    }
+
     // Used to map any general date/createdDts to a human readable date
     if (key === 'createdDts' || key === 'readyForReviewDts') {
       mappedObj[key] = transformObj[key]

@@ -36,7 +36,7 @@ export const modelPlan: TranslationModelPlan = {
     formType: 'radio',
     options: {
       true: 'Yes',
-      false: 'False'
+      false: 'No'
     }
   },
   status: {
