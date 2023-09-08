@@ -14,14 +14,16 @@ import (
 var prepareForClearanceGetByModelPlanID string
 
 // ReadyForClearanceGetByModelPlanID reads information about a model plan's clearance
-func (s *Store) ReadyForClearanceGetByModelPlanID(
-	_ *zap.Logger,
-	modelPlanID uuid.UUID,
-) (*models.PrepareForClearanceResponse, error) {
-
+func (s *Store) ReadyForClearanceGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PrepareForClearanceResponse, error) {
 	dbResult := &models.PrepareForClearanceResponse{}
 
-	err := s.db.Get(dbResult, prepareForClearanceGetByModelPlanID, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	statement, err := s.statements.Get(prepareForClearanceGetByModelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	err = statement.Get(dbResult, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+
 	if err != nil {
 		return nil, err
 	}

@@ -26,18 +26,19 @@ var planPaymentsGetByIDSQL string
 var planPaymentsGetByModelPlanIDLoaderSQL string
 
 // PlanPaymentsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
-	logger *zap.Logger,
-	paramTableJSON string,
-) ([]*models.PlanPayments, error) {
+func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanPayments, error) {
+	paySlice := []*models.PlanPayments{}
 
-	var paySlice []*models.PlanPayments
+	stmt, err := s.statements.Get(planPaymentsGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	// This returns more than one
-	err := s.db.Select(&paySlice, planPaymentsGetByModelPlanIDLoaderSQL, arg)
+	err = stmt.Select(&paySlice, arg) //this returns more than one
+
 	if err != nil {
 		return nil, err
 	}
@@ -49,12 +50,17 @@ func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
 func (s *Store) PlanPaymentsCreate(
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
-
 	payments.ID = utilityUUID.ValueOrNewUUID(payments.ID)
+
+	statement, err := s.statements.Get(planPaymentsCreateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
+	}
+
 	payments.ModifiedBy = nil
 	payments.ModifiedDts = nil
 
-	err := s.db.Get(payments, planPaymentsCreateSQL, payments)
+	err = statement.Get(payments, payments)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
 	}
@@ -68,7 +74,13 @@ func (s *Store) PlanPaymentsRead(
 	id uuid.UUID) (*models.PlanPayments, error) {
 	modelInstance := models.PlanPayments{}
 
-	err := s.db.Get(&modelInstance, planPaymentsGetByIDSQL, utilitySQL.CreateIDQueryMap(id))
+	statement, err := s.statements.Get(planPaymentsGetByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	err = statement.Get(&modelInstance, utilitySQL.CreateIDQueryMap(id))
+
 	if err != nil {
 		return nil, err
 	}
@@ -80,8 +92,12 @@ func (s *Store) PlanPaymentsRead(
 func (s *Store) PlanPaymentsUpdate(
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
+	statement, err := s.statements.Get(planPaymentsUpdateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, payments)
+	}
 
-	err := s.db.Get(payments, planPaymentsUpdateSQL, payments)
+	err = statement.Get(payments, payments)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, payments)
 	}

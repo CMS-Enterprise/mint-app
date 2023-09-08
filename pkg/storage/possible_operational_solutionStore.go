@@ -20,36 +20,39 @@ var possibleOperationalSolutionCollectionGelAllSQL string
 var possibleOperationalSolutionCollectionByOperationalNeedIDSQL string
 
 // PossibleOperationalSolutionCollectionGetByNeedType returns possible operational solutions for a given operational need
-func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(
-	_ *zap.Logger,
-	needKey models.OperationalNeedKey,
-) ([]*models.PossibleOperationalSolution, error) {
+func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.Logger, needKey models.OperationalNeedKey) ([]*models.PossibleOperationalSolution, error) {
 
-	var posSols []*models.PossibleOperationalSolution
+	posSols := []*models.PossibleOperationalSolution{}
+
+	stmt, err := s.statements.Get(possibleOperationalSolutionCollectionByNeedTypeSQL)
+	if err != nil {
+		return nil, err
+	}
+
 	arg := map[string]interface{}{
 		"need_key": needKey,
 	}
 
-	// This returns more than one
-	err := s.db.Select(&posSols, possibleOperationalSolutionCollectionByNeedTypeSQL, arg)
+	err = stmt.Select(&posSols, arg) // this returns more than one
 
 	if err != nil {
 		return nil, err
 	}
 	return posSols, nil
+
 }
 
 // PossibleOperationalSolutionCollectionGetAll returns all possible operational solutions
-func (s *Store) PossibleOperationalSolutionCollectionGetAll(_ *zap.Logger) (
-	[]*models.PossibleOperationalSolution,
-	error,
-) {
+func (s *Store) PossibleOperationalSolutionCollectionGetAll(logger *zap.Logger) ([]*models.PossibleOperationalSolution, error) {
+	posSols := []*models.PossibleOperationalSolution{}
+	stmt, err := s.statements.Get(possibleOperationalSolutionCollectionGelAllSQL)
+	if err != nil {
+		return nil, err
+	}
 
-	var posSols []*models.PossibleOperationalSolution
 	arg := map[string]interface{}{}
 
-	// This returns more than one
-	err := s.db.Select(&posSols, possibleOperationalSolutionCollectionGelAllSQL, arg)
+	err = stmt.Select(&posSols, arg) // this returns more than one
 
 	if err != nil {
 		return nil, err
@@ -57,20 +60,21 @@ func (s *Store) PossibleOperationalSolutionCollectionGetAll(_ *zap.Logger) (
 	return posSols, nil
 }
 
-// PossibleOperationalSolutionCollectionGetByOperationalNeedID returns possible
-// operational solutions for a given operational need
-func (s *Store) PossibleOperationalSolutionCollectionGetByOperationalNeedID(
-	logger *zap.Logger,
-	operationalNeedID uuid.UUID,
-) ([]*models.PossibleOperationalSolution, error) {
+// PossibleOperationalSolutionCollectionGetByOperationalNeedID returns possible operational solutions for a given operational need
+func (s *Store) PossibleOperationalSolutionCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID) ([]*models.PossibleOperationalSolution, error) {
 
-	var posSols []*models.PossibleOperationalSolution
+	posSols := []*models.PossibleOperationalSolution{}
+
+	stmt, err := s.statements.Get(possibleOperationalSolutionCollectionByOperationalNeedIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
 	arg := map[string]interface{}{
 		"operational_need_id": operationalNeedID,
 	}
 
-	// This returns more than one
-	err := s.db.Select(&posSols, possibleOperationalSolutionCollectionByOperationalNeedIDSQL, arg)
+	err = stmt.Select(&posSols, arg) // this returns more than one
 
 	if err != nil {
 		return nil, err

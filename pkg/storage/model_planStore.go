@@ -45,18 +45,19 @@ var modelPlanDeleteByID string
 var modelPlanGetByIDLoaderSQL string
 
 // ModelPlanGetByModelPlanIDLOADER returns the model pland for a slice of ids
-func (s *Store) ModelPlanGetByModelPlanIDLOADER(
-	_ *zap.Logger,
-	paramTableJSON string,
-) ([]*models.ModelPlan, error) {
-
+func (s *Store) ModelPlanGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
 	var planSlice []*models.ModelPlan
+
+	stmt, err := s.statements.Get(modelPlanGetByIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	// This returns more than one
-	err := s.db.Select(&planSlice, modelPlanGetByIDLoaderSQL, arg)
+	err = stmt.Select(&planSlice, arg) //this returns more than one
+
 	if err != nil {
 		return nil, err
 	}
@@ -70,12 +71,20 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
+	stmt, err := s.statements.Get(modelPlanCreateSQL)
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to create model plan with error %s", err),
+			zap.String("user", plan.CreatedBy.String()),
+		)
+		return nil, err
+	}
 	retPlan := models.ModelPlan{}
 
 	plan.ModifiedBy = nil
 	plan.ModifiedDts = nil
 
-	err := s.db.Get(&retPlan, modelPlanCreateSQL, plan)
+	err = stmt.Get(&retPlan, plan)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -91,7 +100,17 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 // ModelPlanUpdate updates a model plan
 func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
-	err := s.db.Get(plan, modelPlanUpdateSQL, plan)
+	stmt, err := s.statements.Get(modelPlanUpdateSQL)
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to update system intake %s", err),
+			zap.String("id", plan.ID.String()),
+			zap.String("user", models.UUIDValueOrEmpty(plan.ModifiedBy)),
+		)
+		return nil, err
+	}
+
+	err = stmt.Get(plan, plan)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
@@ -106,15 +125,21 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	}
 
 	return plan, nil
+
 }
 
 // ModelPlanGetByID returns a model plan for a given ID
 func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
-
 	plan := models.ModelPlan{}
+	stmt, err := s.statements.Get(modelPlanGetByIDSQL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
+	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{"id": id}
 
-	err := s.db.Get(&plan, modelPlanGetByIDSQL, modelPlanGetByIDSQL, arg)
+	err = stmt.Get(&plan, arg)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -141,11 +166,14 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 
 // ModelPlanGetByName returns a model plan for a given ID
 func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
-
 	plan := models.ModelPlan{}
+	stmt, err := s.statements.Get(modelPlanGetByNameSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{"model_name": modelName}
 
-	err := s.db.Get(&plan, modelPlanGetByNameSQL, arg)
+	err = stmt.Get(&plan, arg)
 
 	if err != nil {
 		logger.Error(
@@ -166,13 +194,17 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 
 // ModelPlanCollection returns a list of all model plans (whether or not you're a collaborator)
 func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
-
 	var modelPlans []*models.ModelPlan
+
+	stmt, err := s.statements.Get(modelPlanCollectionWhereArchivedSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"archived": archived,
 	}
 
-	err := s.db.Select(&modelPlans, modelPlanCollectionWhereArchivedSQL, arg)
+	err = stmt.Select(&modelPlans, arg)
 
 	if err != nil {
 		logger.Error(
@@ -191,14 +223,18 @@ func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*model
 
 // ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the user_accountID supplied is a collaborator.
 func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, userID uuid.UUID) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
 
-	var modelPlans []*models.ModelPlan
+	stmt, err := s.statements.Get(modelPlanCollectionByCollaboratorSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"archived": archived,
 		"user_id":  userID,
 	}
 
-	err := s.db.Select(&modelPlans, modelPlanCollectionByCollaboratorSQL, arg)
+	err = stmt.Select(&modelPlans, arg)
 
 	if err != nil {
 		logger.Error(
@@ -217,13 +253,18 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived
 
 // ModelPlanCollectionWithCRTDLS returns a list of all model plans for which the there are CRTDls
 func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
 
-	var modelPlans []*models.ModelPlan
+	stmt, err := s.statements.Get(modelPlanCollectionWithCRTDlSQL)
+	if err != nil {
+		return nil, err
+	}
+
 	arg := map[string]interface{}{
 		"archived": archived,
 	}
 
-	err := s.db.Select(&modelPlans, modelPlanCollectionWithCRTDlSQL, arg)
+	err = stmt.Select(&modelPlans, arg)
 
 	if err != nil {
 		logger.Error(
@@ -242,8 +283,12 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 
 // ModelPlanDeleteByID deletes a model plan for a given ID
 func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
+	statement, err := s.statements.Get(modelPlanDeleteByID)
+	if err != nil {
+		return nil, err
+	}
 
-	sqlResult, err := s.db.Exec(modelPlanDeleteByID, utilitySQL.CreateIDQueryMap(id))
+	sqlResult, err := statement.Exec(utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}

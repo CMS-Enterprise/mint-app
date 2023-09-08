@@ -25,16 +25,17 @@ var planGeneralCharacteristicsGetByIDSQL string
 var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics
-func (s *Store) PlanGeneralCharacteristicsCreate(
-	logger *zap.Logger,
-	gc *models.PlanGeneralCharacteristics,
-) (*models.PlanGeneralCharacteristics, error) {
-
+func (s *Store) PlanGeneralCharacteristicsCreate(logger *zap.Logger, gc *models.PlanGeneralCharacteristics) (*models.PlanGeneralCharacteristics, error) {
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
+
+	statement, err := s.statements.Get(planGeneralCharacteristicsCreateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
+	}
 
 	gc.ModifiedBy = nil
 	gc.ModifiedDts = nil
-	err := s.db.Get(gc, planGeneralCharacteristicsCreateSQL, gc)
+	err = statement.Get(gc, gc)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
@@ -43,12 +44,13 @@ func (s *Store) PlanGeneralCharacteristicsCreate(
 }
 
 // PlanGeneralCharacteristicsUpdate updates the plan general characteristics for a given id
-func (s *Store) PlanGeneralCharacteristicsUpdate(
-	logger *zap.Logger,
-	gc *models.PlanGeneralCharacteristics,
-) (*models.PlanGeneralCharacteristics, error) {
+func (s *Store) PlanGeneralCharacteristicsUpdate(logger *zap.Logger, gc *models.PlanGeneralCharacteristics) (*models.PlanGeneralCharacteristics, error) {
+	statement, err := s.statements.Get(planGeneralCharacteristicsUpdateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
+	}
 
-	err := s.db.Get(gc, planGeneralCharacteristicsUpdateSQL, gc)
+	err = statement.Get(gc, gc)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, gc)
 	}
@@ -57,14 +59,16 @@ func (s *Store) PlanGeneralCharacteristicsUpdate(
 }
 
 // PlanGeneralCharacteristicsGetByID returns the plan general characteristics for a given id
-func (s *Store) PlanGeneralCharacteristicsGetByID(
-	logger *zap.Logger,
-	id uuid.UUID,
-) (*models.PlanGeneralCharacteristics, error) {
-
+func (s *Store) PlanGeneralCharacteristicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanGeneralCharacteristics, error) {
 	gc := models.PlanGeneralCharacteristics{}
 
-	err := s.db.Get(&gc, planGeneralCharacteristicsGetByIDSQL, utilitySQL.CreateIDQueryMap(id))
+	statement, err := s.statements.Get(planGeneralCharacteristicsGetByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	err = statement.Get(&gc, utilitySQL.CreateIDQueryMap(id))
+
 	if err != nil {
 		return nil, err
 	}
@@ -73,18 +77,19 @@ func (s *Store) PlanGeneralCharacteristicsGetByID(
 }
 
 // PlanGeneralCharacteristicsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(
-	logger *zap.Logger,
-	paramTableJSON string,
-) ([]*models.PlanGeneralCharacteristics, error) {
+func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanGeneralCharacteristics, error) {
+	genCharSlice := []*models.PlanGeneralCharacteristics{}
 
-	var genCharSlice []*models.PlanGeneralCharacteristics
+	stmt, err := s.statements.Get(planGeneralCharacteristicsGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	// This returns more than one
-	err := s.db.Select(&genCharSlice, planGeneralCharacteristicsGetByModelPlanIDLoaderSQL, arg)
+	err = stmt.Select(&genCharSlice, arg) //this returns more than one
+
 	if err != nil {
 		return nil, err
 	}

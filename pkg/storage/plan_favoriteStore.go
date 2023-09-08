@@ -32,10 +32,17 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()
 	}
-	retFavorite := models.PlanFavorite{}
+	stmt, err := s.statements.Get(planFavoriteCreateSQL) //TODO, look to refactor this SQL to make it clearer
 
-	// TODO: Look to refactor this SQL to make it clearer
-	err := s.db.Get(&retFavorite, planFavoriteCreateSQL, favorite)
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to create plan favorite with error %s", err),
+			zap.String("user", favorite.CreatedBy.String()),
+		)
+		return nil, err
+	}
+	retFavorite := models.PlanFavorite{}
+	err = stmt.Get(&retFavorite, favorite)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create plan favorite with error %s", err),
@@ -79,19 +86,17 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, 
 }
 
 // PlanFavoriteGetByModelIDAndUserAccountID returns a plan favorite
-func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(
-	logger *zap.Logger,
-	userAccountID uuid.UUID,
-	modelPlanID uuid.UUID,
-) (*models.PlanFavorite, error) {
-
+func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(logger *zap.Logger, userAccountID uuid.UUID, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	stmt, err := s.statements.Get(planFavoriteGetSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"user_id":       userAccountID,
 		"model_plan_id": modelPlanID,
 	}
 	retFavorite := models.PlanFavorite{}
-
-	err := s.db.Get(&retFavorite, planFavoriteGetSQL, arg)
+	err = stmt.Get(&retFavorite, arg)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
 			return nil, nil
@@ -105,10 +110,15 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(
 // PlanFavoriteCollectionGetUniqueUserIDs returns userIDs of users that have favorited any model
 func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 
-	var userIDs []uuid.UUID
+	userIDs := []uuid.UUID{}
+	stmt, err := s.statements.Get(planFavoriteGetUniqueUserIDsSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{}
 
-	err := s.db.Select(&userIDs, planFavoriteGetUniqueUserIDsSQL, arg)
+	err = stmt.Select(&userIDs, arg)
+
 	if err != nil {
 		return nil, err
 	}
@@ -117,17 +127,19 @@ func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 }
 
 // PlanFavoriteGetCollectionByUserID returns plan favorites by userID
-func (s *Store) PlanFavoriteGetCollectionByUserID(
-	logger *zap.Logger,
-	userAccountID uuid.UUID,
-) ([]*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteGetCollectionByUserID(logger *zap.Logger, userAccountID uuid.UUID) ([]*models.PlanFavorite, error) {
 
-	var planFavorites []*models.PlanFavorite
+	planFavorites := []*models.PlanFavorite{}
+	stmt, err := s.statements.Get(planFavoriteGetCollectionByUserIDSQL)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"user_id": userAccountID,
 	}
 
-	err := s.db.Select(&planFavorites, planFavoriteGetCollectionByUserIDSQL, arg)
+	err = stmt.Select(&planFavorites, arg)
+
 	if err != nil {
 		return nil, err
 	}

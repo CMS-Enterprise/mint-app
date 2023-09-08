@@ -30,9 +30,17 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 	if AnalyzedAudit.ID == uuid.Nil {
 		AnalyzedAudit.ID = uuid.New()
 	}
+	stmt, err := s.statements.Get(analyzedAuditCreate)
 
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to create analyzed_audit with error %s", err),
+			zap.String("user", AnalyzedAudit.CreatedBy.String()),
+		)
+		return nil, err
+	}
 	retAnalyzedAudit := models.AnalyzedAudit{}
-	err := s.db.Get(&retAnalyzedAudit, analyzedAuditCreate, AnalyzedAudit)
+	err = stmt.Get(&retAnalyzedAudit, AnalyzedAudit)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to analyzed_audit with error %s", err),
@@ -47,14 +55,19 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 
 // AnalyzedAuditGetByModelPlanIDAndDate gets and returns all AnalyzedAudits by modelPlanID
 func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(logger *zap.Logger, modelPlanID uuid.UUID, date time.Time) (*models.AnalyzedAudit, error) {
-
 	analyzedAudit := models.AnalyzedAudit{}
+
+	stmt, err := s.statements.Get(analyzedAuditGetByModelPlanIDAndDate)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
 		"date":          date.Format("2006-01-02"),
 	}
 
-	err := s.db.Get(&analyzedAudit, analyzedAuditGetByModelPlanIDAndDate, arg)
+	err = stmt.Get(&analyzedAudit, arg)
+
 	if err != nil {
 		return nil, err
 	}
@@ -63,14 +76,19 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(logger *zap.Logger, modelPl
 
 // AnalyzedAuditGetByModelPlanIDsAndDate gets and returns all AnalyzedAudits by modelPlanIDs and date
 func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(logger *zap.Logger, modelPlanIDs []uuid.UUID, date time.Time) ([]*models.AnalyzedAudit, error) {
+	analyzedAudits := []*models.AnalyzedAudit{}
 
-	var analyzedAudits []*models.AnalyzedAudit
+	stmt, err := s.statements.Get(analyzedAuditGetByModelPlanIDsAndDate)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 		"date":           date.Format("2006-01-02"),
 	}
 
-	err := s.db.Select(&analyzedAudits, analyzedAuditGetByModelPlanIDsAndDate, arg)
+	err = stmt.Select(&analyzedAudits, arg)
+
 	if err != nil {
 		return nil, err
 	}
@@ -79,13 +97,17 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(logger *zap.Logger, modelP
 
 // AnalyzedAuditGetByDate gets and returns all AnalyzedAudits by date
 func (s *Store) AnalyzedAuditGetByDate(_ *zap.Logger, date time.Time) ([]*models.AnalyzedAudit, error) {
-
 	var analyzedAudits []*models.AnalyzedAudit
+
+	stmt, err := s.statements.Get(analyzedAuditGetByDate)
+	if err != nil {
+		return nil, err
+	}
 	arg := map[string]interface{}{
 		"date": date.Format("2006-01-02"),
 	}
 
-	err := s.db.Select(&analyzedAudits, analyzedAuditGetByDate, arg)
+	err = stmt.Select(&analyzedAudits, arg)
 
 	if err != nil {
 		return nil, err

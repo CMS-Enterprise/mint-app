@@ -12,20 +12,21 @@ import (
 //go:embed SQL/possible_operational_need/collection_get_by_model_plan_id.sql
 var possibleOperationalNeedCollectionByModelPlanIDSQL string
 
-// PossibleOperationalNeedCollectionGetByModelPlanID returns possible operational
-// needs that don't have an existing record for a model plan
-func (s *Store) PossibleOperationalNeedCollectionGetByModelPlanID(
-	_ *zap.Logger,
-	modelPlanID uuid.UUID,
-) ([]*models.PossibleOperationalNeed, error) {
+// PossibleOperationalNeedCollectionGetByModelPlanID returns possible operational needs that don't have an existing record for a model plan
+func (s *Store) PossibleOperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PossibleOperationalNeed, error) {
 
-	var posNeeds []*models.PossibleOperationalNeed
+	posNeeds := []*models.PossibleOperationalNeed{}
+
+	stmt, err := s.statements.Get(possibleOperationalNeedCollectionByModelPlanIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
 	}
 
-	// This returns more than one
-	err := s.db.Select(&posNeeds, possibleOperationalNeedCollectionByModelPlanIDSQL, arg)
+	err = stmt.Select(&posNeeds, arg) //this returns more than one
 
 	if err != nil {
 		return nil, err

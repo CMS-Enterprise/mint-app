@@ -47,9 +47,14 @@ func (s *Store) PlanDocumentSolutionLinksCreate(
 		"document_ids": docIDs,
 		"created_by":   principal.Account().ID,
 	}
-	var ret []*models.PlanDocumentSolutionLink
 
-	err := s.db.Select(&ret, planDocumentSolutionLinksCreateSQL, arg)
+	var ret []*models.PlanDocumentSolutionLink
+	statement, err := s.statements.Get(planDocumentSolutionLinksCreateSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	err = statement.Select(&ret, arg)
 	if err != nil {
 		return nil, err
 	}
@@ -102,13 +107,13 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 	logger *zap.Logger,
 	solutionID uuid.UUID,
 ) ([]*models.PlanDocumentSolutionLink, error) {
+	statement, err := s.statements.Get(planDocumentSolutionLinksGetBySolutionIDSQL)
+	if err != nil {
+		return nil, err
+	}
 
 	var solutionLinks []*models.PlanDocumentSolutionLink
-	err := s.db.Select(
-		&solutionLinks,
-		planDocumentSolutionLinksGetBySolutionIDSQL,
-		utilitySQL.CreateSolutionIDQueryMap(solutionID),
-	)
+	err = statement.Select(&solutionLinks, utilitySQL.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
@@ -118,13 +123,15 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 
 // PlanDocumentNumLinkedSolutions implements store logic to retrieve the number of linked solutions for a document by ID
 func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uuid.UUID) (int, error) {
-
-	result := 0
-	args := map[string]interface{}{
-		"document_id": documentID,
+	statement, err := s.statements.Get(planDocumentNumLinkedSolutionsSQL)
+	if err != nil {
+		return 0, genericmodel.HandleModelFetchGenericError(logger, err, documentID)
 	}
 
-	err := s.db.Get(&result, planDocumentNumLinkedSolutionsSQL, args)
+	result := 0
+	err = statement.Get(&result, map[string]interface{}{
+		"document_id": documentID,
+	})
 	if err != nil {
 		return 0, genericmodel.HandleModelFetchGenericError(logger, err, documentID)
 	}
@@ -133,19 +140,20 @@ func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uu
 }
 
 // PlanDocumentSolutionLinkGetByIDs returns a single plan document solution link by ID
-func (s *Store) PlanDocumentSolutionLinkGetByIDs(
-	logger *zap.Logger,
-	solutionID uuid.UUID,
-	documentID uuid.UUID,
-) (*models.PlanDocumentSolutionLink, error) {
-
+func (s *Store) PlanDocumentSolutionLinkGetByIDs(logger *zap.Logger, solutionID uuid.UUID, documentID uuid.UUID) (*models.PlanDocumentSolutionLink, error) {
 	link := &models.PlanDocumentSolutionLink{}
+
+	stmt, err := s.statements.Get(planDocumentSolutionLinkGetByIDsSQL)
+	if err != nil {
+		return nil, err
+	}
+
 	arg := map[string]interface{}{
 		"solution_id": solutionID,
 		"document_id": documentID,
 	}
 
-	err := s.db.Get(link, planDocumentSolutionLinkGetByIDsSQL, arg)
+	err = stmt.Get(link, arg)
 
 	if err != nil {
 		return nil, err
