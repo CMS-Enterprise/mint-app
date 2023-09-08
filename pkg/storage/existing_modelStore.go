@@ -33,11 +33,12 @@ func (s *Store) ExistingModelGetByIDLOADER(logger *zap.Logger, paramTableJSON st
 }
 
 // ExistingModelCollectionGet returns a list of existing models
-func (s *Store) ExistingModelCollectionGet(_ *zap.Logger) ([]*models.ExistingModel, error) {
+func (s *Store) ExistingModelCollectionGet(logger *zap.Logger) ([]*models.ExistingModel, error) {
 
 	var existingModels []*models.ExistingModel
+	arg := map[string]interface{}{}
 
-	err := s.db.Select(&existingModels, existingModelCollectionGetSQL)
+	err := s.db.Select(&existingModels, existingModelCollectionGetSQL, arg)
 	if err != nil {
 		return nil, err
 	}
