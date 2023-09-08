@@ -80,8 +80,8 @@ export const operationalSolutionSubCategoryMap: Record<
 export type ContactRoles =
   | 'Product Owner'
   | 'Senior Lead'
-  | 'Chief Quality Officer and Lead'
-  | 'Interim Lead'
+  | 'Chief Quality Officer and Senior Advisor to the CMMI Front Office, Quality Vertical Lead'
+  | 'Program Analyst'
   | 'Quality Analyst'
   | 'Technical Lead'
   | 'Platform Lead'
@@ -110,11 +110,13 @@ export type ContactRoles =
   | 'OIT Point of Contact'
   | 'OIT Government Task Lead'
   | 'Quality Vertical'
+  | 'Quality Vertical Program Analyst'
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
   | 'Director, Division of Budget and Administrative Services (DBAS)'
-  | 'Product Manager';
+  | 'Product Manager'
+  | 'Director, Division of Budget Operations & Management (DBOM)';
 
 export type SolutionContactType = {
   name: string;
@@ -349,8 +351,8 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Chronic Conditions Warehouse',
     pointsOfContact: [
       {
-        name: 'Cheryl Brown',
-        email: 'cheryl.brown@cms.hhs.gov',
+        name: 'Velda McGhee',
+        email: 'velda.mcghee@cms.hhs.gov',
         role: 'CMMI Government Task Lead'
       }
     ],
@@ -656,7 +658,7 @@ export const helpSolutions: HelpSolutionType[] = [
       {
         name: 'Ron Topper',
         email: 'ronald.topper@cms.hhs.gov',
-        role: 'Director, Division of Budget and Administrative Services (DBAS)'
+        role: 'Director, Division of Budget Operations & Management (DBOM)'
       },
       {
         name: 'Sue Nonemaker',
@@ -676,7 +678,7 @@ export const helpSolutions: HelpSolutionType[] = [
     ],
     systemOwner: {
       name:
-        'Business Services Group, Division of Budget and Administrative Services',
+        'Business Services Group, Division of Budget Operations & Management',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
@@ -839,8 +841,8 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Master Data Management',
     pointsOfContact: [
       {
-        name: 'Cheryl Brown',
-        email: 'cheryl.brown@cms.hhs.gov',
+        name: 'Celia Shaunessy',
+        email: 'celia.shaunessy@cms.hhs.gov',
         role: 'CMMI/BSG Point of Contact'
       },
       {
@@ -860,7 +862,7 @@ export const helpSolutions: HelpSolutionType[] = [
       },
       {
         name: 'Glenn Eyler',
-        email: 'cglenn.eyler@cms.hhs.gov',
+        email: 'glenn.eyler@cms.hhs.gov',
         role: 'OIT Government Task Lead'
       }
     ],
@@ -886,7 +888,7 @@ export const helpSolutions: HelpSolutionType[] = [
       {
         name: 'Dustin Allison',
         email: 'dustin.allison@cms.hhs.gov',
-        role: 'Quality Vertical'
+        role: 'Quality Vertical Program Analyst'
       },
       {
         name: 'Teresa Winder-Wells',
@@ -960,19 +962,15 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Quality Vertical',
     pointsOfContact: [
       {
-        name: 'Alesia Hovatter',
-        email: 'alesia.hovatter@cms.hhs.gov',
-        role: 'Senior Lead'
-      },
-      {
         name: 'Susannah Bernheim',
         email: 'susannah.bernheim@cms.hhs.gov',
-        role: 'Chief Quality Officer and Lead'
+        role:
+          'Chief Quality Officer and Senior Advisor to the CMMI Front Office, Quality Vertical Lead'
       },
       {
         name: 'Dustin Allison',
         email: 'dustin.allison1@cms.hhs.gov',
-        role: 'Interim Lead'
+        role: 'Program Analyst'
       },
       {
         name: 'Sasha Gibbel',

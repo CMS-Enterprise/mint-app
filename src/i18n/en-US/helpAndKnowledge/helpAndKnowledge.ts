@@ -405,7 +405,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete CCW VRDC Access Request worksheet',
           description:
-            'Contact Cheryl Brown, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<1>{{email}}</1>) and Cheryl.'
+            'Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<1>{{email}}</1>) and Velda.'
         },
         {
           header: 'Complete CCW CARS application',
@@ -423,7 +423,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete Employee CCW Access Request form',
           description:
-            'Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<1>{{email}}</1>) and Cheryl.'
+            'Contact Velda McGhee, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<1>{{email}}</1>) and Velda.'
         },
         {
           header: 'Complete CCW CARS application',
@@ -645,7 +645,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
     },
     timeline: {
       description:
-        'The setup for GovDelivery is very quick and can take as little as an hour.',
+        'The setup for GovDelivery is very quick and takes one business day in most cases.',
       items: [
         {
           header: 'Reach out to GovDelivery Admin',
@@ -659,7 +659,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
         {
           header: 'Configure GovDelivery and discuss guidelines',
           description:
-            'One of the GovDelivery Admins will set up your topic based on the information you provided. Then, they’ll talk you through some of the basic guidelines set by the Office of Communications for template designs and things like that.'
+            'One of the GovDelivery Admins will set up your topic based on the information you provided. They can also talk you through some of the basic guidelines set by the Office of Communications if necessary.'
         },
         {
           header: 'Access granted',
@@ -1251,7 +1251,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'CMMI/BSG will reach out',
           description:
-            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Cheryl Brown.'
+            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Celia Shaunessy.'
         },
         {
           header: 'Discussion with the model team',
@@ -1300,7 +1300,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Reach out to Quality Vertical',
           description:
-            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical (QV) Team’s Quality Officer, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
+            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison.Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract.The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work.Dustin will meet with the QV team to review the request and determine if the work should move forward.If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
         },
         {
           header: 'COR meets with the model team',
@@ -1449,7 +1449,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Reach out to Quality Vertical',
           description:
-            'Early in model development, model teams should reach out to one of the Quality Vertical leads, Alesia Hovatter, Susannah Bernheim, or Dustin Allison. The QV team meets Wednesdays to discuss, so new models should be prepared to join and share information about their model concept. '
+            'Early in modal development, model teams should reach out Susannah Bernheim. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.'
         },
         {
           header: 'QV assists the model team',

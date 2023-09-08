@@ -30,6 +30,9 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
       }
       return 'Director';
     }
+    if (role.includes('Chief Quality Officer')) {
+      return 'Chief Quality Officer';
+    }
     return role;
   };
 
