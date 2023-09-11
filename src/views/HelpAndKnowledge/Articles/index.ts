@@ -33,6 +33,12 @@ const helpAndKnowledgeArticles: (ArticleProps & ArticleTypeProps)[] = [
     route: '/how-to-have-a-successful-6-pager-meeting',
     translation: 'sixPageMeeting',
     type: 'gettingStarted'
+  },
+  {
+    name: 'High-level project plans',
+    route: '/high-level-project-plan',
+    translation: 'highLevelProjectPlans',
+    type: 'gettingStarted'
   }
 ];
 
