@@ -32,8 +32,8 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()
 	}
-	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL) //TODO, look to refactor this SQL to make it clearer
 
+	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL) // TODO: Look to refactor this SQL to make it clearer
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create plan favorite with error %s", err),
@@ -41,6 +41,8 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 		)
 		return nil, err
 	}
+	defer stmt.Close()
+
 	retFavorite := models.PlanFavorite{}
 	err = stmt.Get(&retFavorite, favorite)
 	if err != nil {
@@ -49,14 +51,19 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 			zap.String("user", favorite.CreatedBy.String()),
 		)
 		return nil, err
-
 	}
 
 	return &retFavorite, nil
 }
 
 // PlanFavoriteDelete deletes a plan favorite
-func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, planID uuid.UUID, deletedByUserID uuid.UUID) (*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteDelete(
+	_ *zap.Logger,
+	userAccountID uuid.UUID,
+	planID uuid.UUID,
+	deletedByUserID uuid.UUID,
+) (*models.PlanFavorite, error) {
+
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 
@@ -64,14 +71,18 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, 
 	if err != nil {
 		return nil, err
 	}
+
 	stmt, err := tx.PrepareNamed(planFavoriteDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"user_id":       userAccountID,
 		"model_plan_id": planID,
 	}
+
 	delFavorite := models.PlanFavorite{}
 	err = stmt.Get(&delFavorite, arg)
 	if err != nil {
@@ -86,16 +97,25 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, 
 }
 
 // PlanFavoriteGetByModelIDAndUserAccountID returns a plan favorite
-func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(logger *zap.Logger, userAccountID uuid.UUID, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(
+	_ *zap.Logger,
+	userAccountID uuid.UUID,
+	modelPlanID uuid.UUID,
+) (*models.PlanFavorite, error) {
+
 	stmt, err := s.db.PrepareNamed(planFavoriteGetSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"user_id":       userAccountID,
 		"model_plan_id": modelPlanID,
 	}
+
 	retFavorite := models.PlanFavorite{}
+
 	err = stmt.Get(&retFavorite, arg)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
@@ -110,15 +130,17 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(logger *zap.Logger, use
 // PlanFavoriteCollectionGetUniqueUserIDs returns userIDs of users that have favorited any model
 func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 
-	userIDs := []uuid.UUID{}
+	var userIDs []uuid.UUID
+
 	stmt, err := s.db.PrepareNamed(planFavoriteGetUniqueUserIDsSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{}
 
 	err = stmt.Select(&userIDs, arg)
-
 	if err != nil {
 		return nil, err
 	}
@@ -127,19 +149,24 @@ func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 }
 
 // PlanFavoriteGetCollectionByUserID returns plan favorites by userID
-func (s *Store) PlanFavoriteGetCollectionByUserID(logger *zap.Logger, userAccountID uuid.UUID) ([]*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteGetCollectionByUserID(
+	_ *zap.Logger,
+	userAccountID uuid.UUID,
+) ([]*models.PlanFavorite, error) {
 
-	planFavorites := []*models.PlanFavorite{}
+	var planFavorites []*models.PlanFavorite
+
 	stmt, err := s.db.PrepareNamed(planFavoriteGetCollectionByUserIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"user_id": userAccountID,
 	}
 
 	err = stmt.Select(&planFavorites, arg)
-
 	if err != nil {
 		return nil, err
 	}
