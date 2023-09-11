@@ -164,7 +164,7 @@ namespace :up do
   desc "Starts all services in the project in the foreground"
 
   task :ci do
-    up(true, "-d", ci:true)
+    up(true, ci:true)
   end
 
   task :watch do
