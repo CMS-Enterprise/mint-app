@@ -190,9 +190,6 @@
       "!src/**/*.stories.{jsx,tsx}",
       "!src/**/__snapshots__/*.test.tsx.snap"
     ],
-    "transformIgnorePatterns": [
-      "node_modules/@json2csv/plainjs/dist/mjs/index.js"
-    ],
     "coverageThreshold": {
       "global": {
         "branches": 50,
