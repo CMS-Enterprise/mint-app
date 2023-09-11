@@ -416,21 +416,14 @@ const DicussionBanner = ({
       >
         {discussions?.length > 0 ? (
           <>
-            <div>
-              <IconAnnouncement />{' '}
-              {unansweredQuestions > 0 && (
-                <>
-                  <strong>{unansweredQuestions}</strong> {d('unanswered')}
-                  {unansweredQuestions > 1 && 's'}{' '}
-                </>
-              )}
-              {answeredQuestions > 0 && (
-                <>
-                  {unansweredQuestions > 0 && 'and '}
-                  <strong>{answeredQuestions}</strong> {d('answered')}
-                  {answeredQuestions > 1 && 's'}
-                </>
-              )}
+            <div className="display-flex flex-align-center">
+              <IconAnnouncement className="margin-right-1" />
+              <div>
+                <strong>{discussions.length}</strong>
+                {d('discussionBanner.discussion', {
+                  count: discussions.length
+                })}
+              </div>
             </div>
             <Button
               type="button"
