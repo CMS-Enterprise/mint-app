@@ -26,17 +26,19 @@ var planBasicsGetByModelPlanIDLoaderSQL string
 
 // PlanBasicsCreate creates a new plan basics
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
+
 	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
 
-	statement, err := s.db.PrepareNamed(planBasicsCreateSQL)
+	stmt, err := s.db.PrepareNamed(planBasicsCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
 	}
+	defer stmt.Close()
 
 	basics.ModifiedBy = nil
 	basics.ModifiedDts = nil
 
-	err = statement.Get(basics, basics)
+	err = stmt.Get(basics, basics)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
 	}
@@ -46,12 +48,14 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) 
 
 // PlanBasicsUpdate updates the plan basics for a given id
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
-	statement, err := s.db.PrepareNamed(planBasicsUpdateSQL)
+
+	stmt, err := s.db.PrepareNamed(planBasicsUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
 	}
+	defer stmt.Close()
 
-	err = statement.Get(plan, plan)
+	err = stmt.Get(plan, plan)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, plan)
 	}
@@ -60,15 +64,17 @@ func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*
 }
 
 // PlanBasicsGetByID returns the plan basics for a given id
-func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanBasics, error) {
+func (s *Store) PlanBasicsGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanBasics, error) {
+
 	plan := models.PlanBasics{}
 
-	statement, err := s.db.PrepareNamed(planBasicsGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(planBasicsGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Get(&plan, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&plan, utilitySQL.CreateIDQueryMap(id))
 
 	if err != nil {
 		return nil, err
@@ -77,18 +83,24 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 }
 
 // PlanBasicsGetByModelPlanIDLOADER returns the plan basics for a slice of model plan ids
-func (s *Store) PlanBasicsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanBasics, error) {
-	basicSlice := []*models.PlanBasics{} //TOOD use new data loader query instead.
+func (s *Store) PlanBasicsGetByModelPlanIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.PlanBasics, error) {
+
+	var basicSlice []*models.PlanBasics // TODO: use new data loader query instead.
 
 	stmt, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	err = stmt.Select(&basicSlice, arg) //this returns more than one
+	err = stmt.Select(&basicSlice, arg) // This returns more than one
 
 	if err != nil {
 		return nil, err
