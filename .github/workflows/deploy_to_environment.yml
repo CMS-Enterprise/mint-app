@@ -33,11 +33,11 @@ jobs:
       APP_ENV: ${{ inputs.env }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.GIT_HASH }}   
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2.1.0
+        uses: aws-actions/configure-aws-credentials@v3.0.2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1          
@@ -84,11 +84,11 @@ jobs:
       APP_ENV: ${{ inputs.env }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2.1.0
+        uses: aws-actions/configure-aws-credentials@v3.0.2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
@@ -133,11 +133,11 @@ jobs:
       APP_ENV: ${{ inputs.env }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2.1.0
+        uses: aws-actions/configure-aws-credentials@v3.0.2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1

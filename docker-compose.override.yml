@@ -17,7 +17,18 @@ services:
       target: dev
     image: mint-backend:latest
     volumes:
-      - ./:/mint
+    # Volume mounting the entire './' directory is dangerous, as it mounts OS-specific folders (and things like .git)
+    # So instead, only volume mount things we need!
+    #
+    # Note, however, that MOST of the files that we care about are copied in the Dockerfile for us, we only really need to copy over the things that
+    # we want to be able to change on the fly in local developmement, like our ./pkg/ directory & Air configs.
+    # This means that editing things like your go.mod/go.sum and ./cmd/ directory WILL require a rebuild of the image, and won't hot reload with Air.
+      - ./pkg/:/mint/pkg/
+      - ./cmd/:/mint/cmd/ # Go build uses ./cmd as well
+      - ./.air.conf:/mint/.air.conf
+      - ./.airDebug.conf:/mint/.airDebug.conf
+      - ./.airDebugWait.conf:/mint/.airDebugWait.conf
+      - /mint/tmp/air/ # This should match .air.conf's tmp_dir. Note that this isn't a volume mount to a local file/folder, but just an empty volume for Air to use.
     entrypoint: air ${AIR_CONFIG}
     ports:
       - 8085:8080

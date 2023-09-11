@@ -44,14 +44,17 @@ var modelPlanDeleteByID string
 //go:embed SQL/model_plan/get_by_id_LOADER.sql
 var modelPlanGetByIDLoaderSQL string
 
-// ModelPlanGetByModelPlanIDLOADER returns the model pland for a slice of ids
-func (s *Store) ModelPlanGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
+// ModelPlanGetByModelPlanIDLOADER returns the model plan for a slice of ids
+func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
+
 	var planSlice []*models.ModelPlan
 
 	stmt, err := s.db.PrepareNamed(modelPlanGetByIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
@@ -79,6 +82,8 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 		)
 		return nil, err
 	}
+	defer stmt.Close()
+
 	retPlan := models.ModelPlan{}
 
 	plan.ModifiedBy = nil
@@ -109,6 +114,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 		)
 		return nil, err
 	}
+	defer stmt.Close()
 
 	err = stmt.Get(plan, plan)
 	if err != nil {
@@ -125,11 +131,11 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	}
 
 	return plan, nil
-
 }
 
 // ModelPlanGetByID returns a model plan for a given ID
 func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
+
 	plan := models.ModelPlan{}
 	stmt, err := s.db.PrepareNamed(modelPlanGetByIDSQL)
 	if err != nil {
@@ -166,15 +172,17 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 
 // ModelPlanGetByName returns a model plan for a given ID
 func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
+
 	plan := models.ModelPlan{}
 	stmt, err := s.db.PrepareNamed(modelPlanGetByNameSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{"model_name": modelName}
 
 	err = stmt.Get(&plan, arg)
-
 	if err != nil {
 		logger.Error(
 			"Failed to fetch model plan",
@@ -189,23 +197,24 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 	}
 
 	return &plan, nil
-
 }
 
 // ModelPlanCollection returns a list of all model plans (whether or not you're a collaborator)
 func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
+
 	var modelPlans []*models.ModelPlan
 
 	stmt, err := s.db.PrepareNamed(modelPlanCollectionWhereArchivedSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"archived": archived,
 	}
 
 	err = stmt.Select(&modelPlans, arg)
-
 	if err != nil {
 		logger.Error(
 			"Failed to fetch model plans",
@@ -221,21 +230,28 @@ func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*model
 	return modelPlans, nil
 }
 
-// ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the user_accountID supplied is a collaborator.
-func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, userID uuid.UUID) ([]*models.ModelPlan, error) {
-	modelPlans := []*models.ModelPlan{}
+// ModelPlanCollectionCollaboratorOnly returns a list of all model plans for
+// which the user_accountID supplied is a collaborator.
+func (s *Store) ModelPlanCollectionCollaboratorOnly(
+	logger *zap.Logger,
+	archived bool,
+	userID uuid.UUID,
+) ([]*models.ModelPlan, error) {
+
+	var modelPlans []*models.ModelPlan
 
 	stmt, err := s.db.PrepareNamed(modelPlanCollectionByCollaboratorSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"archived": archived,
 		"user_id":  userID,
 	}
 
 	err = stmt.Select(&modelPlans, arg)
-
 	if err != nil {
 		logger.Error(
 			"Failed to fetch model plans",
@@ -253,18 +269,20 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived
 
 // ModelPlanCollectionWithCRTDLS returns a list of all model plans for which the there are CRTDls
 func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
-	modelPlans := []*models.ModelPlan{}
+
+	var modelPlans []*models.ModelPlan
 
 	stmt, err := s.db.PrepareNamed(modelPlanCollectionWithCRTDlSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"archived": archived,
 	}
 
 	err = stmt.Select(&modelPlans, arg)
-
 	if err != nil {
 		logger.Error(
 			"Failed to fetch model plans",
@@ -282,12 +300,13 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 
 // ModelPlanDeleteByID deletes a model plan for a given ID
 func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
-	statement, err := s.db.PrepareNamed(modelPlanDeleteByID)
+	stmt, err := s.db.PrepareNamed(modelPlanDeleteByID)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	sqlResult, err := statement.Exec(utilitySQL.CreateIDQueryMap(id))
+	sqlResult, err := stmt.Exec(utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}

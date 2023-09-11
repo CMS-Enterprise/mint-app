@@ -11,7 +11,6 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Link as TrussLink,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
@@ -27,6 +26,7 @@ import ReadyForReview from 'components/ReadyForReview';
 import MINTAlert from 'components/shared/Alert';
 import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import ExternalLink from 'components/shared/ExternalLink';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -183,7 +183,7 @@ const Milestones = () => {
 
       <AskAQuestion modelID={modelID} />
 
-      {/* 
+      {/*
         Conditional render the entire form here to load async data properly on a hard browser refresh
         Naviagting to this component through react-router-dom however properly loads the async data into the Truss datepickers
       */}
@@ -265,14 +265,9 @@ const Milestones = () => {
                         Please be sure that the dates listed here are updated in
                         the clearance calendar, if applicable. Contact the MINT
                         Team at{' '}
-                        <TrussLink
-                          aria-label="Open in a new tab"
-                          href="mailto:MINTTeam@cms.hhs.gov"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
                           MINTTeam@cms.hhs.gov
-                        </TrussLink>{' '}
+                        </ExternalLink>{' '}
                         if you have any questions.
                       </Trans>
                     </MINTAlert>

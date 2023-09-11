@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
+	zap "go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -20,14 +20,21 @@ var auditChangeCollectionByIDAndTableAndField string
 var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database
-func (s *Store) AuditChangeCollectionByIDAndTable(logger *zap.Logger, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
-	auditChanges := []*models.AuditChange{}
+func (s *Store) AuditChangeCollectionByIDAndTable(
+	_ *zap.Logger,
+	tableName string,
+	primaryKey uuid.UUID,
+) ([]*models.AuditChange, error) {
+
+	var auditChanges []*models.AuditChange
 
 	stmt, err := s.db.PrepareNamed(auditChangeCollectionByIDAndTable)
 	if err != nil {
 		return nil, err
 
 	}
+	defer stmt.Close()
+
 	//Add support for secondary key perhaps
 	arg := map[string]interface{}{"primary_key": primaryKey,
 		"table_name": tableName,
@@ -40,12 +47,20 @@ func (s *Store) AuditChangeCollectionByIDAndTable(logger *zap.Logger, tableName 
 	}
 
 	return auditChanges, nil
-
 }
 
-// AuditChangeCollectionByIDAndTableAndField returns changes based on tablename and primary key from the database. It will only return record sets where the given field was modified. It will return all changed fields anywyas
-func (s *Store) AuditChangeCollectionByIDAndTableAndField(logger *zap.Logger, tableName string, primaryKey uuid.UUID, fieldName string, sortDir models.SortDirection) ([]*models.AuditChange, error) {
-	auditChanges := []*models.AuditChange{}
+// AuditChangeCollectionByIDAndTableAndField returns changes based on tablename
+// and primary key from the database. It will only return record sets where the
+// given field was modified. It will return all changed fields anywyas
+func (s *Store) AuditChangeCollectionByIDAndTableAndField(
+	_ *zap.Logger,
+	tableName string,
+	primaryKey uuid.UUID,
+	fieldName string,
+	sortDir models.SortDirection,
+) ([]*models.AuditChange, error) {
+
+	var auditChanges []*models.AuditChange
 	orderedQuery := auditChangeCollectionByIDAndTableAndField
 	orderClause := "" //default to ASCENDING
 	if sortDir == models.SortDesc {
@@ -59,6 +74,7 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(logger *zap.Logger, ta
 		return nil, err
 
 	}
+	defer stmt.Close()
 
 	arg := map[string]interface{}{"primary_key": primaryKey,
 		"table_name": tableName,
@@ -72,12 +88,18 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(logger *zap.Logger, ta
 	}
 
 	return auditChanges, nil
-
 }
 
 // AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate returns changes based on foreign key and date from the database.
-func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap.Logger, primaryKey uuid.UUID, foreignKey uuid.UUID, dayToAnalyze time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
-	auditChanges := []*models.AuditChange{}
+func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(
+	_ *zap.Logger,
+	primaryKey uuid.UUID,
+	foreignKey uuid.UUID,
+	dayToAnalyze time.Time,
+	sortDir models.SortDirection,
+) ([]*models.AuditChange, error) {
+
+	var auditChanges []*models.AuditChange
 	orderedQuery := auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate
 	orderClause := "" //default to ASCENDING
 	if sortDir == models.SortDesc {
@@ -91,6 +113,7 @@ func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap
 		return nil, err
 
 	}
+	defer stmt.Close()
 
 	arg := map[string]interface{}{
 		"primary_key": primaryKey,
@@ -106,5 +129,4 @@ func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap
 	}
 
 	return auditChanges, nil
-
 }

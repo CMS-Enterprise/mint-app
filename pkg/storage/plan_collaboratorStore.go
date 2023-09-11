@@ -29,13 +29,19 @@ var planCollaboratorFetchByIDSQL string
 var planCollaboratorGetByModelPlanIDLoaderSQL string
 
 // PlanCollaboratorGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanCollaborator, error) {
-	collabSlice := []*models.PlanCollaborator{}
+func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.PlanCollaborator, error) {
+
+	var collabSlice []*models.PlanCollaborator
 
 	stmt, err := s.db.PrepareNamed(planCollaboratorGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
@@ -50,19 +56,23 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(logger *zap.Logger, param
 }
 
 // PlanCollaboratorCreate creates a new plan collaborator
-func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorCreate(
+	_ *zap.Logger,
+	collaborator *models.PlanCollaborator,
+) (*models.PlanCollaborator, error) {
 
 	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
-	statement, err := s.db.PrepareNamed(planCollaboratorCreateSQL)
+	stmt, err := s.db.PrepareNamed(planCollaboratorCreateSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	collaborator.ModifiedBy = nil
 	collaborator.ModifiedDts = nil
 
-	err = statement.Get(collaborator, collaborator)
+	err = stmt.Get(collaborator, collaborator)
 	if err != nil {
 		return nil, err
 	}
@@ -71,13 +81,18 @@ func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanC
 }
 
 // PlanCollaboratorUpdate updates the plan collaborator for a given id
-func (s *Store) PlanCollaboratorUpdate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
-	statement, err := s.db.PrepareNamed(planCollaboratorUpdateSQL)
+func (s *Store) PlanCollaboratorUpdate(
+	_ *zap.Logger,
+	collaborator *models.PlanCollaborator,
+) (*models.PlanCollaborator, error) {
+
+	stmt, err := s.db.PrepareNamed(planCollaboratorUpdateSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Get(collaborator, collaborator)
+	err = stmt.Get(collaborator, collaborator)
 	if err != nil {
 		return nil, err
 	}
@@ -86,21 +101,28 @@ func (s *Store) PlanCollaboratorUpdate(_ *zap.Logger, collaborator *models.PlanC
 }
 
 // PlanCollaboratorDelete deletes the plan collaborator for a given id
-func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorDelete(
+	_ *zap.Logger,
+	id uuid.UUID,
+	userID uuid.UUID,
+) (*models.PlanCollaborator, error) {
+
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
+
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
 	}
 
-	statement, err := tx.PrepareNamed(planCollaboratorDeleteSQL)
+	stmt, err := tx.PrepareNamed(planCollaboratorDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	collaborator := &models.PlanCollaborator{}
-	err = statement.Get(collaborator, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(collaborator, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -115,13 +137,15 @@ func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, id uuid.UUID, userID uuid.
 
 // PlanCollaboratorFetchByID returns a plan collaborator for a given database ID, or nil if none found
 func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborator, error) {
-	statement, err := s.db.PrepareNamed(planCollaboratorFetchByIDSQL)
+
+	stmt, err := s.db.PrepareNamed(planCollaboratorFetchByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	var collaborator models.PlanCollaborator
-	err = statement.Get(&collaborator, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&collaborator, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}

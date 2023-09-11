@@ -25,19 +25,24 @@ var planBeneficiariesGetByIDSQL string
 var planBeneficiariesGetByModelPlanIDLoaderSQL string
 
 // PlanBeneficiariesGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanBeneficiaries, error) {
-	benesSlice := []*models.PlanBeneficiaries{}
+func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.PlanBeneficiaries, error) {
+
+	var benesSlice []*models.PlanBeneficiaries
 
 	stmt, err := s.db.PrepareNamed(planBeneficiariesGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"paramTableJSON": paramTableJSON,
 	}
 
-	err = stmt.Select(&benesSlice, arg) //this returns more than one
-
+	err = stmt.Select(&benesSlice, arg) // This returns more than one
 	if err != nil {
 		return nil, err
 	}
@@ -46,17 +51,22 @@ func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(logger *zap.Logger, para
 }
 
 // PlanBeneficiariesCreate creates a new plan benficiaries object
-func (s *Store) PlanBeneficiariesCreate(logger *zap.Logger, b *models.PlanBeneficiaries) (*models.PlanBeneficiaries, error) {
+func (s *Store) PlanBeneficiariesCreate(
+	logger *zap.Logger,
+	b *models.PlanBeneficiaries,
+) (*models.PlanBeneficiaries, error) {
+
 	b.ID = utilityUUID.ValueOrNewUUID(b.ID)
 
-	statement, err := s.db.PrepareNamed(planBeneficiariesCreateSQL)
+	stmt, err := s.db.PrepareNamed(planBeneficiariesCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, b)
 	}
+	defer stmt.Close()
 
 	b.ModifiedBy = nil
 	b.ModifiedDts = nil
-	err = statement.Get(b, b)
+	err = stmt.Get(b, b)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, b)
 	}
@@ -65,13 +75,18 @@ func (s *Store) PlanBeneficiariesCreate(logger *zap.Logger, b *models.PlanBenefi
 }
 
 // PlanBeneficiariesUpdate updates the plan general characteristics for a given id
-func (s *Store) PlanBeneficiariesUpdate(logger *zap.Logger, b *models.PlanBeneficiaries) (*models.PlanBeneficiaries, error) {
-	statement, err := s.db.PrepareNamed(planBeneficiariesUpdateSQL)
+func (s *Store) PlanBeneficiariesUpdate(
+	logger *zap.Logger,
+	b *models.PlanBeneficiaries,
+) (*models.PlanBeneficiaries, error) {
+
+	stmt, err := s.db.PrepareNamed(planBeneficiariesUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, b)
 	}
+	defer stmt.Close()
 
-	err = statement.Get(b, b)
+	err = stmt.Get(b, b)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, b)
 	}
@@ -80,15 +95,20 @@ func (s *Store) PlanBeneficiariesUpdate(logger *zap.Logger, b *models.PlanBenefi
 }
 
 // PlanBeneficiariesGetByID returns the plan general characteristics for a given id
-func (s *Store) PlanBeneficiariesGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanBeneficiaries, error) {
+func (s *Store) PlanBeneficiariesGetByID(
+	_ *zap.Logger,
+	id uuid.UUID,
+) (*models.PlanBeneficiaries, error) {
+
 	b := models.PlanBeneficiaries{}
 
-	statement, err := s.db.PrepareNamed(planBeneficiariesGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(planBeneficiariesGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Get(&b, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&b, utilitySQL.CreateIDQueryMap(id))
 
 	if err != nil {
 		return nil, err

@@ -20,7 +20,7 @@ var checkIfCollaboratorBySolutionIDSQL string
 var checkIfCollaboratorByOperationalNeedIDSQL string
 
 // CheckIfCollaborator returns true if the principal is a collaborator on a model plan.
-func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
+func (s *Store) CheckIfCollaborator(_ *zap.Logger, principalID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
 
 	isCollaborator := false
 
@@ -28,6 +28,8 @@ func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID uuid.UUID, m
 	if err != nil {
 		return isCollaborator, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
 		"user_id":       principalID,
@@ -38,11 +40,15 @@ func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID uuid.UUID, m
 		return isCollaborator, err
 	}
 	return isCollaborator, nil
-
 }
 
-// CheckIfCollaboratorByDiscussionID returns true if the principal is a collaborator on a model plan, by the relation on the plan discussion
-func (s *Store) CheckIfCollaboratorByDiscussionID(logger *zap.Logger, principalID uuid.UUID, discussionID uuid.UUID) (bool, error) { //TODO provie
+// CheckIfCollaboratorByDiscussionID returns true if the principal is a
+// collaborator on a model plan, by the relation on the plan discussion
+func (s *Store) CheckIfCollaboratorByDiscussionID(
+	_ *zap.Logger,
+	principalID uuid.UUID,
+	discussionID uuid.UUID,
+) (bool, error) {
 
 	isCollaborator := false
 
@@ -50,6 +56,8 @@ func (s *Store) CheckIfCollaboratorByDiscussionID(logger *zap.Logger, principalI
 	if err != nil {
 		return isCollaborator, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"discussion_id": discussionID,
 		"user_id":       principalID,
@@ -60,13 +68,12 @@ func (s *Store) CheckIfCollaboratorByDiscussionID(logger *zap.Logger, principalI
 		return isCollaborator, err
 	}
 	return isCollaborator, nil
-
 }
 
 // CheckIfCollaboratorBySolutionID returns true if the principal is a collaborator on a model plan associated
 // with a Solution by SolutionID.
 func (s *Store) CheckIfCollaboratorBySolutionID(
-	logger *zap.Logger,
+	_ *zap.Logger,
 	principalID uuid.UUID,
 	solutionID uuid.UUID,
 ) (bool, error) {
@@ -77,6 +84,8 @@ func (s *Store) CheckIfCollaboratorBySolutionID(
 	if err != nil {
 		return isCollaborator, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"solution_id": solutionID,
 		"user_id":     principalID,
@@ -87,13 +96,12 @@ func (s *Store) CheckIfCollaboratorBySolutionID(
 		return isCollaborator, err
 	}
 	return isCollaborator, nil
-
 }
 
 // CheckIfCollaboratorByOperationalNeedID returns true if the principal is a collaborator on a model plan associated
 // with a OperationalNeed by OperationalNeedID.
 func (s *Store) CheckIfCollaboratorByOperationalNeedID(
-	logger *zap.Logger,
+	_ *zap.Logger,
 	principalID uuid.UUID,
 	operationalNeedID uuid.UUID,
 ) (bool, error) {
@@ -104,6 +112,8 @@ func (s *Store) CheckIfCollaboratorByOperationalNeedID(
 	if err != nil {
 		return isCollaborator, err
 	}
+	defer stmt.Close()
+
 	arg := map[string]interface{}{
 		"need_id": operationalNeedID,
 		"user_id": principalID,
@@ -114,5 +124,4 @@ func (s *Store) CheckIfCollaboratorByOperationalNeedID(
 		return isCollaborator, err
 	}
 	return isCollaborator, nil
-
 }

@@ -6,6 +6,7 @@ import itSolutions from './draftModelPlan/itSolutions';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
+import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
@@ -98,6 +99,7 @@ const enUS = {
   sampleModelPlan,
   twoPageMeeting,
   sixPageMeeting,
+  highLevelProjectPlans,
   subtasks,
   tableAndPagination,
   termsAndConditions
