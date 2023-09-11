@@ -204,10 +204,24 @@ jobs:
             db_migrate.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
       - name: Install yarn dependencies
         run: yarn install --immutable
-      - name: Start all services
+      - name: Build and start all services
+        run: docker compose up --build --quiet-pull --profile frontend -d
+      - name: Wait for Backend to be Ready
         run: |
-          scripts/dev down
-          scripts/dev up:ci
+          echo "Waiting for backend to be ready..."
+          until curl --silent --output /dev/null -m 1 localhost:8085/api/v1/healthcheck; do
+            echo "."
+            sleep 3
+          done
+          echo "Backend is ready!"
+      - name: Wait for Frontend to be Ready
+        run: |
+          echo "Waiting for frontend to be ready..."
+          until curl --silent --output /dev/null -m 1 localhost:3005; do
+            echo "."
+            sleep 3
+          done
+          echo "Frontend is ready!"
       - name: Run Cypress Tests
         run: |
           export FLAG_SOURCE=FILE
