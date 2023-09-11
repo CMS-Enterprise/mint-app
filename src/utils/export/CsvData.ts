@@ -154,7 +154,7 @@ const csvFields = [
   'participantsAndProviders.providerOverlap',
   'participantsAndProviders.providerOverlapHierarchy',
   'participantsAndProviders.providerOverlapNote',
-  'participantsAndProviders.readyForReviewBy',
+  'participantsAndProviders.readyForReviewByUserAccount.commonName',
   'participantsAndProviders.readyForReviewDts',
   'participantsAndProviders.status',
 
@@ -226,7 +226,7 @@ const csvFields = [
   'opsEvalAndLearning.shareCclfData',
   'opsEvalAndLearning.shareCclfDataNote',
   'opsEvalAndLearning.technicalContactsIdentified',
-  'opsEvalAndLearning.technicalContactsIdentifiedDeta',
+  'opsEvalAndLearning.technicalContactsIdentifiedDetail',
   'opsEvalAndLearning.technicalContactsIdentifiedNote',
   'opsEvalAndLearning.captureParticipantInfo',
   'opsEvalAndLearning.captureParticipantInfoNote',
@@ -354,7 +354,7 @@ const csvFields = [
   },
   {
     label: 'Collaborator Team member role',
-    value: 'collaborators.userAccount.username'
+    value: 'collaborators.teamRole'
   },
 
   // Discussions
@@ -363,38 +363,42 @@ const csvFields = [
     value: 'discussions.content'
   },
   {
-    label: 'Discussion Created by',
-    value: 'discussions.createdBy'
+    label: 'Discussion created by',
+    value: 'discussions.createdByUserAccount.commonName'
+  },
+  {
+    label: 'User role',
+    value: 'discussions.userRole'
+  },
+  {
+    label: 'User role description',
+    value: 'discussions.userRoleDescription'
   },
   {
     label: 'Discussion Created',
     value: 'discussions.createdDts'
   },
-  {
-    label: 'Discussion Status',
-    value: 'discussions.status'
-  },
 
   // Discussion Replies
   {
-    label: 'Discussion ID',
-    value: 'replies.content'
-  },
-  {
     label: 'Reply content',
-    value: 'replies.content'
+    value: 'discussions.replies.content'
   },
   {
     label: 'Reply created by',
-    value: 'replies.createdBy'
+    value: 'discussions.replies.createdByUserAccount.commonName'
+  },
+  {
+    label: 'User role',
+    value: 'discussions.replies.userRole'
+  },
+  {
+    label: 'User role description',
+    value: 'discussions.replies.userRoleDescription'
   },
   {
     label: 'Reply Created',
-    value: 'replies.createdDts'
-  },
-  {
-    label: 'Reply resolution',
-    value: 'replies.resolution'
+    value: 'discussions.replies.createdDts'
   }
 ];
 

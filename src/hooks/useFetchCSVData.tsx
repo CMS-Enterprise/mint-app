@@ -7,6 +7,7 @@ import { useCallback } from 'react';
 import { FetchResult, useLazyQuery } from '@apollo/client';
 import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
+import i18next from 'i18next';
 
 import GetAllModelPlans from 'queries/GetAllModelData';
 import GetAllSingleModelPlan from 'queries/GetAllSingleModelPlan';
@@ -51,10 +52,7 @@ const headerFormatter = (dataField: string, allPlanTranslation: any) => {
 
   // Gets the label value from translation object
   if (allPlanTranslation[section][fieldName]?.label) {
-    translation = allPlanTranslation[section][fieldName].label.replace(
-      /[^a-zA-Z ]/g, // TODO:  figure out why sanitization of string is needed to render some headers correctly
-      ''
-    );
+    translation = allPlanTranslation[section][fieldName].label;
   }
   // Generic translation for Ready for review fields
   else if (fieldName === 'readyForReviewByUserAccount.commonName') {
@@ -66,6 +64,18 @@ const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   else {
     translation = dataField;
   }
+
+  // Append Task list section to status headers so differentiate values
+  if (fieldName === 'status' && section !== 'modelPlan') {
+    translation = `${i18next.t<string>(
+      `${section}Misc:heading`
+    )}: ${translation}`;
+  }
+
+  translation = translation.replace(
+    /[^a-zA-Z ]/g, // TODO:  figure out why sanitization of string is needed to render some headers correctly
+    ''
+  );
 
   return translation;
 };
@@ -84,7 +94,11 @@ const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
   getKeys(transformObj).forEach((key: any) => {
     // Used to map fields on the parent level of the model plan
     // These fields exists under 'modelPlan' translation/ not on any parent level translation
-    if (parentFieldsToTranslate.includes(key)) {
+    if (
+      parentFieldsToTranslate.includes(key) &&
+      transformObj?.__typename ===
+        'ModelPlan' /* eslint no-underscore-dangle: 0 */
+    ) {
       mappedObj[key] =
         allPlanTranslation?.modelPlan?.[key]?.options?.[transformObj[key]];
     }
@@ -118,6 +132,12 @@ const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
       !allPlanTranslation?.[key]?.options
     ) {
       mappedObj[key] = transformObj[key].join(',');
+
+      // TODO: Remove once/if discussion translations work has been completed
+    } else if (key === 'userRole') {
+      mappedObj[key] = i18next.t<string>(
+        `discussions:userRole.${transformObj[key]}`
+      );
     }
     // If the value is a nested task list item - Basics, Payments, etc - apply it to the current value
     else if (

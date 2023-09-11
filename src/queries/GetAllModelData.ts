@@ -369,6 +369,8 @@ export default gql`
         createdByUserAccount {
           commonName
         }
+        userRole
+        userRoleDescription
         createdDts
         status
         replies {
@@ -378,6 +380,8 @@ export default gql`
           createdByUserAccount {
             commonName
           }
+          userRole
+          userRoleDescription
           createdDts
           resolution
         }
