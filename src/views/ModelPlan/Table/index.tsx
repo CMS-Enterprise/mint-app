@@ -11,7 +11,11 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  Button,
+  IconComment,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -32,7 +36,7 @@ import {
   ModelPlanFilter,
   ModelStatus
 } from 'types/graphql-global-types';
-import { formatDateUtc } from 'utils/date';
+import { formatDateLocal, formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -41,8 +45,6 @@ import {
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
-
-import formatRecentActivity from './formatActivity';
 
 import './index.scss';
 
@@ -202,8 +204,24 @@ const DraftModelPlansTable = ({
           value: string;
         }) => {
           const { discussions } = row.original;
-          const lastUpdated = value || row.original.createdDts;
-          return formatRecentActivity(lastUpdated, discussions);
+          const formattedUpdatedDate = `${t(
+            'requestsTable.updated'
+          )} ${formatDateLocal(
+            value || row.original.createdDts,
+            'MM/dd/yyyy'
+          )}`;
+          return (
+            <>
+              {formattedUpdatedDate}
+              <div className="display-flex flex-align-center text-bold">
+                <IconComment className="text-primary margin-right-05" />{' '}
+                {discussions.length}{' '}
+                {i18next.t('discussions:discussionBanner.discussion', {
+                  count: discussions.length
+                })}
+              </div>
+            </>
+          );
         }
       }
     ];
