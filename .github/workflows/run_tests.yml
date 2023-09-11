@@ -205,7 +205,7 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Build and start all services
-        run: docker compose up --build --quiet-pull --profile frontend -d
+        run: docker compose --profile frontend up --build --quiet-pull -d
       - name: Wait for Backend to be Ready
         run: |
           echo "Waiting for backend to be ready..."
