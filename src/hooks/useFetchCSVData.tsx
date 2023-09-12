@@ -74,7 +74,7 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
 
   // js2on@csv does not like commas in the header, and instead parses them into a new column, offsetting data
   translation = translation.replace(
-    /[^?.a-zA-Z ]/g, // TODO:  figure out why comma sanitization of string is needed to render some headers correctly
+    /[^?/.a-zA-Z ]/g, // TODO:  figure out why comma sanitization of string is needed to render some headers correctly
     ''
   );
 

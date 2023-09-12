@@ -79,7 +79,6 @@ const csvFields = [
   'generalCharacteristics.communityPartnersInvolved',
   'generalCharacteristics.communityPartnersInvolvedDescription',
   'generalCharacteristics.communityPartnersInvolvedNote',
-  'generalCharacteristics.alternativePaymentModel',
   'generalCharacteristics.alternativePaymentModelTypes', // array
   'generalCharacteristics.alternativePaymentModelNote',
   'generalCharacteristics.keyCharacteristics', // array
