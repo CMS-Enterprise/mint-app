@@ -69,7 +69,7 @@ describe('ClearanceReview component', () => {
   it('renders modal if already cleared', async () => {
     // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
     // eslint-disable-next-line
-    console.error = jest.fn();
+    console.error = vi.fn();
 
     const { getByTestId } = render(
       <MemoryRouter

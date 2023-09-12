@@ -2,7 +2,6 @@
 // okta-signin-widget has no typescript support yet.  If becomes available, install and remove disable
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-// @ts-expect-error
 import OktaSignIn from '@okta/okta-signin-widget';
 
 import './index.scss';
@@ -31,11 +30,11 @@ const OktaSignInWidget = ({
             'primaryauth.title': t('oktaWidget')
           }
         },
-        baseUrl: process.env.REACT_APP_OKTA_DOMAIN,
-        clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
+        baseUrl: import.meta.env.VITE_OKTA_DOMAIN,
+        clientId: import.meta.env.VITE_OKTA_CLIENT_ID,
         authParams: {
           pkce: true,
-          issuer: process.env.REACT_APP_OKTA_ISSUER,
+          issuer: import.meta.env.VITE_OKTA_ISSUER,
           responseMode: 'query'
         }
       });
@@ -48,9 +47,9 @@ const OktaSignInWidget = ({
 
       signIn
         .showSignInToGetTokens({
-          authorizationServerId: process.env.REACT_APP_OKTA_SERVER_ID,
-          clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
-          redirectUri: process.env.REACT_APP_OKTA_REDIRECT_URI,
+          authorizationServerId: import.meta.env.VITE_OKTA_SERVER_ID,
+          clientId: import.meta.env.VITE_OKTA_CLIENT_ID,
+          redirectUri: import.meta.env.VITE_OKTA_REDIRECT_URI,
           scopes: ['openid', 'profile', 'email']
         })
         .then(onSuccess)

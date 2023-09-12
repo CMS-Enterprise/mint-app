@@ -22,7 +22,7 @@ const cache = new apollo.InMemoryCache();
 
 function createApolloClient(euaId) {
   const gqlURL =
-    process.env.REACT_APP_GRAPHQL_ADDRESS ||
+    import.meta.env.VITE_GRAPHQL_ADDRESS ||
     'http://localhost:8085/api/graph/query';
 
   return new apollo.ApolloClient({
@@ -80,10 +80,10 @@ module.exports = (on, config) => {
   on('file:preprocessor', wp(options));
 
   const newConfig = config;
-  newConfig.env.oktaDomain = process.env.OKTA_DOMAIN;
-  newConfig.env.username = process.env.OKTA_TEST_USERNAME;
-  newConfig.env.password = process.env.OKTA_TEST_PASSWORD;
-  newConfig.env.otpSecret = process.env.OKTA_TEST_SECRET;
+  newConfig.env.oktaDomain = import.meta.env.OKTA_DOMAIN;
+  newConfig.env.username = import.meta.env.OKTA_TEST_USERNAME;
+  newConfig.env.password = import.meta.env.OKTA_TEST_PASSWORD;
+  newConfig.env.otpSecret = import.meta.env.OKTA_TEST_SECRET;
 
   return config;
 };

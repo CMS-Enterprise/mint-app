@@ -15,7 +15,7 @@ import Table from 'views/ModelPlan/Table';
 
 import Home from './index';
 
-jest.mock('@okta/okta-react', () => ({
+vi.mock('@okta/okta-react', () => ({
   useOktaAuth: () => {
     return {
       authState: {

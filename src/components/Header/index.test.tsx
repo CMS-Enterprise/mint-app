@@ -6,7 +6,7 @@ import { mount, shallow } from 'enzyme';
 
 import { Header } from './index';
 
-jest.mock('@okta/okta-react', () => ({
+vi.mock('@okta/okta-react', () => ({
   useOktaAuth: () => {
     return {
       authState: {
