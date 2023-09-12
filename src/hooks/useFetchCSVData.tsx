@@ -34,7 +34,7 @@ interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
  */
 
 // Formats headers for data from translations or hardcoded labels
-const headerFormatter = (dataField: string, allPlanTranslation: any) => {
+export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   // Gets the tasklist section from the csv map
   const sectionIndex = dataField.indexOf('.');
 
@@ -72,8 +72,9 @@ const headerFormatter = (dataField: string, allPlanTranslation: any) => {
     )}: ${translation}`;
   }
 
+  // translation = translation.trim();
   translation = translation.replace(
-    /[^a-zA-Z ]/g, // TODO:  figure out why sanitization of string is needed to render some headers correctly
+    /[^?.a-zA-Z ]/g, // TODO:  figure out why sanitization of string is needed to render some headers correctly
     ''
   );
 
@@ -88,7 +89,7 @@ const parentFieldsToTranslate = ['archived', 'status'];
  */
 
 // Recursive function to map through data and apply translation transforms
-const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
+export const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
   const mappedObj: any = { ...transformObj };
 
   getKeys(transformObj).forEach((key: any) => {
@@ -114,7 +115,7 @@ const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
       if (Array.isArray(transformObj[key])) {
         mappedObj[key] = transformObj[key]
           .map((field: any) => allPlanTranslation[key].options[field])
-          .join(',');
+          .join(', ');
       } else {
         mappedObj[key] = allPlanTranslation[key].options[transformObj[key]];
       }
@@ -131,7 +132,7 @@ const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
       Array.isArray(transformObj[key]) &&
       !allPlanTranslation?.[key]?.options
     ) {
-      mappedObj[key] = transformObj[key].join(',');
+      mappedObj[key] = transformObj[key].join(', ');
 
       // TODO: Remove once/if discussion translations work has been completed
     } else if (key === 'userRole') {
