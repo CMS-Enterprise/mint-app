@@ -200,6 +200,7 @@
         "lines": 60,
         "statements": 60
       }
-    }
+    },
+    "globalSetup": "./src/global-setup.js"
   }
 }
