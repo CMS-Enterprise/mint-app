@@ -1,4 +1,7 @@
 module.exports = {
+  devServer: {
+    port: 3005
+  },
   style: {
     sass: {
       loaderOptions: {
