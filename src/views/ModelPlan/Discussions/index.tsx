@@ -348,7 +348,7 @@ const Discussions = ({
       <>
         <PageHeading
           headingLevel={readOnly ? 'h2' : 'h1'}
-          className="margin-top-0"
+          className="margin-top-0 line-height-sans-2 margin-bottom-1"
         >
           {t('heading')}
         </PageHeading>

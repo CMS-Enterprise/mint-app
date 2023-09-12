@@ -5,12 +5,11 @@ const discussions = {
     discussion: ' discussion',
     discussion_plural: ' discussions'
   },
-  askAQuestion: 'Ask a question',
+  askAQuestion: 'Start a discussion',
   description:
     'Need help with something? Ask a question here and someone will reply. Questions and answers will display in Discussions. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
   noDiscussions: 'There are no discussions yet. ',
-  askAQuestionLink: 'Ask a question',
-  toGetStarted: ' to get started',
+  askAQuestionLink: 'Start a discussion',
   typeQuestion: 'Type your question',
   typeAnswer: 'Type your answer',
   save: 'Save question',
