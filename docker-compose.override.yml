@@ -29,6 +29,10 @@ services:
       - ./.airDebug.conf:/mint/.airDebug.conf
       - ./.airDebugWait.conf:/mint/.airDebugWait.conf
       - /mint/tmp/air/ # This should match .air.conf's tmp_dir. Note that this isn't a volume mount to a local file/folder, but just an empty volume for Air to use.
+       # The only reason we need to mount Cypress here is because the `flagdata.json` (used when FLAG_SOURCE=FILE) happens to live in the ./cypress/ directory.
+       # This is not ideal (perhaps it should be in the root directory?), but for now we just volume mount cypress as a workaround.
+       # NOTE: This is only really the case if you set FLAG_SOURCE=FILE locally, or (more importantly) in ./github/workflows/run_tests.yml
+      - ./cypress/:/mint/cypress/
     entrypoint: air ${AIR_CONFIG}
     ports:
       - 8085:8080
