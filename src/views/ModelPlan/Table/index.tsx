@@ -213,13 +213,15 @@ const DraftModelPlansTable = ({
           return (
             <>
               {formattedUpdatedDate}
-              <div className="display-flex flex-align-center text-bold">
-                <IconComment className="text-primary margin-right-05" />{' '}
-                {discussions.length}{' '}
-                {i18next.t('discussions:discussionBanner.discussion', {
-                  count: discussions.length
-                })}
-              </div>
+              {discussions.length > 0 && (
+                <div className="display-flex flex-align-center text-bold">
+                  <IconComment className="text-primary margin-right-05" />{' '}
+                  {discussions.length}{' '}
+                  {i18next.t('discussions:discussionBanner.discussion', {
+                    count: discussions.length
+                  })}
+                </div>
+              )}
             </>
           );
         }
