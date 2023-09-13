@@ -161,25 +161,6 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.MINT_APP_NODE_VERSION }}
-          cache: 'yarn'
-      - name: Install yarn dependencies
-        run: yarn install --frozen-lockfile
-      - name: Build frontend code
-        env:
-          VITE_API_ADDRESS: http://mint:8080/api/v1
-          VITE_GRAPHQL_ADDRESS: http://mint:8080/api/graph/query
-          VITE_APP_ENV: test
-          VITE_OKTA_CLIENT_ID: 0oa2e913coDQeG19S297
-          VITE_OKTA_DOMAIN: https://test.idp.idm.cms.gov
-          VITE_OKTA_SERVER_ID: aus2e96etlbFPnBHt297
-          VITE_OKTA_ISSUER: https://test.idp.idm.cms.gov/oauth2/aus2e96etlbFPnBHt297
-          VITE_OKTA_REDIRECT_URI: http://localhost:3000/implicit/callback
-          VITE_LOCAL_AUTH_ENABLED: true
-        run: yarn run build
-      - name: Set up node
-        uses: actions/setup-node@v3
-        with:
           node-version-file: '.nvmrc'
           cache: yarn
       - name: Set up go
