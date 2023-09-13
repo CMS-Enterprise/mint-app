@@ -9,7 +9,7 @@ Cypress.Commands.add('login', () => {
     log: false,
     parseSpecialCharSequences: false
   });
-  cy.get('#okta-signin-submit').click();
+  cy.get('#okta-signin-submit').click({ force: true });
 
   cy.get('.beacon-loading').should('not.exist');
   cy.get('body').then($body => {
@@ -19,7 +19,7 @@ Cypress.Commands.add('login', () => {
           token => {
             cy.get('input[name="answer"]').type(token, { log: false });
             cy.get('input[name="rememberDevice"]').check({ force: true });
-            cy.get('input[value="Verify"').click();
+            cy.get('input[value="Verify"]').click();
           }
         );
       });
