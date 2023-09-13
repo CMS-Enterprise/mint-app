@@ -4,13 +4,11 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { mount } from 'enzyme';
-import { mockFlags, resetLDMocks } from 'jest-launchdarkly-mock';
 import configureMockStore from 'redux-mock-store';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import { Flags } from 'types/flags';
 import Table from 'views/ModelPlan/Table';
 
 import Home from './index';
@@ -29,14 +27,7 @@ vi.mock('@okta/okta-react', () => ({
   }
 }));
 
-const defaultFlags: Flags = {
-  hideITLeadExperience: false
-} as Flags;
-
 describe('The home page', () => {
-  beforeEach(() => {
-    resetLDMocks();
-  });
   describe('is a basic user', () => {
     const mockAuthReducer = {
       isUserSet: true,
@@ -45,7 +36,6 @@ describe('The home page', () => {
 
     describe('User is logged in', () => {
       it('renders the correct components', async () => {
-        mockFlags({ ...defaultFlags });
         const mockStore = configureMockStore();
         const store = mockStore({ auth: mockAuthReducer });
         let component: any;
@@ -78,7 +68,6 @@ describe('The home page', () => {
 
     describe('User is logged in', () => {
       it('renders the correct components', async () => {
-        mockFlags({ ...defaultFlags });
         const mockStore = configureMockStore();
         const store = mockStore({ auth: mockAuthReducer });
         let component: any;

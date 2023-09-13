@@ -24,6 +24,7 @@ const OktaSignInWidget = ({
     let signIn: any;
     if (widgetRef.current) {
       signIn = new OktaSignIn({
+        useClassicEngine: true, // needed since upgrading okta-signin-widget to 7.x: https://github.com/okta/okta-signin-widget/blob/master/MIGRATING.md#migrating-from-6x-to-7x
         el: widgetRef.current,
         i18n: {
           en: {

@@ -44,7 +44,7 @@ describe('The Header component', () => {
       });
     });
 
-    xit('displays the users name', async done => {
+    test.skip('displays the users name', async done => {
       let component: any;
       await act(async () => {
         component = mount(
@@ -61,7 +61,7 @@ describe('The Header component', () => {
     });
   });
 
-  xit('displays children', () => {
+  test.skip('displays children', () => {
     const component = shallow(
       <Header>
         <div className="test-class-name" />

@@ -28,7 +28,7 @@ vi.mock('launchdarkly-react-client-sdk', () => ({
 }));
 
 describe('The NavigationBar component', () => {
-  it('renders without errors', done => {
+  it('renders without errors', async () => {
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/']}>
         <NavigationBar
@@ -41,10 +41,9 @@ describe('The NavigationBar component', () => {
     );
 
     expect(getByTestId('navigation-bar')).toBeInTheDocument();
-    done();
   });
 
-  it('displays every navigation element', done => {
+  it('displays every navigation element', async () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/system/making-a-request']}>
         <NavigationBar
@@ -62,6 +61,5 @@ describe('The NavigationBar component', () => {
       const linkTitle = t(`header:${route.label}`);
       expect(getByText(linkTitle)).toBeInTheDocument();
     });
-    done();
   });
 });
