@@ -442,8 +442,9 @@ const DicussionBanner = ({
               unstyled
               onClick={() => setIsDiscussionOpen(true)}
             >
-              {d('askAQuestionLink')}{' '}
+              {d('askAQuestionLink')}
             </Button>
+            .
           </>
         )}
       </div>
