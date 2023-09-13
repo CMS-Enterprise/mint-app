@@ -66,6 +66,11 @@ export const modelPlan: TranslationModelPlan = {
 
 export const modelPlanMisc: Record<string, string> = {
   heading: 'Model name',
+  modelID: 'Model ID',
+  createdBy: 'Created by',
+  createdAt: 'Created at',
+  readyForReviewBy: 'Ready for review by',
+  readyForReviewAt: 'Ready for review at',
   breadcrumb: 'Start a new Model Plan',
   modeName: 'What is the name of your model?',
   modelNameInfo:

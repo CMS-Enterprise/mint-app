@@ -1,24 +1,26 @@
+import i18next from 'i18next';
+
 const csvFields = [
   {
-    label: 'Model ID',
+    label: i18next.t<string>('modelPlanMisc:modelID'),
     value: 'id'
   },
   'modelName',
   {
-    label: 'Previous name',
+    label: i18next.t<string>('modelPlan:previousName.label'),
     value: 'nameHistory'
   },
   'abbreviation',
   {
-    label: 'Archived',
+    label: i18next.t<string>('modelPlan:archived.label'),
     value: 'archived'
   },
   {
-    label: 'Created By',
+    label: i18next.t<string>('modelPlanMisc:createdBy'),
     value: 'createdByUserAccount.commonName'
   },
   {
-    label: 'Created At',
+    label: i18next.t<string>('modelPlanMisc:createdAt'),
     value: 'createdDts'
   },
   'status',
@@ -344,59 +346,65 @@ const csvFields = [
 
   // Collaborators
   {
-    label: 'Collaborator EUA ID',
+    label: `${i18next.t<string>(
+      'collaboratorsMisc:csvTitle'
+    )} ${i18next.t<string>('collaboratorsMisc:EUAID')}`,
     value: 'collaborators.userAccount.username'
   },
   {
-    label: 'Collaborator User name',
+    label: `${i18next.t<string>(
+      'collaboratorsMisc:csvTitle'
+    )} ${i18next.t<string>('collaborators:username.label')}`,
     value: 'collaborators.userAccount.commonName'
   },
   {
-    label: 'Collaborator Team member role',
+    label: `${i18next.t<string>(
+      'collaboratorsMisc:csvTitle'
+    )} ${i18next.t<string>('collaborators:teamRole.label')}`,
     value: 'collaborators.teamRole'
   },
 
   // Discussions
   {
-    label: 'Discussion content',
+    label: i18next.t<string>('discussions:discussionCSV.content'),
     value: 'discussions.content'
   },
   {
-    label: 'Discussion created by',
+    label: i18next.t<string>('discussions:discussionCSV.createdBy'),
     value: 'discussions.createdByUserAccount.commonName'
   },
   {
-    label: 'User role',
+    label: i18next.t<string>('discussions:discussionCSV.userRole'),
     value: 'discussions.userRole'
   },
   {
-    label: 'User role description',
+    label: i18next.t<string>('discussions:discussionCSV.userRoleDescription'),
     value: 'discussions.userRoleDescription'
   },
   {
-    label: 'Discussion Created',
+    label: i18next.t<string>('discussions:discussionCSV.createdAt'),
     value: 'discussions.createdDts'
   },
 
   // Discussion Replies
   {
-    label: 'Reply content',
+    label: i18next.t<string>('discussions:replyCSV.content'),
     value: 'discussions.replies.content'
   },
   {
-    label: 'Reply created by',
+    label: i18next.t<string>('discussions:replyCSV.createdBy'),
     value: 'discussions.replies.createdByUserAccount.commonName'
   },
   {
-    label: 'User role',
+    label: i18next.t<string>('discussions:replyCSV.userRole'),
     value: 'discussions.replies.userRole'
   },
   {
-    label: 'User role description',
+    label: i18next.t<string>('discussions:replyCSV.userRoleDescription'),
     value: 'discussions.replies.userRoleDescription'
   },
   {
-    label: 'Reply Created',
+    label: i18next.t<string>('discussions:replyCSV.createdAt'),
     value: 'discussions.replies.createdDts'
   }
 ];
