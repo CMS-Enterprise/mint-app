@@ -19,6 +19,10 @@ UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-
 """
 scalar UUID
 """
+TaggedString are strings which can be parsed with custom tags. These tags represent an entity in the database and have retrievable metadata
+"""
+scalar TaggedString
+"""
 Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
 """
 scalar Time
@@ -366,7 +370,7 @@ PlanDiscussion represents plan discussion
 type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
-	content: String
+	content: TaggedString
   userRole: DiscussionUserRole
   userRoleDescription: String
 	status: DiscussionStatus!
@@ -410,7 +414,7 @@ DiscussionReply represents a discussion reply
 type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
-	content: String
+	content: TaggedString
   userRole: DiscussionUserRole
   userRoleDescription: String
 	resolution: Boolean

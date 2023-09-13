@@ -23,6 +23,7 @@ declare global {
   // Until we add better scalar mapping with graphql-codegen, anything added here should
   // also be added to codegen.ts
   type UUID = string;
+  type TaggedString = string;
   type Time = string;
   type Upload = File;
 

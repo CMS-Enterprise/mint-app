@@ -12,7 +12,7 @@ import { PlanDiscussionCreateInput, DiscussionStatus } from "./../../../types/gr
 export interface CreateModelPlanDiscussion_createPlanDiscussion {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: string | null;
+  content: TaggedString | null;
   status: DiscussionStatus;
   createdBy: UUID;
   createdDts: Time;

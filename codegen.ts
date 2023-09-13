@@ -15,6 +15,7 @@ const config: CodegenConfig = {
           // Hopefully in the future we can use custom/useful types!
           Time: 'Time',
           UUID: 'UUID',
+          TaggedString: 'TaggedString',
           Upload: 'Upload'
         },
         namingConvention: {
