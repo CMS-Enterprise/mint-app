@@ -111,7 +111,7 @@ const SingleDiscussion = ({
                 setReply(discussion);
               }}
             >
-              {t('answer')}
+              {t('reply')}
             </Button>
           </div>
         )}

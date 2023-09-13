@@ -232,14 +232,14 @@ const Discussions = ({
           }
           setDiscussionStatus('success');
           setDiscussionStatusMessage(
-            discussionType === 'question' ? t('success') : t('successAnswer')
+            discussionType === 'question' ? t('success') : t('successReply')
           );
         }
       })
       .catch(() => {
         setDiscussionStatus('error');
         setDiscussionStatusMessage(
-          discussionType === 'question' ? t('error') : t('errorAnswer')
+          discussionType === 'question' ? t('error') : t('errorReply')
         );
       });
   };
