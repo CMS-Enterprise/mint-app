@@ -31,6 +31,7 @@ import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum } from 'utils/modelPlan';
 
+import Replies from './Replies';
 import { DicussionFormPropTypes } from '.';
 
 type QuestionAndReplyProps = {
@@ -99,41 +100,62 @@ const QuestionAndReply = ({
 
       {/* If renderType is reply, render the related question that is being answered */}
       {renderType === 'reply' && reply && (
-        <div>
-          <div className="display-flex flex-wrap flex-justify">
-            {reply.isAssessment ? (
-              <div className="display-flex flex-align-center">
-                <AssessmentIcon size={3} />{' '}
-                <span>
-                  {t('assessment')} | {reply.createdByUserAccount.commonName}
-                </span>
+        <>
+          <div className="discussion-topic margin-bottom-3">
+            <div className="display-flex flex-wrap flex-justify margin-bottom-1">
+              <div>
+                {reply.isAssessment ? (
+                  <div className="display-flex flex-align-center">
+                    <AssessmentIcon size={3} />{' '}
+                    <span>
+                      {t('assessment')} |{' '}
+                      {reply.createdByUserAccount.commonName}
+                    </span>
+                  </div>
+                ) : (
+                  <IconInitial
+                    className="margin-bottom-1"
+                    user={reply.createdByUserAccount.commonName}
+                    index={0}
+                  />
+                )}
+                {reply.userRole && (
+                  <p className="text-base margin-left-5 margin-y-0">
+                    {reply.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
+                      ? reply.userRoleDescription
+                      : t(`userRole.${reply.userRole}`)}
+                  </p>
+                )}
               </div>
-            ) : (
-              <IconInitial
-                className="margin-bottom-1"
-                user={reply.createdByUserAccount.commonName}
-                index={0}
-              />
-            )}
-            <span className="margin-left-5 margin-top-05 text-base">
-              {getTimeElapsed(reply.createdDts)
-                ? getTimeElapsed(reply.createdDts) + t('ago')
-                : t('justNow')}
-            </span>
+              <span className="text-base margin-top-05">
+                {getTimeElapsed(reply.createdDts)
+                  ? getTimeElapsed(reply.createdDts) + t('ago')
+                  : t('justNow')}
+              </span>
+            </div>
+
+            <div className="margin-left-5">
+              <p className="margin-y-0">{reply.content}</p>
+            </div>
           </div>
 
-          {reply.userRole && (
-            <p className="text-base margin-left-5 margin-y-0">
-              {reply.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
-                ? reply.userRoleDescription
-                : t(`userRole.${reply.userRole}`)}
-            </p>
-          )}
+          <Replies />
 
-          <div className="margin-left-5">
-            <p>{reply.content}</p>
-          </div>
-        </div>
+          <PageHeading
+            headingLevel="h2"
+            className="margin-top-0 margin-bottom-1 line-height-sans-2"
+          >
+            {t('reply')}
+          </PageHeading>
+          <p className="margin-top-0 margin-bottom-3">
+            <Trans
+              i18nKey={t('allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
+        </>
       )}
 
       <Formik

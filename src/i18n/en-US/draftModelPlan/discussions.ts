@@ -15,6 +15,9 @@ const discussions = {
   typeQuestion: 'Type your question or discussion topic',
   typeQuestionHelpText:
     'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
+  replies_one: '{{count}} reply',
+  replies_other: '{{count}} replies',
+  replies_zero: 'No replies',
   typeReply: 'Type your reply',
   save: 'Save discussion',
   saveReply: 'Save reply',
