@@ -7,7 +7,8 @@ const discussions = {
   },
   askAQuestion: 'Start a discussion',
   description:
-    'Need help with something? Ask a question here and someone will reply. Questions and answers will display in Discussions. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
+    'Need help with something? Start a discussion and you’ll be notified of any replies. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
+  allFieldsRequired: 'All fields marked with <s>*</s> are required.',
   noDiscussions: 'There are no discussions yet. ',
   askAQuestionLink: 'Start a discussion',
   typeQuestion: 'Type your question',

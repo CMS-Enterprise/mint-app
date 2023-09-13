@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
@@ -81,8 +81,16 @@ const QuestionAndReply = ({
         {renderType === 'question' ? t('askAQuestion') : t('answer')}
       </PageHeading>
 
-      <p className="margin-bottom-4">
-        {renderType === 'question' ? t('description') : t('answerDescription')}
+      <p className="margin-bottom-2">
+        {renderType === 'question' && t('description')}
+      </p>
+      <p className="margin-bottom-5">
+        <Trans
+          i18nKey={t('allFieldsRequired')}
+          components={{
+            s: <span className="text-secondary-dark" />
+          }}
+        />
       </p>
 
       {/* If renderType is reply, render the related question that is being answered */}
@@ -177,7 +185,7 @@ const QuestionAndReply = ({
                   <FieldGroup
                     scrollElement="user-role"
                     error={!!flatErrors.userRole}
-                    className="margin-top-4"
+                    className="margin-top-0"
                   >
                     <Label htmlFor="user-role">
                       {t('role')}
