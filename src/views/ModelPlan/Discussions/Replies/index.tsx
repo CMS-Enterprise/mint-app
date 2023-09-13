@@ -6,7 +6,9 @@ const Replies = () => {
 
   return (
     <>
-      <p className="margin-y-0">{discussionsT('replies', { count: 0 })}</p>
+      <p className="margin-y-0">
+        {discussionsT('replies', { count: 0, context: '0' })}
+      </p>
       <p className="margin-y-0">{discussionsT('replies', { count: 1 })}</p>
       <p className="margin-y-0">{discussionsT('replies', { count: 2 })}</p>
     </>
