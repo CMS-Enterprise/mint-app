@@ -33,6 +33,8 @@ export const collaborators: TranslationCollaborators = {
 type NestedTranslation = Record<string, string>;
 
 export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
+  csvTitle: 'Collaborator',
+  EUAID: 'EUA ID',
   teamBreadcrumb: 'Add model team members',
   addATeamMember: 'Add a team member',
   updateATeamMember: 'Edit a team member',

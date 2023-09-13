@@ -613,7 +613,7 @@ const BasicsContent = () => {
                                       error={!!flatErrors['basics.cmsOther']}
                                     >
                                       <Label htmlFor="plan-basics-cmsCategory--Other">
-                                        {miscellaneousT('pleaseSpecify')}
+                                        {basicsT('cmsOther.label')}
                                       </Label>
 
                                       <FieldErrorMsg>

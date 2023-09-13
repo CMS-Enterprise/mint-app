@@ -29,10 +29,10 @@ exports[`OktaUserSelect selects contact from dropdown 1`] = `
       class="cedar-contact-select__control cedar-contact-select__control--is-focused cedar-contact-select__control--menu-is-open css-1cjrczp-control"
     >
       <div
-        class="cedar-contact-select__value-container css-319lph-ValueContainer"
+        class="cedar-contact-select__value-container css-dlobye-Component"
       >
         <div
-          class="cedar-contact-select__input-container css-1pndypt-Input"
+          class="cedar-contact-select__input-container css-1fv4uur-Component"
           data-value="Adeline"
         >
           <input
@@ -58,7 +58,7 @@ exports[`OktaUserSelect selects contact from dropdown 1`] = `
         </div>
       </div>
       <div
-        class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
+        class="cedar-contact-select__indicators css-ny0e4k-Component"
       >
         <span
           class="cedar-contact-select__indicator-separator css-1okebmr-indicatorSeparator"
@@ -87,7 +87,7 @@ exports[`OktaUserSelect selects contact from dropdown 1`] = `
       id="react-select-cedarContactSelect-listbox"
     >
       <div
-        class="cedar-contact-select__menu-list css-19oqr5x-MenuList"
+        class="cedar-contact-select__menu-list css-tu4xue-Component"
       >
         <div
           aria-disabled="false"
