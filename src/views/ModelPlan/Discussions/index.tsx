@@ -289,13 +289,15 @@ const Discussions = ({
                 title:
                   status === 'UNANSWERED' ? (
                     <strong>
-                      {questionCount.unansweredQuestions} {t('unanswered')}
-                      {questionCount.unansweredQuestions !== 1 && 's'}
+                      {t('newTopics', {
+                        count: questionCount.unansweredQuestions
+                      })}
                     </strong>
                   ) : (
                     <strong>
-                      {questionCount.answeredQuestions} {t('answered')}
-                      {questionCount.answeredQuestions !== 1 && 's'}
+                      {t('discussionWithCount', {
+                        count: questionCount.answeredQuestions
+                      })}
                     </strong>
                   ),
                 content: (

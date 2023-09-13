@@ -19,7 +19,10 @@ const discussions = {
   saveAnswer: 'Save answer',
   useLinkAbove:
     'There are no discussions yet. Ask a question using the link above to get started.',
-  unanswered: 'unanswered question',
+  newTopics: '{{count}} new discussion topic',
+  newTopics_plural: '{{count}} new discussion topics',
+  discussionWithCount: '{{count}} discussion',
+  discussionWithCount_plural: '{{count}} discussions',
   answered: 'answered question',
   viewDiscussions: 'View discussions',
   success: 'Success! Your discussion topic has been added.',
@@ -36,14 +39,14 @@ const discussions = {
   ago: 'ago',
   justNow: 'Just now',
   noAnswered:
-    'There are no answered questions yet. When a question is answered, it will appear here with the response.',
+    'There are no discussions with replies yet. Once a discussion has been replied to, it will appear here.',
   noUanswered:
-    'There are no unanswered questions. Ask a question using the link above.',
+    'There are no new discussion topics. Start a discussion and it will appear here.',
   nonEditor: {
     noDiscussions:
-      'There are no discussions yet. When a question is asked, it will appear here.',
+      'There are no discussions with replies yet. When a question is asked, it will appear here.',
     noQuestions:
-      'There are no questions yet. When a question is asked, it will appear here.'
+      'There are no new discussion topics. When a question is asked, it will appear here.'
   },
   ariaLabel: 'Discussion Center Modal',
   assessment: 'MINT Team',
