@@ -5,7 +5,8 @@ const discussions = {
     discussion: ' discussion',
     discussion_plural: ' discussions'
   },
-  askAQuestion: 'Start a discussion',
+  discussionPanelHeading: 'Start a discussion',
+  discussionPanelReply: 'Discussion',
   description:
     'Need help with something? Start a discussion and you’ll be notified of any replies. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
   allFieldsRequired: 'All fields marked with <s>*</s> are required.',
@@ -15,10 +16,10 @@ const discussions = {
   typeQuestionHelpText:
     'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
   typeReply: 'Type your reply',
-  save: 'Save question',
-  saveAnswer: 'Save answer',
+  save: 'Save discussion',
+  saveReply: 'Save reply',
   useLinkAbove:
-    'There are no discussions yet. Ask a question using the link above to get started.',
+    'There are no new discussion topics. Start a discussion and it will appear here.',
   newTopics: '{{count}} new discussion topic',
   newTopics_plural: '{{count}} new discussion topics',
   discussionWithCount: '{{count}} discussion',
@@ -33,7 +34,7 @@ const discussions = {
     'Sorry, we encountered a problem adding your discussion topic. Please try again.',
   errorReply:
     'Sorry, we encountered a problem adding your reply. Please try again.',
-  reply: 'Answer',
+  reply: 'Reply',
   answerDescription:
     'Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again.',
   ago: 'ago',

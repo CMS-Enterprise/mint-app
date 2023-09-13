@@ -77,21 +77,25 @@ const QuestionAndReply = ({
 
   return (
     <>
-      <PageHeading headingLevel="h1" className="margin-y-0">
-        {renderType === 'question' ? t('askAQuestion') : t('answer')}
+      <PageHeading headingLevel="h1" className="margin-y-0 line-height-sans-2">
+        {renderType === 'question'
+          ? t('discussionPanelHeading')
+          : t('discussionPanelReply')}
       </PageHeading>
 
-      <p className="margin-bottom-2">
-        {renderType === 'question' && t('description')}
-      </p>
-      <p className="margin-bottom-5">
-        <Trans
-          i18nKey={t('allFieldsRequired')}
-          components={{
-            s: <span className="text-secondary-dark" />
-          }}
-        />
-      </p>
+      {renderType === 'question' && (
+        <>
+          <p className="margin-bottom-2">{t('description')}</p>
+          <p className="margin-bottom-5">
+            <Trans
+              i18nKey={t('allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
+        </>
+      )}
 
       {/* If renderType is reply, render the related question that is being answered */}
       {renderType === 'reply' && reply && (
@@ -310,7 +314,7 @@ const QuestionAndReply = ({
                       }
                       onClick={() => setErrors({})}
                     >
-                      {renderType === 'question' ? t('save') : t('saveAnswer')}
+                      {renderType === 'question' ? t('save') : t('saveReply')}
                     </Button>
                   </div>
                 </Fieldset>
