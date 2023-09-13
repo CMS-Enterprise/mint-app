@@ -7,6 +7,10 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"strconv"
+	"strings"
+
+	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
@@ -42,7 +46,10 @@ func tagsFromRawString(rawString string) ([]*Tag, error) {
 	}
 	tagStrings := re.FindAllString(rawString, -1)
 	for _, tagString := range tagStrings {
-		tag := newTagFromString(tagString)
+		tag, err := newTagFromString(tagString)
+		if err != nil {
+			return []*Tag{}, err //TODO: SW should we return anything if there was an error?
+		}
 		tagSlice = append(tagSlice, &tag) //TODO: SW perhaps this should be by value and not by pointer?
 
 	}
@@ -53,14 +60,89 @@ func tagsFromRawString(rawString string) ([]*Tag, error) {
 
 // Tag represents Meta data about an entity tagged in text
 type Tag struct {
-	RawString string
+	RawString   string
+	Type        TagType
+	EntityUUID  *uuid.UUID
+	EntityIntID *int
 }
 
-func newTagFromString(tagString string) Tag { //TODO: SW should we handle an error here as well?
+// TagType represents the posible types of tags you can have in a TaggedString
+type TagType string
+
+// Validate checks that a valid value of TagType is returned
+func (tt TagType) Validate() error {
+	switch tt {
+	case TagTypeUser:
+		return nil
+	case TagTypeSolution:
+		return nil
+	}
+	return fmt.Errorf("%s is not a valid value for TagType", tt)
+}
+
+// These constants represent the different values of TagType
+const (
+	TagTypeUser     TagType = "USER"
+	TagTypeSolution TagType = "SOLUTION"
+)
+
+func newTagFromString(tagString string) (Tag, error) { //TODO: SW should we handle an error here as well?
+
+	tagRegex := `<tag(?P<attributes>(?:\s+\w+="[^"]*")+)\s*\/>`
+	attributeRegex := `\s*(?P<name>\w+)="(?P<value>[^"]*)"`
+	re := regexp.MustCompile(tagRegex)
+	attributeRe := regexp.MustCompile(attributeRegex)
+	entityUUID := uuid.Nil
+	var entityIntID *int
+
+	matches := re.FindStringSubmatch(tagString)
+	if len(matches) < 2 {
+		// Invalid tag string format
+		return Tag{}, errors.New(" tag is missing necessary components")
+	}
+
+	// TODO: SW review this thoroughly
+
+	rawString := matches[0]
+	fmt.Print(rawString)
+	attributesString := matches[1]
+	attributeMatches := attributeRe.FindAllStringSubmatch(attributesString, -1)
+
+	attributes := make(map[string]string)
+	for _, match := range attributeMatches {
+		name := match[1]
+		value := match[2]
+		attributes[name] = value
+	}
+
+	tagTypeStr := attributes["type"]
+	entityIDStr := attributes["entityID"]
+	tagType := TagType(tagTypeStr)
+	err := tagType.Validate()
+	if err != nil {
+		return Tag{}, err //TODO: SW should we return a pointer instead?
+	}
+
+	switch tagType { //TODO: Solution is an int id, user is a UUID
+	case TagTypeUser:
+		entityUUID, err = uuid.Parse(strings.TrimSpace(entityIDStr))
+		if err != nil {
+			return Tag{}, fmt.Errorf("error parsing UUID in tag. error : %w", err) //TODO: SW should we return a pointer instead?
+		}
+	case TagTypeSolution:
+		number, err := strconv.Atoi(entityIDStr)
+		if err != nil {
+			return Tag{}, fmt.Errorf("error parsing into in tag. error : %w", err) //TODO: SW should we return a pointer instead?
+		}
+		entityIntID = &number
+	}
 
 	return Tag{
-		RawString: tagString,
-	}
+		RawString:   tagString,
+		Type:        tagType,
+		EntityUUID:  &entityUUID,
+		EntityIntID: entityIntID,
+	}, nil
 
 }
 
