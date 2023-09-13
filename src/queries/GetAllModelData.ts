@@ -9,18 +9,19 @@ export default gql`
       nameHistory(sort: DESC)
       abbreviation
       archived
-      createdBy
+      createdByUserAccount {
+        commonName
+      }
       createdDts
-      modifiedBy
-      modifiedDts
+      status
       basics {
         id
+        modelCategory
         amsModelID
         demoCode
-        modelCategory
         cmsCenters
-        cmsOther
         cmmiGroups
+        cmsOther
         modelType
         problem
         goal
@@ -38,68 +39,11 @@ export default gql`
         wrapUpEnds
         phasedIn
         phasedInNote
-        readyForReviewBy
-        readyForReviewDts
-        createdBy
-        createdDts
-        modifiedBy
-        modifiedDts
-        status
-      }
-      beneficiaries {
-        id
-        beneficiaries
-        beneficiariesOther
-        beneficiariesNote
-        treatDualElligibleDifferent
-        treatDualElligibleDifferentHow
-        treatDualElligibleDifferentNote
-        excludeCertainCharacteristics
-        excludeCertainCharacteristicsCriteria
-        excludeCertainCharacteristicsNote
-        beneficiarySelectionFrequency
-        beneficiarySelectionFrequencyNote
-        beneficiarySelectionFrequencyOther
-        beneficiaryOverlap
-        beneficiaryOverlapNote
-        precedenceRules
-        readyForReviewBy
-        readyForReviewDts
-        status
-        numberPeopleImpacted
-        estimateConfidence
-        confidenceNote
-        beneficiarySelectionNote
-        beneficiarySelectionOther
-        beneficiarySelectionMethod
-      }
-      discussions {
-        id
-        content
-        createdBy
-        createdDts
-        status
-        replies {
-          id
-          discussionID
-          content
-          createdBy
-          createdDts
-          resolution
-        }
-      }
-      collaborators {
-        id
-        userAccount {
-          id
+        readyForReviewByUserAccount {
           commonName
-          email
-          username
         }
-        userID
-        teamRole
-        modelPlanID
-        createdDts
+        readyForReviewDts
+        status
       }
       generalCharacteristics {
         id
@@ -112,9 +56,6 @@ export default gql`
         waiversRequired
         waiversRequiredTypes
         waiversRequiredNote
-        readyForReviewBy
-        readyForReviewDts
-        status
         isNewModel
         existingModel
         resemblesExistingModel
@@ -155,105 +96,11 @@ export default gql`
         agreementTypesOther
         multiplePatricipationAgreementsNeeded
         multiplePatricipationAgreementsNeededNote
-      }
-      opsEvalAndLearning {
-        id
-        ccmInvolvment
-        iddocSupport
-        sendFilesBetweenCcw
-        sendFilesBetweenCcwNote
-        appToSendFilesToKnown
-        appToSendFilesToWhich
-        appToSendFilesToNote
-        useCcwForFileDistribiutionToParticipants
-        useCcwForFileDistribiutionToParticipantsNote
-        developNewQualityMeasures
-        developNewQualityMeasuresNote
-        qualityPerformanceImpactsPayment
-        qualityPerformanceImpactsPaymentNote
-        dataSharingStarts
-        dataSharingStartsOther
-        dataSharingFrequency
-        dataSharingFrequencyOther
-        dataSharingStartsNote
-        dataCollectionStarts
-        dataCollectionStartsOther
-        dataCollectionFrequency
-        dataCollectionFrequencyOther
-        dataCollectionFrequencyNote
-        qualityReportingStarts
-        qualityReportingStartsOther
-        qualityReportingStartsNote
-        evaluationApproaches
-        evaluationApproachOther
-        evalutaionApproachNote
-        ccmInvolvmentOther
-        ccmInvolvmentNote
-        dataNeededForMonitoring
-        dataNeededForMonitoringOther
-        dataNeededForMonitoringNote
-        dataToSendParticicipants
-        dataToSendParticicipantsOther
-        dataToSendParticicipantsNote
-        shareCclfData
-        shareCclfDataNote
-        technicalContactsIdentified
-        technicalContactsIdentifiedDetail
-        technicalContactsIdentifiedNote
-        captureParticipantInfo
-        captureParticipantInfoNote
-        icdOwner
-        draftIcdDueDate
-        icdNote
-        dataFullTimeOrIncremental
-        eftSetUp
-        unsolicitedAdjustmentsIncluded
-        dataFlowDiagramsNeeded
-        produceBenefitEnhancementFiles
-        fileNamingConventions
-        dataMonitoringNote
-        uatNeeds
-        stcNeeds
-        testingTimelines
-        testingNote
-        dataMonitoringFileTypes
-        dataMonitoringFileOther
-        dataResponseType
-        dataResponseFileFrequency
-        modelLearningSystems
-        modelLearningSystemsOther
-        modelLearningSystemsNote
-        anticipatedChallenges
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          commonName
+        }
         readyForReviewDts
         status
-        agencyOrStateHelp
-        agencyOrStateHelpOther
-        agencyOrStateHelpNote
-        stakeholders
-        stakeholdersOther
-        stakeholdersNote
-        helpdeskUse
-        helpdeskUseNote
-        contractorSupport
-        contractorSupportOther
-        contractorSupportHow
-        contractorSupportNote
-        iddocSupportNote
-        benchmarkForPerformance
-        benchmarkForPerformanceNote
-        computePerformanceScores
-        computePerformanceScoresNote
-        riskAdjustPerformance
-        riskAdjustFeedback
-        riskAdjustPayments
-        riskAdjustOther
-        riskAdjustNote
-        appealPerformance
-        appealFeedback
-        appealPayments
-        appealOther
-        appealNote
       }
       participantsAndProviders {
         id
@@ -303,7 +150,139 @@ export default gql`
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          commonName
+        }
+        readyForReviewDts
+        status
+      }
+      beneficiaries {
+        id
+        beneficiaries
+        beneficiariesNote
+        beneficiariesOther
+        beneficiaryOverlap
+        beneficiaryOverlapNote
+        beneficiarySelectionNote
+        beneficiarySelectionOther
+        beneficiarySelectionMethod
+        treatDualElligibleDifferent
+        treatDualElligibleDifferentHow
+        treatDualElligibleDifferentNote
+        excludeCertainCharacteristics
+        excludeCertainCharacteristicsCriteria
+        excludeCertainCharacteristicsNote
+        beneficiarySelectionFrequency
+        beneficiarySelectionFrequencyNote
+        beneficiarySelectionFrequencyOther
+        precedenceRules
+        numberPeopleImpacted
+        estimateConfidence
+        confidenceNote
+        readyForReviewByUserAccount {
+          commonName
+        }
+        readyForReviewDts
+        status
+      }
+      opsEvalAndLearning {
+        id
+        ccmInvolvment
+        ccmInvolvmentOther
+        ccmInvolvmentNote
+        iddocSupport
+        iddocSupportNote
+        sendFilesBetweenCcw
+        sendFilesBetweenCcwNote
+        appToSendFilesToKnown
+        appToSendFilesToWhich
+        appToSendFilesToNote
+        useCcwForFileDistribiutionToParticipants
+        useCcwForFileDistribiutionToParticipantsNote
+        developNewQualityMeasures
+        developNewQualityMeasuresNote
+        qualityPerformanceImpactsPayment
+        qualityPerformanceImpactsPaymentNote
+        dataSharingStarts
+        dataSharingStartsOther
+        dataSharingFrequency
+        dataSharingFrequencyOther
+        dataSharingStartsNote
+        dataCollectionStarts
+        dataCollectionStartsOther
+        dataCollectionFrequency
+        dataCollectionFrequencyOther
+        dataCollectionFrequencyNote
+        qualityReportingStarts
+        qualityReportingStartsOther
+        qualityReportingStartsNote
+        evaluationApproaches
+        evaluationApproachOther
+        evalutaionApproachNote
+        dataNeededForMonitoring
+        dataNeededForMonitoringOther
+        dataNeededForMonitoringNote
+        dataToSendParticicipants
+        dataToSendParticicipantsOther
+        dataToSendParticicipantsNote
+        shareCclfData
+        shareCclfDataNote
+        technicalContactsIdentified
+        technicalContactsIdentifiedDetail
+        technicalContactsIdentifiedNote
+        captureParticipantInfo
+        captureParticipantInfoNote
+        icdOwner
+        draftIcdDueDate
+        icdNote
+        dataFullTimeOrIncremental
+        eftSetUp
+        unsolicitedAdjustmentsIncluded
+        dataFlowDiagramsNeeded
+        produceBenefitEnhancementFiles
+        fileNamingConventions
+        dataMonitoringNote
+        uatNeeds
+        stcNeeds
+        testingTimelines
+        testingNote
+        dataMonitoringFileTypes
+        dataMonitoringFileOther
+        dataResponseType
+        dataResponseFileFrequency
+        modelLearningSystems
+        modelLearningSystemsOther
+        modelLearningSystemsNote
+        anticipatedChallenges
+        agencyOrStateHelp
+        agencyOrStateHelpOther
+        agencyOrStateHelpNote
+        stakeholders
+        stakeholdersOther
+        stakeholdersNote
+        helpdeskUse
+        helpdeskUseNote
+        contractorSupport
+        contractorSupportOther
+        contractorSupportHow
+        contractorSupportNote
+        benchmarkForPerformance
+        benchmarkForPerformanceNote
+        computePerformanceScores
+        computePerformanceScoresNote
+        riskAdjustPerformance
+        riskAdjustFeedback
+        riskAdjustPayments
+        riskAdjustOther
+        riskAdjustNote
+        appealPerformance
+        appealFeedback
+        appealPayments
+        appealOther
+        appealNote
+        readyForReviewByUserAccount {
+          commonName
+        }
         readyForReviewDts
         status
       }
@@ -365,11 +344,48 @@ export default gql`
         anticipateReconcilingPaymentsRetrospectivelyNote
         paymentStartDate
         paymentStartDateNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          commonName
+        }
         readyForReviewDts
         status
       }
-      status
+      collaborators {
+        id
+        userAccount {
+          id
+          commonName
+          email
+          username
+        }
+        userID
+        teamRole
+        modelPlanID
+        createdDts
+      }
+      discussions {
+        id
+        content
+        createdByUserAccount {
+          commonName
+        }
+        userRole
+        userRoleDescription
+        createdDts
+        status
+        replies {
+          id
+          discussionID
+          content
+          createdByUserAccount {
+            commonName
+          }
+          userRole
+          userRoleDescription
+          createdDts
+          resolution
+        }
+      }
     }
   }
 `;

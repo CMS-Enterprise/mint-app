@@ -1,4 +1,122 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--team-info"
+    data-testid="read-only-model-plan--team-info"
+  >
+    <div
+      class="mint-section team-groupings--section-wrapper padding-bottom-3 border-base-light margin-bottom-4"
+      data-testid="section-wrapper"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Model lead(s)
+      </h2>
+      <li
+        class="usa-card"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-3 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Luke Skywalker
+            </h3>
+            <a
+              aria-label="luke@skywalker.com"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:luke@skywalker.com"
+              target="_blank"
+            >
+              luke@skywalker.com
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </header>
+        </div>
+      </li>
+    </div>
+    <div
+      class="mint-section team-groupings--section-wrapper padding-bottom-3 border-base-light margin-bottom-4"
+      data-testid="section-wrapper"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Leadership
+      </h2>
+      <li
+        class="usa-card"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-3 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Boba Fett
+            </h3>
+            <a
+              aria-label="boba@fett.com"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:boba@fett.com"
+              target="_blank"
+            >
+              boba@fett.com
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </header>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
 <DocumentFragment>

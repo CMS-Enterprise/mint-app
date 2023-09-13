@@ -6,6 +6,9 @@
     "@apollo/client": "^3.6.9",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@cypress/code-coverage": "^3.10.0",
+    "@json2csv/formatters": "^7.0.3",
+    "@json2csv/plainjs": "^7.0.3",
+    "@json2csv/transforms": "^7.0.3",
     "@okta/okta-auth-js": "^6.1.0",
     "@okta/okta-react": "^6.4.2",
     "@okta/okta-signin-widget": "^7.9.1",
@@ -45,7 +48,6 @@
     "i18next-browser-languagedetector": "^5.0.0",
     "istanbul-lib-coverage": "^3.0.0",
     "js-base64": "^3.6.0",
-    "json2csv": "^5.0.7",
     "launchdarkly-react-client-sdk": "^2.29.2",
     "lodash": "^4.17.21",
     "luxon": "^1.22.0",
@@ -197,6 +199,9 @@
       "!src/**/*.stories.{jsx,tsx}",
       "!src/**/__snapshots__/*.test.tsx.snap"
     ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!@json2csv/plainjs)/"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 50,
@@ -204,6 +209,7 @@
         "lines": 60,
         "statements": 60
       }
-    }
+    },
+    "globalSetup": "./src/global-setup.js"
   }
 }

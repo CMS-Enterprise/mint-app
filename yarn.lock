@@ -3634,6 +3634,27 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@json2csv/formatters@^7.0.3":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@json2csv/formatters/-/formatters-7.0.3.tgz#4d0584bd2664d6dfaa7bccc192d1d18aac7bee27"
+  integrity sha512-QLTpBNmNxGDAQNALkWwPdnyJ7IdXHQ0Motzog4fZOKK2ozpxckl6vwhWNBxbQs/25Zhp7bLS4J6ILu/hh0en6w==
+
+"@json2csv/plainjs@^7.0.3":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@json2csv/plainjs/-/plainjs-7.0.3.tgz#2182da06a38c17caceca64701389d9b80a233588"
+  integrity sha512-AEpEdeSu8o64Sdf7Xoy7BM4MyfZToN7oxxleXJ6u7v3h0V0hKdNIw7i4kQ08wiIe7lcJBhS3JRyEPKX6k2AsjA==
+  dependencies:
+    "@json2csv/formatters" "^7.0.3"
+    "@streamparser/json" "^0.0.17"
+    lodash.get "^4.4.2"
+
+"@json2csv/transforms@^7.0.3":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@json2csv/transforms/-/transforms-7.0.3.tgz#86ad4ce692df820db87da8a5e7906a2b70543263"
+  integrity sha512-6IvE2NXcFB48nutRa1nmbnJEJWlR846xHggI0WIuZzX2yMKJjEnNuJYPVpq7pelm2zQqFh1uoE3M7xqUleGdDw==
+  dependencies:
+    lodash.get "^4.4.2"
+
 "@juggle/resize-observer@^3.3.1":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
@@ -5065,6 +5086,11 @@
     "@types/babel__core" "^7.0.0"
     "@types/express" "^4.7.0"
     file-system-cache "2.3.0"
+
+"@streamparser/json@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@streamparser/json/-/json-0.0.17.tgz#b68742ebb49eec9c1fcc76cfa730dd74a5131382"
+  integrity sha512-mW54K6CTVJVLwXRB6kSS1xGWPmtTuXAStWnlvtesmcySgtop+eFPWOywBFPpJO4UD173epYsPSP6HSW8kuqN8w==
 
 "@svgr/babel-plugin-add-jsx-attribute@^7.0.0":
   version "7.0.0"
@@ -7769,7 +7795,7 @@ commander@^3.0.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-3.0.2.tgz#6837c3fb677ad9933d1cfba42dd14d5117d6b39e"
   integrity sha512-Gar0ASD4BDyKC4hl4DwHqDrmvjoxWKZigVnAbn5H1owvm4CxCPdb0HQDehwNYMJpla5+M2tPmPARzhtYuwpHow==
 
-commander@^6.1.0, commander@^6.2.1:
+commander@^6.2.1:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
   integrity sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==
@@ -11263,15 +11289,6 @@ json-to-pretty-yaml@^1.2.2:
     remedial "^1.0.7"
     remove-trailing-spaces "^1.0.6"
 
-json2csv@^5.0.7:
-  version "5.0.7"
-  resolved "https://registry.yarnpkg.com/json2csv/-/json2csv-5.0.7.tgz#f3a583c25abd9804be873e495d1e65ad8d1b54ae"
-  integrity sha512-YRZbUnyaJZLZUJSRi2G/MqahCyRv9n/ds+4oIetjDF3jWQA7AG7iSeKTiZiCNqtMZM7HDyt0e/W6lEnoGEmMGA==
-  dependencies:
-    commander "^6.1.0"
-    jsonparse "^1.3.1"
-    lodash.get "^4.4.2"
-
 json2mq@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/json2mq/-/json2mq-0.2.0.tgz#b637bd3ba9eabe122c83e9720483aeb10d2c904a"
@@ -11316,11 +11333,6 @@ jsonify@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.1.tgz#2aa3111dae3d34a0f151c63f3a45d995d9420978"
   integrity sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==
-
-jsonparse@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
-  integrity sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=
 
 jsonpath-plus@^6.0.1:
   version "6.0.1"

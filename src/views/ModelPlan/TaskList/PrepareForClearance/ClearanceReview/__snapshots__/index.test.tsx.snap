@@ -1,4 +1,159 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ClearanceReview component > matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    data-testid="clearance-review"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap margin-bottom-4"
+        >
+          <ol
+            class="usa-breadcrumb__list"
+          >
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-link usa-breadcrumb__link"
+                href="/"
+              >
+                <span>
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-link usa-breadcrumb__link"
+                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/"
+              >
+                <span>
+                  Model Plan task list
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-link usa-breadcrumb__link"
+                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance"
+              >
+                <span>
+                  Prepare for clearance
+                </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              Review model basics
+            </li>
+          </ol>
+        </nav>
+        <div
+          class="margin-y-7"
+        >
+          <h1
+            aria-live="polite"
+            class="mint-h1"
+            tabindex="-1"
+          >
+            This page cannot be found.
+          </h1>
+          <p>
+            Here is a list of things you could try to check and fix:
+          </p>
+          <ul
+            class="mint-not-found__error_suggestions"
+          >
+            <li>
+              Please check if the address you typed in is correct.
+            </li>
+            <li>
+              If you've typed the address correctly, check the spelling.
+            </li>
+            <li>
+              If you've copied and pasted the address, check that you've copied the entire address.
+            </li>
+          </ul>
+          <p
+            class="margin-bottom-5"
+          >
+            If none of the above have solved the problem, please return to the home page and try again.
+          </p>
+          <a
+            class="usa-button"
+            href="/"
+          >
+            Go back to the home page
+          </a>
+        </div>
+        <div
+          class="margin-top-6 margin-bottom-3"
+        >
+          <button
+            class="usa-button usa-button usa-button--outline margin-bottom-1"
+            data-testid="button"
+            type="button"
+          >
+            Back
+          </button>
+          <button
+            class="usa-button"
+            data-testid="mark-task-list-for-clearance"
+            type="submit"
+          >
+            Mark as ready for clearance
+          </button>
+        </div>
+        <button
+          class="usa-button usa-button usa-button--unstyled display-flex"
+          data-testid="modify-task-list-for-clearance"
+          type="button"
+        >
+          Make changes to model basics
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
 
 exports[`ClearanceReview component matches snapshot 1`] = `
 <DocumentFragment>

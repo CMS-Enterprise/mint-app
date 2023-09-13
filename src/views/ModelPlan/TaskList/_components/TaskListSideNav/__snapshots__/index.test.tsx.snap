@@ -1,4 +1,103 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`The TaskListSideNavActions > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
+    data-testid="sidenav-actions"
+  >
+    <h4
+      class="margin-top-0 margin-bottom-1"
+    >
+      Actions
+    </h4>
+    <a
+      class="usa-link display-block line-height-body-5"
+      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only"
+    >
+      Switch to the Read View for this Model Plan
+    </a>
+    <div
+      class="flex-align-self-center margin-y-2"
+    >
+      <div>
+        <button
+          class="usa-button usa-button--unstyled display-flex"
+          type="button"
+        >
+          <span>
+            Download this Model Plan (CSV)
+          </span>
+        </button>
+      </div>
+    </div>
+    <button
+      class="usa-button usa-button--unstyled line-height-body-5 test-withdraw-request text-red"
+      data-testid="button"
+      type="button"
+    >
+      Remove your Model Plan
+    </button>
+    <div
+      class="margin-top-4 margin-bottom-7"
+    >
+      <h4
+        class="margin-bottom-1"
+      >
+        Related Content
+      </h4>
+      <button
+        class="usa-button usa-button usa-button--unstyled line-height-body-5 margin-bottom-1"
+        data-testid="button"
+        type="button"
+      >
+        Overview for adding a model 
+        <span
+          aria-hidden="true"
+        >
+          (opens in a new tab)
+        </span>
+      </button>
+      <button
+        class="usa-button usa-button usa-button--unstyled line-height-body-5"
+        data-testid="button"
+        type="button"
+      >
+        Sample Model Plan 
+        <span
+          aria-hidden="true"
+        >
+          (opens in a new tab)
+        </span>
+      </button>
+    </div>
+    <div>
+      <h3
+        class="margin-bottom-05"
+      >
+        Model team
+      </h3>
+      <div
+        class="margin-bottom-2"
+      >
+        <a
+          class="usa-link"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators"
+        >
+          Edit team
+        </a>
+      </div>
+      <div
+        class="sidenav-actions__teamList"
+      >
+        <ul
+          class="usa-list usa-list--unstyled"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`The TaskListSideNavActions matches snapshot 1`] = `
 <DocumentFragment>

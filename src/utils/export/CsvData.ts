@@ -3,38 +3,25 @@ const csvFields = [
     label: 'Model ID',
     value: 'id'
   },
-  {
-    label: 'Model name',
-    value: 'modelName'
-  },
+  'modelName',
   {
     label: 'Previous name',
     value: 'nameHistory'
   },
+  'abbreviation',
   {
-    label: 'Short name',
-    value: 'abbreviation'
-  },
-  {
-    label: 'Status',
-    value: 'status'
+    label: 'Archived',
+    value: 'archived'
   },
   {
     label: 'Created By',
-    value: 'createdBy'
+    value: 'createdByUserAccount.commonName'
   },
   {
     label: 'Created At',
     value: 'createdDts'
   },
-  {
-    label: 'Modified By',
-    value: 'modifiedBy'
-  },
-  {
-    label: 'Modified At',
-    value: 'modifiedDts'
-  },
+  'status',
 
   // Basics
   'basics.modelCategory',
@@ -60,6 +47,8 @@ const csvFields = [
   'basics.wrapUpEnds',
   'basics.phasedIn',
   'basics.phasedInNote',
+  'basics.readyForReviewByUserAccount.commonName',
+  'basics.readyForReviewDts',
   'basics.status',
 
   // General Characteristics
@@ -72,9 +61,6 @@ const csvFields = [
   'generalCharacteristics.waiversRequired',
   'generalCharacteristics.waiversRequiredTypes', // array
   'generalCharacteristics.waiversRequiredNote',
-  'generalCharacteristics.readyForReviewBy',
-  'generalCharacteristics.readyForReviewDts',
-  'generalCharacteristics.status',
   'generalCharacteristics.isNewModel',
   'generalCharacteristics.existingModel',
   'generalCharacteristics.resemblesExistingModel',
@@ -93,7 +79,6 @@ const csvFields = [
   'generalCharacteristics.communityPartnersInvolved',
   'generalCharacteristics.communityPartnersInvolvedDescription',
   'generalCharacteristics.communityPartnersInvolvedNote',
-  'generalCharacteristics.alternativePaymentModel',
   'generalCharacteristics.alternativePaymentModelTypes', // array
   'generalCharacteristics.alternativePaymentModelNote',
   'generalCharacteristics.keyCharacteristics', // array
@@ -117,6 +102,9 @@ const csvFields = [
   'generalCharacteristics.agreementTypesOther',
   'generalCharacteristics.multiplePatricipationAgreementsNeeded',
   'generalCharacteristics.multiplePatricipationAgreementsNeededNote',
+  'generalCharacteristics.readyForReviewByUserAccount.commonName',
+  'generalCharacteristics.readyForReviewDts',
+  'generalCharacteristics.status',
 
   // Participants and Providers
   'participantsAndProviders.communicationMethod', // array
@@ -165,20 +153,19 @@ const csvFields = [
   'participantsAndProviders.providerOverlap',
   'participantsAndProviders.providerOverlapHierarchy',
   'participantsAndProviders.providerOverlapNote',
-  'participantsAndProviders.readyForReviewBy',
+  'participantsAndProviders.readyForReviewByUserAccount.commonName',
   'participantsAndProviders.readyForReviewDts',
   'participantsAndProviders.status',
 
   // Beneficiaries
   'beneficiaries.beneficiaries', // array
-  'beneficiaries.beneficiarySelectionMethod', // array
   'beneficiaries.beneficiariesNote',
   'beneficiaries.beneficiariesOther',
   'beneficiaries.beneficiaryOverlap',
   'beneficiaries.beneficiaryOverlapNote',
   'beneficiaries.beneficiarySelectionNote',
   'beneficiaries.beneficiarySelectionOther',
-  'beneficiaries.beneficiarySelectionMethod',
+  'beneficiaries.beneficiarySelectionMethod', // array
   'beneficiaries.treatDualElligibleDifferent',
   'beneficiaries.treatDualElligibleDifferentHow',
   'beneficiaries.treatDualElligibleDifferentNote',
@@ -189,10 +176,12 @@ const csvFields = [
   'beneficiaries.beneficiarySelectionFrequencyNote',
   'beneficiaries.beneficiarySelectionFrequencyOther',
   'beneficiaries.precedenceRules',
-  'beneficiaries.status',
   'beneficiaries.numberPeopleImpacted',
   'beneficiaries.estimateConfidence',
   'beneficiaries.confidenceNote',
+  'beneficiaries.readyForReviewByUserAccount.commonName',
+  'beneficiaries.readyForReviewDts',
+  'beneficiaries.status',
 
   // Ops and Eval Learning
   'opsEvalAndLearning.ccmInvolvment', // array
@@ -236,7 +225,7 @@ const csvFields = [
   'opsEvalAndLearning.shareCclfData',
   'opsEvalAndLearning.shareCclfDataNote',
   'opsEvalAndLearning.technicalContactsIdentified',
-  'opsEvalAndLearning.technicalContactsIdentifiedDeta',
+  'opsEvalAndLearning.technicalContactsIdentifiedDetail',
   'opsEvalAndLearning.technicalContactsIdentifiedNote',
   'opsEvalAndLearning.captureParticipantInfo',
   'opsEvalAndLearning.captureParticipantInfoNote',
@@ -262,8 +251,6 @@ const csvFields = [
   'opsEvalAndLearning.modelLearningSystemsOther',
   'opsEvalAndLearning.modelLearningSystemsNote',
   'opsEvalAndLearning.anticipatedChallenges',
-  'opsEvalAndLearning.readyForReviewBy',
-  'opsEvalAndLearning.readyForReviewDts',
   'opsEvalAndLearning.agencyOrStateHelp', // array
   'opsEvalAndLearning.agencyOrStateHelpOther',
   'opsEvalAndLearning.agencyOrStateHelpNote',
@@ -290,6 +277,8 @@ const csvFields = [
   'opsEvalAndLearning.appealPayments',
   'opsEvalAndLearning.appealOther',
   'opsEvalAndLearning.appealNote',
+  'opsEvalAndLearning.readyForReviewByUserAccount.commonName',
+  'opsEvalAndLearning.readyForReviewDts',
   'opsEvalAndLearning.status',
 
   // Payments
@@ -349,70 +338,69 @@ const csvFields = [
   'payments.anticipateReconcilingPaymentsRetrospectivelyNote',
   'payments.paymentStartDate',
   'payments.paymentStartDateNote',
-  'payments.readyForReviewBy',
+  'payments.readyForReviewByUserAccount.commonName',
   'payments.readyForReviewDts',
   'payments.status',
 
   // Collaborators
-  'collaborators.userAccount.username',
-  'collaborators.userAccount.commonName',
-  'collaborators.teamRole',
+  {
+    label: 'Collaborator EUA ID',
+    value: 'collaborators.userAccount.username'
+  },
+  {
+    label: 'Collaborator User name',
+    value: 'collaborators.userAccount.commonName'
+  },
+  {
+    label: 'Collaborator Team member role',
+    value: 'collaborators.teamRole'
+  },
 
   // Discussions
-  'discussions.content',
-  'discussions.createdBy',
-  'discussions.createdDts',
-  'discussions.status',
+  {
+    label: 'Discussion content',
+    value: 'discussions.content'
+  },
+  {
+    label: 'Discussion created by',
+    value: 'discussions.createdByUserAccount.commonName'
+  },
+  {
+    label: 'User role',
+    value: 'discussions.userRole'
+  },
+  {
+    label: 'User role description',
+    value: 'discussions.userRoleDescription'
+  },
+  {
+    label: 'Discussion Created',
+    value: 'discussions.createdDts'
+  },
 
   // Discussion Replies
-  'discussions.replies.discussionID',
-  'discussions.replies.content',
-  'discussions.replies.createdBy',
-  'discussions.replies.createdDts',
-  'discussions.replies.resolution'
+  {
+    label: 'Reply content',
+    value: 'discussions.replies.content'
+  },
+  {
+    label: 'Reply created by',
+    value: 'discussions.replies.createdByUserAccount.commonName'
+  },
+  {
+    label: 'User role',
+    value: 'discussions.replies.userRole'
+  },
+  {
+    label: 'User role description',
+    value: 'discussions.replies.userRoleDescription'
+  },
+  {
+    label: 'Reply Created',
+    value: 'discussions.replies.createdDts'
+  }
 ];
 
-const fieldsToUnwind = [
-  'collaborators',
-  'nameHistory',
-  'basics.cmsCenters',
-  'basics.cmmiGroups',
-  'beneficiaries.beneficiaries',
-  'beneficiaries.beneficiarySelectionMethod',
-  'discussions',
-  'discussions.replies',
-  'generalCharacteristics.authorityAllowances',
-  'generalCharacteristics.waiversRequiredTypes',
-  'generalCharacteristics.resemblesExistingModelWhich',
-  'generalCharacteristics.alternativePaymentModelTypes',
-  'generalCharacteristics.keyCharacteristics',
-  'generalCharacteristics.geographiesTargetedTypes',
-  'generalCharacteristics.geographiesTargetedAppliedTo',
-  'generalCharacteristics.agreementTypes',
-  'opsEvalAndLearning.agencyOrStateHelp',
-  'opsEvalAndLearning.ccmInvolvment',
-  'opsEvalAndLearning.contractorSupport',
-  'opsEvalAndLearning.dataCollectionFrequency',
-  'opsEvalAndLearning.dataMonitoringFileTypes',
-  'opsEvalAndLearning.dataNeededForMonitoring',
-  'opsEvalAndLearning.dataSharingFrequency',
-  'opsEvalAndLearning.dataToSendParticicipants',
-  'opsEvalAndLearning.evaluationApproaches',
-  'opsEvalAndLearning.modelLearningSystems',
-  'opsEvalAndLearning.stakeholders',
-  'participantsAndProviders.communicationMethod',
-  'participantsAndProviders.participants',
-  'participantsAndProviders.participantsIds',
-  'participantsAndProviders.providerAddMethod',
-  'participantsAndProviders.providerLeaveMethod',
-  'participantsAndProviders.selectionMethod',
-  'payments.anticipatedPaymentFrequency',
-  'payments.fundingSource',
-  'payments.fundingSourceR',
-  'payments.nonClaimsPayments',
-  'payments.payClaims',
-  'payments.payRecipients',
-  'payments.payType'
-];
+const fieldsToUnwind = ['collaborators', 'discussions', 'discussions.replies'];
 
 export { csvFields, fieldsToUnwind };

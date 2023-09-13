@@ -3,21 +3,31 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, TriStateAnswer, SelectionMethodType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole, DiscussionStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllSingleModelData
 // ====================================================
 
+export interface GetAllSingleModelData_modelPlan_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_basics_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetAllSingleModelData_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
+  modelCategory: ModelCategory | null;
   amsModelID: string | null;
   demoCode: string | null;
-  modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
-  cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
+  cmsOther: string | null;
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
@@ -35,13 +45,14 @@ export interface GetAllSingleModelData_modelPlan_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  readyForReviewBy: UUID | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_basics_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
-  createdBy: UUID;
-  createdDts: Time;
-  modifiedBy: UUID | null;
-  modifiedDts: Time | null;
   status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_generalCharacteristics_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
 }
 
 export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
@@ -56,9 +67,6 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   waiversRequired: boolean | null;
   waiversRequiredTypes: WaiverType[];
   waiversRequiredNote: string | null;
-  readyForReviewBy: UUID | null;
-  readyForReviewDts: Time | null;
-  status: TaskStatus;
   isNewModel: boolean | null;
   existingModel: string | null;
   resemblesExistingModel: boolean | null;
@@ -99,6 +107,14 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   agreementTypesOther: string | null;
   multiplePatricipationAgreementsNeeded: boolean | null;
   multiplePatricipationAgreementsNeededNote: string | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_generalCharacteristics_readyForReviewByUserAccount | null;
+  readyForReviewDts: Time | null;
+  status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_participantsAndProviders_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
 }
 
 export interface GetAllSingleModelData_modelPlan_participantsAndProviders {
@@ -150,17 +166,27 @@ export interface GetAllSingleModelData_modelPlan_participantsAndProviders {
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
-  readyForReviewBy: UUID | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_participantsAndProviders_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_beneficiaries_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
 }
 
 export interface GetAllSingleModelData_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
   beneficiaries: BeneficiariesType[];
-  beneficiariesOther: string | null;
   beneficiariesNote: string | null;
+  beneficiariesOther: string | null;
+  beneficiaryOverlap: OverlapType | null;
+  beneficiaryOverlapNote: string | null;
+  beneficiarySelectionNote: string | null;
+  beneficiarySelectionOther: string | null;
+  beneficiarySelectionMethod: SelectionMethodType[];
   treatDualElligibleDifferent: TriStateAnswer | null;
   treatDualElligibleDifferentHow: string | null;
   treatDualElligibleDifferentNote: string | null;
@@ -170,25 +196,28 @@ export interface GetAllSingleModelData_modelPlan_beneficiaries {
   beneficiarySelectionFrequency: FrequencyType | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
-  beneficiaryOverlap: OverlapType | null;
-  beneficiaryOverlapNote: string | null;
   precedenceRules: string | null;
-  readyForReviewBy: UUID | null;
-  readyForReviewDts: Time | null;
-  status: TaskStatus;
   numberPeopleImpacted: number | null;
   estimateConfidence: ConfidenceType | null;
   confidenceNote: string | null;
-  beneficiarySelectionNote: string | null;
-  beneficiarySelectionOther: string | null;
-  beneficiarySelectionMethod: SelectionMethodType[];
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_beneficiaries_readyForReviewByUserAccount | null;
+  readyForReviewDts: Time | null;
+  status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
 }
 
 export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
+  ccmInvolvmentOther: string | null;
+  ccmInvolvmentNote: string | null;
   iddocSupport: boolean | null;
+  iddocSupportNote: string | null;
   sendFilesBetweenCcw: boolean | null;
   sendFilesBetweenCcwNote: string | null;
   appToSendFilesToKnown: boolean | null;
@@ -216,8 +245,6 @@ export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
   evaluationApproaches: EvaluationApproachType[];
   evaluationApproachOther: string | null;
   evalutaionApproachNote: string | null;
-  ccmInvolvmentOther: string | null;
-  ccmInvolvmentNote: string | null;
   dataNeededForMonitoring: DataForMonitoringType[];
   dataNeededForMonitoringOther: string | null;
   dataNeededForMonitoringNote: string | null;
@@ -253,9 +280,6 @@ export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
-  readyForReviewBy: UUID | null;
-  readyForReviewDts: Time | null;
-  status: TaskStatus;
   agencyOrStateHelp: AgencyOrStateHelpType[];
   agencyOrStateHelpOther: string | null;
   agencyOrStateHelpNote: string | null;
@@ -268,7 +292,6 @@ export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
   contractorSupportOther: string | null;
   contractorSupportHow: string | null;
   contractorSupportNote: string | null;
-  iddocSupportNote: string | null;
   benchmarkForPerformance: BenchmarkForPerformanceType | null;
   benchmarkForPerformanceNote: string | null;
   computePerformanceScores: boolean | null;
@@ -283,6 +306,14 @@ export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
   appealPayments: boolean | null;
   appealOther: boolean | null;
   appealNote: string | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_opsEvalAndLearning_readyForReviewByUserAccount | null;
+  readyForReviewDts: Time | null;
+  status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_payments_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
 }
 
 export interface GetAllSingleModelData_modelPlan_payments {
@@ -344,7 +375,7 @@ export interface GetAllSingleModelData_modelPlan_payments {
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
-  readyForReviewBy: UUID | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_payments_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
@@ -367,12 +398,24 @@ export interface GetAllSingleModelData_modelPlan_collaborators {
   createdDts: Time;
 }
 
+export interface GetAllSingleModelData_modelPlan_discussions_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetAllSingleModelData_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: UUID;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount;
+  userRole: DiscussionUserRole | null;
+  userRoleDescription: string | null;
   createdDts: Time;
   resolution: boolean | null;
 }
@@ -381,7 +424,9 @@ export interface GetAllSingleModelData_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: UUID;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_createdByUserAccount;
+  userRole: DiscussionUserRole | null;
+  userRoleDescription: string | null;
   createdDts: Time;
   status: DiscussionStatus;
   replies: GetAllSingleModelData_modelPlan_discussions_replies[];
@@ -394,10 +439,8 @@ export interface GetAllSingleModelData_modelPlan {
   nameHistory: string[];
   abbreviation: string | null;
   archived: boolean;
-  createdBy: UUID;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_createdByUserAccount;
   createdDts: Time;
-  modifiedBy: UUID | null;
-  modifiedDts: Time | null;
   status: ModelStatus;
   basics: GetAllSingleModelData_modelPlan_basics;
   generalCharacteristics: GetAllSingleModelData_modelPlan_generalCharacteristics;

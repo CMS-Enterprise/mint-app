@@ -1,4 +1,30 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`IT Solutions HelpBox > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="padding-3 bg-primary-dark text-white"
+  >
+    <h3
+      class="margin-top-0"
+    >
+      Don’t see what you’re looking for?
+    </h3>
+    <p
+      class="line-height-body-4"
+    >
+      Sometimes models have operational needs that are not uncovered in the Model Plan. If you want to track the status of additional workstreams, you may add them here.
+    </p>
+    <a
+      class="usa-button usa-button--outline text-white border-white border-2px bg-transparent"
+      data-testid="add-new-operational-need"
+      href="//add-an-operational-need"
+    >
+      Add an operational need or IT solution
+    </a>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`IT Solutions HelpBox matches snapshot 1`] = `
 <DocumentFragment>
