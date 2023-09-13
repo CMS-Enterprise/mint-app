@@ -56,9 +56,9 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   }
   // Generic translation for Ready for review fields
   else if (fieldName === 'readyForReviewByUserAccount.commonName') {
-    translation = 'Ready for review by';
+    translation = i18next.t<string>('modelPlanMisc:readyForReviewBy');
   } else if (fieldName === 'readyForReviewDts') {
-    translation = 'Ready for review';
+    translation = i18next.t<string>('modelPlanMisc:readyForReviewAt');
   }
   // If no translation, format using hardcoded label in csvFields
   else {
