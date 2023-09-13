@@ -11,8 +11,10 @@ const discussions = {
   allFieldsRequired: 'All fields marked with <s>*</s> are required.',
   noDiscussions: 'There are no discussions yet. ',
   askAQuestionLink: 'Start a discussion',
-  typeQuestion: 'Type your question',
-  typeAnswer: 'Type your answer',
+  typeQuestion: 'Type your question or discussion topic',
+  typeQuestionHelpText:
+    'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
+  typeReply: 'Type your reply',
   save: 'Save question',
   saveAnswer: 'Save answer',
   useLinkAbove:

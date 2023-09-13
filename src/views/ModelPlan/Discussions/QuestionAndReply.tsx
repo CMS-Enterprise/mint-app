@@ -250,8 +250,12 @@ const QuestionAndReply = ({
                     <Label htmlFor="discussion-content" className="text-normal">
                       {renderType === 'question'
                         ? t('typeQuestion')
-                        : t('typeAnswer')}
+                        : t('typeReply')}
+                      <RequiredAsterisk />
                     </Label>
+                    <p className="text-base margin-top-0">
+                      {t('typeQuestionHelpText')}
+                    </p>
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
                     <Field
                       className="height-card"
