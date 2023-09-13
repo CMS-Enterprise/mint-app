@@ -22,14 +22,14 @@ const discussions = {
   unanswered: 'unanswered question',
   answered: 'answered question',
   viewDiscussions: 'View discussions',
-  success: 'Success! Your question has been added.',
-  successAnswer: 'Success! Your answer has been added.',
+  success: 'Success! Your discussion topic has been added.',
+  successAnswer: 'Success! Your reply has been added.',
   errorFetch:
     'Sorry we encountered a problem fetching your discusssions.  Please try again.',
   error:
-    'Sorry, we encountered a problem adding your question. Please try again.',
+    'Sorry, we encountered a problem adding your discussion topic. Please try again.',
   errorAnswer:
-    'Sorry, we encountered a problem adding your answer. Please try again.',
+    'Sorry, we encountered a problem adding your reply. Please try again.',
   answer: 'Answer',
   answerDescription:
     'Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again.',
