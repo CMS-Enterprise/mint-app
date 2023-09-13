@@ -144,7 +144,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                     class=" css-jvusj8-control"
                   >
                     <div
-                      class=" css-dlobye-Component"
+                      class=" css-319lph-ValueContainer"
                     >
                       <div
                         class=" css-14el2xx-placeholder"
@@ -153,7 +153,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                         2 selected
                       </div>
                       <div
-                        class=" css-1u4kn00-Component"
+                        class=" css-6j8wv5-Input"
                         data-value=""
                       >
                         <input
@@ -176,7 +176,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class=" css-ny0e4k-Component"
+                      class=" css-1hb7zxy-IndicatorsContainer"
                     >
                       <button
                         aria-label="Clear selection"
