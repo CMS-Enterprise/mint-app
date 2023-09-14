@@ -71,7 +71,9 @@ const discussions = {
     MODEL_TEAM: 'Model Team',
     SHARED_SYSTEM_MAINTAINER: 'Shared System Maintainer',
     NONE_OF_THE_ABOVE: 'None of the above'
-  }
+  },
+  showReplies: 'Show replies',
+  hideReplies: 'Hide replies'
 };
 
 export default discussions;
