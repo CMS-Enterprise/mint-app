@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Mention, MentionItem, MentionsInput } from 'react-mentions';
 import { useHistory } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import {
   Button,
   Dropdown,
@@ -11,6 +12,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { debounce } from 'lodash';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
@@ -26,6 +28,8 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
+import SearchOktaUsers from 'queries/SearchOktaUsers';
+import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOktaUsers';
 import { DiscussionUserRole } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
@@ -60,6 +64,32 @@ const QuestionAndReply = ({
 }: QuestionAndReplyProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const [userSearch, setUserSearch] = useState<any>();
+
+  const [getUsersLazyQuery] = useLazyQuery<SearchOktaUsersType>(
+    SearchOktaUsers
+  );
+
+  const [selectedUsers, setSelectedUsers] = useState<MentionItem[]>([]);
+
+  // Data that can be passed/formatted to mutation for BE
+  // console.log(selectedUsers);
+
+  const fetchUsers = (query: string, callback: any) => {
+    getUsersLazyQuery({
+      variables: { searchTerm: query }
+    })
+      .then(res =>
+        res?.data?.searchOktaUsers?.map(user => ({
+          display: user.displayName,
+          id: user.username
+        }))
+      )
+      .then(callback);
+  };
+
+  const userSuggestions = debounce(fetchUsers, 300);
 
   const history = useHistory();
 
@@ -252,6 +282,34 @@ const QuestionAndReply = ({
                       id="discussion-content"
                       name="content"
                     />
+
+                    <div className="async">
+                      <h3>PoC MINT React-Mentions</h3>
+
+                      <MentionsInput
+                        value={userSearch || ''}
+                        onChange={(
+                          event,
+                          newValue,
+                          newPlainTextValue,
+                          mentions
+                        ) => {
+                          setUserSearch(newValue);
+                          if (mentions !== selectedUsers) {
+                            setSelectedUsers(mentions);
+                          }
+                        }}
+                        placeholder="Type anything, use the @ symbol to tag other users."
+                        className="mentions"
+                      >
+                        <Mention
+                          trigger="@"
+                          displayTransform={(user, display) => `@${display}`}
+                          data={userSuggestions}
+                          className="mentions__mention"
+                        />
+                      </MentionsInput>
+                    </div>
                   </FieldGroup>
                   <div className="margin-y-5 display-block">
                     <Button
