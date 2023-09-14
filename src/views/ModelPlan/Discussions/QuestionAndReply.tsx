@@ -139,7 +139,7 @@ const QuestionAndReply = ({
             </div>
           </div>
 
-          <Replies />
+          <Replies originalDiscussion={reply as DiscussionType} />
 
           <PageHeading
             headingLevel="h2"

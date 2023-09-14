@@ -95,26 +95,27 @@ const SingleDiscussion = ({
         </p>
 
         {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
-        {hasEditAccess && answerQuestion && (
-          <div className="display-flex margin-bottom-2">
-            <IconAnnouncement className="text-primary margin-right-1" />
-            <Button
-              type="button"
-              unstyled
-              role="button"
-              onClick={() => {
-                if (setIsDiscussionOpen) {
-                  setIsDiscussionOpen(true);
-                }
-                setDiscussionStatusMessage('');
-                setDiscussionType('reply');
-                setReply(discussion);
-              }}
-            >
-              {t('reply')}
-            </Button>
-          </div>
-        )}
+        {/* TODO: figure out how to conditionally render this reply link */}
+        {/* {hasEditAccess && answerQuestion && ( */}
+        <div className="display-flex margin-bottom-2">
+          <IconAnnouncement className="text-primary margin-right-1" />
+          <Button
+            type="button"
+            unstyled
+            role="button"
+            onClick={() => {
+              if (setIsDiscussionOpen) {
+                setIsDiscussionOpen(true);
+              }
+              setDiscussionStatusMessage('');
+              setDiscussionType('reply');
+              setReply(discussion);
+            }}
+          >
+            {t('reply')}
+          </Button>
+        </div>
+        {/* )} */}
       </div>
     </div>
   );
