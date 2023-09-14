@@ -2,6 +2,7 @@ package models
 
 import (
 	"context"
+	"database/sql/driver"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -184,4 +185,35 @@ func (ts TaggedString) MarshalGQLContext(ctx context.Context, w io.Writer) error
 	}
 
 	return nil
+}
+
+// Scan is used by sql.scan to read the values from the DB
+func (ts *TaggedString) Scan(src interface{}) error {
+
+	switch src := src.(type) {
+	case string:
+		rawContent := string(src)
+		tagString, err := TaggedStringFromRawString(rawContent)
+		if err != nil {
+			return err
+		}
+		*ts = tagString
+	case []byte:
+		rawContent := string(src)
+		tagString, err := TaggedStringFromRawString(rawContent)
+		if err != nil {
+			return err
+		}
+		*ts = tagString
+	case nil:
+		return nil
+
+	}
+	return nil
+}
+
+// Value implements the driver.Valuer interface. This is called when a TaggedString is being written to the database
+func (ts TaggedString) Value() (driver.Value, error) {
+	// Return the RawContent field as a value
+	return ts.RawContent, nil
 }
