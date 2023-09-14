@@ -601,7 +601,7 @@ export interface CreateOperationalSolutionSubtaskInput {
  */
 export interface DiscussionReplyCreateInput {
   discussionID: UUID;
-  content: string;
+  content: TaggedString;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
   resolution: boolean;
@@ -719,7 +719,7 @@ export interface PlanCrTdlCreateInput {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanDiscussionChanges {
-  content?: string | null;
+  content?: TaggedString | null;
   status?: DiscussionStatus | null;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
@@ -730,7 +730,7 @@ export interface PlanDiscussionChanges {
  */
 export interface PlanDiscussionCreateInput {
   modelPlanID: UUID;
-  content: string;
+  content: TaggedString;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }

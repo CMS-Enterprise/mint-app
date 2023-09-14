@@ -17,10 +17,11 @@ import (
 
 func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
-
+	tagStringContent, err := models.TaggedStringFromRawString("this is a test comment")
+	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             "This is a test comment",
+		Content:             tagStringContent,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -47,10 +48,12 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 
 func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	plan := suite.createModelPlan("Test Plan")
+	tagStringContent, err := models.TaggedStringFromRawString("this is a test reply")
+	suite.NoError(err)
 
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             "This is a test comment",
+		Content:             tagStringContent,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -82,9 +85,11 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() 
 	plan := suite.createModelPlan("Test Plan")
 	userRole := models.DiscussionRoleCmsSystemServiceTeam
 
+	tagStringContent, err := models.TaggedStringFromRawString("This is a CMS_SYSTEM_SERVICE_TEAM test comment")
+	suite.NoError(err)
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             "This is a CMS_SYSTEM_SERVICE_TEAM test comment",
+		Content:             tagStringContent,
 		UserRole:            &userRole,
 		UserRoleDescription: nil, // Description not provided for CMS_SYSTEM_SERVICE_TEAM role
 	}
@@ -114,15 +119,17 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() 
 func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 	plan := suite.createModelPlan("Test Plan")
 	userRole := models.DiscussionRoleNoneOfTheAbove
+	tagStringContent, err := models.TaggedStringFromRawString("This is a NONE_OF_THE_ABOVE test comment")
+	suite.NoError(err)
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             "This is a NONE_OF_THE_ABOVE test comment",
+		Content:             tagStringContent,
 		UserRole:            &userRole,
 		UserRoleDescription: nil, // Description not provided for NONE_OF_THE_ABOVE role
 	}
 
-	_, err := CreatePlanDiscussion(
+	_, err = CreatePlanDiscussion(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
@@ -139,15 +146,17 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 
 func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 	plan := suite.createModelPlan("Test Plan")
+	tagStringContent, err := models.TaggedStringFromRawString("This is a test comment")
+	suite.NoError(err)
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             "This is a test comment",
+		Content:             tagStringContent,
 		UserRole:            nil, // Role not provided
 		UserRoleDescription: nil, // Description not provided
 	}
 
-	_, err := CreatePlanDiscussion(
+	_, err = CreatePlanDiscussion(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
@@ -206,10 +215,12 @@ func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
 func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	tagStringContent, err := models.TaggedStringFromRawString("this is a test reply")
+	suite.NoError(err)
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
-		Content:             "This is a test reply",
+		Content:             tagStringContent,
 		Resolution:          true,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
@@ -227,10 +238,12 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	tagStringContent, err := models.TaggedStringFromRawString("this is a test reply")
+	suite.NoError(err)
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
-		Content:             "This is a test reply",
+		Content:             tagStringContent,
 		Resolution:          true,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),

@@ -391,7 +391,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
-  content: String!
+  content: TaggedString!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -402,7 +402,7 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
-  content: String
+  content: TaggedString
   status: DiscussionStatus
   userRole: DiscussionUserRole
   userRoleDescription: String
@@ -433,7 +433,7 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 """
 input DiscussionReplyCreateInput {
   discussionID: UUID!
-  content: String!
+  content: TaggedString!
   userRole: DiscussionUserRole
   userRoleDescription: String
   resolution: Boolean! = false
@@ -445,7 +445,7 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
-  content: String
+  content: TaggedString
   resolution: Boolean
   userRole: DiscussionUserRole
   userRoleDescription: String

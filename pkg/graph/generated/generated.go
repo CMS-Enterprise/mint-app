@@ -42,7 +42,6 @@ type Config struct {
 
 type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
-	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
 	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
@@ -920,9 +919,6 @@ type ComplexityRoot struct {
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
-type DiscussionReplyResolver interface {
-	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedString, error)
-}
 type ExistingModelLinkResolver interface {
 	ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error)
 
@@ -1007,8 +1003,6 @@ type PlanBeneficiariesResolver interface {
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
 }
 type PlanDiscussionResolver interface {
-	Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedString, error)
-
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
 }
 type PlanDocumentResolver interface {
@@ -7121,7 +7115,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
-  content: String!
+  content: TaggedString!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -7132,7 +7126,7 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
-  content: String
+  content: TaggedString
   status: DiscussionStatus
   userRole: DiscussionUserRole
   userRoleDescription: String
@@ -7163,7 +7157,7 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 """
 input DiscussionReplyCreateInput {
   discussionID: UUID!
-  content: String!
+  content: TaggedString!
   userRole: DiscussionUserRole
   userRoleDescription: String
   resolution: Boolean! = false
@@ -7175,7 +7169,7 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
-  content: String
+  content: TaggedString
   resolution: Boolean
   userRole: DiscussionUserRole
   userRoleDescription: String
@@ -11993,7 +11987,7 @@ func (ec *executionContext) _DiscussionReply_content(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.DiscussionReply().Content(rctx, obj)
+		return obj.Content, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -12002,17 +11996,17 @@ func (ec *executionContext) _DiscussionReply_content(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.TaggedString)
+	res := resTmp.(models.TaggedString)
 	fc.Result = res
-	return ec.marshalOTaggedString2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx, field.Selections, res)
+	return ec.marshalOTaggedString2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "DiscussionReply",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type TaggedString does not have child fields")
 		},
@@ -28120,7 +28114,7 @@ func (ec *executionContext) _PlanDiscussion_content(ctx context.Context, field g
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanDiscussion().Content(rctx, obj)
+		return obj.Content, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -28129,17 +28123,17 @@ func (ec *executionContext) _PlanDiscussion_content(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.TaggedString)
+	res := resTmp.(models.TaggedString)
 	fc.Result = res
-	return ec.marshalOTaggedString2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx, field.Selections, res)
+	return ec.marshalOTaggedString2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanDiscussion",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type TaggedString does not have child fields")
 		},
@@ -51100,7 +51094,7 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNTaggedString2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -51315,7 +51309,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNTaggedString2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -51894,38 +51888,7 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "content":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._DiscussionReply_content(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Values[i] = ec._DiscussionReply_content(ctx, field, obj)
 		case "userRole":
 			out.Values[i] = ec._DiscussionReply_userRole(ctx, field, obj)
 		case "userRoleDescription":
@@ -55176,38 +55139,7 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "content":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanDiscussion_content(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Values[i] = ec._PlanDiscussion_content(ctx, field, obj)
 		case "userRole":
 			out.Values[i] = ec._PlanDiscussion_userRole(ctx, field, obj)
 		case "userRoleDescription":
@@ -64134,6 +64066,16 @@ func (ec *executionContext) marshalNString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
+func (ec *executionContext) unmarshalNTaggedString2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx context.Context, v interface{}) (models.TaggedString, error) {
+	var res models.TaggedString
+	err := res.UnmarshalGQLContext(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTaggedString2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx context.Context, sel ast.SelectionSet, v models.TaggedString) graphql.Marshaler {
+	return graphql.WrapContextMarshaler(ctx, v)
+}
+
 func (ec *executionContext) unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, v interface{}) (models.TaskListSection, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.TaskListSection(tmp)
@@ -67679,6 +67621,16 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	}
 	res := graphql.MarshalString(*v)
 	return res
+}
+
+func (ec *executionContext) unmarshalOTaggedString2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx context.Context, v interface{}) (models.TaggedString, error) {
+	var res models.TaggedString
+	err := res.UnmarshalGQLContext(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTaggedString2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx context.Context, sel ast.SelectionSet, v models.TaggedString) graphql.Marshaler {
+	return graphql.WrapContextMarshaler(ctx, v)
 }
 
 func (ec *executionContext) unmarshalOTaggedString2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedString(ctx context.Context, v interface{}) (*models.TaggedString, error) {

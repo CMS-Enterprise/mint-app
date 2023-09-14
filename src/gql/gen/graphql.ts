@@ -305,7 +305,7 @@ export type DiscussionReply = {
  * https://gqlgen.com/reference/changesets/
  */
 export type DiscussionReplyChanges = {
-  content?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['TaggedString']['input']>;
   resolution?: InputMaybe<Scalars['Boolean']['input']>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
@@ -313,7 +313,7 @@ export type DiscussionReplyChanges = {
 
 /** DiscussionReplyCreateInput represents the necessary fields to create a discussion reply */
 export type DiscussionReplyCreateInput = {
-  content: Scalars['String']['input'];
+  content: Scalars['TaggedString']['input'];
   discussionID: Scalars['UUID']['input'];
   resolution?: Scalars['Boolean']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
@@ -1396,7 +1396,7 @@ export type PlanDiscussion = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanDiscussionChanges = {
-  content?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['TaggedString']['input']>;
   status?: InputMaybe<DiscussionStatus>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
@@ -1404,7 +1404,7 @@ export type PlanDiscussionChanges = {
 
 /** PlanDiscussionCreateInput represents the necessary fields to create a plan discussion */
 export type PlanDiscussionCreateInput = {
-  content: Scalars['String']['input'];
+  content: Scalars['TaggedString']['input'];
   modelPlanID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;

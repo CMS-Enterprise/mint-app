@@ -92,7 +92,7 @@ func sendPlanDiscussionCreatedEmail(
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
-		DiscussionContent: planDiscussion.Content,
+		DiscussionContent: planDiscussion.Content.RawContent, //TODO: SW handle the content so the email displays tags correctly....
 	})
 	if err != nil {
 		return err
@@ -107,7 +107,7 @@ func sendPlanDiscussionCreatedEmail(
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
 		UserName:          planDiscussion.CreatedByUserAccount(ctx).CommonName,
-		DiscussionContent: planDiscussion.Content,
+		DiscussionContent: planDiscussion.Content.RawContent, //TODO: SW handle the content so the email displays tags correctly....
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
 	})

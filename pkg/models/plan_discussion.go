@@ -8,7 +8,7 @@ import (
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
-	Content             string              `json:"content" db:"content"`
+	Content             TaggedString        `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
 	Status              DiscussionStatus    `json:"status" db:"status"`
@@ -20,7 +20,7 @@ func NewPlanDiscussion(
 	principal uuid.UUID,
 	isAssessment bool,
 	modelPlanID uuid.UUID,
-	content string,
+	content TaggedString,
 	userRole *DiscussionUserRole,
 	userRoleDescription *string,
 ) *PlanDiscussion {
@@ -39,7 +39,7 @@ func NewPlanDiscussion(
 type DiscussionReply struct {
 	baseStruct
 	discussionRelation
-	Content             string              `json:"content" db:"content"`
+	Content             TaggedString        `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
 	Resolution          bool                `json:"resolution" db:"resolution"` //default to false
@@ -51,7 +51,7 @@ func NewDiscussionReply(
 	principal uuid.UUID,
 	isAssessment bool,
 	discussionID uuid.UUID,
-	content string,
+	content TaggedString,
 	resolution bool,
 	userRole *DiscussionUserRole,
 	userRoleDescription *string,

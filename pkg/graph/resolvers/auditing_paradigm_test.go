@@ -15,10 +15,12 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	tagStringContent, err := models.TaggedStringFromRawString("this is a test reply")
+	suite.NoError(err)
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
-		Content:             "this is a test reply",
+		Content:             tagStringContent,
 		Resolution:          false,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),

@@ -167,7 +167,7 @@ func (ts *TaggedString) UnmarshalGQLContext(ctx context.Context, v interface{}) 
 }
 
 // MarshalGQLContext marshals the TaggedString type to JSON to return to graphQL
-func (ts *TaggedString) MarshalGQLContext(ctx context.Context, w io.Writer) error {
+func (ts TaggedString) MarshalGQLContext(ctx context.Context, w io.Writer) error {
 	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
 
 	// TODO: SW decide the format this should go back to GQL with
