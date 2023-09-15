@@ -34,7 +34,8 @@ Cypress.Commands.add('login', () => {
 Cypress.Commands.add(
   'localLogin',
   ({ name, role = 'MINT_USER_NONPROD', nda }) => {
-    cy.visit('/login');
+    // Adding an extended timeout here to give Vite enough time to compile sass on it's first run
+    cy.visit('/login', { timeout: 120000 });
 
     cy.get('[data-testid="LocalAuth-Visit"]').click();
     cy.get('[data-testid="LocalAuth-EUA"]').type(name);
