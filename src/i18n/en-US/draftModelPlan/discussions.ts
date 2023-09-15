@@ -23,8 +23,8 @@ const discussions = {
   saveReply: 'Save reply',
   useLinkAbove:
     'There are no new discussion topics. Start a discussion and it will appear here.',
-  newTopics: '{{count}} new discussion topic',
-  newTopics_plural: '{{count}} new discussion topics',
+  newDiscussionTopics: '{{count}} new discussion topic',
+  newDiscussionTopics_plural: '{{count}} new discussion topics',
   discussionWithCount: '{{count}} discussion',
   discussionWithCount_plural: '{{count}} discussions',
   answered: 'answered question',

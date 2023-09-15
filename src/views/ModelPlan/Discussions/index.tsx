@@ -277,7 +277,7 @@ const Discussions = ({
       return (
         <div key={status}>
           <Accordion
-            className={classNames('margin-bottom-2', {
+            className={classNames('discussion-accordion margin-bottom-2', {
               'no-pointer': !openStatus(DiscussionStatus[status]),
               'no-button': !openStatus(DiscussionStatus[status])
             })}
@@ -289,7 +289,7 @@ const Discussions = ({
                 title:
                   status === 'UNANSWERED' ? (
                     <strong>
-                      {t('newTopics', {
+                      {t('newDiscussionTopics', {
                         count: questionCount.unansweredQuestions
                       })}
                     </strong>
