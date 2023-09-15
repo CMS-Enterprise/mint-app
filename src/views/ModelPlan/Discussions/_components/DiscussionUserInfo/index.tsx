@@ -21,7 +21,7 @@ const DiscussionUserInfo = ({
 }: DiscussionUserInfoProps) => {
   const { t: discussionT } = useTranslation('discussions');
   return (
-    <div className="display-flex flex-wrap flex-justify margin-bottom-1">
+    <div className="display-flex flex-wrap flex-justify">
       <div>
         {discussionTopic.isAssessment ? (
           <div className="display-flex flex-align-center">

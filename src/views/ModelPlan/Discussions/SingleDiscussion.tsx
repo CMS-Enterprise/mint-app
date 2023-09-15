@@ -38,21 +38,21 @@ const SingleDiscussion = ({
   const { t } = useTranslation('discussions');
 
   return (
-    <div className="mint-discussions__single-discussion">
+    <div className="mint-discussions__single-discussion margin-bottom-4">
       <DiscussionUserInfo discussionTopic={discussion} index={index} />
 
       <div
         className={classNames({
-          'margin-bottom-4': answerQuestion,
+          // 'margin-bottom-4': answerQuestion,
           'mint-discussions__connected': connected,
           'mint-discussions__not-connected': !connected
         })}
       >
         <p
           className={classNames(
-            'margin-top-0 margin-bottom-1 padding-top-1 padding-bottom-2 text-pre-wrap',
+            'margin-top-0 margin-bottom-105 text-pre-wrap',
             {
-              'padding-top-5': !!discussion.userRole,
+              // 'padding-top-5': !!discussion.userRole,
               'margin-bottom-2': isLast
             }
           )}
@@ -63,7 +63,7 @@ const SingleDiscussion = ({
         {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
         {/* TODO: figure out how to conditionally render this reply link */}
         {hasEditAccess && answerQuestion && (
-          <div className="display-flex margin-bottom-2">
+          <div className="display-flex flex-align-center">
             <IconAnnouncement className="text-primary margin-right-1" />
             <Button
               type="button"

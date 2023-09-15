@@ -91,9 +91,7 @@ const FormatDiscussion = ({
               />
             )}
             {/* Divider to separate questions if not the last question */}
-            {index !== discussionsContentList.length - 1 && (
-              <Divider className="margin-top-4" />
-            )}
+            {index !== discussionsContentList.length - 1 && <Divider />}
             {!isAccordionExpanded &&
               discussionsContent.length > 5 &&
               index === discussionsContentList.length - 1 && (
