@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
 import { defineConfig } from 'vite';
 import svgrPlugin from 'vite-plugin-svgr';
-import { warmup } from 'vite-plugin-warmup';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
@@ -17,17 +16,7 @@ export default defineConfig({
       transformMixedEsModules: true
     }
   },
-  plugins: [
-    react(),
-    viteTsconfigPaths(),
-    svgrPlugin(),
-    warmup({
-      // this plugin helps warm up the compiled sass so that the first page load on the
-      // dev server is not slow
-      // https://github.com/vitejs/vite/issues/6736#issuecomment-1492974590
-      clientFiles: ['index.html']
-    })
-  ],
+  plugins: [react(), viteTsconfigPaths(), svgrPlugin()],
   server: {
     watch: {
       usePolling: true
