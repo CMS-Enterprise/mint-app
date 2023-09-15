@@ -14,28 +14,26 @@ type SingleDiscussionProps = {
   discussion: DiscussionType | ReplyType;
   index: number;
   connected?: boolean;
-  answerQuestion?: boolean;
-  hasEditAccess?: boolean;
   setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
   isLast: boolean;
+  replyCount: number;
 };
 
 const SingleDiscussion = ({
   discussion,
   index,
   connected,
-  answerQuestion,
-  hasEditAccess,
   setDiscussionStatusMessage,
   setDiscussionType,
   setReply,
   setIsDiscussionOpen,
-  isLast
+  isLast,
+  replyCount
 }: SingleDiscussionProps) => {
-  const { t } = useTranslation('discussions');
+  const { t: discussionT } = useTranslation('discussions');
 
   return (
     <div className="mint-discussions__single-discussion margin-bottom-4">
@@ -60,28 +58,25 @@ const SingleDiscussion = ({
           {discussion.content}
         </p>
 
-        {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
-        {/* TODO: figure out how to conditionally render this reply link */}
-        {hasEditAccess && answerQuestion && (
-          <div className="display-flex flex-align-center">
-            <IconAnnouncement className="text-primary margin-right-1" />
-            <Button
-              type="button"
-              unstyled
-              role="button"
-              onClick={() => {
-                if (setIsDiscussionOpen) {
-                  setIsDiscussionOpen(true);
-                }
-                setDiscussionStatusMessage('');
-                setDiscussionType('reply');
-                setReply(discussion);
-              }}
-            >
-              {t('reply')}
-            </Button>
-          </div>
-        )}
+        <div className="display-flex flex-align-center">
+          <IconAnnouncement className="text-primary margin-right-1" />
+          <Button
+            type="button"
+            unstyled
+            onClick={() => {
+              if (setIsDiscussionOpen) {
+                setIsDiscussionOpen(true);
+              }
+              setDiscussionStatusMessage('');
+              setDiscussionType('reply');
+              setReply(discussion);
+            }}
+          >
+            {replyCount === 0
+              ? discussionT('reply')
+              : discussionT('replies', { count: replyCount })}
+          </Button>
+        </div>
       </div>
     </div>
   );

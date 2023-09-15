@@ -15,6 +15,7 @@ const discussions = {
   typeQuestion: 'Type your question or discussion topic',
   typeQuestionHelpText:
     'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
+  reply: 'Reply',
   replies: '{{count}} reply',
   replies_plural: '{{count}} replies',
   replies_0: 'No replies',
@@ -37,7 +38,6 @@ const discussions = {
     'Sorry, we encountered a problem adding your discussion topic. Please try again.',
   errorReply:
     'Sorry, we encountered a problem adding your reply. Please try again.',
-  reply: 'Reply',
   answerDescription:
     'Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again.',
   ago: 'ago',

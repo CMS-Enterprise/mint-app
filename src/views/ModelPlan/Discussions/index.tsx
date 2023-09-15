@@ -275,12 +275,15 @@ const Discussions = ({
     .reverse() // Unanswered questions should appear for answered.  This method of sorting may need to change if more status/accordions are introduced
     .map(status => {
       return (
-        <div key={status}>
+        <React.Fragment key={status}>
           <Accordion
-            className={classNames('discussion-accordion margin-bottom-2', {
-              'no-pointer': !openStatus(DiscussionStatus[status]),
-              'no-button': !openStatus(DiscussionStatus[status])
-            })}
+            className={classNames(
+              'discussion-accordion margin-bottom-2 margin-top-0',
+              {
+                'no-pointer': !openStatus(DiscussionStatus[status]),
+                'no-button': !openStatus(DiscussionStatus[status])
+              }
+            )}
             key={status}
             multiselectable
             items={[
@@ -330,7 +333,7 @@ const Discussions = ({
                   : t('nonEditor.noQuestions'))}
             </Alert>
           )}
-        </div>
+        </React.Fragment>
       );
     });
 

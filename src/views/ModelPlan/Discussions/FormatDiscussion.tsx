@@ -55,7 +55,18 @@ const FormatDiscussion = ({
               'margin-top-2': index === 0
             })}
           >
-            {discussion.replies.length > 0 ? (
+            <SingleDiscussion
+              discussion={discussion}
+              index={index}
+              connected={false}
+              setDiscussionStatusMessage={setDiscussionStatusMessage}
+              setDiscussionType={setDiscussionType}
+              setReply={setReply}
+              setIsDiscussionOpen={setIsDiscussionOpen}
+              isLast={index === discussionsContentList.length - 1}
+              replyCount={discussion.replies.length}
+            />
+            {/* {discussion.replies.length > 0 ? (
               // If discussions has replies, join together in array for rendering as a connected discussion
               <>
                 {[discussion, ...discussion.replies].map(
@@ -65,7 +76,6 @@ const FormatDiscussion = ({
                       discussion={discussionReply}
                       index={index}
                       connected={replyIndex !== discussion.replies.length}
-                      hasEditAccess={hasEditAccess}
                       setDiscussionStatusMessage={setDiscussionStatusMessage}
                       setDiscussionType={setDiscussionType}
                       setReply={setReply}
@@ -81,15 +91,13 @@ const FormatDiscussion = ({
                 discussion={discussion}
                 index={index}
                 connected={false}
-                answerQuestion
-                hasEditAccess={hasEditAccess}
                 setDiscussionStatusMessage={setDiscussionStatusMessage}
                 setDiscussionType={setDiscussionType}
                 setReply={setReply}
                 setIsDiscussionOpen={setIsDiscussionOpen}
                 isLast={index === discussionsContentList.length - 1}
               />
-            )}
+            )} */}
             {/* Divider to separate questions if not the last question */}
             {index !== discussionsContentList.length - 1 && <Divider />}
             {!isAccordionExpanded &&
