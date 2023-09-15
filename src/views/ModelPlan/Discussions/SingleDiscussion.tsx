@@ -3,14 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Button, IconAnnouncement } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import AssessmentIcon from 'components/shared/AssessmentIcon';
-import IconInitial from 'components/shared/IconInitial';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { DiscussionUserRole } from 'types/graphql-global-types';
-import { getTimeElapsed } from 'utils/date';
+
+import DiscussionUserInfo from './_components/DiscussionUserInfo';
 
 type SingleDiscussionProps = {
   discussion: DiscussionType | ReplyType;
@@ -41,39 +39,7 @@ const SingleDiscussion = ({
 
   return (
     <div className="mint-discussions__single-discussion">
-      <div className="display-flex flex-wrap flex-justify">
-        {discussion.isAssessment ? (
-          <div className="display-flex flex-align-center">
-            <AssessmentIcon size={3} />{' '}
-            <span>
-              {t('assessment')} | {discussion.createdByUserAccount.commonName}
-            </span>
-          </div>
-        ) : (
-          <IconInitial
-            user={discussion.createdByUserAccount.commonName}
-            index={index}
-          />
-        )}
-
-        <span className="margin-left-5 margin-top-05 text-base">
-          {getTimeElapsed(discussion.createdDts)
-            ? getTimeElapsed(discussion.createdDts) + t('ago')
-            : t('justNow')}
-        </span>
-      </div>
-
-      {discussion.userRole && (
-        <p
-          className={classNames(
-            'text-base margin-top-0 position-absolute margin-left-5'
-          )}
-        >
-          {discussion.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
-            ? discussion.userRoleDescription
-            : t(`userRole.${discussion.userRole}`)}
-        </p>
-      )}
+      <DiscussionUserInfo discussionTopic={discussion} />
 
       <div
         className={classNames({
@@ -96,26 +62,26 @@ const SingleDiscussion = ({
 
         {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
         {/* TODO: figure out how to conditionally render this reply link */}
-        {/* {hasEditAccess && answerQuestion && ( */}
-        <div className="display-flex margin-bottom-2">
-          <IconAnnouncement className="text-primary margin-right-1" />
-          <Button
-            type="button"
-            unstyled
-            role="button"
-            onClick={() => {
-              if (setIsDiscussionOpen) {
-                setIsDiscussionOpen(true);
-              }
-              setDiscussionStatusMessage('');
-              setDiscussionType('reply');
-              setReply(discussion);
-            }}
-          >
-            {t('reply')}
-          </Button>
-        </div>
-        {/* )} */}
+        {hasEditAccess && answerQuestion && (
+          <div className="display-flex margin-bottom-2">
+            <IconAnnouncement className="text-primary margin-right-1" />
+            <Button
+              type="button"
+              unstyled
+              role="button"
+              onClick={() => {
+                if (setIsDiscussionOpen) {
+                  setIsDiscussionOpen(true);
+                }
+                setDiscussionStatusMessage('');
+                setDiscussionType('reply');
+                setReply(discussion);
+              }}
+            >
+              {t('reply')}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

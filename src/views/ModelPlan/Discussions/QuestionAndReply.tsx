@@ -14,11 +14,9 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
-import AssessmentIcon from 'components/shared/AssessmentIcon';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import IconInitial from 'components/shared/IconInitial';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import {
@@ -27,10 +25,10 @@ import {
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
 import { DiscussionUserRole } from 'types/graphql-global-types';
-import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum } from 'utils/modelPlan';
 
+import DiscussionUserInfo from './_components/DiscussionUserInfo';
 import Replies from './Replies';
 import { DicussionFormPropTypes } from '.';
 
@@ -102,37 +100,7 @@ const QuestionAndReply = ({
       {renderType === 'reply' && reply && (
         <>
           <div className="discussion-topic margin-bottom-3">
-            <div className="display-flex flex-wrap flex-justify margin-bottom-1">
-              <div>
-                {reply.isAssessment ? (
-                  <div className="display-flex flex-align-center">
-                    <AssessmentIcon size={3} />{' '}
-                    <span>
-                      {t('assessment')} |{' '}
-                      {reply.createdByUserAccount.commonName}
-                    </span>
-                  </div>
-                ) : (
-                  <IconInitial
-                    className="margin-bottom-1"
-                    user={reply.createdByUserAccount.commonName}
-                    index={0}
-                  />
-                )}
-                {reply.userRole && (
-                  <p className="text-base margin-left-5 margin-y-0">
-                    {reply.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
-                      ? reply.userRoleDescription
-                      : t(`userRole.${reply.userRole}`)}
-                  </p>
-                )}
-              </div>
-              <span className="text-base margin-top-05">
-                {getTimeElapsed(reply.createdDts)
-                  ? getTimeElapsed(reply.createdDts) + t('ago')
-                  : t('justNow')}
-              </span>
-            </div>
+            <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
               <p className="margin-y-0">{reply.content}</p>
