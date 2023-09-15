@@ -39,7 +39,7 @@ const SingleDiscussion = ({
 
   return (
     <div className="mint-discussions__single-discussion">
-      <DiscussionUserInfo discussionTopic={discussion} />
+      <DiscussionUserInfo discussionTopic={discussion} index={index} />
 
       <div
         className={classNames({

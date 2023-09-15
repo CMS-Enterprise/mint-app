@@ -12,9 +12,13 @@ import { getTimeElapsed } from 'utils/date';
 
 type DiscussionUserInfoProps = {
   discussionTopic: DiscussionType | ReplyType;
+  index?: number;
 };
 
-const DiscussionUserInfo = ({ discussionTopic }: DiscussionUserInfoProps) => {
+const DiscussionUserInfo = ({
+  discussionTopic,
+  index
+}: DiscussionUserInfoProps) => {
   const { t: discussionT } = useTranslation('discussions');
   return (
     <div className="display-flex flex-wrap flex-justify margin-bottom-1">
@@ -31,7 +35,7 @@ const DiscussionUserInfo = ({ discussionTopic }: DiscussionUserInfoProps) => {
           <IconInitial
             className="margin-bottom-1"
             user={discussionTopic.createdByUserAccount.commonName}
-            index={0}
+            index={index ?? 0}
           />
         )}
         {discussionTopic.userRole && (
