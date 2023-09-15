@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Mention, MentionItem, MentionsInput } from 'react-mentions';
+import { Mention, MentionsInput } from 'react-mentions';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import {
@@ -8,7 +8,6 @@ import {
   Dropdown,
   Fieldset,
   Label,
-  Textarea,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -65,16 +64,9 @@ const QuestionAndReply = ({
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const [userSearch, setUserSearch] = useState<any>();
-
   const [getUsersLazyQuery] = useLazyQuery<SearchOktaUsersType>(
     SearchOktaUsers
   );
-
-  const [selectedUsers, setSelectedUsers] = useState<MentionItem[]>([]);
-
-  // Data that can be passed/formatted to mutation for BE
-  // console.log(selectedUsers);
 
   const fetchUsers = (query: string, callback: any) => {
     getUsersLazyQuery({
@@ -158,7 +150,8 @@ const QuestionAndReply = ({
         initialValues={{
           content: '',
           userRole: mostRecentUserRole || ('' as DiscussionUserRole),
-          userRoleDescription: mostRecentUserRoleDescription || ''
+          userRoleDescription: mostRecentUserRoleDescription || '',
+          mentions: []
         }}
         enableReinitialize
         onSubmit={handleCreateDiscussion}
@@ -177,6 +170,8 @@ const QuestionAndReply = ({
             isSubmitting
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
+          // console.log(values);
 
           return (
             <>
@@ -275,38 +270,50 @@ const QuestionAndReply = ({
                         : t('typeAnswer')}
                     </Label>
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
-                    <Field
-                      className="height-card"
-                      as={Textarea}
-                      error={!!flatErrors.content}
-                      id="discussion-content"
-                      name="content"
-                    />
 
-                    <div className="async">
-                      <h3>PoC MINT React-Mentions</h3>
-
+                    <div className="margin-top-1">
                       <MentionsInput
-                        value={userSearch || ''}
+                        value={values.content}
                         onChange={(
                           event,
                           newValue,
                           newPlainTextValue,
                           mentions
                         ) => {
-                          setUserSearch(newValue);
-                          if (mentions !== selectedUsers) {
-                            setSelectedUsers(mentions);
+                          setFieldValue('content', newValue);
+                          // @ts-ignore
+                          if (mentions !== values.mentions) {
+                            setFieldValue('mentions', mentions);
                           }
                         }}
                         placeholder="Type anything, use the @ symbol to tag other users."
-                        className="mentions"
+                        className="mentions height-card"
+                        style={{
+                          suggestions: {
+                            list: {
+                              border: '1px solid rgba(0,0,0,0.15)'
+                            },
+                            item: {
+                              padding: '5px 15px',
+                              borderBottom: '1px solid rgba(0,0,0,0.15)',
+                              '&focused': {
+                                backgroundColor: '#d9e8f6'
+                              }
+                            }
+                          },
+                          highlighter: {
+                            lineHeight: '19px'
+                          }
+                        }}
                       >
                         <Mention
                           trigger="@"
-                          displayTransform={(user, display) => `@${display}`}
+                          displayTransform={(user, display) => `@${display} `}
                           data={userSuggestions}
                           className="mentions__mention"
+                          style={{
+                            backgroundColor: '#d9e8f6'
+                          }}
                         />
                       </MentionsInput>
                     </div>
