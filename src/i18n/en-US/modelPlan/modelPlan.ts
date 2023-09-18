@@ -19,13 +19,25 @@ export const modelPlan: TranslationModelPlan = {
   },
   abbreviation: {
     gqlField: 'abbreviation',
-    goField: 'abbreviation',
+    goField: 'Abbreviation',
     dbField: 'abbreviation',
     label: 'Short name',
     sublabel:
       'The abbreviation, acronym, or other common name used for the model.',
     dataType: 'string',
     formType: 'text'
+  },
+  archived: {
+    gqlField: 'archived',
+    goField: 'Archived',
+    dbField: 'archived',
+    label: 'Archived',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
   },
   status: {
     gqlField: 'status',
@@ -54,6 +66,11 @@ export const modelPlan: TranslationModelPlan = {
 
 export const modelPlanMisc: Record<string, string> = {
   heading: 'Model name',
+  modelID: 'Model ID',
+  createdBy: 'Created by',
+  createdAt: 'Created at',
+  readyForReviewBy: 'Ready for review by',
+  readyForReviewAt: 'Ready for review at',
   breadcrumb: 'Start a new Model Plan',
   modeName: 'What is the name of your model?',
   modelNameInfo:

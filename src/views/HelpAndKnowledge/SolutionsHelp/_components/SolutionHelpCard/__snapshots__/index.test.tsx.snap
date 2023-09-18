@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Operation Solution Help Card matches snapshot 1`] = `
+exports[`Operation Solution Help Card > matches snapshot 1`] = `
 <DocumentFragment>
   <ul
     class="usa-card-group flex-no-wrap"

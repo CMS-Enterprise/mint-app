@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ShareExportModal matches the snapshot 1`] = `
+exports[`ShareExportModal > matches the snapshot 1`] = `
 <DocumentFragment>
   <div
     aria-describedby="share-export-modal-description"
@@ -6210,7 +6210,7 @@ exports[`ShareExportModal matches the snapshot 1`] = `
 </DocumentFragment>
 `;
 
-exports[`ShareExportModal matches the snapshot 2`] = `
+exports[`ShareExportModal > matches the snapshot 2`] = `
 <DocumentFragment>
   <div
     aria-describedby="share-export-modal-description"

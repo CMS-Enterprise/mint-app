@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Locked Task List Section Page matches snapshot 1`] = `
+exports[`Locked Task List Section Page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content mint-not-found grid-container"
