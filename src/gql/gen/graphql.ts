@@ -284,7 +284,7 @@ export type DateHistogramAggregationBucket = {
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
   __typename?: 'DiscussionReply';
-  content?: Maybe<Scalars['TaggedString']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -295,6 +295,7 @@ export type DiscussionReply = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   resolution?: Maybe<Scalars['Boolean']['output']>;
+  taggedContent?: Maybe<TaggedContent>;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -1374,7 +1375,7 @@ export type PlanCrTdlCreateInput = {
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
   __typename?: 'PlanDiscussion';
-  content?: Maybe<Scalars['TaggedString']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1386,6 +1387,7 @@ export type PlanDiscussion = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   replies: Array<DiscussionReply>;
   status: DiscussionStatus;
+  taggedContent?: Maybe<TaggedContent>;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -2471,6 +2473,38 @@ export type SubscriptionOnLockTaskListSectionContextArgs = {
 export type SubscriptionOnTaskListSectionLocksChangedArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
+
+/** Tag represents an entity tagged in the database */
+export type Tag = {
+  __typename?: 'Tag';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  entity?: Maybe<TaggedEntity>;
+  entityIntID?: Maybe<Scalars['Int']['output']>;
+  entityUUID?: Maybe<Scalars['UUID']['output']>;
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  tagType: TagType;
+  taggedContentID: Scalars['UUID']['output'];
+};
+
+export enum TagType {
+  POSSIBLE_SOLUTION = 'POSSIBLE_SOLUTION',
+  USER_ACCOUNT = 'USER_ACCOUNT'
+}
+
+/** TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags */
+export type TaggedContent = {
+  __typename?: 'TaggedContent';
+  rawContent: Scalars['String']['output'];
+  tags: Array<Tag>;
+};
+
+/** TaggedEntity is the actual object represented by a tag in the data base. */
+export type TaggedEntity = PossibleOperationalSolution | UserAccount;
 
 export enum TaskListSection {
   BASICS = 'BASICS',

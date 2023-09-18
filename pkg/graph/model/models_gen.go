@@ -98,6 +98,12 @@ type SearchFilter struct {
 	Value interface{}      `json:"value"`
 }
 
+// TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
+type TaggedContent struct {
+	RawContent string        `json:"rawContent"`
+	Tags       []*models.Tag `json:"tags"`
+}
+
 type TaskListSectionLockStatus struct {
 	ModelPlanID         uuid.UUID                   `json:"modelPlanID"`
 	Section             models.TaskListSection      `json:"section"`

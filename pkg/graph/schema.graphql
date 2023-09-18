@@ -364,13 +364,54 @@ type UserInfo {
   username: String!
 }
 
+
+"""
+TaggedEntity is the actual object represented by a tag in the data base.
+"""
+union TaggedEntity =  UserAccount | PossibleOperationalSolution
+
+"""
+TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
+"""
+type TaggedContent {
+  rawContent: String!
+  tags: [Tag!]!
+}
+
+"""
+Tag represents an entity tagged in the database
+"""
+type Tag {
+  id: UUID!
+  tagType: TagType!
+  taggedContentID: UUID!
+  entityUUID: UUID
+  entityIntID: Int
+
+  entity: TaggedEntity
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+enum TagType {
+    USER_ACCOUNT
+    POSSIBLE_SOLUTION
+}
+
+
 """
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
-	content: TaggedString
+	content: String #TODO, when implementing, this content type should likely be replaced with TaggedContent, instead of existing side by side (to allow tags on multiple fields)
+  taggedContent: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
 	status: DiscussionStatus!
@@ -414,7 +455,8 @@ DiscussionReply represents a discussion reply
 type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
-	content: TaggedString
+	content: String #TODO, when implementing, this content type should likely be replaced with TaggedContent, instead of existing side by side (to allow tags on multiple fields)
+  taggedContent: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
 	resolution: Boolean

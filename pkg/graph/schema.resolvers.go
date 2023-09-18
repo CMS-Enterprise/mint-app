@@ -27,6 +27,16 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
+// Content is the resolver for the content field.
+func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*string, error) {
+	panic(fmt.Errorf("not implemented: Content - content"))
+}
+
+// TaggedContent is the resolver for the taggedContent field.
+func (r *discussionReplyResolver) TaggedContent(ctx context.Context, obj *models.DiscussionReply) (*model.TaggedContent, error) {
+	panic(fmt.Errorf("not implemented: TaggedContent - taggedContent"))
+}
+
 // ExistingModel is the resolver for the existingModel field.
 func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
 	if obj.ExistingModelID == nil { //Don't do a DB call if nil
@@ -536,6 +546,16 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
+// Content is the resolver for the content field.
+func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*string, error) {
+	panic(fmt.Errorf("not implemented: Content - content"))
+}
+
+// TaggedContent is the resolver for the taggedContent field.
+func (r *planDiscussionResolver) TaggedContent(ctx context.Context, obj *models.PlanDiscussion) (*model.TaggedContent, error) {
+	panic(fmt.Errorf("not implemented: TaggedContent - taggedContent"))
+}
+
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
 	return resolvers.DiscussionReplyCollectionByDiscusionIDLOADER(ctx, obj.ID)
@@ -1007,8 +1027,18 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
+// Entity is the resolver for the entity field.
+func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error) {
+	panic(fmt.Errorf("not implemented: Entity - entity"))
+}
+
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
+
+// DiscussionReply returns generated.DiscussionReplyResolver implementation.
+func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
+	return &discussionReplyResolver{r}
+}
 
 // ExistingModelLink returns generated.ExistingModelLinkResolver implementation.
 func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
@@ -1076,7 +1106,11 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 // Subscription returns generated.SubscriptionResolver implementation.
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
+// Tag returns generated.TagResolver implementation.
+func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
+
 type auditChangeResolver struct{ *Resolver }
+type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
@@ -1093,3 +1127,4 @@ type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
+type tagResolver struct{ *Resolver }

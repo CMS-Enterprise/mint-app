@@ -23,7 +23,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: TaggedString | null;
+  content: string | null;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
   isAssessment: boolean;
@@ -36,7 +36,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
 export interface GetModelPlanDiscussions_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: TaggedString | null;
+  content: string | null;
   createdBy: UUID;
   createdDts: Time;
   userRole: DiscussionUserRole | null;

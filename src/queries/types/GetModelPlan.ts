@@ -52,7 +52,7 @@ export interface GetModelPlan_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: TaggedString | null;
+  content: string | null;
   createdBy: UUID;
   createdDts: Time;
   resolution: boolean | null;
@@ -61,7 +61,7 @@ export interface GetModelPlan_modelPlan_discussions_replies {
 export interface GetModelPlan_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: TaggedString | null;
+  content: string | null;
   createdBy: UUID;
   createdDts: Time;
   status: DiscussionStatus;

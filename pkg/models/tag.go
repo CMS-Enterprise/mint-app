@@ -10,3 +10,8 @@ type Tag struct {
 	EntityUUID      *uuid.UUID `json:"entityUUID" db:"entity_uuid"`
 	EntityIntID     *int       `json:"entityIntID" db:"entity_intid"`
 }
+
+// TaggedEntity is an interface which represents if an object can be tagged or not
+type TaggedEntity interface {
+	IsTaggedEntity()
+}
