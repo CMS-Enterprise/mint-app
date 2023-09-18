@@ -27,5 +27,5 @@ func TestNameCamelCase(t *testing.T) {
 	}
 
 	camel := field.NameCamelCase()
-	assert.Equal(t, "hOORAYHOerAYHello", camel)
+	assert.Equal(t, "hoorayHoerAyHello", camel)
 }
