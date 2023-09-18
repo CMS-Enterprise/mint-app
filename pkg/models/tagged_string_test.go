@@ -9,7 +9,9 @@ import (
 )
 
 func TestTagsFromRawString(t *testing.T) {
-	content := "This is a sample <tag1/> string <tag2 attribute=\"value\"/> containing tags."
+	tag1 := `<tag type="USER_ACCOUNT" entityID="34508e34-e3a8-4c1c-8d08-820d71995300"/>`
+	tag2 := `<tag type="POSSIBLE_SOLUTION" entityID="3"/>`
+	content := "This is a sample " + tag1 + " string " + tag2 + "containing tags."
 
 	tags, err := tagsFromRawString(content)
 	assert.NoError(t, err)
