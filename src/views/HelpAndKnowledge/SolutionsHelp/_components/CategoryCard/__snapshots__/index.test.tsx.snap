@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Operational Solution Category Card matches snapshot 1`] = `
+exports[`Operational Solution Category Card > matches snapshot 1`] = `
 <DocumentFragment>
   <li
     class="usa-card radius-sm width-full operational-solution-help__category"
