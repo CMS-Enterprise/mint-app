@@ -64,7 +64,7 @@ const FormatDiscussion = ({
               setReply={setReply}
               setIsDiscussionOpen={setIsDiscussionOpen}
               isLast={index === discussionsContentList.length - 1}
-              replyCount={discussion.replies.length}
+              replies={discussion.replies}
             />
             {/* {discussion.replies.length > 0 ? (
               // If discussions has replies, join together in array for rendering as a connected discussion

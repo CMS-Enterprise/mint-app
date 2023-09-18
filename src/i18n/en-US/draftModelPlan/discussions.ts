@@ -22,6 +22,7 @@ const discussions = {
   typeReply: 'Type your reply',
   save: 'Save discussion',
   saveReply: 'Save reply',
+  lastReply: 'Last reply {{date}} at {{time}}',
   useLinkAbove:
     'There are no new discussion topics. Start a discussion and it will appear here.',
   newDiscussionTopics: '{{count}} new discussion topic',
