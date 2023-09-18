@@ -173,9 +173,10 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-
+	cntent, err := models.TaggedStringFromRawString("This is now updated! Thanks for looking at my test")
+	suite.NoError(err)
 	changes := map[string]interface{}{
-		"content": "This is now updated! Thanks for looking at my test",
+		"content": cntent,
 		"status":  models.DiscussionAnswered,
 	}
 	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -267,9 +268,11 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
 	assert.Nil(suite.T(), reply.ModifiedBy)
 	assert.Nil(suite.T(), reply.ModifiedDts)
+	cntnt, err := models.TaggedStringFromRawString("This is now updated! Thanks for looking at my test")
+	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"content":    "This is now updated! Thanks for looking at my test",
+		"content":    cntnt,
 		"resolution": true,
 	}
 
