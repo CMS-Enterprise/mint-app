@@ -1031,7 +1031,7 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 
 // Entity is the resolver for the entity field.
 func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error) {
-	panic(fmt.Errorf("not implemented: Entity - entity"))
+	return resolvers.TaggedEntityGet(ctx, r.store, obj.TagType, obj.EntityUUID, obj.EntityIntID)
 }
 
 // AuditChange returns generated.AuditChangeResolver implementation.

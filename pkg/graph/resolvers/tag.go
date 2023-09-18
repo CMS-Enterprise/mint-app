@@ -1,9 +1,13 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -41,4 +45,24 @@ func TagCollectionGet(
 	tags, err := store.TagCollectionGetByContentIDAndField(logger, taggedTable, taggedField, taggedContentID)
 
 	return tags, err
+}
+
+// TaggedEntityGet returns a Tagged Entity based on the table it refers to as well as the ID
+func TaggedEntityGet(
+	ctx context.Context,
+	store *storage.Store,
+	tagType models.TagType,
+	EntityUUID *uuid.UUID,
+	EntityIntID *int,
+) (models.TaggedEntity, error) {
+	logger := appcontext.ZLogger(ctx)
+	switch tagType {
+	case models.TagTypeUserAccount:
+		return UserAccountGetByIDLOADER(ctx, *EntityUUID)
+	case models.TagTypePossibleSolution:
+		return PossibleOperationalSolutionGetByID(logger, store, *EntityIntID)
+	default:
+		return nil, fmt.Errorf(" no tagged entity configured for table: %s", tagType)
+	}
+
 }
