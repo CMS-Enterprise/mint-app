@@ -17,13 +17,6 @@ const readOnlyModelPlan = {
     heading: 'All models',
     subheading:
       'Follow models that you want to stay up to date on by clicking the star icon.',
-    tableHeading: {
-      modelName: 'Model name',
-      category: 'Category',
-      status: 'Status',
-      startDate: 'Model start date',
-      crsAndTdls: 'CRs and TDLs'
-    },
     noResults: {
       heading: 'We couldn’t find any matches for "{{-searchTerm}}".',
       subheading:

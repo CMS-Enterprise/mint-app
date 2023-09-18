@@ -2,6 +2,8 @@ const home = {
   title: 'Welcome to Model Innovation Tool (MINT)',
   subheading:
     'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.',
+  macSubheading:
+    'The place to learn about upcoming CMMI models and demonstrations.',
   signIn: 'Sign in to start',
   mintPurpose: 'You can use MINT to:',
   startNow: 'Start a new Model Plan',
@@ -50,6 +52,8 @@ const home = {
     headers: {
       name: 'Model name',
       category: 'Category',
+      abbreviation: 'Short name',
+      amsModelID: 'ID',
       modelPoc: 'Model lead(s)',
       clearanceDate: 'Anticipated clearance date',
       startDate: 'Model start date',
@@ -61,7 +65,7 @@ const home = {
       recentActivity: 'Recent activity'
     },
     noneSelectedYet: 'None selected yet',
-    tbd: 'TBD',
+    tbd: 'To be determined',
     updated: 'Updated',
     unansweredQuestion: 'unanswered question',
     answeredQuestion: 'answered question'

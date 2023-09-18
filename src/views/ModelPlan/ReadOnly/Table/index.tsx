@@ -20,10 +20,7 @@ import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-import {
-  GetAllModelPlans_modelPlanCollection as AllModelPlansType,
-  GetAllModelPlans_modelPlanCollection_crTdls as CRTDLType
-} from 'queries/ReadOnly/types/GetAllModelPlans';
+import { GetAllModelPlans_modelPlanCollection as AllModelPlansType } from 'queries/ReadOnly/types/GetAllModelPlans';
 import { ModelCategory } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
@@ -35,6 +32,7 @@ import {
 } from 'utils/tableSort';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 import { RenderFilteredNameHistory } from 'views/ModelPlan/Table';
+import formatRecentActivity from 'views/ModelPlan/Table/formatActivity';
 
 type ModelPlansTableProps = {
   data: AllModelPlansType[];
@@ -92,7 +90,7 @@ const Table = ({
         }
       },
       {
-        Header: t('allModels.tableHeading.modelName'),
+        Header: f('requestsTable.headers.name'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
           const filteredNameHistory: string[] = row.original.nameHistory?.slice(
@@ -113,7 +111,15 @@ const Table = ({
         }
       },
       {
-        Header: t('allModels.tableHeading.category'),
+        Header: f('requestsTable.headers.abbreviation'),
+        accessor: 'abbreviation'
+      },
+      {
+        Header: f('requestsTable.headers.amsModelID'),
+        accessor: 'basics.amsModelID'
+      },
+      {
+        Header: f('requestsTable.headers.category'),
         accessor: 'basics.modelCategory',
         Cell: ({ row, value }: any) => {
           const additionalModelCategory =
@@ -139,7 +145,7 @@ const Table = ({
         }
       },
       {
-        Header: t('allModels.tableHeading.status'),
+        Header: f('requestsTable.headers.status'),
         accessor: ({ status }: any) => {
           return modelPlanT(`status.options.${status}`);
         },
@@ -148,7 +154,22 @@ const Table = ({
         }
       },
       {
-        Header: t('allModels.tableHeading.startDate'),
+        Header: f('requestsTable.headers.clearanceDate'),
+        accessor: ({ basics: { clearanceStarts } }: any) => {
+          if (clearanceStarts) {
+            return formatDateUtc(clearanceStarts, 'MM/dd/yyyy');
+          }
+          return null;
+        },
+        Cell: ({ value }: { value: string }) => {
+          if (!value) {
+            return <div>{f('requestsTable.tbd')}</div>;
+          }
+          return value;
+        }
+      },
+      {
+        Header: f('requestsTable.headers.startDate'),
         accessor: ({ basics: { performancePeriodStarts } }: any) => {
           if (performancePeriodStarts) {
             return formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy');
@@ -163,20 +184,16 @@ const Table = ({
         }
       },
       {
-        Header: t('allModels.tableHeading.crsAndTdls'),
-        accessor: 'crTdls',
-        Cell: ({ value }: { value: CRTDLType[] }) => {
-          if (!value || value.length === 0) {
-            return <div>{h('noAnswer.tBD')}</div>;
-          }
-          const crtdlIDs = value
-            .map((crtdl: CRTDLType) => crtdl.idNumber)
-            .join(', ');
-          return crtdlIDs;
+        Header: f('requestsTable.headers.recentActivity'),
+        accessor: 'modifiedDts',
+        Cell: ({ row, value }: any) => {
+          const { discussions } = row.original;
+          const lastUpdated = value || row.original.createdDts;
+          return formatRecentActivity(lastUpdated, discussions);
         }
       }
     ];
-  }, [t, updateFavorite, basicsT, h, modelPlanT]);
+  }, [f, updateFavorite, basicsT, h, modelPlanT]);
 
   const {
     getTableProps,
@@ -266,10 +283,14 @@ const Table = ({
                     className="table-header"
                     scope="col"
                     style={{
-                      minWidth: index === 0 ? '50px' : '138px',
+                      minWidth:
+                        (index === 0 && '50px') ||
+                        (index === 3 && '100px') ||
+                        '138px',
                       width:
-                        ((index === 1 || index === 2) && '286px') ||
-                        (index === 3 && '175px') ||
+                        (index === 3 && '150px') ||
+                        ((index === 4 || index === 5) && '286px') ||
+                        (index === 6 && '175px') ||
                         '',
                       padding: index === 0 ? '0' : 'auto',
                       paddingTop: index === 0 ? '0rem' : 'auto',

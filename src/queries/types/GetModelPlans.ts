@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelPlanFilter, ModelStatus, KeyCharacteristic, TeamRole, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelPlanFilter, ModelStatus, ModelCategory, KeyCharacteristic, TeamRole, DiscussionStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlans
@@ -13,7 +13,11 @@ export interface GetModelPlans_modelPlanCollection_basics {
   __typename: "PlanBasics";
   id: UUID;
   demoCode: string | null;
+  amsModelID: string | null;
+  modelCategory: ModelCategory | null;
   clearanceStarts: Time | null;
+  performancePeriodStarts: Time | null;
+  additionalModelCategories: ModelCategory[];
   applicationsStart: Time | null;
 }
 
@@ -65,6 +69,7 @@ export interface GetModelPlans_modelPlanCollection {
   id: UUID;
   modelName: string;
   status: ModelStatus;
+  abbreviation: string | null;
   nameHistory: string[];
   createdBy: UUID;
   createdDts: Time;

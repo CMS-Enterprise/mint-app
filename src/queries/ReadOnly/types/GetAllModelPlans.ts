@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelPlanFilter, ModelStatus, ModelCategory, TeamRole } from "./../../../types/graphql-global-types";
+import { ModelPlanFilter, ModelStatus, ModelCategory, DiscussionStatus, TeamRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllModelPlans
@@ -11,10 +11,26 @@ import { ModelPlanFilter, ModelStatus, ModelCategory, TeamRole } from "./../../.
 
 export interface GetAllModelPlans_modelPlanCollection_basics {
   __typename: "PlanBasics";
-  performancePeriodStarts: Time | null;
+  demoCode: string | null;
+  amsModelID: string | null;
   modelCategory: ModelCategory | null;
+  clearanceStarts: Time | null;
+  performancePeriodStarts: Time | null;
   additionalModelCategories: ModelCategory[];
   goal: string | null;
+}
+
+export interface GetAllModelPlans_modelPlanCollection_discussions_replies {
+  __typename: "DiscussionReply";
+  id: UUID;
+  resolution: boolean | null;
+}
+
+export interface GetAllModelPlans_modelPlanCollection_discussions {
+  __typename: "PlanDiscussion";
+  id: UUID;
+  status: DiscussionStatus;
+  replies: GetAllModelPlans_modelPlanCollection_discussions_replies[];
 }
 
 export interface GetAllModelPlans_modelPlanCollection_collaborators_userAccount {
@@ -42,11 +58,15 @@ export interface GetAllModelPlans_modelPlanCollection {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
-  nameHistory: string[];
   status: ModelStatus;
+  abbreviation: string | null;
+  nameHistory: string[];
   isFavorite: boolean;
   isCollaborator: boolean;
+  modifiedDts: Time | null;
+  createdDts: Time;
   basics: GetAllModelPlans_modelPlanCollection_basics;
+  discussions: GetAllModelPlans_modelPlanCollection_discussions[];
   collaborators: GetAllModelPlans_modelPlanCollection_collaborators[];
   crTdls: GetAllModelPlans_modelPlanCollection_crTdls[];
 }

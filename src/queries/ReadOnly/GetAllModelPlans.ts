@@ -5,15 +5,30 @@ export default gql`
     modelPlanCollection(filter: $filter) {
       id
       modelName
-      nameHistory(sort: DESC)
       status
+      abbreviation
+      nameHistory(sort: DESC)
       isFavorite
       isCollaborator
+      modifiedDts
+      createdDts
       basics {
+        demoCode
+        amsModelID
+        modelCategory
+        clearanceStarts
         performancePeriodStarts
         modelCategory
         additionalModelCategories
         goal
+      }
+      discussions {
+        id
+        status
+        replies {
+          id
+          resolution
+        }
       }
       collaborators {
         userAccount {

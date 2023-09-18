@@ -59,7 +59,7 @@ const Home = () => {
               </PageHeading>
 
               <p className="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3">
-                {t('subheading')}
+                {!isMAC(userGroups) ? t('subheading') : t('macSubheading')}
               </p>
 
               {!isMAC(userGroups) && (

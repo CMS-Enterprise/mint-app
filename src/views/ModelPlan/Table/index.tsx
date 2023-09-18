@@ -29,6 +29,7 @@ import {
 } from 'queries/types/GetModelPlans';
 import {
   KeyCharacteristic,
+  ModelCategory,
   ModelPlanFilter,
   ModelStatus
 } from 'types/graphql-global-types';
@@ -149,24 +150,46 @@ const DraftModelPlansTable = ({
         }
       },
       {
-        Header: t('requestsTable.headers.modelPoc'),
-        accessor: 'collaborators',
-        Cell: ({ value }: { value: CollaboratorsType[] }) => {
-          if (value) {
-            const leads = value.filter((item: CollaboratorsType) => {
-              return item.teamRole.toLowerCase().includes('model_lead');
-            });
-            return (
-              <>
-                {leads.map((item: CollaboratorsType, index: number) => {
-                  return `${item.userAccount.commonName}${
-                    index === leads.length - 1 ? '' : ', '
-                  }`;
-                })}
-              </>
-            );
+        Header: t('requestsTable.headers.abbreviation'),
+        accessor: 'abbreviation'
+      },
+      {
+        Header: t('requestsTable.headers.amsModelID'),
+        accessor: 'basics.amsModelID'
+      },
+      {
+        Header: t('requestsTable.headers.category'),
+        accessor: 'basics.modelCategory',
+        Cell: ({ row, value }: any) => {
+          const additionalModelCategory =
+            row.original.basics.additionalModelCategories;
+
+          // Handle no value with an early return
+          if (!value) {
+            return <div>{t('requestsTable.tbd')}</div>;
           }
-          return '';
+
+          if (additionalModelCategory.length !== 0) {
+            const newArray = additionalModelCategory.map(
+              (group: ModelCategory) => {
+                return i18next.t<string>(
+                  `basics:modelCategory.options.${group}`
+                );
+              }
+            );
+
+            return `${i18next.t<string>(
+              `basics:modelCategory.options.${value}`
+            )}, ${newArray.join(', ')}`;
+          }
+          return i18next.t<string>(`basics:modelCategory.options.${value}`);
+        }
+      },
+      {
+        Header: t('requestsTable.headers.status'),
+        accessor: 'status',
+        Cell: ({ value }: { value: ModelStatus }) => {
+          return modelPlanT(`status.options.${value}`);
         }
       },
       {
@@ -185,10 +208,18 @@ const DraftModelPlansTable = ({
         }
       },
       {
-        Header: t('requestsTable.headers.status'),
-        accessor: 'status',
-        Cell: ({ value }: { value: ModelStatus }) => {
-          return modelPlanT(`status.options.${value}`);
+        Header: t('requestsTable.headers.startDate'),
+        accessor: ({ basics: { performancePeriodStarts } }: any) => {
+          if (performancePeriodStarts) {
+            return formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy');
+          }
+          return null;
+        },
+        Cell: ({ value }: any) => {
+          if (!value) {
+            return <div>{t('requestsTable.tbd')}</div>;
+          }
+          return value;
         }
       },
       {
@@ -237,6 +268,13 @@ const DraftModelPlansTable = ({
               )}
             </>
           );
+        }
+      },
+      {
+        Header: t('requestsTable.headers.status'),
+        accessor: 'status',
+        Cell: ({ value }: { value: ModelStatus }) => {
+          return modelPlanT(`status.options.${value}`);
         }
       },
       {
@@ -324,7 +362,7 @@ const DraftModelPlansTable = ({
         }
       }
     ];
-  }, [t]);
+  }, [t, modelPlanT]);
 
   const {
     getTableProps,

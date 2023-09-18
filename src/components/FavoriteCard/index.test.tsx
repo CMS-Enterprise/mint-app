@@ -18,7 +18,13 @@ const mockModel: ModelPlanType = {
   status: ModelStatus.PLAN_DRAFT,
   isFavorite: true,
   isCollaborator: false,
+  abbreviation: 'PGC',
+  createdDts: '2022-06-03T17:41:40.962971Z',
+  modifiedDts: '2022-06-03T17:41:40.962971Z',
   basics: {
+    demoCode: '1',
+    amsModelID: '123',
+    clearanceStarts: '2022-06-03T17:41:40.962971Z',
     performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
     modelCategory: ModelCategory.STATE_BASED,
     additionalModelCategories: [],
@@ -46,6 +52,7 @@ const mockModel: ModelPlanType = {
       __typename: 'PlanCollaborator'
     }
   ],
+  discussions: [],
   __typename: 'ModelPlan'
 };
 

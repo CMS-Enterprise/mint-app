@@ -96,10 +96,13 @@ const ModelPlan = () => {
       <GridContainer>
         <Grid className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
           {message}
+
           <PageHeading className="margin-bottom-1">{t('heading')}</PageHeading>
+
           <p className="line-height-body-5 font-body-lg text-light margin-bottom-05 margin-top-0">
             {t('subheading')}
           </p>
+
           <Button
             type="button"
             onClick={() =>
@@ -109,6 +112,7 @@ const ModelPlan = () => {
           >
             {t('allModelsLink')}
           </Button>
+
           {!macUser && (
             <SummaryBox
               heading=""
@@ -117,6 +121,7 @@ const ModelPlan = () => {
               <p className="margin-0 margin-bottom-1">
                 {h('newModelSummaryBox.copy')}
               </p>
+
               <UswdsReactLink
                 className="usa-button usa-button--outline"
                 variant="unstyled"
@@ -135,6 +140,7 @@ const ModelPlan = () => {
           <div className="margin-bottom-1 font-heading-xl text-bold">
             {t('following.heading')}
           </div>
+
           <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0 margin-bottom-3">
             {t('following.subheading')}
           </p>
@@ -148,9 +154,11 @@ const ModelPlan = () => {
           >
             {t('allModels.heading')}
           </div>
+
           <p className="line-height-body-5 text-light margin-bottom-3 margin-top-0">
             {t('allModels.subheading')}
           </p>
+
           {loading && <PageLoading />}
           {error && <Alert type="error">{h('fetchError')}</Alert>}
           {!loading && !error && (
