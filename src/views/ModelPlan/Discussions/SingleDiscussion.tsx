@@ -2,11 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconAnnouncement } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { DateTime } from 'luxon';
 
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { getDaysElapsed } from 'utils/date';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
 
@@ -19,7 +21,7 @@ type SingleDiscussionProps = {
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
   isLast: boolean;
-  replyCount: number;
+  replies: ReplyType[];
 };
 
 const SingleDiscussion = ({
@@ -31,9 +33,18 @@ const SingleDiscussion = ({
   setReply,
   setIsDiscussionOpen,
   isLast,
-  replyCount
+  replies
 }: SingleDiscussionProps) => {
   const { t: discussionT } = useTranslation('discussions');
+
+  const repliesList = [...replies];
+  const latestDate = repliesList.reduce((pre: any, cur: any) =>
+    Date.parse(pre) > Date.parse(cur) ? pre : cur
+  );
+  const timeLastUpdated = DateTime.fromISO(
+    latestDate.createdDts
+  ).toLocaleString(DateTime.TIME_SIMPLE);
+  const daysLastUpdated = getDaysElapsed(latestDate.createdDts);
 
   return (
     <div className="mint-discussions__single-discussion margin-bottom-4">
@@ -58,8 +69,11 @@ const SingleDiscussion = ({
           {discussion.content}
         </p>
 
-        <div className="display-flex flex-align-center">
-          <IconAnnouncement className="text-primary margin-right-1" />
+        <div
+          className="display-flex flex-align-center"
+          style={{ gap: '0.5rem' }}
+        >
+          <IconAnnouncement className="text-primary" />
           <Button
             type="button"
             unstyled
@@ -72,10 +86,16 @@ const SingleDiscussion = ({
               setReply(discussion);
             }}
           >
-            {replyCount === 0
+            {replies.length === 0
               ? discussionT('reply')
-              : discussionT('replies', { count: replyCount })}
+              : discussionT('replies', { count: replies.length })}
           </Button>
+          <p className="margin-y-0 text-base">
+            {discussionT('lastReply', {
+              date: daysLastUpdated,
+              time: timeLastUpdated
+            })}
+          </p>
         </div>
       </div>
     </div>
