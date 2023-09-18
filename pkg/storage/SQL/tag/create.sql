@@ -6,8 +6,6 @@ INSERT INTO public.tag(
     tagged_content_id,
     entity_uuid,
     entity_intid,
-    created_dts,
-    modified_dts,
     created_by,
     modified_by
 )
@@ -19,8 +17,6 @@ VALUES (
     :tagged_content_id,
     :entity_uuid,
     :entity_intid,
-    :created_dts,
-    :modified_dts,
     :created_by,
     :modified_by
 )

@@ -42,12 +42,13 @@ func (s *Store) TagCreate(
 }
 
 // TagCollectionCreate creates an array of tags in the database based on the tag contet provided in the string
-func (s *Store) TagCollectionCreate(logger *zap.Logger, tags []*models.Tag) ([]*models.Tag, error) {
+func (s *Store) TagCollectionCreate(logger *zap.Logger, tags []*models.Tag, createdBy uuid.UUID) ([]*models.Tag, error) {
 	//TODO: SW create a tag collection using a CTE instead of iteration through list
 	retTags := []*models.Tag{}
 	errs := []*error{}
 
 	for _, tag := range tags {
+		tag.CreatedBy = createdBy
 		retTag, err := s.TagCreate(logger, tag)
 		if err != nil {
 			errs = append(errs, &err)

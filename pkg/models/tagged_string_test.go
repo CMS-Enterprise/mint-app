@@ -40,3 +40,5 @@ func TestNewTagFromString(t *testing.T) {
 	assert.EqualValues(t, tagType, tagSol.Type)
 
 }
+
+//TODO: tags might be in a format like this @[Terry Thompson]["1cf4d434-5d2f-43d9-9b25-ced99246662a"]

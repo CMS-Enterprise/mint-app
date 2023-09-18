@@ -117,7 +117,7 @@ func newTagFromString(tagString string) (TagString, error) { //TODO: SW should w
 	attributeRegex := `\s*(?P<name>\w+)="(?P<value>[^"]*)"`
 	re := regexp.MustCompile(tagRegex)
 	attributeRe := regexp.MustCompile(attributeRegex)
-	entityUUID := uuid.Nil
+	var entityUUID *uuid.UUID
 	var entityIntID *int
 
 	matches := re.FindStringSubmatch(tagString)
@@ -150,10 +150,11 @@ func newTagFromString(tagString string) (TagString, error) { //TODO: SW should w
 
 	switch tagType { //TODO: Solution is an int id, user is a UUID
 	case TagTypeUserAccount:
-		entityUUID, err = uuid.Parse(strings.TrimSpace(entityIDStr))
+		parsedUUID, err := uuid.Parse(strings.TrimSpace(entityIDStr))
 		if err != nil {
 			return TagString{}, fmt.Errorf("error parsing UUID in tag. error : %w", err) //TODO: SW should we return a pointer instead?
 		}
+		entityUUID = &parsedUUID
 	case TagTypePossibleSolution:
 		number, err := strconv.Atoi(entityIDStr)
 		if err != nil {
@@ -165,7 +166,7 @@ func newTagFromString(tagString string) (TagString, error) { //TODO: SW should w
 	return TagString{
 		RawString:   tagString,
 		Type:        tagType,
-		EntityUUID:  &entityUUID,
+		EntityUUID:  entityUUID,
 		EntityIntID: entityIntID,
 	}, nil
 

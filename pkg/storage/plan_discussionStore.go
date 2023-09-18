@@ -123,7 +123,7 @@ func (s *Store) PlanDiscussionCreate(
 	}
 	//TODO: SW this should be a transaction
 	tags := models.TagArrayFromTagStrings("content", "plan_discussion", discussion.ID, discussion.Content.Tags)
-	_, err = s.TagCollectionCreate(logger, tags)
+	_, err = s.TagCollectionCreate(logger, tags, discussion.CreatedBy)
 	if err != nil {
 		return discussion, err
 	}
@@ -151,7 +151,7 @@ func (s *Store) DiscussionReplyCreate(
 	}
 	//TODO: SW this should be a transaction
 	tags := models.TagArrayFromTagStrings("content", "discussion_reply", reply.ID, reply.Content.Tags)
-	_, err = s.TagCollectionCreate(logger, tags)
+	_, err = s.TagCollectionCreate(logger, tags, reply.CreatedBy)
 	if err != nil {
 		return reply, err
 	}
