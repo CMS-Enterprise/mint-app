@@ -384,6 +384,8 @@ Tag represents an entity tagged in the database
 type Tag {
   id: UUID!
   tagType: TagType!
+  taggedField: String!
+  taggedContentTable: String!
   taggedContentID: UUID!
   entityUUID: UUID
   entityIntID: Int

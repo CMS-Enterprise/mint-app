@@ -11,4 +11,4 @@ SELECT
     created_by,
     modified_by
 FROM public.tag
-WHERE id = :id;
+WHERE tagged_field = :tagged_field AND tagged_content_table = :tagged_content_table AND  tagged_content_id = :tagged_content_id;

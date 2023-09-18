@@ -2489,6 +2489,8 @@ export type Tag = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   tagType: TagType;
   taggedContentID: Scalars['UUID']['output'];
+  taggedContentTable: Scalars['String']['output'];
+  taggedField: Scalars['String']['output'];
 };
 
 export enum TagType {

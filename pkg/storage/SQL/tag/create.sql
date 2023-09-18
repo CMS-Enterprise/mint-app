@@ -1,6 +1,8 @@
 INSERT INTO public.tag(
     id,
     tag_type,
+    tagged_field,
+    tagged_content_table,
     tagged_content_id,
     entity_uuid,
     entity_intid,
@@ -12,6 +14,8 @@ INSERT INTO public.tag(
 VALUES (
     :id,
     :tag_type,
+    :tagged_field,
+    :tagged_content_table,
     :tagged_content_id,
     :entity_uuid,
     :entity_intid,
@@ -22,6 +26,8 @@ VALUES (
 )
 RETURNING id,
 tag_type,
+tagged_field,
+tagged_content_table,
 tagged_content_id,
 entity_uuid,
 entity_intid,

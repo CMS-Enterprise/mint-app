@@ -6,9 +6,11 @@ CREATE TYPE TAG_TYPE AS ENUM (
 
 CREATE TABLE tag ( -- Should this name be different / longer?
     id UUID PRIMARY KEY NOT NULL,
-    tag_type TAG_TYPE NOT NULL,
-    -- table_id integer REFERENCES audit.table_config(id), //TODO: note, we could choose to use the table_config table to generically return tagged content. (possible solutiosn aren't there.) For now, just a type
-    tagged_content_id UUID NOT NULL,
+    tag_type TAG_TYPE NOT NULL, --For identifying which table to  get the tagged entity from
+    tagged_field ZERO_STRING NOT NULL,  -- this allows us to potentially tag different fields on the same table
+    
+    tagged_content_id UUID NOT NULL, --The foreign key of the record that contains the tag
+    tagged_content_table ZERO_STRING NOT NULL, -- table_id integer REFERENCES audit.table_config(id), //TODO: note, we could choose to use the table_config table to generically return tagged content. (possible solutiosn aren't there.) For now, just a type
     entity_uuid UUID,
     entity_intid int,
     created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,

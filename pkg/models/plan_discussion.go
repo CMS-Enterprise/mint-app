@@ -8,7 +8,7 @@ import (
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
-	Content             TaggedString        `json:"content" db:"content"`
+	Content             TaggedString        `json:"content" db:"content"` //TODO: SQ should this be represented as just a string instead?
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
 	Status              DiscussionStatus    `json:"status" db:"status"`

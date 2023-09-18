@@ -29,12 +29,13 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 
 // Content is the resolver for the content field.
 func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*string, error) {
-	panic(fmt.Errorf("not implemented: Content - content"))
+	return &obj.Content.RawContent, nil
 }
 
 // TaggedContent is the resolver for the taggedContent field.
-func (r *discussionReplyResolver) TaggedContent(ctx context.Context, obj *models.DiscussionReply) (*model.TaggedContent, error) {
-	panic(fmt.Errorf("not implemented: TaggedContent - taggedContent"))
+func (r *discussionReplyResolver) TaggedContent(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.TaggedContentGet(logger, r.store, obj.Content.RawContent, "discussion_reply", "content", obj.ID) //TODO: SW review implementation
 }
 
 // ExistingModel is the resolver for the existingModel field.
@@ -548,12 +549,13 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 
 // Content is the resolver for the content field.
 func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*string, error) {
-	panic(fmt.Errorf("not implemented: Content - content"))
+	return &obj.Content.RawContent, nil //TODO: SW revisit implementation
 }
 
 // TaggedContent is the resolver for the taggedContent field.
-func (r *planDiscussionResolver) TaggedContent(ctx context.Context, obj *models.PlanDiscussion) (*model.TaggedContent, error) {
-	panic(fmt.Errorf("not implemented: TaggedContent - taggedContent"))
+func (r *planDiscussionResolver) TaggedContent(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedContent, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.TaggedContentGet(logger, r.store, obj.Content.RawContent, "plan_discussion", "content", obj.ID) //TODO: SW review implementation
 }
 
 // Replies is the resolver for the replies field.
@@ -939,63 +941,63 @@ func (r *queryResolver) SearchChanges(ctx context.Context, filters []*model.Sear
 func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	return nil, fmt.Errorf("searchChangeTable is deprecated, use searchChanges instead")
 
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchChangeTable(logger, r.searchClient, request, limit, offset, "modified_dts:desc")
+	// return resolvers.SearchChangeTable(logger, r.searchClient, request, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableWithFreeText is the resolver for the searchChangeTableWithFreeText field.
 func (r *queryResolver) SearchChangeTableWithFreeText(ctx context.Context, searchText string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	return nil, fmt.Errorf("searchChangeTableWithFreeText is deprecated, use searchChanges instead")
 
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchChangeTableWithFreeText(logger, r.searchClient, searchText, limit, offset)
+	// return resolvers.SearchChangeTableWithFreeText(logger, r.searchClient, searchText, limit, offset)
 }
 
 // SearchChangeTableByModelPlanID is the resolver for the searchChangeTableByModelPlanID field.
 func (r *queryResolver) SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	return nil, fmt.Errorf("searchChangeTableByModelPlanID is deprecated, use searchChanges instead")
 
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchChangeTableByModelPlanID(logger, r.searchClient, modelPlanID, limit, offset)
+	// return resolvers.SearchChangeTableByModelPlanID(logger, r.searchClient, modelPlanID, limit, offset)
 }
 
 // SearchChangeTableByDateRange is the resolver for the searchChangeTableByDateRange field.
 func (r *queryResolver) SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	return nil, fmt.Errorf("searchChangeTableByDateRange is deprecated, use searchChanges instead")
 
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchChangeTableByDateRange(logger, r.searchClient, startDate, endDate, limit, offset)
+	// return resolvers.SearchChangeTableByDateRange(logger, r.searchClient, startDate, endDate, limit, offset)
 }
 
 // SearchModelPlanChangesByDateRange is the resolver for the searchModelPlanChangesByDateRange field.
 func (r *queryResolver) SearchModelPlanChangesByDateRange(ctx context.Context, modelPlanID uuid.UUID, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	return nil, fmt.Errorf("searchModelPlanChangesByDateRange is deprecated, use searchChanges instead")
 
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchModelPlanChangesByDateRange(logger, r.searchClient, modelPlanID, startDate, endDate, limit, offset)
+	// return resolvers.SearchModelPlanChangesByDateRange(logger, r.searchClient, modelPlanID, startDate, endDate, limit, offset)
 }
 
 // SearchChangeTableByActor is the resolver for the searchChangeTableByActor field.
 func (r *queryResolver) SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	return nil, fmt.Errorf("searchChangeTableByActor is deprecated, use searchChanges instead")
 
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchChangeTableByActor(logger, r.searchClient, actor, limit, offset)
+	// return resolvers.SearchChangeTableByActor(logger, r.searchClient, actor, limit, offset)
 }
 
 // SearchChangeTableByModelStatus is the resolver for the searchChangeTableByModelStatus field.
 func (r *queryResolver) SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	return nil, fmt.Errorf("searchChangeTableByModelStatus is deprecated, use searchChanges instead")
 
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchChangeTableByModelStatus(logger, r.searchClient, modelStatus, limit, offset)
+	// return resolvers.SearchChangeTableByModelStatus(logger, r.searchClient, modelStatus, limit, offset)
 }
 
 // SearchChangeTableDateHistogramConsolidatedAggregations is the resolver for the searchChangeTableDateHistogramConsolidatedAggregations field.

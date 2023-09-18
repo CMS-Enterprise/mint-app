@@ -87,6 +87,30 @@ const (
 	TagTypePossibleSolution TagType = "POSSIBLE_SOLUTION"
 )
 
+// ToTag converts a TagString to a tag
+func (ts TagString) ToTag(taggedField string, taggedTable string, taggedContentID uuid.UUID) Tag {
+	tag := Tag{
+		TagType:            ts.Type,
+		TaggedField:        taggedField,
+		TaggedContentTable: taggedTable,
+		TaggedContentID:    taggedContentID,
+		EntityUUID:         ts.EntityUUID,
+		EntityIntID:        ts.EntityIntID,
+	}
+	return tag
+}
+
+// TagArrayFromTagStrings conversts an array of TagStrings to an array of Tags
+func TagArrayFromTagStrings(taggedField string, taggedTable string, taggedContentID uuid.UUID, taggedStrings []*TagString) []*Tag {
+	tags := []*Tag{}
+	for _, tagString := range taggedStrings {
+		tag := tagString.ToTag(taggedField, taggedTable, taggedContentID)
+		tags = append(tags, &tag)
+
+	}
+	return tags
+
+}
 func newTagFromString(tagString string) (TagString, error) { //TODO: SW should we handle an error here as well?
 
 	tagRegex := `<tag(?P<attributes>(?:\s+\w+="[^"]*")+)\s*\/>`
@@ -173,7 +197,7 @@ func (ts TaggedString) MarshalGQLContext(ctx context.Context, w io.Writer) error
 
 	// TODO: SW decide the format this should go back to GQL with
 	// Marshal the TaggedString value to JSON so that it's properly escaped (wrapped in quotation marks)
-	jsonValue, err := json.Marshal(ts)
+	jsonValue, err := json.Marshal(ts.RawContent)
 	if err != nil {
 		logger.Info("invalid TaggedString")
 		return fmt.Errorf("failed to marshal TaggedStringto JSON: %w", err)

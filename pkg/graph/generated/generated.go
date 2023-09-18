@@ -898,6 +898,8 @@ type ComplexityRoot struct {
 		ModifiedDts           func(childComplexity int) int
 		TagType               func(childComplexity int) int
 		TaggedContentID       func(childComplexity int) int
+		TaggedContentTable    func(childComplexity int) int
+		TaggedField           func(childComplexity int) int
 	}
 
 	TaggedContent struct {
@@ -945,7 +947,7 @@ type AuditChangeResolver interface {
 }
 type DiscussionReplyResolver interface {
 	Content(ctx context.Context, obj *models.DiscussionReply) (*string, error)
-	TaggedContent(ctx context.Context, obj *models.DiscussionReply) (*model.TaggedContent, error)
+	TaggedContent(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error)
 }
 type ExistingModelLinkResolver interface {
 	ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error)
@@ -1032,7 +1034,7 @@ type PlanBeneficiariesResolver interface {
 }
 type PlanDiscussionResolver interface {
 	Content(ctx context.Context, obj *models.PlanDiscussion) (*string, error)
-	TaggedContent(ctx context.Context, obj *models.PlanDiscussion) (*model.TaggedContent, error)
+	TaggedContent(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedContent, error)
 
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
 }
@@ -6567,6 +6569,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.TaggedContentID(childComplexity), true
 
+	case "Tag.taggedContentTable":
+		if e.complexity.Tag.TaggedContentTable == nil {
+			break
+		}
+
+		return e.complexity.Tag.TaggedContentTable(childComplexity), true
+
+	case "Tag.taggedField":
+		if e.complexity.Tag.TaggedField == nil {
+			break
+		}
+
+		return e.complexity.Tag.TaggedField(childComplexity), true
+
 	case "TaggedContent.rawContent":
 		if e.complexity.TaggedContent.RawContent == nil {
 			break
@@ -7254,6 +7270,8 @@ Tag represents an entity tagged in the database
 type Tag {
   id: UUID!
   tagType: TagType!
+  taggedField: String!
+  taggedContentTable: String!
   taggedContentID: UUID!
   entityUUID: UUID
   entityIntID: Int
@@ -12225,9 +12243,9 @@ func (ec *executionContext) _DiscussionReply_taggedContent(ctx context.Context, 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.TaggedContent)
+	res := resTmp.(*models.TaggedContent)
 	fc.Result = res
-	return ec.marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaggedContent(ctx, field.Selections, res)
+	return ec.marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_taggedContent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -28413,9 +28431,9 @@ func (ec *executionContext) _PlanDiscussion_taggedContent(ctx context.Context, f
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.TaggedContent)
+	res := resTmp.(*models.TaggedContent)
 	fc.Result = res
-	return ec.marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaggedContent(ctx, field.Selections, res)
+	return ec.marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_taggedContent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -48606,6 +48624,94 @@ func (ec *executionContext) fieldContext_Tag_tagType(ctx context.Context, field 
 	return fc, nil
 }
 
+func (ec *executionContext) _Tag_taggedField(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tag_taggedField(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TaggedField, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tag_taggedField(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Tag_taggedContentTable(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tag_taggedContentTable(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TaggedContentTable, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tag_taggedContentTable(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Tag_taggedContentID(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Tag_taggedContentID(ctx, field)
 	if err != nil {
@@ -49072,7 +49178,7 @@ func (ec *executionContext) fieldContext_Tag_modifiedDts(ctx context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedContent_rawContent(ctx context.Context, field graphql.CollectedField, obj *model.TaggedContent) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedContent_rawContent(ctx context.Context, field graphql.CollectedField, obj *models.TaggedContent) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedContent_rawContent(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -49116,7 +49222,7 @@ func (ec *executionContext) fieldContext_TaggedContent_rawContent(ctx context.Co
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedContent_tags(ctx context.Context, field graphql.CollectedField, obj *model.TaggedContent) (ret graphql.Marshaler) {
+func (ec *executionContext) _TaggedContent_tags(ctx context.Context, field graphql.CollectedField, obj *models.TaggedContent) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaggedContent_tags(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -49159,6 +49265,10 @@ func (ec *executionContext) fieldContext_TaggedContent_tags(ctx context.Context,
 				return ec.fieldContext_Tag_id(ctx, field)
 			case "tagType":
 				return ec.fieldContext_Tag_tagType(ctx, field)
+			case "taggedField":
+				return ec.fieldContext_Tag_taggedField(ctx, field)
+			case "taggedContentTable":
+				return ec.fieldContext_Tag_taggedContentTable(ctx, field)
 			case "taggedContentID":
 				return ec.fieldContext_Tag_taggedContentID(ctx, field)
 			case "entityUUID":
@@ -60569,6 +60679,16 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "taggedField":
+			out.Values[i] = ec._Tag_taggedField(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "taggedContentTable":
+			out.Values[i] = ec._Tag_taggedContentTable(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "taggedContentID":
 			out.Values[i] = ec._Tag_taggedContentID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -60719,7 +60839,7 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 
 var taggedContentImplementors = []string{"TaggedContent"}
 
-func (ec *executionContext) _TaggedContent(ctx context.Context, sel ast.SelectionSet, obj *model.TaggedContent) graphql.Marshaler {
+func (ec *executionContext) _TaggedContent(ctx context.Context, sel ast.SelectionSet, obj *models.TaggedContent) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, taggedContentImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -69023,7 +69143,7 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
-func (ec *executionContext) marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaggedContent(ctx context.Context, sel ast.SelectionSet, v *model.TaggedContent) graphql.Marshaler {
+func (ec *executionContext) marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx context.Context, sel ast.SelectionSet, v *models.TaggedContent) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
