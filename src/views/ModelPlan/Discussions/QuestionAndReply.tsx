@@ -274,6 +274,7 @@ const QuestionAndReply = ({
                     <div className="margin-top-1">
                       <MentionsInput
                         value={values.content}
+                        allowSpaceInQuery
                         onChange={(
                           event,
                           newValue,
@@ -286,7 +287,6 @@ const QuestionAndReply = ({
                             setFieldValue('mentions', mentions);
                           }
                         }}
-                        placeholder="Type anything, use the @ symbol to tag other users."
                         className="mentions height-card"
                         style={{
                           suggestions: {
@@ -302,17 +302,50 @@ const QuestionAndReply = ({
                             }
                           },
                           highlighter: {
-                            lineHeight: '19px'
+                            lineHeight: '18.65px',
+                            top: '2px'
                           }
                         }}
                       >
                         <Mention
                           trigger="@"
-                          displayTransform={(user, display) => `@${display} `}
+                          displayTransform={(user, display) => `@${display}`}
                           data={userSuggestions}
-                          className="mentions__mention"
+                          appendSpaceOnAdd
+                          className="mention__highlight"
                           style={{
-                            backgroundColor: '#d9e8f6'
+                            color: '#005EA2'
+                          }}
+                          // TODO: Add onclick handler to users
+                          // onAdd={() => {
+                          //   setTimeout(() => {
+                          //     const mentionTags = document.getElementsByClassName(
+                          //       'mention__highlight'
+                          //     );
+                          //     for (let i = 0; i < mentionTags.length; i += 1) {
+                          //       // @ts-ignore
+                          //       const clickElem: HTMLElement = mentionTags[i];
+                          //       clickElem.onclick = () =>
+                          //         console.log(clickElem);
+                          //     }
+                          //   }, 1);
+                          // }}
+                        />
+
+                        <Mention
+                          trigger="#"
+                          markup="#[__display__](email:__id__)"
+                          displayTransform={(user, display) => `#${display}`}
+                          data={[
+                            {
+                              display: 'Patrick',
+                              id: '123'
+                            }
+                          ]}
+                          appendSpaceOnAdd
+                          className="mention__highlight"
+                          style={{
+                            color: 'red'
                           }}
                         />
                       </MentionsInput>

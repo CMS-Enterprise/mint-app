@@ -72,3 +72,12 @@
   .usa-accordion__content {
     padding: 0.75rem 1.25rem calc(1rem - 0.25rem) 1.25rem !important;
   }
+
+.mention__highlight {
+  background: white;
+  z-index: 999;
+  position: relative;
+  left: 2px;
+  cursor: pointer;
+}
+   
