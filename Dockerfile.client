@@ -11,10 +11,19 @@ RUN yarn install --frozen-lockfile
 
 FROM modules AS src
 
-COPY craco.config.js ./
 COPY tsconfig.json ./
 COPY .eslintrc ./
 COPY public ./public
 COPY src ./src
+
+ARG VITE_APP_ENV
+ARG VITE_API_ADDRESS
+ARG VITE_GRAPHQL_ADDRESS
+ARG VITE_OKTA_CLIENT_ID
+ARG VITE_OKTA_DOMAIN
+ARG VITE_OKTA_ISSUER
+ARG VITE_OKTA_REDIRECT_URI
+ARG VITE_OKTA_SERVER_ID
+ARG VITE_LOCAL_AUTH_ENABLED
 
 ENTRYPOINT [ "yarn", "start" ]

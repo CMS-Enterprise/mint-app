@@ -28,7 +28,7 @@ import store from './store';
 
 import './index.scss';
 
-const apiHost = new URL(process.env.REACT_APP_API_ADDRESS || '').host;
+const apiHost = new URL(import.meta.env.VITE_API_ADDRESS || '').host;
 
 ReactGA.initialize([
   {
@@ -69,11 +69,11 @@ function getAuthHeader(targetUrl: string) {
  * Setup client for GraphQL
  */
 const uploadLink = createUploadLink({
-  uri: process.env.REACT_APP_GRAPHQL_ADDRESS
+  uri: import.meta.env.VITE_GRAPHQL_ADDRESS
 });
 
 const authLink = setContext((request, { headers }) => {
-  const header = getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string);
+  const header = getAuthHeader(import.meta.env.VITE_GRAPHQL_ADDRESS as string);
   return {
     headers: {
       ...headers,
@@ -82,15 +82,15 @@ const authLink = setContext((request, { headers }) => {
   };
 });
 
-const [protocol, gqlAddressWithoutProtocol] = (process.env
-  .REACT_APP_GRAPHQL_ADDRESS as string).split('://');
+const [protocol, gqlAddressWithoutProtocol] = (import.meta.env
+  .VITE_GRAPHQL_ADDRESS as string).split('://');
 const wsProtocol = protocol === 'https' ? 'wss' : 'ws'; // Use WSS when connecting over HTTPs
 const wsLink = new WebSocketLink(
   new SubscriptionClient(`${wsProtocol}://${gqlAddressWithoutProtocol}`, {
     reconnect: true,
     lazy: true,
     connectionParams: () => ({
-      authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
+      authToken: getAuthHeader(import.meta.env.VITE_GRAPHQL_ADDRESS as string)
     })
   })
 );

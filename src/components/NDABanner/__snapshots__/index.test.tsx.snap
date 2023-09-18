@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`NDA Banner Component matches snapshot 1`] = `
+exports[`NDA Banner Component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="usa-summary-box padding-1 border-0"

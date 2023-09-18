@@ -6,8 +6,8 @@ import { filterGroups } from '../BodyContent/_filterGroupMapping';
 import Banner from './index';
 
 describe('Filter View Modal', () => {
-  const openFilterModal = jest.fn();
-  const openExportModal = jest.fn();
+  const openFilterModal = vi.fn();
+  const openExportModal = vi.fn();
   it('renders without crashing', async () => {
     render(
       <Banner

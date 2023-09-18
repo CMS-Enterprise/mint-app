@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SolutionDetailsCard isUpdatingStatus variant 1`] = `
+exports[`SolutionDetailsCard > isUpdatingStatus variant 1`] = `
 <DocumentFragment>
   <div
     class="bg-base-lightest"
@@ -180,7 +180,7 @@ exports[`SolutionDetailsCard isUpdatingStatus variant 1`] = `
 </DocumentFragment>
 `;
 
-exports[`SolutionDetailsCard matches snapshot 1`] = `
+exports[`SolutionDetailsCard > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="bg-base-lightest"
