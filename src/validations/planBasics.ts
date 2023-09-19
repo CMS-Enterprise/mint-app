@@ -40,9 +40,8 @@ const planBasicsSchema = {
         is: (val: [string]) => {
           return val.includes('CMMI');
         },
-        then: Yup.array()
-          .min(1, 'Select a CMMI Group')
-          .required('Select a CMMI Group')
+        then: schema =>
+          schema.min(1, 'Select a CMMI Group').required('Select a CMMI Group')
       })
     })
   }),
@@ -60,9 +59,8 @@ const planBasicsSchema = {
         is: (val: [string]) => {
           return val.includes('CMMI');
         },
-        then: Yup.array()
-          .min(1, 'Select a CMMI Group')
-          .required('Select a CMMI Group')
+        then: schema =>
+          schema.min(1, 'Select a CMMI Group').required('Select a CMMI Group')
       })
     })
   })
