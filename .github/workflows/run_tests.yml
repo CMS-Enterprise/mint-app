@@ -231,6 +231,8 @@ jobs:
           set: |
             mint.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint
             db_migrate.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
+      - name: Install yarn dependencies
+        run: yarn install --immutable
       - name: Start backend services
         run: |
           scripts/dev down
