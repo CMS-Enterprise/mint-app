@@ -12,16 +12,6 @@ const readOnlyModelPlan = {
       subheadingPartA: 'Click the star icon',
       subheadingPartB: 'for any model to add it to this section.'
     }
-  },
-  allModels: {
-    heading: 'All models',
-    subheading:
-      'Follow models that you want to stay up to date on by clicking the star icon.',
-    noResults: {
-      heading: 'We couldn’t find any matches for "{{-searchTerm}}".',
-      subheading:
-        'Double check your search for typos or try a different search.'
-    }
   }
 };
 

@@ -20,16 +20,16 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
-import GetAllModelPlans from 'queries/ReadOnly/GetAllModelPlans';
+import GetFavorites from 'queries/GetFavorites';
 import {
-  GetAllModelPlans as GetAllModelPlansType,
-  GetAllModelPlans_modelPlanCollection as AllModelPlansType
-} from 'queries/ReadOnly/types/GetAllModelPlans';
+  GetFavorites as GetFavoritesType,
+  GetFavorites_modelPlanCollection as GetFavoritesModelPlanCollection
+} from 'queries/types/GetFavorites';
 import { AppState } from 'reducers/rootReducer';
 import { ModelPlanFilter } from 'types/graphql-global-types';
 import { isMAC } from 'utils/user';
 
-import Table from '../ReadOnly/Table';
+import ModelPlansTable from '../Table';
 
 export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
 
@@ -40,16 +40,15 @@ const ModelPlan = () => {
   const userGroups = useSelector((state: AppState) => state.auth.groups);
   const macUser = isMAC(userGroups);
 
-  const { data, loading, error, refetch } = useQuery<GetAllModelPlansType>(
-    GetAllModelPlans,
-    {
-      variables: {
-        filter: ModelPlanFilter.INCLUDE_ALL
-      }
+  const { data, loading, refetch } = useQuery<GetFavoritesType>(GetFavorites, {
+    variables: {
+      filter: ModelPlanFilter.INCLUDE_ALL,
+      isMAC: true
     }
-  );
+  });
 
-  const modelPlans = (data?.modelPlanCollection ?? []) as AllModelPlansType[];
+  const modelPlans = (data?.modelPlanCollection ??
+    []) as GetFavoritesModelPlanCollection[];
 
   const favorites = modelPlans.filter(modelPlan => modelPlan.isFavorite);
 
@@ -152,18 +151,17 @@ const ModelPlan = () => {
             className="margin-bottom-1 font-heading-xl text-bold"
             id="all-models"
           >
-            {t('allModels.heading')}
+            {h('allModels.heading')}
           </div>
 
           <p className="line-height-body-5 text-light margin-bottom-3 margin-top-0">
-            {t('allModels.subheading')}
+            {h('allModels.subheading')}
           </p>
 
-          {loading && <PageLoading />}
-          {error && <Alert type="error">{h('fetchError')}</Alert>}
-          {!loading && !error && (
-            <Table data={modelPlans} updateFavorite={handleUpdateFavorite} />
-          )}
+          <ModelPlansTable
+            type="models"
+            updateFavorite={handleUpdateFavorite}
+          />
         </Grid>
       </GridContainer>
     </MainContent>

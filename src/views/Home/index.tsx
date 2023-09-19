@@ -17,7 +17,7 @@ import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
 import Landing from 'views/Landing';
-import DraftModelPlansTable from 'views/ModelPlan/Table';
+import ModelPlansTable from 'views/ModelPlan/Table';
 
 import './index.scss';
 
@@ -98,7 +98,8 @@ const Home = () => {
               )}
 
               {!isMAC(userGroups) && (
-                <DraftModelPlansTable
+                <ModelPlansTable
+                  type="home"
                   userModels
                   isAssessment={isAssessment(userGroups, flags)}
                   isMAC={isMAC(userGroups)}
@@ -114,7 +115,9 @@ const Home = () => {
                   <div className="mint-header__basic">
                     <h2 className="margin-top-4">{headingType(userGroups)}</h2>
                   </div>
-                  <DraftModelPlansTable
+
+                  <ModelPlansTable
+                    type={isAssessment(userGroups, flags) ? 'home' : 'mac'}
                     userModels={false}
                     isAssessment={isAssessment(userGroups, flags)}
                     isMAC={isMAC(userGroups)}

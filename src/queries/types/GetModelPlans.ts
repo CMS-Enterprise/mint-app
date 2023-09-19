@@ -37,11 +37,14 @@ export interface GetModelPlans_modelPlanCollection_collaborators_userAccount {
   __typename: "UserAccount";
   id: UUID;
   commonName: string;
+  email: string;
+  username: string;
 }
 
 export interface GetModelPlans_modelPlanCollection_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
+  userID: UUID;
   userAccount: GetModelPlans_modelPlanCollection_collaborators_userAccount;
   teamRole: TeamRole;
 }
@@ -74,6 +77,8 @@ export interface GetModelPlans_modelPlanCollection {
   createdBy: UUID;
   createdDts: Time;
   modifiedDts: Time | null;
+  isFavorite: boolean;
+  isCollaborator: boolean;
   basics: GetModelPlans_modelPlanCollection_basics;
   generalCharacteristics: GetModelPlans_modelPlanCollection_generalCharacteristics;
   payments: GetModelPlans_modelPlanCollection_payments;

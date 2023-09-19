@@ -12,7 +12,7 @@ import classnames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
-import { GetAllModelPlans_modelPlanCollection as ModelPlanType } from 'queries/ReadOnly/types/GetAllModelPlans';
+import { GetFavorites_modelPlanCollection as FavoritesModelType } from 'queries/types/GetFavorites';
 import { TeamRole } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
@@ -23,7 +23,7 @@ import './index.scss';
 type FavoriteCardProps = {
   className?: string;
   type?: 'plan'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
-  modelPlan: ModelPlanType;
+  modelPlan: FavoritesModelType;
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
 };
 

@@ -11,6 +11,8 @@ export default gql`
       createdBy
       createdDts
       modifiedDts
+      isFavorite
+      isCollaborator
       basics {
         id
         demoCode
@@ -31,9 +33,12 @@ export default gql`
       }
       collaborators {
         id
+        userID
         userAccount {
           id
           commonName
+          email
+          username
         }
         teamRole
       }

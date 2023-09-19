@@ -2,39 +2,27 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import { GetAllModelPlans_modelPlanCollection as ModelPlanType } from 'queries/ReadOnly/types/GetAllModelPlans';
-import {
-  ModelCategory,
-  ModelStatus,
-  TeamRole
-} from 'types/graphql-global-types';
+import { GetFavorites_modelPlanCollection as FavoritesType } from 'queries/types/GetFavorites';
+import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 
 import FavoriteCard from './index';
 
-const mockModel: ModelPlanType = {
+const mockModel: FavoritesType = {
   id: '0186774a-80b0-454c-b69e-c4e949343483',
   modelName: 'Plan For General Characteristics',
   nameHistory: ['first', 'second'],
-  status: ModelStatus.PLAN_DRAFT,
   isFavorite: true,
+  status: ModelStatus.PLAN_DRAFT,
   isCollaborator: false,
-  abbreviation: 'PGC',
-  createdDts: '2022-06-03T17:41:40.962971Z',
-  modifiedDts: '2022-06-03T17:41:40.962971Z',
   basics: {
-    demoCode: '1',
-    amsModelID: '123',
-    clearanceStarts: '2022-06-03T17:41:40.962971Z',
+    id: '123',
     performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
-    modelCategory: ModelCategory.STATE_BASED,
-    additionalModelCategories: [],
     goal: 'The goal',
     __typename: 'PlanBasics'
   },
   crTdls: [
     {
       __typename: 'PlanCrTdl',
-      id: '123',
       idNumber: 'CR 123'
     }
   ],
@@ -43,16 +31,13 @@ const mockModel: ModelPlanType = {
       userAccount: {
         id: '890',
         __typename: 'UserAccount',
-        email: '',
-        username: 'MINT',
         commonName: 'Test User'
       },
-      userID: '123',
+      id: '2134234',
       teamRole: TeamRole.MODEL_LEAD,
       __typename: 'PlanCollaborator'
     }
   ],
-  discussions: [],
   __typename: 'ModelPlan'
 };
 
