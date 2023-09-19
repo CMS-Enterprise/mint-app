@@ -225,6 +225,7 @@ jobs:
       - name: Run buildx bake
         uses: docker/bake-action@v4.0.0
         with:
+          targets: mint,db_migrate
           files: "docker-compose.yml,docker-compose.override.yml"
           load: true
           set: |
