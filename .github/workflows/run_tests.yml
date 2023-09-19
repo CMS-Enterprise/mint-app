@@ -211,7 +211,7 @@ jobs:
       - name: Build and start frontend
         run: |
           yarn build
-          yarn serve --port 3005 &
+          yarn serve &
       - name: Run Cypress Tests
         run: |
           export FLAG_SOURCE=FILE
