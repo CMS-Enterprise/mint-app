@@ -204,10 +204,14 @@ jobs:
             db_migrate.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
       - name: Install yarn dependencies
         run: yarn install --immutable
-      - name: Start all services
+      - name: Start backend services
         run: |
           scripts/dev down
-          scripts/dev up:ci
+          scripts/dev up:backend
+      - name: Build and start frontend
+        run: |
+          yarn build
+          yarn serve --port 3005 &
       - name: Run Cypress Tests
         run: |
           export FLAG_SOURCE=FILE
