@@ -185,7 +185,9 @@ const ModelPlansTable = ({
           return (
             <>
               <UswdsReactLink
-                to={`/models/${row.original.id}/read-only/model-basics`}
+                to={`/models/${row.original.id}/${
+                  type === 'models' ? 'read-only/model-basics' : 'task-list'
+                }`}
               >
                 {value}
               </UswdsReactLink>
@@ -443,6 +445,31 @@ const ModelPlansTable = ({
 
   rows.map(row => prepareRow(row));
 
+  const homeStyle = (index: number) => {
+    return {
+      minWidth:
+        (index === 0 && '170px') ||
+        (index === 2 && '100px') ||
+        (index === 1 && '110px') ||
+        '138px',
+      paddingLeft: '0'
+    };
+  };
+
+  const modelsStyle = (index: number) => {
+    return {
+      minWidth:
+        (type === 'models' && index === 0 && '50px') ||
+        (type === 'models' && index === 2 && '100px') ||
+        (type === 'models' && index === 3 && '100px') ||
+        '138px',
+      padding: index === 0 ? '0' : 'auto',
+      paddingTop: index === 0 ? '0rem' : 'auto',
+      paddingLeft: '0',
+      paddingBottom: index === 0 ? '0rem' : '.5rem'
+    };
+  };
+
   return (
     <div className="model-plan-table">
       <div className="mint-header__basic">
@@ -490,21 +517,9 @@ const ModelPlansTable = ({
                     aria-sort={getColumnSortStatus(column)}
                     className="table-header"
                     scope="col"
-                    style={{
-                      minWidth:
-                        (index === 0 && '50px') ||
-                        (index === 3 && '100px') ||
-                        '138px',
-                      width:
-                        (index === 3 && '150px') ||
-                        ((index === 4 || index === 5) && '286px') ||
-                        (index === 6 && '175px') ||
-                        '',
-                      padding: index === 0 ? '0' : 'auto',
-                      paddingTop: index === 0 ? '0rem' : 'auto',
-                      paddingLeft: '0',
-                      paddingBottom: index === 0 ? '0rem' : '.5rem'
-                    }}
+                    style={
+                      type === 'models' ? modelsStyle(index) : homeStyle(index)
+                    }
                   >
                     <button
                       className={classNames('usa-button usa-button--unstyled', {
