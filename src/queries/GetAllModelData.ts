@@ -383,7 +383,6 @@ export default gql`
           userRole
           userRoleDescription
           createdDts
-          resolution
         }
       }
     }

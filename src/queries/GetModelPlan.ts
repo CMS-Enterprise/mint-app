@@ -48,7 +48,6 @@ export default gql`
           content
           createdBy
           createdDts
-          resolution
         }
       }
       generalCharacteristics {

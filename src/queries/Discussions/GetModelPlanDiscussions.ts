@@ -26,7 +26,6 @@ export default gql`
           isAssessment
           createdBy
           createdDts
-          resolution
           createdByUserAccount {
             commonName
           }

@@ -344,7 +344,6 @@ const DiscussionCard = () => {
           userRoleDescription: '',
           createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
           createdDts: justNow,
-          resolution: true,
           createdByUserAccount: {
             commonName: 'Zoe Hruban',
             __typename: 'UserAccount'

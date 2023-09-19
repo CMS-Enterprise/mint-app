@@ -118,7 +118,6 @@ type ComplexityRoot struct {
 		ModifiedBy            func(childComplexity int) int
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
-		Resolution            func(childComplexity int) int
 		UserRole              func(childComplexity int) int
 		UserRoleDescription   func(childComplexity int) int
 	}
@@ -1386,13 +1385,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.ModifiedDts(childComplexity), true
-
-	case "DiscussionReply.resolution":
-		if e.complexity.DiscussionReply.Resolution == nil {
-			break
-		}
-
-		return e.complexity.DiscussionReply.Resolution(childComplexity), true
 
 	case "DiscussionReply.userRole":
 		if e.complexity.DiscussionReply.UserRole == nil {
@@ -7137,7 +7129,6 @@ type DiscussionReply  {
 	content: String
   userRole: DiscussionUserRole
   userRoleDescription: String
-	resolution: Boolean
   isAssessment: Boolean!
 
   createdBy: UUID!
@@ -7156,7 +7147,6 @@ input DiscussionReplyCreateInput {
   content: String!
   userRole: DiscussionUserRole
   userRoleDescription: String
-  resolution: Boolean! = false
 }
 
 """
@@ -7166,7 +7156,6 @@ https://gqlgen.com/reference/changesets/
 """
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
   content: String
-  resolution: Boolean
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -12087,47 +12076,6 @@ func (ec *executionContext) fieldContext_DiscussionReply_userRoleDescription(ctx
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _DiscussionReply_resolution(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_DiscussionReply_resolution(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Resolution, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_DiscussionReply_resolution(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "DiscussionReply",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -18833,8 +18781,6 @@ func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
 			case "userRoleDescription":
 				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
-			case "resolution":
-				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
 			case "createdBy":
@@ -18940,8 +18886,6 @@ func (ec *executionContext) fieldContext_Mutation_updateDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
 			case "userRoleDescription":
 				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
-			case "resolution":
-				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
 			case "createdBy":
@@ -19047,8 +18991,6 @@ func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
 			case "userRoleDescription":
 				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
-			case "resolution":
-				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
 			case "createdBy":
@@ -28312,8 +28254,6 @@ func (ec *executionContext) fieldContext_PlanDiscussion_replies(ctx context.Cont
 				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
 			case "userRoleDescription":
 				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
-			case "resolution":
-				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
 			case "createdBy":
@@ -51066,11 +51006,7 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 		asMap[k] = v
 	}
 
-	if _, present := asMap["resolution"]; !present {
-		asMap["resolution"] = false
-	}
-
-	fieldsInOrder := [...]string{"discussionID", "content", "userRole", "userRoleDescription", "resolution"}
+	fieldsInOrder := [...]string{"discussionID", "content", "userRole", "userRoleDescription"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -51113,15 +51049,6 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 				return it, err
 			}
 			it.UserRoleDescription = data
-		case "resolution":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resolution"))
-			data, err := ec.unmarshalNBoolean2bool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Resolution = data
 		}
 	}
 
@@ -51889,8 +51816,6 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 			out.Values[i] = ec._DiscussionReply_userRole(ctx, field, obj)
 		case "userRoleDescription":
 			out.Values[i] = ec._DiscussionReply_userRoleDescription(ctx, field, obj)
-		case "resolution":
-			out.Values[i] = ec._DiscussionReply_resolution(ctx, field, obj)
 		case "isAssessment":
 			out.Values[i] = ec._DiscussionReply_isAssessment(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

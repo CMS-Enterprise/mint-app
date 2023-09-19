@@ -292,7 +292,6 @@ export type DiscussionReply = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  resolution?: Maybe<Scalars['Boolean']['output']>;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -304,7 +303,6 @@ export type DiscussionReply = {
  */
 export type DiscussionReplyChanges = {
   content?: InputMaybe<Scalars['String']['input']>;
-  resolution?: InputMaybe<Scalars['Boolean']['input']>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
@@ -313,7 +311,6 @@ export type DiscussionReplyChanges = {
 export type DiscussionReplyCreateInput = {
   content: Scalars['String']['input'];
   discussionID: Scalars['UUID']['input'];
-  resolution?: Scalars['Boolean']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };

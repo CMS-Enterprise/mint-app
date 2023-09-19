@@ -42,7 +42,6 @@ type DiscussionReply struct {
 	Content             string              `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
-	Resolution          bool                `json:"resolution" db:"resolution"` //default to false
 	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
 }
 
@@ -52,7 +51,6 @@ func NewDiscussionReply(
 	isAssessment bool,
 	discussionID uuid.UUID,
 	content string,
-	resolution bool,
 	userRole *DiscussionUserRole,
 	userRoleDescription *string,
 ) *DiscussionReply {
@@ -60,7 +58,6 @@ func NewDiscussionReply(
 		Content:             content,
 		UserRole:            userRole,
 		UserRoleDescription: userRoleDescription,
-		Resolution:          resolution,
 		IsAssessment:        isAssessment,
 		discussionRelation:  NewDiscussionRelation(discussionID),
 		baseStruct:          NewBaseStruct(principal),

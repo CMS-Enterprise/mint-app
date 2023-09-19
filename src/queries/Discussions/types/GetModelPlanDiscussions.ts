@@ -29,7 +29,6 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   isAssessment: boolean;
   createdBy: UUID;
   createdDts: Time;
-  resolution: boolean | null;
   createdByUserAccount: GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUserAccount;
 }
 

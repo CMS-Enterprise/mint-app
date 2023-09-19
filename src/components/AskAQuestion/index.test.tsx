@@ -35,7 +35,6 @@ const discussionResult = {
           {
             __typename: 'DiscussionReply',
             discussionID: '456',
-            resolution: true,
             id: 'abc',
             content: 'This is an answer.',
             createdBy: 'Jack Doe',

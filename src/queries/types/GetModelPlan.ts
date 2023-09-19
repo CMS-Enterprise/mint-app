@@ -55,7 +55,6 @@ export interface GetModelPlan_modelPlan_discussions_replies {
   content: string | null;
   createdBy: UUID;
   createdDts: Time;
-  resolution: boolean | null;
 }
 
 export interface GetModelPlan_modelPlan_discussions {

@@ -417,7 +417,6 @@ export interface GetAllSingleModelData_modelPlan_discussions_replies {
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
   createdDts: Time;
-  resolution: boolean | null;
 }
 
 export interface GetAllSingleModelData_modelPlan_discussions {

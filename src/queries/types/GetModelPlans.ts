@@ -45,7 +45,6 @@ export interface GetModelPlans_modelPlanCollection_collaborators {
 export interface GetModelPlans_modelPlanCollection_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
-  resolution: boolean | null;
 }
 
 export interface GetModelPlans_modelPlanCollection_discussions {

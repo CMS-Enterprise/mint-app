@@ -417,7 +417,6 @@ export interface GetAllModelData_modelPlanCollection_discussions_replies {
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
   createdDts: Time;
-  resolution: boolean | null;
 }
 
 export interface GetAllModelData_modelPlanCollection_discussions {

@@ -58,7 +58,6 @@ const discussionResult: GetModelPlanDiscussionsType = {
           {
             __typename: 'DiscussionReply',
             discussionID: '456',
-            resolution: true,
             id: 'abc',
             content: 'This is an answer.',
             userRole: DiscussionUserRole.LEADERSHIP,

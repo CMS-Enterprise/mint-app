@@ -197,7 +197,6 @@ const Discussions = ({
       payload = {
         discussionID: reply.id,
         ...formikValues,
-        resolution: true
       };
     } else {
       return; // Currently we have no mutations when discussions is displayed

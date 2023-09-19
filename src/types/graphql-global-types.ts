@@ -604,7 +604,6 @@ export interface DiscussionReplyCreateInput {
   content: string;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
-  resolution: boolean;
 }
 
 /**

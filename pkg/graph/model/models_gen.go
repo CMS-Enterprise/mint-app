@@ -35,7 +35,6 @@ type DiscussionReplyCreateInput struct {
 	Content             string                     `json:"content"`
 	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
-	Resolution          bool                       `json:"resolution"`
 }
 
 // The current user's Launch Darkly key
