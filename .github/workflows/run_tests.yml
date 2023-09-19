@@ -188,7 +188,7 @@ jobs:
   e2e_tests:
     runs-on: ubuntu-latest
     continue-on-error: true
-    needs: build_docker_images
+    needs: [build_docker_images, build_frontend_assets]
     steps:
       - name: Check out code
         uses: actions/checkout@v4
