@@ -371,7 +371,6 @@ export default gql`
         userRole
         userRoleDescription
         createdDts
-        status
         replies {
           id
           discussionID

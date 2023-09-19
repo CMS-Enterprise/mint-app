@@ -181,12 +181,6 @@ export enum DataToSendParticipantsType {
   PROVIDER_LEVEL_DATA = "PROVIDER_LEVEL_DATA",
 }
 
-export enum DiscussionStatus {
-  ANSWERED = "ANSWERED",
-  UNANSWERED = "UNANSWERED",
-  WAITING_FOR_RESPONSE = "WAITING_FOR_RESPONSE",
-}
-
 export enum DiscussionUserRole {
   CMS_SYSTEM_SERVICE_TEAM = "CMS_SYSTEM_SERVICE_TEAM",
   IT_ARCHITECT = "IT_ARCHITECT",
@@ -719,7 +713,6 @@ export interface PlanCrTdlCreateInput {
  */
 export interface PlanDiscussionChanges {
   content?: string | null;
-  status?: DiscussionStatus | null;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }

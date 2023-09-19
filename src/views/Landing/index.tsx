@@ -16,10 +16,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import {
-  DiscussionStatus,
-  DiscussionUserRole
-} from 'types/graphql-global-types';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
 
 import './index.scss';
@@ -327,7 +324,6 @@ const DiscussionCard = () => {
       userRole: DiscussionUserRole.MODEL_TEAM,
       userRoleDescription: '',
       createdDts: hour3ago,
-      status: DiscussionStatus.ANSWERED,
       isAssessment: false,
       createdByUserAccount: {
         commonName: 'Jane Middleton',
@@ -359,9 +355,7 @@ const DiscussionCard = () => {
     <div className="landing__discussions line-height-mono-4 padding-2">
       <FormatDiscussion
         discussionsContent={discussions}
-        status={DiscussionStatus.ANSWERED}
         hasEditAccess
-        setDiscussionStatusMessage={() => null}
         setDiscussionType={() => null}
         setReply={() => null}
       />

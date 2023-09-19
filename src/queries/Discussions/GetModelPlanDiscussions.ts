@@ -12,7 +12,6 @@ export default gql`
         createdDts
         userRole
         userRoleDescription
-        status
         isAssessment
         createdByUserAccount {
           commonName

@@ -18,7 +18,6 @@ type SingleDiscussionProps = {
   connected?: boolean;
   answerQuestion?: boolean;
   hasEditAccess?: boolean;
-  setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
@@ -31,7 +30,6 @@ const SingleDiscussion = ({
   connected,
   answerQuestion,
   hasEditAccess,
-  setDiscussionStatusMessage,
   setDiscussionType,
   setReply,
   setIsDiscussionOpen,
@@ -106,7 +104,6 @@ const SingleDiscussion = ({
                 if (setIsDiscussionOpen) {
                   setIsDiscussionOpen(true);
                 }
-                setDiscussionStatusMessage('');
                 setDiscussionType('reply');
                 setReply(discussion);
               }}

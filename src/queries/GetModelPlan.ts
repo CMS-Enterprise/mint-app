@@ -41,7 +41,6 @@ export default gql`
         content
         createdBy
         createdDts
-        status
         replies {
           id
           discussionID

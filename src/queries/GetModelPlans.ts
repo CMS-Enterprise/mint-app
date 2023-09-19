@@ -34,7 +34,6 @@ export default gql`
       }
       discussions {
         id
-        status
         replies {
           id
         }

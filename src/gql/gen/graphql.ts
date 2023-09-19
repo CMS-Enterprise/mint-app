@@ -321,12 +321,6 @@ export type DiscussionRoleSelection = {
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
-export enum DiscussionStatus {
-  ANSWERED = 'ANSWERED',
-  UNANSWERED = 'UNANSWERED',
-  WAITING_FOR_RESPONSE = 'WAITING_FOR_RESPONSE'
-}
-
 export enum DiscussionUserRole {
   CMS_SYSTEM_SERVICE_TEAM = 'CMS_SYSTEM_SERVICE_TEAM',
   IT_ARCHITECT = 'IT_ARCHITECT',
@@ -1380,7 +1374,6 @@ export type PlanDiscussion = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   replies: Array<DiscussionReply>;
-  status: DiscussionStatus;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -1392,7 +1385,6 @@ export type PlanDiscussion = {
  */
 export type PlanDiscussionChanges = {
   content?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<DiscussionStatus>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };

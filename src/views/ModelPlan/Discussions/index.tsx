@@ -30,7 +30,6 @@ import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'quer
 import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
 import {
-  DiscussionStatus,
   DiscussionUserRole,
   PlanDiscussionCreateInput
 } from 'types/graphql-global-types';
@@ -117,10 +116,6 @@ const Discussions = ({
     'question' | 'reply' | 'discussion'
   >(discussionReplyID ? 'reply' : 'question');
 
-  const [discussionStatus, setDiscussionStatus] = useState<'success' | 'error'>(
-    'success'
-  );
-
   const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
 
   // State used to control when the component is being rendered from a form page rather than the task-list
@@ -155,7 +150,6 @@ const Discussions = ({
           search: queryParams.toString()
         });
         setInitQuestion(false);
-        setDiscussionStatus('error');
         setDiscussionStatusMessage(
           t('alreadyAnswered', {
             question: discussionToReply.content
@@ -196,7 +190,7 @@ const Discussions = ({
     } else if (discussionType === 'reply' && reply) {
       payload = {
         discussionID: reply.id,
-        ...formikValues,
+        ...formikValues
       };
     } else {
       return; // Currently we have no mutations when discussions is displayed
@@ -299,10 +293,7 @@ const Discussions = ({
                   ),
                 content: (
                   <FormatDiscussion
-                    discussionsContent={discussions.filter(
-                      discussion => discussion.status === status
-                    )}
-                    status={DiscussionStatus[status]}
+                    discussionsContent={discussions}
                     hasEditAccess={hasEditAccess}
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
                     setDiscussionType={setDiscussionType}
@@ -413,7 +404,6 @@ const Discussions = ({
         setDiscussionReplyID={setDiscussionReplyID}
         queryParams={queryParams}
         setInitQuestion={setInitQuestion}
-        setDiscussionStatusMessage={setDiscussionStatusMessage}
         setDiscussionType={setDiscussionType}
       />
     );
