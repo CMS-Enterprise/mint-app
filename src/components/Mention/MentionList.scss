@@ -1,0 +1,27 @@
+.items {
+    padding: 0.2rem;
+    position: relative;
+    background: #FFF;
+    color: rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    font-size: 0.9rem;
+    border: none;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.05),
+      0px 10px 20px rgba(0, 0, 0, 0.1),
+    ;
+  }
+  
+  .item {
+    display: block;
+    border: none;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    padding: .3rem;
+  
+    &.is-selected {
+      background-color: #d9e8f6;
+    }
+  }
