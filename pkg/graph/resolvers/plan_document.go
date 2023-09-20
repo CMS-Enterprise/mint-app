@@ -1,6 +1,9 @@
 package resolvers
 
 import (
+	"fmt"
+	"net/url"
+
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
 	"go.uber.org/zap"
@@ -30,7 +33,7 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 
 	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
 	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
 
 	return document, nil
@@ -40,16 +43,20 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, store *storage.Store) (*models.PlanDocument, error) {
 	contentType := "externalLink"
 	fileSize := 0
+	_, err := url.ParseRequestURI(input.URL)
+	if err != nil {
+		return nil, fmt.Errorf(" url is not in a valid format. err : %w", err)
+	}
 	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
 
-	err := BaseStructPreCreate(logger, document, principal, store, true)
+	err = BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
 	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
 	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
 
 	return document, nil

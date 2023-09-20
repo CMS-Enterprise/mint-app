@@ -73,6 +73,13 @@ func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 	suite.Nil(document.OtherTypeDescription.Ptr())
 	suite.Nil(document.OptionalNotes.Ptr())
 	suite.Nil(document.DeletedAt)
+
+	suite.Run("Invalid urls will cause an error", func() {
+		input.URL = "Hello"
+
+		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.Error(err)
+	})
 }
 
 func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {

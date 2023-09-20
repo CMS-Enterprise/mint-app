@@ -219,10 +219,7 @@ func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents [
 func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *models.PlanDocument) error {
 
 	if document.IsLink {
-		return nil
-
-		// TODO: SW address how we want to mark virus scan status for linked documents
-		// WE don't actually scan the document, so we don't want to say that we do...
+		return nil // Note, if this is a link to another website, we are not scanning the link.
 	}
 	status, err := fetchDocumentTag(s3Client, document, "av-status")
 	if err != nil {
