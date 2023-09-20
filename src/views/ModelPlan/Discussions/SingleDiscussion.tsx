@@ -37,9 +37,10 @@ const SingleDiscussion = ({
 }: SingleDiscussionProps) => {
   const { t: discussionT } = useTranslation('discussions');
 
-  const repliesList = [...replies];
-  const latestDate = repliesList.reduce((pre: any, cur: any) =>
-    Date.parse(pre) > Date.parse(cur) ? pre : cur
+  // const repliesList = [...replies];
+  const latestDate = [...replies].reduce(
+    (pre: any, cur: any) => (Date.parse(pre) > Date.parse(cur) ? pre : cur),
+    0
   );
   const timeLastUpdated = DateTime.fromISO(
     latestDate.createdDts
@@ -90,12 +91,14 @@ const SingleDiscussion = ({
               ? discussionT('reply')
               : discussionT('replies', { count: replies.length })}
           </Button>
-          <p className="margin-y-0 text-base">
-            {discussionT('lastReply', {
-              date: daysLastUpdated,
-              time: timeLastUpdated
-            })}
-          </p>
+          {replies.length > 0 && (
+            <p className="margin-y-0 text-base">
+              {discussionT('lastReply', {
+                date: daysLastUpdated,
+                time: timeLastUpdated
+              })}
+            </p>
+          )}
         </div>
       </div>
     </div>
