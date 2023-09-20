@@ -11,6 +11,8 @@ import {
   // GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
 
+import DiscussionUserInfo from '../_components/DiscussionUserInfo';
+
 const Replies = ({
   originalDiscussion
 }: {
@@ -24,7 +26,7 @@ const Replies = ({
 
   return (
     <div className="discussion-replies margin-bottom-4">
-      <div className="discussion-replies__heading display-flex flex-justify">
+      <div className="discussion-replies__heading display-flex flex-justify margin-bottom-1">
         <p className="margin-y-0 text-bold">
           {hasReplies ? (
             <>
@@ -62,8 +64,18 @@ const Replies = ({
         )}
       </div>
       {hasReplies && areRepliesShowing && (
-        <div className="discussion-replies__content">
-          <p>
+        <div className="discussion-replies__content padding-top-2">
+          {originalDiscussion.replies.map((reply, index) => {
+            return (
+              <>
+                <DiscussionUserInfo discussionTopic={reply} index={index} />
+                <p className="margin-top-0 margin-bottom-105 text-pre-wrap">
+                  {reply.content}
+                </p>
+              </>
+            );
+          })}
+          {/* <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
             consequatur quae perspiciatis laboriosam dolorum dolorem fuga. Quod
             incidunt atque recusandae ea. Corporis assumenda fuga distinctio?
@@ -72,7 +84,7 @@ const Replies = ({
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
             consequatur quae perspiciatis laboriosam dolorum dolorem fuga. Quod
             incidunt atque recusandae ea. Corporis assumenda fuga distinctio?
-          </p>
+          </p> */}
         </div>
       )}
     </div>
