@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -67,24 +67,28 @@ const Replies = ({
         <div className="discussion-replies__content padding-top-2">
           {originalDiscussion.replies.map((reply, index) => {
             return (
-              <>
-                <DiscussionUserInfo discussionTopic={reply} index={index} />
-                <p className="margin-top-0 margin-bottom-105 text-pre-wrap">
+              <Fragment key={reply.id}>
+                <DiscussionUserInfo
+                  discussionTopic={reply}
+                  index={index}
+                  connected={
+                    index !== originalDiscussion.replies.length - 1 &&
+                    hasReplies
+                  }
+                />
+                <p
+                  className={`margin-top-0 margin-bottom-105 text-pre-wrap ${
+                    index !== originalDiscussion.replies.length - 1 &&
+                    hasReplies
+                      ? 'mint-discussions__connected'
+                      : 'mint-discussions__not-connected'
+                  }`}
+                >
                   {reply.content}
                 </p>
-              </>
+              </Fragment>
             );
           })}
-          {/* <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-            consequatur quae perspiciatis laboriosam dolorum dolorem fuga. Quod
-            incidunt atque recusandae ea. Corporis assumenda fuga distinctio?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-            consequatur quae perspiciatis laboriosam dolorum dolorem fuga. Quod
-            incidunt atque recusandae ea. Corporis assumenda fuga distinctio?
-          </p> */}
         </div>
       )}
     </div>
