@@ -17,7 +17,6 @@ import SingleDiscussion from './SingleDiscussion';
 type FormatDiscussionProps = {
   discussionsContent: DiscussionType[];
   status: DiscussionStatus;
-  hasEditAccess?: boolean;
   setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
@@ -27,7 +26,6 @@ type FormatDiscussionProps = {
 const FormatDiscussion = ({
   discussionsContent,
   status,
-  hasEditAccess,
   setDiscussionStatusMessage,
   setDiscussionType,
   setReply,

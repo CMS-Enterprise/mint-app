@@ -309,7 +309,6 @@ const Discussions = ({
                       discussion => discussion.status === status
                     )}
                     status={DiscussionStatus[status]}
-                    hasEditAccess={hasEditAccess}
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
                     setDiscussionType={setDiscussionType}
                     setReply={setReply}

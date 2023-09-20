@@ -361,7 +361,6 @@ const DiscussionCard = () => {
       <FormatDiscussion
         discussionsContent={discussions}
         status={DiscussionStatus.ANSWERED}
-        hasEditAccess
         setDiscussionStatusMessage={() => null}
         setDiscussionType={() => null}
         setReply={() => null}
