@@ -233,7 +233,7 @@ jobs:
         uses: docker/bake-action@v4.0.0
         with:
           targets: mint,db_migrate
-          files: "ocker-compose.backend.yml"
+          files: "docker-compose.backend.yml"
           load: true
           set: |
             mint.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint
