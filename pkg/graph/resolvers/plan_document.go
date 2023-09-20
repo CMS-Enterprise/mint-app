@@ -40,7 +40,7 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, store *storage.Store) (*models.PlanDocument, error) {
 	contentType := "externalLink"
 	fileSize := 0
-	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, uuid.NewString(), input.Name, fileSize, input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
+	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
