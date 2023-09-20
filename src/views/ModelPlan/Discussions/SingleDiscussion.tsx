@@ -37,7 +37,6 @@ const SingleDiscussion = ({
 }: SingleDiscussionProps) => {
   const { t: discussionT } = useTranslation('discussions');
 
-  // const repliesList = [...replies];
   const latestDate = [...replies].reduce(
     (pre: any, cur: any) => (Date.parse(pre) > Date.parse(cur) ? pre : cur),
     0
