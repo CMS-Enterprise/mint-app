@@ -106,7 +106,7 @@ services:
       - PGPORT=5432 # We also need to override this, as docker-compose networking uses the container port, not the host port
       - PGDATABASE
       - PGUSER
-      - PGPASS
+      - PGPASSWORD
       - PGSSLMODE
       - DB_MAX_CONNECTIONS
       - FLAG_SOURCE
