@@ -20,24 +20,26 @@ const Replies = ({
 
   const [areRepliesShowing, setAreRepliesShowing] = useState(true);
 
+  const hasReplies = originalDiscussion.replies.length > 0;
+
   return (
     <div className="discussion-replies margin-bottom-4">
       <div className="discussion-replies__heading display-flex flex-justify">
         <p className="margin-y-0 text-bold">
-          {originalDiscussion.replies.length === 0 ? (
+          {hasReplies ? (
+            <>
+              {discussionsT('replies', {
+                count: originalDiscussion.replies.length
+              })}
+            </>
+          ) : (
             <>
               {/*  https://github.com/i18next/i18next/issues/1220#issuecomment-654161038 */}
               {discussionsT('replies', { count: 0, context: '0' })}
             </>
-          ) : (
-            <p className="margin-y-0">
-              {discussionsT('replies', {
-                count: originalDiscussion.replies.length
-              })}
-            </p>
           )}
         </p>
-        {originalDiscussion.replies.length > 0 && (
+        {hasReplies && (
           <Button
             type="button"
             onClick={() => setAreRepliesShowing(!areRepliesShowing)}
@@ -59,7 +61,7 @@ const Replies = ({
           </Button>
         )}
       </div>
-      {areRepliesShowing && (
+      {hasReplies && areRepliesShowing && (
         <div className="discussion-replies__content">
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
