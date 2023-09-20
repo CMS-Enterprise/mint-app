@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`High Level Project Plan Article matches snapshot 1`] = `
+exports[`High Level Project Plan Article > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -67,7 +67,7 @@ exports[`High Level Project Plan Article matches snapshot 1`] = `
         <a
           aria-label="Open in a new tab"
           class="usa-link display-flex flex-align-center width-fit-content margin-bottom-3"
-          href="highLevelProjectPlan.xlsx"
+          href="/src/assets/files/highLevelProjectPlan.xlsx"
           rel="noopener noreferrer"
           target="_blank"
         >

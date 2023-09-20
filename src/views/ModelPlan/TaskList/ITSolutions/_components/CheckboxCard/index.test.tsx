@@ -31,7 +31,7 @@ const solution = [
   }
 ];
 
-const handleSubmit = jest.fn();
+const handleSubmit = vi.fn();
 
 describe('IT Solutions CheckboxCard', () => {
   it('matches snapshot', async () => {

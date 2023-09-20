@@ -6,6 +6,7 @@ export default defineConfig({
   projectId: 'vc6vw5',
   defaultCommandTimeout: 10000,
   execTimeout: 120000,
+  video: true,
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

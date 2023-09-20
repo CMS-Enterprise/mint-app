@@ -75,6 +75,11 @@
       font-family: 'Public Sans', sans-serif;
       text-decoration: none;
     }
+
+    td {
+      white-space: normal;
+      word-wrap: break-word;
+    }
   </style>
 </head>
 <body>
@@ -94,7 +99,7 @@
   <br/>
 {{end}}
 
-<table style="border: 1px solid #E6E6E6; border-radius: 6px; padding: 20px; display: inline-table;">
+<table style="width: 335px; border: 1px solid #E6E6E6; border-radius: 6px; padding: 20px; display: inline-table;">
   <tr>
     <td style="vertical-align: top; padding: 20px;">
       <h1 style="display: inline-block;">{{.ModelName}}</h1>
@@ -136,18 +141,44 @@
       <br/>
     </td>
   </tr>
+  <tr>
+    <td>
+      <p style="padding-top: 14pt;">
+          {{if .ModelViewFilter}}
+            <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}" class="link">
+              View {{.HumanizedModelViewFilter}} details in MINT
+            </a>
+          {{else}}
+            <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
+              View more details in MINT
+            </a>
+          {{end}}
+      </p>
+    </td>
+  </tr>
 </table>
 
 <br/>
-<p style="padding-top: 14pt;">
-    {{if .ModelViewFilter}}
-      <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}" class="link">
-        View {{.HumanizedModelViewFilter}} details in MINT
-      </a>
-    {{else}}
-      <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
-        View more details in MINT
-      </a>
-    {{end}}
-</p>
+<br/>
+
+<table style="width: 335px; height: 120px; padding: 15px 20px 20px 20px; gap: 10px; background: #E7F6F8; display: inline-table;">
+  <tr>
+    <td>
+      <p>
+        If you don’t have access to MINT yet, you will need to request access.
+
+        <br/>
+        <br/>
+
+        <a href="{{.ClientAddress}}/how-to-get-access" class="link">
+          Learn how to get access
+        </a>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<br/>
+<br/>
+
 </body>

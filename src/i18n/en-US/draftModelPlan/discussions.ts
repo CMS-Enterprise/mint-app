@@ -73,6 +73,20 @@ const discussions = {
     SHARED_SYSTEM_MAINTAINER: 'Shared System Maintainer',
     NONE_OF_THE_ABOVE: 'None of the above'
   },
+  discussionCSV: {
+    content: 'Discussion content',
+    createdBy: 'Discussion created by',
+    createdAt: 'Discussion created at',
+    userRole: 'User role',
+    userRoleDescription: 'User role description'
+  },
+  replyCSV: {
+    content: 'Reply content',
+    createdBy: 'Reply created by',
+    createdAt: 'Reply created at',
+    userRole: 'User role',
+    userRoleDescription: 'User role description'
+  },
   showReplies: 'Show replies',
   hideReplies: 'Hide replies'
 };

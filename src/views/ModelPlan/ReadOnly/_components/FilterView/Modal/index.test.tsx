@@ -6,7 +6,7 @@ import FilterViewModal from './index';
 
 describe('Filter View Modal', () => {
   it('renders without crashing', async () => {
-    const closeModal = jest.fn();
+    const closeModal = vi.fn();
     render(<FilterViewModal filteredView="" closeModal={closeModal} />);
 
     await waitFor(() => {
@@ -19,7 +19,7 @@ describe('Filter View Modal', () => {
   });
 
   it('matches snapshot', async () => {
-    const closeModal = jest.fn();
+    const closeModal = vi.fn();
     const { asFragment } = render(
       <FilterViewModal filteredView="" closeModal={closeModal} />
     );

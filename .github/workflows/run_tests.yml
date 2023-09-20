@@ -23,7 +23,6 @@ jobs:
       matrix:
         service_name:
           - mint
-          - mint_client
           - db_migrate
     steps:
       - name: Check out code
@@ -44,13 +43,50 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Run buildx bake
-        uses: docker/bake-action@v3.1.0
+        uses: docker/bake-action@v4.0.0
         with:
           files: "docker-compose.yml,docker-compose.override.yml"
           targets: "${{ matrix.service_name }}"
           set: |
             ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
             ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
+
+  # This is largely a copy of build_frontend_assets, but it doesn't use an `environment` block
+  build_frontend_assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.GIT_HASH }}
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - name: Write local env vars for testing
+        run: |
+          touch .envrc.local
+          echo "export FLAG_SOURCE=FILE" >> .envrc.local
+          echo "export OKTA_TEST_USERNAME='${{ secrets.OKTA_TEST_USERNAME }}'" >> .envrc.local
+          echo "export OKTA_TEST_PASSWORD='${{ secrets.OKTA_TEST_PASSWORD }}'" >> .envrc.local
+          echo "export OKTA_TEST_SECRET='${{ secrets.OKTA_TEST_SECRET }}'" >> .envrc.local
+      - name: Set env vars with direnv
+        uses: HatsuneMiku3939/direnv-action@v1
+      - name: yarn install
+        run: yarn install --immutable
+      - name: Build Frontend Assets
+        run: yarn build
+      - name: Upload Frontend assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e-frontend-assets
+          path: build/
+          retention-days: 10
+      - name: Announce failure
+        if: ${{ failure() }}
+        run: |
+          ./scripts/github-action-announce-broken-branch
 
   server_test:
     runs-on: ubuntu-latest
@@ -152,7 +188,7 @@ jobs:
   e2e_tests:
     runs-on: ubuntu-latest
     continue-on-error: true
-    needs: build_docker_images
+    needs: [build_docker_images, build_frontend_assets]
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -194,20 +230,27 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Run buildx bake
-        uses: docker/bake-action@v3.1.0
+        uses: docker/bake-action@v4.0.0
         with:
+          targets: mint,db_migrate
           files: "docker-compose.yml,docker-compose.override.yml"
           load: true
           set: |
             mint.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint
-            mint_client.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint_client
             db_migrate.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
       - name: Install yarn dependencies
         run: yarn install --immutable
-      - name: Start all services
+      - name: Start backend services
         run: |
           scripts/dev down
-          scripts/dev up:ci
+          scripts/dev up:backend
+      - name: Download Frontend assets
+        uses: actions/download-artifact@v3
+        with:
+          name: e2e-frontend-assets
+          path: build/
+      - name: Start frontend
+        run: yarn serve &
       - name: Run Cypress Tests
         run: |
           export FLAG_SOURCE=FILE

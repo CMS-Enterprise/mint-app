@@ -266,14 +266,10 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      READY:
-        'This section of the Model Plan (Model basics) is ready for review.',
-      IN_PROGRESS:
-        'This section of the Model Plan (Model basics) is ready for review.',
-      READY_FOR_REVIEW:
-        'This section of the Model Plan (Model basics) is ready for review.',
-      READY_FOR_CLEARANCE:
-        'This section of the Model Plan (Model basics) is ready for review.'
+      READY: 'Ready',
+      IN_PROGRESS: 'In progress',
+      READY_FOR_REVIEW: 'Ready for review',
+      READY_FOR_CLEARANCE: 'Ready for clearance'
     }
   }
 };

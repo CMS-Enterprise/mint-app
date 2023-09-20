@@ -63,7 +63,8 @@ describe('NDA Page', () => {
   });
 
   it('matches snapshot', async () => {
-    Date.now = jest.fn();
+    Date.now = vi.fn();
+
     const store = mockStore({
       auth: {
         acceptedNDA: {

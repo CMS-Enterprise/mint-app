@@ -106,6 +106,7 @@ export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
   previousName: TranslationFieldProperties;
   abbreviation: TranslationFieldProperties;
+  archived: TranslationFieldPropertiesWithOptions<Bool>;
   status: TranslationFieldPropertiesWithOptions<ModelStatus>;
 };
 
@@ -117,6 +118,7 @@ export type TranslationBasics = {
   modelCategory: TranslationFieldPropertiesWithOptions<ModelCategory>;
   additionalModelCategories: TranslationFieldPropertiesWithOptions<ModelCategory>;
   cmsCenters: TranslationFieldPropertiesWithOptions<CMSCenter>;
+  cmsOther: TranslationFieldProperties;
   cmmiGroups: TranslationFieldPropertiesWithOptions<CMMIGroup>;
   // Overview
   modelType: TranslationFieldPropertiesWithOptions<ModelType>;
