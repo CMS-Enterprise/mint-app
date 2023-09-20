@@ -25,6 +25,9 @@ export default defineConfig({
     strictPort: true,
     port: 3005
   },
+  preview: {
+    port: 3005
+  },
   css: {
     devSourcemap: true,
     preprocessorOptions: {
