@@ -16,7 +16,7 @@ import (
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
 func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
-	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes))
+	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
@@ -28,7 +28,26 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 		return &models.PlanDocument{}, err
 	}
 
-	document, err = store.PlanDocumentCreate(logger, principal.ID(), document, s3Client)
+	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
+	}
+
+	return document, nil
+}
+
+// PlanDocumentCreateLinked creates a plan document which is a link to an external URL instead of an Uploaded file
+func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, store *storage.Store) (*models.PlanDocument, error) {
+	contentType := "externalLink"
+	fileSize := 0
+	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, uuid.NewString(), input.Name, fileSize, input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
+
+	err := BaseStructPreCreate(logger, document, principal, store, true)
+	if err != nil {
+		return nil, err
+	}
+
+	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
 	}
