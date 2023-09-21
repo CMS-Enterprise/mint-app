@@ -14,7 +14,7 @@ import {
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';
 
 const Replies = ({
-  originalDiscussion
+  originalDiscussion: { replies }
 }: {
   originalDiscussion: DiscussionType;
 }) => {
@@ -22,7 +22,7 @@ const Replies = ({
 
   const [areRepliesShowing, setAreRepliesShowing] = useState(true);
 
-  const hasReplies = originalDiscussion.replies.length > 0;
+  const hasReplies = replies.length > 0;
 
   return (
     <div className="discussion-replies margin-bottom-4">
@@ -31,7 +31,7 @@ const Replies = ({
           {hasReplies ? (
             <>
               {discussionsT('replies', {
-                count: originalDiscussion.replies.length
+                count: replies.length
               })}
             </>
           ) : (
@@ -65,21 +65,17 @@ const Replies = ({
       </div>
       {hasReplies && areRepliesShowing && (
         <div className="discussion-replies__content padding-top-2">
-          {originalDiscussion.replies.map((reply, index) => {
+          {replies.map((reply, index) => {
             return (
               <Fragment key={reply.id}>
                 <DiscussionUserInfo
                   discussionTopic={reply}
                   index={index}
-                  connected={
-                    index !== originalDiscussion.replies.length - 1 &&
-                    hasReplies
-                  }
+                  connected={index !== replies.length - 1 && hasReplies}
                 />
                 <p
                   className={`margin-top-0 margin-bottom-105 text-pre-wrap ${
-                    index !== originalDiscussion.replies.length - 1 &&
-                    hasReplies
+                    index !== replies.length - 1 && hasReplies
                       ? 'mint-discussions__connected'
                       : 'mint-discussions__not-connected'
                   }`}
