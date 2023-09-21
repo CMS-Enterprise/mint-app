@@ -80,6 +80,20 @@ func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 		suite.Error(err)
 	})
+
+	suite.Run("urls with no protocol cause an error", func() {
+		input.URL = "www.google.com"
+
+		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.Error(err)
+	})
+
+	suite.Run("urls non http/https protocol cause an error", func() {
+		input.URL = "ws://www.google.com"
+
+		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.Error(err)
+	})
 }
 
 func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
