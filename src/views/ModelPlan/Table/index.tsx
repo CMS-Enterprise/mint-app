@@ -225,7 +225,7 @@ const ModelPlansTable = ({
             const newArray = additionalModelCategory.map(
               (group: ModelCategory) => {
                 return i18next.t<string>(
-                  `basics:modelCategory.options.${group}`
+                  `basics:additionalModelCategories.options.${group}`
                 );
               }
             );
@@ -234,7 +234,7 @@ const ModelPlansTable = ({
               `basics:modelCategory.options.${value}`
             )}, ${newArray.join(', ')}`;
           }
-          return i18next.t<string>(`bascis:modelCategory.options.${value}`);
+          return i18next.t<string>(`basics:modelCategory.options.${value}`);
         }
       },
       status: {
