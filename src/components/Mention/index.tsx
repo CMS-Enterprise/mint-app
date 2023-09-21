@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLazyQuery } from '@apollo/client';
 import CharacterCount from '@tiptap/extension-character-count';
-import Mention from '@tiptap/extension-mention';
+import Mention, { MentionOptions } from '@tiptap/extension-mention';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -51,7 +51,19 @@ export default () => {
     ]
   });
 
-  console.log(editor?.commands);
+  const getMentions = (data: any) => {
+    const mentions: any = [];
+    data?.content?.forEach((para: any) => {
+      para?.content?.forEach((content: any) => {
+        if (content?.type === 'mention') {
+          mentions.push(content?.attrs);
+        }
+      });
+    });
+    return mentions;
+  };
+
+  console.log(getMentions(editor?.getJSON()));
 
   const percentage = editor
     ? Math.round((100 / limit) * editor.storage.characterCount.characters())
