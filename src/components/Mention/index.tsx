@@ -1,11 +1,9 @@
 import React from 'react';
 import { useLazyQuery } from '@apollo/client';
 import CharacterCount from '@tiptap/extension-character-count';
-import Document from '@tiptap/extension-document';
 import Mention from '@tiptap/extension-mention';
-import Paragraph from '@tiptap/extension-paragraph';
-import Text from '@tiptap/extension-text';
 import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 
 import SearchOktaUsers from 'queries/SearchOktaUsers';
 import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOktaUsers';
@@ -25,7 +23,10 @@ export default () => {
     return getUsersLazyQuery({
       variables: { searchTerm: query }
     }).then(
-      res => res?.data?.searchOktaUsers?.map(user => user.displayName) || []
+      res =>
+        res?.data?.searchOktaUsers?.map(user => {
+          return { username: user.username, displayName: user.displayName };
+        }) || []
     );
   };
 
@@ -36,20 +37,21 @@ export default () => {
 
   const editor = useEditor({
     extensions: [
-      Document,
-      Paragraph,
-      Text,
+      StarterKit,
       CharacterCount.configure({
         limit
       }),
       Mention.configure({
         HTMLAttributes: {
-          class: 'mention'
+          class: 'mention',
+          onclick: e => console.log(e)
         },
         suggestion: asyncSuggestions
       })
     ]
   });
+
+  console.log(editor?.commands);
 
   const percentage = editor
     ? Math.round((100 / limit) * editor.storage.characterCount.characters())
