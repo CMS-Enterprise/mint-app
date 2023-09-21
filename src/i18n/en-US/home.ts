@@ -2,6 +2,8 @@ const home = {
   title: 'Welcome to Model Innovation Tool (MINT)',
   subheading:
     'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.',
+  macSubheading:
+    'The place to learn about upcoming CMMI models and demonstrations.',
   signIn: 'Sign in to start',
   mintPurpose: 'You can use MINT to:',
   startNow: 'Start a new Model Plan',
@@ -19,13 +21,23 @@ const home = {
   },
   allModels: {
     copy: 'Don’t see the model you’re looking for?',
-    cta: 'View all models'
+    cta: 'View all models',
+    heading: 'All models',
+    subheading:
+      'Follow models that you want to stay up to date on by clicking the star icon.',
+    noResults: {
+      heading: 'We couldn’t find any matches for "{{-searchTerm}}".',
+      subheading:
+        'Double check your search for typos or try a different search.'
+    }
   },
   yourModels: 'You have been added as a team member to the model plans below.',
   fetchError: 'There was an error fetching models plans.  Please try again.',
   downloadAllCSV: 'Download all plans as CSV',
   downloadSingleCSV: 'Download this Model Plan (CSV)',
   requestsTable: {
+    id: 'model-plans',
+    title: 'Model plans',
     basic: {
       heading: 'My model plans'
     },
@@ -50,6 +62,8 @@ const home = {
     headers: {
       name: 'Model name',
       category: 'Category',
+      abbreviation: 'Short name',
+      amsModelID: 'ID',
       modelPoc: 'Model lead(s)',
       clearanceDate: 'Anticipated clearance date',
       startDate: 'Model start date',
@@ -61,7 +75,7 @@ const home = {
       recentActivity: 'Recent activity'
     },
     noneSelectedYet: 'None selected yet',
-    tbd: 'TBD',
+    tbd: 'To be determined',
     updated: 'Updated',
     unansweredQuestion: 'unanswered question',
     answeredQuestion: 'answered question'

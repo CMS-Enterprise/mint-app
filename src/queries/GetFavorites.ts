@@ -1,32 +1,28 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query GetAllModelPlans($filter: ModelPlanFilter!) {
+  query GetFavorites($filter: ModelPlanFilter!, $isMAC: Boolean!) {
     modelPlanCollection(filter: $filter) {
       id
       modelName
-      nameHistory(sort: DESC)
-      status
       isFavorite
+      nameHistory(sort: DESC)
       isCollaborator
+      status
       basics {
-        performancePeriodStarts
-        modelCategory
-        additionalModelCategories
+        id
         goal
+        performancePeriodStarts
       }
       collaborators {
+        id
         userAccount {
           id
           commonName
-          email
-          username
         }
-        userID
         teamRole
       }
-      crTdls {
-        id
+      crTdls @include(if: $isMAC) {
         idNumber
       }
     }
