@@ -7,6 +7,7 @@ import {
 } from '@trussworks/react-uswds';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
+import TruncatedText from 'components/shared/TruncatedText';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType
   // GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
@@ -82,15 +83,20 @@ const Replies = ({
                     index={index}
                     connected={index !== replies.length - 1 && hasReplies}
                   />
-                  <p
+                  <div
                     className={`margin-top-0 margin-bottom-105 text-pre-wrap ${
                       index !== replies.length - 1 && hasReplies
                         ? 'mint-discussions__connected'
                         : 'mint-discussions__not-connected'
                     }`}
                   >
-                    {reply.content}
-                  </p>
+                    <TruncatedText
+                      id="asdf-1"
+                      text={reply.content ?? ''}
+                      charLimit={10}
+                    />
+                    {/* {reply.content} */}
+                  </div>
                 </Fragment>
               );
             })}

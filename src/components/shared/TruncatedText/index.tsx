@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from '@trussworks/react-uswds';
-import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  IconExpandLess,
+  IconExpandMore
+} from '@trussworks/react-uswds';
 
 // This component takes free form text and a character limit and
 // will return the whole text until it reaches the character limit, once
@@ -9,32 +13,20 @@ import classnames from 'classnames';
 // desires to see the entire text
 
 type TruncatedTextProps = {
-  id: string;
-  label: string;
+  id?: string;
   text: string;
   charLimit: number;
-  closeLabel?: string;
-  className?: string;
 };
 
-const TruncatedText = ({
-  id,
-  label,
-  text,
-  charLimit,
-  closeLabel,
-  className
-}: TruncatedTextProps) => {
+const TruncatedText = ({ id, text, charLimit }: TruncatedTextProps) => {
+  const { t: generalT } = useTranslation('general');
+
   const [isOpen, setOpen] = useState(true);
-  const arrowClassNames = classnames(
-    'fa',
-    isOpen ? 'fa-caret-down' : 'fa-caret-right'
-  );
 
   // If text is shorter then specified character limit, just
   // return the whole text
   if (text.length < charLimit) {
-    return <span className={className}>{text}</span>;
+    return <span>{text}</span>;
   }
 
   // Text is longer then specified character limit, truncate text
@@ -43,20 +35,22 @@ const TruncatedText = ({
   const startOfText: string = text.substring(0, charLimit);
 
   return (
-    <div className={className}>
-      {isOpen ? `${startOfText}... ` : `${text} `}
+    <>
+      <span className="display-block">
+        {isOpen ? `${startOfText}... ` : `${text} `}
+      </span>
       <Button
         type="button"
         onClick={() => setOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-controls={id}
-        className={classnames({ 'text-bold': isOpen })}
         unstyled
+        className="display-flex flex-align-center"
       >
-        <span className={arrowClassNames} />
-        {isOpen ? closeLabel || label : label}
+        {isOpen ? generalT('readMore') : generalT('readLess')}
+        {isOpen ? <IconExpandMore /> : <IconExpandLess />}
       </Button>
-    </div>
+    </>
   );
 };
 
