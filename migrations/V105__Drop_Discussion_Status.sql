@@ -1,0 +1,4 @@
+ALTER TABLE plan_discussion
+  DROP COLUMN status;
+
+DROP TYPE DISCUSSION_STATUS;

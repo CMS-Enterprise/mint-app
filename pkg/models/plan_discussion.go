@@ -11,7 +11,6 @@ type PlanDiscussion struct {
 	Content             string              `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
-	Status              DiscussionStatus    `json:"status" db:"status"`
 	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
 }
 
@@ -28,7 +27,6 @@ func NewPlanDiscussion(
 		Content:             content,
 		UserRole:            userRole,
 		UserRoleDescription: userRoleDescription,
-		Status:              DiscussionUnAnswered,
 		IsAssessment:        isAssessment,
 		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
 		baseStruct:          NewBaseStruct(principal),
@@ -63,16 +61,6 @@ func NewDiscussionReply(
 		baseStruct:          NewBaseStruct(principal),
 	}
 }
-
-// DiscussionStatus is an enum that represents the status of a Discussion
-type DiscussionStatus string
-
-// These constants represent the possible values of a DiscussionStatus
-const (
-	DiscussionAnswered   DiscussionStatus = "ANSWERED"
-	DiscussionWaiting    DiscussionStatus = "WAITING_FOR_RESPONSE"
-	DiscussionUnAnswered DiscussionStatus = "UNANSWERED"
-)
 
 // DiscussionUserRole is an enum that represents the role of a user in a Discussion
 type DiscussionUserRole string
