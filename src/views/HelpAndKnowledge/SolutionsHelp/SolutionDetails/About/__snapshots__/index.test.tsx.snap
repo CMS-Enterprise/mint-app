@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions About Components matches the snapshot: 4innovation 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > 4innovation 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -162,7 +162,7 @@ exports[`IT Solutions About Components matches the snapshot: 4innovation 1`] = `
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Accountable Care Organization - Operational System 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Accountable Care Organization - Operational System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -324,7 +324,7 @@ exports[`IT Solutions About Components matches the snapshot: Accountable Care Or
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Automated Plan Payment System 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Automated Plan Payment System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -378,7 +378,7 @@ exports[`IT Solutions About Components matches the snapshot: Automated Plan Paym
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Beneficiary Claims Data API 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Beneficiary Claims Data API 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -427,7 +427,7 @@ exports[`IT Solutions About Components matches the snapshot: Beneficiary Claims 
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: CMS Box 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > CMS Box 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -448,7 +448,7 @@ exports[`IT Solutions About Components matches the snapshot: CMS Box 1`] = `
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: CMS Qualtrics 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > CMS Qualtrics 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -492,7 +492,7 @@ exports[`IT Solutions About Components matches the snapshot: CMS Qualtrics 1`] =
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: CPI Vetting 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > CPI Vetting 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -517,7 +517,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Centralized Data Exchange 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Centralized Data Exchange 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -655,7 +655,7 @@ The business function of CDX is a centralized data exchange to enable interopera
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Chronic Conditions Warehouse 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Chronic Conditions Warehouse 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -792,7 +792,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Consolidated Business Operations Support Center 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Consolidated Business Operations Support Center 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -813,7 +813,7 @@ exports[`IT Solutions About Components matches the snapshot: Consolidated Busine
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Electronic File Transfer 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Electronic File Transfer 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -834,7 +834,7 @@ exports[`IT Solutions About Components matches the snapshot: Electronic File Tra
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Expanded Data Feedback Reporting 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Expanded Data Feedback Reporting 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -969,7 +969,7 @@ exports[`IT Solutions About Components matches the snapshot: Expanded Data Feedb
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: GovDelivery 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > GovDelivery 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1023,7 +1023,7 @@ exports[`IT Solutions About Components matches the snapshot: GovDelivery 1`] = `
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: GrantSolutions 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > GrantSolutions 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1048,7 +1048,7 @@ CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies a
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Health Data Reporting 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Health Data Reporting 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1217,7 +1217,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Health Plan Management System 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Health Plan Management System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1418,7 +1418,7 @@ Health Plan Management System, all health insurance companies participating in t
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Healthcare Integrated General Ledger Accounting System 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Healthcare Integrated General Ledger Accounting System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1503,7 +1503,7 @@ Specific to CMMI, HIGLAS has two integrated points:
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Innovation Payment Contractor 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Innovation Payment Contractor 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1587,7 +1587,7 @@ exports[`IT Solutions About Components matches the snapshot: Innovation Payment 
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Innovation Support Platform 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Innovation Support Platform 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1923,7 +1923,7 @@ exports[`IT Solutions About Components matches the snapshot: Innovation Support 
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Integrated Data Repository 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Integrated Data Repository 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2032,7 +2032,7 @@ The data in the IDR is leveraged by various components across the agency to faci
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Learning and Diffusion Group 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Learning and Diffusion Group 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2136,7 +2136,7 @@ exports[`IT Solutions About Components matches the snapshot: Learning and Diffus
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Legal Vertical 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Legal Vertical 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2192,7 +2192,7 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Master Data Management 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Master Data Management 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2271,7 +2271,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Measure and Instrument Development and Support 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Measure and Instrument Development and Support 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2323,7 +2323,7 @@ exports[`IT Solutions About Components matches the snapshot: Measure and Instrum
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Medicare Advantage Prescription Drug System 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Medicare Advantage Prescription Drug System 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2398,7 +2398,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Outlook Mailbox 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Outlook Mailbox 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2419,7 +2419,7 @@ exports[`IT Solutions About Components matches the snapshot: Outlook Mailbox 1`]
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Quality Vertical 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Quality Vertical 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2520,7 +2520,7 @@ exports[`IT Solutions About Components matches the snapshot: Quality Vertical 1`
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Research, Measurement, Assessment, Design, and Analysis 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Research, Measurement, Assessment, Design, and Analysis 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2615,7 +2615,7 @@ exports[`IT Solutions About Components matches the snapshot: Research, Measureme
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Salesforce Application Review and Scoring 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Salesforce Application Review and Scoring 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2675,7 +2675,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Applicat
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/help-center/salesforce-ars.png"
+              href="http://localhost:3000/help-center/salesforce-ars.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -2689,7 +2689,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Applicat
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Salesforce CONNECT 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2759,7 +2759,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/help-center/salesforce-connect-1.png"
+              href="http://localhost:3000/help-center/salesforce-connect-1.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -2772,7 +2772,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/help-center/salesforce-connect-2.png"
+              href="http://localhost:3000/help-center/salesforce-connect-2.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -2786,7 +2786,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce CONNECT 
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Salesforce Letter of Intent 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Salesforce Letter of Intent 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2885,7 +2885,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Letter o
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/help-center/salesforce-loi.png"
+              href="http://localhost:3000/help-center/salesforce-loi.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -2899,7 +2899,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Letter o
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Salesforce Project Officer Support Tool / Portal 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Salesforce Project Officer Support Tool / Portal 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -3048,7 +3048,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/help-center/salesforce-post-1.png"
+              href="http://localhost:3000/help-center/salesforce-post-1.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -3061,7 +3061,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/help-center/salesforce-post-2.png"
+              href="http://localhost:3000/help-center/salesforce-post-2.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -3075,7 +3075,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Project 
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Salesforce Request for Application 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Salesforce Request for Application 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -3201,7 +3201,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Request 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="http://localhost/help-center/salesforce-rfa.png"
+              href="http://localhost:3000/help-center/salesforce-rfa.png"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -3215,7 +3215,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Request 
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Shared Systems 1`] = `
+exports[`IT Solutions About Components > matches the snapshot > Shared Systems 1`] = `
 <DocumentFragment>
   <div>
     <h2

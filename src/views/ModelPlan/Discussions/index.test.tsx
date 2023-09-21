@@ -113,9 +113,9 @@ const store = mockStore({ auth: mockAuthReducer });
 describe('Discussion Component', () => {
   // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
   // eslint-disable-next-line
-  console.error = jest.fn();
+  console.error = vi.fn();
 
-  jest.spyOn(window, 'scroll');
+  vi.spyOn(window, 'scroll');
 
   it('renders discussions and replies without errors', async () => {
     const { getByText } = render(

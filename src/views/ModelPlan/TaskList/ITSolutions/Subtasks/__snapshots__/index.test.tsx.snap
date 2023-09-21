@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions Add Subtasks matches snapshot 1`] = `
+exports[`IT Solutions Add Subtasks > matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"
@@ -309,7 +309,7 @@ exports[`IT Solutions Add Subtasks matches snapshot 1`] = `
 </DocumentFragment>
 `;
 
-exports[`IT Solutions Manage Subtasks matches snapshot 1`] = `
+exports[`IT Solutions Manage Subtasks > matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"

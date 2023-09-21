@@ -22,8 +22,7 @@ const cache = new apollo.InMemoryCache();
 
 function createApolloClient(euaId) {
   const gqlURL =
-    process.env.REACT_APP_GRAPHQL_ADDRESS ||
-    'http://localhost:8085/api/graph/query';
+    process.env.VITE_GRAPHQL_ADDRESS || 'http://localhost:8085/api/graph/query';
 
   return new apollo.ApolloClient({
     cache,
