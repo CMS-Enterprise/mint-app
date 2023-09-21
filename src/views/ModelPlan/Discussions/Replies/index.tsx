@@ -15,7 +15,7 @@ import {
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';
 
 // TODO:
-// 1. Read more toggle when there are more than four replies
+
 // 2. Remove commented code
 // 3. tests
 

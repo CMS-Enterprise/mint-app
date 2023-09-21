@@ -34,7 +34,7 @@ const TruncatedText = ({
   // If text is shorter then specified character limit, just
   // return the whole text
   if (text.length < charLimit) {
-    return <div className={className}>{text}</div>;
+    return <span className={className}>{text}</span>;
   }
 
   // Text is longer then specified character limit, truncate text
