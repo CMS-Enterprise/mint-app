@@ -13,6 +13,11 @@ on:
           - test
           - impl
           - prod
+      skip_tests:
+        required: true
+        default: false
+        type: boolean
+        description: Skip tests?
       confirm_production_deploy:
         required: true
         default: false
@@ -27,6 +32,8 @@ jobs:
   run_tests:
     uses: ./.github/workflows/run_tests.yml
     secrets: inherit
+    with:
+      skip_tests: ${{ inputs.skip_tests }}
 
   build_frontend_assets:
     uses: ./.github/workflows/build_frontend_assets.yml
