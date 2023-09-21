@@ -43,9 +43,18 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, store *storage.Store) (*models.PlanDocument, error) {
 	contentType := "externalLink"
 	fileSize := 0
-	_, err := url.ParseRequestURI(input.URL)
+	u, err := url.Parse(input.URL)
 	if err != nil {
 		return nil, fmt.Errorf(" url is not in a valid format. err : %w", err)
+	}
+	// Ensure the URL has a host specified and is not a relative link
+	if u.Host == "" {
+		return nil, fmt.Errorf(" url does not have a host specified. Please create a valid absolute reference. url : %s ", input.URL)
+	}
+
+	// Ensure the URL has a scheme of either http or https
+	if u.Scheme != "http" && u.Scheme != "https" {
+		return nil, fmt.Errorf(" url does not have a valid scheme. It should begin with http or https. url : %s ", input.URL)
 	}
 	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
 
