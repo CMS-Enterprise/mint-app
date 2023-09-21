@@ -6,12 +6,18 @@ import {
   IconExpandMore
 } from '@trussworks/react-uswds';
 
+import SectionWrapper from 'components/shared/SectionWrapper';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType
   // GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
 
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';
+
+// TODO:
+// 1. Read more toggle when there are more than four replies
+// 2. Remove commented code
+// 3. tests
 
 const Replies = ({
   originalDiscussion: { replies }
@@ -21,8 +27,10 @@ const Replies = ({
   const { t: discussionsT } = useTranslation('discussions');
 
   const [areRepliesShowing, setAreRepliesShowing] = useState(true);
+  const [isAccordionExpanded, setIsAccordionExpanded] = useState(false);
 
   const hasReplies = replies.length > 0;
+  const repliesList = isAccordionExpanded ? replies : replies.slice(0, 4);
 
   return (
     <div className="discussion-replies margin-bottom-4">
@@ -64,27 +72,42 @@ const Replies = ({
         )}
       </div>
       {hasReplies && areRepliesShowing && (
-        <div className="discussion-replies__content padding-top-2">
-          {replies.map((reply, index) => {
-            return (
-              <Fragment key={reply.id}>
-                <DiscussionUserInfo
-                  discussionTopic={reply}
-                  index={index}
-                  connected={index !== replies.length - 1 && hasReplies}
-                />
-                <p
-                  className={`margin-top-0 margin-bottom-105 text-pre-wrap ${
-                    index !== replies.length - 1 && hasReplies
-                      ? 'mint-discussions__connected'
-                      : 'mint-discussions__not-connected'
-                  }`}
-                >
-                  {reply.content}
-                </p>
-              </Fragment>
-            );
-          })}
+        <div className="discussion_replies__wrapper">
+          <div className="discussion-replies__content padding-top-2">
+            {repliesList.map((reply, index) => {
+              return (
+                <Fragment key={reply.id}>
+                  <DiscussionUserInfo
+                    discussionTopic={reply}
+                    index={index}
+                    connected={index !== replies.length - 1 && hasReplies}
+                  />
+                  <p
+                    className={`margin-top-0 margin-bottom-105 text-pre-wrap ${
+                      index !== replies.length - 1 && hasReplies
+                        ? 'mint-discussions__connected'
+                        : 'mint-discussions__not-connected'
+                    }`}
+                  >
+                    {reply.content}
+                  </p>
+                </Fragment>
+              );
+            })}
+          </div>
+          {replies.length > 4 && (
+            <SectionWrapper className="margin-top-1">
+              <Button
+                type="button"
+                className="usa-button usa-button--unstyled"
+                onClick={() => setIsAccordionExpanded(!isAccordionExpanded)}
+              >
+                {isAccordionExpanded
+                  ? discussionsT('viewFewerQuestions')
+                  : discussionsT('viewMoreQuestions')}
+              </Button>
+            </SectionWrapper>
+          )}
         </div>
       )}
     </div>

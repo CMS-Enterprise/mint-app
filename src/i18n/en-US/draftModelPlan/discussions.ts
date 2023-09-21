@@ -56,6 +56,7 @@ const discussions = {
   ariaLabel: 'Discussion Center Modal',
   assessment: 'MINT Team',
   viewMoreQuestions: 'View more questions',
+  viewFewerQuestions: 'View fewer questions',
   alreadyAnswered:
     '“{{-question}}” has already been answered. You can view it in the answered questions below.',
   role: 'Your role',
