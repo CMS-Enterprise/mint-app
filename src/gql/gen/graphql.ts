@@ -627,6 +627,7 @@ export type Mutation = {
   deletePlanDiscussion: PlanDiscussion;
   deletePlanDocument: Scalars['Int']['output'];
   deletePlanFavorite: PlanFavorite;
+  linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   shareModelPlan: Scalars['Boolean']['output'];
@@ -762,6 +763,12 @@ export type MutationDeletePlanDocumentArgs = {
 /** Mutations definition for the schema */
 export type MutationDeletePlanFavoriteArgs = {
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationLinkNewPlanDocumentArgs = {
+  input: PlanDocumentLinkInput;
 };
 
 
@@ -1423,6 +1430,8 @@ export type PlanDocument = {
   fileSize: Scalars['Int']['output'];
   fileType: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
+  /** If isLink = true, then this is a URL to a linked document, not an uploaded document */
+  isLink: Scalars['Boolean']['output'];
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -1431,6 +1440,8 @@ export type PlanDocument = {
   optionalNotes?: Maybe<Scalars['String']['output']>;
   otherType?: Maybe<Scalars['String']['output']>;
   restricted: Scalars['Boolean']['output'];
+  /** URL is the link that must be provided if this is a link instead of an uploaded document */
+  url?: Maybe<Scalars['String']['output']>;
   virusClean: Scalars['Boolean']['output'];
   virusScanned: Scalars['Boolean']['output'];
 };
@@ -1443,6 +1454,17 @@ export type PlanDocumentInput = {
   optionalNotes?: InputMaybe<Scalars['String']['input']>;
   otherTypeDescription?: InputMaybe<Scalars['String']['input']>;
   restricted: Scalars['Boolean']['input'];
+};
+
+/** PlanDocumentLinkInput */
+export type PlanDocumentLinkInput = {
+  documentType: DocumentType;
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  optionalNotes?: InputMaybe<Scalars['String']['input']>;
+  otherTypeDescription?: InputMaybe<Scalars['String']['input']>;
+  restricted: Scalars['Boolean']['input'];
+  url: Scalars['String']['input'];
 };
 
 export type PlanDocumentSolutionLink = {

@@ -254,6 +254,13 @@ func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input mode
 	return planDocument, err
 }
 
+// LinkNewPlanDocument is the resolver for the linkNewPlanDocument field.
+func (r *mutationResolver) LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentCreateLinked(logger, input, principal, r.store)
+}
+
 // DeletePlanDocument is the resolver for the deletePlanDocument field.
 func (r *mutationResolver) DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error) {
 	principal := appcontext.Principal(ctx)
@@ -539,6 +546,11 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 	return resolvers.DiscussionReplyCollectionByDiscusionIDLOADER(ctx, obj.ID)
 }
 
+// URL is the resolver for the url field.
+func (r *planDocumentResolver) URL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.URL.Ptr(), nil
+}
+
 // OtherType is the resolver for the otherType field.
 func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
 	return obj.OtherTypeDescription.Ptr(), nil
@@ -551,6 +563,9 @@ func (r *planDocumentResolver) OptionalNotes(ctx context.Context, obj *models.Pl
 
 // DownloadURL is the resolver for the downloadUrl field.
 func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	if obj.IsLink {
+		return nil, nil
+	}
 	url, err := r.s3Client.NewGetPresignedURL(obj.FileKey)
 	if err != nil {
 		return nil, err
