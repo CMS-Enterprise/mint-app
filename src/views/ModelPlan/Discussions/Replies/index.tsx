@@ -93,7 +93,7 @@ const Replies = ({
                     <TruncatedText
                       id="asdf-1"
                       text={reply.content ?? ''}
-                      charLimit={10}
+                      charLimit={200}
                     />
                     {/* {reply.content} */}
                   </div>
