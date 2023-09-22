@@ -13,12 +13,18 @@ import {
 // desires to see the entire text
 
 type TruncatedTextProps = {
-  id?: string;
+  id: string;
   text: string;
   charLimit: number;
+  className?: string;
 };
 
-const TruncatedText = ({ id, text, charLimit }: TruncatedTextProps) => {
+const TruncatedText = ({
+  id,
+  text,
+  charLimit,
+  className
+}: TruncatedTextProps) => {
   const { t: generalT } = useTranslation('general');
 
   const [isOpen, setOpen] = useState(true);
@@ -26,7 +32,11 @@ const TruncatedText = ({ id, text, charLimit }: TruncatedTextProps) => {
   // If text is shorter then specified character limit, just
   // return the whole text
   if (text.length < charLimit) {
-    return <span>{text}</span>;
+    return (
+      <div className={className}>
+        <span>{text}</span>
+      </div>
+    );
   }
 
   // Text is longer then specified character limit, truncate text
@@ -35,8 +45,8 @@ const TruncatedText = ({ id, text, charLimit }: TruncatedTextProps) => {
   const startOfText: string = text.substring(0, charLimit);
 
   return (
-    <>
-      <span className="display-block">
+    <div className={className}>
+      <span className="display-block" id={id}>
         {isOpen ? `${startOfText}... ` : `${text} `}
       </span>
       <Button
@@ -45,12 +55,12 @@ const TruncatedText = ({ id, text, charLimit }: TruncatedTextProps) => {
         aria-expanded={isOpen}
         aria-controls={id}
         unstyled
-        className="display-flex flex-align-center"
+        className="display-flex flex-align-center margin-top-1"
       >
         {isOpen ? generalT('readMore') : generalT('readLess')}
         {isOpen ? <IconExpandMore /> : <IconExpandLess />}
       </Button>
-    </>
+    </div>
   );
 };
 

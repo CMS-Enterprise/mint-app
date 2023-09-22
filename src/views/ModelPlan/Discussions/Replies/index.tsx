@@ -84,18 +84,18 @@ const Replies = ({
                     connected={index !== replies.length - 1 && hasReplies}
                   />
                   <div
-                    className={`margin-top-0 margin-bottom-105 text-pre-wrap ${
+                    className={`margin-top-0 margin-bottom-05 text-pre-wrap ${
                       index !== replies.length - 1 && hasReplies
                         ? 'mint-discussions__connected'
                         : 'mint-discussions__not-connected'
                     }`}
                   >
                     <TruncatedText
-                      id="asdf-1"
+                      id={`reply-content-${reply.id}`}
                       text={reply.content ?? ''}
-                      charLimit={200}
+                      charLimit={290}
+                      className="padding-bottom-3"
                     />
-                    {/* {reply.content} */}
                   </div>
                 </Fragment>
               );
