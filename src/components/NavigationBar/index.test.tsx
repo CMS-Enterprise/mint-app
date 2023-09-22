@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 
 import NavigationBar, { navLinks } from './index';
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -17,7 +17,7 @@ jest.mock('react-i18next', () => ({
   }
 }));
 
-jest.mock('launchdarkly-react-client-sdk', () => ({
+vi.mock('launchdarkly-react-client-sdk', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useFlags: () => {
     return {
@@ -28,7 +28,7 @@ jest.mock('launchdarkly-react-client-sdk', () => ({
 }));
 
 describe('The NavigationBar component', () => {
-  it('renders without errors', done => {
+  it('renders without errors', async () => {
     const { getByTestId } = render(
       <MemoryRouter initialEntries={['/']}>
         <NavigationBar
@@ -41,10 +41,9 @@ describe('The NavigationBar component', () => {
     );
 
     expect(getByTestId('navigation-bar')).toBeInTheDocument();
-    done();
   });
 
-  it('displays every navigation element', done => {
+  it('displays every navigation element', async () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/system/making-a-request']}>
         <NavigationBar
@@ -62,6 +61,5 @@ describe('The NavigationBar component', () => {
       const linkTitle = t(`header:${route.label}`);
       expect(getByText(linkTitle)).toBeInTheDocument();
     });
-    done();
   });
 });

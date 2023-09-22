@@ -12,8 +12,7 @@ export const DocumentUploadValidationSchema: any = Yup.object().shape({
     .required(i18next.t('documents:validation.restricted')),
   otherTypeDescription: Yup.string().when('documentType', {
     is: 'OTHER',
-    then: Yup.string()
-      .trim()
-      .required(i18next.t('documents:validation.otherDescr'))
+    then: schema =>
+      schema.trim().required(i18next.t('documents:validation.otherDescr'))
   })
 });

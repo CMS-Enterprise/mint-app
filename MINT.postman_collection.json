@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "02a9990c-70bb-4734-bf0b-65f8024d5670",
+		"_postman_id": "4a3dfd30-0046-4c3a-94c5-bc67c01b9599",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20435042"
+		"_exporter_id": "20320964"
 	},
 	"item": [
 		{
@@ -19,7 +19,27 @@
 									"let responseData = pm.response.json().data.createModelPlan",
 									"",
 									"modelPlanID = responseData.id",
-									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);"
+									"basicsID = responseData.basics.id",
+									"generalCharacteristicsID = responseData.generalCharacteristics.id",
+									"participantsAndProvidersID = responseData.participantsAndProviders.id",
+									"beneficiariesID = responseData.beneficiaries.id",
+									"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
+									"modelLeadID = responseData.collaborators[0].id",
+									"paymentsID = responseData.payments.id",
+									"firstOpNeed = responseData.operationalNeeds[0].id",
+									"userID = responseData.createdByUserAccount.id",
+									"",
+									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
+									"pm.collectionVariables.set(\"basicsID\", basicsID);",
+									"",
+									"pm.collectionVariables.set(\"generalCharacteristicsID\", generalCharacteristicsID);",
+									"pm.collectionVariables.set(\"participantsAndProvidersID\", participantsAndProvidersID);",
+									"pm.collectionVariables.set(\"beneficiariesID\", beneficiariesID);",
+									"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
+									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
+									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
+									"pm.collectionVariables.set(\"operationalNeedID\", firstOpNeed);",
+									"pm.collectionVariables.set(\"userID\", userID);"
 								],
 								"type": "text/javascript"
 							}
@@ -31,8 +51,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-								"variables": "{\n  \"modelName\": \"Test\"\n}"
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n  }\n}\n  ",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -654,15 +674,66 @@
 			"name": "Plan Documents",
 			"item": [
 				{
-					"name": "Create Plan Document",
+					"name": "Create Plan Document Upload",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.uploadNewPlanDocument",
+									"",
+									"documentID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"documentID\", documentID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanDocument ($input: PlanDocumentInput!) {\n    createPlanDocument (input: $input) {\n        presignedURL\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"id\": \"\",\n    \"modelPlanID\": \"\",\n    \"documentParameters\": {\n      \"fileName\": \"\",\n      \"fileSize\": 0,\n      \"fileType\": \"\",\n      \"documentType\": \"\",\n      \"otherTypeDescription\": \"\",\n      \"optionalNotes\": \"\"\n    },\n    \"url\": \"\"\n  }\n}"
+								"query": "mutation uploadNewPlanDocument ($input: PlanDocumentInput!) {\n    uploadNewPlanDocument (input: $input) {\n        id\n        fileName\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"fileData\": \"Hello!\",\n    \"documentType\": \"POLICY_PAPER\",\n    \"restricted\": false\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Plan Document Linked",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.linkNewPlanDocument",
+									"",
+									"documentID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"documentID\", documentID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation linkNewPlanDocument  {\n    linkNewPlanDocument (input: {\n        modelPlanID: \"{{modelPlanID}}\",\n        name:\"Google\",\n        url: \"https://www.google.com\",\n        documentType:CONCEPT_PAPER,\n        restricted:false,\n        otherTypeDescription:\"This is just a link to google\",\n        optionalNotes:\"You can find many documents here\",\n\n    }) {\n        id\n        modelPlanID\n        isLink\n        url\n        fileType\n        bucket\n        fileKey\n        virusScanned\n        virusClean\n        restricted\n        fileName\n        fileSize\n        documentType\n        otherType\n        optionalNotes\n        downloadUrl\n        deletedAt\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts        \n    }\n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -1061,65 +1132,6 @@
 							"graphql": {
 								"query": "query searchOktaUsers ($searchTerm: String!) {\n    searchOktaUsers (searchTerm: $searchTerm) {\n        firstName\n        lastName\n        displayName\n        email\n        username\n    }\n}",
 								"variables": "{\n  \"searchTerm\": \"\"\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Variables",
-			"item": [
-				{
-					"name": "ModelPlanCreate AND SET VARIABLES",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let responseData = pm.response.json().data.createModelPlan",
-									"",
-									"modelPlanID = responseData.id",
-									"basicsID = responseData.basics.id",
-									"generalCharacteristicsID = responseData.generalCharacteristics.id",
-									"participantsAndProvidersID = responseData.participantsAndProviders.id",
-									"beneficiariesID = responseData.beneficiaries.id",
-									"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
-									"modelLeadID = responseData.collaborators[0].id",
-									"paymentsID = responseData.payments.id",
-									"",
-									"",
-									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
-									"pm.collectionVariables.set(\"basicsID\", basicsID);",
-									"",
-									"pm.collectionVariables.set(\"generalCharacteristicsID\", generalCharacteristicsID);",
-									"pm.collectionVariables.set(\"participantsAndProvidersID\", participantsAndProvidersID);",
-									"pm.collectionVariables.set(\"beneficiariesID\", beneficiariesID);",
-									"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
-									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
-									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
-									"",
-									"console.log(modelPlanID)"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      userID\n      teamRole\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
-								"variables": ""
 							}
 						},
 						"url": {
@@ -2131,6 +2143,10 @@
 		},
 		{
 			"key": "existingModelLinkID",
+			"value": ""
+		},
+		{
+			"key": "userID",
 			"value": ""
 		}
 	]

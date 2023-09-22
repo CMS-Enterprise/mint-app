@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Title and Status component for Read Only Pages matches snapshot 1`] = `
+exports[`Title and Status component for Read Only Pages > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="display-flex flex-justify flex-align-start"

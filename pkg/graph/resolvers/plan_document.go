@@ -1,6 +1,9 @@
 package resolvers
 
 import (
+	"fmt"
+	"net/url"
+
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
 	"go.uber.org/zap"
@@ -16,7 +19,7 @@ import (
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
 func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
-	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes))
+	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
@@ -28,9 +31,41 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 		return &models.PlanDocument{}, err
 	}
 
-	document, err = store.PlanDocumentCreate(logger, principal.ID(), document, s3Client)
+	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
 	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, document)
+	}
+
+	return document, nil
+}
+
+// PlanDocumentCreateLinked creates a plan document which is a link to an external URL instead of an Uploaded file
+func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, store *storage.Store) (*models.PlanDocument, error) {
+	contentType := "externalLink"
+	fileSize := 0
+	u, err := url.Parse(input.URL)
+	if err != nil {
+		return nil, fmt.Errorf(" url is not in a valid format. err : %w", err)
+	}
+	// Ensure the URL has a host specified and is not a relative link
+	if u.Host == "" {
+		return nil, fmt.Errorf(" url does not have a host specified. Please create a valid absolute reference. url : %s ", input.URL)
+	}
+
+	// Ensure the URL has a scheme of either http or https
+	if u.Scheme != "http" && u.Scheme != "https" {
+		return nil, fmt.Errorf(" url does not have a valid scheme. It should begin with http or https. url : %s ", input.URL)
+	}
+	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
+
+	err = BaseStructPreCreate(logger, document, principal, store, true)
+	if err != nil {
+		return nil, err
+	}
+
+	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
 
 	return document, nil

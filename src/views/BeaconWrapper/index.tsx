@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
-const BEACON_ID = process.env.REACT_APP_BEACON_ID;
+const BEACON_ID = import.meta.env.VITE_BEACON_ID;
 
 // BeaconWrapper manages the state necessary for child components to
 // use the useBeacon hook.

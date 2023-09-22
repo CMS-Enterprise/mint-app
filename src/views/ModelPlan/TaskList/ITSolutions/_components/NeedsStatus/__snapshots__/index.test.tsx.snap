@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions HelpBox matches snapshot 1`] = `
+exports[`IT Solutions HelpBox > matches snapshot 1`] = `
 <DocumentFragment>
   <span
     class="mint-tag line-height-body-1 text-bold bg-success-dark text-white"
