@@ -58,7 +58,7 @@ jobs:
       - name: Run buildx bake
         uses: docker/bake-action@v4.0.0
         with:
-          files: "docker-compose.yml,docker-compose.override.yml"
+          files: "docker-compose.backend.yml"
           targets: "${{ matrix.service_name }}"
           set: |
             ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
@@ -249,7 +249,7 @@ jobs:
         uses: docker/bake-action@v4.0.0
         with:
           targets: mint,db_migrate
-          files: "docker-compose.yml,docker-compose.override.yml"
+          files: "docker-compose.backend.yml"
           load: true
           set: |
             mint.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint
