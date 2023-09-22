@@ -88,6 +88,17 @@ type PlanDocumentInput struct {
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
 
+// PlanDocumentLinkInput
+type PlanDocumentLinkInput struct {
+	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
+	URL                  string              `json:"url"`
+	Name                 string              `json:"name"`
+	DocumentType         models.DocumentType `json:"documentType"`
+	Restricted           bool                `json:"restricted"`
+	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
+	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
+}
+
 type PrepareForClearance struct {
 	Status             PrepareForClearanceStatus `json:"status"`
 	LatestClearanceDts *time.Time                `json:"latestClearanceDts,omitempty"`
