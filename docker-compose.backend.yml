@@ -97,7 +97,6 @@ services:
       - EMAIL_ENABLED
       - GRT_EMAIL
       - ACCESSIBILITY_TEAM_EMAIL
-      - EMAIL_TEMPLATE_DIR
       - AWS_REGION
       - AWS_S3_FILE_UPLOAD_BUCKET
       # - AWS_ACCESS_KEY_ID

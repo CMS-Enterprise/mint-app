@@ -6,7 +6,6 @@
 set -eu -o pipefail
 
 builddir="$(git rev-parse --show-toplevel)"
-export EMAIL_TEMPLATE_DIR=$builddir/pkg/email/templates
 
 red_color_code="\e[31m"
 reset_color_code="\e[0m"
