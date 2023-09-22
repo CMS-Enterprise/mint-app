@@ -5,8 +5,8 @@ services:
     image: mint-frontend:latest
     build:
       context: .
-      dockerfile: Dockerfile.client
-      target: src
+      dockerfile: Dockerfile.frontend
+      target: local_dev
     environment:
       - VITE_APP_ENV
       - VITE_API_ADDRESS
@@ -23,6 +23,6 @@ services:
       - VITE_BEACON_ID
     volumes:
       - .:/app
-      - /app/node_modules
+      - /app/node_modules # Create an empty volume to override node_modules from the local filesystem (we always want to use the node_modules from the container)
     ports:
       - 3005:3005
