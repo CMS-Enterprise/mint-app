@@ -2,6 +2,8 @@
 version: '3.7'
 services:
   db:
+    ports:
+      - 5437:5432
     image: postgres:14.4
     command:
       - 'postgres'
@@ -25,10 +27,14 @@ services:
       - POSTGRES_PASSWORD=mysecretpassword
 
   db_migrate:
+    volumes:
+      - ./migrations:/flyway/sql
     image: mint-db-migrate:latest
     build:
       args:
         TAG: '9.10' # Multi arch tag, rather than '9.10-alpine'
+      context: .
+      dockerfile: Dockerfile.db_migrations
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword
@@ -38,6 +44,32 @@ services:
       - db
 
   mint:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    image: mint-backend:latest
+    volumes:
+    # Volume mounting the entire './' directory is dangerous, as it mounts OS-specific folders (and things like .git)
+    # So instead, only volume mount things we need!
+    #
+    # Note, however, that MOST of the files that we care about are copied in the Dockerfile for us, we only really need to copy over the things that
+    # we want to be able to change on the fly in local developmement, like our ./pkg/ directory & Air configs.
+    # This means that editing things like your go.mod/go.sum and ./cmd/ directory WILL require a rebuild of the image, and won't hot reload with Air.
+      - ./pkg/:/mint/pkg/
+      - ./cmd/:/mint/cmd/ # Go build uses ./cmd as well
+      - ./.air.conf:/mint/.air.conf
+      - ./.airDebug.conf:/mint/.airDebug.conf
+      - ./.airDebugWait.conf:/mint/.airDebugWait.conf
+      - /mint/tmp/air/ # This should match .air.conf's tmp_dir. Note that this isn't a volume mount to a local file/folder, but just an empty volume for Air to use.
+       # The only reason we need to mount Cypress here is because the `flagdata.json` (used when FLAG_SOURCE=FILE) happens to live in the ./cypress/ directory.
+       # This is not ideal (perhaps it should be in the root directory?), but for now we just volume mount cypress as a workaround.
+       # NOTE: This is only really the case if you set FLAG_SOURCE=FILE locally, or (more importantly) in ./github/workflows/run_tests.yml
+      - ./cypress/:/mint/cypress/
+    entrypoint: air ${AIR_CONFIG}
+    ports:
+      - 8085:8080
+      - 2350:2350
     environment:
       - CEDAR_API_KEY
       - CEDAR_API_URL
@@ -49,44 +81,44 @@ services:
       - APPLICATION_VERSION
       - APPLICATION_DATETIME
       - APPLICATION_TS
-      - CLIENT_PROTOCOL=http
-      - CLIENT_DOMAIN=localhost
-      - CLIENT_PORT=3005
-      - CLIENT_HOSTNAME=localhost:3005
-      - CLIENT_ADDRESS=http://localhost:3005
-      - API_PORT=8080
-      - OKTA_CLIENT_ID=0oad9awvebnsMwWNa297
-      - OKTA_ISSUER=https://test.idp.idm.cms.gov/oauth2/ausd980kt2CBBzStG297
-      - EMAIL_HOST=email
-      - EMAIL_PORT=1025
+      - CLIENT_PROTOCOL
+      - CLIENT_DOMAIN
+      - CLIENT_PORT
+      - CLIENT_HOSTNAME
+      - CLIENT_ADDRESS
+      - API_PORT
+      - OKTA_CLIENT_ID
+      - OKTA_ISSUER
+      - EMAIL_HOST
+      - EMAIL_PORT
       - MINT_TEAM_EMAIL
       - DATE_CHANGED_RECIPIENT_EMAILS
       - EMAIL_SENDER
       - EMAIL_ENABLED
-      - GRT_EMAIL=success@simulator.amazonses.com
-      - ACCESSIBILITY_TEAM_EMAIL=success@simluator.amazonses.com
-      - EMAIL_TEMPLATE_DIR=./pkg/email/templates
-      - AWS_REGION=us-west-2
-      - AWS_S3_FILE_UPLOAD_BUCKET=mint-app-file-uploads
-      - AWS_ACCESS_KEY_ID=1
-      - AWS_SECRET_ACCESS_KEY=1
-      - PGHOST=db
-      - PGPORT=5432
-      - PGDATABASE=postgres
-      - PGUSER=postgres
-      - PGPASS=mysecretpassword
-      - PGSSLMODE=disable
-      - DB_MAX_CONNECTIONS=20
+      - GRT_EMAIL
+      - ACCESSIBILITY_TEAM_EMAIL
+      - AWS_REGION
+      - AWS_S3_FILE_UPLOAD_BUCKET
+      # - AWS_ACCESS_KEY_ID
+      # - AWS_SECRET_ACCESS_KEY
+      - PGHOST=db # We need to override this to point to the docker-compose service name, rather than `localhost`
+      - PGPORT=5432 # We also need to override this, as docker-compose networking uses the container port, not the host port
+      - PGDATABASE
+      - PGUSER
+      - PGPASS
+      - PGPASSWORD
+      - PGSSLMODE
+      - DB_MAX_CONNECTIONS
       - FLAG_SOURCE
       - FLAGDATA_FILE
       - LD_SDK_KEY
-      - LD_TIMEOUT_SECONDS=30
+      - LD_TIMEOUT_SECONDS
       - LD_ENV_USER
-      - LAMBDA_FUNCTION_PRINCE=handler
-      - LAMBDA_ENDPOINT=http://prince:9001
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
-      - MINIO_ADDRESS=http://minio:9005
+      - LAMBDA_FUNCTION_PRINCE
+      - LAMBDA_ENDPOINT
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+      - MINIO_ADDRESS=http://minio:9005 # We need to override this, as docker-compose networking uses the container name and port
       - SERVER_CERT
       - SERVER_KEY
       - USE_TLS
@@ -94,18 +126,21 @@ services:
       - FAKTORY_PROCESS_JOBS
       - FAKTORY_CONNECTIONS
       - OPENSEARCH_HOST
+      - LOCAL_AUTH_ENABLED
 
     depends_on:
       db_migrate:
         condition: service_completed_successfully # Only start if migrations completed successfully
 
-  mint_client:
-    image: mint-frontend:latest
-
   minio:
     restart: always
     image: minio/minio:latest
     entrypoint: minio server /data --console-address ":9966" --address ":9005"
+    ports:
+      - '9005:9005'
+      - '9966:9966'
+    volumes:
+      - ./tmp/minio:/data
 
   minio_mc:
     image: minio/mc:latest

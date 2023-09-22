@@ -2,6 +2,12 @@ name: Run Tests
 
 on:
   workflow_call:
+    inputs:
+      skip_tests:
+        description: 'Skip tests'
+        type: boolean
+        required: false
+        default: false
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -15,8 +21,15 @@ env:
   S3_BUCKET: mint-app-file-uploads
 
 jobs:
-
+  skip_tests:
+    if: ${{ inputs.skip_tests == true }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skipping tests
+        run: |
+            echo "Skipping tests!"
   build_docker_images:
+    if: ${{ inputs.skip_tests == false }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -45,7 +58,7 @@ jobs:
       - name: Run buildx bake
         uses: docker/bake-action@v4.0.0
         with:
-          files: "docker-compose.yml,docker-compose.override.yml"
+          files: "docker-compose.backend.yml"
           targets: "${{ matrix.service_name }}"
           set: |
             ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
@@ -53,6 +66,7 @@ jobs:
 
   # This is largely a copy of build_frontend_assets, but it doesn't use an `environment` block
   build_frontend_assets:
+    if: ${{ inputs.skip_tests == false }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -89,6 +103,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   server_test:
+    if: ${{ inputs.skip_tests == false }}
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -186,6 +201,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   e2e_tests:
+    if: ${{ inputs.skip_tests == false }}
     runs-on: ubuntu-latest
     continue-on-error: true
     needs: [build_docker_images, build_frontend_assets]
@@ -233,7 +249,7 @@ jobs:
         uses: docker/bake-action@v4.0.0
         with:
           targets: mint,db_migrate
-          files: "docker-compose.yml,docker-compose.override.yml"
+          files: "docker-compose.backend.yml"
           load: true
           set: |
             mint.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint
@@ -280,6 +296,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   lint:
+    if: ${{ inputs.skip_tests == false }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -316,6 +333,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   client_test:
+    if: ${{ inputs.skip_tests == false }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -339,6 +357,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   client_typecheck:
+    if: ${{ inputs.skip_tests == false }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code

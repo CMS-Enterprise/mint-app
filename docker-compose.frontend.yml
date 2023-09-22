@@ -1,0 +1,28 @@
+---
+version: '3.7'
+services:
+  mint_client:
+    image: mint-frontend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      target: local_dev
+    environment:
+      - VITE_APP_ENV
+      - VITE_API_ADDRESS
+      - VITE_GRAPHQL_ADDRESS
+      - VITE_OKTA_CLIENT_ID
+      - VITE_OKTA_DOMAIN
+      - VITE_OKTA_ISSUER
+      - VITE_OKTA_REDIRECT_URI
+      - VITE_OKTA_SERVER_ID
+      - VITE_LD_ENV_USER
+      - VITE_LD_USER_HASH
+      - VITE_LD_CLIENT_ID
+      - VITE_LOCAL_AUTH_ENABLED
+      - VITE_BEACON_ID
+    volumes:
+      - .:/app
+      - /app/node_modules # Create an empty volume to override node_modules from the local filesystem (we always want to use the node_modules from the container)
+    ports:
+      - 3005:3005

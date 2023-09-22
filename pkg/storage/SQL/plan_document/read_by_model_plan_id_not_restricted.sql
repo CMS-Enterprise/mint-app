@@ -12,6 +12,8 @@ SELECT
     document_type,
     other_type,
     optional_notes,
+    is_link,
+    url,
     deleted_at,
     created_by,
     created_dts,

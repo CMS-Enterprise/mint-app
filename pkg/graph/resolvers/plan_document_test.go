@@ -44,6 +44,58 @@ func (suite *ResolverSuite) TestPlanDocumentCreate() {
 	suite.Nil(document.DeletedAt)
 }
 
+func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
+	plan := suite.createModelPlan("Plan with Documents")
+
+	url := "https://www.google.com/"
+	fileName := "Hooray.png"
+	expectedFileType := "externalLink"
+
+	input := model.PlanDocumentLinkInput{
+		ModelPlanID:  plan.ID,
+		Name:         fileName,
+		URL:          url,
+		Restricted:   false,
+		DocumentType: models.DocumentTypeConceptPaper,
+	}
+	document, err := PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	// Assert values are what we expect
+	suite.EqualValues(plan.ID, document.ModelPlanID)
+	suite.EqualValues(expectedFileType, document.FileType)
+	suite.EqualValues(fileName, document.FileName)
+	suite.EqualValues(0, document.FileSize)
+	suite.False(document.VirusScanned)
+	suite.False(document.VirusClean)
+	suite.False(document.Restricted)
+	suite.EqualValues(models.DocumentTypeConceptPaper, document.DocumentType)
+	suite.Nil(document.OtherTypeDescription.Ptr())
+	suite.Nil(document.OptionalNotes.Ptr())
+	suite.Nil(document.DeletedAt)
+
+	suite.Run("Invalid urls will cause an error", func() {
+		input.URL = "Hello"
+
+		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.Error(err)
+	})
+
+	suite.Run("urls with no protocol cause an error", func() {
+		input.URL = "www.google.com"
+
+		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.Error(err)
+	})
+
+	suite.Run("urls non http/https protocol cause an error", func() {
+		input.URL = "ws://www.google.com"
+
+		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.Error(err)
+	})
+}
+
 func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
 	plan := suite.createModelPlan("Plan with Documents")
 

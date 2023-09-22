@@ -96,6 +96,8 @@ non-composable
 Okta
 yml
 override.yml
+frontend.yml
+backend.yml
 circleci.yml
 local.yml
 ParameterStore
