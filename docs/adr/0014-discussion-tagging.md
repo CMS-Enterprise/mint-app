@@ -39,3 +39,45 @@ As a tag can represent different entities, we needed a way to dynamically return
 
 
 ## Frontend Discoveries
+The options for frontend capabilities of tagging/mentions are split between:
+
+- Specific package that works with existing html textarea elements solely for tagging
+- Rich Text Editor tooling that replaces current text/textarea capabilities (includes tagging/mentions)
+
+## Considered Options
+
+* [React-Mentions](https://github.com/signavio/react-mentions) [PoC Branch](https://github.com/CMSgov/mint-app/tree/EASI-3130/discussion_tagging_spike_poc)
+* [TipTap (Rich Text Editor)](https://tiptap.dev/)
+* [ToastUI (Rich Text Editor)](https://ui.toast.com/tui-editor)
+
+## Decision Outcome
+
+TipTap
+
+We foresee a future business need for a rich text editor and decided to go with an option where we could leverage mention capability, while scoping for future feature requirements.  The PoC branch work successfully demonstrated the capabilties for mentions as well as the ability to leverage RTE features.  The library was well documented, easy to set up, and allows for enough flexibility with both UI customization and functionality.
+
+EASI currently has ToastUI implemented in a single instance in the application.  The decision to part in tooling here is due to difference business needs.  MINT may use this time to validate TipTap as preferred tool.  EASI may have a future need for mention capability, and it may be worth revisiting EASI's RTE tooling upon verification of the success and usefulness of TipTap. 
+
+
+## Pros and Cons of the Options
+
+### React-Mentions
+* `+` OOB mention functionality
+* `+` Package serves single purpose
+* `+` Good documentation
+* `-` Will need to replaced if we ever need to implement a RTE
+
+### TipTap (Rich Text Editor)
+* `+` Offers RTE capabilties in addition to mention capability
+* `+` Great documentation
+* `+` Community support - examples, extension, and plugins
+* `+` Robust flexibility and configuration for UI and functionality
+* `-` More configuration/coordination needed to integrate with BE and CSV export
+* `-` Divergence from EASI's Toast RTE
+
+### ToastUI (Rich Text Editor)
+* `+` EASI has already implemented this RTE
+* `+` Decent documentation
+* `+` Decent Community support
+* `-` Some hacky solutions were needed to meet EASI's business case needs
+* `-` No OOB support for mention functionality - closest would be an autocomplete component
