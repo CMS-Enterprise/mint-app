@@ -58,13 +58,10 @@ const SingleDiscussion = ({
         })}
       >
         <p
-          className={classNames(
-            'margin-top-0 margin-bottom-105 text-pre-wrap',
-            {
-              // 'padding-top-5': !!discussion.userRole,
-              'margin-bottom-2': isLast
-            }
-          )}
+          className={classNames('margin-top-0 margin-bottom-105', {
+            // 'padding-top-5': !!discussion.userRole,
+            'margin-bottom-2': isLast
+          })}
         >
           {discussion.content}
         </p>

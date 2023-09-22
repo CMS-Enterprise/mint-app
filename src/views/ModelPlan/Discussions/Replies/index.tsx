@@ -84,7 +84,7 @@ const Replies = ({
                     connected={index !== replies.length - 1 && hasReplies}
                   />
                   <div
-                    className={`margin-top-0 margin-bottom-05 text-pre-wrap ${
+                    className={`margin-top-0 margin-bottom-05 ${
                       index !== replies.length - 1 && hasReplies
                         ? 'mint-discussions__connected'
                         : 'mint-discussions__not-connected'

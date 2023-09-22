@@ -43,15 +43,17 @@ const DiscussionUserInfo = ({
           />
         )}
         {discussionTopic.userRole && (
-          <p
-            className={`dui__userRole text-base ${
+          <div
+            className={`dui__userRole ${
               connected ? 'dui__userRole--connected' : ''
             }`}
           >
-            {discussionTopic.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
-              ? discussionTopic.userRoleDescription
-              : discussionT(`userRole.${discussionTopic.userRole}`)}
-          </p>
+            <p className="margin-y-0 padding-bottom-1 text-base position-relative">
+              {discussionTopic.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
+                ? discussionTopic.userRoleDescription
+                : discussionT(`userRole.${discussionTopic.userRole}`)}
+            </p>
+          </div>
         )}
       </div>
       <span className="text-base margin-top-05">
