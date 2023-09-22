@@ -22,7 +22,8 @@ FROM base AS dev
 
 FROM base AS build
 
-	COPY cmd/ pkg/ ./
+	COPY cmd ./cmd
+	COPY pkg ./pkg
 	RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/mint ./cmd/mint
 
 FROM scratch
