@@ -246,7 +246,7 @@ const QuestionAndReply = ({
                     </Label>
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
 
-                    <Mention />
+                    <Mention setFieldValue={setFieldValue} />
                   </FieldGroup>
 
                   <div className="margin-y-5 display-block">
