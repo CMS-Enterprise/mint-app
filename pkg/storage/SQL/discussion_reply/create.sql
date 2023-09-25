@@ -4,6 +4,7 @@ INSERT INTO discussion_reply(
     content,
     user_role,
     user_role_description,
+    resolution,
     is_assessment,
     created_by,
     modified_by
@@ -14,6 +15,7 @@ VALUES (
     :content,
     :user_role,
     :user_role_description,
+    :resolution,
     :is_assessment,
     :created_by,
     :modified_by
@@ -23,6 +25,7 @@ discussion_id,
 content,
 user_role,
 user_role_description,
+resolution,
 is_assessment,
 created_by,
 created_dts,
