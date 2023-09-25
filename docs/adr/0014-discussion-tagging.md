@@ -25,7 +25,7 @@ To research these issues, a [POC branch](https://github.com/CMSgov/mint-app/tree
 * Parse Tag content
 * Send Tag content as well as raw tags
 
-The backend explored two options for parsing or storing tagged strings, either a. parse the content and store directly or b. require raw content as well as a second input for tagged content information. Option b opens up data integrity issues, as the tags could potentially not match the raw content. As such, we selected option a. It can be accomplished by using regex capture groups to parse and validate the tags.
+The backend explored two options for parsing or storing tagged strings, either a. parse the content and store directly or b. require raw content as well as a second input for tagged content information. Option b opens up data integrity issues, as the tags could potentially not match the raw content. As such, we selected option a. It can be accomplished by using regex capture groups to parse and validate the tags. If HTML is implemented for rich text, parsing can also be done using HTML libraries (this was also tested in the POC branch).
 
 ### Store Separate entities as tags in the database
 To handle the need to store different entity types in the database, we explored the idea of a tag type. This type is used when parsing the data structure to programmatically populate the tag based on required data. (For example, a user account has an id of type UUID, and a possible solution has an if of type int.)
