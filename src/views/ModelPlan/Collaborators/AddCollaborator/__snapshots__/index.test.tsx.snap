@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Adding a collaborator page matches snapshot 1`] = `
+exports[`Adding a collaborator page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -74,14 +74,14 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
                   class="cedar-contact-select__control css-1b5q38d-control"
                 >
                   <div
-                    class="cedar-contact-select__value-container css-dlobye-Component"
+                    class="cedar-contact-select__value-container css-319lph-ValueContainer"
                   >
                     <div
                       class="cedar-contact-select__placeholder css-14el2xx-placeholder"
                       id="react-select-model-team-cedar-contact-placeholder"
                     />
                     <div
-                      class="cedar-contact-select__input-container css-1u4kn00-Component"
+                      class="cedar-contact-select__input-container css-6j8wv5-Input"
                       data-value=""
                     >
                       <input
@@ -106,7 +106,7 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="cedar-contact-select__indicators css-ny0e4k-Component"
+                    class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
                   >
                     <span
                       class="cedar-contact-select__indicator-separator css-1okebmr-indicatorSeparator"

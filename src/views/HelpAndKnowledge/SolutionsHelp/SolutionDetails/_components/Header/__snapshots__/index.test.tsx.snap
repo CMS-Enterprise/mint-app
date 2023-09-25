@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Operation Solution Detail Header matches snapshot 1`] = `
+exports[`Operation Solution Detail Header > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="bg-primary-darker text-white padding-x-4 padding-top-5 padding-bottom-6"
