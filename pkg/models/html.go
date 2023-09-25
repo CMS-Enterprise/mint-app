@@ -51,7 +51,7 @@ func htmlMentionsFromString(htmlString string) ([]*HTMLMention, error) {
 	for _, node := range mentionNodes {
 		htmlMention, err := parseHTMLMentionTag(*node)
 		if err != nil {
-			fmt.Println("error parsing %w", node) //TODO: when implementing actually handle this error
+			fmt.Println("error parsing %w", err) //TODO: when implementing actually handle this error
 		}
 		mentions = append(mentions, &htmlMention)
 	}
@@ -92,30 +92,25 @@ func parseHTMLMentionTag(mendtionNode html.Node) (HTMLMention, error) {
 	var entityUUID *uuid.UUID
 	var entityIntID *int
 	var tagType TagType
+	var class string
+	attributes := make(map[string]string)
 	for _, a := range mendtionNode.Attr {
-		switch a.Key {
-		case "data-type":
-
-			tagType = TagType(a.Val)
-			err := tagType.Validate()
-			if err != nil {
-				return HTMLMention{}, err //TODO: SW should we return a pointer instead?
-			}
-
-		case "class":
-			if a.Val != "mention" {
-				return HTMLMention{}, fmt.Errorf("this is not a valid mention provided class is : %s", a.Val)
-			}
-
-		case "data-id":
-			entityIDStr = a.Val
-		case "data-label":
-			dataLabel = a.Val
-
-		default:
-			continue
-		}
+		attributes[a.Key] = a.Val
 	}
+
+	tagType = TagType(attributes["data-type"])
+	err := tagType.Validate()
+	if err != nil {
+		return HTMLMention{}, err //TODO: SW should we return a pointer instead?
+	}
+
+	dataLabel = attributes["data-label"]
+	entityIDStr = attributes["data-id"]
+	class = attributes["class"]
+	if class != "mention" {
+		return HTMLMention{}, fmt.Errorf("this is not a valid mention provided class is : %s", class)
+	}
+
 	// switch tagType {
 	// case TagTypeUserAccount:
 	// 	parsedUUID, err := uuid.Parse(strings.TrimSpace(entityIDStr))
