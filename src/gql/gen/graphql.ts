@@ -630,6 +630,7 @@ export type Mutation = {
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
+  reportAProblem: Scalars['Boolean']['output'];
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
@@ -783,6 +784,12 @@ export type MutationLockTaskListSectionArgs = {
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationReportAProblemArgs = {
+  input: ReportAProblemInput;
 };
 
 
@@ -2364,6 +2371,32 @@ export enum RecruitmentType {
   NA = 'NA',
   NOFO = 'NOFO',
   OTHER = 'OTHER'
+}
+
+export type ReportAProblemInput = {
+  allowContact: Scalars['Boolean']['input'];
+  isAnonymousSubmission: Scalars['Boolean']['input'];
+  section: ReportAProblemSection;
+  sectionOther?: InputMaybe<Scalars['String']['input']>;
+  severity?: InputMaybe<ReportAProblemSeverity>;
+  severityOther?: InputMaybe<Scalars['String']['input']>;
+  whatDoing: Scalars['String']['input'];
+  whatWentWrong: Scalars['String']['input'];
+};
+
+export enum ReportAProblemSection {
+  HELP_CENTER = 'HELP_CENTER',
+  IT_SOLUTIONS = 'IT_SOLUTIONS',
+  OTHER = 'OTHER',
+  READ_VIEW = 'READ_VIEW',
+  TASK_LIST = 'TASK_LIST'
+}
+
+export enum ReportAProblemSeverity {
+  DELAYED_TASK = 'DELAYED_TASK',
+  MINOR = 'MINOR',
+  OTHER = 'OTHER',
+  PREVENTED_TASK = 'PREVENTED_TASK'
 }
 
 /** A user role associated with a job code */

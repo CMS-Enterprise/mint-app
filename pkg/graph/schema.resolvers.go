@@ -490,6 +490,12 @@ func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.
 	)
 }
 
+// ReportAProblem is the resolver for the reportAProblem field.
+func (r *mutationResolver) ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error) {
+	// panic(fmt.Errorf("not implemented: ReportAProblem - reportAProblem"))
+	return true, nil
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
