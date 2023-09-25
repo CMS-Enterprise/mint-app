@@ -1277,10 +1277,10 @@ type NDAInfo {
 input ReportAProblemInput {
   isAnonymousSubmission: Boolean!
   allowContact: Boolean!
-  section: ReportAProblemSection!
+  section: ReportAProblemSection
   sectionOther: String
-  whatDoing: String!
-  whatWentWrong: String!
+  whatDoing: String
+  whatWentWrong: String
   severity: ReportAProblemSeverity
   severityOther: String
 }

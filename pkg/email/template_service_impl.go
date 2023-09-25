@@ -70,6 +70,15 @@ var modelPlanShareSubjectTemplate string
 //go:embed templates/model_plan_share_body.html
 var modelPlanShareBodyTemplate string
 
+// ReportAProblemTemplateName is the template name definition for the corresponding email template
+const ReportAProblemTemplateName string = "report_a_problem"
+
+//go:embed templates/report_a_problem_body.html
+var reportAProblemBodyTemplate string
+
+//go:embed templates/report_a_problem_subject.html
+var reportAPrbemSubjectTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
@@ -123,6 +132,11 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(ModelPlanShareTemplateName, modelPlanShareSubjectTemplate, modelPlanShareBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(ReportAProblemTemplateName, reportAPrbemSubjectTemplate, reportAProblemBodyTemplate)
 	if err != nil {
 		return err
 	}

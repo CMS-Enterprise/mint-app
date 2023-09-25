@@ -107,10 +107,10 @@ type PrepareForClearance struct {
 type ReportAProblemInput struct {
 	IsAnonymousSubmission bool                    `json:"isAnonymousSubmission"`
 	AllowContact          bool                    `json:"allowContact"`
-	Section               ReportAProblemSection   `json:"section"`
+	Section               *ReportAProblemSection  `json:"section,omitempty"`
 	SectionOther          *string                 `json:"sectionOther,omitempty"`
-	WhatDoing             string                  `json:"whatDoing"`
-	WhatWentWrong         string                  `json:"whatWentWrong"`
+	WhatDoing             *string                 `json:"whatDoing,omitempty"`
+	WhatWentWrong         *string                 `json:"whatWentWrong,omitempty"`
 	Severity              *ReportAProblemSeverity `json:"severity,omitempty"`
 	SeverityOther         *string                 `json:"severityOther,omitempty"`
 }

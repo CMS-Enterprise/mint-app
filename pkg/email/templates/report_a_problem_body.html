@@ -1,0 +1,129 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Content</title>
+  <style type="text/css">
+    /* CSS Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* General */
+    body {
+      padding-left: 5px;
+      text-align: left;
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 39pt;
+      font-weight: bold;
+      font-style: normal;
+      color: #1A1A1A;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+    }
+
+    h2 {
+      font-size: 24pt;
+      font-weight: bold;
+      font-style: normal;
+      color: #1B1B1B;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+    }
+
+    h3 {
+      font-size: 15.5pt;
+      font-weight: bold;
+      font-style: normal;
+      color: #1A1A1A;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+
+    /* Subtitle */
+    .subtitle {
+      font-size: 15.5pt;
+      font-weight: normal;
+      font-style: normal;
+      color: #707579;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+    }
+
+    /* Paragraph */
+    p {
+      font-size: 15.5pt;
+      font-weight: normal;
+      font-style: normal;
+      color: #1A1A1A;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+
+    /* Links */
+    a {
+      font-size: 15.5pt;
+      font-weight: normal;
+      font-style: normal;
+      color: #005BA0;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<h1 style="padding-top: 3pt;">MINT</h1>
+<p class="subtitle" style="padding-top: 11pt;">The Model Innovation Tool</p>
+<br/>
+<h2 style="padding-top: 18pt">Problem Report</h2>
+<br />
+<h3 style="padding-top: 14pt;">Reporter</h3>
+{{if .IsAnonymousSubmission }}
+  <p>Anonymous</p>
+{{else}}
+  <p>{{.ReporterName}}</p>
+  <a href="mailto:{{.ReporterEmail}}">{{.ReporterEmail}}</a>
+  <br />
+  {{if .AllowContact}}
+    <p>Yes, the MINT team may contact me for additional information.</p>
+  {{else}}
+    <i>User didn't specify if they could be contacted</i>
+  {{end}}
+{{end}}
+<br />
+<hr />
+<h3 style="padding-top: 14pt;">Which part of MINT were you using when you encountered the issue?</h3>
+{{ if .Section}}
+  <p>{{.Section}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+<h3 style="padding-top: 14pt;">What were you doing?</h3>
+{{ if .WhatDoing}}
+  <p>{{.WhatDoing}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+<h3 style="padding-top: 14pt;">What went wrong?</h3>
+{{ if .WhatWentWrong}}
+  <p>{{.WhatWentWrong}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+<h3 style="padding-top: 14pt;">How severe was the problem?</h3>
+{{ if .Severity}}
+  <p>{{.Severity}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+</body>
+</html>

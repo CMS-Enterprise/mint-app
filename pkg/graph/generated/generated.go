@@ -8049,10 +8049,10 @@ type NDAInfo {
 input ReportAProblemInput {
   isAnonymousSubmission: Boolean!
   allowContact: Boolean!
-  section: ReportAProblemSection!
+  section: ReportAProblemSection
   sectionOther: String
-  whatDoing: String!
-  whatWentWrong: String!
+  whatDoing: String
+  whatWentWrong: String
   severity: ReportAProblemSeverity
   severityOther: String
 }
@@ -51971,7 +51971,7 @@ func (ec *executionContext) unmarshalInputReportAProblemInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
-			data, err := ec.unmarshalNReportAProblemSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemSection(ctx, v)
+			data, err := ec.unmarshalOReportAProblemSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemSection(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -51989,7 +51989,7 @@ func (ec *executionContext) unmarshalInputReportAProblemInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("whatDoing"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -51998,7 +51998,7 @@ func (ec *executionContext) unmarshalInputReportAProblemInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("whatWentWrong"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -64426,16 +64426,6 @@ func (ec *executionContext) unmarshalNReportAProblemInput2githubᚗcomᚋcmsgov�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNReportAProblemSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemSection(ctx context.Context, v interface{}) (model.ReportAProblemSection, error) {
-	var res model.ReportAProblemSection
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNReportAProblemSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemSection(ctx context.Context, sel ast.SelectionSet, v model.ReportAProblemSection) graphql.Marshaler {
-	return v
-}
-
 func (ec *executionContext) unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx context.Context, v interface{}) (model.Role, error) {
 	var res model.Role
 	err := res.UnmarshalGQL(v)
@@ -68080,6 +68070,22 @@ func (ec *executionContext) marshalORecruitmentType2ᚖgithubᚗcomᚋcmsgovᚋm
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) unmarshalOReportAProblemSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemSection(ctx context.Context, v interface{}) (*model.ReportAProblemSection, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var res = new(model.ReportAProblemSection)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOReportAProblemSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemSection(ctx context.Context, sel ast.SelectionSet, v *model.ReportAProblemSection) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return v
 }
 
 func (ec *executionContext) unmarshalOReportAProblemSeverity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemSeverity(ctx context.Context, v interface{}) (*model.ReportAProblemSeverity, error) {
