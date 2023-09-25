@@ -10,7 +10,7 @@ type ReportAProblemBodyContent struct {
 	ReporterEmail         string
 	AllowContact          bool
 	Section               string
-	WhatDoing             *string
-	WhatWentWrong         *string
+	WhatDoing             string
+	WhatWentWrong         string
 	Severity              string
 }

@@ -108,11 +108,11 @@ type ReportAProblemInput struct {
 	IsAnonymousSubmission bool                    `json:"isAnonymousSubmission"`
 	AllowContact          bool                    `json:"allowContact"`
 	Section               *ReportAProblemSection  `json:"section,omitempty"`
-	SectionOther          *string                 `json:"sectionOther,omitempty"`
-	WhatDoing             *string                 `json:"whatDoing,omitempty"`
-	WhatWentWrong         *string                 `json:"whatWentWrong,omitempty"`
+	SectionOther          string                  `json:"sectionOther"`
+	WhatDoing             string                  `json:"whatDoing"`
+	WhatWentWrong         string                  `json:"whatWentWrong"`
 	Severity              *ReportAProblemSeverity `json:"severity,omitempty"`
-	SeverityOther         *string                 `json:"severityOther,omitempty"`
+	SeverityOther         string                  `json:"severityOther"`
 }
 
 type SearchFilter struct {

@@ -53,7 +53,7 @@ func ReportAProblem(
 	return true, nil
 }
 
-func humanizeSection(section *model.ReportAProblemSection, sectionOther *string) string {
+func humanizeSection(section *model.ReportAProblemSection, sectionOther string) string {
 	if section == nil {
 		return ""
 	}
@@ -68,16 +68,16 @@ func humanizeSection(section *model.ReportAProblemSection, sectionOther *string)
 	case model.ReportAProblemSectionHelpCenter:
 		return "Help Center"
 	case model.ReportAProblemSectionOther:
-		if sectionOther == nil {
+		if sectionOther == "" {
 			return "Other"
 		}
-		return "Other - " + *sectionOther
+		return "Other - " + sectionOther
 	default:
 		return ""
 	}
 }
 
-func humanizeSeverity(severity *model.ReportAProblemSeverity, severityOther *string) string {
+func humanizeSeverity(severity *model.ReportAProblemSeverity, severityOther string) string {
 	if severity == nil {
 		return ""
 	}
@@ -90,10 +90,10 @@ func humanizeSeverity(severity *model.ReportAProblemSeverity, severityOther *str
 	case model.ReportAProblemSeverityMinor:
 		return "It was a minor annoyance"
 	case model.ReportAProblemSeverityOther:
-		if severityOther == nil {
+		if severityOther == "" {
 			return "Other"
 		}
-		return "Other - " + *severityOther
+		return "Other - " + severityOther
 	default:
 		return ""
 	}

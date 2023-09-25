@@ -1278,11 +1278,11 @@ input ReportAProblemInput {
   isAnonymousSubmission: Boolean!
   allowContact: Boolean!
   section: ReportAProblemSection
-  sectionOther: String
-  whatDoing: String
-  whatWentWrong: String
+  sectionOther: String!
+  whatDoing: String!
+  whatWentWrong: String!
   severity: ReportAProblemSeverity
-  severityOther: String
+  severityOther: String!
 }
 
 enum ReportAProblemSection {
