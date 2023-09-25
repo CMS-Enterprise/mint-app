@@ -19,6 +19,7 @@ import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import BeaconWrapper from 'views/BeaconWrapper';
 import Cookies from 'views/Cookies';
+import ReportAProblem from 'views/Feedback/ReportAProblem';
 import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
@@ -177,6 +178,8 @@ const AppRoutes = () => {
       <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
 
       <SecureRoute path="/pre-decisional-notice" component={NDA} />
+
+      <SecureRoute path="/report-a-problem" component={ReportAProblem} />
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
