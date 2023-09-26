@@ -224,9 +224,11 @@ const Discussions = ({
   };
 
   const DiscussionAccordion = ({
-    discussionContent
+    discussionContent,
+    hasReplies
   }: {
     discussionContent: DiscussionType[];
+    hasReplies?: boolean;
   }) => {
     return (
       <>
@@ -244,9 +246,13 @@ const Discussions = ({
             {
               title: (
                 <strong>
-                  {t('newDiscussionTopics', {
-                    count: discussionContent.length
-                  })}
+                  {hasReplies
+                    ? t('discussionWithCount', {
+                        count: discussionContent.length
+                      })
+                    : t('newDiscussionTopics', {
+                        count: discussionContent.length
+                      })}
                 </strong>
               ),
               content: (
@@ -291,7 +297,10 @@ const Discussions = ({
     return (
       <>
         <DiscussionAccordion discussionContent={discussionsWithNoReplies} />
-        <DiscussionAccordion discussionContent={discussionsWithYesReplies} />
+        <DiscussionAccordion
+          discussionContent={discussionsWithYesReplies}
+          hasReplies
+        />
       </>
     );
   };
