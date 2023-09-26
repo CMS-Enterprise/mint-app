@@ -8,17 +8,9 @@ import {
 
 import SectionWrapper from 'components/shared/SectionWrapper';
 import TruncatedText from 'components/shared/TruncatedText';
-import {
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType
-  // GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';
-
-// TODO:
-
-// 2. Remove commented code
-// 3. tests
 
 const Replies = ({
   originalDiscussion: { replies }
