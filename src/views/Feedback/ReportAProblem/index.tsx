@@ -20,6 +20,7 @@ import {
 } from 'gql/gen/graphql';
 
 import BooleanRadio from 'components/BooleanRadioForm';
+import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -62,9 +63,9 @@ const ReportAProblem = () => {
   return (
     <MainContent>
       <GridContainer>
-        <PageHeading className="margin-bottom-2" data-testid="model-plan-name">
-          {t('heading')}
-        </PageHeading>
+        <HelpBreadcrumb newTabOnly />
+
+        <PageHeading className="margin-bottom-2">{t('heading')}</PageHeading>
 
         <p className="margin-bottom-2 font-body-lg">{t('subheading')}</p>
 

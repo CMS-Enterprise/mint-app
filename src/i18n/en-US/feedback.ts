@@ -47,7 +47,14 @@ const reportAProblem = {
   },
   sendReport: 'Send report',
   sendAndStartAnother: 'Send and start another report',
-  closeTab: 'Close tab without sending report'
+  closeTab: 'Close tab without sending report',
+  thanksforFeedback: 'Thank you for your feedback',
+  feedbackReceived:
+    'The MINT team has received your report and will review it.',
+  closeAndReturn: 'Close tab and return to MINT',
+  sendAnother: 'Send another report',
+  reportWithMint: 'Report a problem with MINT',
+  sendFeedbackWithMint: 'Send feedback to the MINT Team'
 };
 
 export default reportAProblem;
