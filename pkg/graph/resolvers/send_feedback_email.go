@@ -59,25 +59,68 @@ func humanizeFeedbackMINTUses(usedFor []model.MintUses, usedForOther *string) []
 	//TODO: SW implement
 	uses := []string{}
 	for _, use := range usedFor {
-		uses = append(uses, string(use))
+		humanized := humanizeFeedbackMINTUse(use)
+		if humanized == "" {
+			continue
+		}
+		uses = append(uses, humanized)
 	}
-	if usedForOther != nil { //TODO, remove other above?
-		uses = append(uses, *usedForOther)
+	if usedForOther != nil {
+		uses = append(uses, "Other - "+*usedForOther)
 	}
 
 	return uses
 
 }
+func humanizeFeedbackMINTUse(use model.MintUses) string {
+	switch use {
+	case model.MintUsesViewModel:
+		return "To view Model Plans"
+	case model.MintUsesEditModel:
+		return "To edit Model Plans"
+	case model.MintUsesShareModel:
+		return "To share or export Model Plan content"
+	case model.MintUsesTrackSolutions:
+		return "To track operational solutions"
+	case model.MintUsesContributeDiscussions:
+		return "To contribute to Model Discussions"
+	case model.MintUsesViewHelp:
+		return "To view the Help Center"
+	case model.MintUsesOther:
+		return "" // TODO: SW should we include the actual word other?
+	default:
+		return string(use)
+	}
+}
 
 func humanizeFeedbackEasyToUse(ease model.EaseOfUse, easeOther *string) string {
-	// TODO: SW implement
 	if easeOther != nil {
-		return *easeOther
+		return "I'm not sure - " + *easeOther
 	}
-	return string(ease)
+	switch ease {
+	case model.EaseOfUseAgree:
+		return "Agree"
+	case model.EaseOfUseDisagree:
+		return "Disagree"
+	default:
+		return string(ease)
+	}
 }
 
 func humanizeFeedbackSatisfaction(satisfactionLevel model.SatisfactionLevel) string {
-	// TODO: SW implement
-	return string(satisfactionLevel)
+
+	switch satisfactionLevel {
+	case model.SatisfactionLevelVerySatisfied:
+		return "VERY_SATISFIED"
+	case model.SatisfactionLevelSatisfied:
+		return "SATISFIED"
+	case model.SatisfactionLevelNeutral:
+		return "NEUTRAL"
+	case model.SatisfactionLevelDissatisfied:
+		return "DISSATISFIED"
+	case model.SatisfactionLevelVeryDissatisfied:
+		return "VERY_DISSATISFIED"
+	default:
+		return string(satisfactionLevel)
+	}
 }
