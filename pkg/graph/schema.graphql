@@ -1518,14 +1518,14 @@ The inputs to the user feedback form
 """
 input SendFeedbackEmailInput {
   isAnonymousSubmission: Boolean!
-  allowContact: Boolean!
-  cmsRole: String!
-  mintUsedFor: [MintUses!]!
+  allowContact: Boolean
+  cmsRole: String
+  mintUsedFor: [MintUses!]
   mintUsedForOther: String
-  systemEasyToUse: EaseOfUse!
+  systemEasyToUse: EaseOfUse
   systemEasyToUseOther: String
-  howSatisfied: SatisfactionLevel!
-  howCanWeImprove: String!
+  howSatisfied: SatisfactionLevel
+  howCanWeImprove: String
 }
 
 enum EaseOfUse {

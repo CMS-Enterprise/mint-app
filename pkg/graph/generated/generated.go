@@ -8191,14 +8191,14 @@ The inputs to the user feedback form
 """
 input SendFeedbackEmailInput {
   isAnonymousSubmission: Boolean!
-  allowContact: Boolean!
-  cmsRole: String!
-  mintUsedFor: [MintUses!]!
+  allowContact: Boolean
+  cmsRole: String
+  mintUsedFor: [MintUses!]
   mintUsedForOther: String
-  systemEasyToUse: EaseOfUse!
+  systemEasyToUse: EaseOfUse
   systemEasyToUseOther: String
-  howSatisfied: SatisfactionLevel!
-  howCanWeImprove: String!
+  howSatisfied: SatisfactionLevel
+  howCanWeImprove: String
 }
 
 enum EaseOfUse {
@@ -50893,7 +50893,7 @@ func (ec *executionContext) unmarshalInputSendFeedbackEmailInput(ctx context.Con
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("allowContact"))
-			data, err := ec.unmarshalNBoolean2bool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -50902,7 +50902,7 @@ func (ec *executionContext) unmarshalInputSendFeedbackEmailInput(ctx context.Con
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmsRole"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -50911,7 +50911,7 @@ func (ec *executionContext) unmarshalInputSendFeedbackEmailInput(ctx context.Con
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mintUsedFor"))
-			data, err := ec.unmarshalNMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx, v)
+			data, err := ec.unmarshalOMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -50929,7 +50929,7 @@ func (ec *executionContext) unmarshalInputSendFeedbackEmailInput(ctx context.Con
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("systemEasyToUse"))
-			data, err := ec.unmarshalNEaseOfUse2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx, v)
+			data, err := ec.unmarshalOEaseOfUse2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -50947,7 +50947,7 @@ func (ec *executionContext) unmarshalInputSendFeedbackEmailInput(ctx context.Con
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("howSatisfied"))
-			data, err := ec.unmarshalNSatisfactionLevel2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx, v)
+			data, err := ec.unmarshalOSatisfactionLevel2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -50956,7 +50956,7 @@ func (ec *executionContext) unmarshalInputSendFeedbackEmailInput(ctx context.Con
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("howCanWeImprove"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -60793,16 +60793,6 @@ func (ec *executionContext) marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑ
 	return res
 }
 
-func (ec *executionContext) unmarshalNEaseOfUse2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx context.Context, v interface{}) (model.EaseOfUse, error) {
-	var res model.EaseOfUse
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNEaseOfUse2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx context.Context, sel ast.SelectionSet, v model.EaseOfUse) graphql.Marshaler {
-	return v
-}
-
 func (ec *executionContext) unmarshalNEvaluationApproachType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachType(ctx context.Context, v interface{}) (model.EvaluationApproachType, error) {
 	var res model.EvaluationApproachType
 	err := res.UnmarshalGQL(v)
@@ -61419,67 +61409,6 @@ func (ec *executionContext) unmarshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑap
 
 func (ec *executionContext) marshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx context.Context, sel ast.SelectionSet, v model.MintUses) graphql.Marshaler {
 	return v
-}
-
-func (ec *executionContext) unmarshalNMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx context.Context, v interface{}) ([]model.MintUses, error) {
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.MintUses, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalNMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx context.Context, sel ast.SelectionSet, v []model.MintUses) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
 }
 
 func (ec *executionContext) unmarshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (models.ModelCategory, error) {
@@ -63290,16 +63219,6 @@ func (ec *executionContext) marshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑapp�
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalNSatisfactionLevel2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx context.Context, v interface{}) (model.SatisfactionLevel, error) {
-	var res model.SatisfactionLevel
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNSatisfactionLevel2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx context.Context, sel ast.SelectionSet, v model.SatisfactionLevel) graphql.Marshaler {
-	return v
 }
 
 func (ec *executionContext) unmarshalNSearchFilter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSearchFilter(ctx context.Context, v interface{}) (*model.SearchFilter, error) {
@@ -65371,6 +65290,22 @@ func (ec *executionContext) marshalODiscussionUserRole2ᚖgithubᚗcomᚋcmsgov�
 	return res
 }
 
+func (ec *executionContext) unmarshalOEaseOfUse2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx context.Context, v interface{}) (*model.EaseOfUse, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var res = new(model.EaseOfUse)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOEaseOfUse2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx context.Context, sel ast.SelectionSet, v *model.EaseOfUse) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return v
+}
+
 func (ec *executionContext) unmarshalOEvaluationApproachType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachTypeᚄ(ctx context.Context, v interface{}) ([]model.EvaluationApproachType, error) {
 	if v == nil {
 		return nil, nil
@@ -65775,6 +65710,73 @@ func (ec *executionContext) marshalOKeyCharacteristic2ᚕgithubᚗcomᚋcmsgov�
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNKeyCharacteristic2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristic(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx context.Context, v interface{}) ([]model.MintUses, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.MintUses, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx context.Context, sel ast.SelectionSet, v []model.MintUses) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -66875,6 +66877,22 @@ func (ec *executionContext) marshalORecruitmentType2ᚖgithubᚗcomᚋcmsgovᚋm
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) unmarshalOSatisfactionLevel2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx context.Context, v interface{}) (*model.SatisfactionLevel, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var res = new(model.SatisfactionLevel)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOSatisfactionLevel2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx context.Context, sel ast.SelectionSet, v *model.SatisfactionLevel) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return v
 }
 
 func (ec *executionContext) unmarshalOSearchFilter2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSearchFilterᚄ(ctx context.Context, v interface{}) ([]*model.SearchFilter, error) {
