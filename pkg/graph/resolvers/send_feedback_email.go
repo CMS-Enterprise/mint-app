@@ -28,11 +28,12 @@ func SendFeedbackEmail(
 			return false, err
 		}
 
+		//TODO: SW handle if an input is null. Should the schema reflect that? Or should we just expect empty strings?
 		emailBody, err := emailTemplate.GetExecutedBody(email.SendFeedbackBodyContent{
 			IsAnonymousSubmission: input.IsAnonymousSubmission,
 			ReporterName:          principal.Account().CommonName,
 			ReporterEmail:         principal.Account().Email,
-			AllowContact:          input.AllowContact,
+			AllowContact:          humanizeFeedbackAllowContact(&input.AllowContact), //TODO: SW update bool to not be required
 			CMSRole:               input.CmsRole,
 			MINTUsedFor:           humanizeFeedbackMINTUses(input.MintUsedFor, input.MintUsedForOther),
 			SystemEasyToUse:       humanizeFeedbackEasyToUse(input.SystemEasyToUse, input.SystemEasyToUseOther),
@@ -53,6 +54,19 @@ func SendFeedbackEmail(
 	}
 
 	return true, nil
+}
+
+func humanizeFeedbackAllowContact(allowFeedback *bool) string {
+	if allowFeedback == nil {
+		return "" //the text for this case is part of the email template to allow formatting
+		// return "User didn’t specify if they could be contacted"
+	}
+	if *allowFeedback {
+		return "Yes, the MINT team may contact me for additional information."
+	}
+
+	return "No, the MINT team may not contact me for additional information."
+
 }
 
 func humanizeFeedbackMINTUses(usedFor []model.MintUses, usedForOther *string) []string {

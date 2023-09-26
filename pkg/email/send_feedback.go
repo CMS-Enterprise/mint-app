@@ -8,7 +8,7 @@ type SendFeedbackBodyContent struct {
 	IsAnonymousSubmission bool
 	ReporterName          string
 	ReporterEmail         string
-	AllowContact          bool
+	AllowContact          string
 	CMSRole               string
 	MINTUsedFor           []string
 	SystemEasyToUse       string
