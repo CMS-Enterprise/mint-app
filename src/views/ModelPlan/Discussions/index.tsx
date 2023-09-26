@@ -26,8 +26,6 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType,
   GetModelPlanDiscussionsVariables
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
-import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
 import {
   DiscussionUserRole,
@@ -95,10 +93,6 @@ const Discussions = ({
 
   const [createReply] = useMutation<CreateModelPlanReplyType>(
     CreateModelPlanReply
-  );
-
-  const [updateDiscussion] = useMutation<UpdateModelPlanDiscussionType>(
-    UpdateModelPlanDiscussion
   );
 
   const createDiscussionMethods = {
@@ -201,7 +195,10 @@ const Discussions = ({
             history.replace({
               search: queryParams.toString()
             });
-            handleUpdateDiscussion(reply.id);
+            refetch().then(() => {
+              setInitQuestion(false);
+              setDiscussionType('discussion');
+            });
           } else {
             refetch().then(() => {
               setInitQuestion(false);
@@ -223,29 +220,6 @@ const Discussions = ({
         setDiscussionStatusMessage(
           discussionType === 'question' ? t('error') : t('errorReply')
         );
-      });
-  };
-
-  const handleUpdateDiscussion = (id: string) => {
-    updateDiscussion({
-      variables: {
-        id,
-        changes: {
-          status: 'ANSWERED' // For now any question that has a reply will bw considered "ANSWERED"
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          refetch().then(() => {
-            setInitQuestion(false);
-            setDiscussionType('discussion');
-          });
-        }
-      })
-      .catch(() => {
-        setDiscussionStatus('error');
-        setDiscussionStatusMessage(t('error'));
       });
   };
 
