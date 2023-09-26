@@ -40,11 +40,13 @@ export default function HelpBreadcrumb({
       type="button"
       unstyled
       onClick={() => handleClick()}
-      className={classNames(className)}
+      className={classNames(className, {
+        'margin-top-6': newTab || newTabOnly
+      })}
     >
       {newTab || newTabOnly ? (
         <>
-          <IconClose className="margin-right-05 margin-top-6 text-tbottom" />
+          <IconClose className="margin-right-05 text-tbottom" />
           {t('close')}
         </>
       ) : (
