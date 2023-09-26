@@ -40,7 +40,6 @@ type QuestionAndReplyProps = {
   renderType: 'question' | 'reply';
   reply?: DiscussionType | ReplyType | null;
   setDiscussionReplyID?: (value: string | null | undefined) => void;
-  setDiscussionStatusMessage?: (value: string) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
   setInitQuestion?: (value: boolean) => void;
 };
@@ -53,7 +52,6 @@ const QuestionAndReply = ({
   renderType,
   reply,
   setDiscussionReplyID,
-  setDiscussionStatusMessage,
   setDiscussionType,
   setInitQuestion
 }: QuestionAndReplyProps) => {
@@ -280,12 +278,7 @@ const QuestionAndReply = ({
                           });
                           setInitQuestion(false);
                         }
-                        if (
-                          renderType &&
-                          setDiscussionStatusMessage &&
-                          setDiscussionType
-                        ) {
-                          setDiscussionStatusMessage('');
+                        if (renderType && setDiscussionType) {
                           setDiscussionType('discussion');
                         }
                       }}

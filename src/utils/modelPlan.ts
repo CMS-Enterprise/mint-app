@@ -95,19 +95,6 @@ export const translateDocumentType = (documentType: DocumentType) => {
   }
 };
 
-// Returns an object with th number of discussions with answered and unanswered questions
-export const getUnansweredQuestions = (discussions: DiscussionType[]) => {
-  const unansweredQuestions =
-    discussions?.filter(
-      (discussion: DiscussionType) => discussion.status === 'UNANSWERED'
-    ).length || 0;
-  const answeredQuestions = discussions?.length - unansweredQuestions;
-  return {
-    unansweredQuestions,
-    answeredQuestions
-  };
-};
-
 // Sorts discussions by the most recent reply
 export const sortRepliesByDate = (
   discussionA: DiscussionType,

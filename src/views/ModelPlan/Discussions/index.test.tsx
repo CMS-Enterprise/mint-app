@@ -11,10 +11,7 @@ import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions
 import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
-import {
-  DiscussionStatus,
-  DiscussionUserRole
-} from 'types/graphql-global-types';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 
 import Discussions from './index';
 
@@ -30,7 +27,6 @@ const discussionResult: GetModelPlanDiscussionsType = {
         content: 'This is a question.',
         createdBy: 'TIDA',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: DiscussionStatus.UNANSWERED,
         userRole: DiscussionUserRole.CMS_SYSTEM_SERVICE_TEAM,
         userRoleDescription: '',
         isAssessment: false,
@@ -46,7 +42,6 @@ const discussionResult: GetModelPlanDiscussionsType = {
         content: 'This is a second question.',
         createdBy: 'JFCS',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: DiscussionStatus.ANSWERED,
         userRole: DiscussionUserRole.NONE_OF_THE_ABOVE,
         userRoleDescription: 'Designer',
         isAssessment: false,
@@ -58,7 +53,6 @@ const discussionResult: GetModelPlanDiscussionsType = {
           {
             __typename: 'DiscussionReply',
             discussionID: '456',
-            resolution: true,
             id: 'abc',
             content: 'This is an answer.',
             userRole: DiscussionUserRole.LEADERSHIP,

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PlanDiscussionChanges, DiscussionStatus } from "./../../../types/graphql-global-types";
+import { PlanDiscussionChanges } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdateModelPlanDiscussion
@@ -12,7 +12,6 @@ import { PlanDiscussionChanges, DiscussionStatus } from "./../../../types/graphq
 export interface UpdateModelPlanDiscussion_updatePlanDiscussion {
   __typename: "PlanDiscussion";
   id: UUID;
-  status: DiscussionStatus;
 }
 
 export interface UpdateModelPlanDiscussion {

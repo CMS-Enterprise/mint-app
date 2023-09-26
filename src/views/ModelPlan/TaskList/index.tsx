@@ -50,7 +50,6 @@ import {
 } from 'queries/types/GetModelPlan';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
-import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
@@ -191,10 +190,6 @@ const TaskList = () => {
     prepareForClearance
   };
 
-  const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
-    discussions
-  );
-
   useEffect(() => {
     if (discussionID) setIsDiscussionOpen(true);
   }, [discussionID]);
@@ -281,8 +276,6 @@ const TaskList = () => {
 
               <DicussionBanner
                 discussions={discussions}
-                unansweredQuestions={unansweredQuestions}
-                answeredQuestions={answeredQuestions}
                 setIsDiscussionOpen={setIsDiscussionOpen}
               />
 
@@ -390,16 +383,12 @@ const TaskList = () => {
 
 type DiscussionBannerType = {
   discussions: DiscussionType[];
-  unansweredQuestions: number;
-  answeredQuestions: number;
   setIsDiscussionOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 // Banner to display discussion information and launch discussion center
 const DicussionBanner = ({
   discussions,
-  unansweredQuestions,
-  answeredQuestions,
   setIsDiscussionOpen
 }: DiscussionBannerType) => {
   const { t: d } = useTranslation('discussions');

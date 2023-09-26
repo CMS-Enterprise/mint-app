@@ -196,7 +196,7 @@ func (suite *ResolverSuite) TestDeletePlanDiscussion() {
 func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
+	_ = suite.createDiscussionReply(discussion, "This is a test reply")
 
 	_, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.Error(err)
@@ -210,7 +210,6 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
 		Content:             "This is a test reply",
-		Resolution:          true,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
@@ -220,7 +219,6 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)
 	suite.EqualValues(input.Content, result.Content)
-	suite.EqualValues(input.Resolution, result.Resolution)
 	suite.True(result.IsAssessment) // default principal for the test suite is an assessment user
 }
 
@@ -231,7 +229,6 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
 		Content:             "This is a test reply",
-		Resolution:          true,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
@@ -244,27 +241,24 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)
 	suite.EqualValues(input.Content, result.Content)
-	suite.EqualValues(input.Resolution, result.Resolution)
 	suite.False(result.IsAssessment)
 }
 
 func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
+	reply := suite.createDiscussionReply(discussion, "This is a test reply")
 	assert.Nil(suite.T(), reply.ModifiedBy)
 	assert.Nil(suite.T(), reply.ModifiedDts)
 
 	changes := map[string]interface{}{
-		"content":    "This is now updated! Thanks for looking at my test",
-		"resolution": true,
+		"content": "This is now updated! Thanks for looking at my test",
 	}
 
 	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(changes["content"], result.Content)
-	suite.EqualValues(changes["resolution"], result.Resolution)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, result.CreatedBy)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *result.ModifiedBy)
 }
@@ -272,8 +266,8 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
-	_ = suite.createDiscussionReply(discussion, "This is another test reply", true)
+	_ = suite.createDiscussionReply(discussion, "This is a test reply")
+	_ = suite.createDiscussionReply(discussion, "This is another test reply")
 
 	result, err := DiscussionReplyCollectionByDiscusionIDLOADER(suite.testConfigs.Context, discussion.ID)
 	suite.NoError(err)
@@ -281,9 +275,9 @@ func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 
 	// Check that adding another dicussion doesn't affect the first one
 	discussionTwo := suite.createPlanDiscussion(plan, "This is another test comment")
-	_ = suite.createDiscussionReply(discussionTwo, "This is a test reply", false)
-	_ = suite.createDiscussionReply(discussionTwo, "This is another test reply", true)
-	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply", true)
+	_ = suite.createDiscussionReply(discussionTwo, "This is a test reply")
+	_ = suite.createDiscussionReply(discussionTwo, "This is another test reply")
+	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply")
 
 	// Assert the count on the _first_ discussion is still 2
 	result, err = DiscussionReplyCollectionByDiscusionIDLOADER(suite.testConfigs.Context, discussion.ID)
@@ -294,8 +288,8 @@ func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
-	_ = suite.createDiscussionReply(discussion, "This is another test reply", true)
+	_ = suite.createDiscussionReply(discussion, "This is a test reply")
+	_ = suite.createDiscussionReply(discussion, "This is another test reply")
 
 	result, err := PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
@@ -303,9 +297,9 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 
 	// Check that adding another dicussion doesn't affect the first one
 	discussionTwo := suite.createPlanDiscussion(plan, "This is another test comment")
-	_ = suite.createDiscussionReply(discussionTwo, "This is a test reply", false)
-	_ = suite.createDiscussionReply(discussionTwo, "This is another test reply", true)
-	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply", true)
+	_ = suite.createDiscussionReply(discussionTwo, "This is a test reply")
+	_ = suite.createDiscussionReply(discussionTwo, "This is another test reply")
+	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply")
 
 	// Assert the count on the is now 2 after adding another discussion
 	result, err = PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
@@ -316,8 +310,8 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 func (suite *ResolverSuite) TestDeleteDiscussionReply() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
-	_ = suite.createDiscussionReply(discussion, "This is another test reply", false)
+	reply := suite.createDiscussionReply(discussion, "This is a test reply")
+	_ = suite.createDiscussionReply(discussion, "This is another test reply")
 
 	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, reply.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -366,12 +360,12 @@ func verifyPlanDiscussionLoader(ctx context.Context, modelPlanID uuid.UUID) erro
 func (suite *ResolverSuite) TestDiscussionReplyDataLoader() {
 	plan1 := suite.createModelPlan("Plan For DiscR 1")
 	discussion1 := suite.createPlanDiscussion(plan1, "This is a test comment")
-	_ = suite.createDiscussionReply(discussion1, "This is a test reply", false)
-	_ = suite.createDiscussionReply(discussion1, "This is another test reply", true)
+	_ = suite.createDiscussionReply(discussion1, "This is a test reply")
+	_ = suite.createDiscussionReply(discussion1, "This is another test reply")
 	plan2 := suite.createModelPlan("Plan For DiscR 2")
 	discussion2 := suite.createPlanDiscussion(plan2, "This is a test comment")
-	_ = suite.createDiscussionReply(discussion2, "This is a test reply", false)
-	_ = suite.createDiscussionReply(discussion2, "This is another test reply", true)
+	_ = suite.createDiscussionReply(discussion2, "This is a test reply")
+	_ = suite.createDiscussionReply(discussion2, "This is another test reply")
 
 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 	g.Go(func() error {

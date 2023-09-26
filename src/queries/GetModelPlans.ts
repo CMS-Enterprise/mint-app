@@ -34,10 +34,8 @@ export default gql`
       }
       discussions {
         id
-        status
         replies {
           id
-          resolution
         }
       }
       crTdls @include(if: $isMAC) {

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelPlanFilter, ModelStatus, KeyCharacteristic, TeamRole, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelPlanFilter, ModelStatus, KeyCharacteristic, TeamRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlans
@@ -45,13 +45,11 @@ export interface GetModelPlans_modelPlanCollection_collaborators {
 export interface GetModelPlans_modelPlanCollection_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
-  resolution: boolean | null;
 }
 
 export interface GetModelPlans_modelPlanCollection_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  status: DiscussionStatus;
   replies: GetModelPlans_modelPlanCollection_discussions_replies[];
 }
 

@@ -16,7 +16,7 @@ type SingleDiscussionProps = {
   discussion: DiscussionType | ReplyType;
   index: number;
   connected?: boolean;
-  setDiscussionStatusMessage: (a: string) => void;
+  answerQuestion?: boolean;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
@@ -28,7 +28,7 @@ const SingleDiscussion = ({
   discussion,
   index,
   connected,
-  setDiscussionStatusMessage,
+  answerQuestion,
   setDiscussionType,
   setReply,
   setIsDiscussionOpen,
@@ -78,7 +78,6 @@ const SingleDiscussion = ({
               if (setIsDiscussionOpen) {
                 setIsDiscussionOpen(true);
               }
-              setDiscussionStatusMessage('');
               setDiscussionType('reply');
               setReply(discussion);
             }}
