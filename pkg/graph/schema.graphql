@@ -1513,6 +1513,19 @@ type DiscussionRoleSelection {
   userRole: DiscussionUserRole!
   userRoleDescription: String
 }
+"""
+The inputs to the user feedback form
+"""
+input SendFeedbackEmailInput {
+  isAnonymous: Boolean!
+  canBeContacted: Boolean!
+  cmsRole: String!
+  mintServicesUsed: [String!]!
+  systemEasyToUse: String!
+  howSatisfied: String!
+  howCanWeImprove: String!
+}
+
 
 """
 Query definition for the schema
@@ -1692,6 +1705,10 @@ updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentMod
 
 shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
+"""
+This mutation sends feedback about the MINT product to the MINT team
+"""
+sendFeedbackEmail(input: SendFeedbackEmailInput!): String
 }
 
 type Subscription {

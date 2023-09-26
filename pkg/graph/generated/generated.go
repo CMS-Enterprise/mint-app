@@ -235,6 +235,7 @@ type ComplexityRoot struct {
 		LinkNewPlanDocument                func(childComplexity int, input model.PlanDocumentLinkInput) int
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
+		SendFeedbackEmail                  func(childComplexity int, input model.SendFeedbackEmailInput) int
 		ShareModelPlan                     func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
@@ -980,6 +981,7 @@ type MutationResolver interface {
 	DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error)
 	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error)
+	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (*string, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -2139,6 +2141,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.RemovePlanDocumentSolutionLinks(childComplexity, args["solutionID"].(uuid.UUID), args["documentIDs"].([]uuid.UUID)), true
+
+	case "Mutation.sendFeedbackEmail":
+		if e.complexity.Mutation.SendFeedbackEmail == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_sendFeedbackEmail_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.SendFeedbackEmail(childComplexity, args["input"].(model.SendFeedbackEmailInput)), true
 
 	case "Mutation.shareModelPlan":
 		if e.complexity.Mutation.ShareModelPlan == nil {
@@ -6541,6 +6555,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputPlanDocumentInput,
 		ec.unmarshalInputPlanDocumentLinkInput,
 		ec.unmarshalInputSearchFilter,
+		ec.unmarshalInputSendFeedbackEmailInput,
 		ec.unmarshalInputUpdateOperationalSolutionSubtaskInput,
 	)
 	first := true
@@ -8171,6 +8186,19 @@ type DiscussionRoleSelection {
   userRole: DiscussionUserRole!
   userRoleDescription: String
 }
+"""
+The inputs to the user feedback form
+"""
+input SendFeedbackEmailInput {
+  isAnonymous: Boolean!
+  canBeContacted: Boolean!
+  cmsRole: String!
+  mintServicesUsed: [String!]!
+  systemEasyToUse: String!
+  howSatisfied: String!
+  howCanWeImprove: String!
+}
+
 
 """
 Query definition for the schema
@@ -8350,6 +8378,10 @@ updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentMod
 
 shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
+"""
+This mutation sends feedback about the MINT product to the MINT team
+"""
+sendFeedbackEmail(input: SendFeedbackEmailInput!): String
 }
 
 type Subscription {
@@ -9538,6 +9570,21 @@ func (ec *executionContext) field_Mutation_removePlanDocumentSolutionLinks_args(
 		}
 	}
 	args["documentIDs"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_sendFeedbackEmail_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.SendFeedbackEmailInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNSendFeedbackEmailInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSendFeedbackEmailInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -21098,6 +21145,58 @@ func (ec *executionContext) fieldContext_Mutation_shareModelPlan(ctx context.Con
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_shareModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_sendFeedbackEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().SendFeedbackEmail(rctx, fc.Args["input"].(model.SendFeedbackEmailInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -50740,6 +50839,89 @@ func (ec *executionContext) unmarshalInputSearchFilter(ctx context.Context, obj 
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputSendFeedbackEmailInput(ctx context.Context, obj interface{}) (model.SendFeedbackEmailInput, error) {
+	var it model.SendFeedbackEmailInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"isAnonymous", "canBeContacted", "cmsRole", "mintServicesUsed", "systemEasyToUse", "howSatisfied", "howCanWeImprove"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "isAnonymous":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isAnonymous"))
+			data, err := ec.unmarshalNBoolean2bool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IsAnonymous = data
+		case "canBeContacted":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("canBeContacted"))
+			data, err := ec.unmarshalNBoolean2bool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CanBeContacted = data
+		case "cmsRole":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmsRole"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CmsRole = data
+		case "mintServicesUsed":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mintServicesUsed"))
+			data, err := ec.unmarshalNString2ᚕstringᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MintServicesUsed = data
+		case "systemEasyToUse":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("systemEasyToUse"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.SystemEasyToUse = data
+		case "howSatisfied":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("howSatisfied"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.HowSatisfied = data
+		case "howCanWeImprove":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("howCanWeImprove"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.HowCanWeImprove = data
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputUpdateOperationalSolutionSubtaskInput(ctx context.Context, obj interface{}) (model.UpdateOperationalSolutionSubtaskInput, error) {
 	var it model.UpdateOperationalSolutionSubtaskInput
 	asMap := map[string]interface{}{}
@@ -52788,6 +52970,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "sendFeedbackEmail":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_sendFeedbackEmail(ctx, field)
+			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -63061,6 +63247,11 @@ func (ec *executionContext) marshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgov
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNSendFeedbackEmailInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSendFeedbackEmailInput(ctx context.Context, v interface{}) (model.SendFeedbackEmailInput, error) {
+	res, err := ec.unmarshalInputSendFeedbackEmailInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNSortDirection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSortDirection(ctx context.Context, v interface{}) (models.SortDirection, error) {

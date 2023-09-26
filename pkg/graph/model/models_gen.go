@@ -109,6 +109,17 @@ type SearchFilter struct {
 	Value interface{}      `json:"value"`
 }
 
+// The inputs to the user feedback form
+type SendFeedbackEmailInput struct {
+	IsAnonymous      bool     `json:"isAnonymous"`
+	CanBeContacted   bool     `json:"canBeContacted"`
+	CmsRole          string   `json:"cmsRole"`
+	MintServicesUsed []string `json:"mintServicesUsed"`
+	SystemEasyToUse  string   `json:"systemEasyToUse"`
+	HowSatisfied     string   `json:"howSatisfied"`
+	HowCanWeImprove  string   `json:"howCanWeImprove"`
+}
+
 type TaskListSectionLockStatus struct {
 	ModelPlanID         uuid.UUID                   `json:"modelPlanID"`
 	Section             models.TaskListSection      `json:"section"`

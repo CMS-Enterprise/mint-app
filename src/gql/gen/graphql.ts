@@ -630,6 +630,8 @@ export type Mutation = {
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
+  /** This mutation sends feedback about the MINT product to the MINT team */
+  sendFeedbackEmail?: Maybe<Scalars['String']['output']>;
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
@@ -783,6 +785,12 @@ export type MutationLockTaskListSectionArgs = {
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationSendFeedbackEmailArgs = {
+  input: SendFeedbackEmailInput;
 };
 
 
@@ -2390,6 +2398,17 @@ export enum SelectionMethodType {
   RETROSPECTIVE = 'RETROSPECTIVE',
   VOLUNTARY = 'VOLUNTARY'
 }
+
+/** The inputs to the user feedback form */
+export type SendFeedbackEmailInput = {
+  canBeContacted: Scalars['Boolean']['input'];
+  cmsRole: Scalars['String']['input'];
+  howCanWeImprove: Scalars['String']['input'];
+  howSatisfied: Scalars['String']['input'];
+  isAnonymous: Scalars['Boolean']['input'];
+  mintServicesUsed: Array<Scalars['String']['input']>;
+  systemEasyToUse: Scalars['String']['input'];
+};
 
 export enum SortDirection {
   ASC = 'ASC',
