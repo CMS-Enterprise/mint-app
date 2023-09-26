@@ -48,7 +48,7 @@ export type DiscussionsProps = {
   askAQuestion?: boolean;
 };
 
-export type DicussionFormPropTypes = Omit<
+export type DiscussionFormPropTypes = Omit<
   PlanDiscussionCreateInput,
   'modelPlanID'
 >;
@@ -115,6 +115,9 @@ const Discussions = ({
     'question' | 'reply' | 'discussion'
   >(discussionReplyID ? 'reply' : 'question');
 
+  const [discussionStatus, setDiscussionStatus] = useState<
+    'success' | 'warning' | 'error' | 'info'
+  >('info');
   const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
 
   // State used to control when the component is being rendered from a form page rather than the task-list
@@ -164,7 +167,7 @@ const Discussions = ({
     }
   }, [discussions, initQuestion, readOnly, discussionReplyID]);
 
-  const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
+  const handleCreateDiscussion = (formikValues: DiscussionFormPropTypes) => {
     let payload: any = {};
 
     // Setting the mutation payload depending on discussionType
@@ -209,14 +212,14 @@ const Discussions = ({
           if (readOnly) {
             setIsDiscussionOpen(false);
           }
-          // setDiscussionStatus('success');
+          setDiscussionStatus('success');
           setDiscussionStatusMessage(
             discussionType === 'question' ? t('success') : t('successReply')
           );
         }
       })
       .catch(() => {
-        // setDiscussionStatus('error');
+        setDiscussionStatus('error');
         setDiscussionStatusMessage(
           discussionType === 'question' ? t('error') : t('errorReply')
         );
@@ -241,7 +244,7 @@ const Discussions = ({
         }
       })
       .catch(() => {
-        // setDiscussionStatus('error');
+        setDiscussionStatus('error');
         setDiscussionStatusMessage(t('error'));
       });
   };
@@ -356,7 +359,7 @@ const Discussions = ({
         {discussionStatusMessage && !alertClosed && (
           <Expire delay={45000} callback={setDiscussionStatusMessage}>
             <Alert
-              type="success"
+              type={discussionStatus}
               className="margin-bottom-4"
               closeAlert={closeAlert}
             >

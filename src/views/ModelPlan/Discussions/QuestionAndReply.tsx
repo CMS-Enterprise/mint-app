@@ -30,12 +30,12 @@ import { sortOtherEnum } from 'utils/modelPlan';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
 import Replies from './Replies';
-import { DicussionFormPropTypes } from '.';
+import { DiscussionFormPropTypes } from '.';
 
 type QuestionAndReplyProps = {
   closeModal?: () => void;
   discussionReplyID?: string | null | undefined;
-  handleCreateDiscussion: (formikValues: DicussionFormPropTypes) => void;
+  handleCreateDiscussion: (formikValues: DiscussionFormPropTypes) => void;
   queryParams?: URLSearchParams;
   renderType: 'question' | 'reply';
   reply?: DiscussionType | ReplyType | null;
@@ -137,7 +137,7 @@ const QuestionAndReply = ({
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<DicussionFormPropTypes>) => {
+        {(formikProps: FormikProps<DiscussionFormPropTypes>) => {
           const {
             errors,
             values,
