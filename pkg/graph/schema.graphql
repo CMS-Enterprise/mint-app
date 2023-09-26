@@ -1708,7 +1708,7 @@ shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: 
 """
 This mutation sends feedback about the MINT product to the MINT team
 """
-sendFeedbackEmail(input: SendFeedbackEmailInput!): String
+sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
 }
 
 type Subscription {

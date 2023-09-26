@@ -631,7 +631,7 @@ export type Mutation = {
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
-  sendFeedbackEmail?: Maybe<Scalars['String']['output']>;
+  sendFeedbackEmail: Scalars['Boolean']['output'];
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
