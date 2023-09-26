@@ -2425,14 +2425,14 @@ export enum SelectionMethodType {
 
 /** The inputs to the user feedback form */
 export type SendFeedbackEmailInput = {
-  allowContact: Scalars['Boolean']['input'];
-  cmsRole: Scalars['String']['input'];
-  howCanWeImprove: Scalars['String']['input'];
-  howSatisfied: SatisfactionLevel;
+  allowContact?: InputMaybe<Scalars['Boolean']['input']>;
+  cmsRole?: InputMaybe<Scalars['String']['input']>;
+  howCanWeImprove?: InputMaybe<Scalars['String']['input']>;
+  howSatisfied?: InputMaybe<SatisfactionLevel>;
   isAnonymousSubmission: Scalars['Boolean']['input'];
-  mintUsedFor: Array<MintUses>;
+  mintUsedFor?: InputMaybe<Array<MintUses>>;
   mintUsedForOther?: InputMaybe<Scalars['String']['input']>;
-  systemEasyToUse: EaseOfUse;
+  systemEasyToUse?: InputMaybe<EaseOfUse>;
   systemEasyToUseOther?: InputMaybe<Scalars['String']['input']>;
 };
 

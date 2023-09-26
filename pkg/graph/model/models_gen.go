@@ -111,15 +111,15 @@ type SearchFilter struct {
 
 // The inputs to the user feedback form
 type SendFeedbackEmailInput struct {
-	IsAnonymousSubmission bool              `json:"isAnonymousSubmission"`
-	AllowContact          bool              `json:"allowContact"`
-	CmsRole               string            `json:"cmsRole"`
-	MintUsedFor           []MintUses        `json:"mintUsedFor"`
-	MintUsedForOther      *string           `json:"mintUsedForOther,omitempty"`
-	SystemEasyToUse       EaseOfUse         `json:"systemEasyToUse"`
-	SystemEasyToUseOther  *string           `json:"systemEasyToUseOther,omitempty"`
-	HowSatisfied          SatisfactionLevel `json:"howSatisfied"`
-	HowCanWeImprove       string            `json:"howCanWeImprove"`
+	IsAnonymousSubmission bool               `json:"isAnonymousSubmission"`
+	AllowContact          *bool              `json:"allowContact,omitempty"`
+	CmsRole               *string            `json:"cmsRole,omitempty"`
+	MintUsedFor           []MintUses         `json:"mintUsedFor,omitempty"`
+	MintUsedForOther      *string            `json:"mintUsedForOther,omitempty"`
+	SystemEasyToUse       *EaseOfUse         `json:"systemEasyToUse,omitempty"`
+	SystemEasyToUseOther  *string            `json:"systemEasyToUseOther,omitempty"`
+	HowSatisfied          *SatisfactionLevel `json:"howSatisfied,omitempty"`
+	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
 }
 
 type TaskListSectionLockStatus struct {
