@@ -164,8 +164,8 @@ const ClientProtocolKey = "CLIENT_PROTOCOL"
 // ClientAddressKey is the key for getting the client's address
 const ClientAddressKey = "CLIENT_ADDRESS"
 
-// EmailTemplateDirectoryKey is the key for getting the email template directory
-const EmailTemplateDirectoryKey = "EMAIL_TEMPLATE_DIR"
+// // EmailTemplateDirectoryKey is the key for getting the email template directory
+// const EmailTemplateDirectoryKey = "EMAIL_TEMPLATE_DIR"
 
 // AWSS3FileUploadBucket is the key for the bucket we upload files to
 const AWSS3FileUploadBucket = "AWS_S3_FILE_UPLOAD_BUCKET"
