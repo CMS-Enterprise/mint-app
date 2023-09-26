@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -33,12 +34,12 @@ func SendFeedbackEmail(
 			IsAnonymousSubmission: input.IsAnonymousSubmission,
 			ReporterName:          principal.Account().CommonName,
 			ReporterEmail:         principal.Account().Email,
-			AllowContact:          humanizeFeedbackAllowContact(&input.AllowContact), //TODO: SW update bool to not be required
-			CMSRole:               input.CmsRole,
+			AllowContact:          humanizeFeedbackAllowContact(input.AllowContact), //TODO: SW update bool to not be required
+			CMSRole:               models.ValueOrEmpty(input.CmsRole),
 			MINTUsedFor:           humanizeFeedbackMINTUses(input.MintUsedFor, input.MintUsedForOther),
 			SystemEasyToUse:       humanizeFeedbackEasyToUse(input.SystemEasyToUse, input.SystemEasyToUseOther),
 			HowSatisfied:          humanizeFeedbackSatisfaction(input.HowSatisfied),
-			HowCanWeImprove:       input.HowCanWeImprove,
+			HowCanWeImprove:       models.ValueOrEmpty(input.HowCanWeImprove),
 		})
 		if err != nil {
 			return false, err
@@ -107,34 +108,40 @@ func humanizeFeedbackMINTUse(use model.MintUses) string {
 	}
 }
 
-func humanizeFeedbackEasyToUse(ease model.EaseOfUse, easeOther *string) string {
+func humanizeFeedbackEasyToUse(ease *model.EaseOfUse, easeOther *string) string {
 	if easeOther != nil {
 		return "I'm not sure - " + *easeOther
 	}
-	switch ease {
+	if ease == nil {
+		return ""
+	}
+	switch *ease {
 	case model.EaseOfUseAgree:
 		return "Agree"
 	case model.EaseOfUseDisagree:
 		return "Disagree"
 	default:
-		return string(ease)
+		return string(*ease)
 	}
 }
 
-func humanizeFeedbackSatisfaction(satisfactionLevel model.SatisfactionLevel) string {
+func humanizeFeedbackSatisfaction(satisfactionLevel *model.SatisfactionLevel) string {
 
-	switch satisfactionLevel {
+	if satisfactionLevel == nil {
+		return ""
+	}
+	switch *satisfactionLevel {
 	case model.SatisfactionLevelVerySatisfied:
-		return "VERY_SATISFIED"
+		return "Very Satisfied"
 	case model.SatisfactionLevelSatisfied:
-		return "SATISFIED"
+		return "Satisfied"
 	case model.SatisfactionLevelNeutral:
-		return "NEUTRAL"
+		return "Neutral"
 	case model.SatisfactionLevelDissatisfied:
-		return "DISSATISFIED"
+		return "Dissatisfied"
 	case model.SatisfactionLevelVeryDissatisfied:
-		return "VERY_DISSATISFIED"
+		return "Very Dissatisfied"
 	default:
-		return string(satisfactionLevel)
+		return string(*satisfactionLevel)
 	}
 }

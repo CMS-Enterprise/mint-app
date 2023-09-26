@@ -490,7 +490,8 @@ func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.
 
 // SendFeedbackEmail is the resolver for the sendFeedbackEmail field.
 func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error) {
-	return false, nil
+	principal := appcontext.Principal(ctx)
+	return resolvers.SendFeedbackEmail(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
 }
 
 // Solutions is the resolver for the solutions field.

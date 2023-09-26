@@ -111,8 +111,11 @@
     {{end}}
     <h3 style="padding-top: 14pt;">What have you used MINT for?</h3>
     {{ if .MINTUsedFor}}
-    <!-- TODO: implement UL for each list item -->
-      <p>{{.MINTUsedFor}}</p> 
+    <ul>
+    {{range $use := .MINTUsedFor}}
+    <li>{{$use}}</li>
+    {{end}}
+    </ul>
     {{else}}
       <i>Left Blank</i>
     {{end}}
