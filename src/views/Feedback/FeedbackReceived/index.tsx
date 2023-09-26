@@ -8,7 +8,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
 const FeedbackReceived = () => {
-  const { t } = useTranslation(['reportAProblem']);
+  const { t } = useTranslation(['feedback']);
 
   return (
     <MainContent>

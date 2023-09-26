@@ -28,7 +28,7 @@ import { getKeys } from 'types/translation';
 import { sortOtherEnum } from 'utils/modelPlan';
 
 const ReportAProblem = () => {
-  const { t } = useTranslation(['reportAProblem', 'miscellaneous']);
+  const { t } = useTranslation(['feedback', 'miscellaneous']);
 
   const [update, { loading }] = useMutation(CreateReportAProblem);
 
@@ -65,9 +65,11 @@ const ReportAProblem = () => {
       <GridContainer>
         <HelpBreadcrumb newTabOnly />
 
-        <PageHeading className="margin-bottom-2">{t('heading')}</PageHeading>
+        <PageHeading className="margin-bottom-2">
+          {t('reportHeading')}
+        </PageHeading>
 
-        <p className="margin-bottom-2 font-body-lg">{t('subheading')}</p>
+        <p className="margin-bottom-2 font-body-lg">{t('reportSubheading')}</p>
 
         <Formik
           initialValues={initialValues}

@@ -1,6 +1,6 @@
-const reportAProblem = {
-  heading: 'Report a problem',
-  subheading:
+const feedback = {
+  reportHeading: 'Report a problem',
+  reportSubheading:
     'Did you notice something wrong with MINT? Let us know using the form below.',
   isAnonymousSubmission: {
     label: 'Would you like your feedback to remain anonymous?',
@@ -54,7 +54,13 @@ const reportAProblem = {
   closeAndReturn: 'Close tab and return to MINT',
   sendAnother: 'Send another report',
   reportWithMint: 'Report a problem with MINT',
-  sendFeedbackWithMint: 'Send feedback to the MINT Team'
+  sendFeedbackWithMint: 'Send feedback to the MINT Team',
+  footer: {
+    improveMint: 'Want to help improve MINT?',
+    reportProblem: 'Report a problem',
+    sendFeedback: 'Send feedback',
+    chatSlack: 'Chat with us on CMS Slack'
+  }
 };
 
-export default reportAProblem;
+export default feedback;
