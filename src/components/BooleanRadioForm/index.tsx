@@ -15,6 +15,7 @@ type AddNoteType = {
     value: any,
     shouldValidate?: boolean | undefined
   ) => void;
+  disabled?: boolean;
   children?: JSX.Element;
   childName?: string;
   className?: string;
@@ -26,6 +27,7 @@ const BooleanRadio = ({
   id,
   options,
   setFieldValue,
+  disabled = false,
   children,
   childName,
   className
@@ -40,6 +42,7 @@ const BooleanRadio = ({
         label={options.true}
         value="TRUE"
         checked={value === true}
+        disabled={disabled}
         onChange={() => {
           setFieldValue(fieldName, true);
           if (childName) {
@@ -58,6 +61,7 @@ const BooleanRadio = ({
         label={options.false}
         value="FALSE"
         checked={value === false}
+        disabled={disabled}
         onChange={() => {
           setFieldValue(fieldName, false);
         }}
