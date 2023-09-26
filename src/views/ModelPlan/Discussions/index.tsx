@@ -246,6 +246,55 @@ const Discussions = ({
       });
   };
 
+  const DiscussionAccordion = ({
+    discussionContent
+  }: {
+    discussionContent: DiscussionType[];
+  }) => {
+    return (
+      <>
+        <Accordion
+          className={classNames(
+            'discussion-accordion margin-bottom-2 margin-top-0',
+            {
+              'no-pointer': discussionContent.length === 0,
+              'no-button': discussionContent.length === 0
+            }
+          )}
+          bordered={false}
+          multiselectable
+          items={[
+            {
+              title: (
+                <strong>
+                  {t('newDiscussionTopics', {
+                    count: discussionContent.length
+                  })}
+                </strong>
+              ),
+              content: (
+                <FormatDiscussion
+                  discussionsContent={discussionContent}
+                  setDiscussionType={setDiscussionType}
+                  setReply={setReply}
+                  setIsDiscussionOpen={setIsDiscussionOpen}
+                />
+              ),
+              expanded: true,
+              id: 'discussion-accordion--hasNoReplies',
+              headingLevel: 'h4'
+            }
+          ]}
+        />
+        {discussionContent.length === 0 && (
+          <Alert className="margin-bottom-2" type="info">
+            {t('noUanswered')}
+          </Alert>
+        )}
+      </>
+    );
+  };
+
   const renderDiscussionContent = () => {
     if (discussions.length === 0) {
       return (
@@ -259,88 +308,13 @@ const Discussions = ({
       d => d.replies.length === 0
     );
     const discussionsWithYesReplies = discussions.filter(
-      d => d.replies.length > 0
+      d => d.replies.length !== 0
     );
 
     return (
       <>
-        <Accordion
-          className={classNames(
-            'discussion-accordion margin-bottom-2 margin-top-0',
-            {
-              'no-pointer': discussionsWithNoReplies.length === 0,
-              'no-button': discussionsWithNoReplies.length === 0
-            }
-          )}
-          bordered={false}
-          multiselectable
-          items={[
-            {
-              title: (
-                <strong>
-                  {t('newDiscussionTopics', {
-                    count: discussionsWithNoReplies.length
-                  })}
-                </strong>
-              ),
-              content: (
-                <FormatDiscussion
-                  discussionsContent={discussionsWithNoReplies}
-                  setDiscussionType={setDiscussionType}
-                  setReply={setReply}
-                  setIsDiscussionOpen={setIsDiscussionOpen}
-                />
-              ),
-              expanded: true,
-              id: 'discussion-accordion--hasNoReplies',
-              headingLevel: 'h4'
-            }
-          ]}
-        />
-
-        {discussionsWithNoReplies.length === 0 && (
-          <Alert className="margin-bottom-2" type="info">
-            {t('noUanswered')}
-          </Alert>
-        )}
-        <Accordion
-          className={classNames(
-            'discussion-accordion margin-bottom-2 margin-top-0',
-            {
-              'no-pointer': discussionsWithYesReplies.length === 0,
-              'no-button': discussionsWithYesReplies.length === 0
-            }
-          )}
-          bordered={false}
-          multiselectable
-          items={[
-            {
-              title: (
-                <strong>
-                  {t('discussionWithCount', {
-                    count: discussionsWithYesReplies.length
-                  })}
-                </strong>
-              ),
-              content: (
-                <FormatDiscussion
-                  discussionsContent={discussionsWithYesReplies}
-                  setDiscussionType={setDiscussionType}
-                  setReply={setReply}
-                  setIsDiscussionOpen={setIsDiscussionOpen}
-                />
-              ),
-              expanded: true,
-              id: 'discussion-accordion--hasReplies',
-              headingLevel: 'h4'
-            }
-          ]}
-        />
-        {discussionsWithYesReplies.length === 0 && (
-          <Alert className="margin-bottom-2" type="info">
-            {t('noAnswered')}
-          </Alert>
-        )}
+        <DiscussionAccordion discussionContent={discussionsWithNoReplies} />
+        <DiscussionAccordion discussionContent={discussionsWithYesReplies} />
       </>
     );
   };
