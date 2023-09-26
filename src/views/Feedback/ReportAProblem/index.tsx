@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/client';
 import {
   Button,
+  CharacterCount,
   Fieldset,
   Grid,
   GridContainer,
   Label,
   Radio,
-  Textarea,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -171,11 +171,15 @@ const ReportAProblem = () => {
                         {t('whatDoing.label')}
                       </Label>
 
-                      <Field
-                        as={Textarea}
-                        className="height-card"
+                      <CharacterCount
                         id="report-a-problem-section-what-doing"
+                        className="height-card margin-bottom-1"
+                        isTextArea
                         name="whatDoing"
+                        maxLength={2000}
+                        getCharacterCount={(text: string): number =>
+                          Array.from(text).length
+                        }
                       />
                     </FieldGroup>
 
@@ -184,11 +188,15 @@ const ReportAProblem = () => {
                         {t('whatWentWrong.label')}
                       </Label>
 
-                      <Field
-                        as={Textarea}
-                        className="height-card"
+                      <CharacterCount
                         id="report-a-problem-section-what-went-wrong"
+                        className="height-card margin-bottom-1"
+                        isTextArea
                         name="whatWentWrong"
+                        maxLength={2000}
+                        getCharacterCount={(text: string): number =>
+                          Array.from(text).length
+                        }
                       />
                     </FieldGroup>
 
