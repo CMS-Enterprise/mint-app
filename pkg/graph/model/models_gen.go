@@ -111,13 +111,15 @@ type SearchFilter struct {
 
 // The inputs to the user feedback form
 type SendFeedbackEmailInput struct {
-	IsAnonymous      bool     `json:"isAnonymous"`
-	CanBeContacted   bool     `json:"canBeContacted"`
-	CmsRole          string   `json:"cmsRole"`
-	MintServicesUsed []string `json:"mintServicesUsed"`
-	SystemEasyToUse  string   `json:"systemEasyToUse"`
-	HowSatisfied     string   `json:"howSatisfied"`
-	HowCanWeImprove  string   `json:"howCanWeImprove"`
+	IsAnonymousSubmission bool              `json:"isAnonymousSubmission"`
+	AllowContact          bool              `json:"allowContact"`
+	CmsRole               string            `json:"cmsRole"`
+	MintUsedFor           []MintUses        `json:"mintUsedFor"`
+	MintUsedForOther      *string           `json:"mintUsedForOther,omitempty"`
+	SystemEasyToUse       EaseOfUse         `json:"systemEasyToUse"`
+	SystemEasyToUseOther  *string           `json:"systemEasyToUseOther,omitempty"`
+	HowSatisfied          SatisfactionLevel `json:"howSatisfied"`
+	HowCanWeImprove       string            `json:"howCanWeImprove"`
 }
 
 type TaskListSectionLockStatus struct {
@@ -862,6 +864,49 @@ func (e DataToSendParticipantsType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type EaseOfUse string
+
+const (
+	EaseOfUseAgree    EaseOfUse = "AGREE"
+	EaseOfUseDisagree EaseOfUse = "DISAGREE"
+	EaseOfUseUnsure   EaseOfUse = "UNSURE"
+)
+
+var AllEaseOfUse = []EaseOfUse{
+	EaseOfUseAgree,
+	EaseOfUseDisagree,
+	EaseOfUseUnsure,
+}
+
+func (e EaseOfUse) IsValid() bool {
+	switch e {
+	case EaseOfUseAgree, EaseOfUseDisagree, EaseOfUseUnsure:
+		return true
+	}
+	return false
+}
+
+func (e EaseOfUse) String() string {
+	return string(e)
+}
+
+func (e *EaseOfUse) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = EaseOfUse(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid EaseOfUse", str)
+	}
+	return nil
+}
+
+func (e EaseOfUse) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type EvaluationApproachType string
 
 const (
@@ -1049,6 +1094,57 @@ func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type MintUses string
+
+const (
+	MintUsesViewModel             MintUses = "VIEW_MODEL"
+	MintUsesEditModel             MintUses = "EDIT_MODEL"
+	MintUsesShareModel            MintUses = "SHARE_MODEL"
+	MintUsesTrackSolutions        MintUses = "TRACK_SOLUTIONS"
+	MintUsesContributeDiscussions MintUses = "CONTRIBUTE_DISCUSSIONS"
+	MintUsesViewHelp              MintUses = "VIEW_HELP"
+	MintUsesOther                 MintUses = "OTHER"
+)
+
+var AllMintUses = []MintUses{
+	MintUsesViewModel,
+	MintUsesEditModel,
+	MintUsesShareModel,
+	MintUsesTrackSolutions,
+	MintUsesContributeDiscussions,
+	MintUsesViewHelp,
+	MintUsesOther,
+}
+
+func (e MintUses) IsValid() bool {
+	switch e {
+	case MintUsesViewModel, MintUsesEditModel, MintUsesShareModel, MintUsesTrackSolutions, MintUsesContributeDiscussions, MintUsesViewHelp, MintUsesOther:
+		return true
+	}
+	return false
+}
+
+func (e MintUses) String() string {
+	return string(e)
+}
+
+func (e *MintUses) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MintUses(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MintUses", str)
+	}
+	return nil
+}
+
+func (e MintUses) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -1649,6 +1745,53 @@ func (e *Role) UnmarshalGQL(v interface{}) error {
 }
 
 func (e Role) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SatisfactionLevel string
+
+const (
+	SatisfactionLevelVerySatisfied    SatisfactionLevel = "VERY_SATISFIED"
+	SatisfactionLevelSatisfied        SatisfactionLevel = "SATISFIED"
+	SatisfactionLevelNeutral          SatisfactionLevel = "NEUTRAL"
+	SatisfactionLevelDissatisfied     SatisfactionLevel = "DISSATISFIED"
+	SatisfactionLevelVeryDissatisfied SatisfactionLevel = "VERY_DISSATISFIED"
+)
+
+var AllSatisfactionLevel = []SatisfactionLevel{
+	SatisfactionLevelVerySatisfied,
+	SatisfactionLevelSatisfied,
+	SatisfactionLevelNeutral,
+	SatisfactionLevelDissatisfied,
+	SatisfactionLevelVeryDissatisfied,
+}
+
+func (e SatisfactionLevel) IsValid() bool {
+	switch e {
+	case SatisfactionLevelVerySatisfied, SatisfactionLevelSatisfied, SatisfactionLevelNeutral, SatisfactionLevelDissatisfied, SatisfactionLevelVeryDissatisfied:
+		return true
+	}
+	return false
+}
+
+func (e SatisfactionLevel) String() string {
+	return string(e)
+}
+
+func (e *SatisfactionLevel) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SatisfactionLevel(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SatisfactionLevel", str)
+	}
+	return nil
+}
+
+func (e SatisfactionLevel) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

@@ -352,6 +352,12 @@ export enum DocumentType {
   POLICY_PAPER = 'POLICY_PAPER'
 }
 
+export enum EaseOfUse {
+  AGREE = 'AGREE',
+  DISAGREE = 'DISAGREE',
+  UNSURE = 'UNSURE'
+}
+
 export enum EvaluationApproachType {
   COMPARISON_MATCH = 'COMPARISON_MATCH',
   CONTROL_INTERVENTION = 'CONTROL_INTERVENTION',
@@ -487,6 +493,16 @@ export type LaunchDarklySettings = {
   signedHash: Scalars['String']['output'];
   userKey: Scalars['String']['output'];
 };
+
+export enum MintUses {
+  CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
+  EDIT_MODEL = 'EDIT_MODEL',
+  OTHER = 'OTHER',
+  SHARE_MODEL = 'SHARE_MODEL',
+  TRACK_SOLUTIONS = 'TRACK_SOLUTIONS',
+  VIEW_HELP = 'VIEW_HELP',
+  VIEW_MODEL = 'VIEW_MODEL'
+}
 
 export enum ModelCategory {
   ACCOUNTABLE_CARE = 'ACCOUNTABLE_CARE',
@@ -2318,6 +2334,14 @@ export enum Role {
   MINT_USER = 'MINT_USER'
 }
 
+export enum SatisfactionLevel {
+  DISSATISFIED = 'DISSATISFIED',
+  NEUTRAL = 'NEUTRAL',
+  SATISFIED = 'SATISFIED',
+  VERY_DISSATISFIED = 'VERY_DISSATISFIED',
+  VERY_SATISFIED = 'VERY_SATISFIED'
+}
+
 export type SearchFilter = {
   type: SearchFilterType;
   value: Scalars['Any']['input'];
@@ -2401,13 +2425,15 @@ export enum SelectionMethodType {
 
 /** The inputs to the user feedback form */
 export type SendFeedbackEmailInput = {
-  canBeContacted: Scalars['Boolean']['input'];
+  allowContact: Scalars['Boolean']['input'];
   cmsRole: Scalars['String']['input'];
   howCanWeImprove: Scalars['String']['input'];
-  howSatisfied: Scalars['String']['input'];
-  isAnonymous: Scalars['Boolean']['input'];
-  mintServicesUsed: Array<Scalars['String']['input']>;
-  systemEasyToUse: Scalars['String']['input'];
+  howSatisfied: SatisfactionLevel;
+  isAnonymousSubmission: Scalars['Boolean']['input'];
+  mintUsedFor: Array<MintUses>;
+  mintUsedForOther?: InputMaybe<Scalars['String']['input']>;
+  systemEasyToUse: EaseOfUse;
+  systemEasyToUseOther?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum SortDirection {
