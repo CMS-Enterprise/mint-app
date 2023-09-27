@@ -1512,9 +1512,6 @@ enum GQLTableName {
 }
 # lint-enable enum-values-all-caps
 
-input SearchRequest {
-  query: Map!
-}
 
 type DateHistogramAggregationBucket {
   key: String!
@@ -1585,20 +1582,6 @@ type Query {
   existingModelLink(id: UUID!): ExistingModelLink!
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
   searchChanges(filters: [SearchFilter!], sortBy: ChangeHistorySortParams, page: PageParams): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchModelPlanChangesByDateRange(modelPlanID: UUID!, startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
