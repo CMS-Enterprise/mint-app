@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import {
   Button,
@@ -30,6 +31,8 @@ import { sortOtherEnum } from 'utils/modelPlan';
 const ReportAProblem = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
 
+  const history = useHistory();
+
   const [update, { loading }] = useMutation(CreateReportAProblem);
 
   const handleFormSubmit = (formikValues: ReportAProblemInput) => {
@@ -40,8 +43,7 @@ const ReportAProblem = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          // TODO: success page
-          //   history.push(`/models/${modelID}/task-list`);
+          history.push('/feedback-received');
         }
       })
       .catch(errors => {
@@ -51,11 +53,9 @@ const ReportAProblem = () => {
 
   const initialValues: ReportAProblemInput = {
     isAnonymousSubmission: false,
-    allowContact: true,
+    allowContact: null,
     section: null,
     sectionOther: '',
-    whatDoing: '',
-    whatWentWrong: '',
     severity: null,
     severityOther: ''
   };
@@ -119,7 +119,11 @@ const ReportAProblem = () => {
                       <BooleanRadio
                         field="allowContact"
                         id="report-a-problem-allow-contact"
-                        value={values.allowContact}
+                        value={
+                          values.allowContact === undefined
+                            ? null
+                            : values.allowContact
+                        }
                         setFieldValue={setFieldValue}
                         disabled={values.isAnonymousSubmission === true}
                         options={{
@@ -174,7 +178,8 @@ const ReportAProblem = () => {
                         {t('whatDoing.label')}
                       </Label>
 
-                      <CharacterCount
+                      <Field
+                        as={CharacterCount}
                         id="report-a-problem-section-what-doing"
                         className="height-card margin-bottom-1"
                         isTextArea
@@ -191,7 +196,8 @@ const ReportAProblem = () => {
                         {t('whatWentWrong.label')}
                       </Label>
 
-                      <CharacterCount
+                      <Field
+                        as={CharacterCount}
                         id="report-a-problem-section-what-went-wrong"
                         className="height-card margin-bottom-1"
                         isTextArea
@@ -252,16 +258,6 @@ const ReportAProblem = () => {
                         }}
                       >
                         {t('sendReport')}
-                      </Button>
-
-                      <Button
-                        type="button"
-                        className="usa-button margin-bottom-1"
-                        onClick={() => {
-                          handleFormSubmit(values);
-                        }}
-                      >
-                        {t('sendAndStartAnother')}
                       </Button>
                     </div>
                   </Fieldset>
