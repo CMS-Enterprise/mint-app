@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -24,6 +24,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import FieldGroup from 'components/shared/FieldGroup';
 import { getKeys } from 'types/translation';
 import { sortOtherEnum } from 'utils/modelPlan';
@@ -32,6 +33,8 @@ const ReportAProblem = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
 
   const history = useHistory();
+
+  const [mutationError, setMutationError] = useState<boolean>(false);
 
   const [update, { loading }] = useMutation(CreateReportAProblem);
 
@@ -47,7 +50,8 @@ const ReportAProblem = () => {
         }
       })
       .catch(errors => {
-        // TODO: error handling
+        setMutationError(true);
+        window.scrollTo(0, 0);
       });
   };
 
@@ -64,6 +68,12 @@ const ReportAProblem = () => {
     <MainContent>
       <GridContainer>
         <HelpBreadcrumb newTabOnly />
+
+        {mutationError && (
+          <Alert type="error" slim className="margin-top-4">
+            {t('errorFeedback')}
+          </Alert>
+        )}
 
         <PageHeading className="margin-bottom-2">
           {t('reportHeading')}

@@ -60,7 +60,9 @@ const feedback = {
     reportProblem: 'Report a problem',
     sendFeedback: 'Send feedback',
     chatSlack: 'Chat with us on CMS Slack'
-  }
+  },
+  errorFeedback:
+    'There was an error submitting your feedback. Please try again.'
 };
 
 export default feedback;
