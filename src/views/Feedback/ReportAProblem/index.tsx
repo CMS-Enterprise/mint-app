@@ -146,6 +146,7 @@ const ReportAProblem = () => {
                               <Field
                                 as={Radio}
                                 id={`report-a-problem-section-${key}`}
+                                data-testid={`report-a-problem-section-${key}`}
                                 name="section"
                                 label={t(`section.options.${key}`)}
                                 value={key}
@@ -160,6 +161,7 @@ const ReportAProblem = () => {
                                   <Field
                                     as={TextInput}
                                     id="report-a-problem-section-other"
+                                    data-testid="report-a-problem-section-other"
                                     disabled={
                                       values.section !==
                                       ReportAProblemSection.OTHER
@@ -174,13 +176,14 @@ const ReportAProblem = () => {
                     </FieldGroup>
 
                     <FieldGroup>
-                      <Label htmlFor="report-a-problem-what-doing">
+                      <Label htmlFor="report-a-problem-what-went-wrong">
                         {t('whatDoing.label')}
                       </Label>
 
                       <Field
                         as={CharacterCount}
                         id="report-a-problem-section-what-doing"
+                        data-testid="report-a-problem-section-what-doing"
                         className="height-card margin-bottom-1"
                         isTextArea
                         name="whatDoing"
@@ -199,6 +202,7 @@ const ReportAProblem = () => {
                       <Field
                         as={CharacterCount}
                         id="report-a-problem-section-what-went-wrong"
+                        data-testid="report-a-problem-section-what-went-wrong"
                         className="height-card margin-bottom-1"
                         isTextArea
                         name="whatWentWrong"
@@ -222,6 +226,7 @@ const ReportAProblem = () => {
                               <Field
                                 as={Radio}
                                 id={`report-a-problem-severity-${key}`}
+                                data-testid={`report-a-problem-severity-${key}`}
                                 name="severity"
                                 label={t(`severity.options.${key}`)}
                                 value={key}
