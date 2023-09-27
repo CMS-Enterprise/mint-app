@@ -77,7 +77,7 @@ const ReportAProblemTemplateName string = "report_a_problem"
 var reportAProblemBodyTemplate string
 
 //go:embed templates/report_a_problem_subject.html
-var reportAPrbemSubjectTemplate string
+var reportAProblemSubjectTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -136,7 +136,7 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	err = t.loadEmailTemplate(ReportAProblemTemplateName, reportAPrbemSubjectTemplate, reportAProblemBodyTemplate)
+	err = t.loadEmailTemplate(ReportAProblemTemplateName, reportAProblemSubjectTemplate, reportAProblemBodyTemplate)
 	if err != nil {
 		return err
 	}
