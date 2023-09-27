@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e68452c4-426e-415f-ac15-5e441ed4dcf3",
+		"_postman_id": "f8c48fb4-c317-409d-92c7-694ee6bfbd69",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -1132,6 +1132,43 @@
 							"graphql": {
 								"query": "query searchOktaUsers ($searchTerm: String!) {\n    searchOktaUsers (searchTerm: $searchTerm) {\n        firstName\n        lastName\n        displayName\n        email\n        username\n    }\n}",
 								"variables": "{\n  \"searchTerm\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SendFeedback",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.sendFeedbackEmail",
+									"",
+									"pm.test(\"Feedback Email was sent\", function (){",
+									"    pm.expect(responseData).to.equal(true)",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation sendFeedbackEmail{\n  \n  sendFeedbackEmail(input:{\n      isAnonymousSubmission: false\n      allowContact: true\n      cmsRole: \"Ultimate COR\"\n      mintUsedFor: [VIEW_MODEL, EDIT_MODEL]\n      mintUsedForOther: \"Looking cool\"\n      systemEasyToUse: AGREE\n      systemEasyToUseOther: \"HMM I guess it's great!\"\n      howCanWeImprove: \"a virtual assistant that pops up and sings to you\"\n      })\n}",
+								"variables": ""
 							}
 						},
 						"url": {
