@@ -8,7 +8,7 @@ type ReportAProblemBodyContent struct {
 	IsAnonymousSubmission bool
 	ReporterName          string
 	ReporterEmail         string
-	AllowContact          bool
+	AllowContact          string
 	Section               string
 	WhatDoing             string
 	WhatWentWrong         string

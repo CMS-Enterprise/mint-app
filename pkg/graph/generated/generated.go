@@ -8048,13 +8048,13 @@ type NDAInfo {
 
 input ReportAProblemInput {
   isAnonymousSubmission: Boolean!
-  allowContact: Boolean!
+  allowContact: Boolean
   section: ReportAProblemSection
-  sectionOther: String!
-  whatDoing: String!
-  whatWentWrong: String!
+  sectionOther: String
+  whatDoing: String
+  whatWentWrong: String
   severity: ReportAProblemSeverity
-  severityOther: String!
+  severityOther: String
 }
 
 enum ReportAProblemSection {
@@ -51962,7 +51962,7 @@ func (ec *executionContext) unmarshalInputReportAProblemInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("allowContact"))
-			data, err := ec.unmarshalNBoolean2bool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -51980,7 +51980,7 @@ func (ec *executionContext) unmarshalInputReportAProblemInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sectionOther"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -51989,7 +51989,7 @@ func (ec *executionContext) unmarshalInputReportAProblemInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("whatDoing"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -51998,7 +51998,7 @@ func (ec *executionContext) unmarshalInputReportAProblemInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("whatWentWrong"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -52016,7 +52016,7 @@ func (ec *executionContext) unmarshalInputReportAProblemInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("severityOther"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}

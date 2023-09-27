@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -32,10 +33,10 @@ func ReportAProblem(
 			IsAnonymousSubmission: input.IsAnonymousSubmission,
 			ReporterName:          principal.Account().CommonName,
 			ReporterEmail:         principal.Account().Email,
-			AllowContact:          input.AllowContact,
+			AllowContact:          humanizeReportAProblemAllowContact(input.AllowContact),
 			Section:               humanizeSection(input.Section, input.SectionOther),
-			WhatDoing:             input.WhatDoing,
-			WhatWentWrong:         input.WhatWentWrong,
+			WhatDoing:             models.ValueOrEmpty(input.WhatDoing),
+			WhatWentWrong:         models.ValueOrEmpty(input.WhatWentWrong),
 			Severity:              humanizeSeverity(input.Severity, input.SeverityOther),
 		})
 		if err != nil {
@@ -53,7 +54,7 @@ func ReportAProblem(
 	return true, nil
 }
 
-func humanizeSection(section *model.ReportAProblemSection, sectionOther string) string {
+func humanizeSection(section *model.ReportAProblemSection, sectionOther *string) string {
 	if section == nil {
 		return ""
 	}
@@ -68,16 +69,16 @@ func humanizeSection(section *model.ReportAProblemSection, sectionOther string) 
 	case model.ReportAProblemSectionHelpCenter:
 		return "Help Center"
 	case model.ReportAProblemSectionOther:
-		if sectionOther == "" {
+		if sectionOther == nil {
 			return "Other"
 		}
-		return "Other - " + sectionOther
+		return "Other - " + *sectionOther
 	default:
 		return ""
 	}
 }
 
-func humanizeSeverity(severity *model.ReportAProblemSeverity, severityOther string) string {
+func humanizeSeverity(severity *model.ReportAProblemSeverity, severityOther *string) string {
 	if severity == nil {
 		return ""
 	}
@@ -90,11 +91,24 @@ func humanizeSeverity(severity *model.ReportAProblemSeverity, severityOther stri
 	case model.ReportAProblemSeverityMinor:
 		return "It was a minor annoyance"
 	case model.ReportAProblemSeverityOther:
-		if severityOther == "" {
+		if severityOther == nil {
 			return "Other"
 		}
-		return "Other - " + severityOther
+		return "Other - " + *severityOther
 	default:
 		return ""
 	}
+}
+
+func humanizeReportAProblemAllowContact(allowFeedback *bool) string {
+	if allowFeedback == nil {
+		return "" //the text for this case is part of the email template to allow formatting
+		// return "User didn’t specify if they could be contacted"
+	}
+	if *allowFeedback {
+		return "Yes, the MINT team may contact me for additional information."
+	}
+
+	return "No, the MINT team may not contact me for additional information."
+
 }

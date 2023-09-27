@@ -106,13 +106,13 @@ type PrepareForClearance struct {
 
 type ReportAProblemInput struct {
 	IsAnonymousSubmission bool                    `json:"isAnonymousSubmission"`
-	AllowContact          bool                    `json:"allowContact"`
+	AllowContact          *bool                   `json:"allowContact,omitempty"`
 	Section               *ReportAProblemSection  `json:"section,omitempty"`
-	SectionOther          string                  `json:"sectionOther"`
-	WhatDoing             string                  `json:"whatDoing"`
-	WhatWentWrong         string                  `json:"whatWentWrong"`
+	SectionOther          *string                 `json:"sectionOther,omitempty"`
+	WhatDoing             *string                 `json:"whatDoing,omitempty"`
+	WhatWentWrong         *string                 `json:"whatWentWrong,omitempty"`
 	Severity              *ReportAProblemSeverity `json:"severity,omitempty"`
-	SeverityOther         string                  `json:"severityOther"`
+	SeverityOther         *string                 `json:"severityOther,omitempty"`
 }
 
 type SearchFilter struct {

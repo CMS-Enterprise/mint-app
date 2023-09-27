@@ -2374,14 +2374,14 @@ export enum RecruitmentType {
 }
 
 export type ReportAProblemInput = {
-  allowContact: Scalars['Boolean']['input'];
+  allowContact?: InputMaybe<Scalars['Boolean']['input']>;
   isAnonymousSubmission: Scalars['Boolean']['input'];
   section?: InputMaybe<ReportAProblemSection>;
-  sectionOther: Scalars['String']['input'];
+  sectionOther?: InputMaybe<Scalars['String']['input']>;
   severity?: InputMaybe<ReportAProblemSeverity>;
-  severityOther: Scalars['String']['input'];
-  whatDoing: Scalars['String']['input'];
-  whatWentWrong: Scalars['String']['input'];
+  severityOther?: InputMaybe<Scalars['String']['input']>;
+  whatDoing?: InputMaybe<Scalars['String']['input']>;
+  whatWentWrong?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum ReportAProblemSection {
