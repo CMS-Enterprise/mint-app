@@ -271,7 +271,7 @@ const Discussions = ({
         />
         {discussionContent.length === 0 && (
           <Alert className="margin-bottom-2" type="info">
-            {t('noUanswered')}
+            {hasReplies ? t('noAnswered') : t('noUanswered')}
           </Alert>
         )}
       </>
