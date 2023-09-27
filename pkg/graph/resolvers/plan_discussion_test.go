@@ -3,8 +3,8 @@ package resolvers
 import (
 	"context"
 	"fmt"
-
 	"github.com/google/uuid"
+
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/sync/errgroup"
@@ -39,7 +39,6 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)
 	suite.EqualValues(input.Content, result.Content)
-	suite.EqualValues(models.DiscussionUnAnswered, result.Status)
 	suite.True(result.IsAssessment) // default principal for the test suite is an assessment user
 	suite.Nil(result.ModifiedBy)
 	suite.Nil(result.ModifiedDts)
@@ -72,7 +71,6 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)
 	suite.EqualValues(input.Content, result.Content)
-	suite.EqualValues(models.DiscussionUnAnswered, result.Status)
 	suite.False(result.IsAssessment)
 	suite.Nil(result.ModifiedBy)
 	suite.Nil(result.ModifiedDts)
@@ -105,7 +103,6 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() 
 	suite.EqualValues(plan.ID, planDiscussion.ModelPlanID)
 	suite.EqualValues(planDiscussionInput.Content, planDiscussion.Content)
 	suite.EqualValues(planDiscussionInput.UserRole, planDiscussion.UserRole)
-	suite.EqualValues(models.DiscussionUnAnswered, planDiscussion.Status)
 	suite.True(planDiscussion.IsAssessment) // default principal for the test suite is an assessment user
 	suite.Nil(planDiscussion.ModifiedBy)
 	suite.Nil(planDiscussion.ModifiedDts)
@@ -167,14 +164,12 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 
 	changes := map[string]interface{}{
 		"content": "This is now updated! Thanks for looking at my test",
-		"status":  models.DiscussionAnswered,
 	}
 	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(discussion.ID, result.ID)
 	suite.EqualValues(changes["content"], result.Content)
-	suite.EqualValues(changes["status"], result.Status)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, result.CreatedBy)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *result.ModifiedBy)
 }
