@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -45,7 +46,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 	planBasics := models.NewPlanBasics(taskList)
 
 	changes := map[string]interface{}{
-		"modelType": models.MTVoluntary,
+		"modelType": []string{model.ModelTypeVoluntary.String()},
 		"goal":      "Some goal",
 	}
 

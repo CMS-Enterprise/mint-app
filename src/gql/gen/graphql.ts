@@ -581,8 +581,11 @@ export enum ModelStatus {
 }
 
 export enum ModelType {
-  MANDATORY = 'MANDATORY',
-  TBD = 'TBD',
+  MANDATORY_NATIONAL = 'MANDATORY_NATIONAL',
+  MANDATORY_REGIONAL = 'MANDATORY_REGIONAL',
+  NONE = 'NONE',
+  OTHER = 'OTHER',
+  UNKNOWN = 'UNKNOWN',
   VOLUNTARY = 'VOLUNTARY'
 }
 
@@ -1202,7 +1205,8 @@ export type PlanBasics = {
   id: Scalars['UUID']['output'];
   modelCategory?: Maybe<ModelCategory>;
   modelPlanID: Scalars['UUID']['output'];
-  modelType?: Maybe<ModelType>;
+  modelType: Array<ModelType>;
+  modelTypeOther?: Maybe<Scalars['String']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -1244,7 +1248,8 @@ export type PlanBasicsChanges = {
   goal?: InputMaybe<Scalars['String']['input']>;
   highLevelNote?: InputMaybe<Scalars['String']['input']>;
   modelCategory?: InputMaybe<ModelCategory>;
-  modelType?: InputMaybe<ModelType>;
+  modelType?: InputMaybe<Array<ModelType>>;
+  modelTypeOther?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
   performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
   performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;

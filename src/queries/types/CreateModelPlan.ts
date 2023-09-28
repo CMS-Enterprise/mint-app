@@ -17,7 +17,7 @@ export interface CreateModelPlan_createModelPlan_basics {
   cmsCenters: CMSCenter[];
   cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
-  modelType: ModelType | null;
+  modelType: ModelType[];
   problem: string | null;
   goal: string | null;
   testInterventions: string | null;

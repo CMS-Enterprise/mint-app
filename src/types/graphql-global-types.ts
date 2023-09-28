@@ -299,8 +299,11 @@ export enum ModelStatus {
 }
 
 export enum ModelType {
-  MANDATORY = "MANDATORY",
-  TBD = "TBD",
+  MANDATORY_NATIONAL = "MANDATORY_NATIONAL",
+  MANDATORY_REGIONAL = "MANDATORY_REGIONAL",
+  NONE = "NONE",
+  OTHER = "OTHER",
+  UNKNOWN = "UNKNOWN",
   VOLUNTARY = "VOLUNTARY",
 }
 
@@ -644,7 +647,8 @@ export interface PlanBasicsChanges {
   cmsCenters?: CMSCenter[] | null;
   cmsOther?: string | null;
   cmmiGroups?: CMMIGroup[] | null;
-  modelType?: ModelType | null;
+  modelType?: ModelType[] | null;
+  modelTypeOther?: string | null;
   problem?: string | null;
   goal?: string | null;
   testInterventions?: string | null;

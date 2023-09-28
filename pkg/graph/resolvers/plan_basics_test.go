@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
@@ -86,9 +87,10 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 
 	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
+	modelTypes := []string{model.ModelTypeVoluntary.String(), model.ModelTypeMandatoryNational.String()}
 
 	changes := map[string]interface{}{
-		"modelType":     models.MTVoluntary,
+		"modelType":     modelTypes,
 		"goal":          "Some goal",
 		"cmsCenters":    []string{"CMMI", "OTHER"},
 		"cmsOther":      "SOME OTHER CMS CENTER",
@@ -112,7 +114,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.NoError(err)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedBasics.ModifiedBy)
 	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
-	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
+	suite.EqualValues(changes["modelType"], updatedBasics.ModelType)
 	suite.Nil(updatedBasics.Problem)
 	suite.EqualValues("Some goal", *updatedBasics.Goal)
 	suite.EqualValues(changes["cmsCenters"], updatedBasics.CMSCenters)

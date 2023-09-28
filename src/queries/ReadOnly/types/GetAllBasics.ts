@@ -19,7 +19,7 @@ export interface GetAllBasics_modelPlan_basics {
   cmsCenters: CMSCenter[];
   cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
-  modelType: ModelType | null;
+  modelType: ModelType[];
   problem: string | null;
   goal: string | null;
   testInterventions: string | null;

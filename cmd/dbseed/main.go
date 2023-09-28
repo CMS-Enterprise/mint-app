@@ -117,7 +117,7 @@ func (s *Seeder) SeedData() {
 		email.AddressBook{},
 		planWithBasics,
 		map[string]interface{}{
-			"modelType":       models.MTVoluntary,
+			"modelType":       model.ModelTypeVoluntary,
 			"goal":            "Some goal",
 			"cmsCenters":      []string{"CMMI", "OTHER"},
 			"cmsOther":        "SOME OTHER CMS CENTER",
@@ -203,7 +203,7 @@ func (s *Seeder) SeedData() {
 		map[string]interface{}{
 			"amsModelID":      "123",
 			"demoCode":        "1",
-			"modelType":       models.MTVoluntary,
+			"modelType":       model.ModelTypeVoluntary,
 			"goal":            "Some goal",
 			"cmsCenters":      []string{"CMMI", "OTHER"},
 			"cmsOther":        "SOME OTHER CMS CENTER",

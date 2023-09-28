@@ -1133,6 +1133,55 @@ func (e ModelPlanFilter) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type ModelType string
+
+const (
+	ModelTypeVoluntary         ModelType = "VOLUNTARY"
+	ModelTypeMandatoryRegional ModelType = "MANDATORY_REGIONAL"
+	ModelTypeMandatoryNational ModelType = "MANDATORY_NATIONAL"
+	ModelTypeUnknown           ModelType = "UNKNOWN"
+	ModelTypeNone              ModelType = "NONE"
+	ModelTypeOther             ModelType = "OTHER"
+)
+
+var AllModelType = []ModelType{
+	ModelTypeVoluntary,
+	ModelTypeMandatoryRegional,
+	ModelTypeMandatoryNational,
+	ModelTypeUnknown,
+	ModelTypeNone,
+	ModelTypeOther,
+}
+
+func (e ModelType) IsValid() bool {
+	switch e {
+	case ModelTypeVoluntary, ModelTypeMandatoryRegional, ModelTypeMandatoryNational, ModelTypeUnknown, ModelTypeNone, ModelTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e ModelType) String() string {
+	return string(e)
+}
+
+func (e *ModelType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ModelType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ModelType", str)
+	}
+	return nil
+}
+
+func (e ModelType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type MonitoringFileType string
 
 const (
