@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"go.uber.org/zap"
-	"strings"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -20,7 +17,6 @@ func main() {
 
 	// Running all test functions
 	sendPlanDiscussionCreatedTestEmail(emailService, templateService, addressBook)
-	sendAggregatedDigestEmailJobTest(emailService, templateService, addressBook)
 	sendModelPlanCreatedEmailTest(emailService, templateService)
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
@@ -37,10 +33,10 @@ func noErr(err error) {
 
 func initializeOddMailService() oddmail.EmailService {
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{
-		Enabled:       true, // Or fetch from your config if necessary
-		Host:          "YOUR_HOST",
-		Port:          1234,
-		ClientAddress: "YOUR_CLIENT_ADDRESS",
+		Enabled:       true,
+		Host:          "localhost",
+		Port:          1030,
+		ClientAddress: "localhost:3005",
 	}
 
 	emailService, err := oddmail.NewGoSimpleMailService(emailServiceConfig)
@@ -56,9 +52,12 @@ func initializeEmailTemplateService() email.TemplateService {
 
 func initializeAddressBook() email.AddressBook {
 	return email.AddressBook{
-		DefaultSender:                  "YOUR_DEFAULT_SENDER",
-		MINTTeamEmail:                  "YOUR_MINT_TEAM_EMAIL",
-		ModelPlanDateChangedRecipients: strings.Split("YOUR_DATE_CHANGED_RECIPIENT_EMAILS", ","),
+		DefaultSender: "test@mint.dev.cms.gov",
+		MINTTeamEmail: "test.team@mint.dev.cms.gov",
+		ModelPlanDateChangedRecipients: []string{
+			"test.receiver.1@mint.dev.cms.gov",
+			"test.receiver.2@mint.dev.cms.gov",
+		},
 	}
 }
 
@@ -88,8 +87,6 @@ func sendPlanDiscussionCreatedTestEmail(
 	)
 	noErr(err)
 }
-
-// New test functions based on provided email functions
 
 func sendPlanDiscussionCreatedEmail(
 	emailService oddmail.EmailService,
@@ -143,43 +140,6 @@ func sendPlanDiscussionCreatedEmail(
 	return nil
 }
 
-func sendAggregatedDigestEmailJobTest(
-	emailService oddmail.EmailService,
-	templateService email.TemplateService,
-	addressBook email.AddressBook,
-) {
-	dateAnalyzed := time.Now() // Using current time for testing
-	err := AggregatedDigestEmailJob(dateAnalyzed, nil, nil, templateService, emailService, addressBook)
-	noErr(err)
-}
-
-func AggregatedDigestEmailJob(
-	dateAnalyzed time.Time,
-	store interface{}, // Assuming a generic interface here; replace with your actual type
-	logger *zap.Logger,
-	emailTemplateService email.TemplateService,
-	emailService oddmail.EmailService,
-	addressBook email.AddressBook,
-) error {
-	// Mocking a call to fetch analyzedAudits
-	analyzedAudits := []string{"Audit1", "Audit2"} // Mock data, replace with actual call if necessary
-
-	// Generate email subject and body (mocked for the test)
-	emailSubject := "Aggregated Digest for " + dateAnalyzed.Format("2006-01-02")
-	emailBody := strings.Join(analyzedAudits, ", ")
-
-	// Send generated email
-	err := emailService.Send(
-		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
-		nil,
-		emailSubject,
-		"text/html",
-		emailBody,
-	)
-	return err
-}
-
 func sendModelPlanCreatedEmailTest(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
@@ -227,8 +187,6 @@ func sendModelPlanShareTest(
 		"Test Model Plan",
 	)
 
-	principal := authentication.ANON
-
 	// Get client address
 	clientAddress := emailService.GetConfig().GetClientAddress()
 
@@ -236,9 +194,11 @@ func sendModelPlanShareTest(
 	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanShareTemplateName)
 	noErr(err)
 
+	username := "Bob Ross"
+
 	// Get email subject
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanShareSubjectContent{
-		UserName: principal.Account().CommonName,
+		UserName: username,
 	})
 	noErr(err)
 
@@ -258,7 +218,7 @@ func sendModelPlanShareTest(
 
 	// Get email body
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
-		UserName:                 principal.Account().CommonName,
+		UserName:                 username,
 		OptionalMessage:          optionalMessage,
 		ModelName:                modelPlan.ModelName,
 		ModelShortName:           modelPlan.Abbreviation,
@@ -337,12 +297,6 @@ func sendDateChangedEmailsTest(
 	)
 	noErr(err)
 }
-
-/*func sendDigestEmailJobTest(ctx context.Context, worker *Worker) {
-	args := []interface{}{"2022-01-01", "sampleUserID"}
-	err := worker.DigestEmailJob(ctx, args...)
-	noErr(err)
-}*/
 
 func sendCollaboratorAddedEmailTest(
 	emailService oddmail.EmailService,
