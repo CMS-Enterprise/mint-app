@@ -24,4 +24,3 @@ There are multiple ways to run the Cypress tests:
   - Note: the database, frontend, and backend must be running prior to starting the Cypress tests. Use `scripts/dev up` to start them.
   - The `APP_ENV` environment variable should be set to `testing` in `.envrc.local`. After creating `.envrc.local` if necessary and adding `APP_ENV=testing` to it, run `direnv allow` to enable it. (See [instructions above](#direnv) on `direnv` usage)
   - Running `login.spec.js` requires the environment variables `OKTA_TEST_USERNAME`, `OKTA_TEST_PASSWORD`, and `OKTA_TEST_SECRET` to be set in `.envrc.local`. The values can be found in 1Password, as mentioned in the [Authentication section](#authentication).
-  
