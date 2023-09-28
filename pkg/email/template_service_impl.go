@@ -70,8 +70,8 @@ var modelPlanShareSubjectTemplate string
 //go:embed templates/model_plan_share_body.html
 var modelPlanShareBodyTemplate string
 
-//go:embed templates/shared_css.html
-var sharedCSSTemplate string
+//go:embed templates/shared_header.html
+var sharedHeaderTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -148,7 +148,7 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	}
 
 	predefinedTemplates := map[string]string{
-		"shared_css.html": sharedCSSTemplate,
+		"shared_header.html": sharedHeaderTemplate,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
