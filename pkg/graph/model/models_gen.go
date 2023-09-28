@@ -103,6 +103,17 @@ type PrepareForClearance struct {
 	LatestClearanceDts *time.Time                `json:"latestClearanceDts,omitempty"`
 }
 
+type ReportAProblemInput struct {
+	IsAnonymousSubmission bool                    `json:"isAnonymousSubmission"`
+	AllowContact          *bool                   `json:"allowContact,omitempty"`
+	Section               *ReportAProblemSection  `json:"section,omitempty"`
+	SectionOther          *string                 `json:"sectionOther,omitempty"`
+	WhatDoing             *string                 `json:"whatDoing,omitempty"`
+	WhatWentWrong         *string                 `json:"whatWentWrong,omitempty"`
+	Severity              *ReportAProblemSeverity `json:"severity,omitempty"`
+	SeverityOther         *string                 `json:"severityOther,omitempty"`
+}
+
 type SearchFilter struct {
 	Type  SearchFilterType `json:"type"`
 	Value interface{}      `json:"value"`
@@ -1590,6 +1601,98 @@ func (e *ProviderLeaveType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ProviderLeaveType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type ReportAProblemSection string
+
+const (
+	ReportAProblemSectionReadView    ReportAProblemSection = "READ_VIEW"
+	ReportAProblemSectionTaskList    ReportAProblemSection = "TASK_LIST"
+	ReportAProblemSectionItSolutions ReportAProblemSection = "IT_SOLUTIONS"
+	ReportAProblemSectionHelpCenter  ReportAProblemSection = "HELP_CENTER"
+	ReportAProblemSectionOther       ReportAProblemSection = "OTHER"
+)
+
+var AllReportAProblemSection = []ReportAProblemSection{
+	ReportAProblemSectionReadView,
+	ReportAProblemSectionTaskList,
+	ReportAProblemSectionItSolutions,
+	ReportAProblemSectionHelpCenter,
+	ReportAProblemSectionOther,
+}
+
+func (e ReportAProblemSection) IsValid() bool {
+	switch e {
+	case ReportAProblemSectionReadView, ReportAProblemSectionTaskList, ReportAProblemSectionItSolutions, ReportAProblemSectionHelpCenter, ReportAProblemSectionOther:
+		return true
+	}
+	return false
+}
+
+func (e ReportAProblemSection) String() string {
+	return string(e)
+}
+
+func (e *ReportAProblemSection) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ReportAProblemSection(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ReportAProblemSection", str)
+	}
+	return nil
+}
+
+func (e ReportAProblemSection) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type ReportAProblemSeverity string
+
+const (
+	ReportAProblemSeverityPreventedTask ReportAProblemSeverity = "PREVENTED_TASK"
+	ReportAProblemSeverityDelayedTask   ReportAProblemSeverity = "DELAYED_TASK"
+	ReportAProblemSeverityMinor         ReportAProblemSeverity = "MINOR"
+	ReportAProblemSeverityOther         ReportAProblemSeverity = "OTHER"
+)
+
+var AllReportAProblemSeverity = []ReportAProblemSeverity{
+	ReportAProblemSeverityPreventedTask,
+	ReportAProblemSeverityDelayedTask,
+	ReportAProblemSeverityMinor,
+	ReportAProblemSeverityOther,
+}
+
+func (e ReportAProblemSeverity) IsValid() bool {
+	switch e {
+	case ReportAProblemSeverityPreventedTask, ReportAProblemSeverityDelayedTask, ReportAProblemSeverityMinor, ReportAProblemSeverityOther:
+		return true
+	}
+	return false
+}
+
+func (e ReportAProblemSeverity) String() string {
+	return string(e)
+}
+
+func (e *ReportAProblemSeverity) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ReportAProblemSeverity(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ReportAProblemSeverity", str)
+	}
+	return nil
+}
+
+func (e ReportAProblemSeverity) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

@@ -4,6 +4,7 @@ export type Flags = {
   hideGroupView: boolean;
   shareExportEnabled: boolean;
   helpScoutEnabled: boolean;
+  feedbackEnabled: boolean;
 };
 
 export type FlagsState = {

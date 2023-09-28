@@ -1,6 +1,10 @@
 {
 	"info": {
+<<<<<<< HEAD
 		"_postman_id": "e68452c4-426e-415f-ac15-5e441ed4dcf3",
+=======
+		"_postman_id": "39fb2692-2b04-47d3-9a06-6c12f8d779fd",
+>>>>>>> origin/main
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -1142,6 +1146,46 @@
 						}
 					},
 					"response": []
+<<<<<<< HEAD
+=======
+				},
+				{
+					"name": "Report a Problem",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.sendFeedbackEmail",
+									"",
+									"pm.test(\"Feedback Email was sent\", function (){",
+									"    pm.expect(responseData).to.equal(true)",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation reportAProblem{\n  \n  reportAProblem(input:{\n      isAnonymousSubmission: false\n      allowContact: true\n      section: OTHER\n      sectionOther: \"Awesome Section\"\n      whatDoing: \"Making an awesome model\"\n      whatWentWrong: \"I made a mistake\"\n      severity: OTHER\n      severityOther: \"Made me sad\"\n      })\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+>>>>>>> origin/main
 				}
 			]
 		},

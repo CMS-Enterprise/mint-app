@@ -17,12 +17,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
         data-testid="grid"
       >
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled margin-top-6"
           data-testid="button"
           type="button"
         >
           <svg
-            class="usa-icon margin-right-05 margin-top-6 text-tbottom"
+            class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"
             role="img"
