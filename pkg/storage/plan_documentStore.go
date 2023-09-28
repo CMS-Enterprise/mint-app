@@ -48,8 +48,7 @@ var planDocumentSolutionLinksDeleteByDocumentIDSQL string
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
 	principal string,
-	inputDocument *models.PlanDocument,
-	s3Client *upload.S3Client) (*models.PlanDocument, error) {
+	inputDocument *models.PlanDocument) (*models.PlanDocument, error) {
 
 	inputDocument.ID = utilityUUID.ValueOrNewUUID(inputDocument.ID)
 	inputDocument.ModifiedBy = nil
@@ -218,6 +217,10 @@ func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents [
 }
 
 func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *models.PlanDocument) error {
+
+	if document.IsLink {
+		return nil // Note, if this is a link to another website, we are not scanning the link.
+	}
 	status, err := fetchDocumentTag(s3Client, document, "av-status")
 	if err != nil {
 		return err

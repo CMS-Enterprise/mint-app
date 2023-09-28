@@ -136,12 +136,12 @@ describe('Discussion Component', () => {
 
     await waitFor(() => {
       expect(getByText(/This is a question./i)).toBeInTheDocument();
-      expect(getByText(/1 unanswered question/i)).toBeInTheDocument();
+      expect(getByText(/new discussion topic/i)).toBeInTheDocument();
       expect(getByText(/John Doe/i)).toBeInTheDocument();
-      expect(getByText(/1 answered question/i)).toBeInTheDocument();
+      expect(getByText(/1 discussion/i)).toBeInTheDocument();
       expect(getByText(/Jane Doe/i)).toBeInTheDocument();
       expect(getByText(/This is a second question./i)).toBeInTheDocument();
-      expect(getByText(/Leadership/i)).toBeInTheDocument();
+      expect(getByText(/Designer/i)).toBeInTheDocument();
     });
   });
 
@@ -163,11 +163,11 @@ describe('Discussion Component', () => {
     );
 
     await waitFor(async () => {
-      screen.getByRole('button', { name: /Answer/ }).click();
+      screen.getByRole('button', { name: /Reply/ }).click();
 
       expect(
         getByText(
-          /Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again./i
+          /To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify./i
         )
       ).toBeInTheDocument();
 
@@ -183,7 +183,7 @@ describe('Discussion Component', () => {
     expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
 
     const feedbackField = screen.getByRole('textbox', {
-      name: /Type your answer/i
+      name: /Type your reply/i
     });
 
     userEvent.type(feedbackField, 'Test feedback');

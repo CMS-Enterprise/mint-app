@@ -2,13 +2,35 @@
 # Creates a snapshot of the app database for the given environment
 
 # Fail on any error
-set -Eexuo pipefail
+# set -Eexuo pipefail
+set -Exuo pipefail
 
 # Define variables
 env="$APP_ENV"
 db_instance=mint-db-$env
 db_snapshot=$db_instance-$(date '+%Y-%m-%d-%H-%M-%S')
 tags=("Key=Environment,Value=$env" "Key=Tool,Value=$(basename "$0")")
+manual_retention_count=10
+
+# Get the manual snapshots for the DB sorted by creation time
+snapshots=$(aws rds describe-db-snapshots \
+            --db-instance-identifier "$db_instance" \
+            --snapshot-type manual \
+            --query 'sort_by(DBSnapshots, &SnapshotCreateTime)[].DBSnapshotIdentifier' \
+            --no-paginate | jq -r '.[]')
+# Count how many snapshots exist
+snapshot_count=$(echo "$snapshots" | wc -l)
+# Calculate the number of snapshots to delete
+snapshots_to_delete=$((snapshot_count - manual_retention_count))
+
+# Only delete if we have more than our threshold
+if [[ $snapshots_to_delete -gt 0 ]]; then
+  # Delete the oldest snapshots until we're under our threshold
+  for snapshot in $(echo "$snapshots" | head -n $snapshots_to_delete); do
+      echo "Deleting snapshot: $snapshot"
+      aws rds delete-db-snapshot --no-cli-pager --db-snapshot-identifier "$snapshot" --no-paginate
+  done
+fi
 
 # Create a new database snapshot
 echo "Creating snapshot for $db_instance with identifier $db_snapshot"

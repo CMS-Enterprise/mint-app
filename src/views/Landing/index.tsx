@@ -355,7 +355,6 @@ const DiscussionCard = () => {
     <div className="landing__discussions line-height-mono-4 padding-2">
       <FormatDiscussion
         discussionsContent={discussions}
-        hasEditAccess
         setDiscussionType={() => null}
         setReply={() => null}
       />

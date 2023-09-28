@@ -3,13 +3,13 @@ import { Row, useFlexLayout, usePagination, useTable } from 'react-table';
 import { CardGroup, Table as UswdsTable } from '@trussworks/react-uswds';
 
 import TablePagination from 'components/TablePagination';
-import { GetAllModelPlans_modelPlanCollection as AllModelPlansType } from 'queries/ReadOnly/types/GetAllModelPlans';
+import { GetFavorites_modelPlanCollection as FavoritesModelType } from 'queries/types/GetFavorites';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 
 import FavoriteCard from '.';
 
 type ModelPlansTableProps = {
-  favorites: AllModelPlansType[];
+  favorites: FavoritesModelType[];
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
 };
 
@@ -28,7 +28,7 @@ const FavoritesTable = ({
       {
         accessor: 'id',
         disableGlobalFilter: true,
-        Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
+        Cell: ({ row }: { row: Row<FavoritesModelType> }) => {
           return (
             <CardGroup>
               <FavoriteCard

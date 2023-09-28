@@ -1,0 +1,21 @@
+# This Dockerfile is used to help ensure that all developers are using the same
+# version of Node.js, yarn, and node_modules.
+#
+# Note, this image purposefully does NOT copy the source code into the image,
+# because the source code is mounted as a volume in the docker-compose.frontend.yml file.
+# This allows the image to be cached far more easily, and only needs to be rebuilt
+# when the dependencies change.
+
+# Start with the official Node.js image to install dependencies
+FROM node:16.14.0-alpine AS modules
+
+	WORKDIR /app
+	# ENV PATH /app/node_modules/.bin:$PATH
+
+	# Copy in package.json and yarn.lock to install dependencies
+	COPY package.json yarn.lock ./
+	RUN yarn install --immutable
+
+FROM modules AS local_dev
+
+	ENTRYPOINT ["yarn", "start"]

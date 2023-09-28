@@ -35,7 +35,7 @@ describe('The Model Plan Form', () => {
 
     cy.contains('h3', 'Model basics');
 
-    cy.contains('button', 'Start').click();
+    cy.contains('button', /Start$/).click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);

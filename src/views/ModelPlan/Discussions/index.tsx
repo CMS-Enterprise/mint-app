@@ -26,14 +26,11 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType,
   GetModelPlanDiscussionsVariables
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
-import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
 import {
   DiscussionUserRole,
   PlanDiscussionCreateInput
 } from 'types/graphql-global-types';
-import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
@@ -49,7 +46,7 @@ export type DiscussionsProps = {
   askAQuestion?: boolean;
 };
 
-export type DicussionFormPropTypes = Omit<
+export type DiscussionFormPropTypes = Omit<
   PlanDiscussionCreateInput,
   'modelPlanID'
 >;
@@ -98,10 +95,6 @@ const Discussions = ({
     CreateModelPlanReply
   );
 
-  const [updateDiscussion] = useMutation<UpdateModelPlanDiscussionType>(
-    UpdateModelPlanDiscussion
-  );
-
   const createDiscussionMethods = {
     question: createQuestion,
     reply: createReply
@@ -116,17 +109,15 @@ const Discussions = ({
     'question' | 'reply' | 'discussion'
   >(discussionReplyID ? 'reply' : 'question');
 
+  const [discussionStatus, setDiscussionStatus] = useState<
+    'success' | 'warning' | 'error' | 'info'
+  >('info');
   const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
 
   // State used to control when the component is being rendered from a form page rather than the task-list
   const [initQuestion, setInitQuestion] = useState<boolean | undefined>(
     discussionReplyID ? true : askAQuestion
   );
-
-  const [questionCount, setQuestionCount] = useState({
-    answeredQuestions: 0,
-    unansweredQuestions: 0
-  });
 
   // State and setter used for containing the related question when replying
   const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
@@ -168,17 +159,9 @@ const Discussions = ({
     } else {
       setDiscussionType('discussion');
     }
-    setQuestionCount(getUnansweredQuestions(discussions));
   }, [discussions, initQuestion, readOnly, discussionReplyID]);
 
-  // Handles the default expanded render of accordions based on if there are more than zero questions
-  const openStatus = (status: DiscussionStatus) => {
-    return status === 'ANSWERED'
-      ? questionCount.answeredQuestions > 0
-      : questionCount.unansweredQuestions > 0;
-  };
-
-  const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
+  const handleCreateDiscussion = (formikValues: DiscussionFormPropTypes) => {
     let payload: any = {};
 
     // Setting the mutation payload depending on discussionType
@@ -212,7 +195,10 @@ const Discussions = ({
             history.replace({
               search: queryParams.toString()
             });
-            handleUpdateDiscussion(reply.id);
+            refetch().then(() => {
+              setInitQuestion(false);
+              setDiscussionType('discussion');
+            });
           } else {
             refetch().then(() => {
               setInitQuestion(false);
@@ -225,112 +211,98 @@ const Discussions = ({
           }
           setDiscussionStatus('success');
           setDiscussionStatusMessage(
-            discussionType === 'question' ? t('success') : t('successAnswer')
+            discussionType === 'question' ? t('success') : t('successReply')
           );
         }
       })
       .catch(() => {
         setDiscussionStatus('error');
         setDiscussionStatusMessage(
-          discussionType === 'question' ? t('error') : t('errorAnswer')
+          discussionType === 'question' ? t('error') : t('errorReply')
         );
       });
   };
 
-  const handleUpdateDiscussion = (id: string) => {
-    updateDiscussion({
-      variables: {
-        id,
-        changes: {
-          status: 'ANSWERED' // For now any question that has a reply will bw considered "ANSWERED"
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          refetch().then(() => {
-            setInitQuestion(false);
-            setDiscussionType('discussion');
-          });
-        }
-      })
-      .catch(() => {
-        setDiscussionStatus('error');
-        setDiscussionStatusMessage(t('error'));
-      });
+  const DiscussionAccordion = ({
+    discussionContent,
+    hasReplies
+  }: {
+    discussionContent: DiscussionType[];
+    hasReplies?: boolean;
+  }) => {
+    return (
+      <>
+        <Accordion
+          className={classNames(
+            'discussion-accordion margin-bottom-2 margin-top-0',
+            {
+              'no-pointer': discussionContent.length === 0,
+              'no-button': discussionContent.length === 0
+            }
+          )}
+          bordered={false}
+          multiselectable
+          items={[
+            {
+              title: (
+                <strong>
+                  {hasReplies
+                    ? t('discussionWithCount', {
+                        count: discussionContent.length
+                      })
+                    : t('newDiscussionTopics', {
+                        count: discussionContent.length
+                      })}
+                </strong>
+              ),
+              content: (
+                <FormatDiscussion
+                  discussionsContent={discussionContent}
+                  setDiscussionType={setDiscussionType}
+                  setReply={setReply}
+                  setIsDiscussionOpen={setIsDiscussionOpen}
+                />
+              ),
+              expanded: true,
+              id: 'discussion-accordion--hasNoReplies',
+              headingLevel: 'h4'
+            }
+          ]}
+        />
+        {discussionContent.length === 0 && (
+          <Alert className="margin-bottom-2" type="info">
+            {hasReplies ? t('noAnswered') : t('noUanswered')}
+          </Alert>
+        )}
+      </>
+    );
   };
 
-  // Two main discussion accordion types - "Unanswered" and "Answered" based on enum - DiscussionStatus
-  const discussionAccordion = (Object.keys(DiscussionStatus) as Array<
-    keyof typeof DiscussionStatus
-  >)
-    .filter(status => status !== 'WAITING_FOR_RESPONSE') // Not currently using this status, but it exists for future possibility
-    .reverse() // Unanswered questions should appear for answered.  This method of sorting may need to change if more status/accordions are introduced
-    .map(status => {
-      return (
-        <div key={status}>
-          <Accordion
-            className={classNames('margin-bottom-2', {
-              'no-pointer': !openStatus(DiscussionStatus[status]),
-              'no-button': !openStatus(DiscussionStatus[status])
-            })}
-            key={status}
-            multiselectable
-            items={[
-              {
-                // Formatting of accordion headers based on number of questions and their pluraltiy
-                title:
-                  status === 'UNANSWERED' ? (
-                    <strong>
-                      {questionCount.unansweredQuestions} {t('unanswered')}
-                      {questionCount.unansweredQuestions !== 1 && 's'}
-                    </strong>
-                  ) : (
-                    <strong>
-                      {questionCount.answeredQuestions} {t('answered')}
-                      {questionCount.answeredQuestions !== 1 && 's'}
-                    </strong>
-                  ),
-                content: (
-                  <FormatDiscussion
-                    discussionsContent={discussions}
-                    hasEditAccess={hasEditAccess}
-                    setDiscussionStatusMessage={setDiscussionStatusMessage}
-                    setDiscussionType={setDiscussionType}
-                    setReply={setReply}
-                    setIsDiscussionOpen={setIsDiscussionOpen}
-                  />
-                ),
-                expanded: true,
-                id: status,
-                headingLevel: 'h4'
-              }
-            ]}
-          />
-          {/* Sets an infobox beneath each accordion if there are zero questions of that type */}
-          {!openStatus(DiscussionStatus[status]) && (
-            <Alert className="margin-bottom-2" type="info">
-              {hasEditAccess &&
-                (status === 'ANSWERED' ? t('noAnswered') : t('noUanswered'))}
-              {!hasEditAccess &&
-                (status === 'ANSWERED'
-                  ? t('noAnswered')
-                  : t('nonEditor.noQuestions'))}
-            </Alert>
-          )}
-        </div>
-      );
-    });
-
   const renderDiscussionContent = () => {
-    if (discussions?.length === 0) {
+    if (discussions.length === 0) {
       return (
         <Alert className="margin-bottom-2" type="info">
           {hasEditAccess ? t('useLinkAbove') : t('nonEditor.noDiscussions')}
         </Alert>
       );
     }
-    return discussionAccordion;
+
+    const discussionsWithNoReplies = discussions.filter(
+      d => d.replies.length === 0
+    );
+    const discussionsWithYesReplies = discussions.filter(
+      d => d.replies.length !== 0
+    );
+
+    return (
+      <>
+        <DiscussionAccordion discussionContent={discussionsWithNoReplies} />
+        <DiscussionAccordion
+          discussionContent={discussionsWithYesReplies}
+          hasReplies
+        />
+      </>
+    );
   };
 
   const renderDiscussions = () => {
@@ -338,7 +310,7 @@ const Discussions = ({
       <>
         <PageHeading
           headingLevel={readOnly ? 'h2' : 'h1'}
-          className="margin-top-0"
+          className="margin-top-0 line-height-sans-2 margin-bottom-1"
         >
           {t('heading')}
         </PageHeading>

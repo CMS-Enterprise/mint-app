@@ -21,7 +21,6 @@ const discussionResult = {
         content: 'This is a question.',
         createdBy: 'John Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: 'UNANSWERED',
         replies: []
       },
       {
@@ -30,7 +29,6 @@ const discussionResult = {
         content: 'This is a second question.',
         createdBy: 'Jane Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: 'ANSWERED',
         replies: [
           {
             __typename: 'DiscussionReply',
@@ -102,11 +100,13 @@ describe('Ask a Question Component', () => {
 
       expect(
         getByText(
-          'Need help with something? Ask a question here and someone will reply. Questions and answers will display in Discussions. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.'
+          'Need help with something? Start a discussion and you’ll be notified of any replies. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.'
         )
       ).toBeInTheDocument();
 
-      expect(getByText('Type your question')).toBeInTheDocument();
+      expect(
+        getByText('Type your question or discussion topic')
+      ).toBeInTheDocument();
     });
   });
 });
