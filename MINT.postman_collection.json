@@ -1,10 +1,6 @@
 {
 	"info": {
-<<<<<<< HEAD
 		"_postman_id": "e68452c4-426e-415f-ac15-5e441ed4dcf3",
-=======
-		"_postman_id": "39fb2692-2b04-47d3-9a06-6c12f8d779fd",
->>>>>>> origin/main
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -1146,8 +1142,6 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
-=======
 				},
 				{
 					"name": "Report a Problem",
@@ -1185,7 +1179,6 @@
 						}
 					},
 					"response": []
->>>>>>> origin/main
 				}
 			]
 		},
