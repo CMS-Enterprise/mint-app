@@ -9,6 +9,7 @@ import {
   IconLightbulbOutline
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -20,6 +21,8 @@ import './index.scss';
 
 const Footer = () => {
   const { t } = useTranslation(['footer', 'feedback']);
+
+  const { feedbackEnabled } = useFlags();
 
   const location = useLocation();
 
@@ -47,6 +50,7 @@ const Footer = () => {
   return (
     <>
       {authState?.isAuthenticated &&
+        feedbackEnabled &&
         location.pathname !== '/pre-decisional-notice' && (
           <MainContent
             className={classNames('bg-mint-cool-5 padding-y-2', {
@@ -92,7 +96,7 @@ const Footer = () => {
 
       <UswdsFooter
         className={classNames({
-          'margin-top-7': !authState?.isAuthenticated
+          'margin-top-7': !authState?.isAuthenticated || !feedbackEnabled
         })}
         size="slim"
         primary={
