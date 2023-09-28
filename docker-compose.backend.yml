@@ -92,6 +92,7 @@ services:
       - EMAIL_HOST
       - EMAIL_PORT
       - MINT_TEAM_EMAIL
+      - DEV_TEAM_EMAIL
       - DATE_CHANGED_RECIPIENT_EMAILS
       - EMAIL_SENDER
       - EMAIL_ENABLED

@@ -38,6 +38,7 @@ import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';
 import error from './error';
+import feedback from './feedback';
 import footer from './footer';
 import general from './general';
 import header from './header';
@@ -96,6 +97,7 @@ const enUS = {
   prepareForClearance,
   privacyPolicy,
   readOnlyModelPlan,
+  feedback,
   sampleModelPlan,
   twoPageMeeting,
   sixPageMeeting,

@@ -16,18 +16,20 @@ type HelpBreadcrumbProps = {
   className?: string;
   home?: boolean;
   text?: string;
+  newTabOnly?: boolean;
 };
 
 export default function HelpBreadcrumb({
   className,
   home,
-  text
+  text,
+  newTabOnly = false
 }: HelpBreadcrumbProps) {
   const history = useHistory();
   const newTab = history.length === 1;
   const { t } = useTranslation('helpAndKnowledge');
   const handleClick = () => {
-    if (newTab) {
+    if (newTab || newTabOnly) {
       window.close();
     } else {
       history.push(home ? '/' : '/help-and-knowledge');
@@ -38,11 +40,13 @@ export default function HelpBreadcrumb({
       type="button"
       unstyled
       onClick={() => handleClick()}
-      className={classNames(className)}
+      className={classNames(className, {
+        'margin-top-6': newTab || newTabOnly
+      })}
     >
-      {newTab ? (
+      {newTab || newTabOnly ? (
         <>
-          <IconClose className="margin-right-05 margin-top-6 text-tbottom" />
+          <IconClose className="margin-right-05 text-tbottom" />
           {t('close')}
         </>
       ) : (
