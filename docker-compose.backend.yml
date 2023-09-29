@@ -31,8 +31,6 @@ services:
       - ./migrations:/flyway/sql
     image: mint-db-migrate:latest
     build:
-      args:
-        TAG: '9.10' # Multi arch tag, rather than '9.10-alpine'
       context: .
       dockerfile: Dockerfile.db_migrations
     environment:
