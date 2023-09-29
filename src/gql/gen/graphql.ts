@@ -2135,7 +2135,24 @@ export type PossibleOperationalSolution = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
+  pointsOfContact: Array<PossibleOperationalSolutionContact>;
   treatAsOther: Scalars['Boolean']['output'];
+};
+
+/** PossibleOperationalSolutionContact represents a contact for a possible operational solution */
+export type PossibleOperationalSolutionContact = {
+  __typename?: 'PossibleOperationalSolutionContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  possibleOperationalSolutionID: Scalars['Int']['output'];
+  role: Scalars['String']['output'];
 };
 
 export type PrepareForClearance = {
