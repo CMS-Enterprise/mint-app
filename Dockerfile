@@ -29,8 +29,8 @@ FROM scratch
 
 WORKDIR /mint/
 
-COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=build /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=base /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=base /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=build /mint/bin/mint ./
 
 # Copy build args to envs for version, datetime, and timestamp
