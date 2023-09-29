@@ -55,7 +55,6 @@ describe('The Model Plan Task List', () => {
         content: 'This is a question.',
         createdBy: 'John Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: 'UNANSWERED',
         replies: []
       },
       {
@@ -64,12 +63,10 @@ describe('The Model Plan Task List', () => {
         content: 'This is a second question.',
         createdBy: 'Jane Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: 'ANSWERED',
         replies: [
           {
             __typename: 'DiscussionReply',
             discussionID: '456',
-            resolution: true,
             id: 'abc',
             content: 'This is an answer.',
             createdBy: 'Jack Doe',

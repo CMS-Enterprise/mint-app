@@ -97,7 +97,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
               data-testid="ask-a-question-button"
               type="button"
             >
-              Ask a question
+              Start a discussion
             </button>
           </div>
         </div>
@@ -1596,7 +1596,7 @@ exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
               data-testid="ask-a-question-button"
               type="button"
             >
-              Ask a question
+              Start a discussion
             </button>
           </div>
         </div>

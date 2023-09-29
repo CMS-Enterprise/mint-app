@@ -41,14 +41,12 @@ export default gql`
         content
         createdBy
         createdDts
-        status
         replies {
           id
           discussionID
           content
           createdBy
           createdDts
-          resolution
         }
       }
       generalCharacteristics {

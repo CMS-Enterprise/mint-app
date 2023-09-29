@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, TaskStatus, TeamRole, DiscussionStatus, PrepareForClearanceStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, TaskStatus, TeamRole, PrepareForClearanceStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlan
@@ -55,7 +55,6 @@ export interface GetModelPlan_modelPlan_discussions_replies {
   content: string | null;
   createdBy: UUID;
   createdDts: Time;
-  resolution: boolean | null;
 }
 
 export interface GetModelPlan_modelPlan_discussions {
@@ -64,7 +63,6 @@ export interface GetModelPlan_modelPlan_discussions {
   content: string | null;
   createdBy: UUID;
   createdDts: Time;
-  status: DiscussionStatus;
   replies: GetModelPlan_modelPlan_discussions_replies[];
 }
 
