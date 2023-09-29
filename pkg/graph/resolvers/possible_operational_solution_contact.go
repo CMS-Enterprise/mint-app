@@ -2,14 +2,25 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // PossibleOperationalSolutionContactsGetByPossibleSolutionID returns all the contacts associated with a possible operational solution
 // it uses a data loader to ensure efficient querying
 func PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx context.Context, possibleSolutionID int) ([]*models.PossibleOperationalSolutionContact, error) {
-	fmt.Print(ctx, possibleSolutionID)
-	return nil, nil
+	allLoaders := loaders.Loaders(ctx)
+	contactLoader := allLoaders.PossibleOperationSolutionContactLoader
+	key := loaders.NewKeyArgs()
+	key.Args["possible_operational_solution_id"] = possibleSolutionID //TODO: SW should we store this key in a package so it's known and consistent?
+
+	thunk := contactLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]*models.PossibleOperationalSolutionContact), nil
 }
