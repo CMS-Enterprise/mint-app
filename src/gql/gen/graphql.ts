@@ -292,7 +292,6 @@ export type DiscussionReply = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  resolution?: Maybe<Scalars['Boolean']['output']>;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -304,7 +303,6 @@ export type DiscussionReply = {
  */
 export type DiscussionReplyChanges = {
   content?: InputMaybe<Scalars['String']['input']>;
-  resolution?: InputMaybe<Scalars['Boolean']['input']>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
@@ -313,7 +311,6 @@ export type DiscussionReplyChanges = {
 export type DiscussionReplyCreateInput = {
   content: Scalars['String']['input'];
   discussionID: Scalars['UUID']['input'];
-  resolution?: Scalars['Boolean']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
@@ -323,12 +320,6 @@ export type DiscussionRoleSelection = {
   userRole: DiscussionUserRole;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
-
-export enum DiscussionStatus {
-  ANSWERED = 'ANSWERED',
-  UNANSWERED = 'UNANSWERED',
-  WAITING_FOR_RESPONSE = 'WAITING_FOR_RESPONSE'
-}
 
 export enum DiscussionUserRole {
   CMS_SYSTEM_SERVICE_TEAM = 'CMS_SYSTEM_SERVICE_TEAM',
@@ -1397,7 +1388,6 @@ export type PlanDiscussion = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   replies: Array<DiscussionReply>;
-  status: DiscussionStatus;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -1409,7 +1399,6 @@ export type PlanDiscussion = {
  */
 export type PlanDiscussionChanges = {
   content?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<DiscussionStatus>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };

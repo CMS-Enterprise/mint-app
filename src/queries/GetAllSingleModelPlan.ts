@@ -371,7 +371,6 @@ export default gql`
         userRole
         userRoleDescription
         createdDts
-        status
         replies {
           id
           discussionID
@@ -382,7 +381,6 @@ export default gql`
           userRole
           userRoleDescription
           createdDts
-          resolution
         }
       }
     }

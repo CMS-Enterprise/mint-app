@@ -7,7 +7,6 @@ export default gql`
   ) {
     updatePlanDiscussion(id: $id, changes: $changes) {
       id
-      status
     }
   }
 `;
