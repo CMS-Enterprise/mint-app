@@ -1,14 +1,15 @@
 {{template "shared_header.html"}}
 
 <body>
-<h1 style="padding-top: 3pt;">MINT</h1>
-<p class="subtitle" style="padding-top: 11pt;">The Model Innovation Tool</p>
+<h1>MINT</h1>
+<p class="subtitle">The Model Innovation Tool</p>
 <br/>
-<h2 style="padding-top: 14pt;">Dates updated for {{.ModelName}}</h2>
+<br/>
+<h2>Dates updated for {{.ModelName}}</h2>
+<p style="padding-top: 10px">One or more dates have been updated for this model.</p>
 <br/>
 <br/>
 <h3>Anticipated high level timeline</h3>
-<br/>
 
 {{define "date"}}
     {{if .}}
@@ -19,8 +20,9 @@
 {{end}}
 
 {{range .DateChanges}}
+  <br/>
   <p>
-    <b>{{.Field}}:</b>
+    <b>{{.Field}}</b>
     <br/>
       {{if .IsRange}}
           {{if .IsChanged}}
@@ -33,18 +35,17 @@
           {{end}}
       {{else}}
           {{if .IsChanged}}
-            <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldDate}}</span> - {{template "date" .NewDate}}
+            <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldDate}}</span> &nbsp; {{template "date" .NewDate}}
           {{else}}
             {{template "date" .OldDate}}
           {{end}}
       {{end}}
     <br/>
-    <br/>
   </p>
 {{end}}
 
 <br/>
-<p style="padding-top: 14pt;">
+<p style="padding-bottom: 10px">
   <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
     View this Model Plan in MINT
   </a>

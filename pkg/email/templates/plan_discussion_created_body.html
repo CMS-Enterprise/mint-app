@@ -1,19 +1,36 @@
 {{template "shared_header.html"}}
 
 <body>
-  <h1 style="padding-top: 3pt;">MINT</h1>
-  <p class="subtitle" style="padding-top: 11pt;">The Model Innovation Tool</p>
+  <h1>MINT</h1>
+  <p class="subtitle">The Model Innovation Tool</p>
   <br/>
-  <h2 style="padding-top: 14pt;">New question</h2>
+  <h3>New discussion in</h3>
+  <p>{{.ModelName}}</p>
+  <br/>
+  <table>
+    <tr>
+      <td style="vertical-align: top;">
+        <h2>Discussion</h2>
+        <br/>
+        <p><b>{{.UserName}}</b></p>
+        <br/>
+        <p>{{.DiscussionContent}}</p>
+        <br/>
+        <br/>
+        <p style="font-weight: normal">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?discussionID={{.DiscussionID}}" class="link">
+            Respond to this discussion in MINT
+          </a>
+        </p>
+      </td>
+    </tr>
+  </table>
   <br/>
   <br/>
-  <p style="padding-top: 18pt;">{{.UserName}} asked</p>
-  <h3 style="padding-top: 14pt;">{{.DiscussionContent}}</h3>
-  <p style="padding-top: 14pt;">in {{.ModelName}}</p>
+  <hr/>
   <br/>
-  <p style="padding-top: 14pt;">
-    <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?discussionID={{.DiscussionID}}" class="link">
-      Respond to this question in MINT
-    </a>
+  <p>You are receiving this email because you are a part of the
+    <a href="mailto:MINTTeam@cms.hhs.gov" class="a" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>
+    email group.
   </p>
 </body>
