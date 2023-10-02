@@ -5,7 +5,6 @@ export default gql`
     createPlanDiscussion(input: $input) {
       id
       content
-      status
       createdBy
       createdDts
     }

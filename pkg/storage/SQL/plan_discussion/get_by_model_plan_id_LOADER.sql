@@ -12,7 +12,6 @@ SELECT
     disc.content,
     disc.user_role,
     disc.user_role_description,
-    disc.status,
     disc.is_assessment,
     disc.created_by,
     disc.created_dts,

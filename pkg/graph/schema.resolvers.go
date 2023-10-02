@@ -488,6 +488,12 @@ func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.
 	)
 }
 
+// ReportAProblem is the resolver for the reportAProblem field.
+func (r *mutationResolver) ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.ReportAProblem(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
+}
+
 // SendFeedbackEmail is the resolver for the sendFeedbackEmail field.
 func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error) {
 	principal := appcontext.Principal(ctx)

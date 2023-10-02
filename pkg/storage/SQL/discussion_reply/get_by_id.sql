@@ -4,7 +4,6 @@ SELECT
     content,
     user_role,
     user_role_description,
-    resolution,
     is_assessment,
     created_by,
     created_dts,

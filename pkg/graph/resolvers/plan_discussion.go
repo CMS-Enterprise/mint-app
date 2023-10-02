@@ -166,7 +166,6 @@ func CreateDiscussionReply(
 		principal.AllowASSESSMENT(),
 		input.DiscussionID,
 		input.Content,
-		input.Resolution,
 		input.UserRole,
 		input.UserRoleDescription,
 	)
