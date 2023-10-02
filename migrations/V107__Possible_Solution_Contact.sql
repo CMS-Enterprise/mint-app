@@ -13,13 +13,5 @@ CREATE TABLE possible_operational_solution_contact (
     modified_dts TIMESTAMP WITH TIME ZONE
 );
 
-
-INSERT INTO possible_operational_solution_contact(
-    id,
-    possible_operational_solution_id,
-    name,
-    email,
-    role,
-    created_by,
-    created_dts
-)
+ALTER TYPE operational_solution_key ADD VALUE 'ISP'; --acronym
+ALTER TYPE operational_solution_key ADD VALUE 'MIDS'; --acronym
