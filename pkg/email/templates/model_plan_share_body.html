@@ -13,82 +13,93 @@
   <br/>
 {{end}}
 
-<table>
-  <tr>
-    <td style="vertical-align: top;">
-      <h2 style="display: inline-block;">{{.ModelName}}</h2>
-        {{if .ModelShortName}}<h2 style="display: inline-block;"> ({{.ModelShortName}})</h2>{{end}}
-      <br/>
-      <br/>
-
-      <p><b>Category</b></p>
-      <p>
-          {{if .ModelCategories}}
-              {{- range $index, $element := .ModelCategories -}}
-                  {{ if $index }}, {{ end }}
-                  {{$element}}
-              {{- end -}}
-          {{else}}
-            To be determined
-          {{end}}
-      </p>
-      <br/>
-
-      <p><b>Status</b></p>
-      <p>{{.ModelStatus}}</p>
-      <br/>
-
-      <p><b>Last Updated</b></p>
-      <p>{{.ModelLastUpdated.Format "2006-01-02 15:04:05"}}</p>
-      <br/>
-
-      <p><b>Model Leads</b></p>
-      <p>
-          {{if .ModelLeads}}
-              {{- range $index, $element := .ModelLeads -}}
-                  {{- if $index -}}, {{- end -}}
-                  {{$element}}
-              {{- end -}}
-          {{else}}
-            To be determined
-          {{end}}
-      </p>
-      <br/>
-    </td>
-  </tr>
+<table class="formatting-table">
   <tr>
     <td>
-      <p>
-          {{if .ModelViewFilter}}
-            <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}" class="link">
-              View {{.HumanizedModelViewFilter}} details in MINT
-            </a>
-          {{else}}
-            <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
-              View more details in MINT
-            </a>
-          {{end}}
-      </p>
+      <table>
+        <tr>
+          <td style="vertical-align: top;">
+            <h2 style="display: inline-block;">{{.ModelName}}</h2>
+              {{if .ModelShortName}}<h2 style="display: inline-block;"> ({{.ModelShortName}})</h2>{{end}}
+            <br/>
+            <br/>
+
+            <p><b>Category</b></p>
+            <p>
+                {{if .ModelCategories}}
+                    {{- range $index, $element := .ModelCategories -}}
+                        {{ if $index }}, {{ end }}
+                        {{$element}}
+                    {{- end -}}
+                {{else}}
+                  To be determined
+                {{end}}
+            </p>
+            <br/>
+
+            <p><b>Status</b></p>
+            <p>{{.ModelStatus}}</p>
+            <br/>
+
+            <p><b>Last Updated</b></p>
+            <p>{{.ModelLastUpdated.Format "2006-01-02 15:04:05"}}</p>
+            <br/>
+
+            <p><b>Model Leads</b></p>
+            <p>
+                {{if .ModelLeads}}
+                    {{- range $index, $element := .ModelLeads -}}
+                        {{- if $index -}}, {{- end -}}
+                        {{$element}}
+                    {{- end -}}
+                {{else}}
+                  To be determined
+                {{end}}
+            </p>
+            <br/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>
+                {{if .ModelViewFilter}}
+                  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}" class="link">
+                    View {{.HumanizedModelViewFilter}} details in MINT
+                  </a>
+                {{else}}
+                  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
+                    View more details in MINT
+                  </a>
+                {{end}}
+            </p>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
-</table>
 
-<br/>
-<br/>
+  <tr>
+    <td height="20">&nbsp;</td>
+  </tr>
 
-<table style="height: 120px; padding: 15px 20px 20px 20px; gap: 10px; background: #E7F6F8; display: inline-table;">
   <tr>
     <td>
-      <p>
-        If you don’t have access to MINT yet, you will need to request access.
+      <table class="blue-footer-table">
+        <tr>
+          <td>
+            <p>
+              If you don’t have access to MINT yet, you will need to request access.
 
-        <br/>
-        <br/>
+              <br/>
+              <br/>
 
-        <a href="{{.ClientAddress}}/how-to-get-access" class="link" style="font-weight: normal">
-          Learn how to get access
-        </a>
-      </p>
+              <a href="{{.ClientAddress}}/how-to-get-access" class="link" style="font-weight: normal">
+                Learn how to get access
+              </a>
+            </p>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
 </table>
