@@ -116,6 +116,7 @@ const documents = {
     'This document will only be visible to the model team and MINT Team.',
   validation: {
     file: 'Choose a document to upload.',
+    link: 'Please enter the link for your document',
     documentType: 'Select the type of document you are uploading.',
     restricted: 'Please select if this document contains cost information.',
     otherDescr: 'Enter a document name.'

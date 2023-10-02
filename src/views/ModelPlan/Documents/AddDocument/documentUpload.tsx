@@ -30,7 +30,10 @@ import { FileUploadForm } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateDocumentType } from 'utils/modelPlan';
-import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
+import {
+  DocumentLinkValidationSchema,
+  DocumentUploadValidationSchema
+} from 'validations/documentUploadSchema';
 
 const DocumentUpload = ({
   solutionDetailsLink,
@@ -163,13 +166,19 @@ const DocumentUpload = ({
       <Formik
         initialValues={{
           file: null,
+          url: null,
+          name: null,
           documentType: null,
           restricted: null,
           otherTypeDescription: '',
           optionalNotes: ''
         }}
         onSubmit={onSubmit}
-        validationSchema={DocumentUploadValidationSchema}
+        validationSchema={
+          buttonState === 'upload'
+            ? DocumentUploadValidationSchema
+            : DocumentLinkValidationSchema
+        }
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
@@ -258,7 +267,7 @@ const DocumentUpload = ({
 
                   {buttonState === 'link' && (
                     <>
-                      <FieldGroup>
+                      <FieldGroup scrollElement="url" error={!!flatErrors.url}>
                         <Label htmlFor="FileUpload-LinkDocument">
                           {t('linkDocument.linkLabel')}
                           <RequiredAsterisk />
@@ -272,13 +281,18 @@ const DocumentUpload = ({
                           {t('linkDocument.linkHelpText')}
                         </Label>
 
+                        <FieldErrorMsg>{flatErrors.url}</FieldErrorMsg>
+
                         <Field
                           as={TextInput}
                           id="FileUpload-LinkDocument"
                           name="FileUpload-LinkDocument"
                         />
                       </FieldGroup>
-                      <FieldGroup>
+                      <FieldGroup
+                        scrollElement="name"
+                        error={!!flatErrors.name}
+                      >
                         <Label htmlFor="FileUpload-LinkFileName">
                           {t('linkDocument.fileNameLabel')}
                           <RequiredAsterisk />
@@ -291,6 +305,8 @@ const DocumentUpload = ({
                         >
                           {t('linkDocument.fileNameHelpText')}
                         </Label>
+
+                        <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>
 
                         <Field
                           as={TextInput}
