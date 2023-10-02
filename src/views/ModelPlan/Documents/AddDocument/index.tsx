@@ -66,7 +66,7 @@ const AddDocument = () => {
       <GridContainer>
         <Grid desktop={{ col: 6 }}>
           <PageHeading className="margin-top-4 margin-bottom-0">
-            {t('uploadDocument')}
+            {t('addDocument')}
           </PageHeading>
 
           <p className="margin-bottom-2 font-body-md line-height-body-4">
@@ -89,7 +89,7 @@ const AddDocument = () => {
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
               <IconArrowBack className="margin-right-1" aria-hidden />
-              {t('dontUpload')}
+              {t('dontAdd')}
             </Button>
           </div>
         </Grid>

@@ -9,9 +9,9 @@ const modelPlanTaskList = {
   edit: 'Edit Model Plan',
   documentSummaryBox: {
     heading: 'Documents',
-    copy: 'There are no documents uploaded',
+    copy: 'There are no documents added.',
     existingDocuments: 'document<1>{{plural}}</1> uploaded',
-    cta: 'Upload a document',
+    cta: 'Add a document',
     viewAll: 'View all model documents',
     uploadAnother: 'Upload another document'
   },

@@ -383,7 +383,7 @@ const DocumentUpload = ({
                       }
                       data-testid="upload-document"
                     >
-                      {t('uploadButton')}
+                      {t('submitButton')}
                     </Button>
                   </div>
                 </Form>

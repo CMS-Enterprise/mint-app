@@ -66,9 +66,9 @@ const documents = {
   removeDocumentFail: 'Failed to remove document {{-documentName}}',
   removeDocumentSuccess: 'Success! Document {{-documentName}} removed.',
   documentUploadSuccess: 'Successfully added {{-documentName}}.',
-  uploadDocument: 'Upload a document',
+  addDocument: 'Add a document',
   uploadDescription:
-    'Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.',
+    'Choose to upload or link to a document, such as a recent concept document, policy paper, or any additional model background information.',
   documentUpload: 'Document upload',
   selectedFile: 'Selected file',
   changeFile: 'Change file',
@@ -91,8 +91,8 @@ const documents = {
   optionalNotes: 'Optional notes about the document',
   safetyScan:
     'To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know',
-  uploadButton: 'Upload document',
-  dontUpload: 'Don’t upload and return to previous page',
+  submitButton: 'Add document',
+  dontAdd: 'Don’t add and return to previous page',
   selectFile: 'Select file',
   documentKind: 'What kind of document is this?',
   restricted: 'Restricted',
