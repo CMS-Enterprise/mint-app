@@ -292,7 +292,6 @@ export type DiscussionReply = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  resolution?: Maybe<Scalars['Boolean']['output']>;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -304,7 +303,6 @@ export type DiscussionReply = {
  */
 export type DiscussionReplyChanges = {
   content?: InputMaybe<Scalars['String']['input']>;
-  resolution?: InputMaybe<Scalars['Boolean']['input']>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
@@ -313,7 +311,6 @@ export type DiscussionReplyChanges = {
 export type DiscussionReplyCreateInput = {
   content: Scalars['String']['input'];
   discussionID: Scalars['UUID']['input'];
-  resolution?: Scalars['Boolean']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
@@ -323,12 +320,6 @@ export type DiscussionRoleSelection = {
   userRole: DiscussionUserRole;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
-
-export enum DiscussionStatus {
-  ANSWERED = 'ANSWERED',
-  UNANSWERED = 'UNANSWERED',
-  WAITING_FOR_RESPONSE = 'WAITING_FOR_RESPONSE'
-}
 
 export enum DiscussionUserRole {
   CMS_SYSTEM_SERVICE_TEAM = 'CMS_SYSTEM_SERVICE_TEAM',
@@ -630,6 +621,7 @@ export type Mutation = {
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
+  reportAProblem: Scalars['Boolean']['output'];
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
@@ -783,6 +775,12 @@ export type MutationLockTaskListSectionArgs = {
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationReportAProblemArgs = {
+  input: ReportAProblemInput;
 };
 
 
@@ -1390,7 +1388,6 @@ export type PlanDiscussion = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   replies: Array<DiscussionReply>;
-  status: DiscussionStatus;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -1402,7 +1399,6 @@ export type PlanDiscussion = {
  */
 export type PlanDiscussionChanges = {
   content?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<DiscussionStatus>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2183,15 +2179,8 @@ export type Query = {
   planPayments: PlanPayments;
   possibleOperationalNeeds: Array<PossibleOperationalNeed>;
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
-  searchChangeTable: Array<ChangeTableRecord>;
-  searchChangeTableByActor: Array<ChangeTableRecord>;
-  searchChangeTableByDateRange: Array<ChangeTableRecord>;
-  searchChangeTableByModelPlanID: Array<ChangeTableRecord>;
-  searchChangeTableByModelStatus: Array<ChangeTableRecord>;
   searchChangeTableDateHistogramConsolidatedAggregations: Array<DateHistogramAggregationBucket>;
-  searchChangeTableWithFreeText: Array<ChangeTableRecord>;
   searchChanges: Array<ChangeTableRecord>;
-  searchModelPlanChangesByDateRange: Array<ChangeTableRecord>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
@@ -2267,47 +2256,6 @@ export type QueryPlanPaymentsArgs = {
 
 
 /** Query definition for the schema */
-export type QuerySearchChangeTableArgs = {
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
-  request: SearchRequest;
-};
-
-
-/** Query definition for the schema */
-export type QuerySearchChangeTableByActorArgs = {
-  actor: Scalars['String']['input'];
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QuerySearchChangeTableByDateRangeArgs = {
-  endDate: Scalars['Time']['input'];
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
-  startDate: Scalars['Time']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QuerySearchChangeTableByModelPlanIdArgs = {
-  limit: Scalars['Int']['input'];
-  modelPlanID: Scalars['UUID']['input'];
-  offset: Scalars['Int']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QuerySearchChangeTableByModelStatusArgs = {
-  limit: Scalars['Int']['input'];
-  modelStatus: ModelStatus;
-  offset: Scalars['Int']['input'];
-};
-
-
-/** Query definition for the schema */
 export type QuerySearchChangeTableDateHistogramConsolidatedAggregationsArgs = {
   interval: Scalars['String']['input'];
   limit: Scalars['Int']['input'];
@@ -2316,28 +2264,10 @@ export type QuerySearchChangeTableDateHistogramConsolidatedAggregationsArgs = {
 
 
 /** Query definition for the schema */
-export type QuerySearchChangeTableWithFreeTextArgs = {
-  limit: Scalars['Int']['input'];
-  offset: Scalars['Int']['input'];
-  searchText: Scalars['String']['input'];
-};
-
-
-/** Query definition for the schema */
 export type QuerySearchChangesArgs = {
   filters?: InputMaybe<Array<SearchFilter>>;
   page?: InputMaybe<PageParams>;
   sortBy?: InputMaybe<ChangeHistorySortParams>;
-};
-
-
-/** Query definition for the schema */
-export type QuerySearchModelPlanChangesByDateRangeArgs = {
-  endDate: Scalars['Time']['input'];
-  limit: Scalars['Int']['input'];
-  modelPlanID: Scalars['UUID']['input'];
-  offset: Scalars['Int']['input'];
-  startDate: Scalars['Time']['input'];
 };
 
 
@@ -2364,6 +2294,32 @@ export enum RecruitmentType {
   NA = 'NA',
   NOFO = 'NOFO',
   OTHER = 'OTHER'
+}
+
+export type ReportAProblemInput = {
+  allowContact?: InputMaybe<Scalars['Boolean']['input']>;
+  isAnonymousSubmission: Scalars['Boolean']['input'];
+  section?: InputMaybe<ReportAProblemSection>;
+  sectionOther?: InputMaybe<Scalars['String']['input']>;
+  severity?: InputMaybe<ReportAProblemSeverity>;
+  severityOther?: InputMaybe<Scalars['String']['input']>;
+  whatDoing?: InputMaybe<Scalars['String']['input']>;
+  whatWentWrong?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum ReportAProblemSection {
+  HELP_CENTER = 'HELP_CENTER',
+  IT_SOLUTIONS = 'IT_SOLUTIONS',
+  OTHER = 'OTHER',
+  READ_VIEW = 'READ_VIEW',
+  TASK_LIST = 'TASK_LIST'
+}
+
+export enum ReportAProblemSeverity {
+  DELAYED_TASK = 'DELAYED_TASK',
+  MINOR = 'MINOR',
+  OTHER = 'OTHER',
+  PREVENTED_TASK = 'PREVENTED_TASK'
 }
 
 /** A user role associated with a job code */
@@ -2437,10 +2393,6 @@ export enum SearchFilterType {
    */
   TABLE_NAME = 'TABLE_NAME'
 }
-
-export type SearchRequest = {
-  query: Scalars['Map']['input'];
-};
 
 export enum SearchableTaskListSection {
   BASICS = 'BASICS',
@@ -2593,6 +2545,13 @@ export enum WaiverType {
   PROGRAM_PAYMENT = 'PROGRAM_PAYMENT'
 }
 
+export type CreatReportAProblemMutationVariables = Exact<{
+  input: ReportAProblemInput;
+}>;
+
+
+export type CreatReportAProblemMutation = { __typename?: 'Mutation', reportAProblem: boolean };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -2624,6 +2583,7 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetNdaQuery = { __typename?: 'Query', ndaInfo: { __typename?: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
 
+export const CreatReportAProblemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatReportAProblem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReportAProblemInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reportAProblem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<CreatReportAProblemMutation, CreatReportAProblemMutationVariables>;
 export const GetFundingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFunding"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceTrustFundType"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRTrustFundType"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetFundingQuery, GetFundingQueryVariables>;
 export const UpdatePaymentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePayments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanPaymentsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanPayments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePaymentsMutation, UpdatePaymentsMutationVariables>;
 export const CreateShareModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateShareModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelViewFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"receiverEmails"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shareModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"viewFilter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}}},{"kind":"Argument","name":{"kind":"Name","value":"receiverEmails"},"value":{"kind":"Variable","name":{"kind":"Name","value":"receiverEmails"}}},{"kind":"Argument","name":{"kind":"Name","value":"optionalMessage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}}}]}]}}]} as unknown as DocumentNode<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;

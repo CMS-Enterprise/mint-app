@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from '@trussworks/react-uswds';
-import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  IconExpandLess,
+  IconExpandMore
+} from '@trussworks/react-uswds';
 
 // This component takes free form text and a character limit and
 // will return the whole text until it reaches the character limit, once
@@ -10,31 +14,29 @@ import classnames from 'classnames';
 
 type TruncatedTextProps = {
   id: string;
-  label: string;
   text: string;
   charLimit: number;
-  closeLabel?: string;
   className?: string;
 };
 
 const TruncatedText = ({
   id,
-  label,
   text,
   charLimit,
-  closeLabel,
   className
 }: TruncatedTextProps) => {
+  const { t: generalT } = useTranslation('general');
+
   const [isOpen, setOpen] = useState(true);
-  const arrowClassNames = classnames(
-    'fa',
-    isOpen ? 'fa-caret-down' : 'fa-caret-right'
-  );
 
   // If text is shorter then specified character limit, just
   // return the whole text
   if (text.length < charLimit) {
-    return <div className={className}>{text}</div>;
+    return (
+      <div className={className}>
+        <span>{text}</span>
+      </div>
+    );
   }
 
   // Text is longer then specified character limit, truncate text
@@ -44,17 +46,19 @@ const TruncatedText = ({
 
   return (
     <div className={className}>
-      {isOpen ? `${startOfText}... ` : `${text} `}
+      <span className="display-block" id={id}>
+        {isOpen ? `${startOfText}... ` : `${text} `}
+      </span>
       <Button
         type="button"
         onClick={() => setOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-controls={id}
-        className={classnames({ 'text-bold': isOpen })}
         unstyled
+        className="display-flex flex-align-center margin-top-1"
       >
-        <span className={arrowClassNames} />
-        {isOpen ? closeLabel || label : label}
+        {isOpen ? generalT('readMore') : generalT('readLess')}
+        {isOpen ? <IconExpandMore /> : <IconExpandLess />}
       </Button>
     </div>
   );

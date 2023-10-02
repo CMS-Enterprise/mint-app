@@ -12,7 +12,6 @@ SELECT
     discR.content,
     discR.user_role,
     discR.user_role_description,
-    discR.resolution,
     discR.is_assessment,
     discR.created_by,
     discR.created_dts,

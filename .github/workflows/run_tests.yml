@@ -43,12 +43,12 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: docker.contribsys.com
           username: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
@@ -222,12 +222,12 @@ jobs:
       - name: Install go modules
         run: go mod download
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: docker.contribsys.com
           username: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}

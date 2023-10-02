@@ -174,6 +174,7 @@ func (s *Server) routes(
 		DefaultSender:                  s.Config.GetString(appconfig.EmailSenderKey),
 		MINTTeamEmail:                  s.Config.GetString(appconfig.MINTTeamEmailKey),
 		ModelPlanDateChangedRecipients: dateChangedRecipientEmails,
+		DevTeamEmail:                   s.Config.GetString(appconfig.DevTeamEmailKey),
 	}
 
 	var emailService *oddmail.GoSimpleMailService

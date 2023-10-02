@@ -394,7 +394,6 @@ type PlanDiscussion  {
 	content: String
   userRole: DiscussionUserRole
   userRoleDescription: String
-	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
@@ -424,7 +423,6 @@ https://gqlgen.com/reference/changesets/
 """
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
-  status: DiscussionStatus
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -438,7 +436,6 @@ type DiscussionReply  {
 	content: String
   userRole: DiscussionUserRole
   userRoleDescription: String
-	resolution: Boolean
   isAssessment: Boolean!
 
   createdBy: UUID!
@@ -457,7 +454,6 @@ input DiscussionReplyCreateInput {
   content: String!
   userRole: DiscussionUserRole
   userRoleDescription: String
-  resolution: Boolean! = false
 }
 
 """
@@ -467,7 +463,6 @@ https://gqlgen.com/reference/changesets/
 """
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
   content: String
-  resolution: Boolean
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -1274,6 +1269,32 @@ type NDAInfo {
   agreedDts: Time
 }
 
+input ReportAProblemInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  section: ReportAProblemSection
+  sectionOther: String
+  whatDoing: String
+  whatWentWrong: String
+  severity: ReportAProblemSeverity
+  severityOther: String
+}
+
+enum ReportAProblemSection {
+  READ_VIEW
+  TASK_LIST
+  IT_SOLUTIONS
+  HELP_CENTER
+  OTHER
+}
+
+enum ReportAProblemSeverity {
+  PREVENTED_TASK
+  DELAYED_TASK
+  MINOR
+  OTHER
+}
+
 type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
@@ -1486,9 +1507,6 @@ enum GQLTableName {
 }
 # lint-enable enum-values-all-caps
 
-input SearchRequest {
-  query: Map!
-}
 
 type DateHistogramAggregationBucket {
   key: String!
@@ -1559,20 +1577,6 @@ type Query {
   existingModelLink(id: UUID!): ExistingModelLink!
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
   searchChanges(filters: [SearchFilter!], sortBy: ChangeHistorySortParams, page: PageParams): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchModelPlanChangesByDateRange(modelPlanID: UUID!, startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -1709,6 +1713,9 @@ updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentMod
 
 shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
+
+reportAProblem(input: ReportAProblemInput!): Boolean!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 type Subscription {
@@ -1815,12 +1822,6 @@ enum CMMIGroup {
   SEAMLESS_CARE_MODELS_GROUP
   STATE_AND_POPULATION_HEALTH_GROUP
   TBD
-}
-
-enum DiscussionStatus {
-  ANSWERED
-  WAITING_FOR_RESPONSE
-  UNANSWERED
 }
 
 enum DocumentType {

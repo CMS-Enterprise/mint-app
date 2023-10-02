@@ -19,7 +19,6 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
 		Content:             "this is a test reply",
-		Resolution:          false,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}

@@ -37,7 +37,8 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             downgradeAssessmentTeam: false,
             hideGroupView: true,
             shareExportEnabled: false,
-            helpScoutEnabled: false
+            helpScoutEnabled: false,
+            feedbackEnabled: false
           }
         });
 
