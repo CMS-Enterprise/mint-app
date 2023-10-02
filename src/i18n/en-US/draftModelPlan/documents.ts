@@ -79,6 +79,13 @@ const documents = {
   ariaLabelChangeFile: '-- Click to change file',
   fileSelected: 'File <1>{{file}}</1> selected.',
   dragFile: 'Drag file here or ',
+  linkDocument: {
+    linkLabel: 'Link',
+    linkHelpText:
+      'Paste the link for your document. Make sure it includes http:// or https://.',
+    fileNameLabel: 'File name',
+    fileNameHelpText: 'Enter a name for your document.'
+  },
   chooseFromFolder: 'choose from folder',
   notValid: 'This is not a valid file type.',
   whatType: 'What type of document are you uploading?',

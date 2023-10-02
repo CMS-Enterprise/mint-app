@@ -7,7 +7,8 @@ import {
   ButtonGroup,
   Fieldset,
   Label,
-  Radio
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -42,6 +43,7 @@ const DocumentUpload = ({
   const history = useHistory();
   const { t } = useTranslation('documents');
   const { t: h } = useTranslation('draftModelPlan');
+
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<FileUploadForm>>(null);
 
@@ -216,39 +218,88 @@ const DocumentUpload = ({
                     window.scrollTo(0, 0);
                   }}
                 >
-                  <FieldGroup scrollElement="file" error={!!flatErrors.file}>
-                    <Label htmlFor="FileUpload-File">
-                      {t('documentUpload')}
-                      <RequiredAsterisk />
-                    </Label>
+                  {buttonState === 'upload' && (
+                    <FieldGroup scrollElement="file" error={!!flatErrors.file}>
+                      <Label htmlFor="FileUpload-File">
+                        {t('documentUpload')}
+                        <RequiredAsterisk />
+                      </Label>
 
-                    <Label
-                      htmlFor="FileUpload-File"
-                      hint
-                      className="text-normal text-base margin-y-1"
-                    >
-                      {t('fileTypes')}
-                    </Label>
+                      <Label
+                        htmlFor="FileUpload-File"
+                        hint
+                        className="text-normal text-base margin-y-1"
+                      >
+                        {t('fileTypes')}
+                      </Label>
 
-                    <FieldErrorMsg>{flatErrors.file}</FieldErrorMsg>
+                      <FieldErrorMsg>{flatErrors.file}</FieldErrorMsg>
 
-                    <Field
-                      as={FileUpload}
-                      id="FileUpload-File"
-                      name="file"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setFieldValue('file', e.currentTarget?.files?.[0]);
-                      }}
-                      accept=".pdf,.doc,.docx,.xls,.xlsx"
-                      inputProps={{
-                        'aria-expanded': !!values.file,
-                        'aria-label':
-                          values.file &&
-                          `${t('documentUpload')} ${t('ariaLabelChangeFile')}`,
-                        'aria-controls': 'file-type'
-                      }}
-                    />
-                  </FieldGroup>
+                      <Field
+                        as={FileUpload}
+                        id="FileUpload-File"
+                        name="file"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          setFieldValue('file', e.currentTarget?.files?.[0]);
+                        }}
+                        accept=".pdf,.doc,.docx,.xls,.xlsx"
+                        inputProps={{
+                          'aria-expanded': !!values.file,
+                          'aria-label':
+                            values.file &&
+                            `${t('documentUpload')} ${t(
+                              'ariaLabelChangeFile'
+                            )}`,
+                          'aria-controls': 'file-type'
+                        }}
+                      />
+                    </FieldGroup>
+                  )}
+
+                  {buttonState === 'link' && (
+                    <>
+                      <FieldGroup>
+                        <Label htmlFor="FileUpload-LinkDocument">
+                          {t('linkDocument.linkLabel')}
+                          <RequiredAsterisk />
+                        </Label>
+
+                        <Label
+                          htmlFor="FileUpload-LinkDocument"
+                          hint
+                          className="text-normal text-base margin-y-1"
+                        >
+                          {t('linkDocument.linkHelpText')}
+                        </Label>
+
+                        <Field
+                          as={TextInput}
+                          id="FileUpload-LinkDocument"
+                          name="FileUpload-LinkDocument"
+                        />
+                      </FieldGroup>
+                      <FieldGroup>
+                        <Label htmlFor="FileUpload-LinkFileName">
+                          {t('linkDocument.fileNameLabel')}
+                          <RequiredAsterisk />
+                        </Label>
+
+                        <Label
+                          htmlFor="FileUpload-LinkFileName"
+                          hint
+                          className="text-normal text-base margin-y-1"
+                        >
+                          {t('linkDocument.fileNameHelpText')}
+                        </Label>
+
+                        <Field
+                          as={TextInput}
+                          id="FileUpload-LinkFileName"
+                          name="FileUpload-LinkFileName"
+                        />
+                      </FieldGroup>
+                    </>
+                  )}
                   <FieldGroup
                     id="file-type"
                     scrollElement="documentType"
