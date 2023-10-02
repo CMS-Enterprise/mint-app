@@ -83,12 +83,10 @@ func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content s
 func (suite *ResolverSuite) createDiscussionReply(
 	pd *models.PlanDiscussion,
 	content string,
-	resolution bool,
 ) *models.DiscussionReply {
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        pd.ID,
 		Content:             content,
-		Resolution:          resolution,
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}

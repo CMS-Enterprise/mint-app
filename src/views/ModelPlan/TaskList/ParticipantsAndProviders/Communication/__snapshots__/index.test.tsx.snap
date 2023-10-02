@@ -88,7 +88,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
         data-testid="ask-a-question-button"
         type="button"
       >
-        Ask a question
+        Start a discussion
       </button>
     </div>
   </div>

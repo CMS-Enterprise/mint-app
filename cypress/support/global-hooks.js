@@ -1,6 +1,6 @@
 beforeEach(() => {
   cy.exec('scripts/dev db:clean', {
-    timeout: 20000,
+    timeout: 120000,
     failOnNonZeroExit: false
   }).then(cleanResult => {
     cy.log('db:clean code', cleanResult.code);
@@ -8,7 +8,7 @@ beforeEach(() => {
     cy.log('db:clean stderr', cleanResult.stderr);
 
     cy.exec('scripts/dev db:seed', {
-      timeout: 20000,
+      timeout: 120000,
       failOnNonZeroExit: false
     }).then(seedResult => {
       cy.log('db:seed code', seedResult.code);
