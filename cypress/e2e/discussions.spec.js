@@ -6,11 +6,11 @@ describe('Discussion Center', () => {
   it('asks a question and answers a question', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    cy.contains('button', 'Ask a question').click();
+    cy.contains('button', 'Start a discussion').click();
 
-    cy.contains('h1', 'Ask a question');
+    cy.contains('h1', 'Start a discussion');
 
-    cy.contains('button', 'Save question').should('be.disabled');
+    cy.contains('button', 'Save discussion').should('be.disabled');
 
     cy.get('#user-role').should('not.be.disabled');
 
@@ -24,22 +24,22 @@ describe('Discussion Center', () => {
       .type('How to I get to model characteristics?')
       .should('have.value', 'How to I get to model characteristics?');
 
-    cy.contains('button', 'Save question').click();
+    cy.contains('button', 'Save discussion').click();
 
-    cy.contains('button', '1 unanswered question');
+    cy.contains('button', '1 new discussion topic');
 
     cy.contains(
       '.usa-alert__body',
-      'There are no answered questions yet. When a question is answered, it will appear here with the response.'
+      'There are no discussions with replies yet. Once a discussion has been replied to, it will appear here.'
     );
 
-    cy.contains('button', 'Answer').click();
+    cy.contains('button', 'Reply').click();
 
     cy.contains('p', 'How to I get to model characteristics?');
 
-    cy.contains('label', 'Type your answer');
+    cy.contains('label', 'Type your reply');
 
-    cy.contains('button', 'Save answer').should('be.disabled');
+    cy.contains('button', 'Save reply').should('be.disabled');
 
     cy.get('#discussion-content')
       .should('not.be.disabled')
@@ -49,13 +49,13 @@ describe('Discussion Center', () => {
         'Model characteristics is located within the task list.'
       );
 
-    cy.contains('button', 'Save answer').click();
+    cy.contains('button', 'Save reply').click();
 
-    cy.contains('button', '1 answered question');
+    cy.contains('button', '1 discussion');
 
     cy.contains(
       '.usa-alert__body',
-      'There are no unanswered questions. Ask a question using the link above.'
+      'There are no new discussion topics. Start a discussion and it will appear here.'
     );
 
     cy.get('[data-testid="close-discussions"]').click();

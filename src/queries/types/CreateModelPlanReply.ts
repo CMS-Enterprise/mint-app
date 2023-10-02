@@ -14,7 +14,6 @@ export interface CreateModelPlanReply_createDiscussionReply {
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  resolution: boolean | null;
   createdBy: UUID;
   createdDts: Time;
 }
