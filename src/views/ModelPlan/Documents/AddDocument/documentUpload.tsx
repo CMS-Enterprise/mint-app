@@ -2,7 +2,13 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, Fieldset, Label, Radio } from '@trussworks/react-uswds';
+import {
+  Button,
+  ButtonGroup,
+  Fieldset,
+  Label,
+  Radio
+} from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import FileUpload from 'components/FileUpload';
@@ -38,6 +44,8 @@ const DocumentUpload = ({
   const { t: h } = useTranslation('draftModelPlan');
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<FileUploadForm>>(null);
+
+  const [buttonState, setButtonState] = useState<'upload' | 'link'>('upload');
 
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
@@ -132,6 +140,23 @@ const DocumentUpload = ({
           {t('documentLinkError')}
         </Alert>
       )}
+
+      <ButtonGroup type="segmented">
+        <Button
+          type="button"
+          outline={buttonState !== 'upload'}
+          onClick={() => setButtonState('upload')}
+        >
+          {t('segmentedButton.upload')}
+        </Button>
+        <Button
+          type="button"
+          outline={buttonState !== 'link'}
+          onClick={() => setButtonState('link')}
+        >
+          {t('segmentedButton.link')}
+        </Button>
+      </ButtonGroup>
 
       <Formik
         initialValues={{

@@ -66,6 +66,10 @@ const documents = {
   removeDocumentFail: 'Failed to remove document {{-documentName}}',
   removeDocumentSuccess: 'Success! Document {{-documentName}} removed.',
   documentUploadSuccess: 'Successfully added {{-documentName}}.',
+  segmentedButton: {
+    upload: 'Upload document',
+    link: 'Link to document'
+  },
   addDocument: 'Add a document',
   uploadDescription:
     'Choose to upload or link to a document, such as a recent concept document, policy paper, or any additional model background information.',
