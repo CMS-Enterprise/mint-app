@@ -22,7 +22,8 @@ RUN go install github.com/go-delve/delve/cmd/dlv@latest && \
 
 FROM base AS build
 
-COPY cmd/ pkg/ ./
+COPY cmd/ ./cmd/
+COPY pkg/ ./pkg/
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/mint ./cmd/mint
 
 FROM scratch
@@ -31,7 +32,7 @@ WORKDIR /mint/
 
 COPY --from=base /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=base /usr/share/zoneinfo /usr/share/zoneinfo
-COPY --from=build /mint/bin/mint ./
+COPY --from=build /mint/bin/mint .
 
 # Copy build args to envs for version, datetime, and timestamp
 ARG ARG_APPLICATION_VERSION
