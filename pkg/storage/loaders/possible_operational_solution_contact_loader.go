@@ -38,6 +38,7 @@ func (loaders *DataLoaders) PossibleOperationalSolutionContactsGetByPossibleSolu
 		if ok { // There is already a slice in the array
 			slice = append(slice, contact) // Add existing to slice
 			contactsByID[key] = slice
+			continue
 		}
 		contactsByID[key] = []*models.PossibleOperationalSolutionContact{contact}
 	}
