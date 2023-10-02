@@ -41,15 +41,15 @@
             <p>{{.ModelStatus}}</p>
             <br/>
 
-            <p><b>Last Updated</b></p>
-            <p>{{.ModelLastUpdated.Format "2006-01-02 15:04:05"}}</p>
+            <p><b>Last updated</b></p>
+            <p>{{.ModelLastUpdated.Format "01/02/2006"}}</p>
             <br/>
 
-            <p><b>Model Leads</b></p>
+            <p><b>Model lead(s)</b></p>
             <p>
                 {{if .ModelLeads}}
                     {{- range $index, $element := .ModelLeads -}}
-                        {{- if $index -}}, {{- end -}}
+                        {{- if $index -}},&nbsp{{- end -}}
                         {{$element}}
                     {{- end -}}
                 {{else}}
