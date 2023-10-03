@@ -17,9 +17,12 @@ export const mapContactsToSolutions = (
   contactSolutions: GetPossibleSolutionsQuery['possibleOperationalSolutions']
 ): HelpSolutionType[] => {
   return solutions.map(solution => {
-    const foundSolution = contactSolutions?.find(
-      contactSolution => solution.enum === contactSolution.key
-    );
+    const foundSolution =
+      contactSolutions && Array.isArray(contactSolutions)
+        ? contactSolutions?.find(
+            contactSolution => solution.enum === contactSolution.key
+          )
+        : undefined;
 
     return {
       ...solution,

@@ -3,10 +3,12 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { act, render, waitFor } from '@testing-library/react';
 import { Formik } from 'formik';
 
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'types/graphql-global-types';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import { initialValues } from '../../SelectSolutions';
 
@@ -31,6 +33,8 @@ const solution = [
   }
 ];
 
+const mocks = [...possibleSolutionsMock];
+
 const handleSubmit = vi.fn();
 
 describe('IT Solutions CheckboxCard', () => {
@@ -43,9 +47,11 @@ describe('IT Solutions CheckboxCard', () => {
           ]}
         >
           <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-              <CheckboxCard solution={solution[0]} index={0} />
-            </Formik>
+            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                <CheckboxCard solution={solution[0]} index={0} />
+              </Formik>
+            </VerboseMockedProvider>
           </Route>
         </MemoryRouter>
       );

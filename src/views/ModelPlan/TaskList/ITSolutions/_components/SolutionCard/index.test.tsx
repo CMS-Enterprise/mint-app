@@ -2,7 +2,9 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import SolutionCard, { SolutionCardType } from '.';
 
@@ -23,6 +25,8 @@ const solution: SolutionCardType = {
   nameOther: null
 };
 
+const mocks = [...possibleSolutionsMock];
+
 describe('IT Solutions SolutionCard', () => {
   it('renders default card correctly', async () => {
     const { getByText } = render(
@@ -32,15 +36,17 @@ describe('IT Solutions SolutionCard', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-          <SolutionCard solution={solution} />
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <SolutionCard solution={solution} />
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
 
     await waitFor(() => {
       expect(getByText('Shared Systems')).toBeInTheDocument();
-      expect(getByText('Donna Schmidt')).toBeInTheDocument();
-      expect(getByText('donna.schmidt@cms.hhs.gov')).toBeInTheDocument();
+      expect(getByText('John Mint')).toBeInTheDocument();
+      expect(getByText('john.mint@oddball.io')).toBeInTheDocument();
     });
   });
 
@@ -52,7 +58,9 @@ describe('IT Solutions SolutionCard', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-          <SolutionCard solution={solution} addingCustom />
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <SolutionCard solution={solution} addingCustom />
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
@@ -70,7 +78,9 @@ describe('IT Solutions SolutionCard', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-          <SolutionCard solution={solution} />
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <SolutionCard solution={solution} />
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
