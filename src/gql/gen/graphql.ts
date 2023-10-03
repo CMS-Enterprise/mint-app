@@ -1068,11 +1068,13 @@ export enum OperationalSolutionKey {
   INNOVATION = 'INNOVATION',
   INTERNAL_STAFF = 'INTERNAL_STAFF',
   IPC = 'IPC',
+  ISP = 'ISP',
   LDG = 'LDG',
   LOI = 'LOI',
   LV = 'LV',
   MARX = 'MARX',
   MDM = 'MDM',
+  MIDS = 'MIDS',
   OTHER_NEW_PROCESS = 'OTHER_NEW_PROCESS',
   OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
   POST_PORTAL = 'POST_PORTAL',
@@ -2124,7 +2126,25 @@ export type PossibleOperationalSolution = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
+  pointsOfContact: Array<PossibleOperationalSolutionContact>;
   treatAsOther: Scalars['Boolean']['output'];
+};
+
+/** PossibleOperationalSolutionContact represents a contact for a possible operational solution */
+export type PossibleOperationalSolutionContact = {
+  __typename?: 'PossibleOperationalSolutionContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  isTeam: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  possibleOperationalSolutionID: Scalars['Int']['output'];
+  role?: Maybe<Scalars['String']['output']>;
 };
 
 export type PrepareForClearance = {
