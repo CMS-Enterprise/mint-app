@@ -21,7 +21,6 @@ describe('Operation Solution Help Card', () => {
     expect(
       getByText('Applications and participant interaction')
     ).toBeInTheDocument();
-    expect(getByText('4i/ACO-OS Team')).toBeInTheDocument();
   });
 
   it('matches snapshot', () => {

@@ -6,10 +6,9 @@ import { useLocation } from 'react-router-dom';
 
 import usePrevLocation from 'hooks/usePrevious';
 import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
-import {
-  helpSolutions,
-  HelpSolutionType
-} from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import useHelpSolution from './useHelpSolutions';
 
 type SolutionModalState = {
   prevPathname: string;
@@ -21,6 +20,8 @@ const useModalSolutionState = (
   solutionKey: string | null
 ): SolutionModalState => {
   const location = useLocation();
+
+  const helpSolutions = useHelpSolution();
 
   const params = new URLSearchParams(location.search);
   const solutionDetail = params.get('solution');
