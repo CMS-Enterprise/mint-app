@@ -2138,12 +2138,13 @@ export type PossibleOperationalSolutionContact = {
   createdDts: Scalars['Time']['output'];
   email: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
+  isTeam: Scalars['Boolean']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   possibleOperationalSolutionID: Scalars['Int']['output'];
-  role: Scalars['String']['output'];
+  role?: Maybe<Scalars['String']['output']>;
 };
 
 export type PrepareForClearance = {

@@ -134,7 +134,8 @@ type PossibleOperationalSolutionContact {
   
   name: String!
   email: String!
-  role: String!
+  isTeam: Boolean!
+  role: String
 
 
   createdBy: UUID!
