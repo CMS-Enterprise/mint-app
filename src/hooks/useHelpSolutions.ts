@@ -7,8 +7,7 @@ import { GetPossibleSolutionsQuery } from 'gql/gen/graphql';
 import {
   HelpSolutionBaseType,
   helpSolutions,
-  HelpSolutionType,
-  SolutionContactType
+  HelpSolutionType
 } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import useCacheQuery from './useCacheQuery';
@@ -18,14 +17,13 @@ export const mapContactsToSolutions = (
   contactSolutions: GetPossibleSolutionsQuery['possibleOperationalSolutions']
 ): HelpSolutionType[] => {
   return solutions.map(solution => {
-    const foundSolution = contactSolutions.find(
+    const foundSolution = contactSolutions?.find(
       contactSolution => solution.enum === contactSolution.key
     );
 
     return {
       ...solution,
-      pointsOfContact:
-        foundSolution?.pointsOfContact || ([] as SolutionContactType[])
+      pointsOfContact: foundSolution?.pointsOfContact
     };
   });
 };

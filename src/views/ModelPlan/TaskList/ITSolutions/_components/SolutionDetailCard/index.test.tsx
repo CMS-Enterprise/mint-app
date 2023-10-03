@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
@@ -37,6 +38,8 @@ const solution: GetOperationalSolutionType = {
   operationalSolutionSubtasks: []
 };
 
+const mocks = [...possibleSolutionsMock, ...needQuestionAndAnswerMock];
+
 describe('SolutionDetailsCard', () => {
   it('matches snapshot', async () => {
     const { asFragment, getByText } = render(
@@ -46,10 +49,7 @@ describe('SolutionDetailsCard', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-          <VerboseMockedProvider
-            mocks={needQuestionAndAnswerMock}
-            addTypename={false}
-          >
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <MessageProvider>
               <SolutionDetailCard
                 solution={solution}
@@ -81,10 +81,7 @@ describe('SolutionDetailsCard', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-          <VerboseMockedProvider
-            mocks={needQuestionAndAnswerMock}
-            addTypename={false}
-          >
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <MessageProvider>
               <SolutionDetailCard
                 solution={solution}
