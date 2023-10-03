@@ -1,4 +1,16 @@
 import GetPossibleSolutions from 'gql/apolloGQL/Solutions/GetPossibleSolutions';
+import { OperationalSolutionKey } from 'gql/gen/graphql';
+
+export const pointsOfContact = [
+  {
+    __typename: 'PossibleOperationalSolutionContact',
+    id: '123',
+    name: 'John Mint',
+    email: 'john.mint@oddball.io',
+    isTeam: false,
+    role: 'Project lead'
+  }
+];
 
 export const possibleSolutionsMock = [
   {
@@ -8,19 +20,10 @@ export const possibleSolutionsMock = [
     result: {
       data: {
         possibleOperationalSolutions: {
-          __typname: '',
+          __typname: 'PossibleOperationalSolutions',
           id: '123',
-          key: '4INN',
-          pointsOfContact: [
-            {
-              __typename: 'PossibleOperationalSolutionContact',
-              id: '456',
-              name: 'John Mint',
-              email: 'john.mint@oddball.io',
-              isTeam: false,
-              role: 'Project lead'
-            }
-          ]
+          key: OperationalSolutionKey.INNOVATION,
+          pointsOfContact
         }
       }
     }

@@ -12,7 +12,6 @@ import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import MainContent from 'components/MainContent';
 import ExternalLink from 'components/shared/ExternalLink';
 import cmsGovLogo from 'images/cmsGovLogo.png';
 import hhsLogo from 'images/hhsLogo.png';
@@ -52,7 +51,7 @@ const Footer = () => {
       {authState?.isAuthenticated &&
         feedbackEnabled &&
         location.pathname !== '/pre-decisional-notice' && (
-          <MainContent
+          <div
             className={classNames('bg-mint-cool-5 padding-y-2', {
               'margin-top-7': authState?.isAuthenticated
             })}
@@ -91,7 +90,7 @@ const Footer = () => {
 
               <IconLightbulbOutline className="margin-top-05 lightbulb" />
             </GridContainer>
-          </MainContent>
+          </div>
         )}
 
       <UswdsFooter

@@ -3,7 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { act, render, waitFor } from '@testing-library/react';
 import { Formik } from 'formik';
 
-import { possibleSolutionsMock } from 'data/mock/solutions';
+import { pointsOfContact, possibleSolutionsMock } from 'data/mock/solutions';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
@@ -29,7 +29,8 @@ const solution = [
     pocEmail: '',
     nameOther: null,
     isOther: false,
-    otherHeader: null
+    otherHeader: null,
+    pointsOfContact
   }
 ];
 
