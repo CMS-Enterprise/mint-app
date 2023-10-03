@@ -13,7 +13,7 @@ func PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx context.Cont
 	allLoaders := loaders.Loaders(ctx)
 	contactLoader := allLoaders.PossibleOperationSolutionContactLoader
 	key := loaders.NewKeyArgs()
-	key.Args["possible_operational_solution_id"] = possibleSolutionID //TODO: SW should we store this key in a package so it's known and consistent?
+	key.Args[loaders.DLPosOperationalSolutionKey] = possibleSolutionID
 
 	thunk := contactLoader.Loader.Load(ctx, key)
 	result, err := thunk()
