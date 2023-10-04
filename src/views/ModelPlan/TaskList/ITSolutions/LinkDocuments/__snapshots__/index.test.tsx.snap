@@ -601,7 +601,7 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 role="cell"
                 style="padding-left: 0px;"
               >
-                ICIP Draft
+                Concept Paper
               </td>
               <td
                 role="cell"
@@ -623,7 +623,13 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 role="cell"
                 style="padding-left: 0px;"
               >
-                Virus scan in progress...
+                <button
+                  class="usa-button usa-button--unstyled margin-right-1"
+                  data-testid="button"
+                  type="button"
+                >
+                  View
+                </button>
               </td>
             </tr>
           </tbody>
