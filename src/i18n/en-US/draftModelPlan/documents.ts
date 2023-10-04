@@ -132,7 +132,7 @@ const documents = {
   documentUnLinkSuccess:
     'Success! Your documents are unlinked to this solution.',
   documentLinkError:
-    'There was a problem connecting the selected documents to this solution. Please try again.',
+    'There was an error connecting {{fileName}} to this solution. Please try again.',
   documentUnLinkError:
     'There was a problem unlinking the selected model documents to this solution. Please try again.',
   documentUploadSolutionSuccess:

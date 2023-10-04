@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -22,8 +22,8 @@ import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
 import LinkNewPlanDocument from 'queries/Documents/LinkNewPlanDocument';
 import { LinkNewPlanDocument as LinkNewPlanDocumentType } from 'queries/Documents/types/LinkNewPlanDocument';
-// import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
-// import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
+import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
+import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { LinkingDocumentFormTypes } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
@@ -48,7 +48,8 @@ const LinkDocument = ({
 
   const { modelName } = useContext(ModelInfoContext);
   // State management for mutation errors
-  // const [mutationError, setMutationError] = useState<boolean>(false);
+  const [mutationError, setMutationError] = useState<boolean>(false);
+  const [fileNameError, setFileNameError] = useState('');
 
   const [linkFile] = useMutation<LinkNewPlanDocumentType>(LinkNewPlanDocument);
 
@@ -64,11 +65,11 @@ const LinkDocument = ({
       </Alert>
     );
 
-  // const [
-  //   createSolutionLinks
-  // ] = useMutation<CreateDocumentSolutionLinksVariables>(
-  //   CreateDocumentSolutionLinks
-  // );
+  const [
+    createSolutionLinks
+  ] = useMutation<CreateDocumentSolutionLinksVariables>(
+    CreateDocumentSolutionLinks
+  );
 
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = ({
@@ -94,9 +95,40 @@ const LinkDocument = ({
     })
       .then(response => {
         if (!response.errors) {
-          messageOnNextPage('documentUploadSuccess', name);
+          // Checking if need to link new doc to existing solution
+          if (
+            solutionID &&
+            solutionDetailsLink &&
+            response?.data?.linkNewPlanDocument?.id
+          ) {
+            createSolutionLinks({
+              variables: {
+                solutionID,
+                documentIDs: [response?.data?.linkNewPlanDocument?.id]
+              }
+            })
+              .then(res => {
+                if (res && !res.errors) {
+                  messageOnNextPage('documentUploadSolutionSuccess', name);
+                  history.push(solutionDetailsLink);
+                } else if (response.errors) {
+                  setFileNameError(name);
+                  setMutationError(true);
+                }
+              })
+              .catch(() => {
+                setFileNameError(name);
+                setMutationError(true);
+              });
+          } else {
+            messageOnNextPage('documentUploadSuccess', name);
 
-          history.push(`/models/${modelID}/documents`);
+            if (solutionDetailsLink) {
+              history.push(solutionDetailsLink);
+            } else {
+              history.push(`/models/${modelID}/documents`);
+            }
+          }
         }
       })
       .catch(errors => {
@@ -106,11 +138,11 @@ const LinkDocument = ({
 
   return (
     <div>
-      {/* {mutationError && (
+      {mutationError && (
         <Alert type="error" slim>
-          {t('documentLinkError')}
+          {t('documentLinkError', { fileName: fileNameError })}
         </Alert>
-      )} */}
+      )}
 
       <Formik
         initialValues={{
