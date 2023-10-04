@@ -2622,7 +2622,7 @@ export type CreatSendFeedbackMutationVariables = Exact<{
 }>;
 
 
-export type CreatSendFeedbackMutation = { __typename?: 'Mutation', sendFeedbackEmail: boolean };
+export type CreatSendFeedbackMutation = { __typename: 'Mutation', sendFeedbackEmail: boolean };
 
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
