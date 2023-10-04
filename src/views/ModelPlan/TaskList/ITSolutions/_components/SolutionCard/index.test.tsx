@@ -14,10 +14,10 @@ const operationalNeedID = 'f92a8a35-86de-4e03-a81a-bd8bec2e30e3';
 const solution: SolutionCardType = {
   __typename: 'OperationalSolution',
   id: '9d3b71c0-2bd0-4390-a40f-9f6befe8e83e',
-  name: 'Shared Systems',
-  key: OperationalSolutionKey.SHARED_SYSTEMS,
-  pocName: 'John Mint',
-  pocEmail: 'john.mint@oddball.io',
+  name: 'Research, Measurement, Assessment, Design, and Analysis',
+  key: OperationalSolutionKey.RMADA,
+  pocName: 'Alicia Thomas',
+  pocEmail: 'at.mint@oddball.io',
   isOther: false,
   isCommonSolution: true,
   otherHeader: null,
@@ -44,9 +44,11 @@ describe('IT Solutions SolutionCard', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('Shared Systems')).toBeInTheDocument();
-      expect(getByText('John Mint')).toBeInTheDocument();
-      expect(getByText('john.mint@oddball.io')).toBeInTheDocument();
+      expect(
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
+      ).toBeInTheDocument();
+      expect(getByText('Alicia Thomas')).toBeInTheDocument();
+      expect(getByText('at.mint@oddball.io')).toBeInTheDocument();
     });
   });
 
@@ -71,7 +73,7 @@ describe('IT Solutions SolutionCard', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
@@ -84,6 +86,10 @@ describe('IT Solutions SolutionCard', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitFor(() => {
+      expect(getByText('at.mint@oddball.io')).toBeInTheDocument();
+    });
 
     expect(asFragment()).toMatchSnapshot();
   });

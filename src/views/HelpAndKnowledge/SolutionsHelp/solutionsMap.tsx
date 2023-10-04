@@ -78,47 +78,6 @@ export const operationalSolutionSubCategoryMap: Record<
   quality: null
 };
 
-export type ContactRoles =
-  | 'Product Owner'
-  | 'Senior Lead'
-  | 'Chief Quality Officer and Senior Advisor to the CMMI Front Office, Quality Vertical Lead'
-  | 'Program Analyst'
-  | 'Quality Analyst'
-  | 'Technical Lead'
-  | 'Platform Lead'
-  | 'Project Lead'
-  | 'Point of Contact'
-  | 'Subject Matter Expert'
-  | 'CMMI Government Task Lead'
-  | 'Contracting Officer Representative'
-  | 'Operations and Management Lead '
-  | 'Director, Division of Payment Operations'
-  | 'Administrator'
-  | 'Director, Division of Grants Management'
-  | 'Deputy Director, Division of Grants Management'
-  | 'Director, Division of System Support, Operation and Security (DSSOS)'
-  | 'Co-team Lead'
-  | 'Division Director'
-  | 'Deputy Division Director'
-  | 'Director, Division of Model Learning Systems (DMLS)'
-  | 'Deputy Director, Division of Model Learning Systems (DMLS)'
-  | 'Beneficiary Listening Session Point of Contact'
-  | 'Deputy Director, Division of Enterprise Information Management Services'
-  | 'System Owner'
-  | 'CMMI/BSG Point of Contact'
-  | 'CMMI/BSG Project Support'
-  | 'Overlaps Operations Support'
-  | 'OIT Point of Contact'
-  | 'OIT Government Task Lead'
-  | 'Quality Vertical'
-  | 'Quality Vertical Program Analyst'
-  | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
-  | 'Quality Subject Matter Expert (QSME)'
-  | 'Director, Division of Portfolio Management & Strategy'
-  | 'Director, Division of Budget and Administrative Services (DBAS)'
-  | 'Product Manager'
-  | 'Director, Division of Budget Operations & Management (DBOM)';
-
 export type SolutionContactType = GetPossibleSolutionsQuery['possibleOperationalSolutions'][0]['pointsOfContact'][0];
 
 export interface HelpSolutionType extends HelpSolutionBaseType {
