@@ -2,10 +2,15 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, Fieldset, Label, Radio } from '@trussworks/react-uswds';
+import {
+  Button,
+  Fieldset,
+  Label,
+  Radio,
+  TextInput
+} from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-import FileUpload from 'components/FileUpload';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -15,17 +20,17 @@ import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
-import { UploadNewPlanDocument as UploadNewPlanDocumentType } from 'queries/Documents/types/UploadNewPlanDocument';
-import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
+import LinkNewPlanDocument from 'queries/Documents/LinkNewPlanDocument';
+import { LinkNewPlanDocument as LinkNewPlanDocumentType } from 'queries/Documents/types/LinkNewPlanDocument';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
-import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
+import { LinkingDocumentFormTypes } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateDocumentType } from 'utils/modelPlan';
-import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
+import { DocumentLinkValidationSchema } from 'validations/documentUploadSchema';
 
-const DocumentUpload = ({
+const LinkDocument = ({
   solutionDetailsLink,
   solutionID
 }: {
@@ -38,14 +43,12 @@ const DocumentUpload = ({
   const { t: h } = useTranslation('draftModelPlan');
 
   const { showMessageOnNextPage } = useMessage();
-  const formikRef = useRef<FormikProps<FileUploadForm>>(null);
+  const formikRef = useRef<FormikProps<LinkingDocumentFormTypes>>(null);
 
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const [uploadFile, uploadFileStatus] = useMutation<UploadNewPlanDocumentType>(
-    UploadNewPlanDocument
-  );
+  const [linkFile] = useMutation<LinkNewPlanDocumentType>(LinkNewPlanDocument);
 
   const messageOnNextPage = (message: string, fileName: string) =>
     showMessageOnNextPage(
@@ -65,65 +68,68 @@ const DocumentUpload = ({
   );
 
   // Uploads the document to s3 bucket and create document on BE
-  const onSubmit = (values: FileUploadForm | LinkingDocumentFormTypes) => {
-    const { file } = values as FileUploadForm;
+  const onSubmit = (values: LinkingDocumentFormTypes) => {
+    const {
+      name,
+      url,
+      restricted,
+      documentType,
+      otherTypeDescription,
+      optionalNotes
+    } = values;
 
-    if (file && file.name && file.size >= 0 && file.type) {
-      uploadFile({
-        variables: {
-          input: {
-            modelPlanID: modelID,
-            fileData: file,
-            restricted: values.restricted,
-            documentType: values.documentType,
-            otherTypeDescription: values.otherTypeDescription,
-            optionalNotes: values.optionalNotes
+    linkFile({
+      variables: {
+        input: {
+          modelPlanID: modelID,
+          name,
+          url,
+          documentType,
+          restricted,
+          otherTypeDescription,
+          optionalNotes
+        }
+      }
+    })
+      .then(response => {
+        if (!response.errors) {
+          // Checking if need to link new doc to existing solution
+          if (
+            solutionID &&
+            solutionDetailsLink
+            // && response?.data?.uploadNewPlanDocument?.id
+          ) {
+            createSolutionLinks({
+              variables: {
+                solutionID
+                // documentIDs: [response?.data?.uploadNewPlanDocument?.id]
+              }
+            })
+              .then(res => {
+                if (res && !res.errors) {
+                  messageOnNextPage('documentUploadSolutionSuccess', name);
+                  history.push(solutionDetailsLink);
+                } else if (response.errors) {
+                  setMutationError(true);
+                }
+              })
+              .catch(() => {
+                setMutationError(true);
+              });
+          } else {
+            messageOnNextPage('documentUploadSuccess', name);
+
+            if (solutionDetailsLink) {
+              history.push(solutionDetailsLink);
+            } else {
+              history.push(`/models/${modelID}/documents`);
+            }
           }
         }
       })
-        .then(response => {
-          if (!response.errors) {
-            // Checking if need to link new doc to existing solution
-            if (
-              solutionID &&
-              solutionDetailsLink &&
-              response?.data?.uploadNewPlanDocument?.id
-            ) {
-              createSolutionLinks({
-                variables: {
-                  solutionID,
-                  documentIDs: [response?.data?.uploadNewPlanDocument?.id]
-                }
-              })
-                .then(res => {
-                  if (res && !res.errors) {
-                    messageOnNextPage(
-                      'documentUploadSolutionSuccess',
-                      file.name
-                    );
-                    history.push(solutionDetailsLink);
-                  } else if (response.errors) {
-                    setMutationError(true);
-                  }
-                })
-                .catch(() => {
-                  setMutationError(true);
-                });
-            } else {
-              messageOnNextPage('documentUploadSuccess', file.name);
-
-              if (solutionDetailsLink) {
-                history.push(solutionDetailsLink);
-              } else {
-                history.push(`/models/${modelID}/documents`);
-              }
-            }
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-    }
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
   };
 
   return (
@@ -136,21 +142,20 @@ const DocumentUpload = ({
 
       <Formik
         initialValues={{
-          file: null,
-          url: null,
-          name: null,
+          url: '',
+          name: '',
           documentType: null,
           restricted: null,
           otherTypeDescription: '',
           optionalNotes: ''
         }}
         onSubmit={onSubmit}
-        validationSchema={DocumentUploadValidationSchema}
+        validationSchema={DocumentLinkValidationSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<FileUploadForm>) => {
+        {(formikProps: FormikProps<LinkingDocumentFormTypes>) => {
           const {
             errors,
             setErrors,
@@ -179,14 +184,6 @@ const DocumentUpload = ({
                   })}
                 </ErrorAlert>
               )}
-              {uploadFileStatus.error && (
-                <ErrorAlert heading="Error uploading document">
-                  <ErrorAlertMessage
-                    message={uploadFileStatus.error.message}
-                    errorKey="accessibilityRequest"
-                  />
-                </ErrorAlert>
-              )}
               <div>
                 <Form
                   onSubmit={e => {
@@ -194,37 +191,48 @@ const DocumentUpload = ({
                     window.scrollTo(0, 0);
                   }}
                 >
-                  <FieldGroup scrollElement="file" error={!!flatErrors.file}>
-                    <Label htmlFor="FileUpload-File">
-                      {t('documentUpload')}
+                  <FieldGroup scrollElement="url" error={!!flatErrors.url}>
+                    <Label htmlFor="FileUpload-LinkDocument">
+                      {t('linkDocument.linkLabel')}
                       <RequiredAsterisk />
                     </Label>
 
                     <Label
-                      htmlFor="FileUpload-File"
+                      htmlFor="FileUpload-LinkDocument"
                       hint
                       className="text-normal text-base margin-y-1"
                     >
-                      {t('fileTypes')}
+                      {t('linkDocument.linkHelpText')}
                     </Label>
 
-                    <FieldErrorMsg>{flatErrors.file}</FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.url}</FieldErrorMsg>
 
                     <Field
-                      as={FileUpload}
-                      id="FileUpload-File"
-                      name="file"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setFieldValue('file', e.currentTarget?.files?.[0]);
-                      }}
-                      accept=".pdf,.doc,.docx,.xls,.xlsx"
-                      inputProps={{
-                        'aria-expanded': !!values.file,
-                        'aria-label':
-                          values.file &&
-                          `${t('documentUpload')} ${t('ariaLabelChangeFile')}`,
-                        'aria-controls': 'file-type'
-                      }}
+                      as={TextInput}
+                      id="FileUpload-LinkDocument"
+                      name="FileUpload-LinkDocument"
+                    />
+                  </FieldGroup>
+                  <FieldGroup scrollElement="name" error={!!flatErrors.name}>
+                    <Label htmlFor="FileUpload-LinkFileName">
+                      {t('linkDocument.fileNameLabel')}
+                      <RequiredAsterisk />
+                    </Label>
+
+                    <Label
+                      htmlFor="FileUpload-LinkFileName"
+                      hint
+                      className="text-normal text-base margin-y-1"
+                    >
+                      {t('linkDocument.fileNameHelpText')}
+                    </Label>
+
+                    <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>
+
+                    <Field
+                      as={TextInput}
+                      id="FileUpload-LinkFileName"
+                      name="FileUpload-LinkFileName"
                     />
                   </FieldGroup>
 
@@ -379,7 +387,8 @@ const DocumentUpload = ({
                       onClick={() => setErrors({})}
                       disabled={
                         isSubmitting ||
-                        !values.file ||
+                        !values.name ||
+                        !values.url ||
                         !values.documentType ||
                         values.restricted === null ||
                         (values.documentType === DocumentType.OTHER &&
@@ -400,4 +409,4 @@ const DocumentUpload = ({
   );
 };
 
-export default DocumentUpload;
+export default LinkDocument;
