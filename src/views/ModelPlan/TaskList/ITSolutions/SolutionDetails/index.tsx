@@ -37,7 +37,7 @@ import { DocumentStatusType } from 'views/ModelPlan/ReadOnly/Documents';
 import NotFound from 'views/NotFound';
 
 import SolutionDetailCard from '../_components/SolutionDetailCard';
-import SubtasksTable, { SubtaskLinks } from '../_components/SubtasksTable';
+import SubtasksTable from '../_components/SubtasksTable';
 
 const SolutionDetails = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -190,8 +190,6 @@ const SolutionDetails = () => {
             />
 
             <SubtasksTable subtasks={subtasks} className="margin-top-6" />
-
-            <SubtaskLinks className="margin-top-3" subtasks={subtasks} />
 
             {/* Documents table and link */}
             <div className="margin-top-6">
