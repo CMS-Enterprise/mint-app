@@ -494,6 +494,12 @@ func (r *mutationResolver) ReportAProblem(ctx context.Context, input model.Repor
 	return resolvers.ReportAProblem(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
 }
 
+// SendFeedbackEmail is the resolver for the sendFeedbackEmail field.
+func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.SendFeedbackEmail(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)

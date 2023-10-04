@@ -119,7 +119,7 @@ exports[`Report a problem form > matches snapshot 1`] = `
               class="usa-form-group"
             >
               <label
-                class="usa-label"
+                class="usa-label margin-top-5"
                 data-testid="label"
                 for="report-a-problem-allow-contact"
               >
@@ -178,7 +178,7 @@ exports[`Report a problem form > matches snapshot 1`] = `
               class="usa-form-group"
             >
               <label
-                class="usa-label"
+                class="usa-label margin-top-5"
                 data-testid="label"
                 for="report-a-problem-allow-contact"
               >
@@ -301,7 +301,7 @@ exports[`Report a problem form > matches snapshot 1`] = `
               class="usa-form-group"
             >
               <label
-                class="usa-label"
+                class="usa-label margin-top-5"
                 data-testid="label"
                 for="report-a-problem-what-went-wrong"
               >
@@ -326,7 +326,7 @@ exports[`Report a problem form > matches snapshot 1`] = `
               class="usa-form-group"
             >
               <label
-                class="usa-label"
+                class="usa-label margin-top-5"
                 data-testid="label"
                 for="report-a-problem-what-went-wrong"
               >
@@ -351,7 +351,7 @@ exports[`Report a problem form > matches snapshot 1`] = `
               class="usa-form-group"
             >
               <label
-                class="usa-label"
+                class="usa-label margin-top-5"
                 data-testid="label"
                 for="report-a-problem-allow-severity"
               >
