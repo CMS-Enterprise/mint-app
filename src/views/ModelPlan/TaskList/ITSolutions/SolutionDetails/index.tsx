@@ -195,16 +195,7 @@ const SolutionDetails = () => {
             <div className="margin-top-6">
               <h3 className="margin-bottom-0">{t('documents')}</h3>
 
-              <Table
-                data={solution.documents}
-                refetch={refetch}
-                setDocumentMessage={setDocumentMessage}
-                setDocumentStatus={setDocumentStatus}
-                hasEditAccess
-                handleDocumentUnlink={handleDocumentUnlink}
-              />
-
-              <div className="display-flex margin-y-4">
+              <div className="display-flex margin-top-2 margin-bottom-3">
                 {/* Link existing documents */}
                 <Button
                   type="button"
@@ -237,6 +228,15 @@ const SolutionDetails = () => {
                   {t(`links.uploadDocuments`)}
                 </Button>
               </div>
+
+              <Table
+                data={solution.documents}
+                refetch={refetch}
+                setDocumentMessage={setDocumentMessage}
+                setDocumentStatus={setDocumentStatus}
+                hasEditAccess
+                handleDocumentUnlink={handleDocumentUnlink}
+              />
             </div>
           </>
         )}
