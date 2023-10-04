@@ -1,4 +1,5 @@
 const feedback = {
+  // Report a problem
   reportHeading: 'Report a problem',
   reportSubheading:
     'Did you notice something wrong with MINT? Let us know using the form below.',
@@ -45,8 +46,51 @@ const feedback = {
       OTHER: 'Other (please specify)'
     }
   },
+
+  // Send Feedback
+  feedbackHeading: 'Send feedback',
+  feedbackSubheading:
+    'Have a suggestion for how to improve MINT? Let us know using the form below.',
+  cmsRole: {
+    label: 'What is your role?'
+  },
+  mintUsedFor: {
+    label: 'What have you used MINT for?',
+    options: {
+      VIEW_MODEL: 'To view Model Plans',
+      EDIT_MODEL: 'To edit Model Plans',
+      SHARE_MODEL: 'To share or export Model Plan content',
+      TRACK_SOLUTIONS: 'To track operational solutions',
+      CONTRIBUTE_DISCUSSIONS: 'To contribute to Model Discussions',
+      VIEW_HELP: 'To view the Help Center',
+      OTHER: 'Other (please specify)'
+    }
+  },
+  systemEasyToUse: {
+    label: 'The system is easy to use.',
+    options: {
+      AGREE: 'Agree',
+      DISAGREE: 'Disagree',
+      UNSURE: 'I’m not sure (please explain)'
+    }
+  },
+  howSatisfied: {
+    label: 'Overall, how satisfied are you with MINT?',
+    options: {
+      VERY_SATISFIED: 'Very satisfied',
+      SATISFIED: 'Satisfied',
+      NEUTRAL: 'Neutral',
+      DISSATISFIED: 'Dissatisfied',
+      VERY_DISSATISFIED: 'Very dissatisfied'
+    }
+  },
+  howCanWeImprove: {
+    label: 'How can we improve MINT?'
+  },
+
+  // Miscellaneous
   sendReport: 'Send report',
-  sendAndStartAnother: 'Send and start another report',
+  sendFeedback: 'Send feedback',
   closeTab: 'Close tab without sending report',
   thanksforFeedback: 'Thank you for your feedback',
   feedbackReceived:

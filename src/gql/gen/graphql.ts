@@ -343,6 +343,12 @@ export enum DocumentType {
   POLICY_PAPER = 'POLICY_PAPER'
 }
 
+export enum EaseOfUse {
+  AGREE = 'AGREE',
+  DISAGREE = 'DISAGREE',
+  UNSURE = 'UNSURE'
+}
+
 export enum EvaluationApproachType {
   COMPARISON_MATCH = 'COMPARISON_MATCH',
   CONTROL_INTERVENTION = 'CONTROL_INTERVENTION',
@@ -478,6 +484,16 @@ export type LaunchDarklySettings = {
   signedHash: Scalars['String']['output'];
   userKey: Scalars['String']['output'];
 };
+
+export enum MintUses {
+  CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
+  EDIT_MODEL = 'EDIT_MODEL',
+  OTHER = 'OTHER',
+  SHARE_MODEL = 'SHARE_MODEL',
+  TRACK_SOLUTIONS = 'TRACK_SOLUTIONS',
+  VIEW_HELP = 'VIEW_HELP',
+  VIEW_MODEL = 'VIEW_MODEL'
+}
 
 export enum ModelCategory {
   ACCOUNTABLE_CARE = 'ACCOUNTABLE_CARE',
@@ -622,6 +638,8 @@ export type Mutation = {
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   reportAProblem: Scalars['Boolean']['output'];
+  /** This mutation sends feedback about the MINT product to the MINT team */
+  sendFeedbackEmail: Scalars['Boolean']['output'];
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
@@ -781,6 +799,12 @@ export type MutationRemovePlanDocumentSolutionLinksArgs = {
 /** Mutations definition for the schema */
 export type MutationReportAProblemArgs = {
   input: ReportAProblemInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationSendFeedbackEmailArgs = {
+  input: SendFeedbackEmailInput;
 };
 
 
@@ -2332,6 +2356,14 @@ export enum Role {
   MINT_USER = 'MINT_USER'
 }
 
+export enum SatisfactionLevel {
+  DISSATISFIED = 'DISSATISFIED',
+  NEUTRAL = 'NEUTRAL',
+  SATISFIED = 'SATISFIED',
+  VERY_DISSATISFIED = 'VERY_DISSATISFIED',
+  VERY_SATISFIED = 'VERY_SATISFIED'
+}
+
 export type SearchFilter = {
   type: SearchFilterType;
   value: Scalars['Any']['input'];
@@ -2412,6 +2444,19 @@ export enum SelectionMethodType {
   RETROSPECTIVE = 'RETROSPECTIVE',
   VOLUNTARY = 'VOLUNTARY'
 }
+
+/** The inputs to the user feedback form */
+export type SendFeedbackEmailInput = {
+  allowContact?: InputMaybe<Scalars['Boolean']['input']>;
+  cmsRole?: InputMaybe<Scalars['String']['input']>;
+  howCanWeImprove?: InputMaybe<Scalars['String']['input']>;
+  howSatisfied?: InputMaybe<SatisfactionLevel>;
+  isAnonymousSubmission: Scalars['Boolean']['input'];
+  mintUsedFor?: InputMaybe<Array<MintUses>>;
+  mintUsedForOther?: InputMaybe<Scalars['String']['input']>;
+  systemEasyToUse?: InputMaybe<EaseOfUse>;
+  systemEasyToUseOther?: InputMaybe<Scalars['String']['input']>;
+};
 
 export enum SortDirection {
   ASC = 'ASC',
@@ -2552,6 +2597,13 @@ export type CreatReportAProblemMutationVariables = Exact<{
 
 export type CreatReportAProblemMutation = { __typename?: 'Mutation', reportAProblem: boolean };
 
+export type CreatSendFeedbackMutationVariables = Exact<{
+  input: SendFeedbackEmailInput;
+}>;
+
+
+export type CreatSendFeedbackMutation = { __typename?: 'Mutation', sendFeedbackEmail: boolean };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -2584,6 +2636,7 @@ export type GetNdaQuery = { __typename?: 'Query', ndaInfo: { __typename?: 'NDAIn
 
 
 export const CreatReportAProblemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatReportAProblem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReportAProblemInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reportAProblem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<CreatReportAProblemMutation, CreatReportAProblemMutationVariables>;
+export const CreatSendFeedbackDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatSendFeedback"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SendFeedbackEmailInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendFeedbackEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<CreatSendFeedbackMutation, CreatSendFeedbackMutationVariables>;
 export const GetFundingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFunding"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceTrustFundType"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRTrustFundType"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetFundingQuery, GetFundingQueryVariables>;
 export const UpdatePaymentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePayments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanPaymentsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanPayments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePaymentsMutation, UpdatePaymentsMutationVariables>;
 export const CreateShareModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateShareModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelViewFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"receiverEmails"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shareModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"viewFilter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}}},{"kind":"Argument","name":{"kind":"Name","value":"receiverEmails"},"value":{"kind":"Variable","name":{"kind":"Name","value":"receiverEmails"}}},{"kind":"Argument","name":{"kind":"Name","value":"optionalMessage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}}}]}]}}]} as unknown as DocumentNode<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;

@@ -82,6 +82,15 @@ var reportAProblemBodyTemplate string
 //go:embed templates/report_a_problem_subject.html
 var reportAProblemSubjectTemplate string
 
+// SendFeedbackTemplateName is the template name definition of the send feedback email template
+const SendFeedbackTemplateName string = "send_feedback"
+
+//go:embed templates/send_feedback_body.html
+var sendFeedbackBodyTemplate string
+
+//go:embed templates/send_feedback_subject.html
+var sendFeedbackSubjectTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
@@ -144,6 +153,10 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
+	err = t.loadEmailTemplate(SendFeedbackTemplateName, sendFeedbackSubjectTemplate, sendFeedbackBodyTemplate)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
