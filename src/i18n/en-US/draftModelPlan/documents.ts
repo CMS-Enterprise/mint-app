@@ -65,7 +65,8 @@ const documents = {
   urlFail: 'Failed to fetch file URL',
   removeDocumentFail: 'Failed to remove document {{-documentName}}',
   removeDocumentSuccess: 'Success! Document {{-documentName}} removed.',
-  documentUploadSuccess: 'Successfully added {{-documentName}}.',
+  documentUploadSuccess: 'Success! {{-documentName}} added to {{-modelName}}.',
+
   segmentedButton: {
     upload: 'Upload document',
     link: 'Link to document'
