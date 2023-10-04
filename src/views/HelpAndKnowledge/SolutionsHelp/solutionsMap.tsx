@@ -104,7 +104,7 @@ export type ModalSolutionComponentType = {
 };
 
 export interface HelpSolutionBaseType {
-  enum: OperationalSolutionKey | null; // TODO: should not be null, some enums havent been created
+  enum: OperationalSolutionKey;
   key: string; // used for translations
   route: string;
   categories: OperationalSolutionCategories[];
@@ -451,7 +451,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.ISP,
     key: 'innovationSupport',
     route: 'innovation-support-platform',
     categories: [
@@ -539,7 +539,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.MIDS,
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',
     categories: [
