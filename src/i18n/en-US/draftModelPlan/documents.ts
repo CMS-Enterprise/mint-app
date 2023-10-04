@@ -123,17 +123,16 @@ const documents = {
     restricted: 'Please select if this document contains cost information.',
     otherDescr: 'Enter a document name.'
   },
-  linkDocumentsHeader: 'Link model documents',
-  linkDocumentsInfo:
-    'Link any model documents previously uploaded that are associated with this solution.',
-  linkDocumentsButton: 'Link documents',
-  modelDocuments: 'Model documents',
-  dontLink: 'Don’t link documents and return to solution details',
+  connectDocumentsHeader: 'Connect existing documents',
+  connectDocumentsInfo:
+    'Connect any model documents previously added that are associated with this solution.',
+  connectDocumentsButton: 'Connect documents',
+  dontConnect: 'Don’t connect documents and return to solution details',
   documentLinkSuccess: 'Success! Your documents are linked to this solution.',
   documentUnLinkSuccess:
     'Success! Your documents are unlinked to this solution.',
   documentLinkError:
-    'There was a problem linking the selected model documents to this solution. Please try again.',
+    'There was a problem connecting the selected documents to this solution. Please try again.',
   documentUnLinkError:
     'There was a problem unlinking the selected model documents to this solution. Please try again.',
   documentUploadSolutionSuccess:
