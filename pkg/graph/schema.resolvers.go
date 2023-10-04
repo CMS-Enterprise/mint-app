@@ -790,30 +790,7 @@ func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context,
 
 // PointsOfContact is the resolver for the pointsOfContact field.
 func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error) {
-	//TODO: this is mock data, the backend branch will fully implement the logic
-	return []*models.PossibleOperationalSolutionContact{
-		{
-			PossibleOperationalSolutionID: obj.ID,
-			Name:                          "Mr. Test Contact",
-			Email:                         "mrtestcontact@special.email.com",
-			Role:                          models.StringPointer("Subject Matter Expert"),
-			IsTeam:                        false,
-		},
-		{
-			PossibleOperationalSolutionID: obj.ID,
-			Name:                          "The consulting team",
-			Email:                         "testconsultingTeam@special.email.com",
-			Role:                          nil,
-			IsTeam:                        true,
-		},
-		{
-			PossibleOperationalSolutionID: obj.ID,
-			Name:                          "Ms. Test Contact",
-			Email:                         "mstestcontact@special.email.com",
-			Role:                          models.StringPointer("Program Director"),
-			IsTeam:                        false,
-		},
-	}, nil
+	return resolvers.PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, obj.ID)
 }
 
 // CurrentUser is the resolver for the currentUser field.
