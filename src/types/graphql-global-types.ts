@@ -740,6 +740,19 @@ export interface PlanDocumentInput {
 }
 
 /**
+ * PlanDocumentLinkInput
+ */
+export interface PlanDocumentLinkInput {
+  modelPlanID: UUID;
+  url: string;
+  name: string;
+  documentType: DocumentType;
+  restricted: boolean;
+  otherTypeDescription?: string | null;
+  optionalNotes?: string | null;
+}
+
+/**
  * PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
  * general characteristics object when updating it.
  * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
