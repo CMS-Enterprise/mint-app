@@ -13,7 +13,6 @@ import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import MainContent from 'components/MainContent';
 import ExternalLink from 'components/shared/ExternalLink';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import cmsGovLogo from 'images/cmsGovLogo.png';
@@ -56,7 +55,7 @@ const Footer = () => {
       {authState?.isAuthenticated &&
         feedbackEnabled &&
         location.pathname !== '/pre-decisional-notice' && (
-          <MainContent
+          <div
             className={classNames('bg-mint-cool-5 padding-y-2', {
               'margin-top-7': authState?.isAuthenticated
             })}
@@ -132,7 +131,7 @@ const Footer = () => {
                 )}
               </Grid>
             </GridContainer>
-          </MainContent>
+          </div>
         )}
 
       <UswdsFooter
