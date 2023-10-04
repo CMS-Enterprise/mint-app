@@ -1,179 +1,105 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Content</title>
-  <style type="text/css">
-    /* CSS Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+{{template "shared_header.html"}}
 
-    /* General */
-    body {
-      padding-left: 5px;
-      text-align: left;
-    }
-
-    /* Headings */
-    h1 {
-      font-size: 30pt;
-      font-weight: bold;
-      font-style: normal;
-      color: #1B1B1B;
-      font-family: 'Public Sans', sans-serif;
-      text-decoration: none;
-    }
-
-    h2 {
-      font-size: 24pt;
-      font-weight: bold;
-      font-style: normal;
-      color: #1B1B1B;
-      font-family: 'Public Sans', sans-serif;
-      text-decoration: none;
-    }
-
-    h3 {
-      font-size: 16.5pt;
-      font-weight: bold;
-      font-style: normal;
-      color: #1B1B1B;
-      font-family: 'Public Sans', sans-serif;
-      text-decoration: none;
-      line-height: 1.4;
-    }
-
-    /* Subtitle */
-    .subtitle {
-      font-size: 15.5pt;
-      font-weight: normal;
-      font-style: normal;
-      color: #71767A;
-      font-family: 'Public Sans', sans-serif;
-      text-decoration: none;
-    }
-
-    /* Paragraph */
-    p {
-      font-size: 12pt;
-      font-weight: normal;
-      font-style: normal;
-      color: #1B1B1B;
-      font-family: 'Public Sans', sans-serif;
-      text-decoration: none;
-      line-height: 1.4;
-    }
-
-    /* Links */
-    a {
-      font-size: 12pt;
-      color: #005EA2;
-      font-family: 'Public Sans', sans-serif;
-      text-decoration: none;
-    }
-
-    td {
-      white-space: normal;
-      word-wrap: break-word;
-    }
-  </style>
-</head>
 <body>
 <h1 style="padding-top: 3pt;">MINT</h1>
-<p class="subtitle" style="padding-top: 11pt;">The Model Innovation Tool</p>
+<p class="subtitle">The Model Innovation Tool</p>
 <br/>
-<h2 style="padding-top: 14pt;">{{.UserName}} has shared a Model Plan with you:</h2>
+<br/>
+<h3>{{.UserName}} has shared a Model Plan with you:</h3>
 <br/>
 <!-- Only show the optional message if it exists -->
 {{if and .OptionalMessage (gt (len .OptionalMessage) 0)}}
-  <p style="font-size: 15.5pt;
-      font-weight: normal;
-      font-style: normal;
-      color: #565C65;
-      font-family: 'Public Sans', sans-serif;
-      text-decoration: none;">"{{.OptionalMessage}}"</p>
+  <p style="color: #565C65;">"{{.OptionalMessage}}"</p>
   <br/>
 {{end}}
 
-<table style="width: 335px; border: 1px solid #E6E6E6; border-radius: 6px; padding: 20px; display: inline-table;">
-  <tr>
-    <td style="vertical-align: top; padding: 20px;">
-      <h1 style="display: inline-block;">{{.ModelName}}</h1>
-        {{if .ModelShortName}}<h2 style="display: inline-block;"> ({{.ModelShortName}})</h2>{{end}}
-      <br/>
-
-      <h3>Category</h3>
-      <p>
-          {{if .ModelCategories}}
-              {{- range $index, $element := .ModelCategories -}}
-                  {{ if $index }}, {{ end }}
-                  {{$element}}
-              {{- end -}}
-          {{else}}
-            To be determined
-          {{end}}
-      </p>
-      <br/>
-
-      <h3>Status</h3>
-      <p>{{.ModelStatus}}</p>
-      <br/>
-
-      <h3>Last Updated</h3>
-      <p>{{.ModelLastUpdated.Format "2006-01-02 15:04:05"}}</p>
-      <br/>
-
-      <h3>Model Leads</h3>
-      <p>
-          {{if .ModelLeads}}
-              {{- range $index, $element := .ModelLeads -}}
-                  {{- if $index -}}, {{- end -}}
-                  {{$element}}
-              {{- end -}}
-          {{else}}
-            To be determined
-          {{end}}
-      </p>
-      <br/>
-    </td>
-  </tr>
+<table class="formatting-table">
   <tr>
     <td>
-      <p style="padding-top: 14pt;">
-          {{if .ModelViewFilter}}
-            <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}" class="link">
-              View {{.HumanizedModelViewFilter}} details in MINT
-            </a>
-          {{else}}
-            <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
-              View more details in MINT
-            </a>
-          {{end}}
-      </p>
+      <table>
+        <tr>
+          <td style="vertical-align: top;">
+            <h2 style="display: inline-block;">{{.ModelName}}</h2>
+              {{if .ModelShortName}}<h2 style="display: inline-block;"> ({{.ModelShortName}})</h2>{{end}}
+            <br/>
+            <br/>
+
+            <p><b>Category</b></p>
+            <p>
+                {{if .ModelCategories}}
+                    {{- range $index, $element := .ModelCategories -}}
+                        {{ if $index }}, {{ end }}
+                        {{$element}}
+                    {{- end -}}
+                {{else}}
+                  To be determined
+                {{end}}
+            </p>
+            <br/>
+
+            <p><b>Status</b></p>
+            <p>{{.ModelStatus}}</p>
+            <br/>
+
+            <p><b>Last updated</b></p>
+            <p>{{.ModelLastUpdated.Format "01/02/2006"}}</p>
+            <br/>
+
+            <p><b>Model lead(s)</b></p>
+            <p>
+                {{if .ModelLeads}}
+                    {{- range $index, $element := .ModelLeads -}}
+                        {{- if $index -}},&nbsp{{- end -}}
+                        {{$element}}
+                    {{- end -}}
+                {{else}}
+                  To be determined
+                {{end}}
+            </p>
+            <br/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>
+                {{if .ModelViewFilter}}
+                  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}" class="link">
+                    View {{.HumanizedModelViewFilter}} details in MINT
+                  </a>
+                {{else}}
+                  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
+                    View more details in MINT
+                  </a>
+                {{end}}
+            </p>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
-</table>
 
-<br/>
-<br/>
+  <tr>
+    <td height="20">&nbsp;</td>
+  </tr>
 
-<table style="width: 335px; height: 120px; padding: 15px 20px 20px 20px; gap: 10px; background: #E7F6F8; display: inline-table;">
   <tr>
     <td>
-      <p>
-        If you don’t have access to MINT yet, you will need to request access.
+      <table class="blue-footer-table">
+        <tr>
+          <td>
+            <p>
+              If you don’t have access to MINT yet, you will need to request access.
 
-        <br/>
-        <br/>
+              <br/>
+              <br/>
 
-        <a href="{{.ClientAddress}}/how-to-get-access" class="link">
-          Learn how to get access
-        </a>
-      </p>
+              <a href="{{.ClientAddress}}/how-to-get-access" class="link" style="font-weight: normal">
+                Learn how to get access
+              </a>
+            </p>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
 </table>

@@ -70,6 +70,9 @@ var modelPlanShareSubjectTemplate string
 //go:embed templates/model_plan_share_body.html
 var modelPlanShareBodyTemplate string
 
+//go:embed templates/shared_header.html
+var sharedHeaderTemplate string
+
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
 
@@ -171,7 +174,11 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 		return err
 	}
 
-	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate)
+	predefinedTemplates := map[string]string{
+		"shared_header.html": sharedHeaderTemplate,
+	}
+
+	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
 	if err != nil {
 		return err
 	}

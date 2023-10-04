@@ -133,7 +133,7 @@ func createAddedAsCollaboratorTemplateCacheHelper(
 	plan *models.ModelPlan) (*emailTemplates.EmailTemplate, string, string) {
 	templateCache := emailTemplates.NewTemplateCache()
 	_ = templateCache.LoadTextTemplateFromString("testSubject", "{{.ModelName}}'s Test")
-	_ = templateCache.LoadHTMLTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}")
+	_ = templateCache.LoadHTMLTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}", nil)
 	testTemplate := emailTemplates.NewEmailTemplate(
 		templateCache,
 		"testSubject",
