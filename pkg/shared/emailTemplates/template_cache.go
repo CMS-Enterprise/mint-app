@@ -45,17 +45,34 @@ func (t *TemplateCache) GetTextTemplate(templateName string) (*textTemplate.Temp
 }
 
 // LoadHTMLTemplateFromString parses a string into an object model and stores it in the htmlTemplateCache
-func (t *TemplateCache) LoadHTMLTemplateFromString(templateName string, raw string) error {
+func (t *TemplateCache) LoadHTMLTemplateFromString(
+	templateName string,
+	raw string,
+	embeddedTemplates map[string]string, // name to content mapping for embedded templates
+) error {
 	_, templateExists := t.htmlTemplateCache[templateName]
 	if templateExists {
 		return fmt.Errorf("htmlTemplate [%s] already exists in htmlTemplateCache", templateName)
 	}
 
-	tpl, err := htmlTemplate.New(templateName).Parse(raw)
+	// Create a new template with the specified name
+	tpl := htmlTemplate.New(templateName)
+
+	// Parse all the shared/embedded templates first
+	for name, content := range embeddedTemplates {
+		_, err := tpl.New(name).Parse(content) // Add the shared template under its name
+		if err != nil {
+			return err
+		}
+	}
+
+	// Parse the main template (which may reference shared templates)
+	_, err := tpl.Parse(raw)
 	if err != nil {
 		return err
 	}
 
+	// Cache the parsed template
 	t.htmlTemplateCache[templateName] = tpl
 	return nil
 }
