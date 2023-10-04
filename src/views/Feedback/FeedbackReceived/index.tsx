@@ -40,7 +40,7 @@ const FeedbackReceived = () => {
           {t('reportWithMint')}
         </UswdsReactLink>
 
-        <UswdsReactLink to="/submit-feedback" className="display-flex">
+        <UswdsReactLink to="/send-feedback" className="display-flex">
           {t('sendFeedbackWithMint')}
         </UswdsReactLink>
       </GridContainer>

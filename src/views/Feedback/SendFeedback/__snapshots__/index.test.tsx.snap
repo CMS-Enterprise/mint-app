@@ -1,0 +1,601 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Send feedback form > matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <button
+        class="usa-button usa-button--unstyled margin-top-6"
+        data-testid="button"
+        type="button"
+      >
+        <svg
+          class="usa-icon margin-right-05 text-tbottom"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+          />
+        </svg>
+        Close tab
+      </button>
+      <h1
+        aria-live="polite"
+        class="mint-h1 margin-bottom-2"
+        tabindex="-1"
+      >
+        Send feedback
+      </h1>
+      <p
+        class="margin-bottom-2 font-body-lg"
+      >
+        Have a suggestion for how to improve MINT? Let us know using the form below.
+      </p>
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          action="#"
+          class="margin-top-3"
+        >
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
+          >
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="send-feedback-allow-anon-submission"
+              >
+                Would you like your feedback to remain anonymous?
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-allow-anon-submission-true"
+                    id="send-feedback-allow-anon-submission-true"
+                    name="isAnonymousSubmission"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-allow-anon-submission-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    checked=""
+                    class="usa-radio__input"
+                    data-testid="send-feedback-allow-anon-submission-false"
+                    id="send-feedback-allow-anon-submission-false"
+                    name="isAnonymousSubmission"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-allow-anon-submission-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label margin-top-5"
+                data-testid="label"
+                for="send-feedback-allow-contact"
+              >
+                May the MINT team contact you for additional information?
+              </label>
+              <p
+                class="text-base margin-y-1"
+              >
+                If you choose to remain anonymous, we will be unable to contact you.
+              </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-allow-contact-true"
+                    id="send-feedback-allow-contact-true"
+                    name="allowContact"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-allow-contact-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-allow-contact-false"
+                    id="send-feedback-allow-contact-false"
+                    name="allowContact"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-allow-contact-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label margin-top-5"
+                data-testid="label"
+                for="send-feedback-cms-role"
+              >
+                What is your role?
+              </label>
+              <input
+                class="usa-input"
+                data-testid="send-feedback-cms-role"
+                id="send-feedback-cmsRole"
+                name="cmsRole"
+                value=""
+              />
+            </div>
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label margin-top-5"
+                data-testid="label"
+                for="send-feedback-mint-used-for"
+              >
+                What have you used MINT for?
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="send-feedback-mint-used-for-CONTRIBUTE_DISCUSSIONS"
+                    name="mintUsedFor"
+                    type="checkbox"
+                    value="CONTRIBUTE_DISCUSSIONS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="send-feedback-mint-used-for-CONTRIBUTE_DISCUSSIONS"
+                  >
+                    To contribute to Model Discussions
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="send-feedback-mint-used-for-EDIT_MODEL"
+                    name="mintUsedFor"
+                    type="checkbox"
+                    value="EDIT_MODEL"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="send-feedback-mint-used-for-EDIT_MODEL"
+                  >
+                    To edit Model Plans
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="send-feedback-mint-used-for-SHARE_MODEL"
+                    name="mintUsedFor"
+                    type="checkbox"
+                    value="SHARE_MODEL"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="send-feedback-mint-used-for-SHARE_MODEL"
+                  >
+                    To share or export Model Plan content
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="send-feedback-mint-used-for-TRACK_SOLUTIONS"
+                    name="mintUsedFor"
+                    type="checkbox"
+                    value="TRACK_SOLUTIONS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="send-feedback-mint-used-for-TRACK_SOLUTIONS"
+                  >
+                    To track operational solutions
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="send-feedback-mint-used-for-VIEW_HELP"
+                    name="mintUsedFor"
+                    type="checkbox"
+                    value="VIEW_HELP"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="send-feedback-mint-used-for-VIEW_HELP"
+                  >
+                    To view the Help Center
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="send-feedback-mint-used-for-VIEW_MODEL"
+                    name="mintUsedFor"
+                    type="checkbox"
+                    value="VIEW_MODEL"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="send-feedback-mint-used-for-VIEW_MODEL"
+                  >
+                    To view Model Plans
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="send-feedback-mint-used-for-OTHER"
+                    name="mintUsedFor"
+                    type="checkbox"
+                    value="OTHER"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="send-feedback-mint-used-for-OTHER"
+                  >
+                    Other (please specify)
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  />
+                </div>
+                <div
+                  class="margin-left-4 margin-top-1"
+                >
+                  <input
+                    class="usa-input"
+                    data-testid="send-feedback-mint-used-for-other"
+                    disabled=""
+                    id="send-feedback-mint-used-for-other"
+                    name="mintUsedForOther"
+                    value=""
+                  />
+                </div>
+              </fieldset>
+            </div>
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label margin-top-5"
+                data-testid="label"
+                for="send-feedback-ease-of-use"
+              >
+                The system is easy to use.
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-ease-of-use-AGREE"
+                    id="send-feedback-ease-of-use-AGREE"
+                    name="systemEasyToUse"
+                    type="radio"
+                    value="AGREE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-ease-of-use-AGREE"
+                  >
+                    Agree
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-ease-of-use-DISAGREE"
+                    id="send-feedback-ease-of-use-DISAGREE"
+                    name="systemEasyToUse"
+                    type="radio"
+                    value="DISAGREE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-ease-of-use-DISAGREE"
+                  >
+                    Disagree
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-ease-of-use-UNSURE"
+                    id="send-feedback-ease-of-use-UNSURE"
+                    name="systemEasyToUse"
+                    type="radio"
+                    value="UNSURE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-ease-of-use-UNSURE"
+                  >
+                    I’m not sure (please explain)
+                  </label>
+                </div>
+                <div
+                  class="margin-left-4 margin-top-1"
+                >
+                  <input
+                    class="usa-input"
+                    data-testid="send-feedback-ease-of-use-other"
+                    disabled=""
+                    id="send-feedback-ease-of-use-other"
+                    name="systemEasyToUseOther"
+                    value=""
+                  />
+                </div>
+              </fieldset>
+            </div>
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label margin-top-5"
+                data-testid="label"
+                for="send-feedback-how-satisfied"
+              >
+                Overall, how satisfied are you with MINT?
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-how-satisfied-DISSATISFIED"
+                    id="send-feedback-how-satisfied-DISSATISFIED"
+                    name="howSatisfied"
+                    type="radio"
+                    value="DISSATISFIED"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-how-satisfied-DISSATISFIED"
+                  >
+                    Dissatisfied
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-how-satisfied-NEUTRAL"
+                    id="send-feedback-how-satisfied-NEUTRAL"
+                    name="howSatisfied"
+                    type="radio"
+                    value="NEUTRAL"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-how-satisfied-NEUTRAL"
+                  >
+                    Neutral
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-how-satisfied-SATISFIED"
+                    id="send-feedback-how-satisfied-SATISFIED"
+                    name="howSatisfied"
+                    type="radio"
+                    value="SATISFIED"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-how-satisfied-SATISFIED"
+                  >
+                    Satisfied
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-how-satisfied-VERY_DISSATISFIED"
+                    id="send-feedback-how-satisfied-VERY_DISSATISFIED"
+                    name="howSatisfied"
+                    type="radio"
+                    value="VERY_DISSATISFIED"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-how-satisfied-VERY_DISSATISFIED"
+                  >
+                    Very dissatisfied
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-how-satisfied-VERY_SATISFIED"
+                    id="send-feedback-how-satisfied-VERY_SATISFIED"
+                    name="howSatisfied"
+                    type="radio"
+                    value="VERY_SATISFIED"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-how-satisfied-VERY_SATISFIED"
+                  >
+                    Very satisfied
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label margin-top-5"
+                data-testid="label"
+                for="send-feedback-how-can-we-improve"
+              >
+                How can we improve MINT?
+              </label>
+              <textarea
+                class="usa-textarea usa-character-count__field height-card margin-bottom-1"
+                data-testid="send-feedback-how-can-we-improve"
+                id="send-feedback-how-can-we-improve"
+                name="howCanWeImprove"
+              />
+              <span
+                aria-live="polite"
+                class="usa-hint usa-character-count__message"
+                data-testid="characterCountMessage"
+                id="send-feedback-how-can-we-improve-info"
+              >
+                2000 characters allowed
+              </span>
+            </div>
+            <div
+              class="margin-top-6 margin-bottom-3"
+            >
+              <button
+                class="usa-button usa-button usa-button--outline margin-bottom-1"
+                data-testid="button"
+                type="button"
+              >
+                Send feedback
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
