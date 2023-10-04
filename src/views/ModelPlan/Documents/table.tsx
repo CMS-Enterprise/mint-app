@@ -17,6 +17,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import ExternalLink from 'components/shared/ExternalLink';
 import DeleteModelPlanDocument from 'queries/Documents/DeleteModelPlanDocument';
 import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
 import { DeleteModelPlanDocumentVariables } from 'queries/Documents/types/DeleteModelPlanDocument';
@@ -385,17 +386,26 @@ export const Table = ({
           if (value) {
             return row.original.virusClean ? (
               <>
-                <Button
-                  type="button"
-                  unstyled
-                  className="margin-right-1"
-                  onClick={() => handleDownload(row.original)}
-                >
-                  <span className="display-flex flex-align-center">
-                    {t('documentTable.view')}
-                    <IconFileDownload />
-                  </span>
-                </Button>
+                {!row.original.isLink ? (
+                  <Button
+                    type="button"
+                    unstyled
+                    className="margin-right-1"
+                    onClick={() => handleDownload(row.original)}
+                  >
+                    <span className="display-flex flex-align-center">
+                      {t('documentTable.view')}
+                      <IconFileDownload />
+                    </span>
+                  </Button>
+                ) : (
+                  <ExternalLink
+                    href={row.original.url}
+                    className="margin-right-2"
+                  >
+                    {t('documentTable.visit')}
+                  </ExternalLink>
+                )}
                 {hasEditAccess && !linkedDocs && (
                   <Button
                     type="button"

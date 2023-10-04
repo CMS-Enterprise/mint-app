@@ -20,6 +20,7 @@ const documents = {
     noVirusFound: 'No viruses found',
     virusFound: 'Virus found',
     view: 'View',
+    visit: 'Visit',
     remove: 'Remove',
     error: {
       heading: 'There is a problem',
