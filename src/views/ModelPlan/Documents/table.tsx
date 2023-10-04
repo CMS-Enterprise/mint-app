@@ -7,6 +7,7 @@ import {
   Alert,
   Button,
   Checkbox,
+  IconFileDownload,
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -390,7 +391,10 @@ export const Table = ({
                   className="margin-right-1"
                   onClick={() => handleDownload(row.original)}
                 >
-                  {t('documentTable.view')}
+                  <span className="display-flex flex-align-center">
+                    {t('documentTable.view')}
+                    <IconFileDownload />
+                  </span>
                 </Button>
                 {hasEditAccess && !linkedDocs && (
                   <Button
