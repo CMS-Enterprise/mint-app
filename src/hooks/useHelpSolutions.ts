@@ -17,10 +17,12 @@ export const mapContactsToSolutions = (
   contactSolutions: GetPossibleSolutionsQuery['possibleOperationalSolutions']
 ): HelpSolutionType[] => {
   return solutions.map(solution => {
+    // Find fetch possible solution that corresponds to the FE `enum` mapped solution
     const foundSolution = contactSolutions?.find(
       contactSolution => solution.enum === contactSolution.key
     );
 
+    // Add fetch pointsOfContact field to existing FE solution map
     return {
       ...solution,
       pointsOfContact: foundSolution?.pointsOfContact
