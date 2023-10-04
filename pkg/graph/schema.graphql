@@ -1556,6 +1556,43 @@ type DiscussionRoleSelection {
   userRole: DiscussionUserRole!
   userRoleDescription: String
 }
+"""
+The inputs to the user feedback form
+"""
+input SendFeedbackEmailInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  cmsRole: String
+  mintUsedFor: [MintUses!]
+  mintUsedForOther: String
+  systemEasyToUse: EaseOfUse
+  systemEasyToUseOther: String
+  howSatisfied: SatisfactionLevel
+  howCanWeImprove: String
+}
+
+enum EaseOfUse {
+  AGREE
+  DISAGREE
+  UNSURE
+}
+
+enum MintUses {
+  VIEW_MODEL
+  EDIT_MODEL
+  SHARE_MODEL
+  TRACK_SOLUTIONS
+  CONTRIBUTE_DISCUSSIONS
+  VIEW_HELP
+  OTHER
+}
+enum SatisfactionLevel {
+  VERY_SATISFIED
+  SATISFIED
+  NEUTRAL
+  DISSATISFIED
+  VERY_DISSATISFIED
+}
 
 """
 Query definition for the schema
@@ -1738,6 +1775,10 @@ shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: 
 
 reportAProblem(input: ReportAProblemInput!): Boolean!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+"""
+This mutation sends feedback about the MINT product to the MINT team
+"""
+sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
 }
 
 type Subscription {

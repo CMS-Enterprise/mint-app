@@ -236,6 +236,7 @@ type ComplexityRoot struct {
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
 		ReportAProblem                     func(childComplexity int, input model.ReportAProblemInput) int
+		SendFeedbackEmail                  func(childComplexity int, input model.SendFeedbackEmailInput) int
 		ShareModelPlan                     func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
@@ -997,6 +998,7 @@ type MutationResolver interface {
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error)
 	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error)
 	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
+	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -2164,6 +2166,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.ReportAProblem(childComplexity, args["input"].(model.ReportAProblemInput)), true
+
+	case "Mutation.sendFeedbackEmail":
+		if e.complexity.Mutation.SendFeedbackEmail == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_sendFeedbackEmail_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.SendFeedbackEmail(childComplexity, args["input"].(model.SendFeedbackEmailInput)), true
 
 	case "Mutation.shareModelPlan":
 		if e.complexity.Mutation.ShareModelPlan == nil {
@@ -6651,6 +6665,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputPlanDocumentLinkInput,
 		ec.unmarshalInputReportAProblemInput,
 		ec.unmarshalInputSearchFilter,
+		ec.unmarshalInputSendFeedbackEmailInput,
 		ec.unmarshalInputUpdateOperationalSolutionSubtaskInput,
 	)
 	first := true
@@ -8324,6 +8339,43 @@ type DiscussionRoleSelection {
   userRole: DiscussionUserRole!
   userRoleDescription: String
 }
+"""
+The inputs to the user feedback form
+"""
+input SendFeedbackEmailInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  cmsRole: String
+  mintUsedFor: [MintUses!]
+  mintUsedForOther: String
+  systemEasyToUse: EaseOfUse
+  systemEasyToUseOther: String
+  howSatisfied: SatisfactionLevel
+  howCanWeImprove: String
+}
+
+enum EaseOfUse {
+  AGREE
+  DISAGREE
+  UNSURE
+}
+
+enum MintUses {
+  VIEW_MODEL
+  EDIT_MODEL
+  SHARE_MODEL
+  TRACK_SOLUTIONS
+  CONTRIBUTE_DISCUSSIONS
+  VIEW_HELP
+  OTHER
+}
+enum SatisfactionLevel {
+  VERY_SATISFIED
+  SATISFIED
+  NEUTRAL
+  DISSATISFIED
+  VERY_DISSATISFIED
+}
 
 """
 Query definition for the schema
@@ -8506,6 +8558,10 @@ shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: 
 
 reportAProblem(input: ReportAProblemInput!): Boolean!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+"""
+This mutation sends feedback about the MINT product to the MINT team
+"""
+sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
 }
 
 type Subscription {
@@ -9700,6 +9756,21 @@ func (ec *executionContext) field_Mutation_reportAProblem_args(ctx context.Conte
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNReportAProblemInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_sendFeedbackEmail_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.SendFeedbackEmailInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNSendFeedbackEmailInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSendFeedbackEmailInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -21289,6 +21360,61 @@ func (ec *executionContext) fieldContext_Mutation_reportAProblem(ctx context.Con
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_reportAProblem_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_sendFeedbackEmail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().SendFeedbackEmail(rctx, fc.Args["input"].(model.SendFeedbackEmailInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -51598,6 +51724,107 @@ func (ec *executionContext) unmarshalInputSearchFilter(ctx context.Context, obj 
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputSendFeedbackEmailInput(ctx context.Context, obj interface{}) (model.SendFeedbackEmailInput, error) {
+	var it model.SendFeedbackEmailInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"isAnonymousSubmission", "allowContact", "cmsRole", "mintUsedFor", "mintUsedForOther", "systemEasyToUse", "systemEasyToUseOther", "howSatisfied", "howCanWeImprove"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "isAnonymousSubmission":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isAnonymousSubmission"))
+			data, err := ec.unmarshalNBoolean2bool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IsAnonymousSubmission = data
+		case "allowContact":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("allowContact"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.AllowContact = data
+		case "cmsRole":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmsRole"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CmsRole = data
+		case "mintUsedFor":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mintUsedFor"))
+			data, err := ec.unmarshalOMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MintUsedFor = data
+		case "mintUsedForOther":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mintUsedForOther"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MintUsedForOther = data
+		case "systemEasyToUse":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("systemEasyToUse"))
+			data, err := ec.unmarshalOEaseOfUse2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.SystemEasyToUse = data
+		case "systemEasyToUseOther":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("systemEasyToUseOther"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.SystemEasyToUseOther = data
+		case "howSatisfied":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("howSatisfied"))
+			data, err := ec.unmarshalOSatisfactionLevel2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.HowSatisfied = data
+		case "howCanWeImprove":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("howCanWeImprove"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.HowCanWeImprove = data
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputUpdateOperationalSolutionSubtaskInput(ctx context.Context, obj interface{}) (model.UpdateOperationalSolutionSubtaskInput, error) {
 	var it model.UpdateOperationalSolutionSubtaskInput
 	asMap := map[string]interface{}{}
@@ -53647,6 +53874,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "reportAProblem":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_reportAProblem(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "sendFeedbackEmail":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_sendFeedbackEmail(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -62189,6 +62423,16 @@ func (ec *executionContext) marshalNMap2map(ctx context.Context, sel ast.Selecti
 	return res
 }
 
+func (ec *executionContext) unmarshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx context.Context, v interface{}) (model.MintUses, error) {
+	var res model.MintUses
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx context.Context, sel ast.SelectionSet, v model.MintUses) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) unmarshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (models.ModelCategory, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.ModelCategory(tmp)
@@ -64142,6 +64386,11 @@ func (ec *executionContext) marshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgov
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNSendFeedbackEmailInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSendFeedbackEmailInput(ctx context.Context, v interface{}) (model.SendFeedbackEmailInput, error) {
+	res, err := ec.unmarshalInputSendFeedbackEmailInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNSortDirection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSortDirection(ctx context.Context, v interface{}) (models.SortDirection, error) {
@@ -66105,6 +66354,22 @@ func (ec *executionContext) marshalODiscussionUserRole2ᚖgithubᚗcomᚋcmsgov�
 	return res
 }
 
+func (ec *executionContext) unmarshalOEaseOfUse2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx context.Context, v interface{}) (*model.EaseOfUse, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var res = new(model.EaseOfUse)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOEaseOfUse2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEaseOfUse(ctx context.Context, sel ast.SelectionSet, v *model.EaseOfUse) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return v
+}
+
 func (ec *executionContext) unmarshalOEvaluationApproachType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachTypeᚄ(ctx context.Context, v interface{}) ([]model.EvaluationApproachType, error) {
 	if v == nil {
 		return nil, nil
@@ -66509,6 +66774,73 @@ func (ec *executionContext) marshalOKeyCharacteristic2ᚕgithubᚗcomᚋcmsgov�
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNKeyCharacteristic2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristic(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx context.Context, v interface{}) ([]model.MintUses, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.MintUses, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOMintUses2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUsesᚄ(ctx context.Context, sel ast.SelectionSet, v []model.MintUses) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMintUses(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -67637,6 +67969,22 @@ func (ec *executionContext) unmarshalOReportAProblemSeverity2ᚖgithubᚗcomᚋc
 }
 
 func (ec *executionContext) marshalOReportAProblemSeverity2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemSeverity(ctx context.Context, sel ast.SelectionSet, v *model.ReportAProblemSeverity) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return v
+}
+
+func (ec *executionContext) unmarshalOSatisfactionLevel2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx context.Context, v interface{}) (*model.SatisfactionLevel, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var res = new(model.SatisfactionLevel)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOSatisfactionLevel2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSatisfactionLevel(ctx context.Context, sel ast.SelectionSet, v *model.SatisfactionLevel) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

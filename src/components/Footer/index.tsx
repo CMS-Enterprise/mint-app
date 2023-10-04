@@ -5,6 +5,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import {
   Footer as UswdsFooter,
   FooterNav,
+  Grid,
   GridContainer,
   IconLightbulbOutline
 } from '@trussworks/react-uswds';
@@ -13,6 +14,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import ExternalLink from 'components/shared/ExternalLink';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import cmsGovLogo from 'images/cmsGovLogo.png';
 import hhsLogo from 'images/hhsLogo.png';
 
@@ -20,6 +22,8 @@ import './index.scss';
 
 const Footer = () => {
   const { t } = useTranslation(['footer', 'feedback']);
+
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const { feedbackEnabled } = useFlags();
 
@@ -56,39 +60,76 @@ const Footer = () => {
               'margin-top-7': authState?.isAuthenticated
             })}
           >
-            <GridContainer className="display-flex flex-justify">
-              <div className="display-flex">
-                <p className="text-bold margin-y-0 margin-right-4">
-                  {t('feedback:footer.improveMint')}
-                </p>
-
+            <GridContainer className="display-flex flex-justify flex-wrap">
+              <Grid
+                desktop={{ col: 3 }}
+                tablet={{ col: 12 }}
+                mobile={{ col: 12 }}
+                className={classNames('display-flex', {
+                  'margin-bottom-2': isTablet
+                })}
+              >
+                <Grid desktop={{ col: 12 }} tablet={{ col: 6 }}>
+                  <p className="text-bold margin-y-0">
+                    {t('feedback:footer.improveMint')}
+                  </p>
+                </Grid>
+                {isTablet && (
+                  <Grid tablet={{ col: 6 }} className="mint-footer__lightbulb">
+                    <IconLightbulbOutline className="lightbulb right-0" />
+                  </Grid>
+                )}
+              </Grid>
+              <Grid
+                desktop={{ col: 2 }}
+                tablet={{ col: 4 }}
+                mobile={{ col: 4 }}
+              >
                 <UswdsReactLink
                   target="_blank"
                   to="/report-a-problem"
                   variant="external"
-                  className="font-sans-3xs flex-align-center padding-top-05 margin-right-4"
+                  className="font-sans-3xs flex-align-center padding-top-05"
                 >
                   {t('feedback:footer.reportProblem')}
                 </UswdsReactLink>
-
+              </Grid>
+              <Grid
+                desktop={{ col: 2 }}
+                tablet={{ col: 4 }}
+                mobile={{ col: 4 }}
+              >
                 <UswdsReactLink
                   target="_blank"
                   to="/send-feedback"
                   variant="external"
-                  className="font-sans-3xs flex-align-center padding-top-05 margin-right-4"
+                  className="font-sans-3xs flex-align-center padding-top-05"
                 >
                   {t('feedback:footer.sendFeedback')}
                 </UswdsReactLink>
-
+              </Grid>
+              <Grid
+                desktop={{ col: 3 }}
+                tablet={{ col: 4 }}
+                mobile={{ col: 4 }}
+              >
                 <ExternalLink
                   href="https://cmsgov.slack.com/archives/C04B10ZN6A2"
                   className="font-sans-3xs flex-align-center padding-top-05"
                 >
                   {t('feedback:footer.chatSlack')}
                 </ExternalLink>
-              </div>
-
-              <IconLightbulbOutline className="margin-top-05 lightbulb" />
+              </Grid>
+              <Grid
+                desktop={{ col: 2 }}
+                tablet={{ col: 4 }}
+                mobile={{ col: 4 }}
+                className="mint-footer__lightbulb"
+              >
+                {!isTablet && (
+                  <IconLightbulbOutline className="margin-top-05 lightbulb" />
+                )}
+              </Grid>
             </GridContainer>
           </div>
         )}
