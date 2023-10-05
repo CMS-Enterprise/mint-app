@@ -44,7 +44,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
         Send feedback
       </h1>
       <p
-        class="margin-bottom-2 font-body-lg"
+        class="margin-bottom-2 font-body-lg  line-height-sans-lg"
       >
         Have a suggestion for how to improve MINT? Let us know using the form below.
       </p>
@@ -70,6 +70,11 @@ exports[`Send feedback form > matches snapshot 1`] = `
               >
                 Would you like your feedback to remain anonymous?
               </label>
+              <p
+                class="text-base margin-y-1"
+              >
+                If you select yes, your name and email will not be recorded with your feedback.
+              </p>
               <fieldset
                 class="usa-fieldset"
                 data-testid="fieldset"
@@ -211,16 +216,16 @@ exports[`Send feedback form > matches snapshot 1`] = `
                 >
                   <input
                     class="usa-checkbox__input"
-                    id="send-feedback-mint-used-for-CONTRIBUTE_DISCUSSIONS"
+                    id="send-feedback-mint-used-for-VIEW_MODEL"
                     name="mintUsedFor"
                     type="checkbox"
-                    value="CONTRIBUTE_DISCUSSIONS"
+                    value="VIEW_MODEL"
                   />
                   <label
                     class="usa-checkbox__label"
-                    for="send-feedback-mint-used-for-CONTRIBUTE_DISCUSSIONS"
+                    for="send-feedback-mint-used-for-VIEW_MODEL"
                   >
-                    To contribute to Model Discussions
+                    To view Model Plans
                   </label>
                   <p
                     class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -291,16 +296,16 @@ exports[`Send feedback form > matches snapshot 1`] = `
                 >
                   <input
                     class="usa-checkbox__input"
-                    id="send-feedback-mint-used-for-VIEW_HELP"
+                    id="send-feedback-mint-used-for-CONTRIBUTE_DISCUSSIONS"
                     name="mintUsedFor"
                     type="checkbox"
-                    value="VIEW_HELP"
+                    value="CONTRIBUTE_DISCUSSIONS"
                   />
                   <label
                     class="usa-checkbox__label"
-                    for="send-feedback-mint-used-for-VIEW_HELP"
+                    for="send-feedback-mint-used-for-CONTRIBUTE_DISCUSSIONS"
                   >
-                    To view the Help Center
+                    To contribute to Model Discussions
                   </label>
                   <p
                     class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -311,16 +316,16 @@ exports[`Send feedback form > matches snapshot 1`] = `
                 >
                   <input
                     class="usa-checkbox__input"
-                    id="send-feedback-mint-used-for-VIEW_MODEL"
+                    id="send-feedback-mint-used-for-VIEW_HELP"
                     name="mintUsedFor"
                     type="checkbox"
-                    value="VIEW_MODEL"
+                    value="VIEW_HELP"
                   />
                   <label
                     class="usa-checkbox__label"
-                    for="send-feedback-mint-used-for-VIEW_MODEL"
+                    for="send-feedback-mint-used-for-VIEW_HELP"
                   >
-                    To view Model Plans
+                    To view the Help Center
                   </label>
                   <p
                     class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -465,36 +470,17 @@ exports[`Send feedback form > matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    data-testid="send-feedback-how-satisfied-DISSATISFIED"
-                    id="send-feedback-how-satisfied-DISSATISFIED"
+                    data-testid="send-feedback-how-satisfied-VERY_SATISFIED"
+                    id="send-feedback-how-satisfied-VERY_SATISFIED"
                     name="howSatisfied"
                     type="radio"
-                    value="DISSATISFIED"
+                    value="VERY_SATISFIED"
                   />
                   <label
                     class="usa-radio__label"
-                    for="send-feedback-how-satisfied-DISSATISFIED"
+                    for="send-feedback-how-satisfied-VERY_SATISFIED"
                   >
-                    Dissatisfied
-                  </label>
-                </div>
-                <div
-                  class="usa-radio"
-                  data-testid="radio"
-                >
-                  <input
-                    class="usa-radio__input"
-                    data-testid="send-feedback-how-satisfied-NEUTRAL"
-                    id="send-feedback-how-satisfied-NEUTRAL"
-                    name="howSatisfied"
-                    type="radio"
-                    value="NEUTRAL"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="send-feedback-how-satisfied-NEUTRAL"
-                  >
-                    Neutral
+                    Very satisfied
                   </label>
                 </div>
                 <div
@@ -522,6 +508,44 @@ exports[`Send feedback form > matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
+                    data-testid="send-feedback-how-satisfied-NEUTRAL"
+                    id="send-feedback-how-satisfied-NEUTRAL"
+                    name="howSatisfied"
+                    type="radio"
+                    value="NEUTRAL"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-how-satisfied-NEUTRAL"
+                  >
+                    Neutral
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="send-feedback-how-satisfied-DISSATISFIED"
+                    id="send-feedback-how-satisfied-DISSATISFIED"
+                    name="howSatisfied"
+                    type="radio"
+                    value="DISSATISFIED"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="send-feedback-how-satisfied-DISSATISFIED"
+                  >
+                    Dissatisfied
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
                     data-testid="send-feedback-how-satisfied-VERY_DISSATISFIED"
                     id="send-feedback-how-satisfied-VERY_DISSATISFIED"
                     name="howSatisfied"
@@ -533,25 +557,6 @@ exports[`Send feedback form > matches snapshot 1`] = `
                     for="send-feedback-how-satisfied-VERY_DISSATISFIED"
                   >
                     Very dissatisfied
-                  </label>
-                </div>
-                <div
-                  class="usa-radio"
-                  data-testid="radio"
-                >
-                  <input
-                    class="usa-radio__input"
-                    data-testid="send-feedback-how-satisfied-VERY_SATISFIED"
-                    id="send-feedback-how-satisfied-VERY_SATISFIED"
-                    name="howSatisfied"
-                    type="radio"
-                    value="VERY_SATISFIED"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="send-feedback-how-satisfied-VERY_SATISFIED"
-                  >
-                    Very satisfied
                   </label>
                 </div>
               </fieldset>
@@ -585,7 +590,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
               class="margin-top-6 margin-bottom-3"
             >
               <button
-                class="usa-button usa-button usa-button--outline margin-bottom-1"
+                class="usa-button usa-button margin-bottom-1"
                 data-testid="button"
                 type="button"
               >
