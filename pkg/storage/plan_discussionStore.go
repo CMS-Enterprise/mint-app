@@ -121,6 +121,12 @@ func (s *Store) PlanDiscussionCreate(
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
+	//TODO: SW this should be a transaction
+	// tags := models.TagArrayFromTagStrings("content", "plan_discussion", discussion.ID, discussion.Content.Tags)
+	// _, err = s.TagCollectionCreate(logger, tags, discussion.CreatedBy)
+	// if err != nil {
+	// 	return discussion, err
+	// }
 
 	return discussion, nil
 }
@@ -143,6 +149,12 @@ func (s *Store) DiscussionReplyCreate(
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, reply)
 	}
+	//TODO: SW this should be a transaction
+	// tags := models.TagArrayFromTagStrings("content", "discussion_reply", reply.ID, reply.Content.Tags)
+	// _, err = s.TagCollectionCreate(logger, tags, reply.CreatedBy)
+	// if err != nil {
+	// 	return reply, err
+	// }
 
 	return reply, nil
 }
