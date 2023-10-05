@@ -108,7 +108,7 @@ func humanizeFeedbackMINTUse(use model.MintUses) string {
 	case model.MintUsesViewHelp:
 		return "To view the Help Center"
 	case model.MintUsesOther:
-		return "Other" // TODO: SW should we include the actual word other?
+		return "Other"
 	default:
 		return string(use)
 	}
