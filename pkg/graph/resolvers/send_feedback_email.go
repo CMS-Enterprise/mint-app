@@ -69,20 +69,24 @@ func humanizeFeedbackAllowContact(allowFeedback *bool) string {
 }
 
 func humanizeFeedbackMINTUses(usedFor []model.MintUses, usedForOther *string) []string {
-	//TODO: SW implement
+
 	uses := []string{}
+	containsOther := false
 	for _, use := range usedFor {
 		humanized := humanizeFeedbackMINTUse(use)
 		if humanized == "" {
 			continue
 		}
+		if humanized == "Other" {
+			containsOther = true
+			if models.ValueOrEmpty(usedForOther) != "" { // only add the text if isn't nil or empty.
+				humanized = humanized + " - " + *usedForOther
+			}
+		}
 		uses = append(uses, humanized)
 	}
-	if usedForOther != nil {
-		use := "Other"
-		if *usedForOther != "" {
-			use = use + " - " + *usedForOther
-		}
+	if !containsOther && models.ValueOrEmpty(usedForOther) != "" { // It other wasn't selected, but the optional text was filled out include it anyways
+		use := "Other - " + *usedForOther
 		uses = append(uses, use)
 	}
 
@@ -104,7 +108,7 @@ func humanizeFeedbackMINTUse(use model.MintUses) string {
 	case model.MintUsesViewHelp:
 		return "To view the Help Center"
 	case model.MintUsesOther:
-		return "" // TODO: SW should we include the actual word other?
+		return "Other" // TODO: SW should we include the actual word other?
 	default:
 		return string(use)
 	}
