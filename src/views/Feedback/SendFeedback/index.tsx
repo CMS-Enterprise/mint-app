@@ -29,7 +29,6 @@ import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
 import { getKeys } from 'types/translation';
-import { sortOtherEnum } from 'utils/modelPlan';
 
 const SendFeedback = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
@@ -39,6 +38,27 @@ const SendFeedback = () => {
   const [mutationError, setMutationError] = useState<boolean>(false);
 
   const [update, { loading }] = useMutation(CreateSendFeedback);
+
+  const mintUsedForOptions: Record<MintUses, string> = t(
+    'mintUsedFor.options',
+    {
+      returnObjects: true
+    }
+  );
+
+  const systemEasyToUseOptions: Record<EaseOfUse, string> = t(
+    'systemEasyToUse.options',
+    {
+      returnObjects: true
+    }
+  );
+
+  const howSatisfiedOptions: Record<SatisfactionLevel, string> = t(
+    'howSatisfied.options',
+    {
+      returnObjects: true
+    }
+  );
 
   const handleFormSubmit = (formikValues: SendFeedbackEmailInput) => {
     update({
@@ -83,7 +103,7 @@ const SendFeedback = () => {
           {t('feedbackHeading')}
         </PageHeading>
 
-        <p className="margin-bottom-2 font-body-lg">
+        <p className="margin-bottom-2 font-body-lg  line-height-sans-lg">
           {t('feedbackSubheading')}
         </p>
 
@@ -110,6 +130,10 @@ const SendFeedback = () => {
                       <Label htmlFor="send-feedback-allow-anon-submission">
                         {t('isAnonymousSubmission.label')}
                       </Label>
+
+                      <p className="text-base margin-y-1">
+                        {t('isAnonymousSubmission.sublabel')}
+                      </p>
 
                       <BooleanRadio
                         field="isAnonymousSubmission"
@@ -177,39 +201,37 @@ const SendFeedback = () => {
                       </Label>
 
                       <Fieldset>
-                        {getKeys(MintUses)
-                          .sort(sortOtherEnum)
-                          .map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={CheckboxField}
-                                id={`send-feedback-mint-used-for-${key}`}
-                                data-testid={`send-feedback-mint-used-for-${key}`}
-                                name="mintUsedFor"
-                                label={t(`mintUsedFor.options.${key}`)}
-                                value={key}
-                                checked={values.mintUsedFor?.includes(
-                                  key as MintUses
-                                )}
-                              />
-
-                              {key === MintUses.OTHER && (
-                                <div className="margin-left-4 margin-top-1">
-                                  <Field
-                                    as={TextInput}
-                                    id="send-feedback-mint-used-for-other"
-                                    data-testid="send-feedback-mint-used-for-other"
-                                    disabled={
-                                      !values.mintUsedFor?.includes(
-                                        MintUses.OTHER
-                                      )
-                                    }
-                                    name="mintUsedForOther"
-                                  />
-                                </div>
+                        {getKeys(mintUsedForOptions).map(key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={CheckboxField}
+                              id={`send-feedback-mint-used-for-${key}`}
+                              data-testid={`send-feedback-mint-used-for-${key}`}
+                              name="mintUsedFor"
+                              label={t(`mintUsedFor.options.${key}`)}
+                              value={key}
+                              checked={values.mintUsedFor?.includes(
+                                key as MintUses
                               )}
-                            </Fragment>
-                          ))}
+                            />
+
+                            {key === MintUses.OTHER && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Field
+                                  as={TextInput}
+                                  id="send-feedback-mint-used-for-other"
+                                  data-testid="send-feedback-mint-used-for-other"
+                                  disabled={
+                                    !values.mintUsedFor?.includes(
+                                      MintUses.OTHER
+                                    )
+                                  }
+                                  name="mintUsedForOther"
+                                />
+                              </div>
+                            )}
+                          </Fragment>
+                        ))}
                       </Fieldset>
                     </FieldGroup>
 
@@ -222,38 +244,35 @@ const SendFeedback = () => {
                       </Label>
 
                       <Fieldset>
-                        {getKeys(EaseOfUse)
-                          .sort(sortOtherEnum)
-                          .map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`send-feedback-ease-of-use-${key}`}
-                                data-testid={`send-feedback-ease-of-use-${key}`}
-                                name="systemEasyToUse"
-                                label={t(`systemEasyToUse.options.${key}`)}
-                                value={key}
-                                checked={values.systemEasyToUse === key}
-                                onChange={() => {
-                                  setFieldValue('systemEasyToUse', key);
-                                }}
-                              />
-                              {key === EaseOfUse.UNSURE && (
-                                <div className="margin-left-4 margin-top-1">
-                                  <Field
-                                    as={TextInput}
-                                    id="send-feedback-ease-of-use-other"
-                                    data-testid="send-feedback-ease-of-use-other"
-                                    disabled={
-                                      values.systemEasyToUse !==
-                                      EaseOfUse.UNSURE
-                                    }
-                                    name="systemEasyToUseOther"
-                                  />
-                                </div>
-                              )}
-                            </Fragment>
-                          ))}
+                        {getKeys(systemEasyToUseOptions).map(key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`send-feedback-ease-of-use-${key}`}
+                              data-testid={`send-feedback-ease-of-use-${key}`}
+                              name="systemEasyToUse"
+                              label={t(`systemEasyToUse.options.${key}`)}
+                              value={key}
+                              checked={values.systemEasyToUse === key}
+                              onChange={() => {
+                                setFieldValue('systemEasyToUse', key);
+                              }}
+                            />
+                            {key === EaseOfUse.UNSURE && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Field
+                                  as={TextInput}
+                                  id="send-feedback-ease-of-use-other"
+                                  data-testid="send-feedback-ease-of-use-other"
+                                  disabled={
+                                    values.systemEasyToUse !== EaseOfUse.UNSURE
+                                  }
+                                  name="systemEasyToUseOther"
+                                />
+                              </div>
+                            )}
+                          </Fragment>
+                        ))}
                       </Fieldset>
                     </FieldGroup>
 
@@ -266,24 +285,22 @@ const SendFeedback = () => {
                       </Label>
 
                       <Fieldset>
-                        {getKeys(SatisfactionLevel)
-                          .sort(sortOtherEnum)
-                          .map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`send-feedback-how-satisfied-${key}`}
-                                data-testid={`send-feedback-how-satisfied-${key}`}
-                                name="howSatisfied"
-                                label={t(`howSatisfied.options.${key}`)}
-                                value={key}
-                                checked={values.howSatisfied === key}
-                                onChange={() => {
-                                  setFieldValue('howSatisfied', key);
-                                }}
-                              />
-                            </Fragment>
-                          ))}
+                        {getKeys(howSatisfiedOptions).map(key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`send-feedback-how-satisfied-${key}`}
+                              data-testid={`send-feedback-how-satisfied-${key}`}
+                              name="howSatisfied"
+                              label={t(`howSatisfied.options.${key}`)}
+                              value={key}
+                              checked={values.howSatisfied === key}
+                              onChange={() => {
+                                setFieldValue('howSatisfied', key);
+                              }}
+                            />
+                          </Fragment>
+                        ))}
                       </Fieldset>
                     </FieldGroup>
 
@@ -312,7 +329,7 @@ const SendFeedback = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
+                        className="usa-button margin-bottom-1"
                         onClick={() => {
                           handleFormSubmit(values);
                         }}
