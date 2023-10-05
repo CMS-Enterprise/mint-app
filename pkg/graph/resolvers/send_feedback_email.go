@@ -29,12 +29,11 @@ func SendFeedbackEmail(
 			return false, err
 		}
 
-		//TODO: SW handle if an input is null. Should the schema reflect that? Or should we just expect empty strings?
 		emailBody, err := emailTemplate.GetExecutedBody(email.SendFeedbackBodyContent{
 			IsAnonymousSubmission: input.IsAnonymousSubmission,
 			ReporterName:          principal.Account().CommonName,
 			ReporterEmail:         principal.Account().Email,
-			AllowContact:          humanizeFeedbackAllowContact(input.AllowContact), //TODO: SW update bool to not be required
+			AllowContact:          humanizeFeedbackAllowContact(input.AllowContact),
 			CMSRole:               models.ValueOrEmpty(input.CmsRole),
 			MINTUsedFor:           humanizeFeedbackMINTUses(input.MintUsedFor, input.MintUsedForOther),
 			SystemEasyToUse:       humanizeFeedbackEasyToUse(input.SystemEasyToUse, input.SystemEasyToUseOther),
@@ -45,7 +44,6 @@ func SendFeedbackEmail(
 			return false, err
 		}
 
-		// TODO: SW pull un the address book from the report a problem email
 		err = emailService.Send(addressBook.DefaultSender, []string{addressBook.DevTeamEmail}, nil, emailSubject, "text/html", emailBody)
 		if err != nil {
 			return false, err
@@ -81,7 +79,11 @@ func humanizeFeedbackMINTUses(usedFor []model.MintUses, usedForOther *string) []
 		uses = append(uses, humanized)
 	}
 	if usedForOther != nil {
-		uses = append(uses, "Other - "+*usedForOther)
+		use := "Other"
+		if *usedForOther != "" {
+			use = use + " - " + *usedForOther
+		}
+		uses = append(uses, use)
 	}
 
 	return uses
@@ -110,7 +112,11 @@ func humanizeFeedbackMINTUse(use model.MintUses) string {
 
 func humanizeFeedbackEasyToUse(ease *model.EaseOfUse, easeOther *string) string {
 	if easeOther != nil {
-		return "I'm not sure - " + *easeOther
+		easeSt := "I'm not sure"
+		if *easeOther != "" {
+			easeSt = easeSt + " - " + *easeOther
+		}
+		return easeSt
 	}
 	if ease == nil {
 		return ""

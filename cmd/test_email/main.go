@@ -6,7 +6,10 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 )
@@ -22,6 +25,9 @@ func main() {
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, templateService, addressBook)
+	sendFeedbackEmail(emailService, templateService, addressBook)
+	reportAProblemEmail(emailService, templateService, addressBook)
+
 }
 
 func noErr(err error) {
@@ -55,6 +61,8 @@ func initializeAddressBook() email.AddressBook {
 	return email.AddressBook{
 		DefaultSender: "test@mint.dev.cms.gov",
 		MINTTeamEmail: "test.team@mint.dev.cms.gov",
+		DevTeamEmail:  "test.dev.team@mint.dev.cms.gov",
+
 		ModelPlanDateChangedRecipients: []string{
 			"test.receiver.1@mint.dev.cms.gov",
 			"test.receiver.2@mint.dev.cms.gov",
@@ -346,4 +354,63 @@ func sendCollaboratorAddedEmailTest(
 
 	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
 	noErr(err)
+}
+
+func sendFeedbackEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	princ := authentication.ApplicationPrincipal{
+		UserAccount: &authentication.UserAccount{
+			CommonName: "Test Feedback reporter",
+			Email:      "testReporterEmail@fake.com",
+		},
+	}
+
+	satisfaction := model.SatisfactionLevelVerySatisfied
+	easeOfUse := model.EaseOfUseAgree
+	input := model.SendFeedbackEmailInput{
+		IsAnonymousSubmission: false,
+		AllowContact:          models.BoolPointer(true),
+		CmsRole:               models.StringPointer("Inspector General"),
+		MintUsedFor:           []model.MintUses{model.MintUsesOther, model.MintUsesEditModel},
+		MintUsedForOther:      nil,
+		SystemEasyToUse:       &easeOfUse,
+		SystemEasyToUseOther:  models.StringPointer("I agree"),
+		HowSatisfied:          &satisfaction,
+		HowCanWeImprove:       models.StringPointer("Please send me a pizza after every model I submit"),
+	}
+
+	_, err := resolvers.SendFeedbackEmail(emailService, templateService, addressBook, &princ, input)
+	noErr(err)
+}
+
+func reportAProblemEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	princ := authentication.ApplicationPrincipal{
+		UserAccount: &authentication.UserAccount{
+			CommonName: "Test Feedback reporter",
+			Email:      "testReporterEmail@fake.com",
+		},
+	}
+	section := model.ReportAProblemSectionOther
+	severity := model.ReportAProblemSeverityOther
+	input := model.ReportAProblemInput{
+		IsAnonymousSubmission: false,
+		AllowContact:          models.BoolPointer(true),
+		Section:               &section,
+		SectionOther:          models.StringPointer("The Landing page"),
+		WhatDoing:             models.StringPointer("I was trying to log in"),
+		WhatWentWrong:         models.StringPointer("I wasn't able to log in"),
+		Severity:              &severity,
+		SeverityOther:         models.StringPointer(" I couldn't log in for a week "),
+	}
+
+	_, err := resolvers.ReportAProblem(emailService, templateService, addressBook, &princ, input)
+	noErr(err)
+
 }
