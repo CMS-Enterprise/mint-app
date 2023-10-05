@@ -2,6 +2,8 @@
   Typed translation mappings for question centric architecture for a model plan
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
+import { CmmiGroup, CmsCenter } from 'gql/gen/graphql';
+
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 import {
@@ -117,9 +119,9 @@ export type TranslationBasics = {
   demoCode: TranslationFieldProperties;
   modelCategory: TranslationFieldPropertiesWithOptions<ModelCategory>;
   additionalModelCategories: TranslationFieldPropertiesWithOptions<ModelCategory>;
-  cmsCenters: TranslationFieldPropertiesWithOptions<CMSCenter>;
+  cmsCenters: TranslationFieldPropertiesWithOptions<CMSCenter | CmsCenter>;
   cmsOther: TranslationFieldProperties;
-  cmmiGroups: TranslationFieldPropertiesWithOptions<CMMIGroup>;
+  cmmiGroups: TranslationFieldPropertiesWithOptions<CMMIGroup | CmmiGroup>;
   // Overview
   modelType: TranslationFieldPropertiesWithOptions<ModelType>;
   problem: TranslationFieldProperties;

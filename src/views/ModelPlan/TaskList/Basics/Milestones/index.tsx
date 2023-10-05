@@ -16,6 +16,9 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import GetMilestones from 'gql/apolloGQL/Basics/GetMilestones';
+import UpdatePlanBasics from 'gql/apolloGQL/Basics/UpdatePlanBasics';
+import { BasicsMilestonesFieldsFragment as MilestonesFormType } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -30,14 +33,6 @@ import ExternalLink from 'components/shared/ExternalLink';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetMilestones from 'queries/Basics/GetMilestones';
-import {
-  GetMilestones as GetMilestonesType,
-  GetMilestones_modelPlan_basics as MilestonesFormType,
-  GetMilestonesVariables
-} from 'queries/Basics/types/GetMilestones';
-import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
-import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
@@ -65,10 +60,7 @@ const Milestones = () => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
 
-  const { data, loading, error } = useQuery<
-    GetMilestonesType,
-    GetMilestonesVariables
-  >(GetMilestones, {
+  const { data, loading, error } = useQuery(GetMilestones, {
     variables: {
       id: modelID
     },
@@ -94,9 +86,9 @@ const Milestones = () => {
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } = data?.modelPlan?.basics || ({} as MilestonesFormType);
+  } = (data?.modelPlan?.basics || {}) as MilestonesFormType;
 
-  const [update] = useMutation<UpdatePlanBasicsVariables>(UpdatePlanBasics);
+  const [update] = useMutation(UpdatePlanBasics);
 
   const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
     const dirtyInputs = dirtyInput(

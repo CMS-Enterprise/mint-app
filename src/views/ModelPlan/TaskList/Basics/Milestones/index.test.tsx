@@ -1,16 +1,17 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
+import GetMilestones from 'gql/apolloGQL/Basics/GetMilestones';
+import { BasicsMilestonesFieldsFragment } from 'gql/gen/graphql';
 
-import GetMilestones from 'queries/Basics/GetMilestones';
-import { GetMilestones_modelPlan_basics as GetMilestonesType } from 'queries/Basics/types/GetMilestones';
 import { TaskStatus } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import Milestones from './index';
 
-const milestonesMockData: GetMilestonesType = {
+const milestonesMockData: Required<BasicsMilestonesFieldsFragment> = {
   __typename: 'PlanBasics',
+  ' $fragmentName': 'BasicsMilestonesFieldsFragment',
   id: '123',
   completeICIP: '2029-05-12T15:01:39.190679Z',
   clearanceStarts: '2030-06-12T15:01:39.190679Z',

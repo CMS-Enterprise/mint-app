@@ -2,13 +2,12 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetBasics from 'queries/Basics/GetBasics';
-import { GetBasics_modelPlan_basics as GetBasicsType } from 'queries/Basics/types/GetBasics';
+import GetBasics from 'gql/apolloGQL/Basics/GetBasics';
+import { BasicsOverviewFieldsFragment } from 'gql/gen/graphql';
 
 import Overview from './index';
 
-const overviewMockData: GetBasicsType = {
+const overviewMockData: BasicsOverviewFieldsFragment = {
   __typename: 'PlanBasics',
   id: '123',
   modelType: null,
