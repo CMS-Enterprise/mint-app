@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useMemo,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
@@ -38,6 +44,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import './index.scss';
 
@@ -164,6 +171,8 @@ export const Table = ({
     {} as DocumentType
   );
 
+  const { modelName } = useContext(ModelInfoContext);
+
   const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
     DeleteModelPlanDocument
   );
@@ -178,15 +187,17 @@ export const Table = ({
         .then(response => {
           if (response?.errors) {
             setDocumentMessage(
-              t('removeDocumentFail', {
-                documentName: file.fileName
+              t('documentRemoval.error', {
+                documentName: file.fileName,
+                modelName
               })
             );
             setDocumentStatus('error');
           } else {
             setDocumentMessage(
-              t('removeDocumentSuccess', {
-                documentName: file.fileName
+              t('documentRemoval.success', {
+                documentName: file.fileName,
+                modelName
               })
             );
             setDocumentStatus('success');
@@ -195,14 +206,15 @@ export const Table = ({
         })
         .catch(() => {
           setDocumentMessage(
-            t('removeDocumentFail', {
-              documentName: file.fileName
+            t('documentRemoval.error', {
+              documentName: file.fileName,
+              modelName
             })
           );
           setDocumentStatus('error');
         });
     };
-  }, [mutate, refetch, t, setDocumentMessage, setDocumentStatus]);
+  }, [mutate, setDocumentMessage, t, modelName, setDocumentStatus, refetch]);
 
   const handleDownload = useMemo(() => {
     return (file: DocumentType) => {

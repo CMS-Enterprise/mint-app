@@ -64,8 +64,6 @@ const documents = {
   },
   downloadFail: 'Failed to download file',
   urlFail: 'Failed to fetch file URL',
-  removeDocumentFail: 'Failed to remove document {{-documentName}}',
-  removeDocumentSuccess: 'Success! Document {{-documentName}} removed.',
   documentUploadSuccess: 'Success! {{-documentName}} added to {{-modelName}}.',
 
   segmentedButton: {
@@ -134,6 +132,10 @@ const documents = {
       'Success! {{documentName}} has been disconnected from this solution.',
     error:
       'There was an error disconnecting {{documentName}}. Please try again.'
+  },
+  documentRemoval: {
+    success: 'Success! {{documentName}} removed from {{modelName}}.',
+    error: 'There was an error removing {{documentName}}. Please try again.'
   },
   documentLinkError:
     'There was an error connecting {{fileName}} to this solution. Please try again.',
