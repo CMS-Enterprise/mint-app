@@ -514,7 +514,7 @@ export const Table = ({
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
+          {page.map(row => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -535,6 +535,19 @@ export const Table = ({
                         >
                           {cell.render('Cell')}
                         </th>
+                      );
+                    }
+                    if (i + 1 === row.cells.length) {
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          style={{
+                            paddingLeft: '0',
+                            paddingRight: '0'
+                          }}
+                        >
+                          {cell.render('Cell')}
+                        </td>
                       );
                     }
                     return (
