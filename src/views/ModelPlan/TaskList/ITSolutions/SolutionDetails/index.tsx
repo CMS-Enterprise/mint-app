@@ -48,6 +48,7 @@ const SolutionDetails = () => {
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+  const { t: documentsT } = useTranslation('documents');
 
   const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 
@@ -82,7 +83,7 @@ const SolutionDetails = () => {
     DeleteDocumentSolutionLinks
   );
 
-  const handleDocumentUnlink = (linkToRemove: string) => {
+  const handleDocumentUnlink = (linkToRemove: string, documentName: string) => {
     deleteSolutionLink({
       variables: {
         solutionID: operationalSolutionID,
@@ -91,16 +92,24 @@ const SolutionDetails = () => {
     })
       .then(response => {
         if (response && !response.errors) {
-          setDocumentMessage(t('documentUnLinkSuccess'));
+          setDocumentMessage(
+            documentsT('documentDisconnect.success', {
+              documentName
+            })
+          );
           setDocumentStatus('success');
           refetch();
         } else if (response.errors) {
-          setDocumentMessage(t('documentUnLinkError'));
+          setDocumentMessage(
+            documentsT('documentDisconnect.error', { documentName })
+          );
           setDocumentStatus('error');
         }
       })
       .catch(() => {
-        setDocumentMessage(t('documentUnLinkError'));
+        setDocumentMessage(
+          documentsT('documentDisconnect.error', { documentName })
+        );
         setDocumentStatus('error');
       });
   };

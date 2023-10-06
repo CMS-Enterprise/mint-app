@@ -129,8 +129,12 @@ const documents = {
   connectDocumentsButton: 'Connect documents',
   dontConnect: 'Don’t connect documents and return to solution details',
   documentLinkSuccess: 'Success! Your documents are linked to this solution.',
-  documentUnLinkSuccess:
-    'Success! Your documents are unlinked to this solution.',
+  documentDisconnect: {
+    success:
+      'Success! {{documentName}} has been disconnected from this solution.',
+    error:
+      'There was an error disconnecting {{documentName}}. Please try again.'
+  },
   documentLinkError:
     'There was an error connecting {{fileName}} to this solution. Please try again.',
   documentUnLinkError:

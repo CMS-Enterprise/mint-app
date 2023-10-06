@@ -143,7 +143,7 @@ type TableProps = {
   setDocumentStatus: (value: DocumentStatusType) => void;
   linkedDocs?: string[]; // If displaying from LinkedDocuments view
   setLinkedDocs?: Dispatch<SetStateAction<string[]>>; // If displaying from LinkedDocuments view
-  handleDocumentUnlink?: (fileToUnlink: string) => void; // Mutation to unlink a document from directly in table
+  handleDocumentUnlink?: (fileToUnlink: string, documentName: string) => void; // Mutation to unlink a document from directly in table
   hasEditAccess?: boolean;
 };
 
@@ -299,7 +299,7 @@ export const Table = ({
           <Button
             type="button"
             onClick={() => {
-              handleDocumentUnlink(fileToRemove.id);
+              handleDocumentUnlink(fileToRemove.id, fileToRemove.fileName);
               setModalOpen(false);
             }}
           >
