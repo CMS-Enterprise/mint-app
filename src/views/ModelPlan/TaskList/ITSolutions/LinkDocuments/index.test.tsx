@@ -54,7 +54,9 @@ const operationalSolution = {
       otherHeader: null,
       optionalNotes: null,
       otherType: null,
-      __typename: 'PlanDocument'
+      __typename: 'PlanDocument',
+      isLink: false,
+      url: ''
     }
   ],
   mustFinishDts: '2022-05-12T15:01:39.190679Z',
