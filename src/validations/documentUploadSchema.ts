@@ -17,7 +17,10 @@ export const DocumentUploadValidationSchema: any = Yup.object().shape({
 });
 
 export const DocumentLinkValidationSchema: any = Yup.object().shape({
-  url: Yup.mixed().nullable().required(i18next.t('documents:validation.link')),
+  url: Yup.string()
+    .url(i18next.t('documents:validation.url'))
+    .nullable()
+    .required(i18next.t('documents:validation.link')),
   name: Yup.mixed()
     .nullable()
     .required(i18next.t('documents:validation.otherDescr')),
