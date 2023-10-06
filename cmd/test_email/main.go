@@ -68,17 +68,19 @@ func sendPlanDiscussionCreatedTestEmail(
 	addressBook email.AddressBook,
 ) {
 	discussionUserRole := models.DiscussionRoleMintTeam
+	taggedHTML, err := models.NewTaggedHTMLFromString("Test Content for Plan Discussion")
+	noErr(err)
 
 	planDiscussion := models.NewPlanDiscussion(
 		uuid.Nil,
 		false,
 		uuid.Nil,
-		"Test Content for Plan Discussion",
+		taggedHTML,
 		&discussionUserRole,
 		models.StringPointer("Test User Role Description"),
 	)
 
-	err := sendPlanDiscussionCreatedEmail(
+	err = sendPlanDiscussionCreatedEmail(
 		emailService,
 		templateService,
 		addressBook,
@@ -107,7 +109,7 @@ func sendPlanDiscussionCreatedEmail(
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
-		DiscussionContent: planDiscussion.Content,
+		DiscussionContent: string(planDiscussion.Content.RawContent), // TODO: SW allow email to parse HTML instead of just string
 	})
 	if err != nil {
 		return err
@@ -116,8 +118,8 @@ func sendPlanDiscussionCreatedEmail(
 	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
-		UserName:          "Test User", // Note: Hardcoded for the test. In real use, it would be dynamic.
-		DiscussionContent: planDiscussion.Content,
+		UserName:          "Test User",                               // Note: Hardcoded for the test. In real use, it would be dynamic.
+		DiscussionContent: string(planDiscussion.Content.RawContent), // TODO: SW allow email to parse HTML instead of just string
 		ModelID:           modelPlanID.String(),
 		ModelName:         "Test Model Plan Name", // Note: Hardcoded for the test. In real use, it would be dynamic.
 	})

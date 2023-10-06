@@ -2,8 +2,11 @@ package models
 
 import (
 	"context"
+	"database/sql/driver"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"strings"
 
 	"github.com/google/uuid"
@@ -17,6 +20,7 @@ import (
 type TaggedHTML struct {
 	RawContent hTML
 	Mentions   []*HTMLMention
+	Tags       []*Tag // TODO: Verify, this is the actual tag from teh dB
 }
 
 // HTMLMention represents Meta data about an entity tagged in text
@@ -33,7 +37,12 @@ type HTMLMention struct {
 type hTML string
 
 // TaggedHTMLInput Is the input type for HTML that could contain tags
-type TaggedHTMLInput string
+type TaggedHTMLInput TaggedHTML
+
+// ToTaggedHTML casts the input to TaggedHTML
+func (thi TaggedHTMLInput) ToTaggedHTML() TaggedHTML {
+	return TaggedHTML(thi)
+}
 
 // TODO: can we represent this as the same as the output struct?
 
@@ -49,13 +58,40 @@ func (thi *TaggedHTMLInput) UnmarshalGQLContext(ctx context.Context, v interface
 
 	// Sanitize the HTML string
 	sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
-	*thi = TaggedHTMLInput(sanitizedHTMLString)
+	th, err := NewTaggedHTMLFromString(sanitizedHTMLString)
+	if err != nil {
+		return err
+	}
+	*thi = TaggedHTMLInput(th)
+	// *thi = TaggedHTMLInput{
+	// 	RawContent: hTML(sanitizedHTMLString),
+	// }
 	return nil
 
 }
 
+// MarshalGQLContext marshals the TaggedHTMLInput type to JSON to return to graphQL
+func (thi TaggedHTMLInput) MarshalGQLContext(ctx context.Context, w io.Writer) error {
+	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
+
+	// TODO: SW decide the format this should go back to GQL with
+	// Marshal the TaggedHTMLInput value to JSON so that it's properly escaped (wrapped in quotation marks)
+	jsonValue, err := json.Marshal(thi.RawContent)
+	if err != nil {
+		logger.Info("invalid TaggedHTMLInput")
+		return fmt.Errorf("failed to marshal TaggedHTMLInputto JSON: %w", err)
+	}
+	// Write the JSON-encoded TaggedHTMLInput value to the writer
+	_, err = w.Write(jsonValue)
+	if err != nil {
+		return fmt.Errorf("failed to write TaggedHTMLInput to writer: %w", err)
+	}
+
+	return nil
+}
+
 // NewTaggedHTMLFromString converts a rawString into TaggedHTMl
-func NewTaggedHTMLFromString(htmlString string) (TaggedHTML, error) {
+func NewTaggedHTMLFromString(htmlString string) (TaggedHTML, error) { // TODO: SW [TaggedHTMLType ~TaggedHTML] Check if we can use a generic here to return input type. (Most likely not)
 	sanitized := sanitization.SanitizeHTML(htmlString)
 	th := TaggedHTML{
 		RawContent: hTML(sanitized),
@@ -166,4 +202,35 @@ func (th *TaggedHTML) UnmarshalGQLContext(ctx context.Context, v interface{}) er
 	*th = TaggedHTML{RawContent: hTML(sanitizedHTMLString)}
 	return nil
 
+}
+
+// Scan is used by sql.scan to read the values from the DB
+func (th *TaggedHTML) Scan(src interface{}) error {
+
+	switch src := src.(type) {
+	case string:
+		rawContent := string(src)
+		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		if err != nil {
+			return err
+		}
+		*th = tagHTML
+	case []byte:
+		rawContent := string(src)
+		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		if err != nil {
+			return err
+		}
+		*th = tagHTML
+	case nil:
+		return nil
+
+	}
+	return nil
+}
+
+// Value implements the driver.Valuer interface. This is called when a TaggedString is being written to the database
+func (th TaggedHTML) Value() (driver.Value, error) {
+	// Return the RawContent field as a value
+	return string(th.RawContent), nil
 }

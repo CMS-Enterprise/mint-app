@@ -32,6 +32,10 @@ Any represents any GraphQL value.
 """
 scalar Any
 
+"""
+TaggedHTMLInput represents an input typ for HTML that could also include 
+"""
+scalar TaggedHTMLInput
 
 enum SortDirection {
   ASC
@@ -385,13 +389,54 @@ type UserInfo {
   username: String!
 }
 
+
+"""
+TaggedEntity is the actual object represented by a tag in the data base.
+"""
+union TaggedEntity =  UserAccount | PossibleOperationalSolution
+
+"""
+TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
+"""
+type TaggedHTML {
+  rawContent: String! #TODO: SW change this to an HTML type?
+  tags: [Tag!]!
+}
+
+"""
+Tag represents an entity tagged in the database
+"""
+type Tag {
+  id: UUID!
+  tagType: TagType!
+  taggedField: String!
+  taggedContentTable: String!
+  taggedContentID: UUID!
+  entityUUID: UUID
+  entityIntID: Int
+
+  entity: TaggedEntity
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+enum TagType {
+    USER_ACCOUNT
+    POSSIBLE_SOLUTION
+}
+
 """
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
-	content: String
+	content: TaggedHTML
   userRole: DiscussionUserRole
   userRoleDescription: String
   replies: [DiscussionReply!]!
@@ -411,7 +456,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
-  content: String!
+  content: TaggedHTMLInput!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -433,7 +478,7 @@ DiscussionReply represents a discussion reply
 type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
-	content: String
+	content: TaggedHTML
   userRole: DiscussionUserRole
   userRoleDescription: String
   isAssessment: Boolean!
@@ -451,7 +496,7 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 """
 input DiscussionReplyCreateInput {
   discussionID: UUID!
-  content: String!
+  content: TaggedHTMLInput!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }

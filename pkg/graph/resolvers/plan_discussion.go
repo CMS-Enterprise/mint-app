@@ -32,7 +32,7 @@ func CreatePlanDiscussion(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.ModelPlanID,
-		input.Content,
+		input.Content.ToTaggedHTML(), // TODO: SW update this to save the tags as well
 		input.UserRole,
 		input.UserRoleDescription,
 	)
@@ -92,7 +92,7 @@ func sendPlanDiscussionCreatedEmail(
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
-		DiscussionContent: planDiscussion.Content,
+		DiscussionContent: string(planDiscussion.Content.RawContent), //TODO: SW make this take HTML
 	})
 	if err != nil {
 		return err
@@ -107,7 +107,7 @@ func sendPlanDiscussionCreatedEmail(
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
 		UserName:          planDiscussion.CreatedByUserAccount(ctx).CommonName,
-		DiscussionContent: planDiscussion.Content,
+		DiscussionContent: string(planDiscussion.Content.RawContent), //TODO: SW make this take HTML
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
 	})
@@ -165,7 +165,7 @@ func CreateDiscussionReply(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.DiscussionID,
-		input.Content,
+		input.Content.ToTaggedHTML(),
 		input.UserRole,
 		input.UserRoleDescription,
 	)

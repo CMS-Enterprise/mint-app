@@ -54,3 +54,6 @@ const (
 	OpSKSharedSystems             OperationalSolutionKey = "SHARED_SYSTEMS"
 	OpSKBCDA                      OperationalSolutionKey = "BCDA"
 )
+
+// IsTaggedEntity is a method to satisfy the IsTaggedEntity interface for PossibleOperationalSolution.
+func (PossibleOperationalSolution) IsTaggedEntity() {}

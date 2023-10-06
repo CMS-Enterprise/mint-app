@@ -9,11 +9,16 @@ import { DiscussionReplyCreateInput } from "./../../types/graphql-global-types";
 // GraphQL mutation operation: CreateModelPlanReply
 // ====================================================
 
+export interface CreateModelPlanReply_createDiscussionReply_content {
+  __typename: "TaggedHTML";
+  rawContent: string;
+}
+
 export interface CreateModelPlanReply_createDiscussionReply {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: string | null;
+  content: CreateModelPlanReply_createDiscussionReply_content | null;
   createdBy: UUID;
   createdDts: Time;
 }
