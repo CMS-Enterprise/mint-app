@@ -45,17 +45,17 @@ const documents = {
       ' this document will delete it from your model completely, and you will no longer be able to access it. It will also be removed from any other linked solutions.',
     warningRemoveSolution2:
       ' this document will delete it from your model completely, and you will no longer be able to access it.',
-    warningUnlinkSolution:
+    warningDisconnectSolution:
       ' this document will remove it only from this solution. It will still be available with the rest of your model documents.',
     linkDocsWarning:
-      'This document is linked to {{-numLinkedSolutions}} solution{{-plural}}.',
+      'This document is connected to {{-numLinkedSolutions}} solution{{-plural}}.',
     linkDocsWarning2:
-      'This document is linked to {{-numLinkedSolutions}} other solution{{-plural}}.',
+      'This document is connected to {{-numLinkedSolutions}} other solution{{-plural}}.',
     removing: 'Removing',
-    unlinking: 'Unlinking',
+    disconnecting: 'Disconnecting',
     confirm: 'Remove document',
     confirmSolutionRemove: 'Remove',
-    unlink: 'Unlink',
+    disconnect: 'Disconnect',
     keepDocument: 'Keep document',
     cancel: 'Cancel',
     confirmationText_name:

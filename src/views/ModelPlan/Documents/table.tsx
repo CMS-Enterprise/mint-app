@@ -265,9 +265,9 @@ export const Table = ({
             </p>
             <p>
               <span className="text-bold">
-                {t('removeDocumentModal.unlinking')}
+                {t('removeDocumentModal.disconnecting')}
               </span>
-              {t('removeDocumentModal.warningUnlinkSolution')}
+              {t('removeDocumentModal.warningDisconnectSolution')}
             </p>
           </>
         )}
@@ -303,7 +303,7 @@ export const Table = ({
               setModalOpen(false);
             }}
           >
-            {t('removeDocumentModal.unlink')}
+            {t('removeDocumentModal.disconnect')}
           </Button>
         )}
 
@@ -390,7 +390,7 @@ export const Table = ({
                   <Button
                     type="button"
                     unstyled
-                    className="margin-right-1"
+                    className="margin-right-2"
                     onClick={() => handleDownload(row.original)}
                   >
                     <span className="display-flex flex-align-center">
