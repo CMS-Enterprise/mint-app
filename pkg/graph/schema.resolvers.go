@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -554,6 +553,12 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
+// Content is the resolver for the content field.
+func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedHTML, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.TaggedHTMLGet(logger, r.store, string(obj.Content.RawContent), "plan_discussion", "content", obj.ID) //TODO: SW review implementation
+}
+
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
 	return resolvers.DiscussionReplyCollectionByDiscusionIDLOADER(ctx, obj.ID)
@@ -1074,13 +1079,3 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedHTMLResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *taggedHTMLResolver) Tags(ctx context.Context, obj *models.TaggedHTML) ([]*models.Tag, error) {
-	panic(fmt.Errorf("not implemented: Tags - tags"))
-}

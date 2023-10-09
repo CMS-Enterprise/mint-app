@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 	"fmt"
+	"strconv"
+	"strings"
 
 	"go.uber.org/zap"
 
@@ -25,6 +27,10 @@ func (s *Store) TagCreate(
 	tag *models.Tag,
 ) (*models.Tag, error) {
 	tag.ID = utilityUUID.ValueOrNewUUID(tag.ID)
+	err := s.setTagEntityIDs(tag)
+	if err != nil {
+		return nil, err
+	}
 
 	stmt, err := s.db.PrepareNamed(tagCreateSQL)
 	if err != nil {
@@ -63,6 +69,29 @@ func (s *Store) TagCollectionCreate(logger *zap.Logger, tags []*models.Tag, crea
 	}
 	return retTags, nil
 
+}
+func (s *Store) setTagEntityIDs(tag *models.Tag) error { //TODO perhaps this should be in resolvers? Maybe when we convert a mention to a tag? And update the raw HTML?
+	tagType := tag.TagType
+	entityIDStr := tag.EntityRaw
+	// TODO: SW update to check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
+	switch tagType { //TODO: Solution is an int id, user is a UUID
+	case models.TagTypeUserAccount:
+		parsedUUID, err := uuid.Parse(strings.TrimSpace(entityIDStr))
+		if err != nil {
+			return fmt.Errorf("error setting Account ID for tag %w", err)
+		}
+		tag.EntityUUID = &parsedUUID
+		return nil
+	case models.TagTypePossibleSolution:
+		number, err := strconv.Atoi(entityIDStr)
+		if err != nil {
+			return fmt.Errorf("error setting possible solution ID for tag %w", err)
+		}
+		tag.EntityIntID = &number
+		return nil
+	default:
+		return fmt.Errorf("could not set entity id because the tag type is invalid %s", tagType)
+	}
 }
 
 // TagCollectionGetByContentIDAndField returns relevant tags for specific table and field

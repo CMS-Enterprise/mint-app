@@ -9,13 +9,17 @@ import (
 func TestExtractHTMLMentions(t *testing.T) {
 	htmlMention := `<p>Hey <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type="mention" class="mention" data-id="TEST" data-label="Terry Thompson">@Terry Thompson</span> to let them know?</p>`
 	// htmlMention := `<p>Hey <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type="mention" class="mention" data-id="TEST" data-label="Terry Thompson">@Terry Thompson</span> to let them know?</p>`
-	mentionNodes, err := extractHTMLMentions(htmlMention)
+	mentionNodes, err := extractHTMLMentions(htmlMention) //Can we just
 	assert.NotNil(t, mentionNodes)
 	assert.NoError(t, err)
 
 	assert.Len(t, mentionNodes, 2)
 
 }
+
+// <span data-type="mention" class="mention" data-id="" rawTag="SKZO" data-label="Alexander Stark">@Alexander Stark</span>
+// DATA TYPE and class probably needs to be mention.
+// DATA-ID and DATA-LABEl default
 
 func TestHTMLMentionFromString(t *testing.T) {
 	// htmlMention := `<p>Hey <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type="mention" class="mention" data-id="TEST" data-label="Terry Thompson">@Terry Thompson</span> to let them know?</p>`

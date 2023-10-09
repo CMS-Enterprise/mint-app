@@ -8,7 +8,7 @@ import (
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
-	Content             TaggedHTML          `json:"content" db:"content"`
+	Content             TaggedHTMLInput     `json:"content" db:"content"` // TODO: SW this needs to be named different, or be a different type, so we can show that we can handle this as a separate resolver
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
 	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
@@ -19,7 +19,7 @@ func NewPlanDiscussion(
 	principal uuid.UUID,
 	isAssessment bool,
 	modelPlanID uuid.UUID,
-	content TaggedHTML,
+	content TaggedHTMLInput,
 	userRole *DiscussionUserRole,
 	userRoleDescription *string,
 ) *PlanDiscussion {

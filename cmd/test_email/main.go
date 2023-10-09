@@ -75,7 +75,7 @@ func sendPlanDiscussionCreatedTestEmail(
 		uuid.Nil,
 		false,
 		uuid.Nil,
-		taggedHTML,
+		models.TaggedHTMLInput(taggedHTML),
 		&discussionUserRole,
 		models.StringPointer("Test User Role Description"),
 	)

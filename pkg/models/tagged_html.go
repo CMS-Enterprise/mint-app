@@ -186,23 +186,49 @@ func parseHTMLMentionTag(mendtionNode html.Node) (HTMLMention, error) {
 
 }
 
-// UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTML type
-func (th *TaggedHTML) UnmarshalGQLContext(ctx context.Context, v interface{}) error {
-
-	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
-
-	rawHTML, ok := v.(string)
-	if !ok {
-		logger.Info("invalid TaggedHTMLInput")
-		return errors.New("invalid TaggedHTMLInput")
+// ToTag converts a TagString to a tag
+func (hm HTMLMention) ToTag(taggedField string, taggedTable string, taggedContentID uuid.UUID) Tag {
+	tag := Tag{
+		TagType:            hm.Type,
+		TaggedField:        taggedField,
+		TaggedContentTable: taggedTable,
+		TaggedContentID:    taggedContentID,
+		EntityRaw:          hm.EntityRaw,
+		EntityUUID:         hm.EntityUUID,
+		EntityIntID:        hm.EntityIntID,
 	}
+	return tag
+}
 
-	// Sanitize the HTML string
-	sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
-	*th = TaggedHTML{RawContent: hTML(sanitizedHTMLString)}
-	return nil
+// TagArrayFromHTMLMentions converts an array of HTMLMention to an array of Tags
+func TagArrayFromHTMLMentions(taggedField string, taggedTable string, taggedContentID uuid.UUID, mentions []*HTMLMention) []*Tag {
+	tags := []*Tag{}
+	for _, mention := range mentions {
+		tag := mention.ToTag(taggedField, taggedTable, taggedContentID)
+		tags = append(tags, &tag)
+
+	}
+	return tags
 
 }
+
+// // UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTML type
+// func (th *TaggedHTML) UnmarshalGQLContext(ctx context.Context, v interface{}) error {
+
+// 	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
+
+// 	rawHTML, ok := v.(string)
+// 	if !ok {
+// 		logger.Info("invalid TaggedHTMLInput")
+// 		return errors.New("invalid TaggedHTMLInput")
+// 	}
+
+// 	// Sanitize the HTML string
+// 	sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
+// 	*th = TaggedHTML{RawContent: hTML(sanitizedHTMLString)}
+// 	return nil
+
+// }
 
 // Scan is used by sql.scan to read the values from the DB
 func (th *TaggedHTML) Scan(src interface{}) error {
@@ -233,4 +259,35 @@ func (th *TaggedHTML) Scan(src interface{}) error {
 func (th TaggedHTML) Value() (driver.Value, error) {
 	// Return the RawContent field as a value
 	return string(th.RawContent), nil
+}
+
+// Scan is used by sql.scan to read the values from the DB
+func (thi *TaggedHTMLInput) Scan(src interface{}) error {
+
+	switch src := src.(type) {
+	case string:
+		rawContent := string(src)
+		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		if err != nil {
+			return err
+		}
+		*thi = TaggedHTMLInput(tagHTML)
+	case []byte:
+		rawContent := string(src)
+		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		if err != nil {
+			return err
+		}
+		*thi = TaggedHTMLInput(tagHTML)
+	case nil:
+		return nil
+
+	}
+	return nil
+}
+
+// Value implements the driver.Valuer interface. This is called when a TaggedString is being written to the database
+func (thi TaggedHTMLInput) Value() (driver.Value, error) {
+	// Return the RawContent field as a value
+	return string(thi.RawContent), nil
 }

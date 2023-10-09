@@ -12,8 +12,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// TaggedContentGet returns the tag content of a parent object
-func TaggedContentGet(
+// TaggedHTMLGet returns the tag content of a parent object
+func TaggedHTMLGet( //TODO: SW rename
 	logger *zap.Logger,
 	store *storage.Store,
 	rawContent string, //TODO, if we want, we could get this from the database as well

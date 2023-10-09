@@ -32,7 +32,7 @@ func CreatePlanDiscussion(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.ModelPlanID,
-		input.Content.ToTaggedHTML(), // TODO: SW update this to save the tags as well
+		input.Content, // TODO: SW update this to save the tags as well
 		input.UserRole,
 		input.UserRoleDescription,
 	)
