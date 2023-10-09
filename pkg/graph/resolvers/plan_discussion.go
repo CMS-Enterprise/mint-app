@@ -32,7 +32,7 @@ func CreatePlanDiscussion(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.ModelPlanID,
-		input.Content,
+		string(input.Content.RawContent),
 		input.UserRole,
 		input.UserRoleDescription,
 	)
@@ -165,7 +165,7 @@ func CreateDiscussionReply(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.DiscussionID,
-		input.Content,
+		string(input.Content.RawContent),
 		input.UserRole,
 		input.UserRoleDescription,
 	)

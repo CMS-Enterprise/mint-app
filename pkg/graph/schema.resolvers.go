@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -23,6 +24,33 @@ import (
 // Fields is the resolver for the fields field.
 func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
 	return obj.Fields.ToInterface()
+}
+
+// Content is the resolver for the content field.
+func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedHTML, error) {
+	if obj.Content == "" {
+		return nil, nil
+	}
+	tempHTML, err := models.NewTaggedHTMLFromString(obj.Content)
+	tempUserID := uuid.MustParse("8f01092d-0990-4175-8ec3-8f8c551fde14")
+	tempSolutionID := 9000
+	tempHTML.Tags = []*models.Tag{
+		{
+			TaggedContentID:    obj.ID,
+			TaggedField:        "content",
+			TaggedContentTable: "discussion_reply",
+			TagType:            models.TagTypePossibleSolution,
+			EntityIntID:        &tempSolutionID,
+		},
+		{
+			TaggedField:        "content",
+			TaggedContentTable: "discussion_reply",
+			TaggedContentID:    obj.ID,
+			TagType:            models.TagTypeUserAccount,
+			EntityUUID:         &tempUserID,
+		},
+	}
+	return &tempHTML, err
 }
 
 // ExistingModel is the resolver for the existingModel field.
@@ -553,6 +581,33 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
+// Content is the resolver for the content field.
+func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedHTML, error) {
+	if obj.Content == "" {
+		return nil, nil
+	}
+	tempHTML, err := models.NewTaggedHTMLFromString(obj.Content)
+	tempUserID := uuid.MustParse("8f01092d-0990-4175-8ec3-8f8c551fde14")
+	tempSolutionID := 9000
+	tempHTML.Tags = []*models.Tag{
+		{
+			TaggedContentID:    obj.ID,
+			TaggedField:        "content",
+			TaggedContentTable: "plan_discussion",
+			TagType:            models.TagTypePossibleSolution,
+			EntityIntID:        &tempSolutionID,
+		},
+		{
+			TaggedContentID:    obj.ID,
+			TaggedField:        "content",
+			TaggedContentTable: "plan_discussion",
+			TagType:            models.TagTypeUserAccount,
+			EntityUUID:         &tempUserID,
+		},
+	}
+	return &tempHTML, err
+}
+
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
 	return resolvers.DiscussionReplyCollectionByDiscusionIDLOADER(ctx, obj.ID)
@@ -969,8 +1024,43 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
+// Entity is the resolver for the entity field.
+func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error) {
+
+	switch obj.TagType {
+	case models.TagTypePossibleSolution:
+		return models.PossibleOperationalSolution{
+			ID:           9000,
+			Name:         "Temp Possible Solution",
+			Key:          "TPS",
+			TreatAsOther: false,
+		}, nil
+	case models.TagTypeUserAccount:
+		return authentication.UserAccount{
+			ID:         uuid.MustParse("8f01092d-0990-4175-8ec3-8f8c551fde14"),
+			Username:   models.StringPointer("TempUser"),
+			Email:      "tempEmail@email.com",
+			CommonName: "Temp User",
+			GivenName:  "Temp",
+			FamilyName: "User",
+		}, nil
+	default:
+		return nil, fmt.Errorf("invalid tag type")
+	}
+}
+
+// RawContent is the resolver for the rawContent field.
+func (r *taggedHTMLResolver) RawContent(ctx context.Context, obj *models.TaggedHTML) (string, error) {
+	return string(obj.RawContent), nil
+}
+
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
+
+// DiscussionReply returns generated.DiscussionReplyResolver implementation.
+func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
+	return &discussionReplyResolver{r}
+}
 
 // ExistingModelLink returns generated.ExistingModelLinkResolver implementation.
 func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
@@ -1038,7 +1128,14 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 // Subscription returns generated.SubscriptionResolver implementation.
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
+// Tag returns generated.TagResolver implementation.
+func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
+
+// TaggedHTML returns generated.TaggedHTMLResolver implementation.
+func (r *Resolver) TaggedHTML() generated.TaggedHTMLResolver { return &taggedHTMLResolver{r} }
+
 type auditChangeResolver struct{ *Resolver }
+type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
@@ -1055,3 +1152,5 @@ type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
+type tagResolver struct{ *Resolver }
+type taggedHTMLResolver struct{ *Resolver }

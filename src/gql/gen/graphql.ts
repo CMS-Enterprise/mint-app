@@ -18,6 +18,8 @@ export type Scalars = {
   Any: { input: any; output: any; }
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: { input: any; output: any; }
+  /** TaggedHTMLInput represents an input typ for HTML that could also include  */
+  TaggedHTMLInput: { input: any; output: any; }
   /** Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z */
   Time: { input: Time; output: Time; }
   /** UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A */
@@ -282,7 +284,7 @@ export type DateHistogramAggregationBucket = {
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
   __typename?: 'DiscussionReply';
-  content?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<TaggedHtml>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -302,14 +304,14 @@ export type DiscussionReply = {
  * https://gqlgen.com/reference/changesets/
  */
 export type DiscussionReplyChanges = {
-  content?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['TaggedHTMLInput']['input']>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** DiscussionReplyCreateInput represents the necessary fields to create a discussion reply */
 export type DiscussionReplyCreateInput = {
-  content: Scalars['String']['input'];
+  content: Scalars['TaggedHTMLInput']['input'];
   discussionID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
@@ -1401,7 +1403,7 @@ export type PlanCrTdlCreateInput = {
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
   __typename?: 'PlanDiscussion';
-  content?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<TaggedHtml>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1422,14 +1424,14 @@ export type PlanDiscussion = {
  * https://gqlgen.com/reference/changesets/
  */
 export type PlanDiscussionChanges = {
-  content?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['TaggedHTMLInput']['input']>;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** PlanDiscussionCreateInput represents the necessary fields to create a plan discussion */
 export type PlanDiscussionCreateInput = {
-  content: Scalars['String']['input'];
+  content: Scalars['TaggedHTMLInput']['input'];
   modelPlanID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
@@ -2487,6 +2489,40 @@ export type SubscriptionOnLockTaskListSectionContextArgs = {
 
 export type SubscriptionOnTaskListSectionLocksChangedArgs = {
   modelPlanID: Scalars['UUID']['input'];
+};
+
+/** Tag represents an entity tagged in the database */
+export type Tag = {
+  __typename?: 'Tag';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  entity?: Maybe<TaggedEntity>;
+  entityIntID?: Maybe<Scalars['Int']['output']>;
+  entityUUID?: Maybe<Scalars['UUID']['output']>;
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  tagType: TagType;
+  taggedContentID: Scalars['UUID']['output'];
+  taggedContentTable: Scalars['String']['output'];
+  taggedField: Scalars['String']['output'];
+};
+
+export enum TagType {
+  POSSIBLE_SOLUTION = 'POSSIBLE_SOLUTION',
+  USER_ACCOUNT = 'USER_ACCOUNT'
+}
+
+/** TaggedEntity is the actual object represented by a tag in the data base. */
+export type TaggedEntity = PossibleOperationalSolution | UserAccount;
+
+/** TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags */
+export type TaggedHtml = {
+  __typename?: 'TaggedHTML';
+  rawContent: Scalars['String']['output'];
+  tags: Array<Tag>;
 };
 
 export enum TaskListSection {

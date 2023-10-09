@@ -60,9 +60,11 @@ func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
 }
 
 func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content string) *models.PlanDiscussion {
+	taggedHTML, err := models.NewTaggedHTMLFromString(content)
+	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         mp.ID,
-		Content:             content,
+		Content:             models.TaggedHTMLInput(taggedHTML),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -84,9 +86,12 @@ func (suite *ResolverSuite) createDiscussionReply(
 	pd *models.PlanDiscussion,
 	content string,
 ) *models.DiscussionReply {
+
+	taggedHTML, err := models.NewTaggedHTMLFromString(content)
+	suite.NoError(err)
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        pd.ID,
-		Content:             content,
+		Content:             models.TaggedHTMLInput(taggedHTML),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
