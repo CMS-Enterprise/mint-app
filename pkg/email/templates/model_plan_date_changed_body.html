@@ -1,12 +1,7 @@
-{{template "shared_header_old.html"}}
+{{template "shared_header.html"}}
 
-<body>
-<h1>MINT</h1>
-<p class="subtitle">The Model Innovation Tool</p>
-<br/>
-<br/>
 <h2>Dates updated for {{.ModelName}}</h2>
-<p style="padding-top: 10px">One or more dates have been updated for this model.</p>
+<p>One or more dates have been updated for this model.</p>
 <br/>
 <br/>
 <h3>Anticipated high level timeline</h3>
@@ -45,9 +40,9 @@
 {{end}}
 
 <br/>
-<p style="padding-bottom: 10px">
+<p>
   <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
     View this Model Plan in MINT
   </a>
 </p>
-</body>
+<br>
