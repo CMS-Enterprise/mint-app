@@ -17,6 +17,7 @@ const config: CodegenConfig = {
           UUID: 'UUID',
           Upload: 'Upload'
         },
+        nonOptionalTypename: true,
         namingConvention: {
           enumValues: 'change-case-all#upperCase#snakeCase'
         }

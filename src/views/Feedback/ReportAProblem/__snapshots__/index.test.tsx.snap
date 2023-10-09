@@ -44,7 +44,7 @@ exports[`Report a problem form > matches snapshot 1`] = `
         Report a problem
       </h1>
       <p
-        class="margin-bottom-2 font-body-lg"
+        class="margin-bottom-2 font-body-lg line-height-sans-lg"
       >
         Did you notice something wrong with MINT? Let us know using the form below.
       </p>
@@ -70,6 +70,11 @@ exports[`Report a problem form > matches snapshot 1`] = `
               >
                 Would you like your feedback to remain anonymous?
               </label>
+              <p
+                class="text-base margin-y-1"
+              >
+                If you select yes, your name and email will not be recorded with your feedback.
+              </p>
               <fieldset
                 class="usa-fieldset"
                 data-testid="fieldset"
@@ -182,50 +187,12 @@ exports[`Report a problem form > matches snapshot 1`] = `
                 data-testid="label"
                 for="report-a-problem-allow-contact"
               >
-                May the MINT team contact you for additional information?
+                Which part of MINT were you using when you encountered an issue?
               </label>
               <fieldset
                 class="usa-fieldset"
                 data-testid="fieldset"
               >
-                <div
-                  class="usa-radio"
-                  data-testid="radio"
-                >
-                  <input
-                    class="usa-radio__input"
-                    data-testid="report-a-problem-section-HELP_CENTER"
-                    id="report-a-problem-section-HELP_CENTER"
-                    name="section"
-                    type="radio"
-                    value="HELP_CENTER"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="report-a-problem-section-HELP_CENTER"
-                  >
-                    Help Center
-                  </label>
-                </div>
-                <div
-                  class="usa-radio"
-                  data-testid="radio"
-                >
-                  <input
-                    class="usa-radio__input"
-                    data-testid="report-a-problem-section-IT_SOLUTIONS"
-                    id="report-a-problem-section-IT_SOLUTIONS"
-                    name="section"
-                    type="radio"
-                    value="IT_SOLUTIONS"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="report-a-problem-section-IT_SOLUTIONS"
-                  >
-                    IT solution and implementation status tracker
-                  </label>
-                </div>
                 <div
                   class="usa-radio"
                   data-testid="radio"
@@ -262,6 +229,44 @@ exports[`Report a problem form > matches snapshot 1`] = `
                     for="report-a-problem-section-TASK_LIST"
                   >
                     Model Plan Task List
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="report-a-problem-section-IT_SOLUTIONS"
+                    id="report-a-problem-section-IT_SOLUTIONS"
+                    name="section"
+                    type="radio"
+                    value="IT_SOLUTIONS"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="report-a-problem-section-IT_SOLUTIONS"
+                  >
+                    IT solution and implementation status tracker
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="report-a-problem-section-HELP_CENTER"
+                    id="report-a-problem-section-HELP_CENTER"
+                    name="section"
+                    type="radio"
+                    value="HELP_CENTER"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="report-a-problem-section-HELP_CENTER"
+                  >
+                    Help Center
                   </label>
                 </div>
                 <div
@@ -367,6 +372,25 @@ exports[`Report a problem form > matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
+                    data-testid="report-a-problem-severity-PREVENTED_TASK"
+                    id="report-a-problem-severity-PREVENTED_TASK"
+                    name="severity"
+                    type="radio"
+                    value="PREVENTED_TASK"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="report-a-problem-severity-PREVENTED_TASK"
+                  >
+                    It prevented me from completing my task
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
                     data-testid="report-a-problem-severity-DELAYED_TASK"
                     id="report-a-problem-severity-DELAYED_TASK"
                     name="severity"
@@ -397,25 +421,6 @@ exports[`Report a problem form > matches snapshot 1`] = `
                     for="report-a-problem-severity-MINOR"
                   >
                     It was a minor annoyance
-                  </label>
-                </div>
-                <div
-                  class="usa-radio"
-                  data-testid="radio"
-                >
-                  <input
-                    class="usa-radio__input"
-                    data-testid="report-a-problem-severity-PREVENTED_TASK"
-                    id="report-a-problem-severity-PREVENTED_TASK"
-                    name="severity"
-                    type="radio"
-                    value="PREVENTED_TASK"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="report-a-problem-severity-PREVENTED_TASK"
-                  >
-                    It prevented me from completing my task
                   </label>
                 </div>
                 <div
@@ -455,7 +460,7 @@ exports[`Report a problem form > matches snapshot 1`] = `
               class="margin-top-6 margin-bottom-3"
             >
               <button
-                class="usa-button usa-button usa-button--outline margin-bottom-1"
+                class="usa-button usa-button margin-bottom-1"
                 data-testid="button"
                 type="button"
               >
