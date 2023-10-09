@@ -52,9 +52,9 @@ jobs:
           aws-region: us-east-1
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: mint-db-migrate
@@ -67,6 +67,11 @@ jobs:
           cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
           build-args: |
             TAG=9.10-alpine
+          # As of Buildx verion 0.10, image are build with provenance by default.
+          # Lambda currently does not support functions that use multi-architecture container images (https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-reqs)
+          # As such, the Lambda for vulnerability scanning will fail if the image is built with provenance.
+          # More information can be found here: https://github.com/docker/buildx/issues/1533
+          provenance: false
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -91,9 +96,9 @@ jobs:
           aws-region: us-east-1
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: mint-db-clean
@@ -105,6 +110,11 @@ jobs:
           cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-db_clean
           cache-to: type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-db_clean
           context: .
+          # As of Buildx verion 0.10, image are build with provenance by default.
+          # Lambda currently does not support functions that use multi-architecture container images (https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-reqs)
+          # As such, the Lambda for vulnerability scanning will fail if the image is built with provenance.
+          # More information can be found here: https://github.com/docker/buildx/issues/1533
+          provenance: false
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -129,7 +139,7 @@ jobs:
           aws-region: us-east-1
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Calculate build args
         id: calculate-build-args
         run: |
@@ -138,7 +148,7 @@ jobs:
           echo "APPLICATION_DATETIME=${APPLICATION_DATETIME}" >> $GITHUB_OUTPUT
           echo "APPLICATION_TS=${APPLICATION_TS}" >> $GITHUB_OUTPUT
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: mint-backend
@@ -153,6 +163,11 @@ jobs:
             ARG_APPLICATION_DATETIME=${{ steps.calculate-build-args.outputs.APPLICATION_DATETIME }}
             ARG_APPLICATION_TS=${{ steps.calculate-build-args.outputs.APPLICATION_TS }}
             ARG_APPLICATION_VERSION=${{ env.GIT_HASH }}
+          # As of Buildx verion 0.10, image are build with provenance by default.
+          # Lambda currently does not support functions that use multi-architecture container images (https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-reqs)
+          # As such, the Lambda for vulnerability scanning will fail if the image is built with provenance.
+          # More information can be found here: https://github.com/docker/buildx/issues/1533
+          provenance: false
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -178,9 +193,9 @@ jobs:
           aws-region: us-east-1
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: mint-faktory
@@ -192,6 +207,11 @@ jobs:
           context: .
           cache-to: type=gha,scope=${{ env.GIT_REF_NAME }}-faktory
           cache-from: type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-faktory
+          # As of Buildx verion 0.10, image are build with provenance by default.
+          # Lambda currently does not support functions that use multi-architecture container images (https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-reqs)
+          # As such, the Lambda for vulnerability scanning will fail if the image is built with provenance.
+          # More information can be found here: https://github.com/docker/buildx/issues/1533
+          provenance: false
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -216,9 +236,9 @@ jobs:
           aws-region: us-east-1
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: mint-logstash
@@ -230,6 +250,11 @@ jobs:
           context: "./logstash/"
           cache-to: type=gha,scope=${{ env.GIT_REF_NAME }}-logstash
           cache-from: type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-logstash
+          # As of Buildx verion 0.10, image are build with provenance by default.
+          # Lambda currently does not support functions that use multi-architecture container images (https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-reqs)
+          # As such, the Lambda for vulnerability scanning will fail if the image is built with provenance.
+          # More information can be found here: https://github.com/docker/buildx/issues/1533
+          provenance: false
       - name: Announce failure
         if: ${{ failure() }}
         run: |
