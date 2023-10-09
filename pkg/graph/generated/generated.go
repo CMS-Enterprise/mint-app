@@ -56,6 +56,7 @@ type ResolverRoot interface {
 	PlanParticipantsAndProviders() PlanParticipantsAndProvidersResolver
 	PlanPayments() PlanPaymentsResolver
 	PossibleOperationalNeed() PossibleOperationalNeedResolver
+	PossibleOperationalSolution() PossibleOperationalSolutionResolver
 	Query() QueryResolver
 	Subscription() SubscriptionResolver
 }
@@ -839,7 +840,23 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
 		Name                  func(childComplexity int) int
+		PointsOfContact       func(childComplexity int) int
 		TreatAsOther          func(childComplexity int) int
+	}
+
+	PossibleOperationalSolutionContact struct {
+		CreatedBy                     func(childComplexity int) int
+		CreatedByUserAccount          func(childComplexity int) int
+		CreatedDts                    func(childComplexity int) int
+		Email                         func(childComplexity int) int
+		ID                            func(childComplexity int) int
+		IsTeam                        func(childComplexity int) int
+		ModifiedBy                    func(childComplexity int) int
+		ModifiedByUserAccount         func(childComplexity int) int
+		ModifiedDts                   func(childComplexity int) int
+		Name                          func(childComplexity int) int
+		PossibleOperationalSolutionID func(childComplexity int) int
+		Role                          func(childComplexity int) int
 	}
 
 	PrepareForClearance struct {
@@ -1084,6 +1101,9 @@ type PlanPaymentsResolver interface {
 }
 type PossibleOperationalNeedResolver interface {
 	PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error)
+}
+type PossibleOperationalSolutionResolver interface {
+	PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -6102,12 +6122,103 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PossibleOperationalSolution.Name(childComplexity), true
 
+	case "PossibleOperationalSolution.pointsOfContact":
+		if e.complexity.PossibleOperationalSolution.PointsOfContact == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolution.PointsOfContact(childComplexity), true
+
 	case "PossibleOperationalSolution.treatAsOther":
 		if e.complexity.PossibleOperationalSolution.TreatAsOther == nil {
 			break
 		}
 
 		return e.complexity.PossibleOperationalSolution.TreatAsOther(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.createdBy":
+		if e.complexity.PossibleOperationalSolutionContact.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.CreatedBy(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.createdByUserAccount":
+		if e.complexity.PossibleOperationalSolutionContact.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.CreatedByUserAccount(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.createdDts":
+		if e.complexity.PossibleOperationalSolutionContact.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.CreatedDts(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.email":
+		if e.complexity.PossibleOperationalSolutionContact.Email == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.Email(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.id":
+		if e.complexity.PossibleOperationalSolutionContact.ID == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.ID(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.isTeam":
+		if e.complexity.PossibleOperationalSolutionContact.IsTeam == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.IsTeam(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.modifiedBy":
+		if e.complexity.PossibleOperationalSolutionContact.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.ModifiedBy(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.modifiedByUserAccount":
+		if e.complexity.PossibleOperationalSolutionContact.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.ModifiedByUserAccount(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.modifiedDts":
+		if e.complexity.PossibleOperationalSolutionContact.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.ModifiedDts(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.name":
+		if e.complexity.PossibleOperationalSolutionContact.Name == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.Name(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.possibleOperationalSolutionID":
+		if e.complexity.PossibleOperationalSolutionContact.PossibleOperationalSolutionID == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.PossibleOperationalSolutionID(childComplexity), true
+
+	case "PossibleOperationalSolutionContact.role":
+		if e.complexity.PossibleOperationalSolutionContact.Role == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolutionContact.Role(childComplexity), true
 
 	case "PrepareForClearance.latestClearanceDts":
 		if e.complexity.PrepareForClearance.LatestClearanceDts == nil {
@@ -6787,6 +6898,7 @@ type PossibleOperationalSolution {
     name: String!
     key: OperationalSolutionKey!
     treatAsOther: Boolean!
+    pointsOfContact: [PossibleOperationalSolutionContact!]!
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -6794,6 +6906,27 @@ type PossibleOperationalSolution {
     modifiedBy: UUID
     modifiedByUserAccount: UserAccount
     modifiedDts: Time
+}
+
+"""
+PossibleOperationalSolutionContact represents a contact for a possible operational solution
+"""
+type PossibleOperationalSolutionContact {
+  id: UUID!
+  possibleOperationalSolutionID: Int!
+  
+  name: String!
+  email: String!
+  isTeam: Boolean!
+  role: String
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -8985,6 +9118,8 @@ enum OperationalSolutionKey{
   RFA
   SHARED_SYSTEMS
   BCDA
+  ISP
+  MIDS
 }
 
 enum OperationalSolutionSubtaskStatus {
@@ -43862,6 +43997,8 @@ func (ec *executionContext) fieldContext_PossibleOperationalNeed_possibleSolutio
 				return ec.fieldContext_PossibleOperationalSolution_key(ctx, field)
 			case "treatAsOther":
 				return ec.fieldContext_PossibleOperationalSolution_treatAsOther(ctx, field)
+			case "pointsOfContact":
+				return ec.fieldContext_PossibleOperationalSolution_pointsOfContact(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -44485,6 +44622,76 @@ func (ec *executionContext) fieldContext_PossibleOperationalSolution_treatAsOthe
 	return fc, nil
 }
 
+func (ec *executionContext) _PossibleOperationalSolution_pointsOfContact(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolution) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolution_pointsOfContact(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PossibleOperationalSolution().PointsOfContact(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PossibleOperationalSolutionContact)
+	fc.Result = res
+	return ec.marshalNPossibleOperationalSolutionContact2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalSolutionContactᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolution_pointsOfContact(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolution",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PossibleOperationalSolutionContact_id(ctx, field)
+			case "possibleOperationalSolutionID":
+				return ec.fieldContext_PossibleOperationalSolutionContact_possibleOperationalSolutionID(ctx, field)
+			case "name":
+				return ec.fieldContext_PossibleOperationalSolutionContact_name(ctx, field)
+			case "email":
+				return ec.fieldContext_PossibleOperationalSolutionContact_email(ctx, field)
+			case "isTeam":
+				return ec.fieldContext_PossibleOperationalSolutionContact_isTeam(ctx, field)
+			case "role":
+				return ec.fieldContext_PossibleOperationalSolutionContact_role(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PossibleOperationalSolutionContact_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PossibleOperationalSolutionContact_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PossibleOperationalSolutionContact_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PossibleOperationalSolutionContact_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PossibleOperationalSolutionContact_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PossibleOperationalSolutionContact_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalSolutionContact", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PossibleOperationalSolution_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolution) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
 	if err != nil {
@@ -44774,6 +44981,566 @@ func (ec *executionContext) _PossibleOperationalSolution_modifiedDts(ctx context
 func (ec *executionContext) fieldContext_PossibleOperationalSolution_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PossibleOperationalSolution",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_id(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_possibleOperationalSolutionID(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_possibleOperationalSolutionID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PossibleOperationalSolutionID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_possibleOperationalSolutionID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_name(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_email(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_email(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Email, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_email(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_isTeam(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_isTeam(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsTeam, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_isTeam(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_role(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_role(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Role, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_role(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolutionContact) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolutionContact_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolutionContact_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolutionContact",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -46744,6 +47511,8 @@ func (ec *executionContext) fieldContext_Query_possibleOperationalSolutions(ctx 
 				return ec.fieldContext_PossibleOperationalSolution_key(ctx, field)
 			case "treatAsOther":
 				return ec.fieldContext_PossibleOperationalSolution_treatAsOther(ctx, field)
+			case "pointsOfContact":
+				return ec.fieldContext_PossibleOperationalSolution_pointsOfContact(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -58206,6 +58975,42 @@ func (ec *executionContext) _PossibleOperationalSolution(ctx context.Context, se
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "pointsOfContact":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PossibleOperationalSolution_pointsOfContact(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "createdBy":
 			out.Values[i] = ec._PossibleOperationalSolution_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -58289,6 +59094,150 @@ func (ec *executionContext) _PossibleOperationalSolution(ctx context.Context, se
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modifiedDts":
 			out.Values[i] = ec._PossibleOperationalSolution_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var possibleOperationalSolutionContactImplementors = []string{"PossibleOperationalSolutionContact"}
+
+func (ec *executionContext) _PossibleOperationalSolutionContact(ctx context.Context, sel ast.SelectionSet, obj *models.PossibleOperationalSolutionContact) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, possibleOperationalSolutionContactImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PossibleOperationalSolutionContact")
+		case "id":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "possibleOperationalSolutionID":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_possibleOperationalSolutionID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "name":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "email":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_email(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "isTeam":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_isTeam(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "role":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_role(ctx, field, obj)
+		case "createdBy":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PossibleOperationalSolutionContact_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PossibleOperationalSolutionContact_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._PossibleOperationalSolutionContact_modifiedDts(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -63055,6 +64004,60 @@ func (ec *executionContext) marshalNPossibleOperationalSolution2ᚖgithubᚗcom�
 		return graphql.Null
 	}
 	return ec._PossibleOperationalSolution(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNPossibleOperationalSolutionContact2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalSolutionContactᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PossibleOperationalSolutionContact) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPossibleOperationalSolutionContact2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalSolutionContact(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNPossibleOperationalSolutionContact2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalSolutionContact(ctx context.Context, sel ast.SelectionSet, v *models.PossibleOperationalSolutionContact) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PossibleOperationalSolutionContact(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNPrepareForClearance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearance(ctx context.Context, sel ast.SelectionSet, v model.PrepareForClearance) graphql.Marshaler {

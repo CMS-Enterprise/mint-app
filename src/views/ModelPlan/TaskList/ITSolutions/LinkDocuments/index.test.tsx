@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
@@ -83,7 +84,8 @@ export default operationalSolutionMocks;
 const mocks = [
   ...documentMocks,
   ...needQuestionAndAnswerMock,
-  ...operationalSolutionMocks
+  ...operationalSolutionMocks,
+  ...possibleSolutionsMock
 ];
 
 const mockAuthReducer = {
