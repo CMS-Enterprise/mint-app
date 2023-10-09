@@ -15,10 +15,10 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
 import ExternalLink from 'components/shared/ExternalLink';
+import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Table from './table';
 
@@ -33,6 +33,8 @@ interface AccordionItemProps {
 const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
   const { t: generalT } = useTranslation('general');
+
+  const helpSolutions = useHelpSolution();
 
   const { prevPathname, selectedSolution: solution } = useModalSolutionState(
     null

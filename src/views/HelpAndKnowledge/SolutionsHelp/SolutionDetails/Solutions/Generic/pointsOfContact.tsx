@@ -81,7 +81,7 @@ export const GenericPointsOfContact = ({
 
   return (
     <div>
-      {solution.pointsOfContact.map(contact => (
+      {solution.pointsOfContact?.map(contact => (
         <PointOfContactCard pointOfContact={contact} key={contact.name} />
       ))}
 
