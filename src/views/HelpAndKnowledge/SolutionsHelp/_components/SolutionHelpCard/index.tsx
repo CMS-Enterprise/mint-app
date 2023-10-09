@@ -89,7 +89,9 @@ const SolutionHelpCard = ({
             >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-              <p className="margin-y-0">{solution.pointsOfContact[0].name}</p>
+              <p className="margin-y-0">
+                {solution?.pointsOfContact?.[0]?.name}
+              </p>
             </Grid>
           </div>
 

@@ -3,6 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
@@ -63,7 +64,8 @@ const mockData = [
       }
     }
   },
-  ...needQuestionAndAnswerMock
+  ...needQuestionAndAnswerMock,
+  ...possibleSolutionsMock
 ];
 
 // const
