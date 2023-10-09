@@ -866,7 +866,7 @@ export type MutationUpdatePlanBeneficiariesArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdatePlanCollaboratorArgs = {
   id: Scalars['UUID']['input'];
-  newRole: TeamRole;
+  newRoles: Array<TeamRole>;
 };
 
 
@@ -1331,7 +1331,7 @@ export type PlanCollaborator = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  teamRole: TeamRole;
+  teamRoles: Array<TeamRole>;
   userAccount: UserAccount;
   userID: Scalars['UUID']['output'];
 };
@@ -1339,7 +1339,7 @@ export type PlanCollaborator = {
 /** PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan */
 export type PlanCollaboratorCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
-  teamRole: TeamRole;
+  teamRoles: Array<TeamRole>;
   userName: Scalars['String']['input'];
 };
 

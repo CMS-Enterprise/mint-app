@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 // PlanCollaborator represents a plan collaborator
@@ -11,15 +12,15 @@ type PlanCollaborator struct {
 	baseStruct
 	modelPlanRelation
 	userIDRelation
-	TeamRole TeamRole `json:"teamRole" db:"team_role"`
+	TeamRoles pq.StringArray `json:"teamRoles" db:"team_roles"`
 }
 
 // NewPlanCollaborator returns a plan collaborator object
-func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid.UUID, teamRole TeamRole) *PlanCollaborator {
+func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid.UUID, teamRoles []TeamRole) *PlanCollaborator {
 	return &PlanCollaborator{
 		// UserID:              userID,
 		userIDRelation:    NewUserIDRelation(userID),
-		TeamRole:          teamRole,
+		TeamRoles:         ConvertTeamRolesToStringArray(teamRoles),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		baseStruct:        NewBaseStruct(createdBy),
 	}
@@ -40,3 +41,19 @@ const (
 	TeamRoleOACT       TeamRole = "OACT"
 	TeamRolePayment    TeamRole = "PAYMENT"
 )
+
+func ConvertStringArrayToTeamRoles(sa pq.StringArray) []TeamRole {
+	roles := make([]TeamRole, len(sa))
+	for i, s := range sa {
+		roles[i] = TeamRole(s)
+	}
+	return roles
+}
+
+func ConvertTeamRolesToStringArray(roles []TeamRole) pq.StringArray {
+	sa := make(pq.StringArray, len(roles))
+	for i, r := range roles {
+		sa[i] = string(r)
+	}
+	return sa
+}

@@ -594,7 +594,7 @@ const summaryData: GetModelSummaryTypes = {
         username: 'MINT',
         commonName: 'First Collaborator'
       },
-      teamRole: TeamRole.MODEL_LEAD,
+      teamRoles: [TeamRole.MODEL_LEAD],
       __typename: 'PlanCollaborator'
     }
   ],
@@ -634,7 +634,7 @@ const collaboratorsData: GetModelCollaboratorsType[] = [
       commonName: 'Luke Skywalker'
     },
     modelPlanID: modelID,
-    teamRole: TeamRole.MODEL_LEAD,
+    teamRoles: [TeamRole.MODEL_LEAD],
     createdDts: '2022-06-03T19:32:24.412662Z',
     __typename: 'PlanCollaborator'
   },
@@ -649,7 +649,7 @@ const collaboratorsData: GetModelCollaboratorsType[] = [
       commonName: 'Boba Fett'
     },
     modelPlanID: modelID,
-    teamRole: TeamRole.LEADERSHIP,
+    teamRoles: [TeamRole.LEADERSHIP],
     createdDts: '2022-06-03T19:32:24.412662Z',
     __typename: 'PlanCollaborator'
   }

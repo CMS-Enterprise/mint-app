@@ -688,7 +688,7 @@ export interface PlanBeneficiariesChanges {
 export interface PlanCollaboratorCreateInput {
   modelPlanID: UUID;
   userName: string;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
 }
 
 export interface PlanCrTdlChanges {

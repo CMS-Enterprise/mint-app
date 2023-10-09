@@ -40,7 +40,7 @@ export default gql`
           email
           username
         }
-        teamRole
+        teamRoles
       }
       discussions {
         id

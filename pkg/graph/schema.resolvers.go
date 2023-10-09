@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -184,11 +185,11 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 }
 
 // UpdatePlanCollaborator is the resolver for the updatePlanCollaborator field.
-func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRole models.TeamRole) (*models.PlanCollaborator, error) {
+func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanCollaborator(logger, id, newRole, principal, r.store)
+	return resolvers.UpdatePlanCollaborator(logger, id, newRoles, principal, r.store)
 }
 
 // DeletePlanCollaborator is the resolver for the deletePlanCollaborator field.
@@ -545,6 +546,11 @@ func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *mode
 func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
 	sTypes := models.ConvertEnums[model.SelectionMethodType](obj.BeneficiarySelectionMethod)
 	return sTypes, nil
+}
+
+// TeamRoles is the resolver for the teamRoles field.
+func (r *planCollaboratorResolver) TeamRoles(ctx context.Context, obj *models.PlanCollaborator) ([]models.TeamRole, error) {
+	panic(fmt.Errorf("not implemented: TeamRoles - teamRoles"))
 }
 
 // Replies is the resolver for the replies field.
@@ -995,6 +1001,11 @@ func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
 	return &planBeneficiariesResolver{r}
 }
 
+// PlanCollaborator returns generated.PlanCollaboratorResolver implementation.
+func (r *Resolver) PlanCollaborator() generated.PlanCollaboratorResolver {
+	return &planCollaboratorResolver{r}
+}
+
 // PlanDiscussion returns generated.PlanDiscussionResolver implementation.
 func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 	return &planDiscussionResolver{r}
@@ -1040,6 +1051,7 @@ type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
+type planCollaboratorResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }

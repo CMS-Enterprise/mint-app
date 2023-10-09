@@ -59,7 +59,7 @@ func ModelPlanCreate(
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: plan.ID,
 			UserName:    *userAccount.Username,
-			TeamRole:    models.TeamRoleModelLead,
+			TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
 		},
 		principal,
 		store,
@@ -344,8 +344,11 @@ func ModelPlanShare(
 
 	var modelLeads []string
 	for _, collaborator := range planCollaborators {
-		if collaborator.TeamRole == models.TeamRoleModelLead {
-			modelLeads = append(modelLeads, collaborator.UserAccount(ctx).CommonName)
+		for _, role := range collaborator.TeamRoles {
+			if role == string(models.TeamRoleModelLead) {
+				modelLeads = append(modelLeads, collaborator.UserAccount(ctx).CommonName)
+				break
+			}
 		}
 	}
 
