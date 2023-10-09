@@ -283,7 +283,7 @@ export type DateHistogramAggregationBucket = {
 
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
-  __typename?: 'DiscussionReply';
+  __typename: 'DiscussionReply';
   content?: Maybe<TaggedHtml>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1404,7 +1404,7 @@ export type PlanCrTdlCreateInput = {
 
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
-  __typename?: 'PlanDiscussion';
+  __typename: 'PlanDiscussion';
   content?: Maybe<TaggedHtml>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -2513,7 +2513,7 @@ export type SubscriptionOnTaskListSectionLocksChangedArgs = {
 
 /** Tag represents an entity tagged in the database */
 export type Tag = {
-  __typename?: 'Tag';
+  __typename: 'Tag';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2540,7 +2540,7 @@ export type TaggedEntity = PossibleOperationalSolution | UserAccount;
 
 /** TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags */
 export type TaggedHtml = {
-  __typename?: 'TaggedHTML';
+  __typename: 'TaggedHTML';
   rawContent: Scalars['String']['output'];
   tags: Array<Tag>;
 };

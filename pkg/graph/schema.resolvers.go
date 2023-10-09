@@ -1031,7 +1031,6 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 
 // Entity is the resolver for the entity field.
 func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error) {
-
 	switch obj.TagType {
 	case models.TagTypePossibleSolution:
 		return models.PossibleOperationalSolution{
