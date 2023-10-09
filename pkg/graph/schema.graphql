@@ -119,6 +119,7 @@ type PossibleOperationalSolution {
     name: String!
     key: OperationalSolutionKey!
     treatAsOther: Boolean!
+    pointsOfContact: [PossibleOperationalSolutionContact!]!
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -126,6 +127,27 @@ type PossibleOperationalSolution {
     modifiedBy: UUID
     modifiedByUserAccount: UserAccount
     modifiedDts: Time
+}
+
+"""
+PossibleOperationalSolutionContact represents a contact for a possible operational solution
+"""
+type PossibleOperationalSolutionContact {
+  id: UUID!
+  possibleOperationalSolutionID: Int!
+  
+  name: String!
+  email: String!
+  isTeam: Boolean!
+  role: String
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -467,7 +489,7 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
-  content: String
+  content: TaggedHTMLInput
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -507,7 +529,7 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
-  content: String
+  content: TaggedHTMLInput
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -2358,6 +2380,8 @@ enum OperationalSolutionKey{
   RFA
   SHARED_SYSTEMS
   BCDA
+  ISP
+  MIDS
 }
 
 enum OperationalSolutionSubtaskStatus {

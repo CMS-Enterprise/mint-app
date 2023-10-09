@@ -23,6 +23,8 @@ type DataLoaders struct {
 	ExistingModelLinkLoader        *WrappedDataLoader
 	ExistingModelLoader            *WrappedDataLoader
 	ModelPlanLoader                *WrappedDataLoader
+
+	PossibleOperationSolutionContactLoader *WrappedDataLoader
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -51,6 +53,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.ExistingModelLinkLoader = newWrappedDataLoader(loaders.GetExistingModelLinkByModelPlanID)
 	loaders.ExistingModelLoader = newWrappedDataLoader(loaders.GetExistingModelByModelPlanID)
 	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
+
+	loaders.PossibleOperationSolutionContactLoader = newWrappedDataLoader(loaders.PossibleOperationalSolutionContactsGetByPossibleSolutionID)
 
 	return loaders
 }

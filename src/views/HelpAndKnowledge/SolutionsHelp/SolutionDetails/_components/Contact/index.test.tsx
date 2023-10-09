@@ -7,8 +7,11 @@ import { SolutionContactType } from 'views/HelpAndKnowledge/SolutionsHelp/soluti
 import Contact from './index';
 
 const contact: SolutionContactType = {
+  __typename: 'PossibleOperationalSolutionContact',
+  id: '123',
   name: 'Aliza Kim',
   email: 'aliza.kim@cms.hhs.gov',
+  isTeam: false,
   role: 'Project Lead'
 };
 

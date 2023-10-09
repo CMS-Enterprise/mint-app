@@ -69,13 +69,22 @@ const Footer = () => {
                   'margin-bottom-2': isTablet
                 })}
               >
-                <Grid desktop={{ col: 12 }} tablet={{ col: 6 }}>
+                <Grid
+                  desktop={{ col: 12 }}
+                  tablet={{ col: 10 }}
+                  mobile={{ col: 10 }}
+                  className="flex-none"
+                >
                   <p className="text-bold margin-y-0">
                     {t('feedback:footer.improveMint')}
                   </p>
                 </Grid>
                 {isTablet && (
-                  <Grid tablet={{ col: 6 }} className="mint-footer__lightbulb">
+                  <Grid
+                    tablet={{ col: 2 }}
+                    mobile={{ col: 2 }}
+                    className="mint-footer__lightbulb"
+                  >
                     <IconLightbulbOutline className="lightbulb right-0" />
                   </Grid>
                 )}
@@ -84,6 +93,9 @@ const Footer = () => {
                 desktop={{ col: 2 }}
                 tablet={{ col: 4 }}
                 mobile={{ col: 4 }}
+                className={classNames({
+                  'margin-bottom-1': isTablet
+                })}
               >
                 <UswdsReactLink
                   target="_blank"
@@ -98,6 +110,9 @@ const Footer = () => {
                 desktop={{ col: 2 }}
                 tablet={{ col: 4 }}
                 mobile={{ col: 4 }}
+                className={classNames({
+                  'margin-bottom-1': isTablet
+                })}
               >
                 <UswdsReactLink
                   target="_blank"

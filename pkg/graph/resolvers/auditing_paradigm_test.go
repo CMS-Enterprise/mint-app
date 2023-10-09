@@ -25,6 +25,7 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
+
 	/* Create 4 discussion replies, with different principals*/
 	testPR1 := getTestPrincipal(suite.testConfigs.Store, "TestDR1")
 	testPR2 := getTestPrincipal(suite.testConfigs.Store, "TestDR2")

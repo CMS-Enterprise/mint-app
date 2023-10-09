@@ -53,6 +53,8 @@ const (
 	OpSKRfa                       OperationalSolutionKey = "RFA"
 	OpSKSharedSystems             OperationalSolutionKey = "SHARED_SYSTEMS"
 	OpSKBCDA                      OperationalSolutionKey = "BCDA"
+	OpSKISP                       OperationalSolutionKey = "ISP"
+	OpSKMIDS                      OperationalSolutionKey = "MIDS"
 )
 
 // IsTaggedEntity is a method to satisfy the IsTaggedEntity interface for PossibleOperationalSolution.

@@ -389,11 +389,13 @@ export enum OperationalSolutionKey {
   INNOVATION = "INNOVATION",
   INTERNAL_STAFF = "INTERNAL_STAFF",
   IPC = "IPC",
+  ISP = "ISP",
   LDG = "LDG",
   LOI = "LOI",
   LV = "LV",
   MARX = "MARX",
   MDM = "MDM",
+  MIDS = "MIDS",
   OTHER_NEW_PROCESS = "OTHER_NEW_PROCESS",
   OUTLOOK_MAILBOX = "OUTLOOK_MAILBOX",
   POST_PORTAL = "POST_PORTAL",
@@ -712,7 +714,7 @@ export interface PlanCrTdlCreateInput {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanDiscussionChanges {
-  content?: string | null;
+  content?: TaggedHTMLInput | null;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }
