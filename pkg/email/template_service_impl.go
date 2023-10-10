@@ -79,6 +79,9 @@ var sharedHeaderOldTemplate string
 //go:embed templates/shared_header.html
 var sharedHeaderTemplate string
 
+//go:embed templates/shared_access_banner.html
+var sharedAccessBannerTemplate string
+
 //go:embed templates/shared_footer.html
 var sharedFooterTemplate string
 
@@ -184,10 +187,11 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	}
 
 	predefinedTemplates := map[string]string{
-		"shared_style.html":      sharedStyleTemplate,
-		"shared_header.html":     sharedHeaderTemplate,
-		"shared_footer.html":     sharedFooterTemplate,
-		"shared_header_old.html": sharedHeaderOldTemplate,
+		"shared_style.html":         sharedStyleTemplate,
+		"shared_header.html":        sharedHeaderTemplate,
+		"shared_footer.html":        sharedFooterTemplate,
+		"shared_header_old.html":    sharedHeaderOldTemplate,
+		"shared_access_banner.html": sharedAccessBannerTemplate,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
