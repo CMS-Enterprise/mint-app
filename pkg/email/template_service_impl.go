@@ -73,9 +73,6 @@ var modelPlanShareBodyTemplate string
 //go:embed templates/shared_style.html
 var sharedStyleTemplate string
 
-//go:embed templates/shared_header_old.html
-var sharedHeaderOldTemplate string
-
 //go:embed templates/shared_header.html
 var sharedHeaderTemplate string
 
@@ -190,7 +187,6 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 		"shared_style.html":         sharedStyleTemplate,
 		"shared_header.html":        sharedHeaderTemplate,
 		"shared_footer.html":        sharedFooterTemplate,
-		"shared_header_old.html":    sharedHeaderOldTemplate,
 		"shared_access_banner.html": sharedAccessBannerTemplate,
 	}
 
