@@ -1,15 +1,13 @@
-{{template "shared_header_old.html"}}
+{{template "shared_header.html"}}
 
-<body>
-  <h1>MINT</h1>
-  <p class="subtitle">The Model Innovation Tool</p>
-  <br/>
-  <h3>New discussion in</h3>
-  <p>{{.ModelName}}</p>
-  <br/>
-  <table>
-    <tr>
-      <td style="vertical-align: top;">
+
+<h3>New discussion in</h3>
+<p>{{.ModelName}}</p>
+<br/>
+<table>
+  <tr>
+    <td>
+      <div class="container-border">
         <h2>Discussion</h2>
         <br/>
         <p><b>{{.UserName}}</b></p>
@@ -18,19 +16,19 @@
         <br/>
         <br/>
         <p style="font-weight: normal">
-          <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?discussionID={{.DiscussionID}}" class="link">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?discussionID={{.DiscussionID}}">
             Respond to this discussion in MINT
           </a>
         </p>
-      </td>
-    </tr>
-  </table>
-  <br/>
-  <br/>
-  <hr/>
-  <br/>
-  <p>You are receiving this email because you are a part of the
-    <a href="mailto:MINTTeam@cms.hhs.gov" class="a" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>
-    email group.
-  </p>
-</body>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<hr/>
+<br/>
+<p>You are receiving this email because you are a part of the
+  <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>
+  email group.
+</p>
