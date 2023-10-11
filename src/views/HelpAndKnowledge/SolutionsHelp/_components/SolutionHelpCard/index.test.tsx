@@ -2,18 +2,30 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import { helpSolutions } from '../../solutionsMap';
+import { pointsOfContact, possibleSolutionsMock } from 'data/mock/solutions';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
+
+import { helpSolutions, HelpSolutionType } from '../../solutionsMap';
 
 import SolutionHelpCard from './index';
 
+const mocks = [...possibleSolutionsMock];
+
 describe('Operation Solution Help Card', () => {
+  const solutionToTest = {
+    ...helpSolutions[0],
+    pointsOfContact
+  } as HelpSolutionType;
+
   it('rendered all correct information', () => {
     const { getByText } = render(
       <MemoryRouter
         initialEntries={['/help-and-knowledge/operational-solutions']}
       >
         <Route path="/help-and-knowledge/operational-solutions">
-          <SolutionHelpCard solution={helpSolutions[0]} />
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <SolutionHelpCard solution={solutionToTest} />
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
@@ -21,7 +33,6 @@ describe('Operation Solution Help Card', () => {
     expect(
       getByText('Applications and participant interaction')
     ).toBeInTheDocument();
-    expect(getByText('4i/ACO-OS Team')).toBeInTheDocument();
   });
 
   it('matches snapshot', () => {
@@ -30,7 +41,9 @@ describe('Operation Solution Help Card', () => {
         initialEntries={['/help-and-knowledge/operational-solutions']}
       >
         <Route path="/help-and-knowledge/operational-solutions">
-          <SolutionHelpCard solution={helpSolutions[0]} />
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <SolutionHelpCard solution={solutionToTest} />
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );

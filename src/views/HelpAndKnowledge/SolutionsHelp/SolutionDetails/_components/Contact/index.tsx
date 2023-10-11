@@ -5,7 +5,6 @@ import { IconArrowForward, IconLaunch, Link } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import {
-  ContactRoles,
   SolutionContactType,
   solutionHelpRoute
 } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -14,7 +13,7 @@ import { formatQueryParam } from '../../Modal';
 
 import './index.scss';
 
-export const Contact = ({ contact }: { contact: SolutionContactType }) => {
+export const Contact = ({ contact }: { contact?: SolutionContactType }) => {
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
 
@@ -23,7 +22,7 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
   const paramValues = location.search.substring(1).split('&');
   const isOnPointsOfContact = paramValues.includes('section=points-of-contact');
 
-  const shortenRole = (role: ContactRoles) => {
+  const shortenRole = (role: string) => {
     if (role.includes('Director')) {
       if (role.includes('Deputy Director')) {
         return 'Deputy Director';
@@ -44,13 +43,13 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
 
       <h3
         className={`system-profile__subheader margin-top-0 ${
-          contact.role ? 'margin-bottom-05' : 'margin-bottom-1'
+          contact?.role ? 'margin-bottom-05' : 'margin-bottom-1'
         }`}
       >
-        {contact.name}
+        {contact?.name}
       </h3>
 
-      {contact.role && (
+      {contact?.role && (
         <p className="margin-top-0 margin-bottom-1">
           {shortenRole(contact.role)}
         </p>
@@ -59,7 +58,7 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
       <Link
         aria-label={h('contactInfo.sendAnEmail')}
         className="line-height-body-5 display-flex flex-align-center margin-bottom-3"
-        href={`mailto:${contact.email}`}
+        href={`mailto:${contact?.email}`}
         target="_blank"
       >
         {h('contactInfo.sendAnEmail')}
