@@ -1,4 +1,4 @@
-name: PR Checks
+name: Check labels
 
 on:
   pull_request:
@@ -11,10 +11,12 @@ concurrency:
 
 jobs:
   check_do_not_merge_label:
-    env:
-      LABEL_NAMES: github.event.pull_request.labels.*.name
     runs-on: ubuntu-latest
     steps:
-      - name: Check for Do Not Merge label
+      - name: Check for blocked label
         run: |
-          echo "LABEL_NAMES: $LABEL_NAMES"
+          LABELS=$(gh pr view --json labels -q '.labels[].name')
+          if [[ $LABELS == *"blocked"* ]]; then
+            echo "Blocked label found, failing"
+            exit 1
+          fi
