@@ -1,6 +1,10 @@
 import payments from 'i18n/en-US/modelPlan/payments';
 
-import { dataFormatter, headerFormatter } from './useFetchCSVData';
+import {
+  dataFormatter,
+  headerFormatter,
+  selectFilteredFields
+} from './useFetchCSVData';
 
 describe('fetch csv utils', () => {
   const allPlanTranslation = {
@@ -78,5 +82,21 @@ describe('fetch csv utils', () => {
     const returnData = 'Who will you pay? Select all that apply.';
 
     expect(headerFormatter(data, allPlanTranslation)).toEqual(returnData);
+  });
+
+  it('filtered the header columns on the presence of a filter group', () => {
+    const returnData = [
+      'modelPlan.nameHistory',
+      'beneficiaries.beneficiaries',
+      'beneficiaries.beneficiariesOther',
+      'beneficiaries.beneficiariesNote',
+      'beneficiaries.numberPeopleImpacted',
+      'beneficiaries.estimateConfidence',
+      'beneficiaries.beneficiaryOverlap',
+      'beneficiaries.beneficiaryOverlapNote',
+      'beneficiaries.precedenceRules'
+    ];
+
+    expect(selectFilteredFields(allPlanTranslation, 'mdm')).toEqual(returnData);
   });
 });

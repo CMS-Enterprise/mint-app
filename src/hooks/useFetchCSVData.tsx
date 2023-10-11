@@ -3,12 +3,14 @@ Hook used to fetch all data for either a single model plan or all model plans
 Then processes the data into CSV format as well as initiates a download
 */
 
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { FetchResult, useLazyQuery } from '@apollo/client';
 import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
 import i18next from 'i18next';
 
+import { FitlerGroup } from 'components/ShareExport';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetAllModelPlans from 'queries/GetAllModelData';
 import GetAllSingleModelPlan from 'queries/GetAllSingleModelPlan';
 import {
@@ -23,8 +25,7 @@ import {
 import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
-
-import usePlanTranslation from './usePlanTranslation';
+import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
@@ -89,8 +90,12 @@ const parentFieldsToTranslate = ['archived', 'status'];
  */
 
 // Recursive function to map through data and apply translation transforms
-export const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
-  const mappedObj: any = { ...transformObj };
+export const dataFormatter = (
+  transformObj: any,
+  allPlanTranslation: any,
+  filteredGroup?: FilterGroup
+) => {
+  const mappedObj: any = filteredGroup ? {} : { ...transformObj };
 
   getKeys(transformObj).forEach((key: any) => {
     // Used to map fields on the parent level of the model plan
@@ -158,11 +163,35 @@ export const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
     ) {
       mappedObj[key] = dataFormatter(
         transformObj[key],
-        allPlanTranslation?.[key]
+        allPlanTranslation?.[key],
+        filteredGroup
       );
     }
   });
   return mappedObj;
+};
+
+// Filters out columns for csv based on selected FilterGroup mappings in translation file
+export const selectFilteredFields = (
+  allPlanTranslation: any,
+  filteredGroup: FitlerGroup
+) => {
+  const selectedFields: string[] = [];
+  // Loop through task list sections of translation obj
+  getKeys(allPlanTranslation).forEach((taskListSection: any) => {
+    // Loop through all fields of task list sections to identify if they belong to a filter group
+    getKeys(allPlanTranslation[taskListSection]).forEach((field: any) => {
+      if (
+        allPlanTranslation[taskListSection][field]?.filterGroups?.includes(
+          filteredGroup
+        )
+      ) {
+        // Push to array to become a column in exported csv
+        selectedFields.push(`${taskListSection}.${field}`);
+      }
+    });
+  });
+  return selectedFields;
 };
 
 // Initiates the downloading of the formatted csv data
@@ -177,18 +206,27 @@ const downloadFile = (data: string) => {
   element.click();
 };
 
-const csvFormatter = (csvData: CSVModelPlanType[], allPlanTranslation: any) => {
+const csvFormatter = (
+  csvData: CSVModelPlanType[],
+  allPlanTranslation: any,
+  filteredGroup?: FitlerGroup | undefined
+) => {
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
 
+    const selectedCSVFields = filteredGroup
+      ? selectFilteredFields(allPlanTranslation, filteredGroup)
+      : csvFields;
+
     const parser = new Parser({
-      fields: csvFields,
+      fields: selectedCSVFields,
       transforms: [
         transform,
         (transformObj: any) => {
           const mappedTransformObj = dataFormatter(
             transformObj,
-            allPlanTranslation
+            allPlanTranslation,
+            filteredGroup
           );
           return mappedTransformObj;
         }
@@ -213,9 +251,12 @@ type UseFetchCSVData = {
     input: string
   ) => Promise<FetchResult<GetAllSingleModelData>>;
   fetchAllData: () => Promise<FetchResult<GetAllModelDataType>>;
+  setFilteredGroup: (filteredGroup?: FitlerGroup) => void;
 };
 
 const useFetchCSVData = (): UseFetchCSVData => {
+  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup | undefined>();
+
   // Get data for a single model plan
   const [fetchSingleData] = useLazyQuery<
     GetAllSingleModelData,
@@ -224,7 +265,8 @@ const useFetchCSVData = (): UseFetchCSVData => {
     onCompleted: data => {
       csvFormatter(
         data?.modelPlan ? [data?.modelPlan] : [],
-        allPlanTranslation
+        allPlanTranslation,
+        filteredGroup
       );
     }
   });
@@ -243,7 +285,8 @@ const useFetchCSVData = (): UseFetchCSVData => {
       async id => fetchSingleData({ variables: { id } }),
       [fetchSingleData]
     ),
-    fetchAllData: useCallback(async () => fetchAllData(), [fetchAllData])
+    fetchAllData: useCallback(async () => fetchAllData(), [fetchAllData]),
+    setFilteredGroup
   };
 };
 
