@@ -25,7 +25,6 @@ import {
 import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
-import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
@@ -90,12 +89,8 @@ const parentFieldsToTranslate = ['archived', 'status'];
  */
 
 // Recursive function to map through data and apply translation transforms
-export const dataFormatter = (
-  transformObj: any,
-  allPlanTranslation: any,
-  filteredGroup?: FilterGroup
-) => {
-  const mappedObj: any = filteredGroup ? {} : { ...transformObj };
+export const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
+  const mappedObj: any = { ...transformObj };
 
   getKeys(transformObj).forEach((key: any) => {
     // Used to map fields on the parent level of the model plan
@@ -163,8 +158,7 @@ export const dataFormatter = (
     ) {
       mappedObj[key] = dataFormatter(
         transformObj[key],
-        allPlanTranslation?.[key],
-        filteredGroup
+        allPlanTranslation?.[key]
       );
     }
   });
@@ -225,8 +219,7 @@ const csvFormatter = (
         (transformObj: any) => {
           const mappedTransformObj = dataFormatter(
             transformObj,
-            allPlanTranslation,
-            filteredGroup
+            allPlanTranslation
           );
           return mappedTransformObj;
         }
