@@ -38,6 +38,7 @@ import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';
 import error from './error';
+import externalLinkModal from './externalLinkModal';
 import feedback from './feedback';
 import footer from './footer';
 import general from './general';
@@ -104,7 +105,8 @@ const enUS = {
   highLevelProjectPlans,
   subtasks,
   tableAndPagination,
-  termsAndConditions
+  termsAndConditions,
+  externalLinkModal
 };
 
 export default enUS;

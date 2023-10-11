@@ -14,6 +14,7 @@ import {
   Button,
   Checkbox,
   IconFileDownload,
+  IconLaunch,
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -23,7 +24,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import ExternalLink from 'components/shared/ExternalLink';
+import ExternalLinkModal from 'components/shared/ExternalLinkModal';
 import DeleteModelPlanDocument from 'queries/Documents/DeleteModelPlanDocument';
 import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
 import { DeleteModelPlanDocumentVariables } from 'queries/Documents/types/DeleteModelPlanDocument';
@@ -167,6 +168,8 @@ export const Table = ({
 }: TableProps) => {
   const { t } = useTranslation('documents');
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isExternalLinkModalOpen, setExternalLinkModalOpen] = useState(false);
+  const [externalLinkUrl, setExternalLinkUrl] = useState('');
   const [fileToRemove, setFileToRemove] = useState<DocumentType>(
     {} as DocumentType
   );
@@ -411,12 +414,20 @@ export const Table = ({
                     </span>
                   </Button>
                 ) : (
-                  <ExternalLink
-                    href={row.original.url}
+                  <Button
+                    type="button"
+                    unstyled
                     className="margin-right-2"
+                    onClick={() => {
+                      setExternalLinkUrl(row.original.url);
+                      setExternalLinkModalOpen(true);
+                    }}
                   >
-                    {t('documentTable.visit')}
-                  </ExternalLink>
+                    <span className="display-flex flex-align-center">
+                      {t('documentTable.visit')}
+                      <IconLaunch />
+                    </span>
+                  </Button>
                 )}
                 {hasEditAccess && !linkedDocs && (
                   <Button
@@ -479,6 +490,11 @@ export const Table = ({
   return (
     <div className="model-plan-table" data-testid="model-plan-documents-table">
       {renderModal()}
+      <ExternalLinkModal
+        isOpen={isExternalLinkModalOpen}
+        closeModal={() => setExternalLinkModalOpen(false)}
+        url={externalLinkUrl}
+      />
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
