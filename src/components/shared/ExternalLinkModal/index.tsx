@@ -9,6 +9,8 @@ import {
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
+import ExternalLink from '../ExternalLink';
+
 type ExternalLinkModalTypes = {
   isOpen: boolean;
   closeModal: () => void;
@@ -78,9 +80,13 @@ const ExternalLinkModal = ({
         )}
       </div>
 
-      <Button type="button" onClick={() => {}}>
+      <ExternalLink
+        className="usa-button text-white"
+        href={url}
+        variant="unstyled"
+      >
         {externalT('continueButton')}
-      </Button>
+      </ExternalLink>
 
       <Button
         type="button"
