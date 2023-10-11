@@ -41,6 +41,7 @@ jobs:
           OKTA_SERVER_ID: ${{ secrets.OKTA_SERVER_ID }}
           STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
           VITE_BEACON_ID: ${{ secrets.VITE_BEACON_ID }}
+          VITE_GA_TRACKING_ID: ${{ secrets.VITE_GA_TRACKING_ID }}
         run: |
           ./scripts/build_static.sh
       - name: Upload Frontend assets
