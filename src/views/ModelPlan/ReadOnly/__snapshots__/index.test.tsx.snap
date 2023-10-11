@@ -303,6 +303,13 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
               >
                 Filter
               </button>
+              <button
+                class="usa-button usa-button--outline text-white shadow-none border-white border-2px"
+                data-testid="button"
+                type="button"
+              >
+                Share or export
+              </button>
             </div>
           </div>
         </div>
