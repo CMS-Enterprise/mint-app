@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check_do_not_merge_label:
+  check_disallowed_labels:
     runs-on: ubuntu-latest
     steps:
       - name: Check for blocked label
