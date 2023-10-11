@@ -2,15 +2,10 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import {
-  Button,
-  Fieldset,
-  Label,
-  Radio,
-  TextInput
-} from '@trussworks/react-uswds';
+import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import BooleanRadio from 'components/BooleanRadioForm';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -26,8 +21,9 @@ import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolut
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { LinkingDocumentFormTypes } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { translateDocumentType } from 'utils/modelPlan';
+import { sortOtherEnum, translateDocumentType } from 'utils/modelPlan';
 import { DocumentLinkValidationSchema } from 'validations/documentUploadSchema';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
@@ -251,10 +247,9 @@ const LinkDocument = ({
                         <RequiredAsterisk />
                       </legend>
                       <FieldErrorMsg>{flatErrors.documentType}</FieldErrorMsg>
-                      {(Object.keys(DocumentType) as Array<
-                        keyof typeof DocumentType
-                      >)
-                        .filter(documentType => documentType !== 'OTHER') // Filter 'OTHER' to be last in the radio button list
+
+                      {getKeys(DocumentType)
+                        .sort(sortOtherEnum)
                         .map(documentType => {
                           return (
                             <Field
@@ -274,15 +269,7 @@ const LinkDocument = ({
                             />
                           );
                         })}
-                      <Field
-                        as={RadioField}
-                        checked={values.documentType === 'OTHER'}
-                        id="FileUpload-OTHER"
-                        name="documentType"
-                        label={translateDocumentType(DocumentType.OTHER)}
-                        value="OTHER"
-                      />
-                      {values.documentType === 'OTHER' && (
+                      {values.documentType === DocumentType.OTHER && (
                         <div className="margin-left-4 margin-bottom-1">
                           <FieldGroup
                             scrollElement="otherTypeDescription"
@@ -329,20 +316,16 @@ const LinkDocument = ({
 
                     <FieldErrorMsg>{flatErrors.restricted}</FieldErrorMsg>
                     <Fieldset>
-                      {[true, false].map(key => (
-                        <Field
-                          as={Radio}
-                          key={key}
-                          id={`document-upload-restricted-${key}`}
-                          name="restricted"
-                          label={key ? h('yes') : h('no')}
-                          value={key ? 'YES' : 'NO'}
-                          checked={values.restricted === key}
-                          onChange={() => {
-                            setFieldValue('restricted', key);
-                          }}
-                        />
-                      ))}
+                      <BooleanRadio
+                        field="restricted"
+                        id="document-upload-restricted"
+                        setFieldValue={setFieldValue}
+                        value={values.restricted}
+                        options={{
+                          true: h('yes'),
+                          false: h('no')
+                        }}
+                      />
                     </Fieldset>
 
                     {values.restricted !== null && (
