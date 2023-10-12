@@ -1,9 +1,9 @@
-import { gql } from '@apollo/client';
+import { graphql } from '../../gen/gql';
 
-export default gql`
+export default graphql(/* GraphQL */ `
   mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
     linkNewPlanDocument(input: $input) {
       id
     }
   }
-`;
+`);

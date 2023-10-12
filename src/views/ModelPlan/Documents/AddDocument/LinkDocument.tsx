@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import LinkNewPlanDocument from 'gql/apolloGQL/Documents/LinkNewPlanDocument';
 
 import BooleanRadio from 'components/BooleanRadioForm';
 import Alert from 'components/shared/Alert';
@@ -15,8 +16,6 @@ import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
-import LinkNewPlanDocument from 'queries/Documents/LinkNewPlanDocument';
-import { LinkNewPlanDocument as LinkNewPlanDocumentType } from 'queries/Documents/types/LinkNewPlanDocument';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { LinkingDocumentFormTypes } from 'types/files';
@@ -47,7 +46,7 @@ const LinkDocument = ({
   const [mutationError, setMutationError] = useState<boolean>(false);
   const [fileNameError, setFileNameError] = useState('');
 
-  const [linkFile] = useMutation<LinkNewPlanDocumentType>(LinkNewPlanDocument);
+  const [linkFile] = useMutation(LinkNewPlanDocument);
 
   const messageOnNextPage = (message: string, fileName: string) =>
     showMessageOnNextPage(
@@ -82,8 +81,8 @@ const LinkDocument = ({
           modelPlanID: modelID,
           name,
           url,
-          documentType,
-          restricted,
+          documentType: documentType!,
+          restricted: restricted!,
           otherTypeDescription,
           optionalNotes
         }
