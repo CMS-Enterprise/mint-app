@@ -115,6 +115,7 @@ const LinkDocument = ({
               .catch(() => {
                 setFileNameError(name);
                 setMutationError(true);
+                window.scrollTo(0, 0);
               });
           } else {
             messageOnNextPage('documentUploadSuccess', name);
@@ -129,6 +130,7 @@ const LinkDocument = ({
       })
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
+        window.scrollTo(0, 0);
       });
   };
 
@@ -185,12 +187,7 @@ const LinkDocument = ({
                 </ErrorAlert>
               )}
               <div>
-                <Form
-                  onSubmit={e => {
-                    handleSubmit(e);
-                    window.scrollTo(0, 0);
-                  }}
-                >
+                <Form onSubmit={e => handleSubmit(e)}>
                   <FieldGroup scrollElement="url" error={!!flatErrors.url}>
                     <Label htmlFor="FileUpload-LinkDocument">
                       {t('linkDocument.linkLabel')}
