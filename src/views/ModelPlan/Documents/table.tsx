@@ -494,6 +494,7 @@ export const Table = ({
         isOpen={isExternalLinkModalOpen}
         closeModal={() => setExternalLinkModalOpen(false)}
         url={externalLinkUrl}
+        resetExternalUrl={() => setExternalLinkUrl('')}
       />
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>

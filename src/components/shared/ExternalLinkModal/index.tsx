@@ -15,12 +15,14 @@ type ExternalLinkModalTypes = {
   isOpen: boolean;
   closeModal: () => void;
   url: string;
+  resetExternalUrl: () => void;
 };
 
 const ExternalLinkModal = ({
   isOpen,
   closeModal,
-  url
+  url,
+  resetExternalUrl
 }: ExternalLinkModalTypes) => {
   const { t: externalT } = useTranslation('externalLinkModal');
   const [showFullUrl, setShowFullUrl] = useState(false);
@@ -92,7 +94,10 @@ const ExternalLinkModal = ({
         type="button"
         className="margin-left-2"
         unstyled
-        onClick={closeModal}
+        onClick={() => {
+          resetExternalUrl();
+          closeModal();
+        }}
       >
         {externalT('returnButton')}
       </Button>
