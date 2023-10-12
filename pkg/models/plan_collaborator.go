@@ -20,7 +20,7 @@ func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid
 	return &PlanCollaborator{
 		// UserID:              userID,
 		userIDRelation:    NewUserIDRelation(userID),
-		TeamRoles:         ConvertTeamRolesToStringArray(teamRoles),
+		TeamRoles:         ConvertEnumsToStringArray(teamRoles),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		baseStruct:        NewBaseStruct(createdBy),
 	}
@@ -41,19 +41,3 @@ const (
 	TeamRoleOACT       TeamRole = "OACT"
 	TeamRolePayment    TeamRole = "PAYMENT"
 )
-
-func ConvertStringArrayToTeamRoles(sa pq.StringArray) []TeamRole {
-	roles := make([]TeamRole, len(sa))
-	for i, s := range sa {
-		roles[i] = TeamRole(s)
-	}
-	return roles
-}
-
-func ConvertTeamRolesToStringArray(roles []TeamRole) pq.StringArray {
-	sa := make(pq.StringArray, len(roles))
-	for i, r := range roles {
-		sa[i] = string(r)
-	}
-	return sa
-}
