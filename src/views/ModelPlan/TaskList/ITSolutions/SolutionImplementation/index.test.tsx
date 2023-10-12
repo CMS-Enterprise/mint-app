@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -60,7 +61,8 @@ const mocks = [
         operationalNeed
       }
     }
-  }
+  },
+  ...possibleSolutionsMock
 ];
 
 describe('IT Solutions NeedQuestionAndAnswer', () => {
@@ -126,9 +128,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     );
 
     await waitFor(() => {
-      expect(
-        getByText('Research, Measurement, Assessment, Design, and Analysis')
-      ).toBeInTheDocument();
+      expect(getByText('at.mint@oddball.io')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();

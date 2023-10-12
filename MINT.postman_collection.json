@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e2e558ab-89c3-422c-b990-cf47b083cf7a",
+		"_postman_id": "040f04e1-e82a-4a0b-88f7-823fee84baa4",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20435042"
+		"_exporter_id": "20320964"
 	},
 	"item": [
 		{
@@ -1179,8 +1179,47 @@
 						}
 					},
 					"response": []
+				},
+				
+				{
+					"name": "SendFeedback",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.sendFeedbackEmail",
+									"",
+									"pm.test(\"Feedback Email was sent\", function (){",
+									"    pm.expect(responseData).to.equal(true)",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation sendFeedbackEmail{\n  \n  sendFeedbackEmail(input:{\n      isAnonymousSubmission: false\n      allowContact: true\n      cmsRole: \"Ultimate COR\"\n      mintUsedFor: [VIEW_MODEL, EDIT_MODEL]\n      mintUsedForOther: \"Looking cool\"\n      systemEasyToUse: AGREE\n      systemEasyToUseOther: \"HMM I guess it's great!\"\n      howCanWeImprove: \"a virtual assistant that pops up and sings to you\"\n      })\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
+
 		},
 		{
 			"name": "Audit",
@@ -1621,6 +1660,38 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    \n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PossibleOperationalSoultionsGetAllWithContacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key\n        treatAsOther \n        pointsOfContact{\n            id\n            possibleOperationalSolutionID\n            name\n            email\n            isTeam\n            role\n        }            \n  }\n}\n",
 								"variables": ""
 							}
 						},

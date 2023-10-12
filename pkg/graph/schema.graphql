@@ -115,6 +115,7 @@ type PossibleOperationalSolution {
     name: String!
     key: OperationalSolutionKey!
     treatAsOther: Boolean!
+    pointsOfContact: [PossibleOperationalSolutionContact!]!
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -122,6 +123,27 @@ type PossibleOperationalSolution {
     modifiedBy: UUID
     modifiedByUserAccount: UserAccount
     modifiedDts: Time
+}
+
+"""
+PossibleOperationalSolutionContact represents a contact for a possible operational solution
+"""
+type PossibleOperationalSolutionContact {
+  id: UUID!
+  possibleOperationalSolutionID: Int!
+  
+  name: String!
+  email: String!
+  isTeam: Boolean!
+  role: String
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -1534,6 +1556,43 @@ type DiscussionRoleSelection {
   userRole: DiscussionUserRole!
   userRoleDescription: String
 }
+"""
+The inputs to the user feedback form
+"""
+input SendFeedbackEmailInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  cmsRole: String
+  mintUsedFor: [MintUses!]
+  mintUsedForOther: String
+  systemEasyToUse: EaseOfUse
+  systemEasyToUseOther: String
+  howSatisfied: SatisfactionLevel
+  howCanWeImprove: String
+}
+
+enum EaseOfUse {
+  AGREE
+  DISAGREE
+  UNSURE
+}
+
+enum MintUses {
+  VIEW_MODEL
+  EDIT_MODEL
+  SHARE_MODEL
+  TRACK_SOLUTIONS
+  CONTRIBUTE_DISCUSSIONS
+  VIEW_HELP
+  OTHER
+}
+enum SatisfactionLevel {
+  VERY_SATISFIED
+  SATISFIED
+  NEUTRAL
+  DISSATISFIED
+  VERY_DISSATISFIED
+}
 
 """
 Query definition for the schema
@@ -1716,6 +1775,10 @@ shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: 
 
 reportAProblem(input: ReportAProblemInput!): Boolean!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+"""
+This mutation sends feedback about the MINT product to the MINT team
+"""
+sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
 }
 
 type Subscription {
@@ -2272,6 +2335,8 @@ enum OperationalSolutionKey{
   RFA
   SHARED_SYSTEMS
   BCDA
+  ISP
+  MIDS
 }
 
 enum OperationalSolutionSubtaskStatus {

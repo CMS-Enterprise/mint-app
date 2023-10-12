@@ -495,6 +495,12 @@ func (r *mutationResolver) ReportAProblem(ctx context.Context, input model.Repor
 	return resolvers.ReportAProblem(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
 }
 
+// SendFeedbackEmail is the resolver for the sendFeedbackEmail field.
+func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.SendFeedbackEmail(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
@@ -794,6 +800,11 @@ func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context,
 	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.Key, r.store)
 }
 
+// PointsOfContact is the resolver for the pointsOfContact field.
+func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error) {
+	return resolvers.PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, obj.ID)
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -1037,6 +1048,11 @@ func (r *Resolver) PossibleOperationalNeed() generated.PossibleOperationalNeedRe
 	return &possibleOperationalNeedResolver{r}
 }
 
+// PossibleOperationalSolution returns generated.PossibleOperationalSolutionResolver implementation.
+func (r *Resolver) PossibleOperationalSolution() generated.PossibleOperationalSolutionResolver {
+	return &possibleOperationalSolutionResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -1059,5 +1075,6 @@ type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
+type possibleOperationalSolutionResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }

@@ -69,7 +69,7 @@ export enum AnticipatedPaymentFrequencyType {
 }
 
 export type AuditChange = {
-  __typename?: 'AuditChange';
+  __typename: 'AuditChange';
   action: Scalars['String']['output'];
   fields: Scalars['Map']['output'];
   foreignKey?: Maybe<Scalars['UUID']['output']>;
@@ -148,7 +148,7 @@ export type ChangeHistorySortParams = {
 };
 
 export type ChangeTableRecord = {
-  __typename?: 'ChangeTableRecord';
+  __typename: 'ChangeTableRecord';
   action: Scalars['String']['output'];
   fields: ChangedFields;
   foreignKey?: Maybe<Scalars['UUID']['output']>;
@@ -173,7 +173,7 @@ export enum ChangeType {
 }
 
 export type ChangedFields = {
-  __typename?: 'ChangedFields';
+  __typename: 'ChangedFields';
   changes: Array<Field>;
 };
 
@@ -214,7 +214,7 @@ export type CreateOperationalSolutionSubtaskInput = {
 
 /** The current user of the application */
 export type CurrentUser = {
-  __typename?: 'CurrentUser';
+  __typename: 'CurrentUser';
   launchDarkly: LaunchDarklySettings;
 };
 
@@ -272,7 +272,7 @@ export enum DataToSendParticipantsType {
 }
 
 export type DateHistogramAggregationBucket = {
-  __typename?: 'DateHistogramAggregationBucket';
+  __typename: 'DateHistogramAggregationBucket';
   docCount: Scalars['Int']['output'];
   key: Scalars['String']['output'];
   maxModifiedDts: Scalars['Time']['output'];
@@ -281,7 +281,7 @@ export type DateHistogramAggregationBucket = {
 
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
-  __typename?: 'DiscussionReply';
+  __typename: 'DiscussionReply';
   content?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -316,7 +316,7 @@ export type DiscussionReplyCreateInput = {
 };
 
 export type DiscussionRoleSelection = {
-  __typename?: 'DiscussionRoleSelection';
+  __typename: 'DiscussionRoleSelection';
   userRole: DiscussionUserRole;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -343,6 +343,12 @@ export enum DocumentType {
   POLICY_PAPER = 'POLICY_PAPER'
 }
 
+export enum EaseOfUse {
+  AGREE = 'AGREE',
+  DISAGREE = 'DISAGREE',
+  UNSURE = 'UNSURE'
+}
+
 export enum EvaluationApproachType {
   COMPARISON_MATCH = 'COMPARISON_MATCH',
   CONTROL_INTERVENTION = 'CONTROL_INTERVENTION',
@@ -353,7 +359,7 @@ export enum EvaluationApproachType {
 
 /** ExistingModel represents a model that already exists outside of the scope of MINT */
 export type ExistingModel = {
-  __typename?: 'ExistingModel';
+  __typename: 'ExistingModel';
   authority?: Maybe<Scalars['String']['output']>;
   category?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
@@ -378,7 +384,7 @@ export type ExistingModel = {
 };
 
 export type ExistingModelLink = {
-  __typename?: 'ExistingModelLink';
+  __typename: 'ExistingModelLink';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -394,14 +400,14 @@ export type ExistingModelLink = {
 };
 
 export type Field = {
-  __typename?: 'Field';
+  __typename: 'Field';
   name: Scalars['String']['output'];
   nameCamelCase: Scalars['String']['output'];
   value: FieldValue;
 };
 
 export type FieldValue = {
-  __typename?: 'FieldValue';
+  __typename: 'FieldValue';
   new?: Maybe<Scalars['Any']['output']>;
   old?: Maybe<Scalars['Any']['output']>;
 };
@@ -474,10 +480,20 @@ export enum KeyCharacteristic {
 
 /** The current user's Launch Darkly key */
 export type LaunchDarklySettings = {
-  __typename?: 'LaunchDarklySettings';
+  __typename: 'LaunchDarklySettings';
   signedHash: Scalars['String']['output'];
   userKey: Scalars['String']['output'];
 };
+
+export enum MintUses {
+  CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
+  EDIT_MODEL = 'EDIT_MODEL',
+  OTHER = 'OTHER',
+  SHARE_MODEL = 'SHARE_MODEL',
+  TRACK_SOLUTIONS = 'TRACK_SOLUTIONS',
+  VIEW_HELP = 'VIEW_HELP',
+  VIEW_MODEL = 'VIEW_MODEL'
+}
 
 export enum ModelCategory {
   ACCOUNTABLE_CARE = 'ACCOUNTABLE_CARE',
@@ -500,7 +516,7 @@ export enum ModelLearningSystemType {
 
 /** ModelPlan represent the data point for plans about a model. It is the central data type in the application */
 export type ModelPlan = {
-  __typename?: 'ModelPlan';
+  __typename: 'ModelPlan';
   abbreviation?: Maybe<Scalars['String']['output']>;
   archived: Scalars['Boolean']['output'];
   basics: PlanBasics;
@@ -599,7 +615,7 @@ export enum MonitoringFileType {
 
 /** Mutations definition for the schema */
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename: 'Mutation';
   addOrUpdateCustomOperationalNeed: OperationalNeed;
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
@@ -622,6 +638,8 @@ export type Mutation = {
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   reportAProblem: Scalars['Boolean']['output'];
+  /** This mutation sends feedback about the MINT product to the MINT team */
+  sendFeedbackEmail: Scalars['Boolean']['output'];
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
@@ -785,6 +803,12 @@ export type MutationReportAProblemArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationSendFeedbackEmailArgs = {
+  input: SendFeedbackEmailInput;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationShareModelPlanArgs = {
   modelPlanID: Scalars['UUID']['input'];
   optionalMessage?: InputMaybe<Scalars['String']['input']>;
@@ -919,7 +943,7 @@ export type MutationUploadNewPlanDocumentArgs = {
 
 /** NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible */
 export type NdaInfo = {
-  __typename?: 'NDAInfo';
+  __typename: 'NDAInfo';
   agreed: Scalars['Boolean']['output'];
   agreedDts?: Maybe<Scalars['Time']['output']>;
 };
@@ -948,7 +972,7 @@ export enum OpSolutionStatus {
 }
 
 export type OperationalNeed = {
-  __typename?: 'OperationalNeed';
+  __typename: 'OperationalNeed';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1005,7 +1029,7 @@ export enum OperationalNeedKey {
 }
 
 export type OperationalSolution = {
-  __typename?: 'OperationalSolution';
+  __typename: 'OperationalSolution';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1068,11 +1092,13 @@ export enum OperationalSolutionKey {
   INNOVATION = 'INNOVATION',
   INTERNAL_STAFF = 'INTERNAL_STAFF',
   IPC = 'IPC',
+  ISP = 'ISP',
   LDG = 'LDG',
   LOI = 'LOI',
   LV = 'LV',
   MARX = 'MARX',
   MDM = 'MDM',
+  MIDS = 'MIDS',
   OTHER_NEW_PROCESS = 'OTHER_NEW_PROCESS',
   OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
   POST_PORTAL = 'POST_PORTAL',
@@ -1083,7 +1109,7 @@ export enum OperationalSolutionKey {
 }
 
 export type OperationalSolutionSubtask = {
-  __typename?: 'OperationalSolutionSubtask';
+  __typename: 'OperationalSolutionSubtask';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1179,7 +1205,7 @@ export enum PayType {
 
 /** Represents plan basics */
 export type PlanBasics = {
-  __typename?: 'PlanBasics';
+  __typename: 'PlanBasics';
   additionalModelCategories: Array<ModelCategory>;
   amsModelID?: Maybe<Scalars['String']['output']>;
   announced?: Maybe<Scalars['Time']['output']>;
@@ -1256,7 +1282,7 @@ export type PlanBasicsChanges = {
 
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
 export type PlanBeneficiaries = {
-  __typename?: 'PlanBeneficiaries';
+  __typename: 'PlanBeneficiaries';
   beneficiaries: Array<BeneficiariesType>;
   beneficiariesNote?: Maybe<Scalars['String']['output']>;
   beneficiariesOther?: Maybe<Scalars['String']['output']>;
@@ -1322,7 +1348,7 @@ export type PlanBeneficiariesChanges = {
 
 /** PlanCollaborator represents a collaborator on a plan */
 export type PlanCollaborator = {
-  __typename?: 'PlanCollaborator';
+  __typename: 'PlanCollaborator';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1344,7 +1370,7 @@ export type PlanCollaboratorCreateInput = {
 };
 
 export type PlanCrTdl = {
-  __typename?: 'PlanCrTdl';
+  __typename: 'PlanCrTdl';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1376,7 +1402,7 @@ export type PlanCrTdlCreateInput = {
 
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
-  __typename?: 'PlanDiscussion';
+  __typename: 'PlanDiscussion';
   content?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1413,7 +1439,7 @@ export type PlanDiscussionCreateInput = {
 
 /** PlanDocument represents a document on a plan */
 export type PlanDocument = {
-  __typename?: 'PlanDocument';
+  __typename: 'PlanDocument';
   bucket: Scalars['String']['output'];
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1464,7 +1490,7 @@ export type PlanDocumentLinkInput = {
 };
 
 export type PlanDocumentSolutionLink = {
-  __typename?: 'PlanDocumentSolutionLink';
+  __typename: 'PlanDocumentSolutionLink';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1477,7 +1503,7 @@ export type PlanDocumentSolutionLink = {
 };
 
 export type PlanFavorite = {
-  __typename?: 'PlanFavorite';
+  __typename: 'PlanFavorite';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1492,7 +1518,7 @@ export type PlanFavorite = {
 
 /** PlanGeneralCharacteristics represents a plan general characteristics object */
 export type PlanGeneralCharacteristics = {
-  __typename?: 'PlanGeneralCharacteristics';
+  __typename: 'PlanGeneralCharacteristics';
   additionalServicesInvolved?: Maybe<Scalars['Boolean']['output']>;
   additionalServicesInvolvedDescription?: Maybe<Scalars['String']['output']>;
   additionalServicesInvolvedNote?: Maybe<Scalars['String']['output']>;
@@ -1620,7 +1646,7 @@ export type PlanGeneralCharacteristicsChanges = {
 
 /** PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning */
 export type PlanOpsEvalAndLearning = {
-  __typename?: 'PlanOpsEvalAndLearning';
+  __typename: 'PlanOpsEvalAndLearning';
   agencyOrStateHelp: Array<AgencyOrStateHelpType>;
   agencyOrStateHelpNote?: Maybe<Scalars['String']['output']>;
   agencyOrStateHelpOther?: Maybe<Scalars['String']['output']>;
@@ -1836,7 +1862,7 @@ export type PlanOpsEvalAndLearningChanges = {
 
 /** PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants */
 export type PlanParticipantsAndProviders = {
-  __typename?: 'PlanParticipantsAndProviders';
+  __typename: 'PlanParticipantsAndProviders';
   communicationMethod: Array<ParticipantCommunicationType>;
   communicationMethodOther?: Maybe<Scalars['String']['output']>;
   communicationNote?: Maybe<Scalars['String']['output']>;
@@ -1958,7 +1984,7 @@ export type PlanParticipantsAndProvidersChanges = {
 
 /** PlanPayments is the task list section that deals with information regarding Payments */
 export type PlanPayments = {
-  __typename?: 'PlanPayments';
+  __typename: 'PlanPayments';
   affectsMedicareSecondaryPayerClaims?: Maybe<Scalars['Boolean']['output']>;
   affectsMedicareSecondaryPayerClaimsHow?: Maybe<Scalars['String']['output']>;
   affectsMedicareSecondaryPayerClaimsNote?: Maybe<Scalars['String']['output']>;
@@ -2099,7 +2125,7 @@ export type PlanPaymentsChanges = {
 };
 
 export type PossibleOperationalNeed = {
-  __typename?: 'PossibleOperationalNeed';
+  __typename: 'PossibleOperationalNeed';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2114,7 +2140,7 @@ export type PossibleOperationalNeed = {
 };
 
 export type PossibleOperationalSolution = {
-  __typename?: 'PossibleOperationalSolution';
+  __typename: 'PossibleOperationalSolution';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2124,11 +2150,29 @@ export type PossibleOperationalSolution = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
+  pointsOfContact: Array<PossibleOperationalSolutionContact>;
   treatAsOther: Scalars['Boolean']['output'];
 };
 
+/** PossibleOperationalSolutionContact represents a contact for a possible operational solution */
+export type PossibleOperationalSolutionContact = {
+  __typename: 'PossibleOperationalSolutionContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  isTeam: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  possibleOperationalSolutionID: Scalars['Int']['output'];
+  role?: Maybe<Scalars['String']['output']>;
+};
+
 export type PrepareForClearance = {
-  __typename?: 'PrepareForClearance';
+  __typename: 'PrepareForClearance';
   latestClearanceDts?: Maybe<Scalars['Time']['output']>;
   status: PrepareForClearanceStatus;
 };
@@ -2161,7 +2205,7 @@ export enum ProviderLeaveType {
 
 /** Query definition for the schema */
 export type Query = {
-  __typename?: 'Query';
+  __typename: 'Query';
   auditChanges: Array<AuditChange>;
   crTdl: PlanCrTdl;
   currentUser: CurrentUser;
@@ -2332,6 +2376,14 @@ export enum Role {
   MINT_USER = 'MINT_USER'
 }
 
+export enum SatisfactionLevel {
+  DISSATISFIED = 'DISSATISFIED',
+  NEUTRAL = 'NEUTRAL',
+  SATISFIED = 'SATISFIED',
+  VERY_DISSATISFIED = 'VERY_DISSATISFIED',
+  VERY_SATISFIED = 'VERY_SATISFIED'
+}
+
 export type SearchFilter = {
   type: SearchFilterType;
   value: Scalars['Any']['input'];
@@ -2413,6 +2465,19 @@ export enum SelectionMethodType {
   VOLUNTARY = 'VOLUNTARY'
 }
 
+/** The inputs to the user feedback form */
+export type SendFeedbackEmailInput = {
+  allowContact?: InputMaybe<Scalars['Boolean']['input']>;
+  cmsRole?: InputMaybe<Scalars['String']['input']>;
+  howCanWeImprove?: InputMaybe<Scalars['String']['input']>;
+  howSatisfied?: InputMaybe<SatisfactionLevel>;
+  isAnonymousSubmission: Scalars['Boolean']['input'];
+  mintUsedFor?: InputMaybe<Array<MintUses>>;
+  mintUsedForOther?: InputMaybe<Scalars['String']['input']>;
+  systemEasyToUse?: InputMaybe<EaseOfUse>;
+  systemEasyToUseOther?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum SortDirection {
   ASC = 'ASC',
   DESC = 'DESC'
@@ -2429,7 +2494,7 @@ export enum StakeholdersType {
 }
 
 export type Subscription = {
-  __typename?: 'Subscription';
+  __typename: 'Subscription';
   onLockTaskListSectionContext: TaskListSectionLockStatusChanged;
   onTaskListSectionLocksChanged: TaskListSectionLockStatusChanged;
 };
@@ -2455,7 +2520,7 @@ export enum TaskListSection {
 }
 
 export type TaskListSectionLockStatus = {
-  __typename?: 'TaskListSectionLockStatus';
+  __typename: 'TaskListSectionLockStatus';
   isAssessment: Scalars['Boolean']['output'];
   lockedByUserAccount: UserAccount;
   modelPlanID: Scalars['UUID']['output'];
@@ -2463,7 +2528,7 @@ export type TaskListSectionLockStatus = {
 };
 
 export type TaskListSectionLockStatusChanged = {
-  __typename?: 'TaskListSectionLockStatusChanged';
+  __typename: 'TaskListSectionLockStatusChanged';
   actionType: ActionType;
   changeType: ChangeType;
   lockStatus: TaskListSectionLockStatus;
@@ -2516,7 +2581,7 @@ export type UpdateOperationalSolutionSubtaskInput = {
 };
 
 export type UserAccount = {
-  __typename?: 'UserAccount';
+  __typename: 'UserAccount';
   commonName: Scalars['String']['output'];
   email: Scalars['String']['output'];
   familyName: Scalars['String']['output'];
@@ -2531,7 +2596,7 @@ export type UserAccount = {
 
 /** Represents a person response from the Okta API */
 export type UserInfo = {
-  __typename?: 'UserInfo';
+  __typename: 'UserInfo';
   displayName: Scalars['String']['output'];
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
@@ -2550,14 +2615,21 @@ export type CreatReportAProblemMutationVariables = Exact<{
 }>;
 
 
-export type CreatReportAProblemMutation = { __typename?: 'Mutation', reportAProblem: boolean };
+export type CreatReportAProblemMutation = { __typename: 'Mutation', reportAProblem: boolean };
+
+export type CreatSendFeedbackMutationVariables = Exact<{
+  input: SendFeedbackEmailInput;
+}>;
+
+
+export type CreatSendFeedbackMutation = { __typename: 'Mutation', sendFeedbackEmail: boolean };
 
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetFundingQuery = { __typename?: 'Query', modelPlan: { __typename?: 'ModelPlan', id: UUID, modelName: string, payments: { __typename?: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename?: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
 export type UpdatePaymentsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2565,7 +2637,7 @@ export type UpdatePaymentsMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePaymentsMutation = { __typename?: 'Mutation', updatePlanPayments: { __typename?: 'PlanPayments', id: UUID } };
+export type UpdatePaymentsMutation = { __typename: 'Mutation', updatePlanPayments: { __typename: 'PlanPayments', id: UUID } };
 
 export type CreateShareModelPlanMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -2575,16 +2647,23 @@ export type CreateShareModelPlanMutationVariables = Exact<{
 }>;
 
 
-export type CreateShareModelPlanMutation = { __typename?: 'Mutation', shareModelPlan: boolean };
+export type CreateShareModelPlanMutation = { __typename: 'Mutation', shareModelPlan: boolean };
+
+export type GetPossibleSolutionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, role?: string | null }> }> };
 
 export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNdaQuery = { __typename?: 'Query', ndaInfo: { __typename?: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
+export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
 
 export const CreatReportAProblemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatReportAProblem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReportAProblemInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reportAProblem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<CreatReportAProblemMutation, CreatReportAProblemMutationVariables>;
+export const CreatSendFeedbackDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatSendFeedback"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SendFeedbackEmailInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendFeedbackEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<CreatSendFeedbackMutation, CreatSendFeedbackMutationVariables>;
 export const GetFundingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFunding"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceTrustFundType"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRTrustFundType"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetFundingQuery, GetFundingQueryVariables>;
 export const UpdatePaymentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePayments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanPaymentsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanPayments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePaymentsMutation, UpdatePaymentsMutationVariables>;
 export const CreateShareModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateShareModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelViewFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"receiverEmails"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shareModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"viewFilter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}}},{"kind":"Argument","name":{"kind":"Name","value":"receiverEmails"},"value":{"kind":"Variable","name":{"kind":"Name","value":"receiverEmails"}}},{"kind":"Argument","name":{"kind":"Name","value":"optionalMessage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}}}]}]}}]} as unknown as DocumentNode<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;
+export const GetPossibleSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPossibleSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"possibleOperationalSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"pointsOfContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isTeam"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]}}]} as unknown as DocumentNode<GetPossibleSolutionsQuery, GetPossibleSolutionsQueryVariables>;
 export const GetNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ndaInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<GetNdaQuery, GetNdaQueryVariables>;

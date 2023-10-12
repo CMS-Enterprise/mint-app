@@ -20,16 +20,13 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
     <div
       class="flex-align-self-center margin-y-2"
     >
-      <div>
-        <button
-          class="usa-button usa-button--unstyled display-flex"
-          type="button"
-        >
-          <span>
-            Download this Model Plan (CSV)
-          </span>
-        </button>
-      </div>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Share or export this model plan
+      </button>
     </div>
     <button
       class="usa-button usa-button--unstyled line-height-body-5 test-withdraw-request text-red"

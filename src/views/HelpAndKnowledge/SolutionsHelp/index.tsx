@@ -13,6 +13,7 @@ import {
   OperationalSolutionCategories,
   OperationalSolutionCategoryRoute
 } from 'data/operationalSolutionCategories';
+import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import CategoryFooter from './_components/CategoryFooter';
@@ -20,7 +21,6 @@ import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
 import SolutionsHeader from './_components/SolutionsHeader';
 import SolutionDetailsModal from './SolutionDetails/Modal';
 import {
-  helpSolutions,
   HelpSolutionType,
   operationalSolutionCategoryMap
 } from './solutionsMap';
@@ -77,6 +77,8 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const page = params.get('page');
   const modal = params.get('solution');
 
+  const helpSolutions = useHelpSolution();
+
   // Get the solution map details from solution route param
   const { prevPathname, selectedSolution: solution } = useModalSolutionState(
     null
@@ -110,7 +112,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     } else {
       setQuerySolutions(helpSolutions);
     }
-  }, [query, solution]);
+  }, [query, solution, helpSolutions]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = !category

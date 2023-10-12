@@ -1,10 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CreateReportAProblem from 'gql/apolloGQL/Feedback/CreateReportAProblem';
 import { ReportAProblemSection, ReportAProblemSeverity } from 'gql/gen/graphql';
+
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import ReportAProblem from '.';
 
@@ -21,7 +22,7 @@ const mocks = [
           whatDoing: 'Nothing much',
           whatWentWrong: 'Everything',
           severity: ReportAProblemSeverity.DELAYED_TASK,
-          severityOther: null
+          severityOther: ''
         }
       }
     },
@@ -33,14 +34,16 @@ const mocks = [
   }
 ];
 
+window.scrollTo = vi.fn;
+
 describe('Report a problem form', () => {
   it('submits the "Report a problem" form successfully', async () => {
     const { findByText, getByRole, getByTestId } = render(
       <MemoryRouter initialEntries={['/report-a-problem']}>
         <Route path="/report-a-problem">
-          <MockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <ReportAProblem />
-          </MockedProvider>
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
@@ -79,9 +82,9 @@ describe('Report a problem form', () => {
     const { asFragment } = render(
       <MemoryRouter initialEntries={['/report-a-problem']}>
         <Route path="/report-a-problem">
-          <MockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <ReportAProblem />
-          </MockedProvider>
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );

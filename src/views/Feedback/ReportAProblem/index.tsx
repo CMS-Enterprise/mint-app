@@ -27,7 +27,6 @@ import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import FieldGroup from 'components/shared/FieldGroup';
 import { getKeys } from 'types/translation';
-import { sortOtherEnum } from 'utils/modelPlan';
 
 const ReportAProblem = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
@@ -37,6 +36,16 @@ const ReportAProblem = () => {
   const [mutationError, setMutationError] = useState<boolean>(false);
 
   const [update, { loading }] = useMutation(CreateReportAProblem);
+
+  const sectionOptions: Record<
+    ReportAProblemSection,
+    string
+  > = t('section.options', { returnObjects: true });
+
+  const severityOptions: Record<
+    ReportAProblemSeverity,
+    string
+  > = t('severity.options', { returnObjects: true });
 
   const handleFormSubmit = (formikValues: ReportAProblemInput) => {
     update({
@@ -79,7 +88,9 @@ const ReportAProblem = () => {
           {t('reportHeading')}
         </PageHeading>
 
-        <p className="margin-bottom-2 font-body-lg">{t('reportSubheading')}</p>
+        <p className="margin-bottom-2 font-body-lg line-height-sans-lg">
+          {t('reportSubheading')}
+        </p>
 
         <Formik
           initialValues={initialValues}
@@ -105,6 +116,10 @@ const ReportAProblem = () => {
                         {t('isAnonymousSubmission.label')}
                       </Label>
 
+                      <p className="text-base margin-y-1">
+                        {t('isAnonymousSubmission.sublabel')}
+                      </p>
+
                       <BooleanRadio
                         field="isAnonymousSubmission"
                         id="report-a-problem-allow-anon-submission"
@@ -118,7 +133,10 @@ const ReportAProblem = () => {
                     </FieldGroup>
 
                     <FieldGroup>
-                      <Label htmlFor="report-a-problem-allow-contact">
+                      <Label
+                        htmlFor="report-a-problem-allow-contact"
+                        className="margin-top-5"
+                      >
                         {t('allowContact.label')}
                       </Label>
 
@@ -144,49 +162,53 @@ const ReportAProblem = () => {
                     </FieldGroup>
 
                     <FieldGroup>
-                      <Label htmlFor="report-a-problem-allow-contact">
-                        {t('allowContact.label')}
+                      <Label
+                        htmlFor="report-a-problem-allow-contact"
+                        className="margin-top-5"
+                      >
+                        {t('section.label')}
                       </Label>
 
                       <Fieldset>
-                        {getKeys(ReportAProblemSection)
-                          .sort(sortOtherEnum)
-                          .map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`report-a-problem-section-${key}`}
-                                data-testid={`report-a-problem-section-${key}`}
-                                name="section"
-                                label={t(`section.options.${key}`)}
-                                value={key}
-                                checked={values.section === key}
-                                onChange={() => {
-                                  setFieldValue('section', key);
-                                }}
-                              />
+                        {getKeys(sectionOptions).map(key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`report-a-problem-section-${key}`}
+                              data-testid={`report-a-problem-section-${key}`}
+                              name="section"
+                              label={t(`section.options.${key}`)}
+                              value={key}
+                              checked={values.section === key}
+                              onChange={() => {
+                                setFieldValue('section', key);
+                              }}
+                            />
 
-                              {key === ReportAProblemSection.OTHER && (
-                                <div className="margin-left-4 margin-top-1">
-                                  <Field
-                                    as={TextInput}
-                                    id="report-a-problem-section-other"
-                                    data-testid="report-a-problem-section-other"
-                                    disabled={
-                                      values.section !==
-                                      ReportAProblemSection.OTHER
-                                    }
-                                    name="sectionOther"
-                                  />
-                                </div>
-                              )}
-                            </Fragment>
-                          ))}
+                            {key === ReportAProblemSection.OTHER && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Field
+                                  as={TextInput}
+                                  id="report-a-problem-section-other"
+                                  data-testid="report-a-problem-section-other"
+                                  disabled={
+                                    values.section !==
+                                    ReportAProblemSection.OTHER
+                                  }
+                                  name="sectionOther"
+                                />
+                              </div>
+                            )}
+                          </Fragment>
+                        ))}
                       </Fieldset>
                     </FieldGroup>
 
                     <FieldGroup>
-                      <Label htmlFor="report-a-problem-what-went-wrong">
+                      <Label
+                        htmlFor="report-a-problem-what-went-wrong"
+                        className="margin-top-5"
+                      >
                         {t('whatDoing.label')}
                       </Label>
 
@@ -205,7 +227,10 @@ const ReportAProblem = () => {
                     </FieldGroup>
 
                     <FieldGroup>
-                      <Label htmlFor="report-a-problem-what-went-wrong">
+                      <Label
+                        htmlFor="report-a-problem-what-went-wrong"
+                        className="margin-top-5"
+                      >
                         {t('whatWentWrong.label')}
                       </Label>
 
@@ -224,50 +249,51 @@ const ReportAProblem = () => {
                     </FieldGroup>
 
                     <FieldGroup>
-                      <Label htmlFor="report-a-problem-allow-severity">
+                      <Label
+                        htmlFor="report-a-problem-allow-severity"
+                        className="margin-top-5"
+                      >
                         {t('severity.label')}
                       </Label>
 
                       <Fieldset>
-                        {getKeys(ReportAProblemSeverity)
-                          .sort(sortOtherEnum)
-                          .map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`report-a-problem-severity-${key}`}
-                                data-testid={`report-a-problem-severity-${key}`}
-                                name="severity"
-                                label={t(`severity.options.${key}`)}
-                                value={key}
-                                checked={values.severity === key}
-                                onChange={() => {
-                                  setFieldValue('severity', key);
-                                }}
-                              />
+                        {getKeys(severityOptions).map(key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`report-a-problem-severity-${key}`}
+                              data-testid={`report-a-problem-severity-${key}`}
+                              name="severity"
+                              label={t(`severity.options.${key}`)}
+                              value={key}
+                              checked={values.severity === key}
+                              onChange={() => {
+                                setFieldValue('severity', key);
+                              }}
+                            />
 
-                              {key === ReportAProblemSeverity.OTHER && (
-                                <div className="margin-left-4 margin-top-1">
-                                  <Field
-                                    as={TextInput}
-                                    id="report-a-problem-severity-other"
-                                    disabled={
-                                      values.severity !==
-                                      ReportAProblemSeverity.OTHER
-                                    }
-                                    name="severityOther"
-                                  />
-                                </div>
-                              )}
-                            </Fragment>
-                          ))}
+                            {key === ReportAProblemSeverity.OTHER && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Field
+                                  as={TextInput}
+                                  id="report-a-problem-severity-other"
+                                  disabled={
+                                    values.severity !==
+                                    ReportAProblemSeverity.OTHER
+                                  }
+                                  name="severityOther"
+                                />
+                              </div>
+                            )}
+                          </Fragment>
+                        ))}
                       </Fieldset>
                     </FieldGroup>
 
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
+                        className="usa-button margin-bottom-1"
                         onClick={() => {
                           handleFormSubmit(values);
                         }}

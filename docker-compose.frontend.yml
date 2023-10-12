@@ -21,6 +21,7 @@ services:
       - VITE_LD_CLIENT_ID
       - VITE_LOCAL_AUTH_ENABLED
       - VITE_BEACON_ID
+      - VITE_GA_TRACKING_ID
     volumes:
       - .:/app
       - /app/node_modules # Create an empty volume to override node_modules from the local filesystem (we always want to use the node_modules from the container)
