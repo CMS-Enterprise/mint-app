@@ -123,7 +123,7 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRoles []models.
 		return nil, err
 	}
 
-	existingCollaborator.TeamRoles = models.ConvertTeamRolesToStringArray(newRoles)
+	existingCollaborator.TeamRoles = models.ConvertEnumsToStringArray(newRoles)
 
 	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
 }
