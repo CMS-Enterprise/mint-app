@@ -173,6 +173,16 @@ export const selectFilteredFields = (
   const selectedFields: string[] = [];
   // Loop through task list sections of translation obj
   getKeys(allPlanTranslation).forEach((taskListSection: any) => {
+    if (taskListSection === 'nameHistory') {
+      if (
+        allPlanTranslation[taskListSection]?.filterGroups?.includes(
+          filteredGroup
+        )
+      ) {
+        // Push to array to become a column in exported csv
+        selectedFields.push(`${taskListSection}`);
+      }
+    }
     // Loop through all fields of task list sections to identify if they belong to a filter group
     getKeys(allPlanTranslation[taskListSection]).forEach((field: any) => {
       if (

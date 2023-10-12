@@ -1,3 +1,9 @@
+import basics from 'i18n/en-US/modelPlan/basics';
+import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
+import generalCharacteristics from 'i18n/en-US/modelPlan/generalCharacteristics';
+import modelPlan from 'i18n/en-US/modelPlan/modelPlan';
+import opsEvalAndLearning from 'i18n/en-US/modelPlan/opsEvalAndLearning';
+import participantsAndProviders from 'i18n/en-US/modelPlan/participantsAndProviders';
 import payments from 'i18n/en-US/modelPlan/payments';
 
 import {
@@ -86,7 +92,7 @@ describe('fetch csv utils', () => {
 
   it('filtered the header columns on the presence of a filter group', () => {
     const returnData = [
-      'modelPlan.nameHistory',
+      'nameHistory',
       'beneficiaries.beneficiaries',
       'beneficiaries.beneficiariesOther',
       'beneficiaries.beneficiariesNote',
@@ -97,6 +103,19 @@ describe('fetch csv utils', () => {
       'beneficiaries.precedenceRules'
     ];
 
-    expect(selectFilteredFields(allPlanTranslation, 'mdm')).toEqual(returnData);
+    expect(
+      selectFilteredFields(
+        {
+          nameHistory: modelPlan.nameHistory,
+          basics,
+          generalCharacteristics,
+          participantsAndProviders,
+          beneficiaries,
+          opsEvalAndLearning,
+          payments
+        },
+        'mdm'
+      )
+    ).toEqual(returnData);
   });
 });
