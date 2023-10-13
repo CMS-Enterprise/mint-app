@@ -31,6 +31,7 @@ const generalReadOnly = {
       'Generally, you should only send Model Plans to employees at CMS. If the person you’re sending this to doesn’t have access to MINT, they will need to request access to view this information. ',
     shareSelectInfo: 'Select which information you want to share.',
     shareEmail: 'Email address(es)',
+    shareLabel: 'Recipients',
     shareEmailInfo: 'If entering more than one address, separate with commas',
     shareOptional: 'Optional message to include in the email',
     shareSuccess:

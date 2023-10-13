@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import CreateShareModelPlan from 'gql/apolloGQL/ShareExport/CreateShareModelPlan';
 import { ModelViewFilter } from 'gql/gen/graphql';
 
+import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -271,13 +272,15 @@ const ShareExportModal = ({
               {generalReadOnlyT('modal.shareEmailInfo')}
             </p>
 
-            <TextAreaField
-              className="height-8"
+            <OktaMultiSelect
               id="share-model-recipients"
+              ariaLabel={generalReadOnlyT('modal.shareEmail')}
               name="receiverEmails"
-              onBlur={() => null}
-              onChange={e => setReceiverEmails(e.currentTarget.value)}
-              value={receiverEmails}
+              options={[]}
+              selectedLabel={generalReadOnlyT('modal.shareLabel')}
+              onChange={(users: any) => {
+                setReceiverEmails(users);
+              }}
             />
           </FieldGroup>
 
