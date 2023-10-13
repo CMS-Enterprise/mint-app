@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useMemo,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
@@ -7,6 +13,8 @@ import {
   Alert,
   Button,
   Checkbox,
+  IconFileDownload,
+  IconLaunch,
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -16,6 +24,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import ExternalLinkModal from 'components/shared/ExternalLinkModal';
 import DeleteModelPlanDocument from 'queries/Documents/DeleteModelPlanDocument';
 import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
 import { DeleteModelPlanDocumentVariables } from 'queries/Documents/types/DeleteModelPlanDocument';
@@ -36,6 +45,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import './index.scss';
 
@@ -141,7 +151,7 @@ type TableProps = {
   setDocumentStatus: (value: DocumentStatusType) => void;
   linkedDocs?: string[]; // If displaying from LinkedDocuments view
   setLinkedDocs?: Dispatch<SetStateAction<string[]>>; // If displaying from LinkedDocuments view
-  handleDocumentUnlink?: (fileToUnlink: string) => void; // Mutation to unlink a document from directly in table
+  handleDocumentUnlink?: (fileToUnlink: string, documentName: string) => void; // Mutation to unlink a document from directly in table
   hasEditAccess?: boolean;
 };
 
@@ -158,9 +168,13 @@ export const Table = ({
 }: TableProps) => {
   const { t } = useTranslation('documents');
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isExternalLinkModalOpen, setExternalLinkModalOpen] = useState(false);
+  const [externalLinkUrl, setExternalLinkUrl] = useState('');
   const [fileToRemove, setFileToRemove] = useState<DocumentType>(
     {} as DocumentType
   );
+
+  const { modelName } = useContext(ModelInfoContext);
 
   const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
     DeleteModelPlanDocument
@@ -176,15 +190,17 @@ export const Table = ({
         .then(response => {
           if (response?.errors) {
             setDocumentMessage(
-              t('removeDocumentFail', {
-                documentName: file.fileName
+              t('documentRemoval.error', {
+                documentName: file.fileName,
+                modelName
               })
             );
             setDocumentStatus('error');
           } else {
             setDocumentMessage(
-              t('removeDocumentSuccess', {
-                documentName: file.fileName
+              t('documentRemoval.success', {
+                documentName: file.fileName,
+                modelName
               })
             );
             setDocumentStatus('success');
@@ -193,14 +209,15 @@ export const Table = ({
         })
         .catch(() => {
           setDocumentMessage(
-            t('removeDocumentFail', {
-              documentName: file.fileName
+            t('documentRemoval.error', {
+              documentName: file.fileName,
+              modelName
             })
           );
           setDocumentStatus('error');
         });
     };
-  }, [mutate, refetch, t, setDocumentMessage, setDocumentStatus]);
+  }, [mutate, setDocumentMessage, t, modelName, setDocumentStatus, refetch]);
 
   const handleDownload = useMemo(() => {
     return (file: DocumentType) => {
@@ -263,9 +280,9 @@ export const Table = ({
             </p>
             <p>
               <span className="text-bold">
-                {t('removeDocumentModal.unlinking')}
+                {t('removeDocumentModal.disconnecting')}
               </span>
-              {t('removeDocumentModal.warningUnlinkSolution')}
+              {t('removeDocumentModal.warningDisconnectSolution')}
             </p>
           </>
         )}
@@ -297,11 +314,11 @@ export const Table = ({
           <Button
             type="button"
             onClick={() => {
-              handleDocumentUnlink(fileToRemove.id);
+              handleDocumentUnlink(fileToRemove.id, fileToRemove.fileName);
               setModalOpen(false);
             }}
           >
-            {t('removeDocumentModal.unlink')}
+            {t('removeDocumentModal.disconnect')}
           </Button>
         )}
 
@@ -384,14 +401,34 @@ export const Table = ({
           if (value) {
             return row.original.virusClean ? (
               <>
-                <Button
-                  type="button"
-                  unstyled
-                  className="margin-right-1"
-                  onClick={() => handleDownload(row.original)}
-                >
-                  {t('documentTable.view')}
-                </Button>
+                {!row.original.isLink ? (
+                  <Button
+                    type="button"
+                    unstyled
+                    className="margin-right-2"
+                    onClick={() => handleDownload(row.original)}
+                  >
+                    <span className="display-flex flex-align-center">
+                      {t('documentTable.view')}
+                      <IconFileDownload />
+                    </span>
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    unstyled
+                    className="margin-right-2"
+                    onClick={() => {
+                      setExternalLinkUrl(row.original.url);
+                      setExternalLinkModalOpen(true);
+                    }}
+                  >
+                    <span className="display-flex flex-align-center">
+                      {t('documentTable.visit')}
+                      <IconLaunch />
+                    </span>
+                  </Button>
+                )}
                 {hasEditAccess && !linkedDocs && (
                   <Button
                     type="button"
@@ -453,6 +490,11 @@ export const Table = ({
   return (
     <div className="model-plan-table" data-testid="model-plan-documents-table">
       {renderModal()}
+      <ExternalLinkModal
+        isOpen={isExternalLinkModalOpen}
+        closeModal={() => setExternalLinkModalOpen(false)}
+        url={externalLinkUrl}
+      />
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
@@ -488,7 +530,7 @@ export const Table = ({
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
+          {page.map(row => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -509,6 +551,19 @@ export const Table = ({
                         >
                           {cell.render('Cell')}
                         </th>
+                      );
+                    }
+                    if (i + 1 === row.cells.length) {
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          style={{
+                            paddingLeft: '0',
+                            paddingRight: '0'
+                          }}
+                        >
+                          {cell.render('Cell')}
+                        </td>
                       );
                     }
                     return (

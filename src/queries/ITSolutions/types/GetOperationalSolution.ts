@@ -23,6 +23,14 @@ export interface GetOperationalSolution_operationalSolution_documents {
   optionalNotes: string | null;
   otherType: string | null;
   numLinkedSolutions: number;
+  /**
+   * If isLink = true, then this is a URL to a linked document, not an uploaded document
+   */
+  isLink: boolean;
+  /**
+   * URL is the link that must be provided if this is a link instead of an uploaded document
+   */
+  url: string | null;
 }
 
 export interface GetOperationalSolution_operationalSolution_operationalSolutionSubtasks {
