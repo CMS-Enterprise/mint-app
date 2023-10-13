@@ -128,9 +128,11 @@ const OktaMultiSelect = ({
         closeMenuOnSelect={false}
         tabSelectsValue={false}
         onChange={selectedOptions => {
+          // TODO: Figure out what's happening with typescript here
           // @ts-ignore
           setSelected(selectedOptions);
-          onChange(selectedOptions.map(option => option.value));
+          // @ts-ignore
+          onChange(selectedOptions.map(option => option.email));
         }}
         value={selected}
         controlShouldRenderValue={false}

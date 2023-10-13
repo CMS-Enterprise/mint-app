@@ -279,7 +279,9 @@ const ShareExportModal = ({
               name="receiverEmails"
               selectedLabel={generalReadOnlyT('modal.shareLabel')}
               onChange={(users: any) => {
-                setReceiverEmails(users);
+                // TODO: remove stringification once BE is ready to accept an array of users
+                setReceiverEmails(users.toString());
+                // setReceiverEmails(users);
               }}
             />
           </FieldGroup>
