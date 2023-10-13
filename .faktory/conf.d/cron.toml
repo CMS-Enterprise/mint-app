@@ -1,5 +1,5 @@
 [[cron]]
-  schedule = "*/5 * * * *"
+  schedule = "* * * * *"
   [cron.job]
     type = "DailyDigestCronJob"
     queue = "critical"
