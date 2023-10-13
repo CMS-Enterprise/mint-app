@@ -277,7 +277,6 @@ const ShareExportModal = ({
               id="share-model-recipients"
               ariaLabel={generalReadOnlyT('modal.shareEmail')}
               name="receiverEmails"
-              options={[]}
               selectedLabel={generalReadOnlyT('modal.shareLabel')}
               onChange={(users: any) => {
                 setReceiverEmails(users);

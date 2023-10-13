@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Select, { MultiValue } from 'react-select';
+import { useTranslation } from 'react-i18next';
+import Select from 'react-select';
 import classNames from 'classnames';
 
+import Alert from 'components/shared/Alert';
 import {
   ClearIndicator,
   customStyles,
@@ -16,7 +18,13 @@ import './index.scss';
 type MultiSelectOptionProps = {
   value: string;
   label: string;
-  subLabel?: string;
+  email: string;
+};
+
+const selectedContainsNonCMS = (
+  selectedUsers: MultiSelectOptionProps[]
+): boolean => {
+  return !!selectedUsers.find(user => !user.email?.includes('cms.gov'));
 };
 
 /**
@@ -30,9 +38,7 @@ const OktaMultiSelect = ({
   inputId,
   name,
   selectedLabel,
-  options,
   onChange,
-  initialValues,
   className,
   ariaLabel
 }: {
@@ -40,16 +46,20 @@ const OktaMultiSelect = ({
   inputId?: string;
   name: string;
   selectedLabel?: string;
-  options: MultiSelectOptionProps[];
   onChange: (values: string[]) => void;
-  initialValues?: string[];
   className?: string;
   ariaLabel: string;
 }) => {
+  const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
+
+  const [selected, setSelected] = useState<MultiSelectOptionProps[]>([]);
+
   // If autoSearch, set name as initial search term
   const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);
 
-  const [userSelected, setUserSelected] = useState(false);
+  const [userWarning, setUserWarning] = useState<boolean>(false);
+
+  const [userSelected, setUserSelected] = useState<boolean>(false);
 
   const { debounceValue, debounceLoading } = useDebounce(
     searchTerm,
@@ -68,23 +78,9 @@ const OktaMultiSelect = ({
     }
   }, [debounceValue, queryOktaUsers]);
 
-  const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
-    initialValues
-      ? options.filter(option => initialValues.includes(option.value))
-      : []
-  );
-
-  const [originalOptions] = useState<MultiValue<MultiSelectOptionProps>>([
-    ...options
-  ]);
-
   useEffect(() => {
-    setSelected(
-      initialValues
-        ? originalOptions.filter(option => initialValues.includes(option.value))
-        : []
-    );
-  }, [initialValues, originalOptions]);
+    setUserWarning(selectedContainsNonCMS(selected));
+  }, [selected]);
 
   return (
     <div>
@@ -110,7 +106,8 @@ const OktaMultiSelect = ({
         options={contacts.map(
           (contact: OktaUserType): MultiSelectOptionProps => ({
             label: `${contact.displayName}, ${contact.username}`,
-            value: contact.username
+            value: contact.username,
+            email: contact.email
           })
         )}
         onInputChange={(newValue, { action }) => {
@@ -131,6 +128,7 @@ const OktaMultiSelect = ({
         closeMenuOnSelect={false}
         tabSelectsValue={false}
         onChange={selectedOptions => {
+          // @ts-ignore
           setSelected(selectedOptions);
           onChange(selectedOptions.map(option => option.value));
         }}
@@ -172,6 +170,11 @@ const OktaMultiSelect = ({
             ))}
           </ul>
         </div>
+      )}
+      {userWarning && (
+        <Alert type="warning" slim>
+          {generalReadOnlyT('modal.shareAlert')}
+        </Alert>
       )}
     </div>
   );

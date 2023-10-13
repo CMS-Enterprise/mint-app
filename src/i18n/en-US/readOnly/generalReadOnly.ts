@@ -39,6 +39,8 @@ const generalReadOnly = {
       'Success! This Model Plan has been emailed to the specified recipients.',
     shareError:
       'There was an error emailing this Model Plan to the specified recipients.',
+    shareAlert:
+      'At least one selected individual is external to the CMS organization. Please be sure they should see the information you’re sharing before proceeding.',
     copyLinkReadView: 'Copy link to Read View',
     copyLinkFilteredReadView: 'Copy link to filtered Read View',
     cancel: 'Cancel',
