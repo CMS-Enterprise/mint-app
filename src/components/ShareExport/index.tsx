@@ -21,6 +21,7 @@ import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
@@ -265,7 +266,7 @@ const ShareExportModal = ({
           {/* Email address recipient textarea */}
           <FieldGroup className="margin-top-4">
             <Label htmlFor="share-model-recipients" className="text-normal">
-              {generalReadOnlyT('modal.shareEmail')}
+              {generalReadOnlyT('modal.shareEmail')} <RequiredAsterisk />
             </Label>
 
             <p className="text-base margin-y-1">
