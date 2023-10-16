@@ -36,7 +36,6 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             hideITLeadExperience: true,
             downgradeAssessmentTeam: false,
             hideGroupView: true,
-            shareExportEnabled: false,
             helpScoutEnabled: false,
             feedbackEnabled: false
           }
