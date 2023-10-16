@@ -421,7 +421,7 @@ const ModelPlansTable = ({
       },
       globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
-      autoResetPage: false,
+      autoResetPage: true,
       initialState: {
         sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
         pageIndex: 0
