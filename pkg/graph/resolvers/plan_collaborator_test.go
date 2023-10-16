@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"github.com/lib/pq"
 
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
@@ -84,7 +85,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
 	suite.EqualValues(account.ID, collaborator.UserID)
-	suite.EqualValues([]models.TeamRole{models.TeamRoleLeadership}, collaborator.TeamRoles)
+	suite.EqualValues(pq.StringArray{string(models.TeamRoleLeadership)}, collaborator.TeamRoles)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, collaborator.CreatedBy)
 	suite.Nil(collaborator.ModifiedBy)
 	mockController.Finish()
@@ -113,7 +114,7 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	suite.NotNil(updatedCollaborator.ModifiedDts)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedCollaborator.ModifiedBy)
 	suite.EqualValues(account.ID, collaborator.UserID)
-	suite.EqualValues([]models.TeamRole{models.TeamRoleEvaluation}, updatedCollaborator.TeamRoles)
+	suite.EqualValues(pq.StringArray{string(models.TeamRoleEvaluation)}, updatedCollaborator.TeamRoles)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
