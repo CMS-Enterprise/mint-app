@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+
 	"github.com/google/uuid"
 
 	_ "github.com/lib/pq" // required for postgres driver in sql
