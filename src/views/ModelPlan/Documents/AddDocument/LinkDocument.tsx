@@ -1,11 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, Fieldset, Label, Radio } from '@trussworks/react-uswds';
+import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import LinkNewPlanDocument from 'gql/apolloGQL/Documents/LinkNewPlanDocument';
 
-import FileUpload from 'components/FileUpload';
+import BooleanRadio from 'components/BooleanRadioForm';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -15,17 +16,17 @@ import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
-import { UploadNewPlanDocument as UploadNewPlanDocumentType } from 'queries/Documents/types/UploadNewPlanDocument';
-import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
-import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
+import { LinkingDocumentFormTypes } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { translateDocumentType } from 'utils/modelPlan';
-import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
+import { sortOtherEnum, translateDocumentType } from 'utils/modelPlan';
+import { DocumentLinkValidationSchema } from 'validations/documentUploadSchema';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
-const DocumentUpload = ({
+const LinkDocument = ({
   solutionDetailsLink,
   solutionID
 }: {
@@ -38,21 +39,22 @@ const DocumentUpload = ({
   const { t: h } = useTranslation('draftModelPlan');
 
   const { showMessageOnNextPage } = useMessage();
-  const formikRef = useRef<FormikProps<FileUploadForm>>(null);
+  const formikRef = useRef<FormikProps<LinkingDocumentFormTypes>>(null);
 
+  const { modelName } = useContext(ModelInfoContext);
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
+  const [fileNameError, setFileNameError] = useState('');
 
-  const [uploadFile, uploadFileStatus] = useMutation<UploadNewPlanDocumentType>(
-    UploadNewPlanDocument
-  );
+  const [linkFile] = useMutation(LinkNewPlanDocument);
 
   const messageOnNextPage = (message: string, fileName: string) =>
     showMessageOnNextPage(
       <Alert type="success" slim className="margin-y-4" aria-live="assertive">
         <span className="mandatory-fields-alert__text">
           {t(message, {
-            documentName: fileName
+            documentName: fileName,
+            modelName
           })}
         </span>
       </Alert>
@@ -65,92 +67,96 @@ const DocumentUpload = ({
   );
 
   // Uploads the document to s3 bucket and create document on BE
-  const onSubmit = (values: FileUploadForm | LinkingDocumentFormTypes) => {
-    const { file } = values as FileUploadForm;
+  const onSubmit = ({
+    name,
+    url,
+    restricted,
+    documentType,
+    otherTypeDescription,
+    optionalNotes
+  }: LinkingDocumentFormTypes) => {
+    linkFile({
+      variables: {
+        input: {
+          modelPlanID: modelID,
+          name,
+          url,
+          documentType: documentType!,
+          restricted: restricted!,
+          otherTypeDescription,
+          optionalNotes
+        }
+      }
+    })
+      .then(response => {
+        if (!response.errors) {
+          // Checking if need to link new doc to existing solution
+          if (
+            solutionID &&
+            solutionDetailsLink &&
+            response?.data?.linkNewPlanDocument?.id
+          ) {
+            createSolutionLinks({
+              variables: {
+                solutionID,
+                documentIDs: [response?.data?.linkNewPlanDocument?.id]
+              }
+            })
+              .then(res => {
+                if (res && !res.errors) {
+                  messageOnNextPage('documentUploadSolutionSuccess', name);
+                  history.push(solutionDetailsLink);
+                } else if (response.errors) {
+                  setFileNameError(name);
+                  setMutationError(true);
+                }
+              })
+              .catch(() => {
+                setFileNameError(name);
+                setMutationError(true);
+                window.scrollTo(0, 0);
+              });
+          } else {
+            messageOnNextPage('documentUploadSuccess', name);
 
-    if (file && file.name && file.size >= 0 && file.type) {
-      uploadFile({
-        variables: {
-          input: {
-            modelPlanID: modelID,
-            fileData: file,
-            restricted: values.restricted,
-            documentType: values.documentType,
-            otherTypeDescription: values.otherTypeDescription,
-            optionalNotes: values.optionalNotes
+            if (solutionDetailsLink) {
+              history.push(solutionDetailsLink);
+            } else {
+              history.push(`/models/${modelID}/documents`);
+            }
           }
         }
       })
-        .then(response => {
-          if (!response.errors) {
-            // Checking if need to link new doc to existing solution
-            if (
-              solutionID &&
-              solutionDetailsLink &&
-              response?.data?.uploadNewPlanDocument?.id
-            ) {
-              createSolutionLinks({
-                variables: {
-                  solutionID,
-                  documentIDs: [response?.data?.uploadNewPlanDocument?.id]
-                }
-              })
-                .then(res => {
-                  if (res && !res.errors) {
-                    messageOnNextPage(
-                      'documentUploadSolutionSuccess',
-                      file.name
-                    );
-                    history.push(solutionDetailsLink);
-                  } else if (response.errors) {
-                    setMutationError(true);
-                  }
-                })
-                .catch(() => {
-                  setMutationError(true);
-                });
-            } else {
-              messageOnNextPage('documentUploadSuccess', file.name);
-
-              if (solutionDetailsLink) {
-                history.push(solutionDetailsLink);
-              } else {
-                history.push(`/models/${modelID}/documents`);
-              }
-            }
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-    }
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+        window.scrollTo(0, 0);
+      });
   };
 
   return (
     <div>
       {mutationError && (
         <Alert type="error" slim>
-          {t('documentLinkError')}
+          {t('documentLinkError', { fileName: fileNameError })}
         </Alert>
       )}
 
       <Formik
         initialValues={{
-          file: null,
-          url: null,
-          name: null,
+          url: '',
+          name: '',
           documentType: null,
           restricted: null,
           otherTypeDescription: '',
           optionalNotes: ''
         }}
         onSubmit={onSubmit}
-        validationSchema={DocumentUploadValidationSchema}
+        validationSchema={DocumentLinkValidationSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<FileUploadForm>) => {
+        {(formikProps: FormikProps<LinkingDocumentFormTypes>) => {
           const {
             errors,
             setErrors,
@@ -179,52 +185,50 @@ const DocumentUpload = ({
                   })}
                 </ErrorAlert>
               )}
-              {uploadFileStatus.error && (
-                <ErrorAlert heading="Error uploading document">
-                  <ErrorAlertMessage
-                    message={uploadFileStatus.error.message}
-                    errorKey="accessibilityRequest"
-                  />
-                </ErrorAlert>
-              )}
               <div>
-                <Form
-                  onSubmit={e => {
-                    handleSubmit(e);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <FieldGroup scrollElement="file" error={!!flatErrors.file}>
-                    <Label htmlFor="FileUpload-File">
-                      {t('documentUpload')}
+                <Form onSubmit={e => handleSubmit(e)}>
+                  <FieldGroup scrollElement="url" error={!!flatErrors.url}>
+                    <Label htmlFor="FileUpload-LinkDocument">
+                      {t('linkDocument.linkLabel')}
                       <RequiredAsterisk />
                     </Label>
 
                     <Label
-                      htmlFor="FileUpload-File"
+                      htmlFor="FileUpload-LinkDocument"
                       hint
                       className="text-normal text-base margin-y-1"
                     >
-                      {t('fileTypes')}
+                      {t('linkDocument.linkHelpText')}
                     </Label>
 
-                    <FieldErrorMsg>{flatErrors.file}</FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.url}</FieldErrorMsg>
 
                     <Field
-                      as={FileUpload}
-                      id="FileUpload-File"
-                      name="file"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setFieldValue('file', e.currentTarget?.files?.[0]);
-                      }}
-                      accept=".pdf,.doc,.docx,.xls,.xlsx"
-                      inputProps={{
-                        'aria-expanded': !!values.file,
-                        'aria-label':
-                          values.file &&
-                          `${t('documentUpload')} ${t('ariaLabelChangeFile')}`,
-                        'aria-controls': 'file-type'
-                      }}
+                      as={TextInput}
+                      id="FileUpload-LinkDocument"
+                      name="url"
+                    />
+                  </FieldGroup>
+                  <FieldGroup scrollElement="name" error={!!flatErrors.name}>
+                    <Label htmlFor="FileUpload-LinkFileName">
+                      {t('linkDocument.fileNameLabel')}
+                      <RequiredAsterisk />
+                    </Label>
+
+                    <Label
+                      htmlFor="FileUpload-LinkFileName"
+                      hint
+                      className="text-normal text-base margin-y-1"
+                    >
+                      {t('linkDocument.fileNameHelpText')}
+                    </Label>
+
+                    <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>
+
+                    <Field
+                      as={TextInput}
+                      id="FileUpload-LinkFileName"
+                      name="name"
                     />
                   </FieldGroup>
 
@@ -239,10 +243,9 @@ const DocumentUpload = ({
                         <RequiredAsterisk />
                       </legend>
                       <FieldErrorMsg>{flatErrors.documentType}</FieldErrorMsg>
-                      {(Object.keys(DocumentType) as Array<
-                        keyof typeof DocumentType
-                      >)
-                        .filter(documentType => documentType !== 'OTHER') // Filter 'OTHER' to be last in the radio button list
+
+                      {getKeys(DocumentType)
+                        .sort(sortOtherEnum)
                         .map(documentType => {
                           return (
                             <Field
@@ -262,15 +265,7 @@ const DocumentUpload = ({
                             />
                           );
                         })}
-                      <Field
-                        as={RadioField}
-                        checked={values.documentType === 'OTHER'}
-                        id="FileUpload-OTHER"
-                        name="documentType"
-                        label={translateDocumentType(DocumentType.OTHER)}
-                        value="OTHER"
-                      />
-                      {values.documentType === 'OTHER' && (
+                      {values.documentType === DocumentType.OTHER && (
                         <div className="margin-left-4 margin-bottom-1">
                           <FieldGroup
                             scrollElement="otherTypeDescription"
@@ -317,20 +312,16 @@ const DocumentUpload = ({
 
                     <FieldErrorMsg>{flatErrors.restricted}</FieldErrorMsg>
                     <Fieldset>
-                      {[true, false].map(key => (
-                        <Field
-                          as={Radio}
-                          key={key}
-                          id={`document-upload-restricted-${key}`}
-                          name="restricted"
-                          label={key ? h('yes') : h('no')}
-                          value={key ? 'YES' : 'NO'}
-                          checked={values.restricted === key}
-                          onChange={() => {
-                            setFieldValue('restricted', key);
-                          }}
-                        />
-                      ))}
+                      <BooleanRadio
+                        field="restricted"
+                        id="document-upload-restricted"
+                        setFieldValue={setFieldValue}
+                        value={values.restricted}
+                        options={{
+                          true: h('yes'),
+                          false: h('no')
+                        }}
+                      />
                     </Fieldset>
 
                     {values.restricted !== null && (
@@ -379,13 +370,14 @@ const DocumentUpload = ({
                       onClick={() => setErrors({})}
                       disabled={
                         isSubmitting ||
-                        !values.file ||
+                        !values.name ||
+                        !values.url ||
                         !values.documentType ||
                         values.restricted === null ||
                         (values.documentType === DocumentType.OTHER &&
                           !values.otherTypeDescription.trim())
                       }
-                      data-testid="upload-document"
+                      data-testid="link-document"
                     >
                       {t('submitButton')}
                     </Button>
@@ -400,4 +392,4 @@ const DocumentUpload = ({
   );
 };
 
-export default DocumentUpload;
+export default LinkDocument;

@@ -6,9 +6,15 @@ interface ExternalLinkProps {
   children: React.ReactNode;
   className?: string;
   href: string;
+  variant?: 'external' | 'unstyled' | 'nav';
 }
 
-const ExternalLink = ({ children, className, href }: ExternalLinkProps) => {
+const ExternalLink = ({
+  children,
+  className,
+  href,
+  variant = 'external'
+}: ExternalLinkProps) => {
   const { t } = useTranslation('general');
 
   return (
@@ -18,7 +24,7 @@ const ExternalLink = ({ children, className, href }: ExternalLinkProps) => {
       target="_blank"
       rel="noopener noreferrer"
       className={className}
-      variant="external"
+      variant={variant}
     >
       {children}
     </Link>
