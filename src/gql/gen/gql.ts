@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {\n    linkNewPlanDocument(input: $input) {\n      id\n    }\n  }\n": types.LinkNewPlanDocumentDocument,
     "\n  mutation CreatReportAProblem($input: ReportAProblemInput!) {\n    reportAProblem(input: $input)\n  }\n": types.CreatReportAProblemDocument,
     "\n  mutation CreatSendFeedback($input: SendFeedbackEmailInput!) {\n    sendFeedbackEmail(input: $input)\n  }\n": types.CreatSendFeedbackDocument,
     "\n  query GetFunding($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      payments {\n        id\n        fundingSource\n        fundingSourceTrustFundType\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFundType\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n      }\n      operationalNeeds {\n        modifiedDts\n      }\n    }\n  }\n": types.GetFundingDocument,
@@ -36,6 +37,10 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {\n    linkNewPlanDocument(input: $input) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {\n    linkNewPlanDocument(input: $input) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

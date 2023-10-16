@@ -6,9 +6,9 @@ describe('Model Plan Documents', () => {
   it('uploads and removes a document', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    cy.contains('a', 'Upload a document').click();
+    cy.contains('a', 'Add a document').click();
 
-    cy.contains('h1', 'Upload a document');
+    cy.contains('h1', 'Add a document');
 
     // select document
     cy.get('[data-testid="file-upload-input"]').attachFile('test.pdf');
@@ -54,6 +54,6 @@ describe('Model Plan Documents', () => {
 
     cy.get('[data-testid="document-items"]').contains('strong', '1');
 
-    cy.get('[data-testid="document-items"]').contains('document uploaded');
+    cy.get('[data-testid="document-items"]').contains('document');
   });
 });

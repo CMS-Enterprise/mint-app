@@ -9,11 +9,12 @@ const modelPlanTaskList = {
   edit: 'Edit Model Plan',
   documentSummaryBox: {
     heading: 'Documents',
-    copy: 'There are no documents uploaded',
-    existingDocuments: 'document<1>{{plural}}</1> uploaded',
-    cta: 'Upload a document',
+    copy: 'There are no documents added.',
+    document: 'document',
+    document_plural: 'documents',
+    cta: 'Add a document',
     viewAll: 'View all model documents',
-    uploadAnother: 'Upload another document'
+    addAnother: 'Add a document'
   },
   crTDLsSummaryBox: {
     heading: 'CRs and TDLs',

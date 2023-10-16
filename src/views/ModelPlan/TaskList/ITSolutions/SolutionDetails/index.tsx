@@ -37,7 +37,7 @@ import { DocumentStatusType } from 'views/ModelPlan/ReadOnly/Documents';
 import NotFound from 'views/NotFound';
 
 import SolutionDetailCard from '../_components/SolutionDetailCard';
-import SubtasksTable, { SubtaskLinks } from '../_components/SubtasksTable';
+import SubtasksTable from '../_components/SubtasksTable';
 
 const SolutionDetails = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -48,6 +48,7 @@ const SolutionDetails = () => {
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+  const { t: documentsT } = useTranslation('documents');
 
   const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 
@@ -82,7 +83,7 @@ const SolutionDetails = () => {
     DeleteDocumentSolutionLinks
   );
 
-  const handleDocumentUnlink = (linkToRemove: string) => {
+  const handleDocumentUnlink = (linkToRemove: string, documentName: string) => {
     deleteSolutionLink({
       variables: {
         solutionID: operationalSolutionID,
@@ -91,16 +92,24 @@ const SolutionDetails = () => {
     })
       .then(response => {
         if (response && !response.errors) {
-          setDocumentMessage(t('documentUnLinkSuccess'));
+          setDocumentMessage(
+            documentsT('documentDisconnect.success', {
+              documentName
+            })
+          );
           setDocumentStatus('success');
           refetch();
         } else if (response.errors) {
-          setDocumentMessage(t('documentUnLinkError'));
+          setDocumentMessage(
+            documentsT('documentDisconnect.error', { documentName })
+          );
           setDocumentStatus('error');
         }
       })
       .catch(() => {
-        setDocumentMessage(t('documentUnLinkError'));
+        setDocumentMessage(
+          documentsT('documentDisconnect.error', { documentName })
+        );
         setDocumentStatus('error');
       });
   };
@@ -191,22 +200,11 @@ const SolutionDetails = () => {
 
             <SubtasksTable subtasks={subtasks} className="margin-top-6" />
 
-            <SubtaskLinks className="margin-top-3" subtasks={subtasks} />
-
             {/* Documents table and link */}
             <div className="margin-top-6">
               <h3 className="margin-bottom-0">{t('documents')}</h3>
 
-              <Table
-                data={solution.documents}
-                refetch={refetch}
-                setDocumentMessage={setDocumentMessage}
-                setDocumentStatus={setDocumentStatus}
-                hasEditAccess
-                handleDocumentUnlink={handleDocumentUnlink}
-              />
-
-              <div className="display-flex margin-y-4">
+              <div className="display-flex margin-top-2 margin-bottom-3">
                 {/* Link existing documents */}
                 <Button
                   type="button"
@@ -239,6 +237,15 @@ const SolutionDetails = () => {
                   {t(`links.uploadDocuments`)}
                 </Button>
               </div>
+
+              <Table
+                data={solution.documents}
+                refetch={refetch}
+                setDocumentMessage={setDocumentMessage}
+                setDocumentStatus={setDocumentStatus}
+                hasEditAccess
+                handleDocumentUnlink={handleDocumentUnlink}
+              />
             </div>
           </>
         )}
