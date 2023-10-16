@@ -23,6 +23,10 @@ const HelpCardGroup = ({
 }: HelpCardGroupType) => {
   const [pageOffset, setPageOffset] = useState(0);
 
+  helpAndKnowledgeArticles.sort((a, b) =>
+    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+  );
+
   const articles = filter
     ? helpAndKnowledgeArticles.filter(article => article.type === filter)
     : helpAndKnowledgeArticles;

@@ -65,7 +65,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  Overview for adding a model
+                  High-level project plans
                 </h3>
               </header>
               <a
@@ -85,7 +85,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the IT solutions the model will use and track its status through implementation
+                  Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
                 </p>
               </div>
               <div
@@ -93,58 +93,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read Overview for adding a model article"
-                  class="usa-button usa-button--outline"
-                  type="button"
-                >
-                  Read
-                </button>
-              </div>
-            </div>
-          </li>
-          <li
-            class="usa-card desktop:grid-col-4 article article-card--isLink"
-            data-testid="article-card"
-          >
-            <div
-              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-            >
-              <header
-                class="usa-card__header padding-0"
-                data-testid="CardHeader"
-              >
-                <h3
-                  class="line-height-body-4 margin-bottom-1"
-                >
-                  Sample Model Plan
-                </h3>
-              </header>
-              <a
-                class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/getting-started"
-              >
-                <span
-                  aria-label="Articles under the Getting started category"
-                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                  data-testid="tag"
-                >
-                  Getting started
-                </span>
-              </a>
-              <div
-                class="usa-card__body padding-x-0 article__body"
-                data-testid="CardBody"
-              >
-                <p>
-                  This is example data and may not reflect exact model decisions. Use this as a reference to better understand the type of information needed for a Model Plan.
-                </p>
-              </div>
-              <div
-                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                data-testid="CardFooter"
-              >
-                <button
-                  aria-label="Read Sample Model Plan article"
+                  aria-label="Read High-level project plans article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -269,7 +218,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  High-level project plans
+                  Overview for adding a model
                 </h3>
               </header>
               <a
@@ -289,7 +238,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
+                  Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the IT solutions the model will use and track its status through implementation
                 </p>
               </div>
               <div
@@ -297,7 +246,58 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read High-level project plans article"
+                  aria-label="Read Overview for adding a model article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Sample Model Plan
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body"
+                data-testid="CardBody"
+              >
+                <p>
+                  This is example data and may not reflect exact model decisions. Use this as a reference to better understand the type of information needed for a Model Plan.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Sample Model Plan article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
