@@ -506,7 +506,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
     },
     timeline: {
       description:
-        'Generally, it takes 1-2 months for models to start using CBOSC. The steps below are not a complete list of everything involved but highlight some main activities.',
+        'Generally, it takes 30 days for models to start using CBOSC. The steps below are not a complete list of everything involved but highlight some main activities.',
       items: [
         {
           header: 'Begin onboarding activities',

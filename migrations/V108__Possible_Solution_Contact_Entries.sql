@@ -25,7 +25,7 @@ WITH pocs(SolutionName, SolutionKey, Name, Email, Role, IsTeam) AS (
 ('Chronic Conditions Warehouse', 'CCW', 'Velda McGhee', 'velda.mcghee@cms.hhs.gov', 'CMMI Government Task Lead', FALSE),
 ('CMS Box', 'CMS_BOX', 'MINT Team', 'MINTTeam@cms.hhs.gov', NULL, TRUE),
 ('CMS Qualtrics', 'CMS_QUALTRICS', 'MINT Team', 'MINTTeam@cms.hhs.gov', NULL, TRUE),
-('Consolidated Business Operations Support Center', 'CBOSC', 'Richard Speights', 'richard.speights@cms.hhs.gov', 'Contracting Officer Representative', FALSE),
+('Consolidated Business Operations Support Center', 'CBOSC', 'Keir Shine', 'keir.shine@cms.hhs.gov', 'Co-Lead', FALSE),
 ('Consolidated Business Operations Support Center', 'CBOSC', 'Don Rocker', 'don.rocker1@cms.hhs.gov', 'Operations and Management Lead ', FALSE),
 ('CPI Vetting', 'CPI_VETTING', 'MINT Team', 'MINTTeam@cms.hhs.gov', NULL, TRUE),
 ('Electronic File Transfer', 'EFT', 'MINT Team', 'MINTTeam@cms.hhs.gov', NULL, TRUE),
