@@ -23,7 +23,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
 		UserName:    "CLAB",
-		TeamRole:    models.TeamRoleLeadership,
+		TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 	}
 	expectedEmail := "CLAB.doe@local.fake" // This comes from the stub fetch user info function
 

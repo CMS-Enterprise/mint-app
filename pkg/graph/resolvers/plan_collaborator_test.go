@@ -27,7 +27,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
 		UserName:    "CLAB",
-		TeamRole:    models.TeamRoleLeadership,
+		TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
@@ -84,7 +84,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
 	suite.EqualValues(account.ID, collaborator.UserID)
-	suite.EqualValues(models.TeamRoleLeadership, collaborator.TeamRole)
+	suite.EqualValues([]models.TeamRole{models.TeamRoleLeadership}, collaborator.TeamRoles)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, collaborator.CreatedBy)
 	suite.Nil(collaborator.ModifiedBy)
 	mockController.Finish()
@@ -96,7 +96,13 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	suite.Nil(collaborator.ModifiedBy)
 	suite.Nil(collaborator.ModifiedDts)
 
-	updatedCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, suite.testConfigs.Principal, suite.testConfigs.Store)
+	updatedCollaborator, err := UpdatePlanCollaborator(
+		suite.testConfigs.Logger,
+		collaborator.ID,
+		[]models.TeamRole{models.TeamRoleEvaluation},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 
 	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername("CLAB")
 	suite.NoError(uAccountErr)
@@ -107,7 +113,7 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	suite.NotNil(updatedCollaborator.ModifiedDts)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedCollaborator.ModifiedBy)
 	suite.EqualValues(account.ID, collaborator.UserID)
-	suite.EqualValues(models.TeamRoleEvaluation, updatedCollaborator.TeamRole)
+	suite.EqualValues([]models.TeamRole{models.TeamRoleEvaluation}, updatedCollaborator.TeamRoles)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
@@ -117,7 +123,13 @@ func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
 	suite.NoError(err)
 
 	collaborator := collaborators[0]
-	updatedPlanCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, suite.testConfigs.Principal, suite.testConfigs.Store)
+	updatedPlanCollaborator, err := UpdatePlanCollaborator(
+		suite.testConfigs.Logger,
+		collaborator.ID,
+		[]models.TeamRole{models.TeamRoleEvaluation},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.Error(err)
 	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
 	suite.Nil(updatedPlanCollaborator)

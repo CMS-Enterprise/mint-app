@@ -93,7 +93,7 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, userName 
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
 		UserName:    userName,
-		TeamRole:    teamRole,
+		TeamRoles:   []models.TeamRole{teamRole},
 	}
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
