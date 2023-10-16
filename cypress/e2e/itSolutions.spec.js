@@ -294,7 +294,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .then(verifyStatus)
       .wait(250);
 
-    cy.contains('button', 'Upload a document')
+    cy.contains('button', 'Add a new document')
       .should('not.be.disabled')
       .click();
 
