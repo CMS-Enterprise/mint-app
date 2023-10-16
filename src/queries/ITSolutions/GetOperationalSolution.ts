@@ -29,6 +29,8 @@ export default gql`
         optionalNotes
         otherType
         numLinkedSolutions
+        isLink
+        url
       }
       operationalSolutionSubtasks {
         id

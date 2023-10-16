@@ -143,6 +143,10 @@ const SubtasksTable = ({ subtasks, className }: SubtasksProps) => {
   return (
     <div className={classNames(className)}>
       <h3 className="margin-top-0">{t('subtasks.header')}</h3>
+      <SubtaskLinks
+        className="margin-top-2 margin-bottom-3"
+        subtasks={subtasks}
+      />
 
       <GridContainer className="padding-0">
         <Grid row className="border">

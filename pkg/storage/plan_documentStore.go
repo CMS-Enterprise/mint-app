@@ -218,8 +218,12 @@ func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents [
 
 func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *models.PlanDocument) error {
 
+	// if this is a link to another website, we are not currently able to scan the link.
+	// in this case, we'll just assume it's clean, otherwise the user won't be able to do anything with the link, making it useless.
 	if document.IsLink {
-		return nil // Note, if this is a link to another website, we are not scanning the link.
+		document.VirusScanned = true
+		document.VirusClean = true
+		return nil
 	}
 	status, err := fetchDocumentTag(s3Client, document, "av-status")
 	if err != nil {

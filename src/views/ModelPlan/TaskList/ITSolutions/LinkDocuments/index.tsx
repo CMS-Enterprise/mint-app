@@ -168,7 +168,7 @@ const LinkDocuments = () => {
       text: t('solutionDetails'),
       url: solutionDetailsURL
     },
-    { text: t('linkDocumentsHeader') }
+    { text: t('connectDocumentsHeader') }
   ];
 
   return (
@@ -185,7 +185,7 @@ const LinkDocuments = () => {
         <Grid desktop={{ col: 9 }}>
           <Grid tablet={{ col: 11 }}>
             <PageHeading className="margin-top-4 margin-bottom-1">
-              {t('linkDocumentsHeader')}
+              {t('connectDocumentsHeader')}
             </PageHeading>
 
             <p
@@ -196,7 +196,7 @@ const LinkDocuments = () => {
             </p>
 
             <p className="line-height-body-4 margin-bottom-4 margin-top-1">
-              {t('linkDocumentsInfo')}
+              {t('connectDocumentsInfo')}
             </p>
 
             <Grid tablet={{ col: 8 }}>
@@ -220,9 +220,7 @@ const LinkDocuments = () => {
         )}
       </Grid>
 
-      <h3 className="margin-top-8 margin-bottom-neg-1">
-        {t('modelDocuments')}
-      </h3>
+      <h3 className="margin-top-8 margin-bottom-neg-1">{t('heading')}</h3>
 
       <PlanDocumentsTable
         modelID={modelID}
@@ -240,12 +238,12 @@ const LinkDocuments = () => {
           disabled={isEqual(linkedDocs?.sort(), linkedDocsInit?.sort())}
           className="display-inline-flex flex-align-center margin-y-3"
         >
-          {t('linkDocumentsButton')}
+          {t('connectDocumentsButton')}
         </Button>
 
         <UswdsReactLink className="display-flex" to={solutionDetailsURL}>
           <IconArrowBack className="margin-right-1" aria-hidden />
-          {t('dontLink')}
+          {t('dontConnect')}
         </UswdsReactLink>
       </Grid>
 

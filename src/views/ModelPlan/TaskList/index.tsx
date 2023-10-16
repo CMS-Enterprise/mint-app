@@ -469,9 +469,7 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             data-testid="document-items"
           >
             <strong>{documents.length} </strong>
-            <Trans i18nKey="modelPlanTaskList:documentSummaryBox.existingDocuments">
-              indexZero {documents.length > 1 ? 's' : ''}
-            </Trans>
+            {t('documentSummaryBox.document', { count: documents.length })}
           </p>
 
           <UswdsReactLink
@@ -486,15 +484,13 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             variant="unstyled"
             to={`/models/${modelID}/documents/add-document`}
           >
-            {t('documentSummaryBox.uploadAnother')}
+            {t('documentSummaryBox.addAnother')}
           </UswdsReactLink>
         </>
       ) : (
         <>
           <p className="margin-0 margin-bottom-1">
-            <Trans i18nKey="modelPlanTaskList:documentSummaryBox.copy">
-              indexZero
-            </Trans>
+            {t('documentSummaryBox.copy')}
           </p>
 
           <UswdsReactLink
