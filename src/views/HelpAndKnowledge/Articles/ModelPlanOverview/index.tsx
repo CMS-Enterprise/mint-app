@@ -106,7 +106,7 @@ export const ModelPlanOverview = () => {
           </div>
         </div>
       </MainContent>
-      <RelatedArticles currentArticle="Model Plan Overview" />
+      <RelatedArticles currentArticle="Model Plan Overview" viewAllLink />
     </>
   );
 };
