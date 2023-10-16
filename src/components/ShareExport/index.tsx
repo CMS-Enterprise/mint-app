@@ -65,7 +65,7 @@ const ShareExportModal = ({
   const [exportCSV, setExportCSV] = useState<boolean>(false);
   const [exportPDF, setExportPDF] = useState<boolean>(false);
 
-  const [receiverEmails, setReceiverEmails] = useState<string>('');
+  const [receiverEmails, setReceiverEmails] = useState<string[]>([]);
   const [optionalMessage, setOptionalMessage] = useState<string>('');
 
   // State for modal navigation elements
@@ -202,16 +202,11 @@ const ShareExportModal = ({
               ? (filteredGroup.toUpperCase() as ModelViewFilter)
               : undefined;
 
-          // Converts comma-separated string into an array of trimmed email strings
-          const receiverEmailsArray: string[] = receiverEmails
-            .split(',')
-            .map(email => email.trim());
-
           shareModelPlan({
             variables: {
               modelPlanID: modelID,
               viewFilter,
-              receiverEmails: receiverEmailsArray,
+              receiverEmails,
               optionalMessage
             }
           })
@@ -280,7 +275,7 @@ const ShareExportModal = ({
               selectedLabel={generalReadOnlyT('modal.shareLabel')}
               onChange={(users: any) => {
                 // TODO: remove stringification once BE is ready to accept an array of users
-                setReceiverEmails(users.toString());
+                setReceiverEmails(users);
                 // setReceiverEmails(users);
               }}
             />

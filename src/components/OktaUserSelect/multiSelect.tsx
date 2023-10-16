@@ -105,7 +105,7 @@ const OktaMultiSelect = ({
         }
         options={contacts.map(
           (contact: OktaUserType): MultiSelectOptionProps => ({
-            label: `${contact.displayName}, ${contact.username}`,
+            label: `${contact.displayName}, ${contact.username} (${contact.email})`,
             value: contact.username,
             email: contact.email
           })
@@ -132,7 +132,7 @@ const OktaMultiSelect = ({
           // @ts-ignore
           setSelected(selectedOptions);
           // @ts-ignore
-          onChange(selectedOptions.map(option => option.email));
+          onChange(selectedOptions.map(option => option.value));
         }}
         value={selected}
         controlShouldRenderValue={false}
