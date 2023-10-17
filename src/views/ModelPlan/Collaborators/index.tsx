@@ -11,6 +11,7 @@ import {
   Grid,
   GridContainer
 } from '@trussworks/react-uswds';
+import { TeamRole } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -37,8 +38,8 @@ import CollaboratorsTable from './table';
 
 // Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
 const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
-  const modelLeads = collaborators.filter(
-    collaborator => collaborator.teamRole === 'MODEL_LEAD'
+  const modelLeads = collaborators.filter(collaborator =>
+    collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
   );
   return !(modelLeads.length > 1);
 };
