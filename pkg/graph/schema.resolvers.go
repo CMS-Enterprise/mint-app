@@ -6,8 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
-
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
@@ -556,7 +554,7 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 
 // TeamRoles is the resolver for the teamRoles field.
 func (r *planCollaboratorResolver) TeamRoles(ctx context.Context, obj *models.PlanCollaborator) ([]models.TeamRole, error) {
-	panic(fmt.Errorf("not implemented: TeamRoles - teamRoles"))
+	return models.ConvertEnums[models.TeamRole](obj.TeamRoles), nil
 }
 
 // Replies is the resolver for the replies field.
