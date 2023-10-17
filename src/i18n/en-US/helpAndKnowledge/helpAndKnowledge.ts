@@ -1806,6 +1806,7 @@ const helpAndKnowledge = {
     'Get help with the creation of your Model Plan and the implementation of IT solutions.',
   read: 'Read',
   gettingStarted: 'Getting started',
+  allHelpArticles: 'All help articles',
   itImplementation: 'IT implementation',
   instructions:
     'Use the articles below to help get started with your Model Plan and IT implementation.',
