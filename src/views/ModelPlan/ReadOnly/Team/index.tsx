@@ -24,7 +24,7 @@ const TeamGroupings = ({
   role,
   collaborators
 }: {
-  role: string;
+  role: TeamRole;
   collaborators: CollaboratorsType[];
 }) => {
   const { t } = useTranslation('generalReadOnly');
@@ -38,7 +38,7 @@ const TeamGroupings = ({
           : collaboratorsT(`teamRole.options.${role}`)}
       </h2>
       {collaborators
-        .filter(c => c.teamRole === role)
+        .filter(c => c.teamRoles.includes(role))
         .map(collaborator => {
           return (
             <Card
@@ -88,7 +88,7 @@ const FilteredViewGroupings = ({
           <em className="text-base">{t('contactInfo.emptyState')}</em>
         )}
         {collaborators
-          .filter(c => c.teamRole === role)
+          .filter(c => c.teamRoles.includes(role))
           .map((collaborator, index) => {
             return (
               // eslint-disable-next-line react/no-array-index-key
@@ -154,27 +154,30 @@ const ReadOnlyTeamInfo = ({
         <>
           <FilteredViewGroupings
             role={TeamRole.MODEL_LEAD}
-            collaborators={collaborators.filter(
-              c => c.teamRole === TeamRole.MODEL_LEAD
+            collaborators={collaborators.filter(c =>
+              c.teamRoles.includes(TeamRole.MODEL_LEAD)
             )}
           />
           {filteredView === 'ipc' && (
             <FilteredViewGroupings
               role={TeamRole.PAYMENT}
-              collaborators={collaborators.filter(
-                c => c.teamRole === TeamRole.PAYMENT
+              collaborators={collaborators.filter(c =>
+                c.teamRoles.includes(TeamRole.PAYMENT)
               )}
             />
           )}
         </>
       ) : (
         sortModelLeadFirst.map((role, index) => {
-          if (collaborators.filter(c => c.teamRole === role).length !== 0) {
+          if (
+            collaborators.filter(c => c.teamRoles.includes(role as TeamRole))
+              .length !== 0
+          ) {
             return (
               <TeamGroupings
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
-                role={role}
+                role={role as TeamRole}
                 collaborators={collaborators}
               />
             );
