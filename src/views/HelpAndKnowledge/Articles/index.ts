@@ -4,12 +4,17 @@ type ArticleProps = {
   translation: string;
 };
 
-export type ArticleTypeProps = {
-  type: 'getting-started' | 'it-implementation';
-};
+export type ArticleTypeProps = 'getting-started' | 'it-implementation';
+
+export const articleCategories: ArticleTypeProps[] = [
+  'getting-started',
+  'it-implementation'
+];
 
 // Help and Knowledge Articles
-const helpAndKnowledgeArticles: (ArticleProps & ArticleTypeProps)[] = [
+const helpAndKnowledgeArticles: (ArticleProps & {
+  type: ArticleTypeProps;
+})[] = [
   {
     name: 'Model Plan Overview',
     route: '/model-plan-overview', // route for hitting rendered article component

@@ -20,6 +20,7 @@ type ArticleCardProps = {
   translation: string;
   isLink?: boolean;
   tag?: boolean;
+  type: ArticleTypeProps;
 };
 
 const ArticleCard = ({
@@ -29,7 +30,7 @@ const ArticleCard = ({
   translation,
   isLink = false,
   tag = true
-}: ArticleCardProps & ArticleTypeProps) => {
+}: ArticleCardProps) => {
   const { t } = useTranslation(translation);
   const history = useHistory();
 

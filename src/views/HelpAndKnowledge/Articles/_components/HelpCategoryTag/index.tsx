@@ -5,7 +5,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
 import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
 
-const articleTypes: ArticleTypeProps['type'][] = [
+const articleTypes: ArticleTypeProps[] = [
   'getting-started',
   'it-implementation'
 ];
@@ -14,7 +14,7 @@ export default function HelpCategoryTag({
   type,
   className
 }: {
-  type: ArticleTypeProps['type'];
+  type: ArticleTypeProps;
   className?: string;
 }) {
   const { t } = useTranslation('helpAndKnowledge');

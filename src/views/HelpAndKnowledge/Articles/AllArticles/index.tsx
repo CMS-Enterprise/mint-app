@@ -6,8 +6,10 @@ import { Grid, GridContainer } from '@trussworks/react-uswds';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import NotFound from 'views/NotFound';
 
 import HelpCardGroup from '../_components/HelpCardGroup';
+import { articleCategories, ArticleTypeProps } from '..';
 
 const AllArticles = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -15,6 +17,10 @@ const AllArticles = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const category = params.get('category');
+
+  if (category && !articleCategories.includes(category as ArticleTypeProps)) {
+    return <NotFound />;
+  }
 
   return (
     <MainContent>
