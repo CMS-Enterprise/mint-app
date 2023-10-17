@@ -10,7 +10,7 @@ const articleTypes: ArticleTypeProps['type'][] = [
   'it-implementation'
 ];
 
-export default function HelpAndKnowledgeCategoryTag({
+export default function HelpCategoryTag({
   type,
   className
 }: {

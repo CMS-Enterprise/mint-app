@@ -15,7 +15,7 @@ import ExternalLink from 'components/shared/ExternalLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import HelpAndKnowledgeCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
@@ -117,7 +117,7 @@ const SixPagerMeeting = () => {
             <PageHeading className="margin-bottom-1">
               {sixPageMeetingT('title')}
             </PageHeading>
-            <HelpAndKnowledgeCategoryTag
+            <HelpCategoryTag
               type="getting-started"
               className="margin-bottom-1"
             />

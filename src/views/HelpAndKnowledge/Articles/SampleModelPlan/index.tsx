@@ -6,7 +6,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import HelpAndKnowledgeCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import ReadOnly from 'views/ModelPlan/ReadOnly';
 
@@ -20,7 +20,7 @@ export const SampleModelPlan = () => {
           <Grid>
             <HelpBreadcrumb text={t('title')} />
             <PageHeading className="margin-bottom-1">{t('title')}</PageHeading>
-            <HelpAndKnowledgeCategoryTag
+            <HelpCategoryTag
               type="getting-started"
               className="margin-bottom-1"
             />

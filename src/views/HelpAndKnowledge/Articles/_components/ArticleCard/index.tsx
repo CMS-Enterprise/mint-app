@@ -10,7 +10,7 @@ import {
 import classnames from 'classnames';
 
 import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
-import HelpAndKnowledgeCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 
 import './index.scss';
 
@@ -54,7 +54,7 @@ const ArticleCard = ({
       <CardHeader className="padding-0">
         <h3 className="line-height-body-4 margin-bottom-1">{t('title')}</h3>
       </CardHeader>
-      {tag && <HelpAndKnowledgeCategoryTag type={type} />}
+      {tag && <HelpCategoryTag type={type} />}
 
       <CardBody className="padding-x-0 article__body">
         <p>{t('description')}</p>

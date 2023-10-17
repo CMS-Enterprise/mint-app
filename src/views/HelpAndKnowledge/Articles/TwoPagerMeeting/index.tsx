@@ -11,7 +11,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import ExternalLink from 'components/shared/ExternalLink';
 import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import HelpAndKnowledgeCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 const covertToLowercaseAndDashes = (string: string) =>
@@ -72,7 +72,7 @@ const TwoPagerMeeting = () => {
             <PageHeading className="margin-bottom-1">
               {twoPageMeetingT('title')}
             </PageHeading>
-            <HelpAndKnowledgeCategoryTag
+            <HelpCategoryTag
               type="getting-started"
               className="margin-bottom-1"
             />

@@ -2,13 +2,13 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
-import HelpAndKnowledgeCategoryTag from './index';
+import HelpCategoryTag from './index';
 
-describe('HelpAndKnowledgeCategoryTag', () => {
+describe('HelpCategoryTag', () => {
   it('renders without errors', async () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter>
-        <HelpAndKnowledgeCategoryTag type="getting-started" />
+        <HelpCategoryTag type="getting-started" />
       </MemoryRouter>
     );
 
@@ -17,9 +17,7 @@ describe('HelpAndKnowledgeCategoryTag', () => {
       expect(getByTestId('tag')).toBeInTheDocument();
       expect(getByText('Getting started').closest('a')).toHaveAttribute(
         'href',
-        expect.stringMatching(
-          '/help-and-knowledge/articles?category=getting-started'
-        )
+        '/help-and-knowledge/articles?category=getting-started'
       );
     });
   });
