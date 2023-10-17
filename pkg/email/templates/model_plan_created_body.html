@@ -1,14 +1,9 @@
-{{template "shared_header.html"}}
+{{template "shared_header.html" "New Model Plan"}}
 
-<body>
-<h1 style="padding-top: 3pt;">MINT</h1>
-<p class="subtitle">The Model Innovation Tool</p>
+<h3>{{.ModelName}}</h3>
+<p>Created by {{.UserName}}</p>
 <br/>
-<h2 style="padding-top: 18pt">New Model Plan</h2>
-<br />
-<h3 style="padding-top: 14pt;">{{.ModelName}}</h3>
-<p style="padding-top: 12pt;">Created by {{.UserName}}</p>
-<br/>
-<p style="padding-top: 13pt;"><a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list" class="link">View this Model
-  Plan in MINT</a></p>
-</body>
+<p>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list">View this Model Plan in MINT</a>
+</p>
+<br>
