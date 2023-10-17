@@ -42,7 +42,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
             </header>
             <a
               class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/getting-started"
+              href="/help-and-knowledge/articles?category=getting-started"
             >
               <span
                 aria-label="Articles under the Getting started category"
@@ -93,7 +93,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
             </header>
             <a
               class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/getting-started"
+              href="/help-and-knowledge/articles?category=getting-started"
             >
               <span
                 aria-label="Articles under the Getting started category"
@@ -144,7 +144,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
             </header>
             <a
               class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/getting-started"
+              href="/help-and-knowledge/articles?category=getting-started"
             >
               <span
                 aria-label="Articles under the Getting started category"

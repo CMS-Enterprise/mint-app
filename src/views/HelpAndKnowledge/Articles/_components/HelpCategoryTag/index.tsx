@@ -5,31 +5,23 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
 import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
 
-export type ArticleRouteProps = {
-  type: string;
-  route: string;
-};
-
-const articleTypes: ArticleRouteProps[] = [
-  {
-    type: 'gettingStarted',
-    route: 'getting-started'
-  },
-  {
-    type: 'itImplementation',
-    route: 'it-implementation'
-  }
+const articleTypes: ArticleTypeProps[] = [
+  'getting-started',
+  'it-implementation'
 ];
 
-export default function HelpAndKnowledgeCategoryTag({
+export default function HelpCategoryTag({
   type,
   className
-}: { className?: string } & ArticleTypeProps) {
+}: {
+  type: ArticleTypeProps;
+  className?: string;
+}) {
   const { t } = useTranslation('helpAndKnowledge');
-  const articleType = articleTypes.filter(article => article.type === type)[0];
+  const articleType = articleTypes.filter(article => article === type)[0];
   return (
     <UswdsReactLink
-      to={`/help-and-knowledge/${articleType.route}`}
+      to={`/help-and-knowledge/articles?category=${articleType}`}
       className={`width-fit-content display-block ${className || ''}`}
     >
       <Tag
