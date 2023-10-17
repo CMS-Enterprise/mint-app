@@ -375,8 +375,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               isDescriptionExpandable={isDescriptionExpandable}
               characteristics={generalCharacteristics}
               performancePeriodStarts={basics?.performancePeriodStarts}
-              modelLeads={collaborators?.filter(
-                c => c.teamRole === TeamRole.MODEL_LEAD
+              modelLeads={collaborators?.filter(c =>
+                c.teamRoles.includes(TeamRole.MODEL_LEAD)
               )}
               crTdls={crTdls}
             />
