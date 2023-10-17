@@ -87,7 +87,7 @@ export const UtilizingSolutions = () => {
                 <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4">
                   <ProcessListHeading
                     type="h5"
-                    className="font-body-sm line-height-sans-4 text-normal"
+                    className="font-body-sm text-normal"
                   >
                     <Trans
                       i18nKey={`utilizingSolutions:timingSteps.items.${index}.heading`}
@@ -96,7 +96,7 @@ export const UtilizingSolutions = () => {
                       }}
                     />
                   </ProcessListHeading>
-                  <p>{item.description}</p>
+                  <p className="margin-top-105">{item.description}</p>
                 </ProcessListItem>
               ))}
             </ProcessList>
@@ -134,12 +134,9 @@ export const UtilizingSolutions = () => {
             <ProcessList>
               {activityConfig.map((item, index) => (
                 <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4">
-                  <ProcessListHeading
-                    type="h5"
-                    className="font-body-sm line-height-sans-4"
-                  >
+                  <ProcessListHeading type="h5" className="font-body-sm">
                     {item.heading}
-                    <p className="text-normal margin-bottom-0 margin-top-1">
+                    <p className="text-normal margin-bottom-0 margin-top-105">
                       <Trans
                         i18nKey={`utilizingSolutions:activitySteps.items.${index}.description`}
                         components={{
