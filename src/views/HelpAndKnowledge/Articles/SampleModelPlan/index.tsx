@@ -32,7 +32,7 @@ export const SampleModelPlan = () => {
       </MainContent>
       <ReadOnly isHelpArticle />
       <SectionWrapper className="margin-top-6">
-        <RelatedArticles currentArticle={t('title')} />
+        <RelatedArticles currentArticle={t('title')} viewAllLink />
       </SectionWrapper>
     </>
   );

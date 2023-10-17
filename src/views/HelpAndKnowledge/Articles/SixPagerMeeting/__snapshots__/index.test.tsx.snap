@@ -1059,7 +1059,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
           </li>
         </ul>
         <a
-          href="/help-and-knowledge"
+          href="/help-and-knowledge/all-articles"
         >
           View all help articles
         </a>
