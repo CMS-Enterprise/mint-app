@@ -32,7 +32,7 @@ export default function HelpBreadcrumb({
     if (newTab || newTabOnly) {
       window.close();
     } else {
-      history.push(home ? '/' : '/help-and-knowledge');
+      history.replace(home ? '/' : '/help-and-knowledge');
     }
   };
   return (

@@ -20,10 +20,12 @@ const ArticlePageInfo = ({ className }: ArticlePageInfoProps) => {
         })}
       </p>
 
-      {/* TODO: add link for all articles */}
-      {/* <UswdsReactLink to="/help-and-knowledge" className="margin-right-4">
+      <UswdsReactLink
+        to="/help-and-knowledge/all-articles"
+        className="margin-right-4"
+      >
         {t('browseAll')}
-      </UswdsReactLink> */}
+      </UswdsReactLink>
 
       <div className="border-right margin-bottom-2 text-base-lighter margin-right-4" />
 
