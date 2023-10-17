@@ -35,9 +35,7 @@ const RelatedArticles = ({
           ))}
         </CardGroup>
         {viewAllLink && (
-          <Link to="/help-and-knowledge/all-articles">
-            {t('viewAllRelated')}
-          </Link>
+          <Link to="/help-and-knowledge/articles">{t('viewAllRelated')}</Link>
         )}
       </GridContainer>
     </div>

@@ -99,7 +99,7 @@ const HighLevelProjectPlan = () => {
               {highLevelT('title')}
             </PageHeading>
             <HelpAndKnowledgeCategoryTag
-              type="gettingStarted"
+              type="getting-started"
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">

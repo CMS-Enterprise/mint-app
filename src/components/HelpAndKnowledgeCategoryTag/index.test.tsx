@@ -8,7 +8,7 @@ describe('HelpAndKnowledgeCategoryTag', () => {
   it('renders without errors', async () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter>
-        <HelpAndKnowledgeCategoryTag type="gettingStarted" />
+        <HelpAndKnowledgeCategoryTag type="getting-started" />
       </MemoryRouter>
     );
 
@@ -17,7 +17,9 @@ describe('HelpAndKnowledgeCategoryTag', () => {
       expect(getByTestId('tag')).toBeInTheDocument();
       expect(getByText('Getting started').closest('a')).toHaveAttribute(
         'href',
-        expect.stringMatching('/help-and-knowledge/getting-started')
+        expect.stringMatching(
+          '/help-and-knowledge/articles?category=getting-started'
+        )
       );
     });
   });

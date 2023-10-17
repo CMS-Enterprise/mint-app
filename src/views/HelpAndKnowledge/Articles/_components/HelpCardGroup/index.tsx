@@ -8,7 +8,7 @@ import helpAndKnowledgeArticles from '../..';
 
 type HelpCardGroupType = {
   className?: string;
-  filter?: 'itImplementation' | 'gettingStarted';
+  filter?: 'it-implementation' | 'getting-started' | string | null;
   showFirstThree?: boolean;
   tag?: boolean;
   pagination?: boolean;
