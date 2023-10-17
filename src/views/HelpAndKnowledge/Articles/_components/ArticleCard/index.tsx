@@ -9,8 +9,8 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
-import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
 import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
+import HelpAndKnowledgeCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 
 import './index.scss';
 

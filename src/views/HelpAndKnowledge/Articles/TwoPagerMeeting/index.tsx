@@ -7,12 +7,12 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 
-import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import RelatedArticles from 'components/RelatedArticles';
 import ExternalLink from 'components/shared/ExternalLink';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import HelpAndKnowledgeCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');

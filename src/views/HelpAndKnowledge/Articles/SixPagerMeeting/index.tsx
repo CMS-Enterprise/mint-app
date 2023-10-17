@@ -8,15 +8,15 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 
-import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import RelatedArticles from 'components/RelatedArticles';
 import ExternalLink from 'components/shared/ExternalLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import HelpAndKnowledgeCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 const covertToLowercaseAndDashes = (string: string) =>

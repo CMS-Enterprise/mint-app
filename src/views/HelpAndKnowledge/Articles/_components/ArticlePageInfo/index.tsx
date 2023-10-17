@@ -36,12 +36,13 @@ const ArticlePageInfo = ({ className }: ArticlePageInfoProps) => {
         {t('viewGettingStarted')}
       </UswdsReactLink>
 
-      <UswdsReactLink
+      {/* TODO: enable once first it implementation articles is added */}
+      {/* <UswdsReactLink
         to="/help-and-knowledge/articles?category=it-implementation"
         className="margin-right-4"
       >
         {t('viewITImplementation')}
-      </UswdsReactLink>
+      </UswdsReactLink> */}
     </div>
   );
 };

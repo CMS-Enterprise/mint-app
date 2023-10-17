@@ -2,12 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 
-import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import RelatedArticles from 'components/RelatedArticles';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import HelpAndKnowledgeCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import ReadOnly from 'views/ModelPlan/ReadOnly';
 
 export const SampleModelPlan = () => {

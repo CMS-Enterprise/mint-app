@@ -9,10 +9,10 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import RelatedArticles from 'components/RelatedArticles';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 type ModelPlanOverviewContentProps = {
   help?: boolean;

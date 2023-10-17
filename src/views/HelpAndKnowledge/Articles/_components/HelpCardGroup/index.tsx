@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { CardGroup } from '@trussworks/react-uswds';
 
-import ArticleCard from 'components/ArticleCard';
+import ArticleCard from 'views/HelpAndKnowledge/Articles/_components/ArticleCard';
 
 import helpAndKnowledgeArticles from '../..';
 
