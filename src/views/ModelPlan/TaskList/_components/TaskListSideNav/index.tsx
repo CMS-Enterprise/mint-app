@@ -197,11 +197,12 @@ const TaskListSideNav = ({
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
               {[
-                ...collaborators.filter(
-                  collaborator => collaborator.teamRole === TeamRole.MODEL_LEAD
+                ...collaborators.filter(collaborator =>
+                  collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
                 ),
                 ...collaborators.filter(
-                  collaborator => collaborator.teamRole !== TeamRole.MODEL_LEAD
+                  collaborator =>
+                    !collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
                 )
               ].map((collaborator, index) => {
                 return (
