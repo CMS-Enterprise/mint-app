@@ -22,13 +22,13 @@ import {
 } from 'gql/gen/graphql';
 
 import BooleanRadio from 'components/BooleanRadioForm';
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
 import { getKeys } from 'types/translation';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
 const SendFeedback = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);

@@ -20,27 +20,28 @@ const ArticlePageInfo = ({ className }: ArticlePageInfoProps) => {
         })}
       </p>
 
-      {/* TODO: add link for all articles */}
-      {/* <UswdsReactLink to="/help-and-knowledge" className="margin-right-4">
+      <UswdsReactLink
+        to="/help-and-knowledge/articles"
+        className="margin-right-4"
+      >
         {t('browseAll')}
-      </UswdsReactLink> */}
+      </UswdsReactLink>
 
       <div className="border-right margin-bottom-2 text-base-lighter margin-right-4" />
 
       <UswdsReactLink
-        to="/help-and-knowledge/getting-started"
+        to="/help-and-knowledge/articles?category=getting-started"
         className="margin-right-4"
       >
         {t('viewGettingStarted')}
       </UswdsReactLink>
 
-      {/* TODO: reimplement the below link when IT Implentation is available */}
-      {/* <UswdsReactLink
-        to="/help-and-knowledge/getting-started"
+      <UswdsReactLink
+        to="/help-and-knowledge/articles?category=it-implementation"
         className="margin-right-4"
       >
         {t('viewITImplementation')}
-      </UswdsReactLink> */}
+      </UswdsReactLink>
     </div>
   );
 };

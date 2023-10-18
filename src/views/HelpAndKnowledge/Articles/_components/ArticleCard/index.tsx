@@ -9,8 +9,8 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
-import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
 import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
+import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 
 import './index.scss';
 
@@ -20,6 +20,7 @@ type ArticleCardProps = {
   translation: string;
   isLink?: boolean;
   tag?: boolean;
+  type: ArticleTypeProps;
 };
 
 const ArticleCard = ({
@@ -29,7 +30,7 @@ const ArticleCard = ({
   translation,
   isLink = false,
   tag = true
-}: ArticleCardProps & ArticleTypeProps) => {
+}: ArticleCardProps) => {
   const { t } = useTranslation(translation);
   const history = useHistory();
 
@@ -54,7 +55,7 @@ const ArticleCard = ({
       <CardHeader className="padding-0">
         <h3 className="line-height-body-4 margin-bottom-1">{t('title')}</h3>
       </CardHeader>
-      {tag && <HelpAndKnowledgeCategoryTag type={type} />}
+      {tag && <HelpCategoryTag type={type} />}
 
       <CardBody className="padding-x-0 article__body">
         <p>{t('description')}</p>
