@@ -65,7 +65,7 @@ const ShareExportModal = ({
   const [exportCSV, setExportCSV] = useState<boolean>(false);
   const [exportPDF, setExportPDF] = useState<boolean>(false);
 
-  const [receiverEmails, setReceiverEmails] = useState<string[]>([]);
+  const [usernames, setUsernames] = useState<string[]>([]);
   const [optionalMessage, setOptionalMessage] = useState<string>('');
 
   // State for modal navigation elements
@@ -206,7 +206,7 @@ const ShareExportModal = ({
             variables: {
               modelPlanID: modelID,
               viewFilter,
-              receiverEmails,
+              usernames,
               optionalMessage
             }
           })
@@ -271,12 +271,10 @@ const ShareExportModal = ({
             <OktaMultiSelect
               id="share-model-recipients"
               ariaLabel={generalReadOnlyT('modal.shareEmail')}
-              name="receiverEmails"
+              name="usernames"
               selectedLabel={generalReadOnlyT('modal.shareLabel')}
               onChange={(users: any) => {
-                // TODO: remove stringification once BE is ready to accept an array of users
-                setReceiverEmails(users);
-                // setReceiverEmails(users);
+                setUsernames(users);
               }}
             />
           </FieldGroup>
@@ -293,7 +291,7 @@ const ShareExportModal = ({
             <TextAreaField
               className="share-export-modal__optional-message-textarea"
               id="share-model--optional-message"
-              name="receiverEmails"
+              name="optionalMessage"
               onBlur={() => null}
               onChange={e => setOptionalMessage(e.currentTarget.value)}
               value={optionalMessage}
@@ -334,7 +332,7 @@ const ShareExportModal = ({
             <Button
               type="submit"
               data-testid="export-model-plan"
-              disabled={!filteredGroup || !receiverEmails || loading}
+              disabled={!filteredGroup || !usernames || loading}
               className="margin-top-0"
             >
               {generalReadOnlyT('modal.share')}
