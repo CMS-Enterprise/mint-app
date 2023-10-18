@@ -36,7 +36,15 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.contains('button', 'Add team member').should('be.disabled');
 
-    cy.get('select').select('Evaluation').should('have.value', 'EVALUATION');
+    cy.get('#collaborator-role').within(() => {
+      cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
+    });
+
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Evaluation"]')
+      .first()
+      .contains('Evaluation');
 
     cy.contains('button', 'Add team member').click();
 
@@ -60,10 +68,27 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('input').should('be.disabled');
 
-    cy.get('select')
-      .should('not.be.disabled')
-      .select('Model Team')
-      .should('have.value', 'MODEL_TEAM');
+    cy.get('#collaborator-role').within(() => {
+      cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
+    });
+
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Evaluation"]')
+      .first()
+      .contains('Evaluation');
+
+    cy.get('#collaborator-role').should('not.be.disabled');
+
+    cy.get('#collaborator-role').within(() => {
+      cy.get("input[type='text']").click().type('model tea{downArrow}{enter}');
+    });
+
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Model Team"]')
+      .first()
+      .contains('Model Team');
 
     cy.contains('button', 'Update team member').click();
 
