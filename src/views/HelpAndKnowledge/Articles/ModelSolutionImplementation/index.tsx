@@ -32,6 +32,18 @@ export const ModelSolutionImplementation = () => {
     }
   );
 
+  const stayInformedConfig: string[] = t('trackWork.activities.items.0.items', {
+    returnObjects: true
+  });
+
+  const trackProgressConfig: any[] = t('trackWork.activities.items.1.items', {
+    returnObjects: true
+  });
+
+  const outcomesConfig: any[] = t('trackWork.outcomes.items', {
+    returnObjects: true
+  });
+
   return (
     <>
       <MainContent>
@@ -71,6 +83,8 @@ export const ModelSolutionImplementation = () => {
                 ))}
               </ol>
             </SummaryBox>
+
+            {/* INITIATE WORK */}
 
             <h2 className="margin-top-6 margin-bottom-2">
               {t('initiateWork.heading')}
@@ -144,60 +158,94 @@ export const ModelSolutionImplementation = () => {
               <li>{t('initiateWork.outcomes.items.0')}</li>
             </ol>
 
-            {/* <SummaryBox
-              heading={t('helpBox.heading')}
-              className="margin-bottom-6 margin-top-neg-4"
-            >
-              <Trans
-                i18nKey="utilizingSolutions:helpBox.description"
-                components={{
-                  link1: (
-                    // @ts-ignore
-                    <UswdsReactLink
-                      to="/help-and-knowledge/operational-solutions?page=1"
-                      className="margin-top-2 display-inline-block"
-                    />
-                  )
-                }}
-              />
-            </SummaryBox> */}
+            {/* TRACK WORK */}
 
-            {/* <h2 className="margin-top-6 margin-bottom-2">
-              {t('activitySteps.heading')}
+            <h2 className="margin-top-7 margin-bottom-2">
+              {t('trackWork.heading')}
             </h2>
 
+            <h3 className="margin-top-3 margin-bottom-1">
+              {t('trackWork.purpose')}
+            </h3>
+
             <p className="margin-y-0 line-height-sans-5">
-              {t('activitySteps.description')}
+              {t('trackWork.purposeDescription')}
             </p>
 
-            <h3 className="margin-top-3 margin-bottom-6">
-              {t('activitySteps.subHeading')}
-            </h3> */}
+            <h3 className="margin-top-3 margin-bottom-1">
+              {t('trackWork.when')}
+            </h3>
 
-            {/* <ProcessList>
-              {activityConfig.map((item, index) => (
-                <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4">
-                  <ProcessListHeading type="h5" className="font-body-sm">
-                    {item.heading}
-                    <p className="text-normal margin-bottom-0 margin-top-105">
-                      <Trans
-                        i18nKey={`utilizingSolutions:activitySteps.items.${index}.description`}
-                        components={{
-                          bold: <strong />
-                        }}
-                      />
-                    </p>
-                  </ProcessListHeading>
-                </ProcessListItem>
+            <p className="margin-y-0 line-height-sans-5">
+              {t('trackWork.whenDescription')}
+            </p>
+
+            <h3 className="margin-top-3 margin-bottom-4">
+              {t('trackWork.activities.heading')}
+            </h3>
+
+            <ProcessList>
+              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-2">
+                <ProcessListHeading type="h5" className="font-body-sm">
+                  {t('trackWork.activities.items.0.heading')}
+                </ProcessListHeading>
+
+                <p className="margin-top-105 margin-bottom-1">
+                  {t('trackWork.activities.items.0.description')}
+                </p>
+
+                <ul className="padding-left-5 margin-y-0">
+                  {stayInformedConfig.map(item => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </ProcessListItem>
+
+              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0">
+                <ProcessListHeading type="h5" className="font-body-sm">
+                  {t('trackWork.activities.items.1.heading')}
+                </ProcessListHeading>
+
+                <p className="margin-top-105 margin-bottom-1">
+                  {t('trackWork.activities.items.1.description')}
+                </p>
+
+                <ul className="padding-left-5 margin-y-0">
+                  {trackProgressConfig.map(item => {
+                    let listItem = <></>;
+                    if (item.items) {
+                      listItem = (
+                        <ul className="padding-left-5 margin-y-0">
+                          {item.items.map((item2: string) => {
+                            return <li>{item2}</li>;
+                          })}
+                        </ul>
+                      );
+                    }
+                    return (
+                      <li>
+                        {item.heading}
+                        {listItem}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </ProcessListItem>
+            </ProcessList>
+
+            <h3 className="margin-top-3 margin-bottom-1">
+              {t('trackWork.outcomes.heading')}
+            </h3>
+
+            <p className="margin-y-0 line-height-sans-5">
+              {t('trackWork.outcomes.description')}
+            </p>
+
+            <ol className="padding-left-5 margin-bottom-6">
+              {outcomesConfig.map(item => (
+                <li className="padding-bottom-1">{item}</li>
               ))}
-            </ProcessList> */}
-
-            {/* <SummaryBox
-              heading={t('helpBox2.heading')}
-              className="margin-bottom-6 margin-top-neg-4"
-            >
-              <p className="margin-bottom-0">{t('helpBox2.description')}</p>
-            </SummaryBox> */}
+            </ol>
           </Grid>
         </GridContainer>
       </MainContent>

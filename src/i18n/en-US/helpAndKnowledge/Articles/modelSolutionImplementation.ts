@@ -53,6 +53,9 @@ const modelSolutionImplementation = {
     purpose: 'Purpose',
     purposeDescription:
       'For all groups involved to stay organized and informed throughout the implementation process.',
+    when: 'When',
+    whenDescription:
+      'After the operational solutions have been identified and outreach has began, the IT Lead will help keep track of the status of each solution up until it has been implemented.',
     activities: {
       heading: 'Activities',
       items: [
