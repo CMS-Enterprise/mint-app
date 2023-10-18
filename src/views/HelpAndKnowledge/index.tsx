@@ -8,6 +8,7 @@ import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import ModelSolutionDesign from './Articles/ModelSolutionDesign';
 import ModelSolutionImplementation from './Articles/ModelSolutionImplementation';
+import PhasesInvolved from './Articles/PhasesInvolved';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
@@ -70,6 +71,10 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/model-and-solution-design" exact>
         <ModelSolutionDesign />
+      </Route>
+
+      <Route path="/help-and-knowledge/phases-involved" exact>
+        <PhasesInvolved />
       </Route>
 
       <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>
