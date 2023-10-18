@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "040f04e1-e82a-4a0b-88f7-823fee84baa4",
+		"_postman_id": "e2e558ab-89c3-422c-b990-cf47b083cf7a",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20320964"
+		"_exporter_id": "20435042"
 	},
 	"item": [
 		{
@@ -83,8 +83,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation shareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $receiverEmails: [String!]!, $optionalMessage: String) {\n    shareModelPlan(modelPlanID: $modelPlanID, viewFilter: $viewFilter, receiverEmails: $receiverEmails, optionalMessage: $optionalMessage)\n}\n",
-								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"receiverEmails\": [\"example1@example.com\", \"example2@example.com\"],\n  \"optionalMessage\": \"\"\n}\n"
+								"query": "mutation shareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $usernames: [String!]!, $optionalMessage: String) {\n    shareModelPlan(modelPlanID: $modelPlanID, viewFilter: $viewFilter, usernames: $usernames, optionalMessage: $optionalMessage)\n}\n",
+								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"usernames\": [\"ABCD\", \"BOOGER\"],\n  \"optionalMessage\": \"\"\n}\n"
 							}
 						},
 						"url": {
@@ -408,8 +408,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n    id\n    modelPlanID\n    userID\n    teamRole\n    userAccount \n    {\n        commonName\n        familyName\n        givenName\n        email\n        locale\n    }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"CLAB\",\n    \"teamRole\": \"MODEL_LEAD\"\n  }\n}"
+								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n    id\n    modelPlanID\n    userID\n    teamRoles\n    userAccount \n    {\n        commonName\n        familyName\n        givenName\n        email\n        locale\n    }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"TEST\",\n    \"teamRoles\": [\"MODEL_LEAD\"]\n  }\n}"
 							}
 						},
 						"url": {
@@ -429,8 +429,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanCollaborator ($id: UUID!, $newRole: TeamRole!) {\n    updatePlanCollaborator (id: $id, newRole: $newRole) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"{{modelLeadID}}\",\n  \"newRole\": \"LEARNING\"\n}"
+								"query": "mutation updatePlanCollaborator ($id: UUID!, $newRoles: [TeamRole!]!) {\n    updatePlanCollaborator (id: $id, newRoles: $newRoles) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"{{modelLeadID}}\",\n  \"newRoles\": [\"LEARNING\"]\n}"
 							}
 						},
 						"url": {
@@ -450,7 +450,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanCollaborator ($id: UUID!) {\n    deletePlanCollaborator (id: $id) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation deletePlanCollaborator ($id: UUID!) {\n    deletePlanCollaborator (id: $id) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
 							}
 						},
@@ -471,7 +471,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query planCollaboratorByID ($id: UUID!) {\n    planCollaboratorByID (id: $id) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "query planCollaboratorByID ($id: UUID!) {\n    planCollaboratorByID (id: $id) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
 							}
 						},
@@ -1179,47 +1179,8 @@
 						}
 					},
 					"response": []
-				},
-				
-				{
-					"name": "SendFeedback",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let responseData = pm.response.json().data.sendFeedbackEmail",
-									"",
-									"pm.test(\"Feedback Email was sent\", function (){",
-									"    pm.expect(responseData).to.equal(true)",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation sendFeedbackEmail{\n  \n  sendFeedbackEmail(input:{\n      isAnonymousSubmission: false\n      allowContact: true\n      cmsRole: \"Ultimate COR\"\n      mintUsedFor: [VIEW_MODEL, EDIT_MODEL]\n      mintUsedForOther: \"Looking cool\"\n      systemEasyToUse: AGREE\n      systemEasyToUseOther: \"HMM I guess it's great!\"\n      howCanWeImprove: \"a virtual assistant that pops up and sings to you\"\n      })\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
 				}
 			]
-
 		},
 		{
 			"name": "Audit",
@@ -1660,38 +1621,6 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    \n  }\n}\n",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PossibleOperationalSoultionsGetAllWithContacts",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key\n        treatAsOther \n        pointsOfContact{\n            id\n            possibleOperationalSolutionID\n            name\n            email\n            isTeam\n            role\n        }            \n  }\n}\n",
 								"variables": ""
 							}
 						},
