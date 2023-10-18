@@ -8,6 +8,7 @@ import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
+import modelSolutionDesign from './helpAndKnowledge/Articles/modelSolutionDesign';
 import modelSolutionImplementation from './helpAndKnowledge/Articles/modelSolutionImplementation';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
@@ -103,6 +104,7 @@ const enUS = {
   feedback,
   // Help and Knowledge Center Articles
   highLevelProjectPlans,
+  modelSolutionDesign,
   modelSolutionImplementation,
   sampleModelPlan,
   sixPageMeeting,
