@@ -71,10 +71,13 @@ export const ModelSolutionImplementation = () => {
               </h3>
 
               <ol className="padding-left-5 margin-y-0">
-                {summaryBoxConfig.map(item => (
+                {summaryBoxConfig.map((item, index) => (
                   <li key={item} className="margin-bottom-1">
                     <div className="margin-left-1 display-flex flex-align-center">
-                      <UswdsReactLink to="/" className="margin-right-1">
+                      <UswdsReactLink
+                        to={t(`summaryBox.links.${index}`)}
+                        className="margin-right-1"
+                      >
                         {item}
                       </UswdsReactLink>
                       <IconArrowForward />
@@ -136,7 +139,10 @@ export const ModelSolutionImplementation = () => {
                 </ul>
 
                 <div className="margin-top-2 margin-bottom-4 display-flex flex-align-center text-bold">
-                  <UswdsReactLink to="/" className="margin-right-1">
+                  <UswdsReactLink
+                    to="/help-and-knowledge/utilizing-solutions"
+                    className="margin-right-1"
+                  >
                     {t('initiateWork.activities.learnMore')}
                   </UswdsReactLink>
                   <IconArrowForward />

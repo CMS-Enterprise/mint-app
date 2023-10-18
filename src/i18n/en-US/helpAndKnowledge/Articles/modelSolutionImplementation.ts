@@ -7,6 +7,10 @@ const modelSolutionImplementation = {
     items: [
       'Initiate work with each operational solution team',
       'Track work up through implementation'
+    ],
+    links: [
+      '/help-and-knowledge/operational-solutions?page=1',
+      '/help-and-knowledge/operational-solutions?page=1'
     ]
   },
   initiateWork: {
