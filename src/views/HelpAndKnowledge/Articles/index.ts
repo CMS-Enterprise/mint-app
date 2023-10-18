@@ -50,6 +50,12 @@ const helpAndKnowledgeArticles: (ArticleProps & {
     route: '/utilizing-solutions',
     translation: 'utilizingSolutions',
     type: 'it-implementation'
+  },
+  {
+    name: 'Model implementation and solution implementation',
+    route: '/model-and-solution-implementation',
+    translation: 'modelSolutionImplementation',
+    type: 'it-implementation'
   }
 ];
 

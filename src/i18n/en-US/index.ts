@@ -8,6 +8,7 @@ import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
+import modelSolutionImplementation from './helpAndKnowledge/Articles/modelSolutionImplementation';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
@@ -101,10 +102,11 @@ const enUS = {
   readOnlyModelPlan,
   feedback,
   // Help and Knowledge Center Articles
-  sampleModelPlan,
-  twoPageMeeting,
-  sixPageMeeting,
   highLevelProjectPlans,
+  modelSolutionImplementation,
+  sampleModelPlan,
+  sixPageMeeting,
+  twoPageMeeting,
   utilizingSolutions,
   // End Help and Knowledge Center Articles
   subtasks,
