@@ -2,14 +2,9 @@ import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import {
-  Button,
-  Dropdown,
-  Fieldset,
-  Label,
-  TextInput
-} from '@trussworks/react-uswds';
+import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { TeamRole } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -19,6 +14,7 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MultiSelect from 'components/shared/MultiSelect';
 import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -39,6 +35,7 @@ import {
 import UpdateModelPlanCollaborator from 'queries/Collaborators/UpdateModelPlanCollaborator';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 const Collaborators = () => {
@@ -86,14 +83,13 @@ const Collaborators = () => {
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorFormType) => {
     const {
       userAccount: { username, commonName },
-      teamRole
+      teamRoles
     } = formikValues || { userAccount: { userName: null } };
-
     if (collaboratorId) {
       update({
         variables: {
           id: collaboratorId,
-          newRole: teamRole!
+          newRole: teamRoles!
         }
       })
         .then(response => {
@@ -108,7 +104,11 @@ const Collaborators = () => {
                 >
                   {collaboratorsMiscT('successUpdateMessage', {
                     collaborator: commonName,
-                    role: collaboratorsT(`teamRole.options.${teamRole}`)
+                    role: teamRoles
+                      ?.map((role: TeamRole) => {
+                        return collaboratorsT(`teamRole.options.${role}`);
+                      })
+                      .join(', ')
                   })}
                 </Alert>
               </>
@@ -125,7 +125,7 @@ const Collaborators = () => {
           input: {
             modelPlanID: modelID,
             userName: username!,
-            teamRole: teamRole!
+            teamRoles: teamRoles!
           }
         }
       })
@@ -141,7 +141,11 @@ const Collaborators = () => {
                 >
                   {collaboratorsMiscT('successMessage', {
                     collaborator: commonName,
-                    role: collaboratorsT(`teamRole.options.${teamRole}`)
+                    role: teamRoles
+                      ?.map((role: TeamRole) => {
+                        return collaboratorsT(`teamRole.options.${role}`);
+                      })
+                      .join(', ')
                   })}
                 </Alert>
               </>
@@ -285,41 +289,27 @@ const Collaborators = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="teamRole"
-                        error={!!flatErrors.teamRole}
+                        scrollElement="teamRoles"
+                        error={!!flatErrors.teamRoles}
                       >
                         <Label htmlFor="collaborator-role">
                           {collaboratorsT('teamRole.label')}
                         </Label>
 
-                        <FieldErrorMsg>{flatErrors.teamRole}</FieldErrorMsg>
+                        <FieldErrorMsg>{flatErrors.teamRoles}</FieldErrorMsg>
 
                         <Field
-                          as={Dropdown}
+                          as={MultiSelect}
                           id="collaborator-role"
                           name="role"
-                          value={values.teamRole || ''}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            setFieldValue('teamRole', e.target.value);
+                          options={composeMultiSelectOptions(
+                            teamRoleConfig.options
+                          )}
+                          onChange={(value: TeamRole[]) => {
+                            setFieldValue('teamRoles', value);
                           }}
-                        >
-                          <option key="default-select" disabled value="">
-                            {`-${miscellaneousT('select')}-`}
-                          </option>
-
-                          {getKeys(teamRoleConfig.options).map(role => {
-                            return (
-                              <option
-                                key={`Collaborator-Role-${teamRoleConfig.options[role]}`}
-                                value={role || ''}
-                              >
-                                {teamRoleConfig.options[role]}
-                              </option>
-                            );
-                          })}
-                        </Field>
+                          initialValues={initialValues.teamRoles}
+                        />
                       </FieldGroup>
 
                       <Alert
@@ -337,7 +327,7 @@ const Collaborators = () => {
                         <Button
                           type="submit"
                           disabled={
-                            !values.userAccount.commonName || !values.teamRole
+                            !values.userAccount.commonName || !values.teamRoles
                           }
                         >
                           {!collaboratorId

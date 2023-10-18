@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { TeamRole } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import IconInitial from 'components/shared/IconInitial';
@@ -50,9 +51,18 @@ const CollaboratorsTable = ({
       },
       {
         Header: collaboratorsMiscT('table.role'),
-        accessor: 'teamRole',
-        Cell: ({ row, value }: any) => {
-          return <>{collaboratorsT(`teamRole.options.${value}`)}</>;
+        accessor: 'teamRoles',
+
+        Cell: ({ value }: any) => {
+          return (
+            <>
+              {value
+                .map((role: TeamRole) => {
+                  return collaboratorsT(`teamRole.options.${role}`);
+                })
+                .join(', ')}
+            </>
+          );
         }
       },
       {
