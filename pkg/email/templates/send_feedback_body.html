@@ -1,159 +1,77 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Content</title>
-  <style type="text/css">
-    /* CSS Reset */
-    * body {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Public Sans', sans-serif;
-    }
+{{template "shared_header.html" "Feedback"}}
 
-    /* General */
-    body {
-      padding-left: 5px;
-      text-align: left;
-    }
+<h3>Reporter</h3>
 
-    /* Headings */
-    h1 {
-      font-size: 39pt;
-      font-weight: bold;
-      font-style: normal;
-      color: #1A1A1A;
-      text-decoration: none;
-      margin: 0;
-    }
+{{if .IsAnonymousSubmission }}
+  <p>Anonymous</p>
+{{else}}
+  <p>{{.ReporterName}}</p>
+  <a href="mailto:{{.ReporterEmail}}">{{.ReporterEmail}}</a>
+  <br />
+  <br />
+  {{if .AllowContact}}
+    <p>{{.AllowContact}}</p>
+  {{else}}
+    <i>User didn't specify if they could be contacted</i>
+  {{end}}
+{{end}}
 
-    h2 {
-      font-size: 2rem;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 2.375rem; /* 118.75% */
-      margin: 0;
-    }
+<br />
+<hr />
+<br/>
 
-    h3 {
-      font-size: 1rem;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 1.5625rem; /* 156.25% */
-      letter-spacing: -0.01rem;
-      margin: 0;
-    }
+<p class="bold">What is your role?</p>
 
-    /* Subtitle */
-    .subtitle {
-      font-size: 15.5pt;
-      font-weight: normal;
-      font-style: normal;
-      color: #707579;
-      text-decoration: none;
-    }
+{{ if .CMSRole}}
+  <p>{{.CMSRole}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
 
-    /* Paragraph */
-    p {
-      font-size: 1rem;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 1.5625rem; /* 156.25% */
-      letter-spacing: -0.01rem;
-      margin: 0;
-    }
+<br/>
 
-    i {
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5625rem; /* 156.25% */
-      letter-spacing: -0.01rem;
-    }
+<p class="bold">What have you used MINT for?</p>
 
-    /* Links */
-    a {
-      font-size: 1rem;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 1.5625rem;
-      letter-spacing: -0.01rem;
-      text-decoration-line: underline;
-    }
-    /* Lists */
-    ul,
-    li {
-      font-size: 1rem;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 1.5625rem; /* 156.25% */
-      letter-spacing: -0.01rem;
-    }
-    ul {
-      padding: 10px 0 0 25px ;
-     }
-  </style>
-</head>
+{{ if .MINTUsedFor}}
+<ul>
+{{range $use := .MINTUsedFor}}
+<li>
+  {{$use}}
+</li>
+{{end}}
+</ul>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
 
-<body>
-    <h1 style="padding-top: 3pt;">MINT</h1>
-    <p class="subtitle" style="padding-top: 11pt;">The Model Innovation Tool</p>
-    <br/>
-    <h2 style="padding-top: 18pt">Feedback</h2>
-    <br />
-    <h3 style="padding-top: 14pt;">Reporter</h3>
-    {{if .IsAnonymousSubmission }}
-      <p>Anonymous</p>
-    {{else}}
-      <p>{{.ReporterName}}</p>
-      <a href="mailto:{{.ReporterEmail}}">{{.ReporterEmail}}</a>
-      <br />
-      <br />
-      {{if .AllowContact}}
-        <p>{{.AllowContact}}</p>
-      {{else}}
-        <i>User didn't specify if they could be contacted</i>
-      {{end}}
-    {{end}}
-    <br />
-    <hr />
-    <h3 style="padding-top: 14pt;">What is your role?</h3>
-    {{ if .CMSRole}}
-      <p>{{.CMSRole}}</p>
-    {{else}}
-      <i>Left Blank</i>
-    {{end}}
-    <h3 style="padding-top: 14pt;">What have you used MINT for?</h3>
-    {{ if .MINTUsedFor}}
-    <ul>
-    {{range $use := .MINTUsedFor}}
-    <li>
-      {{$use}}
-    </li>
-    {{end}}
-    </ul>
-    {{else}}
-      <i>Left Blank</i>
-    {{end}}
-    <h3 style="padding-top: 14pt;">The system is easy to use.</h3>
-    {{ if .SystemEasyToUse}}
-      <p>{{.SystemEasyToUse}}</p>
-    {{else}}
-      <i>Left Blank</i>
-    {{end}}
-    <h3 style="padding-top: 14pt;">Overall, how satisfied are you with MINT?</h3>
-    {{ if .HowSatisfied}}
-      <p>{{.HowSatisfied}}</p>
-    {{else}}
-      <i>Left Blank</i>
-    {{end}}
-    <h3 style="padding-top: 14pt;">How can we improve MINT?</h3>
-    {{ if .HowCanWeImprove}}
-      <p>{{.HowCanWeImprove}}</p>
-    {{else}}
-      <i>Left Blank</i>
-    {{end}}
-    
-    </body>
-    </html>
+<br/>
+
+<p class="bold">The system is easy to use.</p>
+
+{{ if .SystemEasyToUse}}
+  <p>{{.SystemEasyToUse}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br/>
+
+<p class="bold">Overall, how satisfied are you with MINT?</p>
+
+{{ if .HowSatisfied}}
+  <p>{{.HowSatisfied}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br/>
+
+<p class="bold">How can we improve MINT?</p>
+
+{{ if .HowCanWeImprove}}
+  <p>{{.HowCanWeImprove}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+{{template "shared_footer.html"}}

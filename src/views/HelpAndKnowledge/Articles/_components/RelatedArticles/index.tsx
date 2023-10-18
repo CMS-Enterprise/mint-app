@@ -4,23 +4,38 @@ import { Link } from 'react-router-dom';
 import { CardGroup, GridContainer } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
-import ArticleCard from 'components/ArticleCard';
-import helpAndKnowledgeArticles from 'views/HelpAndKnowledge/Articles';
+import helpAndKnowledgeArticles, {
+  ArticleTypeProps
+} from 'views/HelpAndKnowledge/Articles';
+import ArticleCard from 'views/HelpAndKnowledge/Articles/_components/ArticleCard';
 
 type RelatedArticlesProps = {
   className?: string;
   currentArticle: string;
   viewAllLink?: boolean;
+  type?: ArticleTypeProps;
 };
 
 const RelatedArticles = ({
   className,
   currentArticle,
-  viewAllLink
+  viewAllLink,
+  type
 }: RelatedArticlesProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const selectedArticles = helpAndKnowledgeArticles
+  // Filter to only the category tag type
+  let selectedArticles = type
+    ? helpAndKnowledgeArticles.filter(article => article.type === type)
+    : helpAndKnowledgeArticles;
+
+  // If the only article is the current article, default to all articles
+  if (selectedArticles.length <= 1) {
+    selectedArticles = helpAndKnowledgeArticles;
+  }
+
+  // Slice to first 3 of the relevant articles
+  selectedArticles = selectedArticles
     .filter(article => article.name !== currentArticle)
     .slice(0, 3);
 
@@ -35,9 +50,7 @@ const RelatedArticles = ({
           ))}
         </CardGroup>
         {viewAllLink && (
-          <Link to="/help-and-knowledge/all-articles">
-            {t('viewAllRelated')}
-          </Link>
+          <Link to="/help-and-knowledge/articles">{t('viewAllRelated')}</Link>
         )}
       </GridContainer>
     </div>

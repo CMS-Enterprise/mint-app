@@ -7,12 +7,12 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 
-import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import RelatedArticles from 'components/RelatedArticles';
 import ExternalLink from 'components/shared/ExternalLink';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
@@ -72,8 +72,8 @@ const TwoPagerMeeting = () => {
             <PageHeading className="margin-bottom-1">
               {twoPageMeetingT('title')}
             </PageHeading>
-            <HelpAndKnowledgeCategoryTag
-              type="gettingStarted"
+            <HelpCategoryTag
+              type="getting-started"
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">

@@ -11,6 +11,7 @@ import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
+import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
@@ -99,10 +100,13 @@ const enUS = {
   privacyPolicy,
   readOnlyModelPlan,
   feedback,
+  // Help and Knowledge Center Articles
   sampleModelPlan,
   twoPageMeeting,
   sixPageMeeting,
   highLevelProjectPlans,
+  utilizingSolutions,
+  // End Help and Knowledge Center Articles
   subtasks,
   tableAndPagination,
   termsAndConditions,

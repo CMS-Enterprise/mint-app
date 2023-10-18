@@ -4,13 +4,12 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'views/NotFound';
 
 import AllArticles from './Articles/AllArticles';
-import GettingStarted from './Articles/GettingStarted';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
-import ITImplementation from './Articles/ITImplementation';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
+import UtilizingSolutions from './Articles/UtilizingSolutions';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
 
@@ -21,7 +20,7 @@ export const HelpAndKnowledge = () => {
         <HelpAndKnowledgeHome />
       </Route>
 
-      <Route path="/help-and-knowledge/all-articles" exact>
+      <Route path="/help-and-knowledge/articles" exact>
         <AllArticles />
       </Route>
 
@@ -33,6 +32,7 @@ export const HelpAndKnowledge = () => {
         <SolutionsHelp />
       </Route>
 
+      {/* Getting Started Articles */}
       <Route path="/help-and-knowledge/high-level-project-plan" exact>
         <HighLevelProjectPlan />
       </Route>
@@ -57,16 +57,13 @@ export const HelpAndKnowledge = () => {
         to="/help-and-knowledge/sample-model-plan/model-basics"
       />
 
+      {/* IT Implementation Articles */}
+      <Route path="/help-and-knowledge/utilizing-solutions" exact>
+        <UtilizingSolutions />
+      </Route>
+
       <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>
         <SampleModelPlan />
-      </Route>
-
-      <Route path="/help-and-knowledge/getting-started" exact>
-        <GettingStarted />
-      </Route>
-
-      <Route path="/help-and-knowledge/it-implementation" exact>
-        <ITImplementation />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />

@@ -70,7 +70,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </header>
               <a
                 class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/getting-started"
+                href="/help-and-knowledge/articles?category=getting-started"
               >
                 <span
                   aria-label="Articles under the Getting started category"
@@ -121,7 +121,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </header>
               <a
                 class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/getting-started"
+                href="/help-and-knowledge/articles?category=getting-started"
               >
                 <span
                   aria-label="Articles under the Getting started category"
@@ -172,7 +172,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </header>
               <a
                 class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/getting-started"
+                href="/help-and-knowledge/articles?category=getting-started"
               >
                 <span
                   aria-label="Articles under the Getting started category"
@@ -223,7 +223,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </header>
               <a
                 class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/getting-started"
+                href="/help-and-knowledge/articles?category=getting-started"
               >
                 <span
                   aria-label="Articles under the Getting started category"
@@ -274,7 +274,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </header>
               <a
                 class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/getting-started"
+                href="/help-and-knowledge/articles?category=getting-started"
               >
                 <span
                   aria-label="Articles under the Getting started category"
@@ -298,6 +298,57 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               >
                 <button
                   aria-label="Read Sample Model Plan article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Utilizing available operational solutions
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=it-implementation"
+              >
+                <span
+                  aria-label="Articles under the IT implementation category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  IT implementation
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body"
+                data-testid="CardBody"
+              >
+                <p>
+                  One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Utilizing available operational solutions article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >

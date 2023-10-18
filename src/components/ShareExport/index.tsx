@@ -34,7 +34,7 @@ import './index.scss';
 
 const navElement = ['share', 'export'] as const;
 
-type FitlerGroup = typeof filterGroups[number] | 'all';
+export type FitlerGroup = typeof filterGroups[number] | 'all';
 
 const FileTypes = ['csv', 'pdf'] as const;
 
@@ -69,7 +69,10 @@ const ShareExportModal = ({
   // State for modal navigation elements
   const [isActive, setIsActive] = useState<typeof navElement[number]>('share');
 
-  const { fetchSingleData } = useFetchCSVData();
+  const {
+    fetchSingleData,
+    setFilteredGroup: setFilteredGroupForExport
+  } = useFetchCSVData();
 
   const modalElementId: string = 'share-export-modal';
 
@@ -172,9 +175,6 @@ const ShareExportModal = ({
         id={id}
         name="filterGroup"
         onChange={value => {
-          if (value !== 'all') {
-            setExportCSV(false);
-          }
           setFilteredGroup(value as FitlerGroup);
         }}
         defaultValue={filteredGroup}
@@ -355,6 +355,11 @@ const ShareExportModal = ({
             handlePrint();
           }
           if (exportCSV) {
+            const groupToExport =
+              filteredGroup && filteredGroup !== 'all'
+                ? filteredGroup
+                : undefined;
+            setFilteredGroupForExport(groupToExport);
             fetchSingleData(modelID);
           }
         }}
@@ -396,9 +401,6 @@ const ShareExportModal = ({
               value={file}
               checked={file === 'csv' ? exportCSV : exportPDF}
               onBlur={() => null}
-              disabled={
-                file === 'csv' && !!filteredGroup && filteredGroup !== 'all'
-              }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (file === 'csv') {
                   setExportCSV(!exportCSV);
