@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import {
-  Grid,
-  GridContainer,
-  IconArrowForward,
-  SummaryBox
-} from '@trussworks/react-uswds';
+import { Grid, GridContainer, SummaryBox } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -19,20 +14,7 @@ import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCat
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
-const covertToLowercaseAndDashes = (string: string) =>
-  string.toLowerCase().replace(/\s+/g, '-');
-
-const Link = ({ scrollTo }: { scrollTo: string }) => {
-  return (
-    <a
-      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
-      className="display-flex flex-align-center"
-    >
-      {scrollTo}
-      <IconArrowForward />
-    </a>
-  );
-};
+import { covertToLowercaseAndDashes, ScrollLink } from '..';
 
 const SixPagerMeeting = () => {
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
@@ -132,22 +114,22 @@ const SixPagerMeeting = () => {
               <ul className="margin-y-0">
                 {/* eslint-disable jsx-a11y/anchor-is-valid */}
                 <li className="margin-top-05 margin-bottom-1">
-                  <Link
+                  <ScrollLink
                     scrollTo={sixPageMeetingT('summaryBox.listItem.create')}
                   />
                 </li>
                 <li className="margin-bottom-1">
-                  <Link
+                  <ScrollLink
                     scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
                   />
                 </li>
                 <li className="margin-bottom-1">
-                  <Link
+                  <ScrollLink
                     scrollTo={sixPageMeetingT('summaryBox.listItem.determine')}
                   />
                 </li>
                 <li>
-                  <Link
+                  <ScrollLink
                     scrollTo={sixPageMeetingT('summaryBox.listItem.review')}
                   />
                 </li>

@@ -17,6 +17,7 @@ import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBrea
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import { covertToLowercaseAndDashes, ScrollLink } from '..';
 
 export const ModelSolutionImplementation = () => {
   const { t } = useTranslation('modelSolutionImplementation');
@@ -74,13 +75,7 @@ export const ModelSolutionImplementation = () => {
                 {summaryBoxConfig.map((item, index) => (
                   <li key={item} className="margin-bottom-1">
                     <div className="margin-left-1 display-flex flex-align-center">
-                      <UswdsReactLink
-                        to={t(`summaryBox.links.${index}`)}
-                        className="margin-right-1"
-                      >
-                        {item}
-                      </UswdsReactLink>
-                      <IconArrowForward />
+                      <ScrollLink scrollTo={item} />
                     </div>
                   </li>
                 ))}
@@ -89,7 +84,10 @@ export const ModelSolutionImplementation = () => {
 
             {/* INITIATE WORK */}
 
-            <h2 className="margin-top-6 margin-bottom-2">
+            <h2
+              id={covertToLowercaseAndDashes(t('summaryBox.items.0'))}
+              className="margin-top-6 margin-bottom-2"
+            >
               {t('initiateWork.heading')}
             </h2>
 
@@ -164,7 +162,10 @@ export const ModelSolutionImplementation = () => {
 
             {/* TRACK WORK */}
 
-            <h2 className="margin-top-7 margin-bottom-2">
+            <h2
+              id={covertToLowercaseAndDashes(t('summaryBox.items.1'))}
+              className="margin-top-7 margin-bottom-2"
+            >
               {t('trackWork.heading')}
             </h2>
 

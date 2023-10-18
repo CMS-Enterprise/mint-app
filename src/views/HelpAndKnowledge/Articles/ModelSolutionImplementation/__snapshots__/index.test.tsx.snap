@@ -92,28 +92,28 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
                     class="margin-left-1 display-flex flex-align-center"
                   >
                     <a
-                      class="usa-link margin-right-1"
-                      href="/"
+                      class="display-flex flex-align-center"
+                      href="#initiate-work-with-each-operational-solution-team"
                     >
                       Initiate work with each operational solution team
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
                     </a>
-                    <svg
-                      class="usa-icon"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
                   </div>
                 </li>
                 <li
@@ -123,28 +123,28 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
                     class="margin-left-1 display-flex flex-align-center"
                   >
                     <a
-                      class="usa-link margin-right-1"
-                      href="/"
+                      class="display-flex flex-align-center"
+                      href="#track-work-up-through-implementation"
                     >
                       Track work up through implementation
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
                     </a>
-                    <svg
-                      class="usa-icon"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
                   </div>
                 </li>
               </ol>
@@ -153,6 +153,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
         </div>
         <h2
           class="margin-top-6 margin-bottom-2"
+          id="initiate-work-with-each-operational-solution-team"
         >
           1. Initiate work with each operational solution team
         </h2>
@@ -237,7 +238,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             >
               <a
                 class="usa-link margin-right-1"
-                href="/"
+                href="/help-and-knowledge/utilizing-solutions"
               >
                 Learn more about utilizing available operational solutions
               </a>
@@ -280,6 +281,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
         </ol>
         <h2
           class="margin-top-7 margin-bottom-2"
+          id="track-work-up-through-implementation"
         >
           2. Track work up through implementation
         </h2>
