@@ -44,6 +44,12 @@ const helpAndKnowledgeArticles: (ArticleProps & {
     route: '/high-level-project-plan',
     translation: 'highLevelProjectPlans',
     type: 'getting-started'
+  },
+  {
+    name: 'Utilizing available operational solutions',
+    route: '/utilizing-solutions',
+    translation: 'utilizingSolutions',
+    type: 'it-implementation'
   }
 ];
 
