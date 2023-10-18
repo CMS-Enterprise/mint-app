@@ -4,9 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'views/NotFound';
 
 import AllArticles from './Articles/AllArticles';
-import GettingStarted from './Articles/GettingStarted';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
-import ITImplementation from './Articles/ITImplementation';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
@@ -21,7 +19,7 @@ export const HelpAndKnowledge = () => {
         <HelpAndKnowledgeHome />
       </Route>
 
-      <Route path="/help-and-knowledge/all-articles" exact>
+      <Route path="/help-and-knowledge/articles" exact>
         <AllArticles />
       </Route>
 
@@ -59,14 +57,6 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>
         <SampleModelPlan />
-      </Route>
-
-      <Route path="/help-and-knowledge/getting-started" exact>
-        <GettingStarted />
-      </Route>
-
-      <Route path="/help-and-knowledge/it-implementation" exact>
-        <ITImplementation />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />

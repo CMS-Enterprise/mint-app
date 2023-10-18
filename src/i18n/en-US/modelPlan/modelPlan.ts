@@ -17,6 +17,25 @@ export const modelPlan: TranslationModelPlan = {
     dataType: 'string',
     formType: 'text'
   },
+  nameHistory: {
+    gqlField: 'nameHistory',
+    goField: 'NameHistory',
+    dbField: 'name_history',
+    label: 'Previous names',
+    dataType: 'string',
+    isArray: true,
+    formType: 'text',
+    filterGroups: [
+      'oact',
+      'dfsdm',
+      'ccw',
+      'ipc',
+      'iddoc',
+      'pbg',
+      'mdm',
+      'cbosc'
+    ]
+  },
   abbreviation: {
     gqlField: 'abbreviation',
     goField: 'Abbreviation',

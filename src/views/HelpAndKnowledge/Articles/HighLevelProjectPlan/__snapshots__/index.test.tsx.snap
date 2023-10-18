@@ -49,7 +49,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
-          href="/help-and-knowledge/getting-started"
+          href="/help-and-knowledge/articles?category=getting-started"
         >
           <span
             aria-label="Articles under the Getting started category"
@@ -2067,7 +2067,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                 </header>
                 <a
                   class="usa-link width-fit-content display-block "
-                  href="/help-and-knowledge/getting-started"
+                  href="/help-and-knowledge/articles?category=getting-started"
                 >
                   <span
                     aria-label="Articles under the Getting started category"
@@ -2118,7 +2118,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                 </header>
                 <a
                   class="usa-link width-fit-content display-block "
-                  href="/help-and-knowledge/getting-started"
+                  href="/help-and-knowledge/articles?category=getting-started"
                 >
                   <span
                     aria-label="Articles under the Getting started category"
@@ -2169,7 +2169,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                 </header>
                 <a
                   class="usa-link width-fit-content display-block "
-                  href="/help-and-knowledge/getting-started"
+                  href="/help-and-knowledge/articles?category=getting-started"
                 >
                   <span
                     aria-label="Articles under the Getting started category"
@@ -2203,7 +2203,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             </li>
           </ul>
           <a
-            href="/help-and-knowledge/all-articles"
+            href="/help-and-knowledge/articles"
           >
             View all help articles
           </a>

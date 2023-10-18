@@ -1,6 +1,16 @@
+import basics from 'i18n/en-US/modelPlan/basics';
+import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
+import generalCharacteristics from 'i18n/en-US/modelPlan/generalCharacteristics';
+import modelPlan from 'i18n/en-US/modelPlan/modelPlan';
+import opsEvalAndLearning from 'i18n/en-US/modelPlan/opsEvalAndLearning';
+import participantsAndProviders from 'i18n/en-US/modelPlan/participantsAndProviders';
 import payments from 'i18n/en-US/modelPlan/payments';
 
-import { dataFormatter, headerFormatter } from './useFetchCSVData';
+import {
+  dataFormatter,
+  headerFormatter,
+  selectFilteredFields
+} from './useFetchCSVData';
 
 describe('fetch csv utils', () => {
   const allPlanTranslation = {
@@ -78,5 +88,34 @@ describe('fetch csv utils', () => {
     const returnData = 'Who will you pay? Select all that apply.';
 
     expect(headerFormatter(data, allPlanTranslation)).toEqual(returnData);
+  });
+
+  it('filtered the header columns on the presence of a filter group', () => {
+    const returnData = [
+      'nameHistory',
+      'beneficiaries.beneficiaries',
+      'beneficiaries.beneficiariesOther',
+      'beneficiaries.beneficiariesNote',
+      'beneficiaries.numberPeopleImpacted',
+      'beneficiaries.estimateConfidence',
+      'beneficiaries.beneficiaryOverlap',
+      'beneficiaries.beneficiaryOverlapNote',
+      'beneficiaries.precedenceRules'
+    ];
+
+    expect(
+      selectFilteredFields(
+        {
+          nameHistory: modelPlan.nameHistory,
+          basics,
+          generalCharacteristics,
+          participantsAndProviders,
+          beneficiaries,
+          opsEvalAndLearning,
+          payments
+        },
+        'mdm'
+      )
+    ).toEqual(returnData);
   });
 });

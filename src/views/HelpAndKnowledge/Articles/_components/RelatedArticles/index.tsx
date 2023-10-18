@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { CardGroup, GridContainer } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
-import ArticleCard from 'components/ArticleCard';
 import helpAndKnowledgeArticles from 'views/HelpAndKnowledge/Articles';
+import ArticleCard from 'views/HelpAndKnowledge/Articles/_components/ArticleCard';
 
 type RelatedArticlesProps = {
   className?: string;
@@ -35,9 +35,7 @@ const RelatedArticles = ({
           ))}
         </CardGroup>
         {viewAllLink && (
-          <Link to="/help-and-knowledge/all-articles">
-            {t('viewAllRelated')}
-          </Link>
+          <Link to="/help-and-knowledge/articles">{t('viewAllRelated')}</Link>
         )}
       </GridContainer>
     </div>
