@@ -8,117 +8,122 @@ const modelSolutionDesign = {
       'Start a Model Plan',
       'Assemble the IT and operational team',
       'Identify the IT solutions for the model’s operational needs'
-    ],
-    links: [
-      '/help-and-knowledge/operational-solutions?page=1',
-      '/help-and-knowledge/operational-solutions?page=1'
     ]
   },
-  initiateWork: {
-    heading: '1. Initiate work with each operational solution team',
+  startModelPlan: {
+    heading: '1. Start a Model Plan',
     purpose: 'Purpose',
     purposeDescription:
-      'To notify the project teams for each operational solution so that there is enough notice to implement the work needed.',
+      'To provide BSG with an understanding of the model needs so they can help determine the necessary operational solutions for the model.',
     when: 'When',
     whenDescription:
-      'The IT Lead will assist model teams in understanding and following the release calendar of each system as all system timelines are different. ',
+      'The model team should begin their Model Plan after they’ve completed their 2-page concept document.',
     activities: {
       heading: 'Activities',
       items: [
         {
-          heading: 'Determine priority',
-          description:
-            'Based on the IT solutions and implementation status tracker populated in the previous phase, the IT Lead will work with the Model Lead to determine which projects need to begin first. Working with some systems takes longer than others. The IT Lead will help model teams with the necessary timing.'
+          heading: 'Start a Model Plan',
+          description: `Once a concept paper has been written, the Model Lead (or other model team member) will create a Model Plan within MINT to collaborate on the operational needs of the model.
+            
+            <link1>Start a new Model Plan<iconForward /></link1>`
         },
         {
-          heading: 'Start work with the product/project teams',
+          heading: 'Upload relevant documents',
+          description: `Upload relevant documents
+            
+            These will provide BSG and/or the IT Lead helpful background.`
+        },
+        {
+          heading: 'Make time to work with BSG during model design',
           description:
-            'The IT Lead will complete the documents and activities required by each operational solution team. All solutions are different, but this may include:',
-          items: [
-            'Onboarding request',
-            'Change request',
-            'Contract Action',
-            'Business Requirements',
-            'User Stories'
-          ]
+            'Operational planning for models is a very iterative process so collaboration is key.'
         }
-      ],
-      learnMore: 'Learn more about utilizing available operational solutions'
+      ]
     },
     outcomes: {
       heading: 'Outcomes',
       description: 'These activities produce the following outcomes:',
       items: [
-        'Relevant product/project teams have been notified about the model and the model is in the backlog. '
+        'Model Plan that identifies the high-level operational requirements for your model; ',
+        'Provides BSG with enough information to start assisting with the model',
+        'Project Management and IT subject matter experts identified to work with the model team to plan, execute, and manage the IT and operational implementation for the CMMI model.'
       ]
     }
   },
-  trackWork: {
-    heading: '2. Track work up through implementation',
+  assembleTeam: {
+    heading: '2. Assemble the IT and operational team',
     purpose: 'Purpose',
     purposeDescription:
-      'For all groups involved to stay organized and informed throughout the implementation process.',
+      'To provide the model team with the necessary expertise to assist with completing the IT and operational projects.',
     when: 'When',
     whenDescription:
-      'After the operational solutions have been identified and outreach has began, the IT Lead will help keep track of the status of each solution up until it has been implemented.',
+      'This happens after the Model Plan has been started in MINT.',
     activities: {
       heading: 'Activities',
       items: [
         {
-          heading:
-            'Stay informed on the status of each project relevant to the model',
+          heading: 'Assign an IT Lead',
           description:
-            'To accomplish this, the IT Lead will need to do the following:',
-          items: [
-            'Attend project meetings',
-            'Read project materials',
-            'Communication with product owners'
-          ]
+            'An IT Lead is a member of BSG that will work closely with the Model Team to orchestrate the implementation of all the IT and operations needed for a model. Other organizations might refer to this role as an integrator.'
         },
         {
-          heading: 'Track progress of each operational solution within MINT',
+          heading: 'Collaborate with other SMEs as necessary',
           description:
-            'The IT Lead will work with the Model Team to update the status of each solution to the following:',
-          items: [
-            {
-              heading: 'Not started'
-            },
-            {
-              heading: 'Onboarding',
-              items: [
-                'Onboarding includes activities such as contract modification, change request, onboarding request, etc.'
-              ]
-            },
-            {
-              heading: 'Backlog',
-              items: [
-                'This means the model team’s work is on the project team’s backlog but not started yet.'
-              ]
-            },
-            {
-              heading: 'In progress'
-            },
-            {
-              heading: 'Completed'
-            },
-            {
-              heading: 'At risk',
-              items: [
-                'This indicates there are problems that may delay work or that the project is off track.'
-              ]
-            }
-          ]
+            'Other SMEs may be brought in to help with other aspects of the operational and IT needs of the model.'
         }
-      ],
-      learnMore: 'Learn more about utilizing available operational solutions'
+      ]
     },
     outcomes: {
       heading: 'Outcomes',
       description: 'These activities produce the following outcomes:',
       items: [
-        'Model Team knows the status of projects.',
-        'Product owners, project managers, and associated teams manage and implement the systems and other services required for a model.',
-        'Leadership can see the implementation status of projects.'
+        'IT Lead and other relevant SMEs are identified to work with the model team to plan, execute, and manage the IT and operational implementation for the model.'
+      ]
+    }
+  },
+  identifySolutions: {
+    heading: '3.   Identify the IT solutions for the model’s operational needs',
+    purpose: 'Purpose',
+    purposeDescription:
+      'To identify the systems, data, and operational contracts needed to support a model. This step should identify the breadth of system and operational needs for a model.',
+    when: 'When',
+    whenDescription:
+      'The operational needs identification should begin as soon as the model team:',
+    whenItems: [
+      'Starts developing the Innovation Center Investment Proposal (ICIP) after approval by the Portfolio Management Committee (PMC) and/or',
+      'Begins developing a Notice of Proposed Rulemaking (NPRM). Ideally, the operational needs identification occurs in parallel with the ICIP / NPRM development.'
+    ],
+    whenDescription2:
+      'Identifying operational and IT needs early allows the model and BSG team to identify the most effective and efficient operational support strategies. As the model design becomes clearer, the operational strategy should also increase in precision.',
+    activities: {
+      heading: 'Activities',
+      items: [
+        {
+          heading: 'Iterate and complete the Model Plan',
+          description:
+            'The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the IT solutions and implementation status tracker. '
+        },
+        {
+          heading:
+            'Select the necessary IT solutions for the model’s operational needs',
+          description:
+            'Within the IT solutions and implementation status tracker, the Model Lead and IT Lead will work together to select the IT solutions the model keeping the milestones in mind.'
+        },
+        {
+          heading: 'Understand and plan for the data needs of the model',
+          description: `BSG will meet with model teams to understand the data the model will be collecting. For example: Models may choose to track participation in the model (the participants, providers, or beneficiaries). You will be asked to produce participation files in a specified format to be loaded into CMMI's central data repository the APM Management System (AMS).
+          
+          This model data will be shared with AMS, QPP, and ResDAC. Data will be made available for researchers in ResDAC after the first quarter of operations if it is ready at that point in time.`
+        }
+      ]
+    },
+    outcomes: {
+      heading: 'Outcomes',
+      description: 'These activities produce the following outcomes:',
+      items: [
+        'Required operational needs for the model are identified.',
+        'IT systems are identified for meeting the model needs.',
+        'Operational and data support for the model is identified.'
       ]
     }
   }

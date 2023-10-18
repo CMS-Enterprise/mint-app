@@ -44,7 +44,9 @@ export const UtilizingSolutions = () => {
           <Grid desktop={{ col: 12 }}>
             <HelpBreadcrumb text={t('title')} />
 
-            <PageHeading className="margin-bottom-1">{t('title')}</PageHeading>
+            <PageHeading className="margin-bottom-1 margin-top-4">
+              {t('title')}
+            </PageHeading>
 
             <HelpCategoryTag
               type="it-implementation"
@@ -84,7 +86,7 @@ export const UtilizingSolutions = () => {
 
             <ProcessList>
               {timingConfig.map((item, index) => (
-                <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4">
+                <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4 padding-left-2">
                   <ProcessListHeading
                     type="h5"
                     className="font-body-sm text-normal"
@@ -133,7 +135,7 @@ export const UtilizingSolutions = () => {
 
             <ProcessList>
               {activityConfig.map((item, index) => (
-                <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4">
+                <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4 padding-left-2">
                   <ProcessListHeading type="h5" className="font-body-sm">
                     {item.heading}
                     <p className="text-normal margin-bottom-0 margin-top-105">

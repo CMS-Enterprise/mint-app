@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
@@ -20,28 +20,52 @@ import HelpCategoryTag from '../_components/HelpCategoryTag';
 import { covertToLowercaseAndDashes, ScrollLink } from '..';
 
 export const ModelSolutionDesign = () => {
-  const { t } = useTranslation('modelSolutionImplementation');
+  const { t } = useTranslation('modelSolutionDesign');
 
   const summaryBoxConfig: string[] = t('summaryBox.items', {
     returnObjects: true
   });
 
-  const determinePriorityConfig: string[] = t(
-    'initiateWork.activities.items.1.items',
+  const startModelPlanActivitiesConfig: any[] = t(
+    'startModelPlan.activities.items',
     {
       returnObjects: true
     }
   );
 
-  const stayInformedConfig: string[] = t('trackWork.activities.items.0.items', {
+  const assembleTeamActivitiesConfig: any[] = t(
+    'assembleTeam.activities.items',
+    {
+      returnObjects: true
+    }
+  );
+
+  const identifySolutionsActivitiesConfig: any[] = t(
+    'identifySolutions.activities.items',
+    {
+      returnObjects: true
+    }
+  );
+
+  const startModelPlanOutcomesConfig: any[] = t(
+    'startModelPlan.outcomes.items',
+    {
+      returnObjects: true
+    }
+  );
+
+  const assembleTeamOutcomesConfig: any[] = t('assembleTeam.outcomes.items', {
     returnObjects: true
   });
 
-  const trackProgressConfig: any[] = t('trackWork.activities.items.1.items', {
-    returnObjects: true
-  });
+  const identifySolutionsOutcomesConfig: any[] = t(
+    'identifySolutions.outcomes.items',
+    {
+      returnObjects: true
+    }
+  );
 
-  const outcomesConfig: any[] = t('trackWork.outcomes.items', {
+  const identifySolutionsWhenConfig: any[] = t('identifySolutions.whenItems', {
     returnObjects: true
   });
 
@@ -52,7 +76,9 @@ export const ModelSolutionDesign = () => {
           <Grid desktop={{ col: 12 }}>
             <HelpBreadcrumb text={t('title')} />
 
-            <PageHeading className="margin-bottom-1">{t('title')}</PageHeading>
+            <PageHeading className="margin-bottom-1 margin-top-4">
+              {t('title')}
+            </PageHeading>
 
             <HelpCategoryTag
               type="it-implementation"
@@ -82,173 +108,209 @@ export const ModelSolutionDesign = () => {
               </ol>
             </SummaryBox>
 
-            {/* INITIATE WORK */}
+            {/* START MODEL PLAN */}
 
             <h2
               id={covertToLowercaseAndDashes(t('summaryBox.items.0'))}
               className="margin-top-6 margin-bottom-2"
             >
-              {t('initiateWork.heading')}
+              {t('startModelPlan.heading')}
             </h2>
 
             <h3 className="margin-top-3 margin-bottom-1">
-              {t('initiateWork.purpose')}
+              {t('startModelPlan.purpose')}
             </h3>
 
             <p className="margin-y-0 line-height-sans-5">
-              {t('initiateWork.purposeDescription')}
+              {t('startModelPlan.purposeDescription')}
             </p>
 
             <h3 className="margin-top-3 margin-bottom-1">
-              {t('initiateWork.when')}
+              {t('startModelPlan.when')}
             </h3>
 
             <p className="margin-y-0 line-height-sans-5">
-              {t('initiateWork.whenDescription')}
+              {t('startModelPlan.whenDescription')}
             </p>
 
             <h3 className="margin-top-3 margin-bottom-4">
-              {t('initiateWork.activities.heading')}
+              {t('startModelPlan.activities.heading')}
             </h3>
 
             <ProcessList>
-              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-2">
-                <ProcessListHeading type="h5" className="font-body-sm">
-                  {t('initiateWork.activities.items.0.heading')}
-                </ProcessListHeading>
-                <p className="margin-top-105">
-                  {t('initiateWork.activities.items.0.description')}
-                </p>
-              </ProcessListItem>
+              {startModelPlanActivitiesConfig.map((activity, index) => (
+                <ProcessListItem
+                  key={activity.heading}
+                  className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+                >
+                  <ProcessListHeading type="h5" className="font-body-sm">
+                    {activity.heading}
+                  </ProcessListHeading>
 
-              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0">
-                <ProcessListHeading type="h5" className="font-body-sm">
-                  {t('initiateWork.activities.items.1.heading')}
-                </ProcessListHeading>
-
-                <p className="margin-top-105 margin-bottom-1">
-                  {t('initiateWork.activities.items.1.description')}
-                </p>
-
-                <ul className="padding-left-5 margin-y-0">
-                  {determinePriorityConfig.map(item => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-
-                <div className="margin-top-2 margin-bottom-4 display-flex flex-align-center text-bold">
-                  <UswdsReactLink
-                    to="/help-and-knowledge/utilizing-solutions"
-                    className="margin-right-1"
-                  >
-                    {t('initiateWork.activities.learnMore')}
-                  </UswdsReactLink>
-                  <IconArrowForward />
-                </div>
-              </ProcessListItem>
+                  <p className="margin-top-105">
+                    <Trans
+                      i18nKey={`modelSolutionDesign:startModelPlan.activities.items.${index}.description`}
+                      components={{
+                        link1: (
+                          // @ts-ignore
+                          <UswdsReactLink
+                            to="/models/steps-overview"
+                            className="margin-top-2 display-block display-flex flex-align-center text-bold"
+                          />
+                        ),
+                        iconForward: (
+                          <IconArrowForward className="margin-left-1 text-bold" />
+                        )
+                      }}
+                    />
+                  </p>
+                </ProcessListItem>
+              ))}
             </ProcessList>
 
-            <h3 className="margin-top-1 margin-bottom-1">
-              {t('initiateWork.outcomes.heading')}
+            <h3 className="margin-top-neg-2 margin-bottom-1">
+              {t('startModelPlan.outcomes.heading')}
             </h3>
 
             <p className="margin-y-0 line-height-sans-5">
-              {t('initiateWork.outcomes.description')}
+              {t('startModelPlan.outcomes.description')}
             </p>
 
-            <ol className="padding-left-5">
-              <li>{t('initiateWork.outcomes.items.0')}</li>
+            <ol className="padding-left-8 margin-bottom-6">
+              {startModelPlanOutcomesConfig.map(item => (
+                <li key={item} className="line-height-sans-5">
+                  {item}
+                </li>
+              ))}
             </ol>
 
-            {/* TRACK WORK */}
+            {/* ASSEMBLE TEAM */}
 
             <h2
               id={covertToLowercaseAndDashes(t('summaryBox.items.1'))}
               className="margin-top-7 margin-bottom-2"
             >
-              {t('trackWork.heading')}
+              {t('assembleTeam.heading')}
             </h2>
 
             <h3 className="margin-top-3 margin-bottom-1">
-              {t('trackWork.purpose')}
+              {t('assembleTeam.purpose')}
             </h3>
 
             <p className="margin-y-0 line-height-sans-5">
-              {t('trackWork.purposeDescription')}
+              {t('assembleTeam.purposeDescription')}
             </p>
 
             <h3 className="margin-top-3 margin-bottom-1">
-              {t('trackWork.when')}
+              {t('assembleTeam.when')}
             </h3>
 
             <p className="margin-y-0 line-height-sans-5">
-              {t('trackWork.whenDescription')}
+              {t('assembleTeam.whenDescription')}
             </p>
 
             <h3 className="margin-top-3 margin-bottom-4">
-              {t('trackWork.activities.heading')}
+              {t('assembleTeam.activities.heading')}
             </h3>
 
             <ProcessList>
-              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-2">
-                <ProcessListHeading type="h5" className="font-body-sm">
-                  {t('trackWork.activities.items.0.heading')}
-                </ProcessListHeading>
+              {assembleTeamActivitiesConfig.map(activity => (
+                <ProcessListItem
+                  key={activity.heading}
+                  className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+                >
+                  <ProcessListHeading type="h5" className="font-body-sm">
+                    {activity.heading}
+                  </ProcessListHeading>
 
-                <p className="margin-top-105 margin-bottom-1">
-                  {t('trackWork.activities.items.0.description')}
-                </p>
-
-                <ul className="padding-left-5 margin-y-0">
-                  {stayInformedConfig.map(item => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </ProcessListItem>
-
-              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0">
-                <ProcessListHeading type="h5" className="font-body-sm">
-                  {t('trackWork.activities.items.1.heading')}
-                </ProcessListHeading>
-
-                <p className="margin-top-105 margin-bottom-1">
-                  {t('trackWork.activities.items.1.description')}
-                </p>
-
-                <ul className="padding-left-5 margin-y-0">
-                  {trackProgressConfig.map(item => {
-                    let listItem = <></>;
-                    if (item.items) {
-                      listItem = (
-                        <ul className="padding-left-5 margin-y-0">
-                          {item.items.map((item2: string) => {
-                            return <li key={item2}>{item2}</li>;
-                          })}
-                        </ul>
-                      );
-                    }
-                    return (
-                      <li key={item.heading}>
-                        {item.heading}
-                        {listItem}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </ProcessListItem>
+                  <p className="margin-top-105">{activity.description}</p>
+                </ProcessListItem>
+              ))}
             </ProcessList>
 
-            <h3 className="margin-top-3 margin-bottom-1">
-              {t('trackWork.outcomes.heading')}
+            <h3 className="margin-top-neg-2 margin-bottom-1">
+              {t('assembleTeam.outcomes.heading')}
             </h3>
 
             <p className="margin-y-0 line-height-sans-5">
-              {t('trackWork.outcomes.description')}
+              {t('assembleTeam.outcomes.description')}
             </p>
 
-            <ol className="padding-left-5 margin-bottom-6">
-              {outcomesConfig.map(item => (
-                <li key={item} className="padding-bottom-1">
+            <ol className="padding-left-8 margin-bottom-6">
+              {assembleTeamOutcomesConfig.map(item => (
+                <li key={item} className="line-height-sans-5">
+                  {item}
+                </li>
+              ))}
+            </ol>
+
+            {/* IDENTIFY SOLUTIONS */}
+
+            <h2
+              id={covertToLowercaseAndDashes(t('summaryBox.items.2'))}
+              className="margin-top-7 margin-bottom-2"
+            >
+              {t('identifySolutions.heading')}
+            </h2>
+
+            <h3 className="margin-top-3 margin-bottom-1">
+              {t('identifySolutions.purpose')}
+            </h3>
+
+            <p className="margin-y-0 line-height-sans-5">
+              {t('identifySolutions.purposeDescription')}
+            </p>
+
+            <h3 className="margin-top-3 margin-bottom-1">
+              {t('identifySolutions.when')}
+            </h3>
+
+            <p className="margin-y-0 line-height-sans-5">
+              {t('identifySolutions.whenDescription')}
+            </p>
+
+            <ol className="padding-left-8 margin-bottom-1">
+              {identifySolutionsWhenConfig.map(item => (
+                <li key={item} className="line-height-sans-5">
+                  {item}
+                </li>
+              ))}
+            </ol>
+
+            <p className="margin-y-0 line-height-sans-5 padding-left-6">
+              {t('identifySolutions.whenDescription2')}
+            </p>
+
+            <h3 className="margin-top-4 margin-bottom-4">
+              {t('identifySolutions.activities.heading')}
+            </h3>
+
+            <ProcessList>
+              {identifySolutionsActivitiesConfig.map(activity => (
+                <ProcessListItem
+                  key={activity.heading}
+                  className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+                >
+                  <ProcessListHeading type="h5" className="font-body-sm">
+                    {activity.heading}
+                  </ProcessListHeading>
+
+                  <p className="margin-top-105">{activity.description}</p>
+                </ProcessListItem>
+              ))}
+            </ProcessList>
+
+            <h3 className="margin-top-neg-2 margin-bottom-1">
+              {t('identifySolutions.outcomes.heading')}
+            </h3>
+
+            <p className="margin-y-0 line-height-sans-5">
+              {t('identifySolutions.outcomes.description')}
+            </p>
+
+            <ol className="padding-left-8 margin-bottom-6">
+              {identifySolutionsOutcomesConfig.map(item => (
+                <li key={item} className="line-height-sans-5">
                   {item}
                 </li>
               ))}
