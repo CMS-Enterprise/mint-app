@@ -298,7 +298,7 @@ const OperationalNeedsTable = ({
       },
       globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
-      autoResetPage: false,
+      autoResetPage: true,
       initialState: {
         sortBy: useMemo(
           () => [{ id: type === 'needs' ? 'needName' : 'name', asc: true }],
