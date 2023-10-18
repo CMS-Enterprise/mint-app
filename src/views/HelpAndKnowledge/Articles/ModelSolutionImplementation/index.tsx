@@ -72,7 +72,7 @@ export const ModelSolutionImplementation = () => {
 
               <ol className="padding-left-5 margin-y-0">
                 {summaryBoxConfig.map(item => (
-                  <li className="margin-bottom-1">
+                  <li key={item} className="margin-bottom-1">
                     <div className="margin-left-1 display-flex flex-align-center">
                       <UswdsReactLink to="/" className="margin-right-1">
                         {item}
@@ -131,18 +131,16 @@ export const ModelSolutionImplementation = () => {
 
                 <ul className="padding-left-5 margin-y-0">
                   {determinePriorityConfig.map(item => (
-                    <li>{item}</li>
+                    <li key={item}>{item}</li>
                   ))}
                 </ul>
 
-                <UswdsReactLink to="/" className="margin-right-1">
-                  <div className="margin-top-2 display-flex flex-align-center text-bold">
-                    <UswdsReactLink to="/" className="margin-right-1">
-                      {t('initiateWork.activities.learnMore')}
-                    </UswdsReactLink>
-                    <IconArrowForward />
-                  </div>
-                </UswdsReactLink>
+                <div className="margin-top-2 margin-bottom-4 display-flex flex-align-center text-bold">
+                  <UswdsReactLink to="/" className="margin-right-1">
+                    {t('initiateWork.activities.learnMore')}
+                  </UswdsReactLink>
+                  <IconArrowForward />
+                </div>
               </ProcessListItem>
             </ProcessList>
 
@@ -196,7 +194,7 @@ export const ModelSolutionImplementation = () => {
 
                 <ul className="padding-left-5 margin-y-0">
                   {stayInformedConfig.map(item => (
-                    <li>{item}</li>
+                    <li key={item}>{item}</li>
                   ))}
                 </ul>
               </ProcessListItem>
@@ -217,13 +215,13 @@ export const ModelSolutionImplementation = () => {
                       listItem = (
                         <ul className="padding-left-5 margin-y-0">
                           {item.items.map((item2: string) => {
-                            return <li>{item2}</li>;
+                            return <li key={item2}>{item2}</li>;
                           })}
                         </ul>
                       );
                     }
                     return (
-                      <li>
+                      <li key={item.heading}>
                         {item.heading}
                         {listItem}
                       </li>
@@ -243,7 +241,9 @@ export const ModelSolutionImplementation = () => {
 
             <ol className="padding-left-5 margin-bottom-6">
               {outcomesConfig.map(item => (
-                <li className="padding-bottom-1">{item}</li>
+                <li key={item} className="padding-bottom-1">
+                  {item}
+                </li>
               ))}
             </ol>
           </Grid>
