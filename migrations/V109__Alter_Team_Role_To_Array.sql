@@ -38,3 +38,19 @@ CREATE TRIGGER collaborator_lead_req_delete
   FOR EACH ROW
   WHEN ('MODEL_LEAD' = ANY(old.team_roles))
 EXECUTE FUNCTION COLLABORATOR_ROLE_CHECK_TRIGGER();
+
+-- Trigger function to check for unique roles within team_roles array
+CREATE FUNCTION ENSURE_UNIQUE_ROLES_TRIGGER() RETURNS TRIGGER AS $unique_roles$
+BEGIN
+  IF ARRAY_LENGTH(NEW.team_roles, 1) != (SELECT COUNT(DISTINCT unnest_val) FROM unnest(NEW.team_roles) AS unnest_val) THEN
+    RAISE EXCEPTION 'Duplicate roles are not allowed in team_roles';
+  END IF;
+  RETURN NEW;
+END
+$unique_roles$ LANGUAGE plpgsql;
+
+-- Trigger to call the function before each INSERT or UPDATE on plan_collaborator
+CREATE TRIGGER ensure_unique_roles
+  BEFORE INSERT OR UPDATE ON plan_collaborator
+  FOR EACH ROW
+EXECUTE FUNCTION ENSURE_UNIQUE_ROLES_TRIGGER();
