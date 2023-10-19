@@ -76,3 +76,8 @@ CREATE TRIGGER ensure_unique_roles
   BEFORE INSERT OR UPDATE ON plan_collaborator
   FOR EACH ROW
 EXECUTE FUNCTION ensure_unique_roles_trigger();
+
+-- Replace the 'insert_fields' column in the audit.table_config plan_collaborator row to include 'team_roles'
+UPDATE audit.table_config
+SET insert_fields = ARRAY['user_id', 'team_roles']::text[]
+WHERE name = 'plan_collaborator';

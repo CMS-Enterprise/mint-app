@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"log"
 	"time"
 
 	faktory "github.com/contribsys/faktory/client"
@@ -236,15 +237,25 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 
 	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.AnalyzedModelLeadInfo, bool) {
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_role") && m.Fields["team_role"].New == "MODEL_LEAD" {
+
+		log.Printf("Debug: Processing audit entry number %d with keys: %v", index, keys)
+
+		teamRoles, ok := m.Fields["team_roles"].New.([]string)
+		if !ok {
+			log.Printf("Warning: team_roles is not of type []string in audit entry number %d. It is of type %T", index, m.Fields["team_roles"].New)
+			return models.AnalyzedModelLeadInfo{}, false
+		}
+
+		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_roles") && lo.Contains(teamRoles, "MODEL_LEAD") {
 			idString := m.Fields["user_id"].New.(string)
 			var id uuid.UUID
 			id, parseError = uuid.Parse(idString)
 			if parseError != nil {
+				log.Printf("Error: Failed to parse UUID in audit entry number %d with error: %v", index, parseError)
 				return models.AnalyzedModelLeadInfo{}, false
 			}
 
-			account, _ := store.UserAccountGetByID(id) //TODO should we handle? The error? I think null is ok if can't get the account
+			account, _ := store.UserAccountGetByID(id) //TODO should we handle the error? I think null is ok if can't get the account
 
 			return models.AnalyzedModelLeadInfo{
 				ID:         id,
@@ -264,7 +275,6 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 	}
 
 	return nil, nil
-
 }
 
 // analyzeDiscussionAudits analyzes if there was discussion activity on a model plan

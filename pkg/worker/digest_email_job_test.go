@@ -45,7 +45,13 @@ func (suite *WorkerSuite) TestDigestEmail() {
 	}
 
 	mp := suite.createModelPlan("Test Plan")
-	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
+	collaborator := suite.createPlanCollaborator(
+		mp,
+		"MINT",
+		"Test User",
+		[]models.TeamRole{models.TeamRoleModelLead},
+		"testuser@email.com",
+	)
 	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
 	suite.NoError(err)
 
@@ -114,7 +120,13 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 	date := time.Now().UTC().Format("2006-01-02")
 	//Create Plans
 	mp := suite.createModelPlan("Test Plan")
-	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
+	collaborator := suite.createPlanCollaborator(
+		mp,
+		"MINT",
+		"Test User",
+		[]models.TeamRole{models.TeamRoleModelLead},
+		"testuser@email.com",
+	)
 	emails := []string{collaborator.UserID.String(), suite.testConfigs.Principal.Account().ID.String()} //TODO verify that his is correct
 	// SHOULD EMAIL CREATOR OF PLAN AND COLLABORATOR
 
@@ -233,7 +245,13 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 	// 	date := time.Now().UTC().Format("2006-01-02")
 	//Create Plans
 	mp := suite.createModelPlan("Test Plan")
-	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
+	collaborator := suite.createPlanCollaborator(
+		mp,
+		"MINT",
+		"Test User",
+		[]models.TeamRole{models.TeamRoleModelLead},
+		"testuser@email.com",
+	)
 	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
 	suite.NoError(err)
 
