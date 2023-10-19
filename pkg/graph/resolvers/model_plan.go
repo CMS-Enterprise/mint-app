@@ -292,8 +292,9 @@ func ModelPlanShare(
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	viewFilter *models.ModelViewFilter,
-	receiverEmails []string,
+	usernames []string,
 	optionalMessage *string,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (bool, error) {
 	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
 	if err != nil {
@@ -303,6 +304,24 @@ func ModelPlanShare(
 	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return false, err
+	}
+
+	receiverEmails := make([]string, len(usernames))
+
+	for i, username := range usernames {
+		collabAccount, err := userhelpers.GetOrCreateUserAccount(
+			ctx,
+			store,
+			username,
+			false,
+			false,
+			getAccountInformation,
+		)
+		if err != nil {
+			return false, fmt.Errorf("failed to get or create user account: %w", err)
+		}
+
+		receiverEmails[i] = collabAccount.Email
 	}
 
 	// Get client address

@@ -6,9 +6,12 @@ import NotFound from 'views/NotFound';
 import AllArticles from './Articles/AllArticles';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
+import ModelSolutionDesign from './Articles/ModelSolutionDesign';
+import ModelSolutionImplementation from './Articles/ModelSolutionImplementation';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
+import UtilizingSolutions from './Articles/UtilizingSolutions';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
 
@@ -31,6 +34,7 @@ export const HelpAndKnowledge = () => {
         <SolutionsHelp />
       </Route>
 
+      {/* Getting Started Articles */}
       <Route path="/help-and-knowledge/high-level-project-plan" exact>
         <HighLevelProjectPlan />
       </Route>
@@ -54,6 +58,19 @@ export const HelpAndKnowledge = () => {
         from="/help-and-knowledge/sample-model-plan"
         to="/help-and-knowledge/sample-model-plan/model-basics"
       />
+
+      {/* IT Implementation Articles */}
+      <Route path="/help-and-knowledge/utilizing-solutions" exact>
+        <UtilizingSolutions />
+      </Route>
+
+      <Route path="/help-and-knowledge/model-and-solution-implementation" exact>
+        <ModelSolutionImplementation />
+      </Route>
+
+      <Route path="/help-and-knowledge/model-and-solution-design" exact>
+        <ModelSolutionDesign />
+      </Route>
 
       <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>
         <SampleModelPlan />

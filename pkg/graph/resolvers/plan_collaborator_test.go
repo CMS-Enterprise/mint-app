@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+
 	"github.com/lib/pq"
 
 	"github.com/golang/mock/gomock"

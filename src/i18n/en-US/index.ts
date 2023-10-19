@@ -8,9 +8,12 @@ import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
+import modelSolutionDesign from './helpAndKnowledge/Articles/modelSolutionDesign';
+import modelSolutionImplementation from './helpAndKnowledge/Articles/modelSolutionImplementation';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
+import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
@@ -99,10 +102,15 @@ const enUS = {
   privacyPolicy,
   readOnlyModelPlan,
   feedback,
-  sampleModelPlan,
-  twoPageMeeting,
-  sixPageMeeting,
+  // Help and Knowledge Center Articles
   highLevelProjectPlans,
+  modelSolutionDesign,
+  modelSolutionImplementation,
+  sampleModelPlan,
+  sixPageMeeting,
+  twoPageMeeting,
+  utilizingSolutions,
+  // End Help and Knowledge Center Articles
   subtasks,
   tableAndPagination,
   termsAndConditions,

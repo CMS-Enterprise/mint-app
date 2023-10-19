@@ -5,6 +5,7 @@ export default gql`
     searchOktaUsers(searchTerm: $searchTerm) {
       displayName
       username
+      email
     }
   }
 `;

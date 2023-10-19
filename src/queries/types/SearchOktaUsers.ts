@@ -11,6 +11,7 @@ export interface SearchOktaUsers_searchOktaUsers {
   __typename: "UserInfo";
   displayName: string;
   username: string;
+  email: string;
 }
 
 export interface SearchOktaUsers {
