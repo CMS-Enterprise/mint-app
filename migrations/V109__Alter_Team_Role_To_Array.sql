@@ -13,24 +13,38 @@ ALTER TABLE plan_collaborator
 -- Create or replace trigger function
 CREATE OR REPLACE FUNCTION collaborator_role_check_trigger() RETURNS TRIGGER AS $role_check$
 BEGIN
-  -- Check if the old roles contained "MODEL_LEAD" but the new roles do not
-  IF 'MODEL_LEAD' = ANY(OLD.team_roles) AND NOT ('MODEL_LEAD' = ANY(NEW.team_roles)) THEN
-    -- Ensure there's another collaborator with the "MODEL_LEAD" role
-    IF (
-         SELECT count(*)
-         FROM plan_collaborator
-         WHERE 'MODEL_LEAD' = ANY(team_roles) AND model_plan_id = OLD.model_plan_id AND id != NEW.id
-       ) = 0 THEN
-      RAISE EXCEPTION 'There must be at least one MODEL_LEAD assigned to each model plan';
-    END IF;
-  END IF;
-
-  -- Return value based on operation type
+  -- For DELETE operations
   IF (TG_OP = 'DELETE') THEN
+    -- If the roles being deleted contain "MODEL_LEAD"
+    IF 'MODEL_LEAD' = ANY(OLD.team_roles) THEN
+      -- Ensure there's another collaborator with the "MODEL_LEAD" role
+      IF (
+           SELECT count(*)
+           FROM plan_collaborator
+           WHERE 'MODEL_LEAD' = ANY(team_roles) AND model_plan_id = OLD.model_plan_id AND id != OLD.id
+         ) = 0 THEN
+        RAISE EXCEPTION 'There must be at least one MODEL_LEAD assigned to each model plan';
+      END IF;
+    END IF;
     RETURN OLD;
-  ELSE
+
+    -- For UPDATE operations
+  ELSEIF (TG_OP = 'UPDATE') THEN
+    -- If the old roles contained "MODEL_LEAD" but the new roles do not
+    IF 'MODEL_LEAD' = ANY(OLD.team_roles) AND NOT ('MODEL_LEAD' = ANY(NEW.team_roles)) THEN
+      -- Ensure there's another collaborator with the "MODEL_LEAD" role
+      IF (
+           SELECT count(*)
+           FROM plan_collaborator
+           WHERE 'MODEL_LEAD' = ANY(team_roles) AND model_plan_id = OLD.model_plan_id AND id != NEW.id
+         ) = 0 THEN
+        RAISE EXCEPTION 'There must be at least one MODEL_LEAD assigned to each model plan';
+      END IF;
+    END IF;
     RETURN NEW;
   END IF;
+
+  RETURN NULL; -- This should never be reached, but it's good practice to have a default return
 END
 $role_check$ LANGUAGE plpgsql;
 
