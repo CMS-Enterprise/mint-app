@@ -4,7 +4,7 @@ Integrated with Formik
 */
 
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
@@ -24,7 +24,12 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 import { translateOperationalSolutionKey } from 'utils/modelPlan';
+import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import {
+  AboutConfigType,
+  getTransLinkComponents
+} from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import './index.scss';
@@ -36,6 +41,67 @@ type CheckboxCardProps = {
   index: number;
 };
 
+const SolutionDescription = ({ solution }: { solution: HelpSolutionType }) => {
+  const { t } = useTranslation('helpAndKnowledge');
+
+  const { modelID, operationalNeedID } = useParams<{
+    modelID: string;
+    operationalNeedID: string;
+  }>();
+
+  const location = useLocation();
+
+  const [initLocation] = useState<string>(location.pathname);
+
+  const solutions = useHelpSolution();
+
+  const aboutConfig: AboutConfigType = t(`solutions.${solution.key}.about`, {
+    returnObjects: true
+  });
+
+  const initialLink: string = aboutConfig?.links?.[0]?.link || '';
+
+  const linkedSolutionRoute = initialLink.substring(
+    initialLink.indexOf('?solution=') + 10,
+    initialLink.lastIndexOf('&')
+  );
+
+  const linkedSolution = findSolutionByRouteParam(
+    linkedSolutionRoute,
+    solutions
+  );
+
+  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
+    linkedSolution?.enum as string | null
+  );
+
+  return (
+    <>
+      {renderModal && selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`}
+        />
+      )}
+
+      <div className="margin-bottom-2 solutions-checkbox__body-text">
+        {solution.key && (
+          <Trans
+            i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.description`}
+            components={{
+              ...getTransLinkComponents(
+                aboutConfig.links,
+                `${initLocation}${location.search}`
+              )
+            }}
+          />
+        )}
+      </div>
+    </>
+  );
+};
+
 const CheckboxCard = ({
   className,
   disabled,
@@ -44,7 +110,6 @@ const CheckboxCard = ({
 }: CheckboxCardProps) => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('generalReadOnly');
-  const { t: hk } = useTranslation('helpAndKnowledge');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -132,7 +197,6 @@ const CheckboxCard = ({
         </Button>
       );
     }
-
     return (
       <UswdsReactLink
         className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
@@ -225,8 +289,7 @@ const CheckboxCard = ({
 
           {(!solution.isOther || isDefaultSolutionOptions) && (
             <div className="margin-bottom-2 solutions-checkbox__body-text">
-              {solutionMap &&
-                hk(`solutions.${solutionMap.key}.about.description`)}
+              {solutionMap && <SolutionDescription solution={solutionMap} />}
             </div>
           )}
 
