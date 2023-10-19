@@ -408,8 +408,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n    id\n    modelPlanID\n    userID\n    teamRoles\n    userAccount \n    {\n        commonName\n        familyName\n        givenName\n        email\n        locale\n    }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"TEST\",\n    \"teamRoles\": [\"MODEL_LEAD\"]\n  }\n}"
+								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"TEST\",\n    \"teamRoles\": [\"MODEL_LEAD\", \"IT_LEAD\"]\n  }\n}"
 							}
 						},
 						"url": {
@@ -430,7 +430,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation updatePlanCollaborator ($id: UUID!, $newRoles: [TeamRole!]!) {\n    updatePlanCollaborator (id: $id, newRoles: $newRoles) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"{{modelLeadID}}\",\n  \"newRoles\": [\"LEARNING\"]\n}"
+								"variables": "{\n  \"id\": \"d16b0a20-5295-474f-9a9b-7d11809c9d74\",\n  \"newRoles\": [\"MODEL_LEAD\"]\n}"
 							}
 						},
 						"url": {
@@ -451,7 +451,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation deletePlanCollaborator ($id: UUID!) {\n    deletePlanCollaborator (id: $id) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
+								"variables": "{\n  \"id\": \"afdb772a-169b-4788-8a38-096a828fd09b\"\n}"
 							}
 						},
 						"url": {
