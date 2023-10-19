@@ -52,7 +52,9 @@ export const ModelSolutionImplementation = () => {
           <Grid desktop={{ col: 12 }}>
             <HelpBreadcrumb text={t('title')} />
 
-            <PageHeading className="margin-bottom-1">{t('title')}</PageHeading>
+            <PageHeading className="margin-bottom-1 margin-top-4">
+              {t('title')}
+            </PageHeading>
 
             <HelpCategoryTag
               type="it-implementation"
@@ -112,7 +114,7 @@ export const ModelSolutionImplementation = () => {
             </h3>
 
             <ProcessList>
-              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-2">
+              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2">
                 <ProcessListHeading type="h5" className="font-body-sm">
                   {t('initiateWork.activities.items.0.heading')}
                 </ProcessListHeading>
@@ -121,7 +123,7 @@ export const ModelSolutionImplementation = () => {
                 </p>
               </ProcessListItem>
 
-              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0">
+              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0 padding-left-2">
                 <ProcessListHeading type="h5" className="font-body-sm">
                   {t('initiateWork.activities.items.1.heading')}
                 </ProcessListHeading>
@@ -156,7 +158,7 @@ export const ModelSolutionImplementation = () => {
               {t('initiateWork.outcomes.description')}
             </p>
 
-            <ol className="padding-left-5">
+            <ol className="padding-left-7">
               <li>{t('initiateWork.outcomes.items.0')}</li>
             </ol>
 
@@ -190,7 +192,7 @@ export const ModelSolutionImplementation = () => {
             </h3>
 
             <ProcessList>
-              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-2">
+              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2">
                 <ProcessListHeading type="h5" className="font-body-sm">
                   {t('trackWork.activities.items.0.heading')}
                 </ProcessListHeading>
@@ -206,7 +208,7 @@ export const ModelSolutionImplementation = () => {
                 </ul>
               </ProcessListItem>
 
-              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0">
+              <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0 padding-left-2">
                 <ProcessListHeading type="h5" className="font-body-sm">
                   {t('trackWork.activities.items.1.heading')}
                 </ProcessListHeading>
@@ -246,7 +248,7 @@ export const ModelSolutionImplementation = () => {
               {t('trackWork.outcomes.description')}
             </p>
 
-            <ol className="padding-left-5 margin-bottom-6">
+            <ol className="padding-left-7 margin-bottom-6">
               {outcomesConfig.map(item => (
                 <li key={item} className="padding-bottom-1">
                   {item}

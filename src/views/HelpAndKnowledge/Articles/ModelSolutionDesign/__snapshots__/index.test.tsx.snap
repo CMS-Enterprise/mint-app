@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
+exports[`ModelSolutionDesign > matches the snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -45,7 +45,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
           class="mint-h1 margin-bottom-1 margin-top-4"
           tabindex="-1"
         >
-          Model implementation and solution implementation
+          Model design and solution design
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
@@ -62,7 +62,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         <p
           class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4"
         >
-          This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+          This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, and operational contracts needed to support the model.
         </p>
         <div
           class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
@@ -93,9 +93,9 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                   >
                     <a
                       class="display-flex flex-align-center"
-                      href="#initiate-work-with-each-operational-solution-team"
+                      href="#start-a-model-plan"
                     >
-                      Initiate work with each operational solution team
+                      Start a Model Plan
                       <svg
                         class="usa-icon"
                         focusable="false"
@@ -124,9 +124,40 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                   >
                     <a
                       class="display-flex flex-align-center"
-                      href="#track-work-up-through-implementation"
+                      href="#assemble-the-it-and-operational-team"
                     >
-                      Track work up through implementation
+                      Assemble the IT and operational team
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </li>
+                <li
+                  class="margin-bottom-1"
+                >
+                  <div
+                    class="margin-left-1 display-flex flex-align-center"
+                  >
+                    <a
+                      class="display-flex flex-align-center"
+                      href="#identify-the-it-solutions-for-the-model’s-operational-needs"
+                    >
+                      Identify the IT solutions for the model’s operational needs
                       <svg
                         class="usa-icon"
                         focusable="false"
@@ -153,9 +184,9 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         </div>
         <h2
           class="margin-top-6 margin-bottom-2"
-          id="initiate-work-with-each-operational-solution-team"
+          id="start-a-model-plan"
         >
-          1. Initiate work with each operational solution team
+          1. Start a Model Plan
         </h2>
         <h3
           class="margin-top-3 margin-bottom-1"
@@ -165,7 +196,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         <p
           class="margin-y-0 line-height-sans-5"
         >
-          To notify the project teams for each operational solution so that there is enough notice to implement the work needed.
+          To provide BSG with an understanding of the model needs so they can help determine the necessary operational solutions for the model.
         </p>
         <h3
           class="margin-top-3 margin-bottom-1"
@@ -175,7 +206,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         <p
           class="margin-y-0 line-height-sans-5"
         >
-          The IT Lead will assist model teams in understanding and following the release calendar of each system as all system timelines are different. 
+          The model team should begin their Model Plan after they’ve completed their 2-page concept document.
         </p>
         <h3
           class="margin-top-3 margin-bottom-4"
@@ -192,78 +223,74 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               class="usa-process-list__heading font-body-sm"
               data-testid="processListHeading"
             >
-              Determine priority
+              Start a Model Plan
             </h5>
             <p
               class="margin-top-105"
             >
-              Based on the IT solutions and implementation status tracker populated in the previous phase, the IT Lead will work with the Model Lead to determine which projects need to begin first. Working with some systems takes longer than others. The IT Lead will help model teams with the necessary timing.
+              Once a concept paper has been written, the Model Lead (or other model team member) will create a Model Plan within MINT to collaborate on the operational needs of the model.
+            
+            
+              <a
+                class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
+                href="/models/steps-overview"
+              >
+                Start a new Model Plan
+                <svg
+                  class="usa-icon margin-left-1 text-bold"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </a>
             </p>
           </li>
           <li
-            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0 padding-left-2"
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
           >
             <h5
               class="usa-process-list__heading font-body-sm"
               data-testid="processListHeading"
             >
-              Start work with the product/project teams
+              Upload relevant documents
             </h5>
             <p
-              class="margin-top-105 margin-bottom-1"
+              class="margin-top-105"
             >
-              The IT Lead will complete the documents and activities required by each operational solution team. All solutions are different, but this may include:
+              Upload relevant documents
+            
+            These will provide BSG and/or the IT Lead helpful background.
             </p>
-            <ul
-              class="padding-left-5 margin-y-0"
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
             >
-              <li>
-                Onboarding request
-              </li>
-              <li>
-                Change request
-              </li>
-              <li>
-                Contract Action
-              </li>
-              <li>
-                Business Requirements
-              </li>
-              <li>
-                User Stories
-              </li>
-            </ul>
-            <div
-              class="margin-top-2 margin-bottom-4 display-flex flex-align-center text-bold"
+              Make time to work with BSG during model design
+            </h5>
+            <p
+              class="margin-top-105"
             >
-              <a
-                class="usa-link margin-right-1"
-                href="/help-and-knowledge/utilizing-solutions"
-              >
-                Learn more about utilizing available operational solutions
-              </a>
-              <svg
-                class="usa-icon"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                />
-              </svg>
-            </div>
+              Operational planning for models is a very iterative process so collaboration is key.
+            </p>
           </li>
         </ol>
         <h3
-          class="margin-top-1 margin-bottom-1"
+          class="margin-top-neg-2 margin-bottom-1"
         >
           Outcomes
         </h3>
@@ -273,17 +300,29 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
           These activities produce the following outcomes:
         </p>
         <ol
-          class="padding-left-7"
+          class="padding-left-8 margin-bottom-6"
         >
-          <li>
-            Relevant product/project teams have been notified about the model and the model is in the backlog. 
+          <li
+            class="line-height-sans-5"
+          >
+            Model Plan that identifies the high-level operational requirements for your model; 
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Provides BSG with enough information to start assisting with the model
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Project Management and IT subject matter experts identified to work with the model team to plan, execute, and manage the IT and operational implementation for the CMMI model.
           </li>
         </ol>
         <h2
           class="margin-top-7 margin-bottom-2"
-          id="track-work-up-through-implementation"
+          id="assemble-the-it-and-operational-team"
         >
-          2. Track work up through implementation
+          2. Assemble the IT and operational team
         </h2>
         <h3
           class="margin-top-3 margin-bottom-1"
@@ -293,7 +332,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         <p
           class="margin-y-0 line-height-sans-5"
         >
-          For all groups involved to stay organized and informed throughout the implementation process.
+          To provide the model team with the necessary expertise to assist with completing the IT and operational projects.
         </p>
         <h3
           class="margin-top-3 margin-bottom-1"
@@ -303,7 +342,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         <p
           class="margin-y-0 line-height-sans-5"
         >
-          After the operational solutions have been identified and outreach has began, the IT Lead will help keep track of the status of each solution up until it has been implemented.
+          This happens after the Model Plan has been started in MINT.
         </p>
         <h3
           class="margin-top-3 margin-bottom-4"
@@ -320,88 +359,32 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               class="usa-process-list__heading font-body-sm"
               data-testid="processListHeading"
             >
-              Stay informed on the status of each project relevant to the model
+              Assign an IT Lead
             </h5>
             <p
-              class="margin-top-105 margin-bottom-1"
+              class="margin-top-105"
             >
-              To accomplish this, the IT Lead will need to do the following:
+              An IT Lead is a member of BSG that will work closely with the Model Team to orchestrate the implementation of all the IT and operations needed for a model. Other organizations might refer to this role as an integrator.
             </p>
-            <ul
-              class="padding-left-5 margin-y-0"
-            >
-              <li>
-                Attend project meetings
-              </li>
-              <li>
-                Read project materials
-              </li>
-              <li>
-                Communication with product owners
-              </li>
-            </ul>
           </li>
           <li
-            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0 padding-left-2"
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
           >
             <h5
               class="usa-process-list__heading font-body-sm"
               data-testid="processListHeading"
             >
-              Track progress of each operational solution within MINT
+              Collaborate with other SMEs as necessary
             </h5>
             <p
-              class="margin-top-105 margin-bottom-1"
+              class="margin-top-105"
             >
-              The IT Lead will work with the Model Team to update the status of each solution to the following:
+              Other SMEs may be brought in to help with other aspects of the operational and IT needs of the model.
             </p>
-            <ul
-              class="padding-left-5 margin-y-0"
-            >
-              <li>
-                Not started
-              </li>
-              <li>
-                Onboarding
-                <ul
-                  class="padding-left-5 margin-y-0"
-                >
-                  <li>
-                    Onboarding includes activities such as contract modification, change request, onboarding request, etc.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                Backlog
-                <ul
-                  class="padding-left-5 margin-y-0"
-                >
-                  <li>
-                    This means the model team’s work is on the project team’s backlog but not started yet.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                In progress
-              </li>
-              <li>
-                Completed
-              </li>
-              <li>
-                At risk
-                <ul
-                  class="padding-left-5 margin-y-0"
-                >
-                  <li>
-                    This indicates there are problems that may delay work or that the project is off track.
-                  </li>
-                </ul>
-              </li>
-            </ul>
           </li>
         </ol>
         <h3
-          class="margin-top-3 margin-bottom-1"
+          class="margin-top-neg-2 margin-bottom-1"
         >
           Outcomes
         </h3>
@@ -411,22 +394,142 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
           These activities produce the following outcomes:
         </p>
         <ol
-          class="padding-left-7 margin-bottom-6"
+          class="padding-left-8 margin-bottom-6"
         >
           <li
-            class="padding-bottom-1"
+            class="line-height-sans-5"
           >
-            Model Team knows the status of projects.
+            IT Lead and other relevant SMEs are identified to work with the model team to plan, execute, and manage the IT and operational implementation for the model.
+          </li>
+        </ol>
+        <h2
+          class="margin-top-7 margin-bottom-2"
+          id="identify-the-it-solutions-for-the-model’s-operational-needs"
+        >
+          3.   Identify the IT solutions for the model’s operational needs
+        </h2>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          Purpose
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          To identify the systems, data, and operational contracts needed to support a model. This step should identify the breadth of system and operational needs for a model.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          When
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          The operational needs identification should begin as soon as the model team:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-1"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            Starts developing the Innovation Center Investment Proposal (ICIP) after approval by the Portfolio Management Committee (PMC) and/or
           </li>
           <li
-            class="padding-bottom-1"
+            class="line-height-sans-5"
           >
-            Product owners, project managers, and associated teams manage and implement the systems and other services required for a model.
+            Begins developing a Notice of Proposed Rulemaking (NPRM). Ideally, the operational needs identification occurs in parallel with the ICIP / NPRM development.
+          </li>
+        </ol>
+        <p
+          class="margin-y-0 line-height-sans-5 padding-left-6"
+        >
+          Identifying operational and IT needs early allows the model and BSG team to identify the most effective and efficient operational support strategies. As the model design becomes clearer, the operational strategy should also increase in precision.
+        </p>
+        <h3
+          class="margin-top-4 margin-bottom-4"
+        >
+          Activities
+        </h3>
+        <ol
+          class="usa-process-list"
+        >
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Iterate and complete the Model Plan
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the IT solutions and implementation status tracker. 
+            </p>
           </li>
           <li
-            class="padding-bottom-1"
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
           >
-            Leadership can see the implementation status of projects.
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Select the necessary IT solutions for the model’s operational needs
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Within the IT solutions and implementation status tracker, the Model Lead and IT Lead will work together to select the IT solutions the model keeping the milestones in mind.
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Understand and plan for the data needs of the model
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              BSG will meet with model teams to understand the data the model will be collecting. For example: Models may choose to track participation in the model (the participants, providers, or beneficiaries). You will be asked to produce participation files in a specified format to be loaded into CMMI's central data repository the APM Management System (AMS).
+          
+          This model data will be shared with AMS, QPP, and ResDAC. Data will be made available for researchers in ResDAC after the first quarter of operations if it is ready at that point in time.
+            </p>
+          </li>
+        </ol>
+        <h3
+          class="margin-top-neg-2 margin-bottom-1"
+        >
+          Outcomes
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          These activities produce the following outcomes:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-6"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            Required operational needs for the model are identified.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            IT systems are identified for meeting the model needs.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Operational and data support for the model is identified.
           </li>
         </ol>
       </div>
@@ -518,7 +621,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
-                Model design and solution design
+                Model implementation and solution implementation
               </h3>
             </header>
             <a
@@ -538,7 +641,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, and operational contracts needed to support the model.
+                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
               </p>
             </div>
             <div
@@ -546,7 +649,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
-                aria-label="Read Model design and solution design article"
+                aria-label="Read Model implementation and solution implementation article"
                 class="usa-button usa-button--outline"
                 type="button"
               >
