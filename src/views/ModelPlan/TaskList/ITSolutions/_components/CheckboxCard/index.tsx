@@ -4,7 +4,7 @@ Integrated with Formik
 */
 
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
@@ -44,7 +44,6 @@ const CheckboxCard = ({
 }: CheckboxCardProps) => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('generalReadOnly');
-  const { t: hk } = useTranslation('helpAndKnowledge');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -225,8 +224,18 @@ const CheckboxCard = ({
 
           {(!solution.isOther || isDefaultSolutionOptions) && (
             <div className="margin-bottom-2 solutions-checkbox__body-text">
-              {solutionMap &&
-                hk(`solutions.${solutionMap.key}.about.description`)}
+              {solutionMap && (
+                <div className="margin-bottom-2 solutions-checkbox__body-text">
+                  {solution.key && (
+                    <Trans
+                      i18nKey={`helpAndKnowledge:solutions.${solutionMap.key}.about.description`}
+                      components={{
+                        link1: <span />
+                      }}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           )}
 
