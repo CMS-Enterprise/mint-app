@@ -6,6 +6,7 @@ import NotFound from 'views/NotFound';
 import AllArticles from './Articles/AllArticles';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
+import ModelSolutionImplementation from './Articles/ModelSolutionImplementation';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
@@ -60,6 +61,10 @@ export const HelpAndKnowledge = () => {
       {/* IT Implementation Articles */}
       <Route path="/help-and-knowledge/utilizing-solutions" exact>
         <UtilizingSolutions />
+      </Route>
+
+      <Route path="/help-and-knowledge/model-and-solution-implementation" exact>
+        <ModelSolutionImplementation />
       </Route>
 
       <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>

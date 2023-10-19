@@ -1,3 +1,6 @@
+import React from 'react';
+import { IconArrowForward } from '@trussworks/react-uswds';
+
 type ArticleProps = {
   name: string;
   route: string;
@@ -50,7 +53,28 @@ const helpAndKnowledgeArticles: (ArticleProps & {
     route: '/utilizing-solutions',
     translation: 'utilizingSolutions',
     type: 'it-implementation'
+  },
+  {
+    name: 'Model implementation and solution implementation',
+    route: '/model-and-solution-implementation',
+    translation: 'modelSolutionImplementation',
+    type: 'it-implementation'
   }
 ];
+
+export const covertToLowercaseAndDashes = (string: string) =>
+  string.toLowerCase().replace(/\s+/g, '-');
+
+export const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
+  return (
+    <a
+      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
+      className="display-flex flex-align-center"
+    >
+      {scrollTo}
+      <IconArrowForward />
+    </a>
+  );
+};
 
 export default helpAndKnowledgeArticles;

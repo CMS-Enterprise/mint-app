@@ -160,7 +160,7 @@ export const UtilizingSolutions = () => {
       </MainContent>
 
       <RelatedArticles
-        currentArticle="Utilizing Solutions"
+        currentArticle="Utilizing available operational solutions"
         type="it-implementation"
         viewAllLink
       />
