@@ -225,16 +225,12 @@ const CheckboxCard = ({
           {(!solution.isOther || isDefaultSolutionOptions) && (
             <div className="margin-bottom-2 solutions-checkbox__body-text">
               {solutionMap && (
-                <div className="margin-bottom-2 solutions-checkbox__body-text">
-                  {solution.key && (
-                    <Trans
-                      i18nKey={`helpAndKnowledge:solutions.${solutionMap.key}.about.description`}
-                      components={{
-                        link1: <span />
-                      }}
-                    />
-                  )}
-                </div>
+                <Trans
+                  i18nKey={`helpAndKnowledge:solutions.${solutionMap.key}.about.description`}
+                  components={{
+                    link1: <span />
+                  }}
+                />
               )}
             </div>
           )}
