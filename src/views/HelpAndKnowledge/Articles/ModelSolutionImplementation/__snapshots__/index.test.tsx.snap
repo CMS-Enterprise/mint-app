@@ -187,6 +187,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         >
           <li
             class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+
           >
             <h5
               class="usa-process-list__heading font-body-sm"
@@ -202,6 +203,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
           </li>
           <li
             class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-0 padding-bottom-0 padding-left-2"
+
           >
             <h5
               class="usa-process-list__heading font-body-sm"
