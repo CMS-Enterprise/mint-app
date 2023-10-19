@@ -4,7 +4,7 @@ import "github.com/cmsgov/mint-app/pkg/models"
 
 func (suite *ResolverSuite) TestCreatedByUserAccount() {
 	plan := suite.createModelPlan("My Test plan")
-	colab := suite.createPlanCollaborator(plan, "FRND", models.TeamRoleEvaluation)
+	colab := suite.createPlanCollaborator(plan, "FRND", []models.TeamRole{models.TeamRoleEvaluation})
 	createdAccount := colab.CreatedByUserAccount(suite.testConfigs.Context) //the same as the config test principal
 
 	suite.Equal(suite.testConfigs.Principal.UserAccount, createdAccount)
@@ -14,7 +14,7 @@ func (suite *ResolverSuite) TestModifiedByUserAccount() {
 	updaterPrincipal := getTestPrincipal(suite.testConfigs.Store, "BTMN")
 
 	plan := suite.createModelPlan("My Test plan")
-	colab := suite.createPlanCollaborator(plan, "FRND", models.TeamRoleEvaluation)
+	colab := suite.createPlanCollaborator(plan, "FRND", []models.TeamRole{models.TeamRoleEvaluation})
 
 	nilModifiedAccount := colab.ModifiedByUserAccount(suite.testConfigs.Context)
 	suite.Nil(nilModifiedAccount)
