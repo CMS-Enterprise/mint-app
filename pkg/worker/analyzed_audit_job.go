@@ -3,6 +3,7 @@ package worker
 import (
 	"context"
 	"log"
+	"strings"
 	"time"
 
 	faktory "github.com/contribsys/faktory/client"
@@ -238,11 +239,14 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.AnalyzedModelLeadInfo, bool) {
 		keys := lo.Keys(m.Fields)
 
-		log.Printf("Debug: Processing audit entry number %d with keys: %v", index, keys)
+		teamRolesRaw, ok := m.Fields["team_roles"].New.(string)
+		teamRolesRaw = strings.TrimPrefix(teamRolesRaw, "{")
+		teamRolesRaw = strings.TrimSuffix(teamRolesRaw, "}")
 
-		teamRoles, ok := m.Fields["team_roles"].New.([]string)
+		teamRoles := strings.Split(teamRolesRaw, ",")
+
 		if !ok {
-			log.Printf("Warning: team_roles is not of type []string in audit entry number %d. It is of type %T", index, m.Fields["team_roles"].New)
+			log.Printf("Warning: team_roles is not of type string in audit entry number %d. It is of type %T", index, m.Fields["team_roles"].New)
 			return models.AnalyzedModelLeadInfo{}, false
 		}
 
