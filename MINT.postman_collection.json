@@ -83,8 +83,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation shareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $receiverEmails: [String!]!, $optionalMessage: String) {\n    shareModelPlan(modelPlanID: $modelPlanID, viewFilter: $viewFilter, receiverEmails: $receiverEmails, optionalMessage: $optionalMessage)\n}\n",
-								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"receiverEmails\": [\"example1@example.com\", \"example2@example.com\"],\n  \"optionalMessage\": \"\"\n}\n"
+								"query": "mutation shareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $usernames: [String!]!, $optionalMessage: String) {\n    shareModelPlan(modelPlanID: $modelPlanID, viewFilter: $viewFilter, usernames: $usernames, optionalMessage: $optionalMessage)\n}\n",
+								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"usernames\": [\"ABCD\", \"TEST\"],\n  \"optionalMessage\": \"\"\n}\n"
 							}
 						},
 						"url": {

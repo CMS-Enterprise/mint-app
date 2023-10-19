@@ -17,9 +17,11 @@ import classNames from 'classnames';
 import CreateShareModelPlan from 'gql/apolloGQL/ShareExport/CreateShareModelPlan';
 import { ModelViewFilter } from 'gql/gen/graphql';
 
+import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
@@ -63,7 +65,7 @@ const ShareExportModal = ({
   const [exportCSV, setExportCSV] = useState<boolean>(false);
   const [exportPDF, setExportPDF] = useState<boolean>(false);
 
-  const [receiverEmails, setReceiverEmails] = useState<string>('');
+  const [usernames, setUsernames] = useState<string[]>([]);
   const [optionalMessage, setOptionalMessage] = useState<string>('');
 
   // State for modal navigation elements
@@ -200,16 +202,11 @@ const ShareExportModal = ({
               ? (filteredGroup.toUpperCase() as ModelViewFilter)
               : undefined;
 
-          // Converts comma-separated string into an array of trimmed email strings
-          const receiverEmailsArray: string[] = receiverEmails
-            .split(',')
-            .map(email => email.trim());
-
           shareModelPlan({
             variables: {
               modelPlanID: modelID,
               viewFilter,
-              receiverEmails: receiverEmailsArray,
+              usernames,
               optionalMessage
             }
           })
@@ -264,20 +261,21 @@ const ShareExportModal = ({
           {/* Email address recipient textarea */}
           <FieldGroup className="margin-top-4">
             <Label htmlFor="share-model-recipients" className="text-normal">
-              {generalReadOnlyT('modal.shareEmail')}
+              {generalReadOnlyT('modal.shareEmail')} <RequiredAsterisk />
             </Label>
 
             <p className="text-base margin-y-1">
               {generalReadOnlyT('modal.shareEmailInfo')}
             </p>
 
-            <TextAreaField
-              className="height-8"
+            <OktaMultiSelect
               id="share-model-recipients"
-              name="receiverEmails"
-              onBlur={() => null}
-              onChange={e => setReceiverEmails(e.currentTarget.value)}
-              value={receiverEmails}
+              ariaLabel={generalReadOnlyT('modal.shareEmail')}
+              name="usernames"
+              selectedLabel={generalReadOnlyT('modal.shareLabel')}
+              onChange={(users: any) => {
+                setUsernames(users);
+              }}
             />
           </FieldGroup>
 
@@ -293,7 +291,7 @@ const ShareExportModal = ({
             <TextAreaField
               className="share-export-modal__optional-message-textarea"
               id="share-model--optional-message"
-              name="receiverEmails"
+              name="optionalMessage"
               onBlur={() => null}
               onChange={e => setOptionalMessage(e.currentTarget.value)}
               value={optionalMessage}
@@ -334,7 +332,7 @@ const ShareExportModal = ({
             <Button
               type="submit"
               data-testid="export-model-plan"
-              disabled={!filteredGroup || !receiverEmails || loading}
+              disabled={!filteredGroup || !usernames || loading}
               className="margin-top-0"
             >
               {generalReadOnlyT('modal.share')}
