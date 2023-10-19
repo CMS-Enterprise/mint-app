@@ -75,7 +75,10 @@ const CollaboratorsTable = ({
       {
         Header: collaboratorsMiscT('table.actions'),
         Cell: ({ row }: any) => {
-          if (row.original.teamRole === 'MODEL_LEAD' && isLastLead) {
+          if (
+            row.original.teamRoles.includes(TeamRole.MODEL_LEAD) &&
+            isLastLead
+          ) {
             return <></>;
           }
           return (

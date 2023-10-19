@@ -6,6 +6,7 @@ const CollaboratorsValidationSchema = Yup.object().shape({
   }),
   teamRoles: Yup.array()
     .of(Yup.string())
+    .min(1, 'Requires at least one role')
     .required('Enter a role for this team member')
 });
 
