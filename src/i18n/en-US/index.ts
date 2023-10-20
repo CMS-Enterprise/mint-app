@@ -10,6 +10,7 @@ import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectP
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import modelSolutionDesign from './helpAndKnowledge/Articles/modelSolutionDesign';
 import modelSolutionImplementation from './helpAndKnowledge/Articles/modelSolutionImplementation';
+import phasesInvolved from './helpAndKnowledge/Articles/phasesInvolved';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
@@ -106,6 +107,7 @@ const enUS = {
   highLevelProjectPlans,
   modelSolutionDesign,
   modelSolutionImplementation,
+  phasesInvolved,
   sampleModelPlan,
   sixPageMeeting,
   twoPageMeeting,

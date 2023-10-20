@@ -65,6 +65,12 @@ const helpAndKnowledgeArticles: (ArticleProps & {
     route: '/model-and-solution-design',
     translation: 'modelSolutionDesign',
     type: 'it-implementation'
+  },
+  {
+    name: 'Phases Involved',
+    route: '/phases-involved',
+    translation: 'phasesInvolved',
+    type: 'it-implementation'
   }
 ];
 
