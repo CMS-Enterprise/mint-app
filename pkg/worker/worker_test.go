@@ -89,11 +89,17 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 	return pd
 }
 
-func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, userName string, fullName string, teamRole models.TeamRole, emailAddress string) *models.PlanCollaborator {
+func (suite *WorkerSuite) createPlanCollaborator(
+	mp *models.ModelPlan,
+	userName string,
+	fullName string,
+	teamRoles []models.TeamRole,
+	emailAddress string,
+) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
 		UserName:    userName,
-		TeamRoles:   []models.TeamRole{teamRole},
+		TeamRoles:   teamRoles,
 	}
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(

@@ -42,7 +42,13 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	}
 
 	mp := suite.createModelPlan("Test Plan")
-	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
+	collaborator := suite.createPlanCollaborator(
+		mp,
+		"MINT",
+		"Test User",
+		[]models.TeamRole{models.TeamRoleModelLead},
+		"testuser@email.com",
+	)
 
 	var analyzedAudits []*models.AnalyzedAudit
 	modelNameChange := "Old Name"
