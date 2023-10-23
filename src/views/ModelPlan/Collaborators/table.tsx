@@ -86,10 +86,11 @@ const CollaboratorsTable = ({
               >
                 {collaboratorsMiscT('table.edit')}
               </UswdsReactLink>
-
-              {(row.original.teamRoles.includes(TeamRole.MODEL_LEAD) &&
-                isLastLead) ||
-                (collaborators.length > 1 && (
+              {!(
+                row.original.teamRoles.includes(TeamRole.MODEL_LEAD) &&
+                isLastLead
+              ) &&
+                collaborators.length > 1 && (
                   <button
                     className="usa-button usa-button--unstyled line-height-body-5 text-red"
                     type="button"
@@ -103,7 +104,7 @@ const CollaboratorsTable = ({
                   >
                     {collaboratorsMiscT('modal.remove')}
                   </button>
-                ))}
+                )}
             </>
           );
         }
