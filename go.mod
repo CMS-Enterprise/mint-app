@@ -46,7 +46,6 @@ require (
 	github.com/hashicorp/golang-lru/v2 v2.0.3 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
-	github.com/sosodev/duration v1.1.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 )
 
