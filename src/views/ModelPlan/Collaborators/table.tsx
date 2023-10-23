@@ -75,12 +75,6 @@ const CollaboratorsTable = ({
       {
         Header: collaboratorsMiscT('table.actions'),
         Cell: ({ row }: any) => {
-          if (
-            row.original.teamRoles.includes(TeamRole.MODEL_LEAD) &&
-            isLastLead
-          ) {
-            return <></>;
-          }
           return (
             <>
               <UswdsReactLink
@@ -93,21 +87,23 @@ const CollaboratorsTable = ({
                 {collaboratorsMiscT('table.edit')}
               </UswdsReactLink>
 
-              {collaborators.length > 1 && (
-                <button
-                  className="usa-button usa-button--unstyled line-height-body-5 text-red"
-                  type="button"
-                  aria-label={`${collaboratorsMiscT('modal.remove')} ${
-                    row.original.userAccount.commonName
-                  }`}
-                  onClick={() => {
-                    setRemoveCollaborator(row.original);
-                    setModalOpen(true);
-                  }}
-                >
-                  {collaboratorsMiscT('modal.remove')}
-                </button>
-              )}
+              {(row.original.teamRoles.includes(TeamRole.MODEL_LEAD) &&
+                isLastLead) ||
+                (collaborators.length > 1 && (
+                  <button
+                    className="usa-button usa-button--unstyled line-height-body-5 text-red"
+                    type="button"
+                    aria-label={`${collaboratorsMiscT('modal.remove')} ${
+                      row.original.userAccount.commonName
+                    }`}
+                    onClick={() => {
+                      setRemoveCollaborator(row.original);
+                      setModalOpen(true);
+                    }}
+                  >
+                    {collaboratorsMiscT('modal.remove')}
+                  </button>
+                ))}
             </>
           );
         }
