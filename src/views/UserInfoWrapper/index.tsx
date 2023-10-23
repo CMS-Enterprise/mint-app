@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
@@ -33,12 +34,26 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
       JSON.parse(window.localStorage[localAuthStorageKey]).favorLocalAuth
     ) {
       const oktaUser: oktaUserProps = await oktaAuth.getUser();
+
       const user = {
         name: oktaUser.name,
         euaId: oktaUser.euaId || '',
         groups: oktaUser.groups || [],
         acceptedNDA: data?.ndaInfo
       };
+
+      const email = 'patrick.segura@oddball.io';
+
+      ReactGA.set({
+        userId: user.euaId
+      });
+
+      ReactGA.gtag('set', 'user_properties', {
+        user_name: user.name,
+        domain: email.replace(/.*@/, ''),
+        user_role: user.groups.join(', ')
+      });
+
       dispatch(setUser(user));
     } else {
       const user = {
