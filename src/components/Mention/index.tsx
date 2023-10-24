@@ -24,7 +24,9 @@ const CustomMention = Mention.extend({
     };
   },
   renderHTML({ HTMLAttributes }) {
-    const elem = document.createElement('span');
+    const elem = document.createElement('button');
+
+    elem.setAttribute('type', 'button');
 
     Object.entries(
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
@@ -32,6 +34,11 @@ const CustomMention = Mention.extend({
 
     elem.addEventListener('click', e => {
       // TODO: Add event handler here
+      // If event target not an HTMLButtonElement, exit
+      if (!(e.target instanceof HTMLButtonElement)) {
+        return;
+      }
+      // Data from mention stored here
       console.log(e.target?.dataset);
     });
 
@@ -99,7 +106,7 @@ export default ({ setFieldValue }: any) => {
       }),
       CustomMention.configure({
         HTMLAttributes: {
-          class: 'mention hello'
+          class: 'mention'
           // onclick: e => console.log(e)
         },
         suggestion: asyncSuggestions
