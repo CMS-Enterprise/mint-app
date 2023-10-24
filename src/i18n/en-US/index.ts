@@ -8,9 +8,13 @@ import subtasks from './draftModelPlan/subtasks';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
+import modelSolutionDesign from './helpAndKnowledge/Articles/modelSolutionDesign';
+import modelSolutionImplementation from './helpAndKnowledge/Articles/modelSolutionImplementation';
+import phasesInvolved from './helpAndKnowledge/Articles/phasesInvolved';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
+import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
@@ -38,6 +42,7 @@ import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';
 import error from './error';
+import externalLinkModal from './externalLinkModal';
 import feedback from './feedback';
 import footer from './footer';
 import general from './general';
@@ -98,13 +103,20 @@ const enUS = {
   privacyPolicy,
   readOnlyModelPlan,
   feedback,
-  sampleModelPlan,
-  twoPageMeeting,
-  sixPageMeeting,
+  // Help and Knowledge Center Articles
   highLevelProjectPlans,
+  modelSolutionDesign,
+  modelSolutionImplementation,
+  phasesInvolved,
+  sampleModelPlan,
+  sixPageMeeting,
+  twoPageMeeting,
+  utilizingSolutions,
+  // End Help and Knowledge Center Articles
   subtasks,
   tableAndPagination,
-  termsAndConditions
+  termsAndConditions,
+  externalLinkModal
 };
 
 export default enUS;

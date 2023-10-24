@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
+  ButtonGroup,
   Grid,
   GridContainer,
   IconArrowBack
@@ -14,11 +15,14 @@ import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 
 import DocumentUpload from './documentUpload';
+import LinkDocument from './LinkDocument';
 
 const AddDocument = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documents');
   const { modelID } = useParams<{ modelID: string }>();
+
+  const [formState, setFormState] = useState<'upload' | 'link'>('upload');
 
   const history = useHistory();
 
@@ -66,7 +70,7 @@ const AddDocument = () => {
       <GridContainer>
         <Grid desktop={{ col: 6 }}>
           <PageHeading className="margin-top-4 margin-bottom-0">
-            {t('uploadDocument')}
+            {t('addDocument')}
           </PageHeading>
 
           <p className="margin-bottom-2 font-body-md line-height-body-4">
@@ -77,10 +81,34 @@ const AddDocument = () => {
             {t('requiredHint')} <RequiredAsterisk /> {t('requiredHint2')}
           </p>
 
-          <DocumentUpload
-            solutionDetailsLink={solutionDetailsLink}
-            solutionID={solutionID}
-          />
+          <ButtonGroup type="segmented">
+            <Button
+              type="button"
+              outline={formState !== 'upload'}
+              onClick={() => setFormState('upload')}
+            >
+              {t('segmentedButton.upload')}
+            </Button>
+            <Button
+              type="button"
+              outline={formState !== 'link'}
+              onClick={() => setFormState('link')}
+            >
+              {t('segmentedButton.link')}
+            </Button>
+          </ButtonGroup>
+
+          {formState === 'upload' ? (
+            <DocumentUpload
+              solutionDetailsLink={solutionDetailsLink}
+              solutionID={solutionID}
+            />
+          ) : (
+            <LinkDocument
+              solutionDetailsLink={solutionDetailsLink}
+              solutionID={solutionID}
+            />
+          )}
 
           <div className="display-block">
             <Button
@@ -89,7 +117,7 @@ const AddDocument = () => {
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
               <IconArrowBack className="margin-right-1" aria-hidden />
-              {t('dontUpload')}
+              {t('dontAdd')}
             </Button>
           </div>
         </Grid>

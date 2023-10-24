@@ -3,13 +3,16 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import NotFound from 'views/NotFound';
 
-import GettingStarted from './Articles/GettingStarted';
+import AllArticles from './Articles/AllArticles';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
-import ITImplementation from './Articles/ITImplementation';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
+import ModelSolutionDesign from './Articles/ModelSolutionDesign';
+import ModelSolutionImplementation from './Articles/ModelSolutionImplementation';
+import PhasesInvolved from './Articles/PhasesInvolved';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
+import UtilizingSolutions from './Articles/UtilizingSolutions';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
 
@@ -20,6 +23,10 @@ export const HelpAndKnowledge = () => {
         <HelpAndKnowledgeHome />
       </Route>
 
+      <Route path="/help-and-knowledge/articles" exact>
+        <AllArticles />
+      </Route>
+
       <Route path="/help-and-knowledge/model-plan-overview" exact>
         <ModelPlanOverview />
       </Route>
@@ -28,6 +35,7 @@ export const HelpAndKnowledge = () => {
         <SolutionsHelp />
       </Route>
 
+      {/* Getting Started Articles */}
       <Route path="/help-and-knowledge/high-level-project-plan" exact>
         <HighLevelProjectPlan />
       </Route>
@@ -52,16 +60,25 @@ export const HelpAndKnowledge = () => {
         to="/help-and-knowledge/sample-model-plan/model-basics"
       />
 
+      {/* IT Implementation Articles */}
+      <Route path="/help-and-knowledge/utilizing-solutions" exact>
+        <UtilizingSolutions />
+      </Route>
+
+      <Route path="/help-and-knowledge/model-and-solution-implementation" exact>
+        <ModelSolutionImplementation />
+      </Route>
+
+      <Route path="/help-and-knowledge/model-and-solution-design" exact>
+        <ModelSolutionDesign />
+      </Route>
+
+      <Route path="/help-and-knowledge/phases-involved" exact>
+        <PhasesInvolved />
+      </Route>
+
       <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>
         <SampleModelPlan />
-      </Route>
-
-      <Route path="/help-and-knowledge/getting-started" exact>
-        <GettingStarted />
-      </Route>
-
-      <Route path="/help-and-knowledge/it-implementation" exact>
-        <ITImplementation />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />

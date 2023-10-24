@@ -280,13 +280,14 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'CBOSC',
     name: 'Consolidated Business Operations Support Center',
     systemOwner: {
-      name: 'Business Services Group, Division of IT Operations and Security',
+      name:
+        'Business Services Group, Division of System Support, Operations, and Security',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {}
@@ -624,8 +625,8 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {

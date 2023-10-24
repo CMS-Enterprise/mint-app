@@ -10,6 +10,15 @@ export type FileUploadForm = {
   optionalNotes: string;
 };
 
+export type LinkingDocumentFormTypes = {
+  name: string;
+  url: string;
+  restricted: boolean | null;
+  documentType: DocumentType | null;
+  otherTypeDescription: string;
+  optionalNotes: string;
+};
+
 export type UploadedFile = {
   filename: string;
   uploadURL: string;

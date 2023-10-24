@@ -239,7 +239,7 @@ type ComplexityRoot struct {
 		RemovePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
 		ReportAProblem                     func(childComplexity int, input model.ReportAProblemInput) int
 		SendFeedbackEmail                  func(childComplexity int, input model.SendFeedbackEmailInput) int
-		ShareModelPlan                     func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) int
+		ShareModelPlan                     func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		UpdateCustomOperationalNeedByID    func(childComplexity int, id uuid.UUID, customNeedType *string, needed bool) int
@@ -1020,7 +1020,7 @@ type MutationResolver interface {
 	UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error)
 	DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error)
-	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error)
+	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error)
 	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
 }
@@ -2221,7 +2221,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.ShareModelPlan(childComplexity, args["modelPlanID"].(uuid.UUID), args["viewFilter"].(*models.ModelViewFilter), args["receiverEmails"].([]string), args["optionalMessage"].(*string)), true
+		return e.complexity.Mutation.ShareModelPlan(childComplexity, args["modelPlanID"].(uuid.UUID), args["viewFilter"].(*models.ModelViewFilter), args["usernames"].([]string), args["optionalMessage"].(*string)), true
 
 	case "Mutation.unlockAllTaskListSections":
 		if e.complexity.Mutation.UnlockAllTaskListSections == nil {
@@ -7062,7 +7062,7 @@ PossibleOperationalSolutionContact represents a contact for a possible operation
 type PossibleOperationalSolutionContact {
   id: UUID!
   possibleOperationalSolutionID: Int!
-  
+
   name: String!
   email: String!
   isTeam: Boolean!
@@ -8742,7 +8742,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 
-shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
 
 reportAProblem(input: ReportAProblemInput!): Boolean!
@@ -9990,14 +9990,14 @@ func (ec *executionContext) field_Mutation_shareModelPlan_args(ctx context.Conte
 	}
 	args["viewFilter"] = arg1
 	var arg2 []string
-	if tmp, ok := rawArgs["receiverEmails"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("receiverEmails"))
+	if tmp, ok := rawArgs["usernames"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("usernames"))
 		arg2, err = ec.unmarshalNString2ᚕstringᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["receiverEmails"] = arg2
+	args["usernames"] = arg2
 	var arg3 *string
 	if tmp, ok := rawArgs["optionalMessage"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("optionalMessage"))
@@ -21418,7 +21418,7 @@ func (ec *executionContext) _Mutation_shareModelPlan(ctx context.Context, field 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(*models.ModelViewFilter), fc.Args["receiverEmails"].([]string), fc.Args["optionalMessage"].(*string))
+			return ec.resolvers.Mutation().ShareModelPlan(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["viewFilter"].(*models.ModelViewFilter), fc.Args["usernames"].([]string), fc.Args["optionalMessage"].(*string))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")

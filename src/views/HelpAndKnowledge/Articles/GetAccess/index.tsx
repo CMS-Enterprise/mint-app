@@ -12,13 +12,13 @@ import {
 import classNames from 'classnames';
 import i18next from 'i18next';
 
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHashScroll from 'hooks/useHashScroll';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
 type GetAccessContentProps = {
   help?: boolean;

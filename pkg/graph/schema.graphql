@@ -135,7 +135,7 @@ PossibleOperationalSolutionContact represents a contact for a possible operation
 type PossibleOperationalSolutionContact {
   id: UUID!
   possibleOperationalSolutionID: Int!
-  
+
   name: String!
   email: String!
   isTeam: Boolean!
@@ -1815,7 +1815,7 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 
-shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
 
 reportAProblem(input: ReportAProblemInput!): Boolean!

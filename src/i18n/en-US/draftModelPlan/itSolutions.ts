@@ -178,8 +178,8 @@ const itSolutions = {
   },
   documents: 'Documents',
   links: {
-    linkDocuments: 'Link existing documents',
-    uploadDocuments: 'Upload a document'
+    linkDocuments: 'Connect existing documents',
+    uploadDocuments: 'Add a new document'
   },
   updateStatus: 'Update status',
   updateStatusInfo:
