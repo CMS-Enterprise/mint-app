@@ -181,12 +181,6 @@ export enum DataToSendParticipantsType {
   PROVIDER_LEVEL_DATA = "PROVIDER_LEVEL_DATA",
 }
 
-export enum DiscussionStatus {
-  ANSWERED = "ANSWERED",
-  UNANSWERED = "UNANSWERED",
-  WAITING_FOR_RESPONSE = "WAITING_FOR_RESPONSE",
-}
-
 export enum DiscussionUserRole {
   CMS_SYSTEM_SERVICE_TEAM = "CMS_SYSTEM_SERVICE_TEAM",
   IT_ARCHITECT = "IT_ARCHITECT",
@@ -395,11 +389,13 @@ export enum OperationalSolutionKey {
   INNOVATION = "INNOVATION",
   INTERNAL_STAFF = "INTERNAL_STAFF",
   IPC = "IPC",
+  ISP = "ISP",
   LDG = "LDG",
   LOI = "LOI",
   LV = "LV",
   MARX = "MARX",
   MDM = "MDM",
+  MIDS = "MIDS",
   OTHER_NEW_PROCESS = "OTHER_NEW_PROCESS",
   OUTLOOK_MAILBOX = "OUTLOOK_MAILBOX",
   POST_PORTAL = "POST_PORTAL",
@@ -604,7 +600,6 @@ export interface DiscussionReplyCreateInput {
   content: string;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
-  resolution: boolean;
 }
 
 /**
@@ -720,7 +715,6 @@ export interface PlanCrTdlCreateInput {
  */
 export interface PlanDiscussionChanges {
   content?: string | null;
-  status?: DiscussionStatus | null;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }

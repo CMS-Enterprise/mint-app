@@ -50,7 +50,6 @@ import {
 } from 'queries/types/GetModelPlan';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
-import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
@@ -191,10 +190,6 @@ const TaskList = () => {
     prepareForClearance
   };
 
-  const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
-    discussions
-  );
-
   useEffect(() => {
     if (discussionID) setIsDiscussionOpen(true);
   }, [discussionID]);
@@ -281,8 +276,6 @@ const TaskList = () => {
 
               <DicussionBanner
                 discussions={discussions}
-                unansweredQuestions={unansweredQuestions}
-                answeredQuestions={answeredQuestions}
                 setIsDiscussionOpen={setIsDiscussionOpen}
               />
 
@@ -390,16 +383,12 @@ const TaskList = () => {
 
 type DiscussionBannerType = {
   discussions: DiscussionType[];
-  unansweredQuestions: number;
-  answeredQuestions: number;
   setIsDiscussionOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 // Banner to display discussion information and launch discussion center
 const DicussionBanner = ({
   discussions,
-  unansweredQuestions,
-  answeredQuestions,
   setIsDiscussionOpen
 }: DiscussionBannerType) => {
   const { t: d } = useTranslation('discussions');
@@ -416,21 +405,14 @@ const DicussionBanner = ({
       >
         {discussions?.length > 0 ? (
           <>
-            <div>
-              <IconAnnouncement />{' '}
-              {unansweredQuestions > 0 && (
-                <>
-                  <strong>{unansweredQuestions}</strong> {d('unanswered')}
-                  {unansweredQuestions > 1 && 's'}{' '}
-                </>
-              )}
-              {answeredQuestions > 0 && (
-                <>
-                  {unansweredQuestions > 0 && 'and '}
-                  <strong>{answeredQuestions}</strong> {d('answered')}
-                  {answeredQuestions > 1 && 's'}
-                </>
-              )}
+            <div className="display-flex flex-align-center">
+              <IconAnnouncement className="margin-right-1" />
+              <div>
+                <strong>{discussions.length}</strong>
+                {d('discussionBanner.discussion', {
+                  count: discussions.length
+                })}
+              </div>
             </div>
             <Button
               type="button"
@@ -449,9 +431,9 @@ const DicussionBanner = ({
               unstyled
               onClick={() => setIsDiscussionOpen(true)}
             >
-              {d('askAQuestionLink')}{' '}
-            </Button>{' '}
-            {d('toGetStarted')}
+              {d('askAQuestionLink')}
+            </Button>
+            .
           </>
         )}
       </div>
@@ -487,9 +469,7 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             data-testid="document-items"
           >
             <strong>{documents.length} </strong>
-            <Trans i18nKey="modelPlanTaskList:documentSummaryBox.existingDocuments">
-              indexZero {documents.length > 1 ? 's' : ''}
-            </Trans>
+            {t('documentSummaryBox.document', { count: documents.length })}
           </p>
 
           <UswdsReactLink
@@ -504,15 +484,13 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             variant="unstyled"
             to={`/models/${modelID}/documents/add-document`}
           >
-            {t('documentSummaryBox.uploadAnother')}
+            {t('documentSummaryBox.addAnother')}
           </UswdsReactLink>
         </>
       ) : (
         <>
           <p className="margin-0 margin-bottom-1">
-            <Trans i18nKey="modelPlanTaskList:documentSummaryBox.copy">
-              indexZero
-            </Trans>
+            {t('documentSummaryBox.copy')}
           </p>
 
           <UswdsReactLink

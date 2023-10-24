@@ -1,38 +1,20 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import {
-  Grid,
-  GridContainer,
-  IconArrowForward,
-  SummaryBox
-} from '@trussworks/react-uswds';
+import { Grid, GridContainer, SummaryBox } from '@trussworks/react-uswds';
 
-import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import RelatedArticles from 'components/RelatedArticles';
 import ExternalLink from 'components/shared/ExternalLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
-const covertToLowercaseAndDashes = (string: string) =>
-  string.toLowerCase().replace(/\s+/g, '-');
-
-const Link = ({ scrollTo }: { scrollTo: string }) => {
-  return (
-    <a
-      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
-      className="display-flex flex-align-center"
-    >
-      {scrollTo}
-      <IconArrowForward />
-    </a>
-  );
-};
+import { covertToLowercaseAndDashes, ScrollLink } from '..';
 
 const SixPagerMeeting = () => {
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
@@ -117,8 +99,8 @@ const SixPagerMeeting = () => {
             <PageHeading className="margin-bottom-1">
               {sixPageMeetingT('title')}
             </PageHeading>
-            <HelpAndKnowledgeCategoryTag
-              type="gettingStarted"
+            <HelpCategoryTag
+              type="getting-started"
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
@@ -132,22 +114,22 @@ const SixPagerMeeting = () => {
               <ul className="margin-y-0">
                 {/* eslint-disable jsx-a11y/anchor-is-valid */}
                 <li className="margin-top-05 margin-bottom-1">
-                  <Link
+                  <ScrollLink
                     scrollTo={sixPageMeetingT('summaryBox.listItem.create')}
                   />
                 </li>
                 <li className="margin-bottom-1">
-                  <Link
+                  <ScrollLink
                     scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
                   />
                 </li>
                 <li className="margin-bottom-1">
-                  <Link
+                  <ScrollLink
                     scrollTo={sixPageMeetingT('summaryBox.listItem.determine')}
                   />
                 </li>
                 <li>
-                  <Link
+                  <ScrollLink
                     scrollTo={sixPageMeetingT('summaryBox.listItem.review')}
                   />
                 </li>

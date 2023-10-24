@@ -115,6 +115,7 @@ type PossibleOperationalSolution {
     name: String!
     key: OperationalSolutionKey!
     treatAsOther: Boolean!
+    pointsOfContact: [PossibleOperationalSolutionContact!]!
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -122,6 +123,27 @@ type PossibleOperationalSolution {
     modifiedBy: UUID
     modifiedByUserAccount: UserAccount
     modifiedDts: Time
+}
+
+"""
+PossibleOperationalSolutionContact represents a contact for a possible operational solution
+"""
+type PossibleOperationalSolutionContact {
+  id: UUID!
+  possibleOperationalSolutionID: Int!
+
+  name: String!
+  email: String!
+  isTeam: Boolean!
+  role: String
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -225,6 +247,18 @@ PlanDocument represents a document on a plan
 type PlanDocument {
   id: UUID!
   modelPlanID: UUID!
+
+  """
+  If isLink = true, then this is a URL to a linked document, not an uploaded document
+  """
+  isLink: Boolean!
+  """
+  URL is the link that must be provided if this is a link instead of an uploaded document
+  """
+  url: String
+
+
+
   fileType: String!
   bucket: String!
   fileKey: String!
@@ -255,6 +289,19 @@ PlanDocumentInput
 input PlanDocumentInput {
   modelPlanID: UUID!
   fileData: Upload!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+"""
+PlanDocumentLinkInput
+"""
+input PlanDocumentLinkInput {
+  modelPlanID: UUID!
+  url: String!
+  name: String!
   documentType: DocumentType!
   restricted: Boolean!
   otherTypeDescription: String
@@ -369,7 +416,6 @@ type PlanDiscussion  {
 	content: String
   userRole: DiscussionUserRole
   userRoleDescription: String
-	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
@@ -399,7 +445,6 @@ https://gqlgen.com/reference/changesets/
 """
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
-  status: DiscussionStatus
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -413,7 +458,6 @@ type DiscussionReply  {
 	content: String
   userRole: DiscussionUserRole
   userRoleDescription: String
-	resolution: Boolean
   isAssessment: Boolean!
 
   createdBy: UUID!
@@ -432,7 +476,6 @@ input DiscussionReplyCreateInput {
   content: String!
   userRole: DiscussionUserRole
   userRoleDescription: String
-  resolution: Boolean! = false
 }
 
 """
@@ -442,7 +485,6 @@ https://gqlgen.com/reference/changesets/
 """
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
   content: String
-  resolution: Boolean
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -1249,6 +1291,32 @@ type NDAInfo {
   agreedDts: Time
 }
 
+input ReportAProblemInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  section: ReportAProblemSection
+  sectionOther: String
+  whatDoing: String
+  whatWentWrong: String
+  severity: ReportAProblemSeverity
+  severityOther: String
+}
+
+enum ReportAProblemSection {
+  READ_VIEW
+  TASK_LIST
+  IT_SOLUTIONS
+  HELP_CENTER
+  OTHER
+}
+
+enum ReportAProblemSeverity {
+  PREVENTED_TASK
+  DELAYED_TASK
+  MINOR
+  OTHER
+}
+
 type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
@@ -1461,9 +1529,6 @@ enum GQLTableName {
 }
 # lint-enable enum-values-all-caps
 
-input SearchRequest {
-  query: Map!
-}
 
 type DateHistogramAggregationBucket {
   key: String!
@@ -1490,6 +1555,43 @@ input PageParams {
 type DiscussionRoleSelection {
   userRole: DiscussionUserRole!
   userRoleDescription: String
+}
+"""
+The inputs to the user feedback form
+"""
+input SendFeedbackEmailInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  cmsRole: String
+  mintUsedFor: [MintUses!]
+  mintUsedForOther: String
+  systemEasyToUse: EaseOfUse
+  systemEasyToUseOther: String
+  howSatisfied: SatisfactionLevel
+  howCanWeImprove: String
+}
+
+enum EaseOfUse {
+  AGREE
+  DISAGREE
+  UNSURE
+}
+
+enum MintUses {
+  VIEW_MODEL
+  EDIT_MODEL
+  SHARE_MODEL
+  TRACK_SOLUTIONS
+  CONTRIBUTE_DISCUSSIONS
+  VIEW_HELP
+  OTHER
+}
+enum SatisfactionLevel {
+  VERY_SATISFIED
+  SATISFIED
+  NEUTRAL
+  DISSATISFIED
+  VERY_DISSATISFIED
 }
 
 """
@@ -1534,20 +1636,6 @@ type Query {
   existingModelLink(id: UUID!): ExistingModelLink!
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
   searchChanges(filters: [SearchFilter!], sortBy: ChangeHistorySortParams, page: PageParams): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchModelPlanChangesByDateRange(modelPlanID: UUID!, startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
@@ -1596,6 +1684,9 @@ updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!)
 @hasRole(role: MINT_USER)
 
 uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
+@hasRole(role: MINT_USER)
+
+linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
 @hasRole(role: MINT_USER)
 
 deletePlanDocument(id: UUID!): Int!
@@ -1679,8 +1770,15 @@ deleteOperationalSolutionSubtask(id: UUID!): Int!
 updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 
-shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, receiverEmails: [String!]!, optionalMessage: String): Boolean!
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
 @hasRole(role: MINT_USER)
+
+reportAProblem(input: ReportAProblemInput!): Boolean!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
+"""
+This mutation sends feedback about the MINT product to the MINT team
+"""
+sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
 }
 
 type Subscription {
@@ -1787,12 +1885,6 @@ enum CMMIGroup {
   SEAMLESS_CARE_MODELS_GROUP
   STATE_AND_POPULATION_HEALTH_GROUP
   TBD
-}
-
-enum DiscussionStatus {
-  ANSWERED
-  WAITING_FOR_RESPONSE
-  UNANSWERED
 }
 
 enum DocumentType {
@@ -2243,6 +2335,8 @@ enum OperationalSolutionKey{
   RFA
   SHARED_SYSTEMS
   BCDA
+  ISP
+  MIDS
 }
 
 enum OperationalSolutionSubtaskStatus {

@@ -18,12 +18,12 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { findSolutionByKey } from '../CheckboxCard';
 
@@ -64,6 +64,8 @@ const SolutionCard = ({
   const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
     solution.key
   );
+
+  const helpSolutions = useHelpSolution();
 
   const solutionMap = findSolutionByKey(solution.key, helpSolutions);
 
@@ -144,7 +146,7 @@ const SolutionCard = ({
               </>
             )}
 
-            {solutionMap?.pointsOfContact[0].name ? (
+            {solutionMap?.pointsOfContact?.[0].name ? (
               <Grid
                 tablet={{ col: 6 }}
                 className={classNames({ 'margin-bottom-2': solution.name })}

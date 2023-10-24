@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { DiscussionUserRole, DiscussionStatus } from "./../../../types/graphql-global-types";
+import { DiscussionUserRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlanDiscussions
@@ -29,7 +29,6 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   isAssessment: boolean;
   createdBy: UUID;
   createdDts: Time;
-  resolution: boolean | null;
   createdByUserAccount: GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUserAccount;
 }
 
@@ -41,7 +40,6 @@ export interface GetModelPlanDiscussions_modelPlan_discussions {
   createdDts: Time;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
-  status: DiscussionStatus;
   isAssessment: boolean;
   createdByUserAccount: GetModelPlanDiscussions_modelPlan_discussions_createdByUserAccount;
   replies: GetModelPlanDiscussions_modelPlan_discussions_replies[];

@@ -210,16 +210,16 @@ exports[`IT Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
                       <p
                         class="margin-y-0"
                       >
-                        Joe Pusateri
+                        Alicia Thomas
                       </p>
                       <a
                         aria-label="Send an email"
                         class="usa-link line-height-body-5 display-flex flex-align-center"
-                        href="mailto:joseph.pusateri@cms.hhs.gov"
+                        href="mailto:at.mint@oddball.io"
                         target="_blank"
                       >
                         <div>
-                          joseph.pusateri@cms.hhs.gov
+                          at.mint@oddball.io
                         </div>
                       </a>
                     </div>
@@ -345,7 +345,7 @@ exports[`IT Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
             data-testid="ask-a-question-button"
             type="button"
           >
-            Ask a question
+            Start a discussion
           </button>
         </div>
       </div>

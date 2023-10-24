@@ -51,7 +51,7 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 
 	//  Create discussion and reply
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
+	reply := suite.createDiscussionReply(discussion, "This is a test reply")
 
 	//5. User is collaborator by discusionID
 	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, basicUserPrincipal, suite.testConfigs.Store)

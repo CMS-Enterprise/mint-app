@@ -1,47 +1,60 @@
 const discussions = {
   heading: 'Discussions',
   modalHeading: 'Model discussions',
-  askAQuestion: 'Ask a question',
+  discussionBanner: {
+    discussion: ' discussion',
+    discussion_plural: ' discussions'
+  },
+  discussionPanelHeading: 'Start a discussion',
+  discussionPanelReply: 'Discussion',
   description:
-    'Need help with something? Ask a question here and someone will reply. Questions and answers will display in Discussions. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
+    'Need help with something? Start a discussion and you’ll be notified of any replies. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
+  allFieldsRequired: 'All fields marked with <s>*</s> are required.',
   noDiscussions: 'There are no discussions yet. ',
-  askAQuestionLink: 'Ask a question',
-  toGetStarted: ' to get started',
-  typeQuestion: 'Type your question',
-  typeAnswer: 'Type your answer',
-  save: 'Save question',
-  saveAnswer: 'Save answer',
+  askAQuestionLink: 'Start a discussion',
+  typeQuestion: 'Type your question or discussion topic',
+  reply: 'Reply',
+  replies: '{{count}} reply',
+  replies_plural: '{{count}} replies',
+  replies_0: 'No replies',
+  typeReply: 'Type your reply',
+  save: 'Save discussion',
+  saveReply: 'Save reply',
+  lastReply: 'Last reply {{date}} at {{time}}',
   useLinkAbove:
-    'There are no discussions yet. Ask a question using the link above to get started.',
-  unanswered: 'unanswered question',
+    'There are no new discussion topics. Start a discussion and it will appear here.',
+  newDiscussionTopics: '{{count}} new discussion topic',
+  newDiscussionTopics_plural: '{{count}} new discussion topics',
+  discussionWithCount: '{{count}} discussion',
+  discussionWithCount_plural: '{{count}} discussions',
   answered: 'answered question',
   viewDiscussions: 'View discussions',
-  success: 'Success! Your question has been added.',
-  successAnswer: 'Success! Your answer has been added.',
+  success: 'Success! Your discussion topic has been added.',
+  successReply: 'Success! Your reply has been added.',
   errorFetch:
     'Sorry we encountered a problem fetching your discusssions.  Please try again.',
   error:
-    'Sorry, we encountered a problem adding your question. Please try again.',
-  errorAnswer:
-    'Sorry, we encountered a problem adding your answer. Please try again.',
-  answer: 'Answer',
+    'Sorry, we encountered a problem adding your discussion topic. Please try again.',
+  errorReply:
+    'Sorry, we encountered a problem adding your reply. Please try again.',
   answerDescription:
     'Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again.',
   ago: 'ago',
   justNow: 'Just now',
   noAnswered:
-    'There are no answered questions yet. When a question is answered, it will appear here with the response.',
+    'There are no discussions with replies yet. Once a discussion has been replied to, it will appear here.',
   noUanswered:
-    'There are no unanswered questions. Ask a question using the link above.',
+    'There are no new discussion topics. Start a discussion and it will appear here.',
   nonEditor: {
     noDiscussions:
-      'There are no discussions yet. When a question is asked, it will appear here.',
+      'There are no discussions with replies yet. When a question is asked, it will appear here.',
     noQuestions:
-      'There are no questions yet. When a question is asked, it will appear here.'
+      'There are no new discussion topics. When a question is asked, it will appear here.'
   },
   ariaLabel: 'Discussion Center Modal',
   assessment: 'MINT Team',
   viewMoreQuestions: 'View more questions',
+  viewFewerQuestions: 'View fewer questions',
   alreadyAnswered:
     '“{{-question}}” has already been answered. You can view it in the answered questions below.',
   role: 'Your role',
@@ -72,7 +85,9 @@ const discussions = {
     createdAt: 'Reply created at',
     userRole: 'User role',
     userRoleDescription: 'User role description'
-  }
+  },
+  showReplies: 'Show replies',
+  hideReplies: 'Hide replies'
 };
 
 export default discussions;

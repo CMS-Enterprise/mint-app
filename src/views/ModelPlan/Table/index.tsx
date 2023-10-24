@@ -14,6 +14,7 @@ import {
 import { useQuery } from '@apollo/client';
 import {
   Button,
+  IconComment,
   IconStar,
   IconStarOutline,
   Table as UswdsTable
@@ -39,7 +40,7 @@ import {
   ModelCategory,
   ModelPlanFilter
 } from 'types/graphql-global-types';
-import { formatDateUtc } from 'utils/date';
+import { formatDateLocal, formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -49,7 +50,6 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
-import formatRecentActivity from 'views/ModelPlan/Table/formatActivity';
 
 type ModelPlansTableProps =
   | {
@@ -285,8 +285,26 @@ const ModelPlansTable = ({
         accessor: 'modifiedDts',
         Cell: ({ row, value }: any) => {
           const { discussions } = row.original;
-          const lastUpdated = value || row.original.createdDts;
-          return formatRecentActivity(lastUpdated, discussions);
+          const formattedUpdatedDate = `${homeT(
+            'requestsTable.updated'
+          )} ${formatDateLocal(
+            value || row.original.createdDts,
+            'MM/dd/yyyy'
+          )}`;
+          return (
+            <>
+              {formattedUpdatedDate}
+              {discussions.length > 0 && (
+                <div className="display-flex flex-align-center text-bold">
+                  <IconComment className="text-primary margin-right-05" />{' '}
+                  {discussions.length}{' '}
+                  {i18next.t('discussions:discussionBanner.discussion', {
+                    count: discussions.length
+                  })}
+                </div>
+              )}
+            </>
+          );
         }
       },
       paymentDate: {
@@ -403,7 +421,8 @@ const ModelPlansTable = ({
       },
       globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
-      autoResetPage: false,
+      // Resets to page 1 upon client global filtering.  False value if changing/filtering your data externally
+      autoResetPage: true,
       initialState: {
         sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
         pageIndex: 0

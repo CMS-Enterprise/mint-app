@@ -299,7 +299,7 @@ exports[`IT Solutions Add Subtasks > matches snapshot 1`] = `
               data-testid="ask-a-question-button"
               type="button"
             >
-              Ask a question
+              Start a discussion
             </button>
           </div>
         </div>
@@ -830,7 +830,7 @@ exports[`IT Solutions Manage Subtasks > matches snapshot 1`] = `
               data-testid="ask-a-question-button"
               type="button"
             >
-              Ask a question
+              Start a discussion
             </button>
           </div>
         </div>

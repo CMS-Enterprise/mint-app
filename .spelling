@@ -96,6 +96,8 @@ non-composable
 Okta
 yml
 override.yml
+frontend.yml
+backend.yml
 circleci.yml
 local.yml
 ParameterStore
@@ -230,3 +232,13 @@ StateTrace
 performant
 Vite
 EASI-3250
+indexable
+Indexable
+indexability.
+TipTap
+html
+textarea
+PoC
+ToastUI
+capabilties
+hacky

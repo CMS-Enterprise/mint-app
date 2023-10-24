@@ -4,7 +4,6 @@ INSERT INTO plan_discussion(
     content,
     user_role,
     user_role_description,
-    status,
     is_assessment,
     created_by,
     modified_by
@@ -15,7 +14,6 @@ VALUES (
     :content,
     :user_role,
     :user_role_description,
-    :status,
     :is_assessment,
     :created_by,
     :modified_by
@@ -25,7 +23,6 @@ model_plan_id,
 content,
 user_role,
 user_role_description,
-status,
 is_assessment,
 created_by,
 created_dts,

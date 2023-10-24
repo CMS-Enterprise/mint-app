@@ -6,8 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
-	"time"
 
 	"github.com/google/uuid"
 
@@ -256,6 +254,13 @@ func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input mode
 	return planDocument, err
 }
 
+// LinkNewPlanDocument is the resolver for the linkNewPlanDocument field.
+func (r *mutationResolver) LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentCreateLinked(logger, input, principal, r.store)
+}
+
 // DeletePlanDocument is the resolver for the deletePlanDocument field.
 func (r *mutationResolver) DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error) {
 	principal := appcontext.Principal(ctx)
@@ -464,7 +469,7 @@ func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPl
 }
 
 // ShareModelPlan is the resolver for the shareModelPlan field.
-func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, receiverEmails []string, optionalMessage *string) (bool, error) {
+func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
@@ -478,9 +483,22 @@ func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.
 		r.addressBook,
 		modelPlanID,
 		viewFilter,
-		receiverEmails,
+		usernames,
 		optionalMessage,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
 	)
+}
+
+// ReportAProblem is the resolver for the reportAProblem field.
+func (r *mutationResolver) ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.ReportAProblem(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
+}
+
+// SendFeedbackEmail is the resolver for the sendFeedbackEmail field.
+func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.SendFeedbackEmail(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
 }
 
 // Solutions is the resolver for the solutions field.
@@ -541,6 +559,11 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 	return resolvers.DiscussionReplyCollectionByDiscusionIDLOADER(ctx, obj.ID)
 }
 
+// URL is the resolver for the url field.
+func (r *planDocumentResolver) URL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.URL.Ptr(), nil
+}
+
 // OtherType is the resolver for the otherType field.
 func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
 	return obj.OtherTypeDescription.Ptr(), nil
@@ -553,6 +576,9 @@ func (r *planDocumentResolver) OptionalNotes(ctx context.Context, obj *models.Pl
 
 // DownloadURL is the resolver for the downloadUrl field.
 func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	if obj.IsLink {
+		return nil, nil
+	}
 	url, err := r.s3Client.NewGetPresignedURL(obj.FileKey)
 	if err != nil {
 		return nil, err
@@ -769,6 +795,11 @@ func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context,
 	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.Key, r.store)
 }
 
+// PointsOfContact is the resolver for the pointsOfContact field.
+func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error) {
+	return resolvers.PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, obj.ID)
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -915,69 +946,6 @@ func (r *queryResolver) SearchChanges(ctx context.Context, filters []*model.Sear
 	return resolvers.SearchChangesWithFilters(logger, r.searchClient, filters, sortBy, page)
 }
 
-// SearchChangeTable is the resolver for the searchChangeTable field.
-func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	return nil, fmt.Errorf("searchChangeTable is deprecated, use searchChanges instead")
-
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTable(logger, r.searchClient, request, limit, offset, "modified_dts:desc")
-}
-
-// SearchChangeTableWithFreeText is the resolver for the searchChangeTableWithFreeText field.
-func (r *queryResolver) SearchChangeTableWithFreeText(ctx context.Context, searchText string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	return nil, fmt.Errorf("searchChangeTableWithFreeText is deprecated, use searchChanges instead")
-
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableWithFreeText(logger, r.searchClient, searchText, limit, offset)
-}
-
-// SearchChangeTableByModelPlanID is the resolver for the searchChangeTableByModelPlanID field.
-func (r *queryResolver) SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	return nil, fmt.Errorf("searchChangeTableByModelPlanID is deprecated, use searchChanges instead")
-
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableByModelPlanID(logger, r.searchClient, modelPlanID, limit, offset)
-}
-
-// SearchChangeTableByDateRange is the resolver for the searchChangeTableByDateRange field.
-func (r *queryResolver) SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	return nil, fmt.Errorf("searchChangeTableByDateRange is deprecated, use searchChanges instead")
-
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableByDateRange(logger, r.searchClient, startDate, endDate, limit, offset)
-}
-
-// SearchModelPlanChangesByDateRange is the resolver for the searchModelPlanChangesByDateRange field.
-func (r *queryResolver) SearchModelPlanChangesByDateRange(ctx context.Context, modelPlanID uuid.UUID, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	return nil, fmt.Errorf("searchModelPlanChangesByDateRange is deprecated, use searchChanges instead")
-
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchModelPlanChangesByDateRange(logger, r.searchClient, modelPlanID, startDate, endDate, limit, offset)
-}
-
-// SearchChangeTableByActor is the resolver for the searchChangeTableByActor field.
-func (r *queryResolver) SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	return nil, fmt.Errorf("searchChangeTableByActor is deprecated, use searchChanges instead")
-
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableByActor(logger, r.searchClient, actor, limit, offset)
-}
-
-// SearchChangeTableByModelStatus is the resolver for the searchChangeTableByModelStatus field.
-func (r *queryResolver) SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	return nil, fmt.Errorf("searchChangeTableByModelStatus is deprecated, use searchChanges instead")
-
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableByModelStatus(logger, r.searchClient, modelStatus, limit, offset)
-}
-
 // SearchChangeTableDateHistogramConsolidatedAggregations is the resolver for the searchChangeTableDateHistogramConsolidatedAggregations field.
 func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, interval string, limit int, offset int) ([]*models.DateHistogramAggregationBucket, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -1070,6 +1038,11 @@ func (r *Resolver) PossibleOperationalNeed() generated.PossibleOperationalNeedRe
 	return &possibleOperationalNeedResolver{r}
 }
 
+// PossibleOperationalSolution returns generated.PossibleOperationalSolutionResolver implementation.
+func (r *Resolver) PossibleOperationalSolution() generated.PossibleOperationalSolutionResolver {
+	return &possibleOperationalSolutionResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -1091,5 +1064,6 @@ type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
+type possibleOperationalSolutionResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }

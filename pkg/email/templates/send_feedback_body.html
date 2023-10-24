@@ -1,0 +1,77 @@
+{{template "shared_header.html" "Feedback"}}
+
+<h3>Reporter</h3>
+
+{{if .IsAnonymousSubmission }}
+  <p>Anonymous</p>
+{{else}}
+  <p>{{.ReporterName}}</p>
+  <a href="mailto:{{.ReporterEmail}}">{{.ReporterEmail}}</a>
+  <br />
+  <br />
+  {{if .AllowContact}}
+    <p>{{.AllowContact}}</p>
+  {{else}}
+    <i>User didn't specify if they could be contacted</i>
+  {{end}}
+{{end}}
+
+<br />
+<hr />
+<br/>
+
+<p class="bold">What is your role?</p>
+
+{{ if .CMSRole}}
+  <p>{{.CMSRole}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br/>
+
+<p class="bold">What have you used MINT for?</p>
+
+{{ if .MINTUsedFor}}
+<ul>
+{{range $use := .MINTUsedFor}}
+<li>
+  {{$use}}
+</li>
+{{end}}
+</ul>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br/>
+
+<p class="bold">The system is easy to use.</p>
+
+{{ if .SystemEasyToUse}}
+  <p>{{.SystemEasyToUse}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br/>
+
+<p class="bold">Overall, how satisfied are you with MINT?</p>
+
+{{ if .HowSatisfied}}
+  <p>{{.HowSatisfied}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br/>
+
+<p class="bold">How can we improve MINT?</p>
+
+{{ if .HowCanWeImprove}}
+  <p>{{.HowCanWeImprove}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+{{template "shared_footer.html"}}

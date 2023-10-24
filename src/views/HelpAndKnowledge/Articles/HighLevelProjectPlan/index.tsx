@@ -9,16 +9,16 @@ import {
 } from '@trussworks/react-uswds';
 
 import ExcelFile from 'assets/files/highLevelProjectPlan.xlsx';
-import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
-import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import RelatedArticles from 'components/RelatedArticles';
 import ExternalLink from 'components/shared/ExternalLink';
+import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Table from './table';
 
@@ -33,6 +33,8 @@ interface AccordionItemProps {
 const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
   const { t: generalT } = useTranslation('general');
+
+  const helpSolutions = useHelpSolution();
 
   const { prevPathname, selectedSolution: solution } = useModalSolutionState(
     null
@@ -96,8 +98,8 @@ const HighLevelProjectPlan = () => {
             <PageHeading className="margin-bottom-1">
               {highLevelT('title')}
             </PageHeading>
-            <HelpAndKnowledgeCategoryTag
-              type="gettingStarted"
+            <HelpCategoryTag
+              type="getting-started"
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">

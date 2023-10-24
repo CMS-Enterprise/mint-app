@@ -42,8 +42,8 @@ describe('user', () => {
             downgradeAssessmentTeam: true,
             hideITLeadExperience: false,
             hideGroupView: true,
-            shareExportEnabled: false,
-            helpScoutEnabled: false
+            helpScoutEnabled: false,
+            feedbackEnabled: false
           })
         ).toBe(false);
       });

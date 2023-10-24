@@ -11,10 +11,7 @@ import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions
 import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
-import {
-  DiscussionStatus,
-  DiscussionUserRole
-} from 'types/graphql-global-types';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 
 import Discussions from './index';
 
@@ -30,7 +27,6 @@ const discussionResult: GetModelPlanDiscussionsType = {
         content: 'This is a question.',
         createdBy: 'TIDA',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: DiscussionStatus.UNANSWERED,
         userRole: DiscussionUserRole.CMS_SYSTEM_SERVICE_TEAM,
         userRoleDescription: '',
         isAssessment: false,
@@ -46,7 +42,6 @@ const discussionResult: GetModelPlanDiscussionsType = {
         content: 'This is a second question.',
         createdBy: 'JFCS',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: DiscussionStatus.ANSWERED,
         userRole: DiscussionUserRole.NONE_OF_THE_ABOVE,
         userRoleDescription: 'Designer',
         isAssessment: false,
@@ -58,7 +53,6 @@ const discussionResult: GetModelPlanDiscussionsType = {
           {
             __typename: 'DiscussionReply',
             discussionID: '456',
-            resolution: true,
             id: 'abc',
             content: 'This is an answer.',
             userRole: DiscussionUserRole.LEADERSHIP,
@@ -142,12 +136,12 @@ describe('Discussion Component', () => {
 
     await waitFor(() => {
       expect(getByText(/This is a question./i)).toBeInTheDocument();
-      expect(getByText(/1 unanswered question/i)).toBeInTheDocument();
+      expect(getByText(/new discussion topic/i)).toBeInTheDocument();
       expect(getByText(/John Doe/i)).toBeInTheDocument();
-      expect(getByText(/1 answered question/i)).toBeInTheDocument();
+      expect(getByText(/1 discussion/i)).toBeInTheDocument();
       expect(getByText(/Jane Doe/i)).toBeInTheDocument();
       expect(getByText(/This is a second question./i)).toBeInTheDocument();
-      expect(getByText(/Leadership/i)).toBeInTheDocument();
+      expect(getByText(/Designer/i)).toBeInTheDocument();
     });
   });
 
@@ -169,13 +163,7 @@ describe('Discussion Component', () => {
     );
 
     await waitFor(async () => {
-      screen.getByRole('button', { name: /Answer/ }).click();
-
-      expect(
-        getByText(
-          /Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again./i
-        )
-      ).toBeInTheDocument();
+      screen.getByRole('button', { name: /Reply/ }).click();
 
       expect(getByText(/This is a question./i)).toBeInTheDocument();
     });
@@ -189,7 +177,7 @@ describe('Discussion Component', () => {
     expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
 
     const feedbackField = screen.getByRole('textbox', {
-      name: /Type your answer/i
+      name: /Type your reply/i
     });
 
     userEvent.type(feedbackField, 'Test feedback');

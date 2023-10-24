@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
@@ -14,11 +14,9 @@ import * as Yup from 'yup';
 
 import Mention from 'components/Mention';
 import PageHeading from 'components/PageHeading';
-import AssessmentIcon from 'components/shared/AssessmentIcon';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import IconInitial from 'components/shared/IconInitial';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import {
@@ -27,21 +25,21 @@ import {
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
 import { DiscussionUserRole } from 'types/graphql-global-types';
-import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum } from 'utils/modelPlan';
 
-import { DicussionFormPropTypes } from '.';
+import DiscussionUserInfo from './_components/DiscussionUserInfo';
+import Replies from './Replies';
+import { DiscussionFormPropTypes } from '.';
 
 type QuestionAndReplyProps = {
   closeModal?: () => void;
   discussionReplyID?: string | null | undefined;
-  handleCreateDiscussion: (formikValues: DicussionFormPropTypes) => void;
+  handleCreateDiscussion: (formikValues: DiscussionFormPropTypes) => void;
   queryParams?: URLSearchParams;
   renderType: 'question' | 'reply';
   reply?: DiscussionType | ReplyType | null;
   setDiscussionReplyID?: (value: string | null | undefined) => void;
-  setDiscussionStatusMessage?: (value: string) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
   setInitQuestion?: (value: boolean) => void;
 };
@@ -54,7 +52,6 @@ const QuestionAndReply = ({
   renderType,
   reply,
   setDiscussionReplyID,
-  setDiscussionStatusMessage,
   setDiscussionType,
   setInitQuestion
 }: QuestionAndReplyProps) => {
@@ -77,51 +74,54 @@ const QuestionAndReply = ({
 
   return (
     <>
-      <PageHeading headingLevel="h1" className="margin-y-0">
-        {renderType === 'question' ? t('askAQuestion') : t('answer')}
+      <PageHeading headingLevel="h1" className="margin-y-0 line-height-sans-2">
+        {renderType === 'question'
+          ? t('discussionPanelHeading')
+          : t('discussionPanelReply')}
       </PageHeading>
 
-      <p className="margin-bottom-4">
-        {renderType === 'question' ? t('description') : t('answerDescription')}
-      </p>
+      {renderType === 'question' && (
+        <>
+          <p className="margin-bottom-2">{t('description')}</p>
+          <p className="margin-bottom-5">
+            <Trans
+              i18nKey={t('allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
+        </>
+      )}
 
       {/* If renderType is reply, render the related question that is being answered */}
       {renderType === 'reply' && reply && (
-        <div>
-          <div className="display-flex flex-wrap flex-justify">
-            {reply.isAssessment ? (
-              <div className="display-flex flex-align-center">
-                <AssessmentIcon size={3} />{' '}
-                <span>
-                  {t('assessment')} | {reply.createdByUserAccount.commonName}
-                </span>
-              </div>
-            ) : (
-              <IconInitial
-                className="margin-bottom-1"
-                user={reply.createdByUserAccount.commonName}
-                index={0}
-              />
-            )}
-            <span className="margin-left-5 margin-top-05 text-base">
-              {getTimeElapsed(reply.createdDts)
-                ? getTimeElapsed(reply.createdDts) + t('ago')
-                : t('justNow')}
-            </span>
+        <>
+          <div className="discussion-topic margin-bottom-3">
+            <DiscussionUserInfo discussionTopic={reply} />
+
+            <div className="margin-left-5">
+              <p className="margin-y-0">{reply.content}</p>
+            </div>
           </div>
 
-          {reply.userRole && (
-            <p className="text-base margin-left-5 margin-y-0">
-              {reply.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
-                ? reply.userRoleDescription
-                : t(`userRole.${reply.userRole}`)}
-            </p>
-          )}
+          <Replies originalDiscussion={reply as DiscussionType} />
 
-          <div className="margin-left-5">
-            <p>{reply.content}</p>
-          </div>
-        </div>
+          <PageHeading
+            headingLevel="h2"
+            className="margin-top-0 margin-bottom-1 line-height-sans-2"
+          >
+            {t('reply')}
+          </PageHeading>
+          <p className="margin-top-0 margin-bottom-3">
+            <Trans
+              i18nKey={t('allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
+        </>
       )}
 
       <Formik
@@ -137,7 +137,7 @@ const QuestionAndReply = ({
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<DicussionFormPropTypes>) => {
+        {(formikProps: FormikProps<DiscussionFormPropTypes>) => {
           const {
             errors,
             values,
@@ -177,7 +177,7 @@ const QuestionAndReply = ({
                   <FieldGroup
                     scrollElement="user-role"
                     error={!!flatErrors.userRole}
-                    className="margin-top-4"
+                    className="margin-top-0"
                   >
                     <Label htmlFor="user-role">
                       {t('role')}
@@ -242,7 +242,8 @@ const QuestionAndReply = ({
                     <Label htmlFor="discussion-content" className="text-normal">
                       {renderType === 'question'
                         ? t('typeQuestion')
-                        : t('typeAnswer')}
+                        : t('typeReply')}
+                      <RequiredAsterisk />
                     </Label>
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
 
@@ -270,12 +271,7 @@ const QuestionAndReply = ({
                           });
                           setInitQuestion(false);
                         }
-                        if (
-                          renderType &&
-                          setDiscussionStatusMessage &&
-                          setDiscussionType
-                        ) {
-                          setDiscussionStatusMessage('');
+                        if (renderType && setDiscussionType) {
                           setDiscussionType('discussion');
                         }
                       }}
@@ -294,7 +290,7 @@ const QuestionAndReply = ({
                       }
                       onClick={() => setErrors({})}
                     >
-                      {renderType === 'question' ? t('save') : t('saveAnswer')}
+                      {renderType === 'question' ? t('save') : t('saveReply')}
                     </Button>
                   </div>
                 </Fieldset>

@@ -20,7 +20,7 @@ type MultiSelectOptionProps = {
   subLabel?: string;
 };
 
-const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
+export const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
   const { data, isSelected, innerProps, innerRef, isFocused } = props;
   return (
     <div
@@ -47,7 +47,7 @@ const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
   );
 };
 
-const ClearIndicator = (
+export const ClearIndicator = (
   props: ClearIndicatorProps<MultiSelectOptionProps, true>
 ) => {
   const {
@@ -72,7 +72,7 @@ const ClearIndicator = (
   );
 };
 
-const MultiSelectTag = ({
+export const MultiSelectTag = ({
   id,
   parentId,
   label,
@@ -121,6 +121,63 @@ const MultiSelectTag = ({
   );
 };
 
+export const customStyles: {
+  [index: string]: (
+    provided: CSSProperties,
+    state: { isFocused: boolean }
+  ) => CSSProperties;
+} = {
+  control: (provided, state) => ({
+    ...provided,
+    borderColor: color('base-dark'),
+    outline: state.isFocused ? `.25rem solid ${color('blue-vivid-40')}` : '',
+    borderRadius: 0,
+    transition: 'none',
+    '&:hover': {
+      borderColor: color('base-dark'),
+      cursor: 'text'
+    }
+  }),
+  dropdownIndicator: provided => ({
+    ...provided,
+    color: color('base'),
+    '&:hover': {
+      color: color('base'),
+      cursor: 'pointer'
+    },
+    '> svg': {
+      width: '26px',
+      height: '26px'
+    }
+  }),
+  clearIndicator: provided => ({
+    ...provided,
+    color: color('base-dark'),
+    padding: '8px 6px',
+    '&:hover': {
+      color: color('base-dark'),
+      cursor: 'pointer'
+    },
+    '> svg': {
+      width: '22px',
+      height: '22px'
+    }
+  }),
+  indicatorSeparator: provided => ({
+    ...provided,
+    marginTop: '10px',
+    marginBottom: '10px'
+  }),
+  menu: provided => ({
+    ...provided,
+    marginTop: '0px',
+    borderRadius: 0,
+    border: `1px solid ${color('base-dark')}`,
+    borderTop: 'none',
+    boxShadow: 'none'
+  })
+};
+
 /**
  * EASi Multiselect.
  * Uses `react-select/Select` and `@trussworks/react-uswds/Tag`.
@@ -157,63 +214,6 @@ const MultiSelect = ({
   const [originalOptions] = useState<MultiValue<MultiSelectOptionProps>>([
     ...options
   ]);
-
-  const customStyles: {
-    [index: string]: (
-      provided: CSSProperties,
-      state: { isFocused: boolean }
-    ) => CSSProperties;
-  } = {
-    control: (provided, state) => ({
-      ...provided,
-      borderColor: color('base-dark'),
-      outline: state.isFocused ? `.25rem solid ${color('blue-vivid-40')}` : '',
-      borderRadius: 0,
-      transition: 'none',
-      '&:hover': {
-        borderColor: color('base-dark'),
-        cursor: 'text'
-      }
-    }),
-    dropdownIndicator: provided => ({
-      ...provided,
-      color: color('base'),
-      '&:hover': {
-        color: color('base'),
-        cursor: 'pointer'
-      },
-      '> svg': {
-        width: '26px',
-        height: '26px'
-      }
-    }),
-    clearIndicator: provided => ({
-      ...provided,
-      color: color('base-dark'),
-      padding: '8px 6px',
-      '&:hover': {
-        color: color('base-dark'),
-        cursor: 'pointer'
-      },
-      '> svg': {
-        width: '22px',
-        height: '22px'
-      }
-    }),
-    indicatorSeparator: provided => ({
-      ...provided,
-      marginTop: '10px',
-      marginBottom: '10px'
-    }),
-    menu: provided => ({
-      ...provided,
-      marginTop: '0px',
-      borderRadius: 0,
-      border: `1px solid ${color('base-dark')}`,
-      borderTop: 'none',
-      boxShadow: 'none'
-    })
-  };
 
   useEffect(() => {
     setSelected(
