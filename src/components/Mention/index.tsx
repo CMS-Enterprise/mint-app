@@ -26,8 +26,6 @@ const CustomMention = Mention.extend({
   renderHTML({ HTMLAttributes }) {
     const elem = document.createElement('button');
 
-    elem.setAttribute('type', 'button');
-
     Object.entries(
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
     ).forEach(([attr, val]) => elem.setAttribute(attr, val));
@@ -106,7 +104,9 @@ export default ({ setFieldValue }: any) => {
       }),
       CustomMention.configure({
         HTMLAttributes: {
-          class: 'mention'
+          class: 'mention',
+          type: 'button',
+          'aria-label': 'User mentioned'
           // onclick: e => console.log(e)
         },
         suggestion: asyncSuggestions
@@ -119,12 +119,6 @@ export default ({ setFieldValue }: any) => {
       const fieldValue = getContent(editor2?.getJSON());
       setFieldValue('content', fieldValue);
     }
-    // editorProps: {
-    //   handleClick(view, pos, event) {
-    //     console.log(view);
-    //     console.log(event);
-    //   }
-    // }
   });
 
   const percentage = editor
