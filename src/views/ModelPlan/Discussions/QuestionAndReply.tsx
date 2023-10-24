@@ -7,12 +7,12 @@ import {
   Dropdown,
   Fieldset,
   Label,
-  Textarea,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
+import Mention from 'components/Mention';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -246,14 +246,10 @@ const QuestionAndReply = ({
                       <RequiredAsterisk />
                     </Label>
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
-                    <Field
-                      className="height-card"
-                      as={Textarea}
-                      error={!!flatErrors.content}
-                      id="discussion-content"
-                      name="content"
-                    />
+
+                    <Mention setFieldValue={setFieldValue} />
                   </FieldGroup>
+
                   <div className="margin-y-5 display-block">
                     <Button
                       className="usa-button usa-button--outline margin-bottom-1"
