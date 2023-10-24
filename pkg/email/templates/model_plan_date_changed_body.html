@@ -1,12 +1,7 @@
 {{template "shared_header.html"}}
 
-<body>
-<h1>MINT</h1>
-<p class="subtitle">The Model Innovation Tool</p>
-<br/>
-<br/>
 <h2>Dates updated for {{.ModelName}}</h2>
-<p style="padding-top: 10px">One or more dates have been updated for this model.</p>
+<p>One or more dates have been updated for this model.</p>
 <br/>
 <br/>
 <h3>Anticipated high level timeline</h3>
@@ -15,7 +10,7 @@
     {{if .}}
         {{.Format "01/02/2006"}}
     {{else}}
-      <i>no date entered</i>
+      <i style="display: initial;">no date entered</i>
     {{end}}
 {{end}}
 
@@ -45,9 +40,9 @@
 {{end}}
 
 <br/>
-<p style="padding-bottom: 10px">
-  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only" class="link">
+<p>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only">
     View this Model Plan in MINT
   </a>
 </p>
-</body>
+<br>

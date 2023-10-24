@@ -168,8 +168,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    filterGroups: ['cmmi', 'iddoc', 'pbg']
+    }
   },
   collectPlanBidsNote: {
     gqlField: 'collectPlanBidsNote',

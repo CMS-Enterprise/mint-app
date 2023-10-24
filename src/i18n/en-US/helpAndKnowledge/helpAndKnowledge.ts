@@ -506,7 +506,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
     },
     timeline: {
       description:
-        'Generally, it takes 1-2 months for models to start using CBOSC. The steps below are not a complete list of everything involved but highlight some main activities.',
+        'Generally, it takes 30 days for models to start using CBOSC. The steps below are not a complete list of everything involved but highlight some main activities.',
       items: [
         {
           header: 'Begin onboarding activities',
@@ -1300,7 +1300,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Reach out to Quality Vertical',
           description:
-            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison.Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract.The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work.Dustin will meet with the QV team to review the request and determine if the work should move forward.If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
+            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
         },
         {
           header: 'COR meets with the model team',
@@ -1805,8 +1805,9 @@ const helpAndKnowledge = {
   description:
     'Get help with the creation of your Model Plan and the implementation of IT solutions.',
   read: 'Read',
-  gettingStarted: 'Getting started',
-  itImplementation: 'IT implementation',
+  all: 'All help articles',
+  'getting-started': 'Getting started',
+  'it-implementation': 'IT implementation',
   instructions:
     'Use the articles below to help get started with your Model Plan and IT implementation.',
   gettingStartedInstructions:

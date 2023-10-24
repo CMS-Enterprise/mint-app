@@ -19,7 +19,7 @@ import { UploadNewPlanDocument as UploadNewPlanDocumentType } from 'queries/Docu
 import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
-import { FileUploadForm } from 'types/files';
+import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateDocumentType } from 'utils/modelPlan';
@@ -36,6 +36,7 @@ const DocumentUpload = ({
   const history = useHistory();
   const { t } = useTranslation('documents');
   const { t: h } = useTranslation('draftModelPlan');
+
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<FileUploadForm>>(null);
 
@@ -64,8 +65,8 @@ const DocumentUpload = ({
   );
 
   // Uploads the document to s3 bucket and create document on BE
-  const onSubmit = (values: FileUploadForm) => {
-    const { file } = values;
+  const onSubmit = (values: FileUploadForm | LinkingDocumentFormTypes) => {
+    const { file } = values as FileUploadForm;
 
     if (file && file.name && file.size >= 0 && file.type) {
       uploadFile({
@@ -136,6 +137,8 @@ const DocumentUpload = ({
       <Formik
         initialValues={{
           file: null,
+          url: null,
+          name: null,
           documentType: null,
           restricted: null,
           otherTypeDescription: '',
@@ -224,6 +227,7 @@ const DocumentUpload = ({
                       }}
                     />
                   </FieldGroup>
+
                   <FieldGroup
                     id="file-type"
                     scrollElement="documentType"
@@ -383,7 +387,7 @@ const DocumentUpload = ({
                       }
                       data-testid="upload-document"
                     >
-                      {t('uploadButton')}
+                      {t('submitButton')}
                     </Button>
                   </div>
                 </Form>

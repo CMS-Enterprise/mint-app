@@ -105,6 +105,7 @@ export type TranslationFieldPropertiesWithOptions<
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
   previousName: TranslationFieldProperties;
+  nameHistory: TranslationFieldProperties;
   abbreviation: TranslationFieldProperties;
   archived: TranslationFieldPropertiesWithOptions<Bool>;
   status: TranslationFieldPropertiesWithOptions<ModelStatus>;

@@ -30,13 +30,16 @@ import './index.scss';
 
 const apiHost = new URL(import.meta.env.VITE_API_ADDRESS || '').host;
 
-ReactGA.initialize([
-  {
-    trackingId: 'G-45PX7VBWQK',
-    gaOptions: {}, // optional
-    gtagOptions: {} // optional
-  }
-]);
+const trackingID = import.meta.env.VITE_GA_TRACKING_ID;
+if (trackingID) {
+  ReactGA.initialize([
+    {
+      trackingId: trackingID,
+      gaOptions: {}, // optional
+      gtagOptions: {} // optional
+    }
+  ]);
+}
 
 /**
  * Extract auth token from local storage and return a header

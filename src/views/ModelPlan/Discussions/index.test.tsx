@@ -165,12 +165,6 @@ describe('Discussion Component', () => {
     await waitFor(async () => {
       screen.getByRole('button', { name: /Reply/ }).click();
 
-      expect(
-        getByText(
-          /To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify./i
-        )
-      ).toBeInTheDocument();
-
       expect(getByText(/This is a question./i)).toBeInTheDocument();
     });
 
