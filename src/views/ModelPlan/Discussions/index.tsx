@@ -143,7 +143,7 @@ const Discussions = ({
         setInitQuestion(false);
         setDiscussionStatusMessage(
           t('alreadyAnswered', {
-            question: discussionToReply.content
+            question: discussionToReply.content?.rawContent
           })
         );
       }

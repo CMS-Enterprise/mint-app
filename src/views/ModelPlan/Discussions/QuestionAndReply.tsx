@@ -101,7 +101,7 @@ const QuestionAndReply = ({
             <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
-              <p className="margin-y-0">{reply.content}</p>
+              <p className="margin-y-0">{reply.content?.rawContent}</p>
             </div>
           </div>
 

@@ -63,7 +63,7 @@ const SingleDiscussion = ({
             'margin-bottom-2': isLast
           })}
         >
-          {discussion.content}
+          {discussion.content?.rawContent}
         </p>
 
         <div

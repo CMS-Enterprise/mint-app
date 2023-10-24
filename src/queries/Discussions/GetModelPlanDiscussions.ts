@@ -7,7 +7,9 @@ export default gql`
       isCollaborator
       discussions {
         id
-        content
+        content {
+          rawContent
+        }
         createdBy
         createdDts
         userRole
@@ -19,7 +21,9 @@ export default gql`
         replies {
           id
           discussionID
-          content
+          content {
+            rawContent
+          }
           userRole
           userRoleDescription
           isAssessment

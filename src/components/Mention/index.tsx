@@ -2,7 +2,7 @@ import React from 'react';
 import { useLazyQuery } from '@apollo/client';
 import CharacterCount from '@tiptap/extension-character-count';
 import Mention from '@tiptap/extension-mention';
-import { EditorContent, useEditor } from '@tiptap/react';
+import { EditorContent, mergeAttributes, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
 import SearchOktaUsers from 'queries/SearchOktaUsers';
@@ -11,6 +11,35 @@ import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOkta
 import suggestion from './suggestion';
 
 import './style.scss';
+
+const CustomMention = Mention.extend({
+  atom: true,
+  selectable: true,
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      'data-id-db': {
+        default: ''
+      }
+    };
+  },
+  renderHTML({ HTMLAttributes }) {
+    const elem = document.createElement('span');
+
+    Object.entries(
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
+    ).forEach(([attr, val]) => elem.setAttribute(attr, val));
+
+    elem.addEventListener('click', e => {
+      // TODO: Add event handler here
+      console.log(e.target?.dataset);
+    });
+
+    elem.textContent = `@${HTMLAttributes['data-label']}`;
+
+    return elem;
+  }
+});
 
 const getMentions = (data: any) => {
   const mentions: any = [];
@@ -68,9 +97,9 @@ export default ({ setFieldValue }: any) => {
       CharacterCount.configure({
         limit
       }),
-      Mention.configure({
+      CustomMention.configure({
         HTMLAttributes: {
-          class: 'mention'
+          class: 'mention hello'
           // onclick: e => console.log(e)
         },
         suggestion: asyncSuggestions
@@ -83,6 +112,12 @@ export default ({ setFieldValue }: any) => {
       const fieldValue = getContent(editor2?.getJSON());
       setFieldValue('content', fieldValue);
     }
+    // editorProps: {
+    //   handleClick(view, pos, event) {
+    //     console.log(view);
+    //     console.log(event);
+    //   }
+    // }
   });
 
   const percentage = editor
@@ -91,7 +126,7 @@ export default ({ setFieldValue }: any) => {
 
   return (
     <div className="margin-top-1">
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} id="tip-editor" />
       {editor && (
         <div
           className={`character-count ${

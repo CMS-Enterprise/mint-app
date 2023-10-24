@@ -398,9 +398,19 @@ export interface GetAllModelData_modelPlanCollection_collaborators {
   createdDts: Time;
 }
 
+export interface GetAllModelData_modelPlanCollection_discussions_content {
+  __typename: "TaggedHTML";
+  rawContent: string;
+}
+
 export interface GetAllModelData_modelPlanCollection_discussions_createdByUserAccount {
   __typename: "UserAccount";
   commonName: string;
+}
+
+export interface GetAllModelData_modelPlanCollection_discussions_replies_content {
+  __typename: "TaggedHTML";
+  rawContent: string;
 }
 
 export interface GetAllModelData_modelPlanCollection_discussions_replies_createdByUserAccount {
@@ -412,7 +422,7 @@ export interface GetAllModelData_modelPlanCollection_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: string | null;
+  content: GetAllModelData_modelPlanCollection_discussions_replies_content | null;
   createdByUserAccount: GetAllModelData_modelPlanCollection_discussions_replies_createdByUserAccount;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
@@ -422,7 +432,7 @@ export interface GetAllModelData_modelPlanCollection_discussions_replies {
 export interface GetAllModelData_modelPlanCollection_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: string | null;
+  content: GetAllModelData_modelPlanCollection_discussions_content | null;
   createdByUserAccount: GetAllModelData_modelPlanCollection_discussions_createdByUserAccount;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
