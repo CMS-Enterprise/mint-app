@@ -38,9 +38,11 @@ const CustomMention = (history: RouteComponentProps['history']) => {
         if (!(e.target instanceof HTMLButtonElement)) {
           return;
         }
-        history.push('/');
+
         // Data from mention stored here
-        console.log(e.target?.dataset);
+        const mentionData = e.target?.dataset;
+        console.log(mentionData);
+        // ex: history.push(mentionData.userAccountRoute);
       });
 
       elem.textContent = `@${HTMLAttributes['data-label']}`;
@@ -94,7 +96,10 @@ export default ({ setFieldValue }: any) => {
     }).then(
       res =>
         res?.data?.searchOktaUsers?.map(user => {
-          return { username: user.username, displayName: user.displayName };
+          return {
+            username: user.username,
+            displayName: `${user.displayName} (${user.username})`
+          };
         }) || []
     );
   };
@@ -119,11 +124,8 @@ export default ({ setFieldValue }: any) => {
         suggestion: asyncSuggestions
       })
     ],
-    onUpdate: ({ editor: editor2 }) => {
-      console.log(editor2?.getHTML());
-      // console.log(getContent(editor2?.getJSON()));
-      // console.log(getMentions(editor2?.getJSON()));
-      const fieldValue = getContent(editor2?.getJSON());
+    onUpdate: ({ editor: input }) => {
+      const fieldValue = getContent(input?.getJSON());
       setFieldValue('content', fieldValue);
     }
   });
