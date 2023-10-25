@@ -1,4 +1,5 @@
 import React from 'react';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import CharacterCount from '@tiptap/extension-character-count';
 import Mention from '@tiptap/extension-mention';
@@ -12,51 +13,56 @@ import suggestion from './suggestion';
 
 import './style.scss';
 
-const CustomMention = Mention.extend({
-  atom: true,
-  selectable: true,
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      'data-id-db': {
-        default: ''
-      }
-    };
-  },
-  renderHTML({ HTMLAttributes }) {
-    const elem = document.createElement('button');
+const CustomMention = (history: RouteComponentProps['history']) => {
+  return Mention.extend({
+    atom: true,
+    selectable: true,
+    addAttributes() {
+      return {
+        ...this.parent?.(),
+        'data-id-db': {
+          default: ''
+        }
+      };
+    },
+    renderHTML({ HTMLAttributes }) {
+      const elem = document.createElement('button');
 
-    Object.entries(
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
-    ).forEach(([attr, val]) => elem.setAttribute(attr, val));
+      Object.entries(
+        mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
+      ).forEach(([attr, val]) => elem.setAttribute(attr, val));
 
-    elem.addEventListener('click', e => {
-      // TODO: Add event handler here
-      // If event target not an HTMLButtonElement, exit
-      if (!(e.target instanceof HTMLButtonElement)) {
-        return;
-      }
-      // Data from mention stored here
-      console.log(e.target?.dataset);
-    });
+      elem.addEventListener('click', e => {
+        // TODO: Add event handler here
+        // If event target not an HTMLButtonElement, exit
+        if (!(e.target instanceof HTMLButtonElement)) {
+          return;
+        }
+        history.push('/');
+        // Data from mention stored here
+        console.log(e.target?.dataset);
+      });
 
-    elem.textContent = `@${HTMLAttributes['data-label']}`;
+      elem.textContent = `@${HTMLAttributes['data-label']}`;
 
-    return elem;
-  }
-});
-
-const getMentions = (data: any) => {
-  const mentions: any = [];
-  data?.content?.forEach((para: any) => {
-    para?.content?.forEach((content: any) => {
-      if (content?.type === 'mention') {
-        mentions.push(content?.attrs);
-      }
-    });
+      return elem;
+    }
   });
-  return mentions;
 };
+
+// // Possible Util to extract only mentions from content
+//
+// const getMentions = (data: any) => {
+//   const mentions: any = [];
+//   data?.content?.forEach((para: any) => {
+//     para?.content?.forEach((content: any) => {
+//       if (content?.type === 'mention') {
+//         mentions.push(content?.attrs);
+//       }
+//     });
+//   });
+//   return mentions;
+// };
 
 const getContent = (editorData: any) => {
   const data = { ...editorData };
@@ -74,6 +80,8 @@ const getContent = (editorData: any) => {
 };
 
 export default ({ setFieldValue }: any) => {
+  const history = useHistory();
+
   const limit = 280;
 
   const [getUsersLazyQuery] = useLazyQuery<SearchOktaUsersType>(
@@ -102,12 +110,11 @@ export default ({ setFieldValue }: any) => {
       CharacterCount.configure({
         limit
       }),
-      CustomMention.configure({
+      CustomMention(history).configure({
         HTMLAttributes: {
           class: 'mention',
           type: 'button',
           'aria-label': 'User mentioned'
-          // onclick: e => console.log(e)
         },
         suggestion: asyncSuggestions
       })
