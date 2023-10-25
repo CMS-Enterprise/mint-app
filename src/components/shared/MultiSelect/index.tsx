@@ -268,7 +268,7 @@ const MultiSelect = ({
           'easi-multiselect usa-combo-box margin-top-1',
           className
         )}
-        isClearable
+        isClearable={!disabledOption}
         options={options}
         components={{ ClearIndicator, Option }}
         isMulti
