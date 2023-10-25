@@ -121,12 +121,12 @@ func (s *Store) PlanDiscussionCreate(
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
-	// TODO: SW this should be a transaction
-	tags := models.TagArrayFromHTMLMentions("content", "plan_discussion", discussion.ID, discussion.Content.Mentions)
-	_, err = s.TagCollectionCreate(logger, tags, discussion.CreatedBy)
-	if err != nil {
-		return discussion, err
-	}
+	// TODO: SW this should be a transaction remove here
+	// tags := models.TagArrayFromHTMLMentions("content", "plan_discussion", discussion.ID, discussion.Content.Mentions)
+	// _, err = s.TagCollectionCreate(logger, tags, discussion.CreatedBy)
+	// if err != nil {
+	// 	return discussion, err
+	// }
 
 	return discussion, nil
 }

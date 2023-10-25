@@ -283,6 +283,7 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 		&input,
 		principal,
 		r.store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
 	)
 }
 

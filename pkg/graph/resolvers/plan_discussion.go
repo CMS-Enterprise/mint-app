@@ -8,6 +8,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/google/uuid"
 
@@ -27,6 +28,7 @@ func CreatePlanDiscussion(
 	input *model.PlanDiscussionCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.PlanDiscussion, error) {
 	planDiscussion := models.NewPlanDiscussion(
 		principal.Account().ID,
@@ -42,9 +44,19 @@ func CreatePlanDiscussion(
 		return nil, err
 	}
 
-	result, err := store.PlanDiscussionCreate(logger, planDiscussion)
+	discussion, err := store.PlanDiscussionCreate(logger, planDiscussion)
 	if err != nil {
 		return nil, err
+	}
+	tags, err := CreateOrGetTagEntityID(ctx, store, discussion.Content.ToTaggedHTML(), "content", "plan_discussion", discussion.ID, getAccountInformation)
+	if err != nil {
+		//TOOD: do we need to stop execution here?
+		return discussion, err
+	}
+	// tags := models.TagArrayFromHTMLMentions("content", "plan_discussion", discussion.ID, discussion.Content.Mentions)
+	_, err = store.TagCollectionCreate(logger, tags, discussion.CreatedBy)
+	if err != nil {
+		return discussion, err
 	}
 
 	// Send email to MINT Dev Team
@@ -57,18 +69,18 @@ func CreatePlanDiscussion(
 			emailTemplateService,
 			addressBook,
 			addressBook.MINTTeamEmail,
-			result,
+			discussion,
 			input.ModelPlanID,
 		)
 
 		if sendEmailErr != nil {
 			logger.Error("error sending plan discussion created email to MINT Team",
-				zap.String("discussionID", result.ID.String()),
+				zap.String("discussionID", discussion.ID.String()),
 				zap.Error(sendEmailErr))
 		}
 	}()
 
-	return result, err
+	return discussion, err
 }
 
 func sendPlanDiscussionCreatedEmail(

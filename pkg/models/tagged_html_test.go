@@ -26,15 +26,15 @@ func TestHTMLMentionFromString(t *testing.T) {
 	tag1EUA := "SKZO"
 	tag1Label := "Alexander Stark"
 	tag1Type := TagTypeUserAccount
-	tag1 := `<span data-type="` + string(tag1Type) + `" class="mention" data-id="` + tag1EUA + `" data-label="` + tag1Label + `">@` + tag1Label + `</span>`
+	tag1 := `<span data-type="mention" tag-type="` + string(tag1Type) + `" class="mention" data-id="` + tag1EUA + `" data-label="` + tag1Label + `">@` + tag1Label + `</span>`
 	tag2EUA := "TEST"
 	tag2Label := "Terry Thompson"
 	tag2Type := TagTypeUserAccount
-	tag2 := `<span data-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2EUA + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
+	tag2 := `<span data-type="mention" tag-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2EUA + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
 	tag3ID := "3"
 	tag3Label := "Salesforce"
 	tag3Type := TagTypePossibleSolution
-	tag3 := `<span data-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
+	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
 	htmlMention := `<p>Hey ` + tag1 + `!  Will you be able to join the meeting next week?  If not, can you contact ` + tag2 + ` to let them know?</p> We are planning on using the ` + tag3 + `solution.`
 	taggedHTML, err := NewTaggedHTMLFromString(htmlMention)
 	assert.NoError(t, err)

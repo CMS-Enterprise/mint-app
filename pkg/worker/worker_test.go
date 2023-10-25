@@ -86,6 +86,7 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return pd

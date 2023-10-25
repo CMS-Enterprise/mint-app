@@ -20,7 +20,7 @@ import (
 type TaggedHTML struct {
 	RawContent hTML
 	Mentions   []*HTMLMention
-	Tags       []*Tag // TODO: Verify, this is the actual tag from teh dB
+	Tags       []*Tag // TODO: Verify, this is the actual tag from the dB
 }
 
 // HTMLMention represents Meta data about an entity tagged in text
@@ -149,20 +149,21 @@ func extractHTMLMentions(htmlString string) ([]*html.Node, error) {
 
 }
 
-func parseHTMLMentionTag(mendtionNode html.Node) (HTMLMention, error) {
+func parseHTMLMentionTag(mentionNode html.Node) (HTMLMention, error) {
 	// htmlMention := HTMLMention{}
 	var entityIDStr string
 	var dataLabel string
-	var entityUUID *uuid.UUID
-	var entityIntID *int
+	// var entityUUID *uuid.UUID
+	// var entityIntID *int
 	var tagType TagType
 	var class string
 	attributes := make(map[string]string)
-	for _, a := range mendtionNode.Attr {
+	for _, a := range mentionNode.Attr {
 		attributes[a.Key] = a.Val
 	}
+	// TODO add a new attribute
 
-	tagType = TagType(attributes["data-type"])
+	tagType = TagType(attributes["tag-type"])
 	err := tagType.Validate()
 	if err != nil {
 		return HTMLMention{}, err //TODO: SW should we return a pointer instead?
@@ -174,14 +175,24 @@ func parseHTMLMentionTag(mendtionNode html.Node) (HTMLMention, error) {
 	if class != "mention" {
 		return HTMLMention{}, fmt.Errorf("this is not a valid mention provided class is : %s", class)
 	}
+	dataIDDB := attributes["data-id-db"] // TODO: SW this should not be set yet actually
+	fmt.Print(dataIDDB)
+	// switch tagType {
+	// case TagTypeUserAccount:
+	// 	entityUUID = dataIDDB
+
+	// }
+
+	//TODO, need to update with a data-id-db tag, and update the raw string
+	// TODO somewhere data-id-db needs to be updated as well
 
 	return HTMLMention{
-		RawHTML:     mendtionNode,
-		Type:        tagType,
-		EntityRaw:   entityIDStr, //TODO, maybe we need to keep it generic at this point. Perhaps when writing the tag we can get the reference and perhaps update the tag?
-		DataLabel:   dataLabel,
-		EntityUUID:  entityUUID,
-		EntityIntID: entityIntID,
+		RawHTML:   mentionNode,
+		Type:      tagType,
+		EntityRaw: entityIDStr, //TODO, maybe we need to keep it generic at this point. Perhaps when writing the tag we can get the reference and perhaps update the tag?
+		DataLabel: dataLabel,
+		// EntityUUID:  entityUUID,
+		// EntityIntID: entityIntID,
 	}, nil
 
 }
@@ -211,24 +222,6 @@ func TagArrayFromHTMLMentions(taggedField string, taggedTable string, taggedCont
 	return tags
 
 }
-
-// // UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTML type
-// func (th *TaggedHTML) UnmarshalGQLContext(ctx context.Context, v interface{}) error {
-
-// 	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
-
-// 	rawHTML, ok := v.(string)
-// 	if !ok {
-// 		logger.Info("invalid TaggedHTMLInput")
-// 		return errors.New("invalid TaggedHTMLInput")
-// 	}
-
-// 	// Sanitize the HTML string
-// 	sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
-// 	*th = TaggedHTML{RawContent: hTML(sanitizedHTMLString)}
-// 	return nil
-
-// }
 
 // Scan is used by sql.scan to read the values from the DB
 func (th *TaggedHTML) Scan(src interface{}) error {

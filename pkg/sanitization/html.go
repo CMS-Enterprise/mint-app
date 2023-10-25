@@ -51,7 +51,7 @@ func createHTMLPolicy() *bluemonday.Policy {
 	// rules for mentions
 	// <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>
 	policy.AllowElements("span")
-	policy.AllowAttrs("data-type", "class", "data-id", "data-label").OnElements("span")
+	policy.AllowAttrs("data-type", "class", "data-id", "data-label", "tag-type", "data-id-db").OnElements("span")
 	// policy.AllowElementsMatching() // TODO: can we use this to make sure that the span only is allowed with required elements?
 	return policy
 
