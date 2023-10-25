@@ -130,12 +130,14 @@ export const mapMultiSelectOptions = (
 // Used to map MultiSelect options from Enums
 export const composeMultiSelectOptions = (
   translationObject: Record<string, string>,
-  sublabels?: Record<string, string>
+  sublabels?: Record<string, string>,
+  disabledValue?: string
 ) =>
   getKeys(translationObject).map(key => ({
     value: key,
     label: translationObject[key],
-    subLabel: sublabels ? sublabels[key] : null
+    subLabel: sublabels ? sublabels[key] : null,
+    isDisabled: key === disabledValue
   }));
 
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
