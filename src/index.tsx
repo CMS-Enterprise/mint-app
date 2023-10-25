@@ -39,7 +39,6 @@ if (trackingID) {
       gtagOptions: {} // optional
     }
   ]);
-  // ReactGA.gtag('config', 'GTM-ND283L9F', { debug_mode: true });
 }
 
 /**
