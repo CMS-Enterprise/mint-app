@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -20,15 +20,11 @@ import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
 import {
   CreateModelPlanCollaborator as CreateCollaboratorsType,
   CreateModelPlanCollaboratorVariables
 } from 'queries/Collaborators/types/CreateModelPlanCollaborator';
-import {
-  GetModelCollaborator,
-  GetModelCollaborator_planCollaboratorByID as CollaboratorFormType
-} from 'queries/Collaborators/types/GetModelCollaborator';
+import { GetModelCollaborator_planCollaboratorByID as CollaboratorFormType } from 'queries/Collaborators/types/GetModelCollaborator';
 import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
@@ -74,36 +70,28 @@ const Collaborators = () => {
     UpdateModelPlanCollaboratorVariables
   >(UpdateModelPlanCollaborator);
 
-  const { data, loading: queryLoading } = useQuery<GetModelCollaborator>(
-    GetModelPlanCollaborator,
-    {
-      variables: {
-        id: collaboratorId
-      },
-      skip: !collaboratorId
+  const {
+    data: allCollaboratorsData,
+    loading: queryLoading
+  } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
+    variables: {
+      id: modelID
     }
+  });
+
+  const allCollaborators =
+    allCollaboratorsData?.modelPlan?.collaborators ??
+    ([] as GetCollaboratorsType[]);
+
+  const specificCollaborator = allCollaborators.filter(
+    collab => collab.id === collaboratorId
   );
 
-  const collaborator =
-    data?.planCollaboratorByID ?? ({ userAccount: {} } as CollaboratorFormType);
+  const initialValues: CollaboratorFormType = specificCollaborator[0];
 
-  const initialValues: CollaboratorFormType = collaborator;
-
-  const isModelLead = collaborator.teamRoles?.includes(TeamRole.MODEL_LEAD);
-
-  const { data: collaboratorsData } = useQuery<GetModelCollaborators>(
-    GetModelPlanCollaborators,
-    {
-      variables: {
-        id: modelID
-      }
-    }
+  const isModelLead = specificCollaborator[0].teamRoles?.includes(
+    TeamRole.MODEL_LEAD
   );
-
-  const allCollaborators = useMemo(() => {
-    return (collaboratorsData?.modelPlan?.collaborators ??
-      []) as GetCollaboratorsType[];
-  }, [collaboratorsData?.modelPlan?.collaborators]);
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorFormType) => {
     const {
