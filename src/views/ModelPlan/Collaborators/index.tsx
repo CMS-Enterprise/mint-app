@@ -37,7 +37,7 @@ import AddCollaborator from './AddCollaborator';
 import CollaboratorsTable from './table';
 
 // Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
-const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
+export const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
   const modelLeads = collaborators.filter(collaborator =>
     collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
   );

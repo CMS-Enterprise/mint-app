@@ -18,10 +18,12 @@ type MultiSelectOptionProps = {
   value: string;
   label: string;
   subLabel?: string;
+  isDisabled?: boolean;
 };
 
 export const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
   const { data, isSelected, innerProps, innerRef, isFocused } = props;
+
   return (
     <div
       {...innerProps}
@@ -39,6 +41,7 @@ export const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
         onChange={() => null}
         onBlur={() => null}
         value={data.value}
+        disabled={data.isDisabled}
       />
       {data.subLabel && (
         <span className="text-base margin-left-4">{data.subLabel}</span>

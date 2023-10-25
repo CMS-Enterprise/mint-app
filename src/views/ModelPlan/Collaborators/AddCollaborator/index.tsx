@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -19,6 +19,7 @@ import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
 import {
   CreateModelPlanCollaborator as CreateCollaboratorsType,
@@ -29,6 +30,10 @@ import {
   GetModelCollaborator_planCollaboratorByID as CollaboratorFormType
 } from 'queries/Collaborators/types/GetModelCollaborator';
 import {
+  GetModelCollaborators,
+  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
+} from 'queries/Collaborators/types/GetModelCollaborators';
+import {
   UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType,
   UpdateModelPlanCollaboratorVariables
 } from 'queries/Collaborators/types/UpdateModelPlanCollaborator';
@@ -37,6 +42,8 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
+
+import { isLastModelLead } from '..';
 
 const Collaborators = () => {
   const { t: collaboratorsT } = useTranslation('collaborators');
@@ -79,6 +86,24 @@ const Collaborators = () => {
 
   const collaborator =
     data?.planCollaboratorByID ?? ({ userAccount: {} } as CollaboratorFormType);
+
+  const initialValues: CollaboratorFormType = collaborator;
+
+  const isModelLead = collaborator.teamRoles?.includes(TeamRole.MODEL_LEAD);
+
+  const { data: collaboratorsData } = useQuery<GetModelCollaborators>(
+    GetModelPlanCollaborators,
+    {
+      variables: {
+        id: modelID
+      }
+    }
+  );
+
+  const allCollaborators = useMemo(() => {
+    return (collaboratorsData?.modelPlan?.collaborators ??
+      []) as GetCollaboratorsType[];
+  }, [collaboratorsData?.modelPlan?.collaborators]);
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorFormType) => {
     const {
@@ -169,8 +194,6 @@ const Collaborators = () => {
         });
     }
   };
-
-  const initialValues: CollaboratorFormType = collaborator;
 
   return (
     <MainContent>
@@ -303,12 +326,17 @@ const Collaborators = () => {
                           id="collaborator-role"
                           name="role"
                           options={composeMultiSelectOptions(
-                            teamRoleConfig.options
+                            teamRoleConfig.options,
+                            undefined,
+                            isModelLead && isLastModelLead(allCollaborators)
+                              ? TeamRole.MODEL_LEAD
+                              : ''
                           )}
                           onChange={(value: TeamRole[]) => {
                             setFieldValue('teamRoles', value);
                           }}
                           initialValues={initialValues.teamRoles}
+                          tagOrder={TeamRole.MODEL_LEAD}
                         />
                       </FieldGroup>
 
