@@ -351,7 +351,9 @@ const Collaborators = () => {
                         className="margin-y-4"
                       >
                         <span className="mandatory-fields-alert__text">
-                          {collaboratorsMiscT('searchMemberInfo')}
+                          {isLastModelLead(allCollaborators)
+                            ? collaboratorsMiscT('lastModelLeadMemberInfo')
+                            : collaboratorsMiscT('searchMemberInfo')}
                         </span>
                       </Alert>
 
