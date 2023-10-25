@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   stories: [
     '../src/**/*.stories.@(js|jsx|ts|tsx)',
@@ -10,31 +8,11 @@ module.exports = {
     '@storybook/addon-controls',
     "storybook-addon-apollo-client",
   ],
-  webpackFinal: (config) => {
-    config.resolve.modules = [
-      // Resolve absolute import paths
-      ...(config.resolve.modules || []),
-      path.resolve(__dirname, '../src')
-    ];
-
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        'sass-loader',
-        {
-          loader: 'sass-resources-loader',
-          options: {
-            resources: [
-              path.resolve(__dirname, '../src/stylesheets/_colors.scss'),
-              path.resolve(__dirname, '../src/stylesheets/_viewports.scss')
-            ]
-          }
-        }
-      ],
-      include: path.resolve(__dirname, '../src'),
-    });
-    return config;
+  framework: {
+    name: '@storybook/react-vite',
+    options: {}
+  },
+  docs: {
+    autodocs: true
   }
 }
