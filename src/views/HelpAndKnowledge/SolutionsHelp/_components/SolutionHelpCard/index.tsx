@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import {
   Card,
@@ -11,7 +11,12 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 
+import {
+  AboutConfigType,
+  getTransLinkComponents
+} from '../../SolutionDetails/Solutions/Generic/about';
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionsTag from '../SolutionsTag';
 
@@ -19,7 +24,7 @@ import './index.scss';
 
 type SolutionCardProps = {
   className?: string;
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
   solution: HelpSolutionType;
 };
 
@@ -30,18 +35,22 @@ const SolutionHelpCard = ({
 }: SolutionCardProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
+  const aboutConfig: AboutConfigType = t(`solutions.${solution.key}.about`, {
+    returnObjects: true
+  });
+
   const location = useLocation();
 
   return (
-    <CardGroup className="flex-column flex-no-wrap">
+    <CardGroup className="flex-no-wrap">
       <Card
         className={classNames(
           'solution-card margin-bottom-2 shadow',
           className
         )}
       >
-        <div className="padding-3 solution-card__container">
-          <div className="solution-card__header">
+        <div className="padding-3 solution-card__container solution-card__fill-card-space">
+          <div className="solution-card__header solution-card__fill-card-space">
             <h3
               className="margin-bottom-0 margin-top-0 solutions-checkbox__header"
               style={{ wordBreak: 'break-word' }}
@@ -65,7 +74,13 @@ const SolutionHelpCard = ({
             </div>
 
             <p className="solution-card__body">
-              {t(`solutions.${solution.key}.about.description`)}
+              <Trans
+                i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.description`}
+                components={{
+                  ...getTransLinkComponents(aboutConfig.links),
+                  bold: <strong />
+                }}
+              />
             </p>
 
             <Grid
@@ -74,7 +89,9 @@ const SolutionHelpCard = ({
             >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-              <p className="margin-y-0">{solution.pointsOfContact[0].name}</p>
+              <p className="margin-y-0">
+                {solution?.pointsOfContact?.[0]?.name}
+              </p>
             </Grid>
           </div>
 

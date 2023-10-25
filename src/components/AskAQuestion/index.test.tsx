@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -22,7 +21,6 @@ const discussionResult = {
         content: 'This is a question.',
         createdBy: 'John Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: 'UNANSWERED',
         replies: []
       },
       {
@@ -31,12 +29,10 @@ const discussionResult = {
         content: 'This is a second question.',
         createdBy: 'Jane Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
-        status: 'ANSWERED',
         replies: [
           {
             __typename: 'DiscussionReply',
             discussionID: '456',
-            resolution: true,
             id: 'abc',
             content: 'This is an answer.',
             createdBy: 'Jack Doe',
@@ -74,9 +70,9 @@ const store = mockStore({ auth: mockAuthReducer });
 describe('Ask a Question Component', () => {
   // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
   // eslint-disable-next-line
-  console.error = jest.fn();
+  console.error = vi.fn();
 
-  jest.spyOn(window, 'scroll');
+  vi.spyOn(window, 'scroll');
 
   it('renders the discussion modal init with question', async () => {
     const { getByText, getByTestId } = render(
@@ -104,19 +100,13 @@ describe('Ask a Question Component', () => {
 
       expect(
         getByText(
-          'Need help with something? Ask a question here and someone will reply. Questions and answers will display in Discussions. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.'
+          'Need help with something? Start a discussion and you’ll be notified of any replies. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.'
         )
       ).toBeInTheDocument();
 
-      expect(getByText('Type your question')).toBeInTheDocument();
+      expect(
+        getByText('Type your question or discussion topic')
+      ).toBeInTheDocument();
     });
-
-    const feedbackField = screen.getByRole('textbox', {
-      name: /Type your question/i
-    });
-
-    userEvent.type(feedbackField, 'Test feedback');
-
-    expect(feedbackField).toHaveValue('Test feedback');
   });
 });

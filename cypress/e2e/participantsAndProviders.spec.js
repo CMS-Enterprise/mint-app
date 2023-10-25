@@ -1,47 +1,28 @@
-import { aliasQuery } from '../support/graphql-test-utils';
-
 describe('The Model Plan Participants and Providers Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
-
-    cy.intercept('POST', '/api/graph/query', req => {
-      aliasQuery(req, 'GetModelPlan');
-      aliasQuery(req, 'GetParticipantsAndProviders');
-      aliasQuery(req, 'GetParticipantOptions');
-      aliasQuery(req, 'GetCommunication');
-      aliasQuery(req, 'GetCoordination');
-      aliasQuery(req, 'GetProviderOptions');
-    });
   });
 
   it('completes a Model Plan Participants and Providers', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    cy.wait('@GetModelPlan')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     // Clicks the Participants and Providers tasklist item
     cy.get('[data-testid="participants-and-providers"]').click();
 
-    cy.wait('@GetParticipantsAndProviders')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    // Page - /participants-and-providers
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/participants-and-providers/
       );
     });
-
-    // Page - /participants-and-providers
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
-    cy.get('#participants-and-providers-participants').within(() => {
-      cy.get("input[type='text']").click();
-    });
+    cy.get('#participants-and-providers-participants')
+      .should('not.be.disabled')
+      .within(() => {
+        cy.get("input[type='text']").click();
+      });
 
     cy.get('[data-testid="option-MEDICARE_PROVIDERS"]')
       .check({ force: true })
@@ -76,7 +57,7 @@ describe('The Model Plan Participants and Providers Form', () => {
       .type('The candy people')
       .should('have.value', 'The candy people');
 
-    cy.get('#participants-and-providers-current-participants')
+    cy.get('#participants-and-providers-current-participants-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -88,12 +69,8 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/participant-options
 
-    cy.wait('@GetParticipantOptions')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.get('#participants-and-providers-expected-participants')
+      .should('not.be.disabled')
       .invoke('val', 2345)
       .trigger('change')
       .should('have.value', 2345);
@@ -131,17 +108,13 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/communication
 
-    cy.wait('@GetCommunication')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.get('#participants-and-providers-communication-method-IT_TOOL')
+      .should('not.be.disabled')
       .as('communication')
       .check({ force: true });
     cy.get('@communication').should('be.checked');
 
-    cy.get('#participants-and-providers-risk')
+    cy.get('#participants-and-providers-risk-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -153,7 +126,7 @@ describe('The Model Plan Participants and Providers Form', () => {
       .type('Programmatic Risk')
       .should('have.value', 'Programmatic Risk');
 
-    cy.get('#participants-and-providers-risk-change')
+    cy.get('#participants-and-providers-risk-change-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -161,20 +134,16 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/coordination
 
-    cy.wait('@GetCoordination')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
-    cy.get('#participants-and-providers-coordniate-work')
+    cy.get('#participants-and-providers-coordniate-work-true')
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#participants-and-providers-gainshare-payment')
+    cy.get('#participants-and-providers-gainshare-payment-true')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#participants-and-providers-gainshare-track')
+    cy.get('#participants-and-providers-gainshare-track-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -190,13 +159,8 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/provider-options
 
-    cy.wait('@GetProviderOptions')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
     cy.get('#participants-and-providers-additional-frequency-OTHER')
-      .check({ force: true })
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
@@ -246,11 +210,6 @@ describe('The Model Plan Participants and Providers Form', () => {
       );
 
     cy.contains('button', 'Save and return to task list').click();
-
-    cy.wait('@GetModelPlan')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);

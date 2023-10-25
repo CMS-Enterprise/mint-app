@@ -135,7 +135,7 @@ def up(frontend_included, *args, debug:false, wait:false, ci:false)
 
   contribsys_docker_login
 
-  command = "docker compose #{"--profile frontend" if frontend_included } up #{"--build" if !ci}"
+  command = "docker compose -f docker-compose.backend.yml #{"-f docker-compose.frontend.yml" if frontend_included } up #{"--build" if !ci}"
 
   if args.any?
     command = "#{command} #{args.join(' ')}"
@@ -210,12 +210,12 @@ end
 
 desc "Stops all services in the project"
 task :down do
-  sh "docker compose --profile frontend down"
+  sh "docker compose -f docker-compose.backend.yml -f docker-compose.frontend.yml down"
 end
 
 desc "Restart the specified container"
 task restart: :consume_args do |t, args|
-  yml = `docker-compose --profile frontend config`
+  yml = `docker-compose -f docker-compose.backend.yml -f docker-compose.frontend.yml config`
   config = YAML.load(yml)["services"]
   services = config.keys.sort
 
@@ -224,7 +224,7 @@ task restart: :consume_args do |t, args|
       puts "service #{service} not one of defined services: #{services.join(', ')}"
       next
     end
-    sh "docker-compose rm -s --force #{service}"
+    sh "docker compose -f docker-compose.backend.yml -f docker-compose.frontend.yml rm -s --force #{service}"
   end
 
   Rake::Task["up"].invoke
@@ -238,7 +238,7 @@ namespace :docker do
 end
 
 def each_minio_file(&block)
-  output = `docker-compose run --entrypoint="mc --no-color --json ls -r s3local/mint-app-file-uploads" minio_mc`
+  output = `docker-compose -f docker-compose.backend.yml run --entrypoint="mc --no-color --json ls -r s3local/mint-app-file-uploads" minio_mc`
   json = "[#{output.gsub(/\}\s*\{/, "},{")}]" # convert sort-of-jsonl into conventional json
   files = JSON.parse(json)
 
@@ -249,7 +249,7 @@ end
 
 def set_file_tag(key, status)
   command = %Q{mc tag set 's3local/mint-app-file-uploads/#{key}' 'av-status=#{status}'}
-  sh %Q{docker-compose run --entrypoint="#{command}" minio_mc}
+  sh %Q{docker-compose -f docker-compose.backend.yml run --entrypoint="#{command}" minio_mc}
 end
 
 namespace :minio do
@@ -296,7 +296,7 @@ task :reset => :up do
   Rake::Task["db:seed"].invoke
 
   # The backend may have lost its database connection
-  sh("docker-compose restart mint", verbose: true)
+  sh("docker-compose -f docker-compose.backend.yml restart mint", verbose: true)
 end
 
 namespace :hosts do
@@ -327,15 +327,15 @@ end
 namespace :db do
   desc "Runs database migrations and wait for them to complete"
   task :migrate do
-    sh "docker-compose start db_migrate"
+    sh "docker-compose -f docker-compose.backend.yml start db_migrate"
     loop do
       sleep 0.5
-      status = `docker-compose ps | grep "db_migrate-1"`
-      match = /exited \((\d+)\)/.match(status)
+      status = `docker-compose -f docker-compose.backend.yml ps -a | grep "db_migrate-1"`
+      match = /Exited \((\d+)\)/.match(status)
       if match
         unless match[1] == "0"
           puts "\n\n🚨 Migration failed! 🚨 Displaying logs from that container:\n\n"
-          sh("docker-compose logs db_migrate")
+          sh("docker-compose -f docker-compose.backend.yml logs db_migrate")
           exit(1)
         end
         break
@@ -345,7 +345,7 @@ namespace :db do
 
   desc "Destroys the database container and recreates it"
   task :recreate do
-    sh "docker-compose kill db && docker-compose rm -fv db && docker-compose up -d db"
+    sh "docker-compose -f docker-compose.backend.yml kill db && docker-compose -f docker-compose.backend.yml rm -fv db && docker-compose -f docker-compose.backend.yml up -d db"
   end
 
   desc "Seed local database with development data"
@@ -378,6 +378,7 @@ namespace :db do
     operational_solution_subtask,
     operational_solution,
     operational_need,
+    existing_model_link,
     model_plan,
     audit.change"
 
@@ -439,12 +440,12 @@ namespace :test do
 
   desc "Run JS tests (pass path to scope to that location)"
   task :js => :consume_args do |t, args|
-    sh "yarn", "run", "craco", "test", "--watchAll=false", *args
+    sh "yarn", "run", "test", *args
   end
   namespace :js do
     desc "Run JS tests with a matching name (pass needle as additional option)"
     task :named => :consume_args do |t, args|
-      sh "yarn", "run", "craco", "test", "--watchAll=false", "-t", *args
+      sh "yarn", "run", "test", "-t", *args
     end
   end
 end
@@ -468,6 +469,11 @@ end
 desc "Run all linters and checks managed by pre-commit"
 task :lint do
   sh "pre-commit run -a"
+end
+
+desc "Send a test email of all the email templates"
+task :email do
+  sh "go run cmd/test_email/*.go"
 end
 
 begin

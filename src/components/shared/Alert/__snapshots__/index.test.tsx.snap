@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`The Alert component matches snapshot 1`] = `
+exports[`The Alert component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="usa-alert usa-alert--info mint-alert-text flex"
@@ -17,7 +17,9 @@ exports[`The Alert component matches snapshot 1`] = `
       <p
         class="usa-alert__text"
       >
-        This is information
+        <span>
+          This is information
+        </span>
         <button
           aria-label="Close Button"
           class="usa-button usa-button usa-button--unstyled text-no-underline text-black flex-align-end"

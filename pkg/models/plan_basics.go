@@ -10,10 +10,14 @@ import (
 type PlanBasics struct {
 	baseTaskListSection
 
-	ModelCategory *ModelCategory `json:"modelCategory" db:"model_category"`
-	CMSCenters    pq.StringArray `json:"cmsCenters" db:"cms_centers"`
-	CMSOther      *string        `json:"cmsOther" db:"cms_other"`
-	CMMIGroups    pq.StringArray `json:"cmmiGroups" db:"cmmi_groups"`
+	DemoCode   *string `json:"demoCode" db:"demo_code"`
+	AmsModelID *string `json:"amsModelID" db:"ams_model_id"`
+
+	ModelCategory             *ModelCategory `json:"modelCategory" db:"model_category"`
+	AdditionalModelCategories pq.StringArray `json:"additionalModelCategories" db:"additional_model_categories"`
+	CMSCenters                pq.StringArray `json:"cmsCenters" db:"cms_centers"`
+	CMSOther                  *string        `json:"cmsOther" db:"cms_other"`
+	CMMIGroups                pq.StringArray `json:"cmmiGroups" db:"cmmi_groups"`
 
 	ModelType *ModelType `json:"modelType" db:"model_type" statusWeight:"1"`
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Collaborator/Team Member page w/table matches snapshot 1`] = `
+exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -71,21 +71,24 @@ exports[`Collaborator/Team Member page w/table matches snapshot 1`] = `
             Add team member
           </a>
           <div
-            class="usa-alert usa-alert--info flex"
-            data-testid="alert"
+            class="margin-y-10"
+            data-testid="page-loading"
           >
             <div
-              class="usa-alert__body"
+              class="text-center"
             >
-              <h4
-                class="usa-alert__heading"
-              >
-                No associated team members
-              </h4>
-              <p
-                class="usa-alert__text"
+              <span
+                aria-busy="true"
+                aria-valuetext="Loading the page"
+                class="mint-spinner mint-spinner--xl"
+                role="progressbar"
               />
             </div>
+            <h1
+              class="margin-top-6 text-center"
+            >
+              Loading the page
+            </h1>
           </div>
           <div
             class="margin-top-5 display-block"

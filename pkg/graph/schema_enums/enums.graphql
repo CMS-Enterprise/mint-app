@@ -55,9 +55,12 @@ enum TeamRole {
   EVALUATION
   IT_LEAD
   QUALITY
+  OACT
+  PAYMENT
 }
 
-enum ModelType {
+enum ModelType
+{
   VOLUNTARY
   MANDATORY
   TBD
@@ -65,14 +68,12 @@ enum ModelType {
 
 enum ModelCategory {
   ACCOUNTABLE_CARE
-  DEMONSTRATION
-  EPISODE_BASED_PAYMENT_INITIATIVES
-  INIT_MEDICAID_CHIP_POP
-  INIT__MEDICARE_MEDICAID_ENROLLEES
-  INIT_ACCEL_DEV_AND_TEST
-  INIT_SPEED_ADOPT_BEST_PRACTICE
-  PRIMARY_CARE_TRANSFORMATION
-  UNKNOWN
+  DISEASE_SPECIFIC_AND_EPISODIC
+  HEALTH_PLAN
+  PRESCRIPTION_DRUG
+  STATE_BASED
+  STATUTORY
+  TO_BE_DETERMINED
 }
 
 enum ModelStatus {
@@ -87,6 +88,8 @@ enum ModelStatus {
   ANNOUNCED
   PAUSED
   CANCELED
+  ACTIVE
+  ENDED
 }
 
 enum CMSCenter {
@@ -106,17 +109,13 @@ enum CMMIGroup {
   TBD
 }
 
-enum DiscussionStatus {
-  ANSWERED
-  WAITING_FOR_RESPONSE
-  UNANSWERED
-}
-
 enum DocumentType {
   CONCEPT_PAPER,
   POLICY_PAPER,
   ICIP_DRAFT,
   MARKET_RESEARCH,
+  DESIGN_PARAMETERS_MEMO,
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
   OTHER
 }
 
@@ -181,7 +180,6 @@ enum BeneficiariesType {
   OTHER
   NA
 }
-
 enum SelectionMethodType {
   HISTORICAL
   PROSPECTIVE
@@ -289,7 +287,6 @@ enum ProviderAddType {
 }
 
 enum ProviderLeaveType {
-
   VOLUNTARILY_WITHOUT_IMPLICATIONS
   AFTER_A_CERTAIN_WITH_IMPLICATIONS
   VARIES_BY_TYPE_OF_PROVIDER
@@ -302,6 +299,11 @@ enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
   TRUST_FUND
   OTHER
+}
+
+enum TrustFundType {
+  MEDICARE_PART_A_HI_TRUST_FUND
+  MEDICARE_PART_B_SMI_TRUST_FUND
 }
 
 enum PayRecipient {
@@ -439,12 +441,35 @@ enum OperationalSolutionKey{
   POST_PORTAL
   RFA
   SHARED_SYSTEMS
+  BCDA
+  ISP
+  MIDS
 }
 
 enum OperationalSolutionSubtaskStatus {
   TODO,
   IN_PROGRESS,
   DONE
+}
+
+"""
+A user role associated with a job code
+"""
+enum Role {
+  """
+  A basic MINT user
+  """
+  MINT_USER
+
+  """
+  A MINT assessment team user
+  """
+  MINT_ASSESSMENT
+
+  """
+  A MINT MAC user
+  """
+  MINT_MAC
 }
 
 enum ActionType {
@@ -458,3 +483,158 @@ enum ActionType {
   """
   ADMIN
 }
+
+enum SearchFilterType {
+  """
+  Filter search results to include changes on or after the specified date.
+  Expected value: A string in RFC3339 format representing the date and time.
+  Example: "2006-01-02T15:04:05Z07:00"
+  """
+  CHANGED_AFTER
+
+  """
+  Filter search results to include changes on or before the specified date.
+  Expected value: A string in RFC3339 format representing the date and time.
+  Example: "2006-01-02T15:04:05Z07:00"
+  """
+  CHANGED_BEFORE
+
+  """
+  Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
+  Expected value: A string representing the name or username of the actor.
+  Example: "MINT"
+  """
+  CHANGED_BY_ACTOR
+
+  """
+  Filter search results to include changes made to the specified object.
+  Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
+  Example: "BASICS"
+  """
+  MODEL_PLAN_SECTION
+
+  """
+  Filter search results to include changes made to the specified model plan by ID.
+  Expected value: A string representing the ID of the model plan.
+  Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
+  """
+  MODEL_PLAN_ID
+
+  """
+  Filter search results to include model plans with the specified status.
+  Expected value: A string representing the status of the model plan.
+  Example: "ACTIVE"
+  """
+  MODEL_PLAN_STATUS
+
+  """
+  Filter results with a free text search. This is a fuzzy search on the entire record.
+  Expected value: A string representing the free text search query.
+  Example: "Operational Need"
+  """
+  FREE_TEXT
+
+  """
+  Filter results by table id.
+  Expected value: An integer representing the table ID.
+  Example: 14
+  """
+  TABLE_ID
+
+  """
+  Filter results by table name.
+  Expected value: A string representing the table name.
+  Example: "plan_basics"
+  """
+  TABLE_NAME
+}
+
+enum ChangeHistorySortKey {
+  """
+  Sort by the date the change was made
+  """
+  CHANGE_DATE
+
+  """
+  Sort by the user who made the change
+  """
+  ACTOR
+
+  """
+  Sort by the model plan ID that was changed
+  """
+  MODEL_PLAN_ID
+
+  """
+  Sort by the table ID that was changed
+  """
+  TABLE_ID
+
+  """
+  Sort by the table name that was changed
+  """
+  TABLE_NAME
+}
+
+# lint-disable defined-types-are-used
+enum SearchableTaskListSection {
+  BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT
+}
+# lint-enable defined-types-are-used
+
+enum DiscussionUserRole {
+  CMS_SYSTEM_SERVICE_TEAM,
+  IT_ARCHITECT,
+  LEADERSHIP,
+  MEDICARE_ADMINISTRATIVE_CONTRACTOR,
+  MINT_TEAM,
+  MODEL_IT_LEAD,
+  MODEL_TEAM,
+  SHARED_SYSTEM_MAINTAINER,
+  NONE_OF_THE_ABOVE,
+}
+
+enum ModelViewFilter {
+  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
+  CMMI, # CMMI_COST_ESTIMATE
+  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
+  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
+  IPC, # INNOVATION_PAYMENT_CONTRACTOR
+  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
+  MDM, # MASTER_DATA_MANAGEMENT
+  OACT, # OFFICE_OF_THE_ACTUARY
+  PBG, # PROVIDER_BILLING_GROUP
+}
+
+# lint-disable enum-values-all-caps
+enum GQLTableName {
+  analyzedAudit
+  discussionReply
+  existingModel
+  existingModelLink
+  modelPlan
+  ndaAgreement
+  operationalNeed
+  operationalSolution
+  operationalSolutionSubtask
+  planBasics
+  planBeneficiaries
+  planCollaborator
+  planCrTdl
+  planDiscussion
+  planDocument
+  planDocumentSolutionLink
+  planGeneralCharacteristics
+  planOpsEvalAndLearning
+  planParticipantsAndProviders
+  planPayments
+  possibleOperationalNeed
+  possibleOperationalSolution
+  userAccount
+}
+# lint-enable enum-values-all-caps

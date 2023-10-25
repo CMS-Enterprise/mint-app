@@ -11,10 +11,14 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
+  IconInfo,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import GetFunding from 'gql/apolloGQL/Payments/GetFunding';
+import UpdatePayments from 'gql/apolloGQL/Payments/UpdatePayments';
+import { GetFundingQuery, PayType } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,46 +30,44 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import Tooltip from 'components/shared/Tooltip';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetFunding from 'queries/Payments/GetFunding';
-import {
-  GetFunding as GetFundingType,
-  GetFunding_modelPlan_payments as FundingFormType,
-  GetFundingVariables
-} from 'queries/Payments/types/GetFunding';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   ClaimsBasedPayType,
   FundingSource as FundingSourceEnum,
-  PayRecipient,
-  PayType
+  PayRecipient
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  sortOtherEnum,
-  sortPayTypeEnums,
-  translatePayRecipient,
-  translatePayType,
-  translateSourceOptions
-} from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
+type FundingFormType = GetFundingQuery['modelPlan']['payments'];
+
 const FundingSource = () => {
-  const { t } = useTranslation('payments');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: paymentsT } = useTranslation('payments');
+
+  const { t: paymentsMiscT } = useTranslation('paymentsMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    fundingSource: fundingSourceConfig,
+    fundingSourceTrustFundType: fundingSourceTrustFundTypeConfig,
+    fundingSourceR: fundingSourceRConfig,
+    payRecipients: payRecipientsConfig,
+    payType: payTypeConfig
+  } = usePlanTranslation('payments');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<FundingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetFundingType,
-    GetFundingVariables
-  >(GetFunding, {
+  const { data, loading, error } = useQuery(GetFunding, {
     variables: {
       id: modelID
     }
@@ -77,11 +79,11 @@ const FundingSource = () => {
   const {
     id,
     fundingSource,
-    fundingSourceTrustFund,
+    fundingSourceTrustFundType,
     fundingSourceOther,
     fundingSourceNote,
     fundingSourceR,
-    fundingSourceRTrustFund,
+    fundingSourceRTrustFundType,
     fundingSourceROther,
     fundingSourceRNote,
     payRecipients,
@@ -98,15 +100,17 @@ const FundingSource = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useMutation(UpdatePayments);
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | string) => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
+
     const hasNonClaimBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
+
     update({
       variables: {
         id,
@@ -146,11 +150,11 @@ const FundingSource = () => {
     __typename: 'PlanPayments',
     id: id ?? '',
     fundingSource: fundingSource ?? [],
-    fundingSourceTrustFund: fundingSourceTrustFund ?? '',
+    fundingSourceTrustFundType: fundingSourceTrustFundType ?? [],
     fundingSourceOther: fundingSourceOther ?? '',
     fundingSourceNote: fundingSourceNote ?? '',
     fundingSourceR: fundingSourceR ?? [],
-    fundingSourceRTrustFund: fundingSourceRTrustFund ?? '',
+    fundingSourceRTrustFundType: fundingSourceRTrustFundType ?? [],
     fundingSourceROther: fundingSourceROther ?? '',
     fundingSourceRNote: fundingSourceRNote ?? '',
     payRecipients: payRecipients ?? [],
@@ -165,23 +169,66 @@ const FundingSource = () => {
     return <NotFoundPartial />;
   }
 
+  const TrustFundSelection = ({
+    values,
+    fieldName
+  }: {
+    values: FundingFormType;
+    fieldName: 'fundingSourceTrustFundType' | 'fundingSourceRTrustFundType';
+  }) => (
+    <Fieldset className="margin-left-4">
+      <Label
+        htmlFor="fundingSourceTrustFundType"
+        className="maxw-none text-normal"
+      >
+        {paymentsT(`${fieldName}.label`)}
+      </Label>
+
+      {getKeys(fundingSourceTrustFundTypeConfig.options).map(trustType => {
+        return (
+          <div className="display-flex flex-align-center" key={trustType}>
+            <Field
+              key={trustType}
+              as={CheckboxField}
+              id={`payment-funding-source-${fieldName}-${trustType}`}
+              name={fieldName}
+              label={fundingSourceTrustFundTypeConfig.options[trustType]}
+              value={trustType}
+              checked={values[fieldName]?.includes(trustType)}
+            />
+            <Tooltip
+              label={
+                fundingSourceTrustFundTypeConfig.optionsLabels?.[trustType] ||
+                ''
+              }
+              position="right"
+              className="margin-left-05 height-105"
+            >
+              <IconInfo className="text-base-light" />
+            </Tooltip>
+          </div>
+        );
+      })}
+    </Fieldset>
+  );
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {paymentsMiscT('heading')}
       </PageHeading>
 
       <p
@@ -192,8 +239,9 @@ const FundingSource = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -208,20 +256,22 @@ const FundingSource = () => {
       >
         {(formikProps: FormikProps<FundingFormType>) => {
           const { errors, handleSubmit, setErrors, values } = formikProps;
+
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -238,66 +288,47 @@ const FundingSource = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="fundingSource"
-                        error={!!flatErrors.fundingSource}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="fundingSource" className="maxw-none">
-                          {t('fundingSource')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.fundingSource}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {Object.keys(FundingSourceEnum)
-                            .sort(sortOtherEnum)
-                            .map(type => {
+                      <Fieldset disabled={!!error || loading}>
+                        <FieldGroup
+                          scrollElement="fundingSource"
+                          error={!!flatErrors.fundingSource}
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="fundingSource" className="maxw-none">
+                            {paymentsT('fundingSource.label')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.fundingSource}
+                          </FieldErrorMsg>
+
+                          <Fieldset>
+                            {getKeys(fundingSourceConfig.options).map(type => {
                               return (
                                 <Fragment key={type}>
                                   <Field
                                     key={type}
                                     as={CheckboxField}
                                     id={`payment-funding-source-${type}`}
+                                    data-testid={`payment-funding-source-${type}`}
                                     name="fundingSource"
-                                    label={translateSourceOptions(type)}
+                                    label={fundingSourceConfig.options[type]}
                                     value={type}
                                     checked={values.fundingSource?.includes(
-                                      type as FundingSourceEnum
+                                      type
                                     )}
                                   />
-                                  {type === 'TRUST_FUND' &&
-                                    values.fundingSource?.includes(
-                                      type as FundingSourceEnum
-                                    ) && (
-                                      <FieldGroup
-                                        className="margin-left-4 margin-top-2 margin-bottom-4"
-                                        error={
-                                          !!flatErrors.fundingSourceTrustFund
-                                        }
-                                      >
-                                        <Label
-                                          htmlFor="fundingSourceTrustFund"
-                                          className="text-normal"
-                                        >
-                                          {t('whichType')}
-                                        </Label>
-                                        <FieldErrorMsg>
-                                          {flatErrors.fundingSourceTrustFund}
-                                        </FieldErrorMsg>
-                                        <Field
-                                          as={TextInput}
-                                          id="payment-funding-source-trust-fund"
-                                          data-testid="payment-funding-source-trust-fund"
-                                          maxLength={50}
-                                          name="fundingSourceTrustFund"
-                                        />
-                                      </FieldGroup>
+
+                                  {type === FundingSourceEnum.TRUST_FUND &&
+                                    values.fundingSource?.includes(type) && (
+                                      <TrustFundSelection
+                                        values={values}
+                                        fieldName="fundingSourceTrustFundType"
+                                      />
                                     )}
-                                  {type === 'OTHER' &&
-                                    values.fundingSource?.includes(
-                                      type as FundingSourceEnum
-                                    ) && (
+
+                                  {type === FundingSourceEnum.OTHER &&
+                                    values.fundingSource?.includes(type) && (
                                       <FieldGroup
                                         className="margin-left-4 margin-top-2 margin-bottom-4"
                                         error={!!flatErrors.fundingSourceOther}
@@ -306,11 +337,15 @@ const FundingSource = () => {
                                           htmlFor="fundingSourceOther"
                                           className="text-normal"
                                         >
-                                          {t('otherSourceOption')}
+                                          {paymentsT(
+                                            'fundingSourceOther.label'
+                                          )}
                                         </Label>
+
                                         <FieldErrorMsg>
                                           {flatErrors.fundingSourceOther}
                                         </FieldErrorMsg>
+
                                         <Field
                                           as={TextInput}
                                           id="payment-funding-source-other"
@@ -322,28 +357,29 @@ const FundingSource = () => {
                                 </Fragment>
                               );
                             })}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-funding-source-note"
-                          field="fundingSourceNote"
-                        />
-                      </FieldGroup>
+                          </Fieldset>
 
-                      <FieldGroup
-                        scrollElement="fundingSourceR"
-                        error={!!flatErrors.fundingSourceR}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="fundingSourceR" className="maxw-none">
-                          {t('reconciliation')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.fundingSourceR}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {Object.keys(FundingSourceEnum)
-                            .sort(sortOtherEnum)
-                            .map(type => {
+                          <AddNote
+                            id="payment-funding-source-note"
+                            field="fundingSourceNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="fundingSourceR"
+                          error={!!flatErrors.fundingSourceR}
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="fundingSourceR" className="maxw-none">
+                            {paymentsT('fundingSourceR.label')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.fundingSourceR}
+                          </FieldErrorMsg>
+
+                          <Fieldset>
+                            {getKeys(fundingSourceRConfig.options).map(type => {
                               return (
                                 <Fragment key={type}>
                                   <Field
@@ -351,44 +387,23 @@ const FundingSource = () => {
                                     as={CheckboxField}
                                     id={`payment-funding-source-reconciliation-${type}`}
                                     name="fundingSourceR"
-                                    label={translateSourceOptions(type)}
+                                    label={fundingSourceRConfig.options[type]}
                                     value={type}
                                     checked={values.fundingSourceR?.includes(
-                                      type as FundingSourceEnum
+                                      type
                                     )}
                                   />
-                                  {type === 'TRUST_FUND' &&
-                                    values.fundingSourceR?.includes(
-                                      type as FundingSourceEnum
-                                    ) && (
-                                      <FieldGroup
-                                        className="margin-left-4 margin-top-2 margin-bottom-4"
-                                        error={
-                                          !!flatErrors.fundingSourceRTrustFund
-                                        }
-                                      >
-                                        <Label
-                                          htmlFor="fundingSourceRTrustFund"
-                                          className="text-normal"
-                                        >
-                                          {t('whichType')}
-                                        </Label>
-                                        <FieldErrorMsg>
-                                          {flatErrors.fundingSourceRTrustFund}
-                                        </FieldErrorMsg>
-                                        <Field
-                                          as={TextInput}
-                                          id="payment-funding-source-reconciliation-trust-fund"
-                                          data-testid="payment-funding-source-reconciliation-trust-fund"
-                                          maxLength={50}
-                                          name="fundingSourceRTrustFund"
-                                        />
-                                      </FieldGroup>
+
+                                  {type === FundingSourceEnum.TRUST_FUND &&
+                                    values.fundingSourceR?.includes(type) && (
+                                      <TrustFundSelection
+                                        values={values}
+                                        fieldName="fundingSourceRTrustFundType"
+                                      />
                                     )}
-                                  {type === 'OTHER' &&
-                                    values.fundingSourceR?.includes(
-                                      type as FundingSourceEnum
-                                    ) && (
+
+                                  {type === FundingSourceEnum.OTHER &&
+                                    values.fundingSourceR?.includes(type) && (
                                       <FieldGroup
                                         className="margin-left-4 margin-top-2 margin-bottom-4"
                                         error={!!flatErrors.fundingSourceROther}
@@ -397,11 +412,15 @@ const FundingSource = () => {
                                           htmlFor="fundingSourceROther"
                                           className="text-normal"
                                         >
-                                          {t('otherSourceOption')}
+                                          {paymentsT(
+                                            'fundingSourceROther.label'
+                                          )}
                                         </Label>
+
                                         <FieldErrorMsg>
                                           {flatErrors.fundingSourceROther}
                                         </FieldErrorMsg>
+
                                         <Field
                                           as={TextInput}
                                           id="payment-funding-source-reconciliation-other"
@@ -413,44 +432,44 @@ const FundingSource = () => {
                                 </Fragment>
                               );
                             })}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-funding-source-reconciliation-note"
-                          field="fundingSourceRNote"
-                        />
-                      </FieldGroup>
+                          </Fieldset>
 
-                      <FieldGroup
-                        scrollElement="payRecipients"
-                        error={!!flatErrors.payRecipients}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="payRecipients" className="maxw-none">
-                          {t('whoWillYouPay')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.payRecipients}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {Object.keys(PayRecipient)
-                            .sort(sortOtherEnum)
-                            .map(type => {
+                          <AddNote
+                            id="payment-funding-source-reconciliation-note"
+                            field="fundingSourceRNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="payRecipients"
+                          error={!!flatErrors.payRecipients}
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="payRecipients" className="maxw-none">
+                            {paymentsT('payRecipients.label')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.payRecipients}
+                          </FieldErrorMsg>
+
+                          <Fieldset>
+                            {getKeys(payRecipientsConfig.options).map(type => {
                               return (
                                 <Fragment key={type}>
                                   <Field
                                     as={CheckboxField}
                                     id={`payment-pay-recipients-${type}`}
                                     name="payRecipients"
-                                    label={translatePayRecipient(type)}
+                                    label={payRecipientsConfig.options[type]}
                                     value={type}
                                     checked={values.payRecipients.includes(
-                                      type as PayRecipient
+                                      type
                                     )}
                                   />
-                                  {type === 'OTHER' &&
-                                    values.payRecipients.includes(
-                                      type as PayRecipient
-                                    ) && (
+
+                                  {type === PayRecipient.OTHER &&
+                                    values.payRecipients.includes(type) && (
                                       <FieldGroup
                                         className="margin-left-4 margin-top-2 margin-bottom-4"
                                         error={
@@ -461,13 +480,17 @@ const FundingSource = () => {
                                           htmlFor="payRecipientsOtherSpecification"
                                           className="text-normal"
                                         >
-                                          {t('otherPayOption')}
+                                          {paymentsT(
+                                            'payRecipientsOtherSpecification.label'
+                                          )}
                                         </Label>
+
                                         <FieldErrorMsg>
                                           {
                                             flatErrors.payRecipientsOtherSpecification
                                           }
                                         </FieldErrorMsg>
+
                                         <Field
                                           as={TextInput}
                                           id="payment-pay-recipients-other-specification"
@@ -479,77 +502,86 @@ const FundingSource = () => {
                                 </Fragment>
                               );
                             })}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-pay-recipients-note"
-                          field="payRecipientsNote"
-                        />
-                      </FieldGroup>
+                          </Fieldset>
 
-                      <FieldGroup
-                        scrollElement="payType"
-                        error={!!flatErrors.payType}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="payType" className="maxw-none">
-                          {t('whatWillYouPay')}
-                        </Label>
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="payment-pay-recipients-warning"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
-                            }
+                          <AddNote
+                            id="payment-pay-recipients-note"
+                            field="payRecipientsNote"
                           />
-                        )}
-                        <p className="text-base margin-y-1 margin-top-2">
-                          {t('whatWillYouPaySubCopy')}
-                        </p>
-                        <FieldErrorMsg>{flatErrors.payType}</FieldErrorMsg>
-                        <Fieldset>
-                          {Object.keys(PayType)
-                            .sort(sortPayTypeEnums)
-                            .map(type => {
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="payType"
+                          error={!!flatErrors.payType}
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="payType" className="maxw-none">
+                            {paymentsT('payType.label')}
+                          </Label>
+
+                          {itSolutionsStarted && (
+                            <ITSolutionsWarning
+                              id="payment-pay-recipients-warning"
+                              onClick={() =>
+                                handleFormSubmit(
+                                  `/models/${modelID}/task-list/it-solutions`
+                                )
+                              }
+                            />
+                          )}
+
+                          <p className="text-base margin-y-1 margin-top-2">
+                            {paymentsT('payType.sublabel')}
+                          </p>
+
+                          <FieldErrorMsg>{flatErrors.payType}</FieldErrorMsg>
+
+                          <Fieldset>
+                            {getKeys(payTypeConfig.options).map(type => {
                               return (
                                 <Field
                                   key={type}
                                   as={CheckboxField}
                                   id={`payment-pay-recipients-${type}`}
                                   name="payType"
-                                  label={translatePayType(type)}
+                                  label={payTypeConfig.options[type]}
                                   value={type}
-                                  checked={values.payType.includes(
-                                    type as PayType
-                                  )}
+                                  checked={values.payType.includes(type)}
                                 />
                               );
                             })}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-pay-type-note"
-                          field="payTypeNote"
-                        />
-                      </FieldGroup>
+                          </Fieldset>
 
-                      <div className="margin-top-6 margin-bottom-3">
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
+                          <AddNote
+                            id="payment-pay-type-note"
+                            field="payTypeNote"
+                          />
+                        </FieldGroup>
+
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {miscellaneousT('next')}
+                          </Button>
+                        </div>
+
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('back')}
+                        >
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('back')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -563,6 +595,7 @@ const FundingSource = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

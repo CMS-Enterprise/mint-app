@@ -17,9 +17,10 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	input := &model.DiscussionReplyCreateInput{
-		DiscussionID: discussion.ID,
-		Content:      "this is a test reply",
-		Resolution:   false,
+		DiscussionID:        discussion.ID,
+		Content:             "this is a test reply",
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 	/* Create 4 discussion replies, with different principals*/
 	testPR1 := getTestPrincipal(suite.testConfigs.Store, "TestDR1")

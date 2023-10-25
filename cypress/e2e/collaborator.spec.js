@@ -28,8 +28,11 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('#react-select-model-team-cedar-contact-input')
       .click()
-      .type('Jerry{enter}', { delay: 500 })
-      .should('have.value', 'Jerry Seinfeld, SF13');
+      .type('Jerry', { delay: 1000 });
+
+    cy.get('#react-select-model-team-cedar-contact-option-0')
+      .contains('Jerry Seinfeld, SF13')
+      .click();
 
     cy.contains('button', 'Add team member').should('be.disabled');
 
@@ -57,7 +60,10 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('input').should('be.disabled');
 
-    cy.get('select').select('Model Team').should('have.value', 'MODEL_TEAM');
+    cy.get('select')
+      .should('not.be.disabled')
+      .select('Model Team')
+      .should('have.value', 'MODEL_TEAM');
 
     cy.contains('button', 'Update team member').click();
 

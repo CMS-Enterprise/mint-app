@@ -3,13 +3,6 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
     hooks:
-      - id: no-commit-to-branch
-        args: [
-          '--pattern', '^(?!((main)|(feature\/EASI-\d{1,5})|((EASI-\d{1,5}|NOREF|dependabot)\/[a-zA-Z0-9\-\._/]+))$).*',
-          '--branch', '' # Adding this to remove the default protection on `main` so that CI checks can pass
-        ]
-        name: Enforce branch naming patterns
-        description: Enforces branch naming policy. Allowed branch patterns are 'EASI-#', 'EASI-#/*', 'feature/EASI-#', 'NOREF/*', and 'dependabot/*'. A feature branch like feature/EASI-2020 would have branches like EASI-2020/frontend and EASI-2020/backend merge into it.
       - id: check-yaml
         name: Check YAML formatting
       - id: detect-private-key
@@ -17,6 +10,7 @@ repos:
       - id: end-of-file-fixer
         files: \.(sql|scss|md|js|ts|tsx|go|yml|yaml)$
         name: Add newlines to ends of files
+        exclude: src/gql/gen/.* # Ignore generated FE files
 
   - repo: https://github.com/detailyang/pre-commit-shell
     rev: v1.0.6
@@ -51,11 +45,11 @@ repos:
           )$
 
   - repo: https://github.com/golangci/golangci-lint
-    rev: v1.48.0
+    rev: v1.54.2
     hooks:
       - id: golangci-lint
         name: Lint go files
-        args: ['--concurrency', '-1'] # Run with all CPUs
+        args: ['--concurrency', '-1', '-v'] # Run with all CPUs
 
   - repo: local
     hooks:
@@ -73,7 +67,7 @@ repos:
         entry: scripts/pre-commit-eslint
         language: script
         files: \.(js|jsx|ts|tsx)$
-        exclude: (\.(d\.ts)$)|(\.storybook)|(serviceWorker\.ts) # This should match the .eslintrc "ignorePatterns". Change one, change the other!
+        exclude: (\.(d\.ts)$)|(\.storybook)|(serviceWorker\.ts)|(src/gql/gen/.*) # This should match the .eslintrc "ignorePatterns". Change one, change the other!
 
   - repo: local
     hooks:
@@ -98,7 +92,7 @@ repos:
         name: Run GraphQL code generation
         entry: scripts/pre-commit-check-code-generation
         language: script
-        files: "pkg/graph/schema(/.*)?/.*\\.graphql|pkg/graph/schema/gqlresolvers/[^/]+\\.go|src/queries/.*\\.ts"
+        files: "pkg/graph/schema(/.*)?/.*\\.graphql|pkg/graph/schema/gqlresolvers/[^/]+\\.go|src/queriesCodegen/.*\\.ts"
         pass_filenames: false
 
   - repo: https://github.com/awslabs/git-secrets

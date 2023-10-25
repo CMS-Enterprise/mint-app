@@ -1,9 +1,11 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
+  IconArrowForward,
   IconMail,
+  IconMailOutline,
   Link,
   Tag
 } from '@trussworks/react-uswds';
@@ -14,7 +16,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { DiscussionStatus } from 'types/graphql-global-types';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
 
 import './index.scss';
@@ -57,13 +59,22 @@ export const LandingHeader = () => {
           {t('description')}
         </p>
 
-        <UswdsReactLink
-          className="usa-button bg-mint-cool-vivid text-white width-auto"
-          variant="unstyled"
-          to="/signin"
-        >
-          {t('signIn')}
-        </UswdsReactLink>
+        <span className="hide-print">
+          <UswdsReactLink
+            className="usa-button bg-mint-cool-vivid text-white width-auto"
+            variant="unstyled"
+            to="/signin"
+          >
+            {t('signIn')}
+          </UswdsReactLink>
+
+          <UswdsReactLink
+            to="/how-to-get-access"
+            className="landing__access-link margin-left-105"
+          >
+            {t('getAccess')}
+          </UswdsReactLink>
+        </span>
 
         <NDABanner
           className="bg-primary-darker text-white padding-x-0 border-top border-primary-dark margin-top-6 text-primary-lighter"
@@ -153,6 +164,7 @@ export const LandingBody = () => {
 
 export const LandingFooter = () => {
   const { t } = useTranslation('landing');
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const footerItems: FooterItemType[] = t('footerItems', {
     returnObjects: true
@@ -163,7 +175,7 @@ export const LandingFooter = () => {
       <GridContainer className="padding-top-6 padding-bottom-4">
         <h2 className="margin-bottom-2 margin-top-0">{t('footerHeading')}</h2>
 
-        <Grid row gap={4} className="padding-bottom-2">
+        <Grid row gap={4} className="padding-bottom-2 landing__footer">
           {footerItems.map(item => (
             <Grid tablet={{ col: 4 }} key={item.heading}>
               <h3 className="margin-bottom-0">{item.heading}</h3>
@@ -174,15 +186,39 @@ export const LandingFooter = () => {
           ))}
         </Grid>
 
-        <div className="landing__footer padding-top-4 padding-bottom-2">
-          <span className="text-bold margin-right-1">{t('access')}</span>
-          <span>
-            <Trans i18nKey="landing:email">
-              indexOne
-              <Link href="mailto:MINTTeam@cms.hhs.gov">helpTextEmail</Link>
-              indexTwo
-            </Trans>
-          </span>
+        <div className="hide-print">
+          <div
+            className={classNames({
+              'display-block': isTablet,
+              'display-flex': !isTablet
+            })}
+          >
+            <div className="padding-top-4 padding-bottom-2 margin-right-2">
+              <span className="text-bold margin-right-1">{t('access')}</span>
+              <span>
+                <UswdsReactLink to="/how-to-get-access">
+                  {t('learnHowtoGetAccess')}{' '}
+                  <IconArrowForward className="margin-left-1 text-tbottom" />
+                </UswdsReactLink>
+                {!isTablet && <span className="margin-left-2 landing__vr" />}
+              </span>
+            </div>
+
+            <div
+              className={classNames('padding-bottom-2', {
+                'padding-top-1': isTablet,
+                'padding-top-4': !isTablet
+              })}
+            >
+              <span className="text-bold margin-right-1">{t('questions')}</span>
+              <span>
+                <Link href="mailto:MINTTeam@cms.hhs.gov">
+                  {t('email')}
+                  <IconMailOutline className="margin-left-1 text-tbottom" />
+                </Link>
+              </span>
+            </div>
+          </div>
         </div>
       </GridContainer>
     </div>
@@ -285,8 +321,9 @@ const DiscussionCard = () => {
       id: 'c5960290-81b2-4303-8249-84d334de56b3',
       content: 'When should we submit an onboarding request to use Salesforce?',
       createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
+      userRole: DiscussionUserRole.MODEL_TEAM,
+      userRoleDescription: '',
       createdDts: hour3ago,
-      status: DiscussionStatus.ANSWERED,
       isAssessment: false,
       createdByUserAccount: {
         commonName: 'Jane Middleton',
@@ -299,9 +336,10 @@ const DiscussionCard = () => {
           content:
             'You should submit an onboarding request as soon as your team has a sense of what direction you want for IT support.',
           isAssessment: true,
+          userRole: DiscussionUserRole.LEADERSHIP,
+          userRoleDescription: '',
           createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
           createdDts: justNow,
-          resolution: true,
           createdByUserAccount: {
             commonName: 'Zoe Hruban',
             __typename: 'UserAccount'
@@ -317,9 +355,6 @@ const DiscussionCard = () => {
     <div className="landing__discussions line-height-mono-4 padding-2">
       <FormatDiscussion
         discussionsContent={discussions}
-        status={DiscussionStatus.ANSWERED}
-        hasEditAccess
-        setDiscussionStatusMessage={() => null}
         setDiscussionType={() => null}
         setReply={() => null}
       />

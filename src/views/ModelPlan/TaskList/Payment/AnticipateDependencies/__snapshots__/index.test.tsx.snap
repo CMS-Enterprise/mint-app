@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
+exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"
@@ -88,7 +88,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
         data-testid="ask-a-question-button"
         type="button"
       >
-        Ask a question
+        Start a discussion
       </button>
     </div>
   </div>
@@ -109,358 +109,365 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
           class="margin-top-6"
           data-testid="payment-anticipate-dependencies-form"
         >
-          <h3
-            aria-live="polite"
-            class="mint-h1 margin-bottom-3"
-            tabindex="-1"
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
           >
-            Claims-based payment questions continued
-          </h3>
-          <div
-            class="usa-form-group margin-top-4"
-            data-scroll="creatingDependenciesBetweenServices"
-          >
-            <label
-              class="usa-label maxw-none"
-              data-testid="label"
-              for="creatingDependenciesBetweenServices"
+            <h3
+              aria-live="polite"
+              class="mint-h1 margin-bottom-3"
+              tabindex="-1"
             >
-              Are you anticipating creating dependencies between services?
-            </label>
-            <p
-              class="text-base margin-y-1"
-            >
-              Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.
-            </p>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
-            >
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="payment-creating-dependencies-between-services-true"
-                  id="payment-creating-dependencies-between-services-true"
-                  name="creatingDependenciesBetweenServices"
-                  type="radio"
-                  value="YES"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="payment-creating-dependencies-between-services-true"
-                >
-                  Yes
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="payment-creating-dependencies-between-services-false"
-                  id="payment-creating-dependencies-between-services-false"
-                  name="creatingDependenciesBetweenServices"
-                  type="radio"
-                  value="NO"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="payment-creating-dependencies-between-services-false"
-                >
-                  No
-                </label>
-              </div>
-            </fieldset>
+              Claims-based payment questions continued
+            </h3>
             <div
-              class="margin-top-4 margin-bottom-8"
+              class="usa-form-group margin-top-4"
+              data-scroll="creatingDependenciesBetweenServices"
             >
-              <button
-                class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
-                type="button"
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="creatingDependenciesBetweenServices"
               >
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                Add an additional note
-              </button>
-            </div>
-          </div>
-          <div
-            class="usa-form-group margin-top-4"
-            data-scroll="needsClaimsDataCollection"
-          >
-            <label
-              class="usa-label maxw-none"
-              data-testid="label"
-              for="needsClaimsDataCollection"
-            >
-              Will any additional data need to be collected for claims?
-            </label>
-            <p
-              class="text-base margin-y-1"
-            >
-              If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)
-            </p>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
-            >
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="payment-needs-claims-data-collection-true"
-                  id="payment-needs-claims-data-collection-true"
-                  name="needsClaimsDataCollection"
-                  type="radio"
-                  value="YES"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="payment-needs-claims-data-collection-true"
-                >
-                  Yes
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="payment-needs-claims-data-collection-false"
-                  id="payment-needs-claims-data-collection-false"
-                  name="needsClaimsDataCollection"
-                  type="radio"
-                  value="NO"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="payment-needs-claims-data-collection-false"
-                >
-                  No
-                </label>
-              </div>
-            </fieldset>
-            <div
-              class="margin-top-4 margin-bottom-8"
-            >
-              <button
-                class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
-                type="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                Add an additional note
-              </button>
-            </div>
-          </div>
-          <div
-            class="usa-form-group margin-top-4"
-            data-scroll="providingThirdPartyFile"
-          >
-            <label
-              class="usa-label maxw-none"
-              data-testid="label"
-              for="providingThirdPartyFile"
-            >
-              Will your contractor be providing data (a Third Party File) that will be used in claims processing?
-            </label>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
-            >
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="payment-providing-third-party-file-true"
-                  id="payment-providing-third-party-file-true"
-                  name="providingThirdPartyFile"
-                  type="radio"
-                  value="YES"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="payment-providing-third-party-file-true"
-                >
-                  Yes
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="payment-providing-third-party-file-false"
-                  id="payment-providing-third-party-file-false"
-                  name="providingThirdPartyFile"
-                  type="radio"
-                  value="NO"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="payment-providing-third-party-file-false"
-                >
-                  No
-                </label>
-              </div>
-            </fieldset>
-          </div>
-          <div
-            class="usa-alert usa-alert--info usa-alert--slim flex margin-y-6"
-            data-testid="alert"
-          >
-            <div
-              class="usa-alert__body"
-            >
+                Are you anticipating creating dependencies between services?
+              </label>
               <p
-                class="usa-alert__text"
+                class="text-base margin-y-1"
               >
-                Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).
+                Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.
               </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-creating-dependencies-between-services-true"
+                    id="payment-creating-dependencies-between-services-true"
+                    name="creatingDependenciesBetweenServices"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-creating-dependencies-between-services-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-creating-dependencies-between-services-false"
+                    id="payment-creating-dependencies-between-services-false"
+                    name="creatingDependenciesBetweenServices"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-creating-dependencies-between-services-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-4 margin-bottom-8"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
+              </div>
             </div>
-          </div>
-          <div
-            class="usa-form-group margin-top-4"
-            data-scroll="isContractorAwareTestDataRequirements"
-          >
-            <label
-              class="usa-label maxw-none"
-              data-testid="label"
-              for="isContractorAwareTestDataRequirements"
+            <div
+              class="usa-form-group margin-top-4"
+              data-scroll="needsClaimsDataCollection"
             >
-              Is your contractor aware that test data will be needed, and when that test data must be available? 
-            </label>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="needsClaimsDataCollection"
+              >
+                Will any additional data need to be collected for claims?
+              </label>
+              <p
+                class="text-base margin-y-1"
+              >
+                If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)
+              </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-needs-claims-data-collection-true"
+                    id="payment-needs-claims-data-collection-true"
+                    name="needsClaimsDataCollection"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-needs-claims-data-collection-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-needs-claims-data-collection-false"
+                    id="payment-needs-claims-data-collection-false"
+                    name="needsClaimsDataCollection"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-needs-claims-data-collection-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-4 margin-bottom-8"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-4"
+              data-scroll="providingThirdPartyFile"
+            >
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="providingThirdPartyFile"
+              >
+                Will your contractor be providing data (a Third Party File) that will be used in claims processing?
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-providing-third-party-file-true"
+                    id="payment-providing-third-party-file-true"
+                    name="providingThirdPartyFile"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-providing-third-party-file-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-providing-third-party-file-false"
+                    id="payment-providing-third-party-file-false"
+                    name="providingThirdPartyFile"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-providing-third-party-file-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div
+              class="usa-alert usa-alert--info usa-alert--slim flex margin-y-6"
+              data-testid="alert"
             >
               <div
-                class="usa-radio"
-                data-testid="radio"
+                class="usa-alert__body"
               >
-                <input
-                  class="usa-radio__input"
-                  data-testid="payment-contractor-aware-test-data-requirements-true"
-                  id="payment-contractor-aware-test-data-requirements-true"
-                  name="isContractorAwareTestDataRequirements"
-                  type="radio"
-                  value="YES"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="payment-contractor-aware-test-data-requirements-true"
+                <p
+                  class="usa-alert__text"
                 >
-                  Yes
-                </label>
+                  <span>
+                    Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).
+                  </span>
+                </p>
               </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
+            </div>
+            <div
+              class="usa-form-group margin-top-4"
+              data-scroll="isContractorAwareTestDataRequirements"
+            >
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="isContractorAwareTestDataRequirements"
               >
-                <input
-                  class="usa-radio__input"
-                  data-testid="payment-contractor-aware-test-data-requirements-false"
-                  id="payment-contractor-aware-test-data-requirements-false"
-                  name="isContractorAwareTestDataRequirements"
-                  type="radio"
-                  value="NO"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="payment-contractor-aware-test-data-requirements-false"
+                Is your contractor aware that test data will be needed, and when that test data must be available?
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
                 >
-                  No
-                </label>
-              </div>
-            </fieldset>
-          </div>
-          <div
-            class="margin-top-6 margin-bottom-3"
-          >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-contractor-aware-test-data-requirements-true"
+                    id="payment-contractor-aware-test-data-requirements-true"
+                    name="isContractorAwareTestDataRequirements"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-contractor-aware-test-data-requirements-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-contractor-aware-test-data-requirements-false"
+                    id="payment-contractor-aware-test-data-requirements-false"
+                    name="isContractorAwareTestDataRequirements"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-contractor-aware-test-data-requirements-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div
+              class="margin-top-6 margin-bottom-3"
+            >
+              <button
+                class="usa-button usa-button usa-button--outline margin-bottom-1"
+                data-testid="button"
+                type="button"
+              >
+                Back
+              </button>
+              <button
+                class="usa-button"
+                data-testid="button"
+                type="submit"
+              >
+                Next
+              </button>
+            </div>
             <button
-              class="usa-button usa-button usa-button--outline margin-bottom-1"
+              class="usa-button usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
-              Back
+              <svg
+                aria-hidden="true"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Save and return to task list
             </button>
-            <button
-              class="usa-button"
-              data-testid="button"
-              type="submit"
-            >
-              Next
-            </button>
-          </div>
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-              />
-            </svg>
-            Save and return to task list
-          </button>
+          </fieldset>
         </form>
       </div>
     </div>

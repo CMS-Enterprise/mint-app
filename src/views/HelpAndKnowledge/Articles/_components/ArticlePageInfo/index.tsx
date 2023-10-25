@@ -15,27 +15,29 @@ const ArticlePageInfo = ({ className }: ArticlePageInfoProps) => {
     <div className="display-flex">
       <p className="text-base margin-top-0 margin-right-4">
         {t('pageInfo', {
-          pageStart: '2',
+          pageStart: '3',
           totalPages: helpAndKnowledgeArticles.length
         })}
       </p>
 
-      {/* TODO: add link for all articles */}
-      <UswdsReactLink to="/help-and-knowledge" className="margin-right-4">
+      <UswdsReactLink
+        to="/help-and-knowledge/articles"
+        className="margin-right-4"
+      >
         {t('browseAll')}
       </UswdsReactLink>
 
       <div className="border-right margin-bottom-2 text-base-lighter margin-right-4" />
 
       <UswdsReactLink
-        to="/help-and-knowledge/getting-started"
+        to="/help-and-knowledge/articles?category=getting-started"
         className="margin-right-4"
       >
         {t('viewGettingStarted')}
       </UswdsReactLink>
 
       <UswdsReactLink
-        to="/help-and-knowledge/getting-started"
+        to="/help-and-knowledge/articles?category=it-implementation"
         className="margin-right-4"
       >
         {t('viewITImplementation')}

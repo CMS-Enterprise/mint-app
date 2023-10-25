@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
@@ -33,6 +34,9 @@ const operationalSolution = {
   pocName: 'John Doe',
   pocEmail: 'j.doe@oddball.io',
   nameOther: 'My custom solution',
+  isCommonSolution: true,
+  isOther: false,
+  otherHeader: null,
   status: OpSolutionStatus.COMPLETED,
   documents: [
     {
@@ -47,9 +51,13 @@ const operationalSolution = {
       documentType: 'ICIP_DRAFT',
       createdDts: '2023-02-16T13:51:31.026147Z',
       numLinkedSolutions: 0,
+      isOther: false,
+      otherHeader: null,
       optionalNotes: null,
       otherType: null,
-      __typename: 'PlanDocument'
+      __typename: 'PlanDocument',
+      isLink: false,
+      url: ''
     }
   ],
   mustFinishDts: '2022-05-12T15:01:39.190679Z',
@@ -78,7 +86,8 @@ export default operationalSolutionMocks;
 const mocks = [
   ...documentMocks,
   ...needQuestionAndAnswerMock,
-  ...operationalSolutionMocks
+  ...operationalSolutionMocks,
+  ...possibleSolutionsMock
 ];
 
 const mockAuthReducer = {

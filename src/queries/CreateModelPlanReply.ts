@@ -6,7 +6,6 @@ export default gql`
       id
       discussionID
       content
-      resolution
       createdBy
       createdDts
     }

@@ -1,6 +1,0 @@
-type DateHistogramAggregationBucket {
-  key: String!
-  docCount: Int!
-  maxModifiedDts: Time!
-  minModifiedDts: Time!
-}

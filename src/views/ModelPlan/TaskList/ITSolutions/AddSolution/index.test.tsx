@@ -1,7 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
@@ -83,12 +87,11 @@ const mocks = [
 
 describe('IT Solutions AddSolution', () => {
   it('renders correctly', async () => {
-    const { getByTestId, getByText } = render(
+    const { getByRole, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
           }
         ]}
       >
@@ -100,26 +103,21 @@ describe('IT Solutions AddSolution', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+
     await waitFor(() => {
-      const dropdown = getByTestId('dropdown');
-      userEvent.selectOptions(dropdown, 'HPMS');
-      expect(
-        (getByText('Health Plan Management System (HPMS)') as HTMLOptionElement)
-          .selected
-      ).toBeTruthy();
-      expect(
-        (getByText('Salesforce') as HTMLOptionElement).selected
-      ).toBeFalsy();
+      const combobox = getByTestId('combo-box-select');
+      userEvent.selectOptions(combobox, ['HPMS']);
+      expect(combobox).toHaveValue('HPMS');
     });
   });
 
   it('renders other button when OTHER_NEW_PROCESS selected', async () => {
-    const { getByTestId, getByText } = render(
+    const { getByTestId, getByRole } = render(
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
           }
         ]}
       >
@@ -131,47 +129,23 @@ describe('IT Solutions AddSolution', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+
     await waitFor(() => {
-      const dropdown = getByTestId('dropdown');
-      userEvent.selectOptions(dropdown, 'OTHER_NEW_PROCESS');
-      expect((getByText('Other') as HTMLOptionElement).selected).toBeTruthy();
+      const combobox = getByTestId('combo-box-select');
+      userEvent.selectOptions(combobox, ['OTHER_NEW_PROCESS']);
+      expect(combobox).toHaveValue('OTHER_NEW_PROCESS');
 
       expect(getByTestId('add-solution-details-button')).toBeInTheDocument();
     });
   });
 
-  it('renders created custom solution', async () => {
-    const { getByTestId, getByText } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${operationalSolutionID}`,
-            state: { isCustomNeed: false }
-          }
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <AddSolution />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
-      expect(getByTestId('custom-added-solution')).toBeInTheDocument();
-      expect(getByText('My custom solution')).toBeInTheDocument();
-      expect(getByText('j.doe@oddball.io')).toBeInTheDocument();
-    });
-  });
-
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { asFragment, getByRole } = render(
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
           }
         ]}
       >
@@ -182,6 +156,8 @@ describe('IT Solutions AddSolution', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByRole('progressbar'));
 
     expect(asFragment()).toMatchSnapshot();
   });

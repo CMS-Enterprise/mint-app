@@ -13,6 +13,7 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
@@ -56,6 +57,8 @@ const LinkDocuments = () => {
 
   const { t } = useTranslation('documents');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -165,7 +168,7 @@ const LinkDocuments = () => {
       text: t('solutionDetails'),
       url: solutionDetailsURL
     },
-    { text: t('linkDocumentsHeader') }
+    { text: t('connectDocumentsHeader') }
   ];
 
   return (
@@ -179,10 +182,10 @@ const LinkDocuments = () => {
       )}
 
       <Grid row gap>
-        <Grid tablet={{ col: 9 }}>
+        <Grid desktop={{ col: 9 }}>
           <Grid tablet={{ col: 11 }}>
             <PageHeading className="margin-top-4 margin-bottom-1">
-              {t('linkDocumentsHeader')}
+              {t('connectDocumentsHeader')}
             </PageHeading>
 
             <p
@@ -193,7 +196,7 @@ const LinkDocuments = () => {
             </p>
 
             <p className="line-height-body-4 margin-bottom-4 margin-top-1">
-              {t('linkDocumentsInfo')}
+              {t('connectDocumentsInfo')}
             </p>
 
             <Grid tablet={{ col: 8 }}>
@@ -205,18 +208,19 @@ const LinkDocuments = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <ITSolutionsSidebar
-            modelID={modelID}
-            renderTextFor="need"
-            helpfulLinks={false}
-          />
-        </Grid>
+
+        {isDesktop && (
+          <Grid desktop={{ col: 3 }} className="padding-x-1">
+            <ITSolutionsSidebar
+              modelID={modelID}
+              renderTextFor="need"
+              helpfulLinks={false}
+            />
+          </Grid>
+        )}
       </Grid>
 
-      <h3 className="margin-top-8 margin-bottom-neg-1">
-        {t('modelDocuments')}
-      </h3>
+      <h3 className="margin-top-8 margin-bottom-neg-1">{t('heading')}</h3>
 
       <PlanDocumentsTable
         modelID={modelID}
@@ -234,14 +238,24 @@ const LinkDocuments = () => {
           disabled={isEqual(linkedDocs?.sort(), linkedDocsInit?.sort())}
           className="display-inline-flex flex-align-center margin-y-3"
         >
-          {t('linkDocumentsButton')}
+          {t('connectDocumentsButton')}
         </Button>
 
         <UswdsReactLink className="display-flex" to={solutionDetailsURL}>
           <IconArrowBack className="margin-right-1" aria-hidden />
-          {t('dontLink')}
+          {t('dontConnect')}
         </UswdsReactLink>
       </Grid>
+
+      {!isDesktop && (
+        <Grid desktop={{ col: 12 }} className="padding-x-1">
+          <ITSolutionsSidebar
+            modelID={modelID}
+            renderTextFor="need"
+            helpfulLinks={false}
+          />
+        </Grid>
+      )}
     </>
   );
 };

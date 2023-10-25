@@ -11,6 +11,8 @@ import (
 type PlanDocument struct {
 	baseStruct
 	modelPlanRelation
+	IsLink bool        `json:"isLink" db:"is_link"`
+	URL    zero.String `json:"url" db:"url"`
 
 	FileType string `json:"fileType" db:"file_type"`
 	Bucket   string `json:"bucket" db:"bucket"`
@@ -30,7 +32,7 @@ type PlanDocument struct {
 }
 
 // NewPlanDocument returns a new Plan Document
-func NewPlanDocument(createdBy uuid.UUID, modelPlanID uuid.UUID, fileType string, bucket string, fileKey string, fileName string, fileSize int, documentType DocumentType, restricted bool, otherTypeDescription zero.String, optionalNotes zero.String) *PlanDocument {
+func NewPlanDocument(createdBy uuid.UUID, modelPlanID uuid.UUID, fileType string, bucket string, fileKey string, fileName string, fileSize int, documentType DocumentType, restricted bool, otherTypeDescription zero.String, optionalNotes zero.String, isLink bool, url zero.String) *PlanDocument {
 	return &PlanDocument{
 		modelPlanRelation:    NewModelPlanRelation(modelPlanID),
 		baseStruct:           NewBaseStruct(createdBy),
@@ -43,6 +45,8 @@ func NewPlanDocument(createdBy uuid.UUID, modelPlanID uuid.UUID, fileType string
 		Restricted:           restricted,
 		OtherTypeDescription: otherTypeDescription,
 		OptionalNotes:        optionalNotes,
+		IsLink:               isLink,
+		URL:                  url,
 
 		// Defaults
 		VirusScanned: false,

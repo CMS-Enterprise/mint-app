@@ -28,6 +28,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetBeneficiaryIdentification from 'queries/Beneficiaries/getBeneficiaryIndentification';
 import {
   GetBeneficiaryIdentification as BeneficiaryIdentificationType,
@@ -37,14 +38,25 @@ import {
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import { sortOtherEnum, translateBeneficiariesType } from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const BeneficiaryIdentification = () => {
-  const { t } = useTranslation('beneficiaries');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: beneficiariesT } = useTranslation('beneficiaries');
+
+  const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    beneficiaries: beneficiariesConfig,
+    treatDualElligibleDifferent: treatDualElligibleDifferentConfig,
+    excludeCertainCharacteristics: excludeCertainCharacteristicsConfig
+  } = usePlanTranslation('beneficiaries');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<BeneficiaryIdentificationFormType>>(
@@ -107,15 +119,6 @@ const BeneficiaryIdentification = () => {
       });
   };
 
-  const mappedBeneficiariesType = Object.keys(BeneficiariesType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateBeneficiariesType(key),
-      subLabel:
-        key === BeneficiariesType.DISEASE_SPECIFIC ? t('diseaseSubLabel') : null
-    }));
-
   const initialValues: BeneficiaryIdentificationFormType = {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
@@ -140,18 +143,18 @@ const BeneficiaryIdentification = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{beneficiariesMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {beneficiariesMiscT('heading')}
       </PageHeading>
 
       <p
@@ -162,8 +165,9 @@ const BeneficiaryIdentification = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -185,25 +189,27 @@ const BeneficiaryIdentification = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap className="beneficiaries__info">
                   <Grid desktop={{ col: 6 }}>
@@ -214,296 +220,345 @@ const BeneficiaryIdentification = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="beneficiaries"
-                        error={!!flatErrors.beneficiaries}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="beneficiaries-beneficiaries"
-                          id="label-beneficiaries-beneficiaries"
+                      <Fieldset disabled={!!error || loading}>
+                        <FieldGroup
+                          scrollElement="beneficiaries"
+                          error={!!flatErrors.beneficiaries}
+                          className="margin-top-4"
                         >
-                          {t('beneficiaries')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.beneficiaries}
-                        </FieldErrorMsg>
-
-                        <Field
-                          as={MultiSelect}
-                          id="beneficiaries-beneficiaries"
-                          name="beneficiaries"
-                          ariaLabel="label-beneficiaries-beneficiaries"
-                          options={mappedBeneficiariesType}
-                          selectedLabel={t('selectedGroup')}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('beneficiaries', value);
-                          }}
-                          initialValues={initialValues.beneficiaries}
-                        />
-
-                        {(values?.beneficiaries || []).includes(
-                          BeneficiariesType.OTHER
-                        ) && (
-                          <FieldGroup
-                            scrollElement="beneficiariesOther"
-                            error={!!flatErrors.beneficiariesOther}
+                          <Label
+                            htmlFor="beneficiaries-beneficiaries"
+                            id="label-beneficiaries-beneficiaries"
                           >
-                            <Label
-                              htmlFor="beneficiaries-other"
-                              className="text-normal"
+                            {beneficiariesT('beneficiaries.label')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.beneficiaries}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={MultiSelect}
+                            id="beneficiaries-beneficiaries"
+                            name="beneficiaries"
+                            ariaLabel="label-beneficiaries-beneficiaries"
+                            options={composeMultiSelectOptions(
+                              beneficiariesConfig.options,
+                              beneficiariesConfig.optionsLabels
+                            )}
+                            selectedLabel={beneficiariesT(
+                              'beneficiaries.multiSelectLabel'
+                            )}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue('beneficiaries', value);
+                            }}
+                            initialValues={initialValues.beneficiaries}
+                          />
+
+                          {(values?.beneficiaries || []).includes(
+                            BeneficiariesType.OTHER
+                          ) && (
+                            <FieldGroup
+                              scrollElement="beneficiariesOther"
+                              error={!!flatErrors.beneficiariesOther}
                             >
-                              {t('beneficiariesOther')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.beneficiariesOther}
-                            </FieldErrorMsg>
+                              <Label
+                                htmlFor="beneficiaries-other"
+                                className="text-normal"
+                              >
+                                {beneficiariesT('beneficiariesOther.label')}
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors.beneficiariesOther}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextField}
+                                error={flatErrors.beneficiariesOther}
+                                id="beneficiaries-other"
+                                data-testid="beneficiaries-other"
+                                name="beneficiariesOther"
+                              />
+                            </FieldGroup>
+                          )}
+
+                          {(values?.beneficiaries || []).includes(
+                            BeneficiariesType.NA
+                          ) && (
+                            <Alert type="info" slim>
+                              {beneficiariesMiscT('beneficiariesNA')}
+                            </Alert>
+                          )}
+
+                          <AddNote
+                            id="beneficiaries-note"
+                            field="beneficiariesNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="treatDualElligibleDifferent"
+                          error={!!flatErrors.treatDualElligibleDifferent}
+                          className="margin-y-4 margin-bottom-8"
+                        >
+                          <Label htmlFor="beneficiaries-dual-eligibility">
+                            {beneficiariesT(
+                              'treatDualElligibleDifferent.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.treatDualElligibleDifferent}
+                          </FieldErrorMsg>
+
+                          <Fieldset>
                             <Field
-                              as={TextField}
-                              error={flatErrors.beneficiariesOther}
-                              id="beneficiaries-other"
-                              data-testid="beneficiaries-other"
-                              name="beneficiariesOther"
+                              as={Radio}
+                              id="beneficiaries-dual-eligibility"
+                              name="treatDualElligibleDifferent"
+                              label={
+                                treatDualElligibleDifferentConfig.options.YES
+                              }
+                              value="TRUE"
+                              checked={
+                                values.treatDualElligibleDifferent ===
+                                TriStateAnswer.YES
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'treatDualElligibleDifferent',
+                                  'YES'
+                                );
+                              }}
                             />
-                          </FieldGroup>
-                        )}
 
-                        {(values?.beneficiaries || []).includes(
-                          BeneficiariesType.NA
-                        ) && (
-                          <Alert type="info" slim>
-                            {t('beneficiariesNA')}
-                          </Alert>
-                        )}
-
-                        <AddNote
-                          id="beneficiaries-note"
-                          field="beneficiariesNote"
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="treatDualElligibleDifferent"
-                        error={!!flatErrors.treatDualElligibleDifferent}
-                        className="margin-y-4 margin-bottom-8"
-                      >
-                        <Label htmlFor="beneficiaries-dual-eligibility">
-                          {t('dualEligibility')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.treatDualElligibleDifferent}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="beneficiaries-dual-eligibility"
-                            name="treatDualElligibleDifferent"
-                            label={h('yes')}
-                            value="TRUE"
-                            checked={
-                              values.treatDualElligibleDifferent ===
-                              TriStateAnswer.YES
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'treatDualElligibleDifferent',
-                                'YES'
-                              );
-                            }}
-                          />
-
-                          {values?.treatDualElligibleDifferent ===
-                            TriStateAnswer.YES && (
-                            <FieldGroup
-                              className="margin-left-4 margin-y-1"
-                              scrollElement="treatDualElligibleDifferentHow"
-                              error={
-                                !!flatErrors.treatDualElligibleDifferentHow
-                              }
-                            >
-                              <Label
-                                htmlFor="beneficiaries-dual-eligibility-how"
-                                className="text-normal"
-                              >
-                                {h('howSo')}
-                              </Label>
-                              <FieldErrorMsg>
-                                {flatErrors.treatDualElligibleDifferentHow}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextAreaField}
-                                className="height-15"
+                            {values?.treatDualElligibleDifferent ===
+                              TriStateAnswer.YES && (
+                              <FieldGroup
+                                className="margin-left-4 margin-y-1"
+                                scrollElement="treatDualElligibleDifferentHow"
                                 error={
-                                  flatErrors.treatDualElligibleDifferentHow
+                                  !!flatErrors.treatDualElligibleDifferentHow
                                 }
-                                id="beneficiaries-dual-eligibility-how"
-                                data-testid="beneficiaries-dual-eligibility-how"
-                                name="treatDualElligibleDifferentHow"
-                              />
-                            </FieldGroup>
-                          )}
-                          <Field
-                            as={Radio}
-                            id="beneficiaries-dual-eligibility-no"
-                            name="treatDualElligibleDifferent"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.treatDualElligibleDifferent ===
-                              TriStateAnswer.NO
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'treatDualElligibleDifferent',
-                                'NO'
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="beneficiaries-dual-eligibility-tbd"
-                            name="treatDualElligibleDifferent"
-                            label={t('beneficiariesOptions.na')}
-                            value="TBD"
-                            checked={
-                              values.treatDualElligibleDifferent ===
-                              TriStateAnswer.TBD
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'treatDualElligibleDifferent',
-                                'TBD'
-                              );
-                            }}
-                          />
-                        </Fieldset>
-                        <AddNote
-                          id="beneficiaries-dual-eligibility-note"
-                          field="treatDualElligibleDifferentNote"
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="excludeCertainCharacteristics"
-                        error={!!flatErrors.excludeCertainCharacteristics}
-                        className="margin-y-4 margin-bottom-8"
-                      >
-                        <Label htmlFor="beneficiaries-exclude">
-                          {t('excluded')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.excludeCertainCharacteristics}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="beneficiaries-exclude"
-                            name="excludeCertainCharacteristics"
-                            label={h('yes')}
-                            value="TRUE"
-                            checked={
-                              values.excludeCertainCharacteristics ===
-                              TriStateAnswer.YES
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'excludeCertainCharacteristics',
-                                'YES'
-                              );
-                            }}
-                          />
-
-                          {values?.excludeCertainCharacteristics ===
-                            TriStateAnswer.YES && (
-                            <FieldGroup
-                              className="margin-left-4 margin-y-1"
-                              scrollElement="excludeCertainCharacteristicsCriteria"
-                              error={
-                                !!flatErrors.excludeCertainCharacteristicsCriteria
-                              }
-                            >
-                              <Label
-                                htmlFor="beneficiaries-exclude-criteria"
-                                className="text-normal"
                               >
-                                {t('excludedNestedQuestion')}
-                              </Label>
-                              <FieldErrorMsg>
-                                {
-                                  flatErrors.excludeCertainCharacteristicsCriteria
-                                }
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextAreaField}
-                                className="height-15"
+                                <Label
+                                  htmlFor="beneficiaries-dual-eligibility-how"
+                                  className="text-normal"
+                                >
+                                  {beneficiariesT(
+                                    'treatDualElligibleDifferentHow.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.treatDualElligibleDifferentHow}
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextAreaField}
+                                  className="height-15"
+                                  error={
+                                    flatErrors.treatDualElligibleDifferentHow
+                                  }
+                                  id="beneficiaries-dual-eligibility-how"
+                                  data-testid="beneficiaries-dual-eligibility-how"
+                                  name="treatDualElligibleDifferentHow"
+                                />
+                              </FieldGroup>
+                            )}
+
+                            <Field
+                              as={Radio}
+                              id="beneficiaries-dual-eligibility-no"
+                              name="treatDualElligibleDifferent"
+                              label={
+                                treatDualElligibleDifferentConfig.options.NO
+                              }
+                              value="FALSE"
+                              checked={
+                                values.treatDualElligibleDifferent ===
+                                TriStateAnswer.NO
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'treatDualElligibleDifferent',
+                                  'NO'
+                                );
+                              }}
+                            />
+
+                            <Field
+                              as={Radio}
+                              id="beneficiaries-dual-eligibility-tbd"
+                              name="treatDualElligibleDifferent"
+                              label={
+                                treatDualElligibleDifferentConfig.options.TBD
+                              }
+                              value="TBD"
+                              checked={
+                                values.treatDualElligibleDifferent ===
+                                TriStateAnswer.TBD
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'treatDualElligibleDifferent',
+                                  'TBD'
+                                );
+                              }}
+                            />
+                          </Fieldset>
+
+                          <AddNote
+                            id="beneficiaries-dual-eligibility-note"
+                            field="treatDualElligibleDifferentNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="excludeCertainCharacteristics"
+                          error={!!flatErrors.excludeCertainCharacteristics}
+                          className="margin-y-4 margin-bottom-8"
+                        >
+                          <Label htmlFor="beneficiaries-exclude">
+                            {beneficiariesT(
+                              'excludeCertainCharacteristics.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.excludeCertainCharacteristics}
+                          </FieldErrorMsg>
+
+                          <Fieldset>
+                            <Field
+                              as={Radio}
+                              id="beneficiaries-exclude"
+                              name="excludeCertainCharacteristics"
+                              label={
+                                excludeCertainCharacteristicsConfig.options.YES
+                              }
+                              value="TRUE"
+                              checked={
+                                values.excludeCertainCharacteristics ===
+                                TriStateAnswer.YES
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'excludeCertainCharacteristics',
+                                  'YES'
+                                );
+                              }}
+                            />
+
+                            {values?.excludeCertainCharacteristics ===
+                              TriStateAnswer.YES && (
+                              <FieldGroup
+                                className="margin-left-4 margin-y-1"
+                                scrollElement="excludeCertainCharacteristicsCriteria"
                                 error={
-                                  flatErrors.excludeCertainCharacteristicsCriteria
+                                  !!flatErrors.excludeCertainCharacteristicsCriteria
                                 }
-                                id="beneficiaries-exclude-criteria"
-                                data-testid="beneficiaries-exclude-criteria"
-                                name="excludeCertainCharacteristicsCriteria"
-                              />
-                            </FieldGroup>
-                          )}
+                              >
+                                <Label
+                                  htmlFor="beneficiaries-exclude-criteria"
+                                  className="text-normal"
+                                >
+                                  {beneficiariesT(
+                                    'excludeCertainCharacteristicsCriteria.label'
+                                  )}
+                                </Label>
 
-                          <Field
-                            as={Radio}
-                            id="beneficiaries-exclude-no"
-                            name="excludeCertainCharacteristics"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.excludeCertainCharacteristics ===
-                              TriStateAnswer.NO
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'excludeCertainCharacteristics',
-                                'NO'
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="beneficiaries-exclude-tbd"
-                            name="excludeCertainCharacteristics"
-                            label={t('beneficiariesOptions.na')}
-                            value="TBD"
-                            checked={
-                              values.excludeCertainCharacteristics ===
-                              TriStateAnswer.TBD
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'excludeCertainCharacteristics',
-                                'TBD'
-                              );
-                            }}
-                          />
-                        </Fieldset>
-                        <AddNote
-                          id="beneficiaries-exclude-note"
-                          field="excludeCertainCharacteristicsNote"
-                        />
-                      </FieldGroup>
+                                <FieldErrorMsg>
+                                  {
+                                    flatErrors.excludeCertainCharacteristicsCriteria
+                                  }
+                                </FieldErrorMsg>
 
-                      <div className="margin-top-6 margin-bottom-3">
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
+                                <Field
+                                  as={TextAreaField}
+                                  className="height-15"
+                                  error={
+                                    flatErrors.excludeCertainCharacteristicsCriteria
+                                  }
+                                  id="beneficiaries-exclude-criteria"
+                                  data-testid="beneficiaries-exclude-criteria"
+                                  name="excludeCertainCharacteristicsCriteria"
+                                />
+                              </FieldGroup>
+                            )}
+
+                            <Field
+                              as={Radio}
+                              id="beneficiaries-exclude-no"
+                              name="excludeCertainCharacteristics"
+                              label={
+                                excludeCertainCharacteristicsConfig.options.NO
+                              }
+                              value="FALSE"
+                              checked={
+                                values.excludeCertainCharacteristics ===
+                                TriStateAnswer.NO
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'excludeCertainCharacteristics',
+                                  'NO'
+                                );
+                              }}
+                            />
+
+                            <Field
+                              as={Radio}
+                              id="beneficiaries-exclude-tbd"
+                              name="excludeCertainCharacteristics"
+                              label={
+                                excludeCertainCharacteristicsConfig.options.TBD
+                              }
+                              value="TBD"
+                              checked={
+                                values.excludeCertainCharacteristics ===
+                                TriStateAnswer.TBD
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'excludeCertainCharacteristics',
+                                  'TBD'
+                                );
+                              }}
+                            />
+                          </Fieldset>
+
+                          <AddNote
+                            id="beneficiaries-exclude-note"
+                            field="excludeCertainCharacteristicsNote"
+                          />
+                        </FieldGroup>
+
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {miscellaneousT('next')}
+                          </Button>
+                        </div>
+
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('back')}
+                        >
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('back')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -517,6 +572,7 @@ const BeneficiaryIdentification = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={1} totalPages={3} className="margin-y-6" />
     </>
   );

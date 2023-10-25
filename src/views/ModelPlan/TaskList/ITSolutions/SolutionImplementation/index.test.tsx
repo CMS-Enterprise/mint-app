@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -35,6 +36,9 @@ const operationalNeed: GetOperationalNeedType = {
       key: OperationalSolutionKey.RMADA,
       mustStartDts: null,
       mustFinishDts: null,
+      isOther: false,
+      isCommonSolution: true,
+      otherHeader: null,
       status: OpSolutionStatus.AT_RISK,
       needed: true,
       pocName: 'John Doe',
@@ -57,7 +61,8 @@ const mocks = [
         operationalNeed
       }
     }
-  }
+  },
+  ...possibleSolutionsMock
 ];
 
 describe('IT Solutions NeedQuestionAndAnswer', () => {
@@ -66,8 +71,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`,
-            state: { fromSolutionDetails: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
           }
         ]}
       >
@@ -83,9 +87,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 
@@ -111,8 +113,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`,
-            state: { fromSolutionDetails: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
           }
         ]}
       >
@@ -127,11 +128,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     );
 
     await waitFor(() => {
-      expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
-      ).toBeInTheDocument();
+      expect(getByText('at.mint@oddball.io')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();

@@ -1,4 +1,3 @@
-#Ops Eval and Learning types begin
 enum AgencyOrStateHelpType {
   YES_STATE
   YES_AGENCY_IDEAS
@@ -16,6 +15,7 @@ enum StakeholdersType {
   STATES
   OTHER
 }
+
 
 enum ContractorSupportType {
   ONE
@@ -93,6 +93,7 @@ enum ModelLearningSystemType {
   NO_LEARNING_SYSTEM
 }
 
+
 enum DataFullTimeOrIncrementalType {
   FULL_TIME
   INCREMENTAL
@@ -114,4 +115,3 @@ enum DataStartsType {
   NOT_PLANNING_TO_DO_THIS
   OTHER
 }
-#Ops Eval and Learning types end

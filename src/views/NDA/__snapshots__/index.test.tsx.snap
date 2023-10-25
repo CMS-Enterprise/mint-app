@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`NDA Page matches snapshot 1`] = `
+exports[`NDA Page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -38,7 +38,9 @@ exports[`NDA Page matches snapshot 1`] = `
               <p
                 class="usa-alert__text"
               >
-                Accepted on 07/30/2022
+                <span>
+                  Accepted on 07/30/2022
+                </span>
               </p>
             </div>
           </div>

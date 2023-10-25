@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, TaskStatus } from "./../../../types/graphql-global-types";
+import { FundingSource, TrustFundType, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllPayments
@@ -12,11 +12,11 @@ import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBase
 export interface GetAllPayments_modelPlan_payments {
   __typename: "PlanPayments";
   fundingSource: FundingSource[];
-  fundingSourceTrustFund: string | null;
+  fundingSourceTrustFundType: TrustFundType[];
   fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
-  fundingSourceRTrustFund: string | null;
+  fundingSourceRTrustFundType: TrustFundType[];
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
   payRecipients: PayRecipient[];
@@ -56,7 +56,6 @@ export interface GetAllPayments_modelPlan_payments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: string | null;
   planningToUseInnovationPaymentContractor: boolean | null;
   planningToUseInnovationPaymentContractorNote: string | null;
-  fundingStructure: string | null;
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote: string | null;
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;

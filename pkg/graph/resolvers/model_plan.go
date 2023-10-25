@@ -3,12 +3,14 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -212,6 +214,23 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	return plan, nil
 }
 
+// ModelPlanGetByIDLOADER implements resolver logic to get Model Plan by a model plan ID using a data loader
+func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
+	allLoaders := loaders.Loaders(ctx)
+	planLoader := allLoaders.ModelPlanLoader
+	key := loaders.NewKeyArgs()
+	key.Args["id"] = id
+
+	thunk := planLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.(*models.ModelPlan), nil
+}
+
 // ModelPlanGetSampleModel returns the sample model plan
 func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.ModelPlan, error) {
 	plan, err := store.ModelPlanGetByName(logger, constants.SampleModelName)
@@ -260,4 +279,131 @@ func ModelPlanNameHistory(logger *zap.Logger, modelPlanID uuid.UUID, sortDir mod
 	}
 
 	return nameHistory, nil
+}
+
+// ModelPlanShare implements resolver logic to share a model plan with a list of emails
+func ModelPlanShare(
+	ctx context.Context,
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	modelPlanID uuid.UUID,
+	viewFilter *models.ModelViewFilter,
+	usernames []string,
+	optionalMessage *string,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
+) (bool, error) {
+	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
+	if err != nil {
+		return false, err
+	}
+
+	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return false, err
+	}
+
+	receiverEmails := make([]string, len(usernames))
+
+	for i, username := range usernames {
+		collabAccount, err := userhelpers.GetOrCreateUserAccount(
+			ctx,
+			store,
+			username,
+			false,
+			false,
+			getAccountInformation,
+		)
+		if err != nil {
+			return false, fmt.Errorf("failed to get or create user account: %w", err)
+		}
+
+		receiverEmails[i] = collabAccount.Email
+	}
+
+	// Get client address
+	clientAddress := emailService.GetConfig().GetClientAddress()
+
+	// Get email template
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanShareTemplateName)
+	if err != nil {
+		return false, fmt.Errorf("failed to get email template: %w", err)
+	}
+
+	// Get email subject
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanShareSubjectContent{
+		UserName: principal.Account().CommonName,
+	})
+	if err != nil {
+		return false, fmt.Errorf("failed to execute email subject: %w", err)
+	}
+
+	var modelPlanCategoriesHumainzed []string
+	if planBasics.ModelCategory != nil {
+		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[*planBasics.ModelCategory])
+	}
+
+	for _, category := range planBasics.AdditionalModelCategories {
+		// Have to cast the additional category as a models.ModelCategory so we can fetch it from the models.ModelCategoryHumanized map
+		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[models.ModelCategory(category)])
+	}
+
+	lastModified := modelPlan.CreatedDts
+	if modelPlan.ModifiedDts != nil {
+		lastModified = *modelPlan.ModifiedDts
+	}
+
+	planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return false, fmt.Errorf("failed to get plan collaborators: %w", err)
+	}
+
+	var modelLeads []string
+	for _, collaborator := range planCollaborators {
+		if collaborator.TeamRole == models.TeamRoleModelLead {
+			modelLeads = append(modelLeads, collaborator.UserAccount(ctx).CommonName)
+		}
+	}
+
+	humanizedModelStatus := models.ModelStatusHumanized[modelPlan.Status]
+
+	var humanizedViewFilter *string
+	var lowercasedViewFilter *string
+	if viewFilter != nil {
+		humanizedViewFilter = models.StringPointer(
+			models.ModelViewFilterHumanized[*viewFilter])
+
+		lowercasedViewFilter = models.StringPointer(
+			strings.ToLower(string(*viewFilter)))
+	}
+
+	// Get email body
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
+		UserName:                 principal.Account().CommonName,
+		OptionalMessage:          optionalMessage,
+		ModelName:                modelPlan.ModelName,
+		ModelShortName:           modelPlan.Abbreviation,
+		ModelCategories:          modelPlanCategoriesHumainzed,
+		ModelStatus:              humanizedModelStatus,
+		ModelLastUpdated:         lastModified,
+		ModelLeads:               modelLeads,
+		ModelViewFilter:          lowercasedViewFilter,
+		HumanizedModelViewFilter: humanizedViewFilter,
+		ClientAddress:            clientAddress,
+		ModelID:                  modelPlan.ID.String(),
+	})
+	if err != nil {
+		return false, fmt.Errorf("failed to execute email body: %w", err)
+	}
+
+	// Send email
+	err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return false, fmt.Errorf("failed to send email: %w", err)
+	}
+
+	return true, nil
 }

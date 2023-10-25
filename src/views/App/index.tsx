@@ -14,11 +14,17 @@ import Footer from 'components/Footer';
 import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
 import { MessageProvider } from 'hooks/useMessage';
+import usePrevLocation from 'hooks/usePrevious';
 import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
+import BeaconWrapper from 'views/BeaconWrapper';
 import Cookies from 'views/Cookies';
+import FeedbackReceived from 'views/Feedback/FeedbackReceived';
+import ReportAProblem from 'views/Feedback/ReportAProblem';
+import SendFeedback from 'views/Feedback/SendFeedback';
 import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
+import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
@@ -66,6 +72,7 @@ import './index.scss';
 
 const AppRoutes = () => {
   const location = useLocation();
+  const prevLocation = usePrevLocation(location);
   const flags = useFlags();
 
   // Track GA Pages
@@ -77,10 +84,15 @@ const AppRoutes = () => {
 
   // Scroll to top
   useLayoutEffect(() => {
-    if (shouldScroll(location.pathname + location.search)) {
+    if (
+      shouldScroll(
+        location.pathname + location.search,
+        (prevLocation?.pathname || '') + (prevLocation?.search || '')
+      )
+    ) {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname, location.search]);
+  }, [location.pathname, location.search, prevLocation]);
 
   return (
     <Switch>
@@ -96,14 +108,8 @@ const AppRoutes = () => {
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
 
-      <Redirect
-        exact
-        from="/models/:modelID/read-only"
-        to="/models/:modelID/read-only/model-basics"
-      />
-
       <SecureRoute
-        path="/models/:modelID/read-only/:subinfo"
+        path="/models/:modelID/read-only/:subinfo?"
         exact
         component={ReadOnly}
       />
@@ -175,6 +181,12 @@ const AppRoutes = () => {
 
       <SecureRoute path="/pre-decisional-notice" component={NDA} />
 
+      <SecureRoute path="/report-a-problem" component={ReportAProblem} />
+
+      <SecureRoute path="/send-feedback" component={SendFeedback} />
+
+      <SecureRoute path="/feedback-received" component={FeedbackReceived} />
+
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
       <Route path="/cookies" exact component={Cookies} />
@@ -188,6 +200,8 @@ const AppRoutes = () => {
         path="/terms-and-conditions"
         component={TermsAndConditions}
       />
+
+      <Route exact path="/how-to-get-access" component={GetAccess} />
 
       {/* Misc Routes */}
       {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
@@ -228,22 +242,24 @@ const App = () => {
                 <MessageProvider>
                   <FlagsWrapper>
                     <UserInfoWrapper>
-                      <NDAWrapper>
-                        <ModelAccessWrapper>
-                          <ModelInfoWrapper>
-                            <TimeOutWrapper>
-                              <NavContextProvider>
-                                <PageWrapper>
-                                  <Header />
-                                  <TaskListBannerAlert />
-                                  <AppRoutes />
-                                  <Footer />
-                                </PageWrapper>
-                              </NavContextProvider>
-                            </TimeOutWrapper>
-                          </ModelInfoWrapper>
-                        </ModelAccessWrapper>
-                      </NDAWrapper>
+                      <BeaconWrapper>
+                        <NDAWrapper>
+                          <ModelAccessWrapper>
+                            <ModelInfoWrapper>
+                              <TimeOutWrapper>
+                                <NavContextProvider>
+                                  <PageWrapper>
+                                    <Header />
+                                    <TaskListBannerAlert />
+                                    <AppRoutes />
+                                    <Footer />
+                                  </PageWrapper>
+                                </NavContextProvider>
+                              </TimeOutWrapper>
+                            </ModelInfoWrapper>
+                          </ModelAccessWrapper>
+                        </NDAWrapper>
+                      </BeaconWrapper>
                     </UserInfoWrapper>
                   </FlagsWrapper>
                 </MessageProvider>

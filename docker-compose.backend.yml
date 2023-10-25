@@ -1,0 +1,237 @@
+---
+version: '3.7'
+services:
+  db:
+    ports:
+      - 5437:5432
+    image: postgres:14.4
+    command:
+      - 'postgres'
+      - '-c'
+      - 'log_statement=all'
+      - '-c'
+      - 'max_connections=25'
+      # Sets the Write-Ahead Log (WAL) level to logical allowing replication and change data capture (CDC)
+      - '-c'
+      - 'wal_level=logical'
+      # Sets the maximum number of concurrent WAL sender processes. A WAL sender is used by a replica to send WAL
+      # records to the master. This value should be at least 2 to allow for replication and change data capture (CDC).
+      - '-c'
+      - 'max_wal_senders=2'
+      # Sets the maximum number of replication slots that can be used. A replication slot is used by a replica to keep
+      # track of the changes that have been made to the database. This value should be at least 2 to allow for
+      # replication and change data capture (CDC).
+      - '-c'
+      - 'max_replication_slots=2'
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+
+  db_migrate:
+    volumes:
+      - ./migrations:/flyway/sql
+    image: mint-db-migrate:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.db_migrations
+    environment:
+      - FLYWAY_USER=postgres
+      - FLYWAY_PASSWORD=mysecretpassword
+      - FLYWAY_URL=jdbc:postgresql://db/postgres
+      - FLYWAY_PLACEHOLDERS_APP_USER_PASSWORD=supersecretapp
+    depends_on:
+      - db
+
+  mint:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    image: mint-backend:latest
+    volumes:
+    # Volume mounting the entire './' directory is dangerous, as it mounts OS-specific folders (and things like .git)
+    # So instead, only volume mount things we need!
+    #
+    # Note, however, that MOST of the files that we care about are copied in the Dockerfile for us, we only really need to copy over the things that
+    # we want to be able to change on the fly in local developmement, like our ./pkg/ directory & Air configs.
+    # This means that editing things like your go.mod/go.sum and ./cmd/ directory WILL require a rebuild of the image, and won't hot reload with Air.
+      - ./pkg/:/mint/pkg/
+      - ./cmd/:/mint/cmd/ # Go build uses ./cmd as well
+      - ./.air.conf:/mint/.air.conf
+      - ./.airDebug.conf:/mint/.airDebug.conf
+      - ./.airDebugWait.conf:/mint/.airDebugWait.conf
+      - /mint/tmp/air/ # This should match .air.conf's tmp_dir. Note that this isn't a volume mount to a local file/folder, but just an empty volume for Air to use.
+       # The only reason we need to mount Cypress here is because the `flagdata.json` (used when FLAG_SOURCE=FILE) happens to live in the ./cypress/ directory.
+       # This is not ideal (perhaps it should be in the root directory?), but for now we just volume mount cypress as a workaround.
+       # NOTE: This is only really the case if you set FLAG_SOURCE=FILE locally, or (more importantly) in ./github/workflows/run_tests.yml
+      - ./cypress/:/mint/cypress/
+    entrypoint: air ${AIR_CONFIG}
+    ports:
+      - 8085:8080
+      - 2350:2350
+    environment:
+      - CEDAR_API_KEY
+      - CEDAR_API_URL
+      - OKTA_API_URL
+      - OKTA_API_TOKEN
+      - HTTP_PROXY
+      - HTTPS_PROXY
+      - APP_ENV
+      - APPLICATION_VERSION
+      - APPLICATION_DATETIME
+      - APPLICATION_TS
+      - CLIENT_PROTOCOL
+      - CLIENT_DOMAIN
+      - CLIENT_PORT
+      - CLIENT_HOSTNAME
+      - CLIENT_ADDRESS
+      - API_PORT
+      - OKTA_CLIENT_ID
+      - OKTA_ISSUER
+      - EMAIL_HOST
+      - EMAIL_PORT
+      - MINT_TEAM_EMAIL
+      - DEV_TEAM_EMAIL
+      - DATE_CHANGED_RECIPIENT_EMAILS
+      - EMAIL_SENDER
+      - EMAIL_ENABLED
+      - GRT_EMAIL
+      - ACCESSIBILITY_TEAM_EMAIL
+      - AWS_REGION
+      - AWS_S3_FILE_UPLOAD_BUCKET
+      # - AWS_ACCESS_KEY_ID
+      # - AWS_SECRET_ACCESS_KEY
+      - PGHOST=db # We need to override this to point to the docker-compose service name, rather than `localhost`
+      - PGPORT=5432 # We also need to override this, as docker-compose networking uses the container port, not the host port
+      - PGDATABASE
+      - PGUSER
+      - PGPASS
+      - PGPASSWORD
+      - PGSSLMODE
+      - DB_MAX_CONNECTIONS
+      - FLAG_SOURCE
+      - FLAGDATA_FILE
+      - LD_SDK_KEY
+      - LD_TIMEOUT_SECONDS
+      - LD_ENV_USER
+      - LAMBDA_FUNCTION_PRINCE
+      - LAMBDA_ENDPOINT
+      - MINIO_ACCESS_KEY
+      - MINIO_SECRET_KEY
+      - MINIO_ADDRESS=http://minio:9005 # We need to override this, as docker-compose networking uses the container name and port
+      - SERVER_CERT
+      - SERVER_KEY
+      - USE_TLS
+      - FAKTORY_URL
+      - FAKTORY_PROCESS_JOBS
+      - FAKTORY_CONNECTIONS
+      - OPENSEARCH_HOST
+      - LOCAL_AUTH_ENABLED
+
+    depends_on:
+      db_migrate:
+        condition: service_completed_successfully # Only start if migrations completed successfully
+
+  minio:
+    restart: always
+    image: minio/minio:latest
+    entrypoint: minio server /data --console-address ":9966" --address ":9005"
+    ports:
+      - '9005:9005'
+      - '9966:9966'
+    volumes:
+      - ./tmp/minio:/data
+
+  minio_mc:
+    image: minio/mc:latest
+    volumes:
+      - ./minio_config.json:/root/.mc/config.json
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc rb --force s3local/mint-app-file-uploads/;
+      /usr/bin/mc mb --quiet s3local/mint-app-file-uploads/;
+      /usr/bin/mc policy set public s3local/mint-app-file-uploads;
+      "
+
+  email:
+    image: dockage/mailcatcher:0.8.2
+    ports:
+      - "1085:1080"
+      - "1030:1025"
+
+  faktory:
+    image: docker.contribsys.com/contribsys/faktory-ent:latest
+    ports:
+      - "7419:7419"
+      - "7420:7420"
+    volumes:
+      - faktory:/var/lib/faktory
+      - type: bind
+        source: ./.faktory/conf.d
+        target: /root/.faktory/conf.d
+    restart: always
+
+  opensearch:
+    # As of 5/2/2023 - Latest available version in AWS Opensearch Service: 2.5.0
+    image: opensearchproject/opensearch:2.5.0
+    container_name: opensearch
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - plugins.security.disabled=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9200:9200" # REST API
+      - "9400:9600" # Performance Analyzer
+
+  opensearch-dashboards:
+    # As of 5/2/2023 - Latest available version in AWS Opensearch Service: 2.5.0
+    image: opensearchproject/opensearch-dashboards:2.5.0
+    container_name: opensearch-dashboards
+    ports:
+      - "5601:5601"
+    expose:
+      - "5601"
+    environment:
+      OPENSEARCH_HOSTS: '["http://opensearch:9200"]'
+      opensearch.ssl.verificationMode: none
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: true
+
+  logstash:
+    image: logstash:7.16.1
+    container_name: Logstash
+    environment:
+      discovery.seed_hosts: logstash
+      LS_JAVA_OPTS: "-Xms1024m -Xmx1024m"
+      xpack.monitoring.enabled: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+    volumes:
+      - ./logstash/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
+      - ./logstash/config/logstash.conf:/usr/share/logstash/logstash.config
+      - ./logstash/config/ingest_change_table.sql:/usr/share/logstash/ingest_change_table.sql
+    ports:
+      - "9600:9600"
+    depends_on:
+      - opensearch
+    command: >
+      bash -c "
+        logstash-plugin install logstash-output-opensearch;
+        logstash -f /usr/share/logstash/logstash.config
+      "
+
+volumes:
+  faktory:

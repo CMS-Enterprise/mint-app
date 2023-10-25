@@ -16,6 +16,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
@@ -47,18 +48,18 @@ const SuccessRemovalMessage = ({
 }: {
   modelName: string | undefined;
 }) => {
-  const { t } = useTranslation('newModel');
+  const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
   return (
     <Alert
       type="success"
       data-testid="mandatory-fields-alert"
       className="margin-y-4"
-      heading={t('success.heading', {
+      heading={collaboratorsMiscT('success.heading', {
         modelName
       })}
     >
       <span className="mandatory-fields-alert__text">
-        {t('success.message')}
+        {collaboratorsMiscT('success.message')}
       </span>
     </Alert>
   );
@@ -66,8 +67,9 @@ const SuccessRemovalMessage = ({
 
 export const CollaboratorsContent = () => {
   const { modelID } = useParams<{ modelID: string }>();
-  const { t: h } = useTranslation('draftModelPlan');
-  const { t } = useTranslation('newModel');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
   const history = useHistory();
 
@@ -88,7 +90,7 @@ export const CollaboratorsContent = () => {
     DeleteModelPlanCollaborator
   );
 
-  const { error, data, refetch } = useQuery<GetModelCollaborators>(
+  const { error, data, refetch, loading } = useQuery<GetModelCollaborators>(
     GetModelPlanCollaborators,
     {
       variables: {
@@ -143,13 +145,22 @@ export const CollaboratorsContent = () => {
         : 'modal';
 
     return (
-      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0">
-          {t(`${selfOrCollaborator}.heading`, {
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
+          {collaboratorsMiscT(`${selfOrCollaborator}.heading`, {
             collaborator: removeCollaborator?.userAccount.commonName
           })}
         </PageHeading>
-        <p>{t(`${selfOrCollaborator}.subheading`)}</p>
+
+        <p>{collaboratorsMiscT(`${selfOrCollaborator}.subheading`)}</p>
+
         <Button
           type="button"
           className="margin-right-4"
@@ -157,10 +168,11 @@ export const CollaboratorsContent = () => {
             removeCollaborator && handleRemoveCollaborator(removeCollaborator)
           }
         >
-          {t(`${selfOrCollaborator}.confirm`)}
+          {collaboratorsMiscT(`${selfOrCollaborator}.confirm`)}
         </Button>
+
         <Button type="button" unstyled onClick={() => setModalOpen(false)}>
-          {t(`${selfOrCollaborator}.no`)}
+          {collaboratorsMiscT(`${selfOrCollaborator}.no`)}
         </Button>
       </Modal>
     );
@@ -182,36 +194,49 @@ export const CollaboratorsContent = () => {
             <BreadcrumbBar variant="wrap">
               <Breadcrumb>
                 <BreadcrumbLink asCustom={Link} to="/">
-                  <span>{h('home')}</span>
+                  <span>{miscellaneousT('home')}</span>
                 </BreadcrumbLink>
               </Breadcrumb>
-              <Breadcrumb current>{t('teamBreadcrumb')}</Breadcrumb>
+              <Breadcrumb current>
+                {collaboratorsMiscT('teamBreadcrumb')}
+              </Breadcrumb>
             </BreadcrumbBar>
+
             <PageHeading className="margin-top-4 margin-bottom-2">
-              {t('headingTeamMembers')}
+              {collaboratorsMiscT('headingTeamMembers')}
             </PageHeading>
+
             <div className="font-body-lg margin-bottom-6">
-              {t('teamMemberInfo')}
+              {collaboratorsMiscT('teamMemberInfo')}
             </div>
-            <h4 className="margin-bottom-1">{t('teamMembers')}</h4>
+
+            <h4 className="margin-bottom-1">
+              {collaboratorsMiscT('teamMembers')}
+            </h4>
+
             <UswdsReactLink
               className="usa-button margin-bottom-2"
               variant="unstyled"
               to={`/models/${modelID}/collaborators/add-collaborator`}
             >
-              {t('addTeamMemberButton')}
+              {collaboratorsMiscT('addTeamMemberButton')}
             </UswdsReactLink>
 
-            {collaborators.length === 0 ? (
-              <Alert type="info" heading={t('table.noCollaborators')} />
-            ) : (
-              <CollaboratorsTable
-                collaborators={collaborators}
-                setModalOpen={setModalOpen}
-                setRemoveCollaborator={setRemoveCollaborator}
-                isLastLead={isLastLead}
-              />
-            )}
+            {loading && <PageLoading />}
+            {!loading &&
+              (collaborators.length === 0 ? (
+                <Alert
+                  type="info"
+                  heading={collaboratorsMiscT('table.noCollaborators')}
+                />
+              ) : (
+                <CollaboratorsTable
+                  collaborators={collaborators}
+                  setModalOpen={setModalOpen}
+                  setRemoveCollaborator={setRemoveCollaborator}
+                  isLastLead={isLastLead}
+                />
+              ))}
 
             <div className="margin-top-5 display-block">
               <UswdsReactLink
@@ -221,8 +246,8 @@ export const CollaboratorsContent = () => {
                 to={`/models/${modelID}/task-list`}
               >
                 {collaborators.length > 0
-                  ? h('continueToTaskList')
-                  : t('continueWithoutAdding')}
+                  ? miscellaneousT('continueToTaskList')
+                  : collaboratorsMiscT('continueWithoutAdding')}
               </UswdsReactLink>
             </div>
           </Grid>

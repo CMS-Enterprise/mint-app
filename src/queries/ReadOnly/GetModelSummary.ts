@@ -5,6 +5,8 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
+      abbreviation
+      createdDts
       modifiedDts
       status
       isFavorite

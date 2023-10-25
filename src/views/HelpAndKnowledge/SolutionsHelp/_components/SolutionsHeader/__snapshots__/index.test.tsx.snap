@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Operation Solution Help Header matches snapshot 1`] = `
+exports[`Operation Solution Help Header > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="padding-y-4 padding-bottom-4 bg-primary-darker text-white"
@@ -107,7 +107,7 @@ exports[`Operation Solution Help Header matches snapshot 1`] = `
           <p
             class="margin-y-0"
           >
-            Showing 9 of 32 operational solutions
+            Showing 9 of 34 operational solutions
           </p>
         </div>
       </div>

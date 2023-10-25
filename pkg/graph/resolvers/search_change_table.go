@@ -10,7 +10,13 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/aquasecurity/esquery"
+
 	"github.com/opensearch-project/opensearch-go/v2"
+
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/querybuilderfactories"
+
 	"github.com/opensearch-project/opensearch-go/v2/opensearchapi"
 
 	"github.com/google/uuid"
@@ -25,14 +31,16 @@ type SearchQueryTemplate string
 
 // These are the different search query template enums
 const (
-	FreeTextSearchTemplate    SearchQueryTemplate = "FreeTextSearch"
-	ModelPlanIDSearchTemplate SearchQueryTemplate = "ModelPlanIDSearch"
-	DateRangeSearchTemplate   SearchQueryTemplate = "DateRangeSearch"
-	ActorSearchTemplate       SearchQueryTemplate = "ActorSearch"
-	ModelStatusSearchTemplate SearchQueryTemplate = "ModelStatusSearch"
+	FreeTextSearchTemplate     SearchQueryTemplate = "FreeTextSearch"
+	ModelPlanIDSearchTemplate  SearchQueryTemplate = "ModelPlanIDSearch"
+	DateRangeSearchTemplate    SearchQueryTemplate = "DateRangeSearch"
+	ActorSearchTemplate        SearchQueryTemplate = "ActorSearch"
+	ModelStatusSearchTemplate  SearchQueryTemplate = "ModelStatusSearch"
+	ModelIDDatesSearchTemplate SearchQueryTemplate = "ModelIDDatesSearch"
 )
 
 // Embed the template files
+//
 //go:embed searchquerytemplates/free_text.tmpl
 var freeTextSearchTmpl string
 
@@ -48,12 +56,16 @@ var actorSearchTmpl string
 //go:embed searchquerytemplates/by_model_status.tmpl
 var modelStatusSearchTmpl string
 
+//go:embed searchquerytemplates/by_model_id_dates.tmpl
+var modelIDDatesSearchTmpl string
+
 var templateFileMapping = map[SearchQueryTemplate]string{
-	FreeTextSearchTemplate:    freeTextSearchTmpl,
-	ModelPlanIDSearchTemplate: modelPlanIDSearchTmpl,
-	DateRangeSearchTemplate:   dateRangeSearchTmpl,
-	ActorSearchTemplate:       actorSearchTmpl,
-	ModelStatusSearchTemplate: modelStatusSearchTmpl,
+	FreeTextSearchTemplate:     freeTextSearchTmpl,
+	ModelPlanIDSearchTemplate:  modelPlanIDSearchTmpl,
+	DateRangeSearchTemplate:    dateRangeSearchTmpl,
+	ActorSearchTemplate:        actorSearchTmpl,
+	ModelStatusSearchTemplate:  modelStatusSearchTmpl,
+	ModelIDDatesSearchTemplate: modelIDDatesSearchTmpl,
 }
 
 var templateCache = make(map[SearchQueryTemplate]*template.Template)
@@ -105,6 +117,18 @@ func marshalSearchQuery(request models.SearchRequest) (io.Reader, error) {
 }
 
 func performSearch(
+	searchClient *opensearch.Client,
+	queryReader io.Reader,
+) (*opensearchapi.Response, error) {
+	return searchClient.Search(
+		searchClient.Search.WithIndex("change_table_idx"),
+		searchClient.Search.WithBody(queryReader),
+		searchClient.Search.WithTrackTotalHits(true),
+		searchClient.Search.WithPretty(),
+	)
+}
+
+func performSearchWithParameters(
 	searchClient *opensearch.Client,
 	queryReader io.Reader,
 	limit int,
@@ -171,6 +195,29 @@ func extractChangeTableRecords(
 			return nil, fmt.Errorf("error unmarshaling JSON into ChangeTableRecord: %s", err)
 		}
 
+		// Process the fields
+		fieldsMap, ok := source["fields"].(map[string]interface{})
+		if ok {
+			for key, value := range fieldsMap {
+				fieldValueBytes, err := json.Marshal(value)
+				if err != nil {
+					logger.Error("Error marshaling field value into JSON", zap.Error(err))
+					return nil, fmt.Errorf("error marshaling field value into JSON: %s", err)
+				}
+
+				var fieldValue models.FieldValue
+				if err := json.Unmarshal(fieldValueBytes, &fieldValue); err != nil {
+					logger.Error("Error unmarshalling JSON into FieldValue", zap.Error(err))
+					return nil, fmt.Errorf("error unmarshaling JSON into FieldValue: %s", err)
+				}
+
+				record.Fields.Changes = append(record.Fields.Changes, &models.Field{
+					Name:  key,
+					Value: fieldValue,
+				})
+			}
+		}
+
 		changeTableRecords = append(changeTableRecords, &record)
 	}
 	return changeTableRecords, nil
@@ -201,7 +248,7 @@ func searchChangeTableBase(
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	res, err := performSearch(searchClient, queryReader, limit, offset, sortBy)
+	res, err := performSearchWithParameters(searchClient, queryReader, limit, offset, sortBy)
 	if err != nil {
 		return nil, err
 	}
@@ -245,6 +292,120 @@ func SearchChangeTable(
 	}
 
 	return searchChangeTableBase(logger, searchClient, queryReader, limit, offset, sortBy)
+}
+
+// Search functions for change table
+func searchChanges(
+	logger *zap.Logger,
+	searchClient *opensearch.Client,
+	queryReader io.Reader,
+) ([]*models.ChangeTableRecord, error) {
+	res, err := performSearch(searchClient, queryReader)
+	if err != nil {
+		return nil, err
+	}
+	defer func(Body io.ReadCloser) {
+		err2 := Body.Close()
+		if err2 != nil {
+			logger.Error("Error closing response body", zap.Error(err2))
+		}
+	}(res.Body)
+
+	if res.IsError() {
+		return nil, handleSearchError(res, logger)
+	}
+
+	r, err := parseSearchResponseBody(res, logger)
+	if err != nil {
+		return nil, err
+	}
+
+	changeTableRecords, err := extractChangeTableRecords(r, logger)
+	if err != nil {
+		return nil, err
+	}
+
+	return changeTableRecords, nil
+}
+
+func convertSortKeyToField(sortKey model.ChangeHistorySortKey) (string, error) {
+	switch sortKey {
+	case model.ChangeHistorySortKeyChangeDate:
+		return "modified_dts", nil
+	case model.ChangeHistorySortKeyActor:
+		return "modified_by.username", nil
+	case model.ChangeHistorySortKeyModelPlanID:
+		return "model_plan_id", nil
+	case model.ChangeHistorySortKeyTableID:
+		return "table_id", nil
+	case model.ChangeHistorySortKeyTableName:
+		return "table_name", nil
+	default:
+		return "", fmt.Errorf("unknown sort key: %s", sortKey)
+	}
+}
+
+// SearchChangesWithFilters searches the change table for records matching the given query and filters
+func SearchChangesWithFilters(
+	logger *zap.Logger,
+	searchClient *opensearch.Client,
+	searchFilters []*model.SearchFilter,
+	sortBy *model.ChangeHistorySortParams,
+	page *model.PageParams,
+) ([]*models.ChangeTableRecord, error) {
+	// Initialize a new QueryBuilder with the provided searchFilters
+	qb, err := querybuilderfactories.NewMINTQueryBuilder()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, searchFilter := range searchFilters {
+		err2 := qb.AddFilter(string(searchFilter.Type), searchFilter.Value)
+		if err2 != nil {
+			return nil, err2
+		}
+	}
+
+	if sortBy != nil {
+		var sortOrder esquery.Order
+		if sortBy.Order == models.SortAsc {
+			sortOrder = esquery.OrderAsc
+		} else {
+			sortOrder = esquery.OrderDesc
+		}
+
+		sortField, err2 := convertSortKeyToField(sortBy.Field)
+		if err2 != nil {
+			return nil, err2
+		}
+
+		qb.SortBy(sortField, sortOrder)
+	}
+
+	if page != nil {
+		qb.Page(page.Offset, page.Limit)
+	}
+
+	// Build the query
+	query := qb.Build()
+
+	// Convert the query to a map
+	queryMap := query.Map()
+
+	// Marshal the map to a JSON string
+	queryJSON, err := json.Marshal(queryMap)
+	if err != nil {
+		return nil, err
+	}
+
+	// Debug print the query
+	logger.Debug("Search query", zap.String("query", string(queryJSON)))
+	print(string(queryJSON))
+
+	// Convert the JSON string to a reader
+	queryReader := strings.NewReader(string(queryJSON))
+
+	return searchChanges(logger, searchClient, queryReader)
 }
 
 // SearchChangeTableWithFreeText searches for change table records in search using a free-text search
@@ -295,6 +456,31 @@ func SearchChangeTableByDateRange(
 	query, err := buildSearchQuery(DateRangeSearchTemplate, map[string]interface{}{
 		"StartDate": startDate.Format(time.RFC3339),
 		"EndDate":   endDate.Format(time.RFC3339),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "modified_dts:desc")
+}
+
+// SearchModelPlanChangesByDateRange searches the change table for records with a modified_dts within the specified
+// date range and matching the given model plan ID. This is used to find all changes to a specific model plan across
+// a multitude of record types, e.g. all changes to a specific model plan's model, associated discussions, attached
+// documents, etc.
+func SearchModelPlanChangesByDateRange(
+	logger *zap.Logger,
+	searchClient *opensearch.Client,
+	modelPlanID uuid.UUID,
+	startDate time.Time,
+	endDate time.Time,
+	limit int,
+	offset int,
+) ([]*models.ChangeTableRecord, error) {
+	query, err := buildSearchQuery(ModelIDDatesSearchTemplate, map[string]interface{}{
+		"ModelPlanID": modelPlanID.String(),
+		"StartDate":   startDate.Format(time.RFC3339),
+		"EndDate":     endDate.Format(time.RFC3339),
 	})
 	if err != nil {
 		return nil, err

@@ -20,6 +20,7 @@ const documents = {
     noVirusFound: 'No viruses found',
     virusFound: 'Virus found',
     view: 'View',
+    visit: 'Visit',
     remove: 'Remove',
     error: {
       heading: 'There is a problem',
@@ -44,17 +45,17 @@ const documents = {
       ' this document will delete it from your model completely, and you will no longer be able to access it. It will also be removed from any other linked solutions.',
     warningRemoveSolution2:
       ' this document will delete it from your model completely, and you will no longer be able to access it.',
-    warningUnlinkSolution:
+    warningDisconnectSolution:
       ' this document will remove it only from this solution. It will still be available with the rest of your model documents.',
     linkDocsWarning:
-      'This document is linked to {{-numLinkedSolutions}} solution{{-plural}}.',
+      'This document is connected to {{-numLinkedSolutions}} solution{{-plural}}.',
     linkDocsWarning2:
-      'This document is linked to {{-numLinkedSolutions}} other solution{{-plural}}.',
+      'This document is connected to {{-numLinkedSolutions}} other solution{{-plural}}.',
     removing: 'Removing',
-    unlinking: 'Unlinking',
+    disconnecting: 'Disconnecting',
     confirm: 'Remove document',
     confirmSolutionRemove: 'Remove',
-    unlink: 'Unlink',
+    disconnect: 'Disconnect',
     keepDocument: 'Keep document',
     cancel: 'Cancel',
     confirmationText_name:
@@ -63,34 +64,46 @@ const documents = {
   },
   downloadFail: 'Failed to download file',
   urlFail: 'Failed to fetch file URL',
-  removeDocumentFail: 'Failed to remove document {{-documentName}}',
-  removeDocumentSuccess: 'Success! Document {{-documentName}} removed.',
-  documentUploadSuccess: 'Successfully added {{-documentName}}.',
-  uploadDocument: 'Upload a document',
+  documentUploadSuccess: 'Success! {{-documentName}} added to {{-modelName}}.',
+
+  segmentedButton: {
+    upload: 'Upload document',
+    link: 'Link to document'
+  },
+  addDocument: 'Add a document',
   uploadDescription:
-    'Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.',
+    'Choose to upload or link to a document, such as a recent concept document, policy paper, or any additional model background information.',
   documentUpload: 'Document upload',
   selectedFile: 'Selected file',
   changeFile: 'Change file',
   ariaLabelChangeFile: '-- Click to change file',
   fileSelected: 'File <1>{{file}}</1> selected.',
   dragFile: 'Drag file here or ',
+  linkDocument: {
+    linkLabel: 'Link',
+    linkHelpText:
+      'Paste the link for your document. Make sure it includes http:// or https://.',
+    fileNameLabel: 'File name',
+    fileNameHelpText: 'Enter a name for your document.'
+  },
   chooseFromFolder: 'choose from folder',
   notValid: 'This is not a valid file type.',
   whatType: 'What type of document are you uploading?',
   documentTypes: {
     concept: 'Concept Paper',
+    designParamMemo: 'Design Parameter Memo',
     policy: 'Policy Paper',
     icipDraft: 'ICIP Draft',
     marketResearch: 'Market Research',
+    adminOfficePresentation: 'Office of the Administrator Presentation',
     other: 'Other'
   },
   whatKind: 'What kind of document is this?',
   optionalNotes: 'Optional notes about the document',
   safetyScan:
     'To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know',
-  uploadButton: 'Upload document',
-  dontUpload: 'Don’t upload and return to previous page',
+  submitButton: 'Add document',
+  dontAdd: 'Don’t add and return to previous page',
   selectFile: 'Select file',
   documentKind: 'What kind of document is this?',
   restricted: 'Restricted',
@@ -103,21 +116,30 @@ const documents = {
     'This document will only be visible to the model team and MINT Team.',
   validation: {
     file: 'Choose a document to upload.',
+    url: 'Make sure link includes http:// or https://.',
+    link: 'Please enter the link for your document',
     documentType: 'Select the type of document you are uploading.',
     restricted: 'Please select if this document contains cost information.',
     otherDescr: 'Enter a document name.'
   },
-  linkDocumentsHeader: 'Link model documents',
-  linkDocumentsInfo:
-    'Link any model documents previously uploaded that are associated with this solution.',
-  linkDocumentsButton: 'Link documents',
-  modelDocuments: 'Model documents',
-  dontLink: 'Don’t link documents and return to solution details',
+  connectDocumentsHeader: 'Connect existing documents',
+  connectDocumentsInfo:
+    'Connect any model documents previously added that are associated with this solution.',
+  connectDocumentsButton: 'Connect documents',
+  dontConnect: 'Don’t connect documents and return to solution details',
   documentLinkSuccess: 'Success! Your documents are linked to this solution.',
-  documentUnLinkSuccess:
-    'Success! Your documents are unlinked to this solution.',
+  documentDisconnect: {
+    success:
+      'Success! {{documentName}} has been disconnected from this solution.',
+    error:
+      'There was an error disconnecting {{documentName}}. Please try again.'
+  },
+  documentRemoval: {
+    success: 'Success! {{documentName}} removed from {{modelName}}.',
+    error: 'There was an error removing {{documentName}}. Please try again.'
+  },
   documentLinkError:
-    'There was a problem linking the selected model documents to this solution. Please try again.',
+    'There was an error connecting {{fileName}} to this solution. Please try again.',
   documentUnLinkError:
     'There was a problem unlinking the selected model documents to this solution. Please try again.',
   documentUploadSolutionSuccess:

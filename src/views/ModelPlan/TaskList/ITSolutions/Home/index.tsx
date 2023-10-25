@@ -75,7 +75,7 @@ const ITSolutionsHome = () => {
           <li>{t('summaryBox.listItem.three')}</li>
         </ul>
 
-        <ImplementationStatuses slim />
+        <ImplementationStatuses />
       </SummaryBox>
 
       <AskAQuestion modelID={modelID} />

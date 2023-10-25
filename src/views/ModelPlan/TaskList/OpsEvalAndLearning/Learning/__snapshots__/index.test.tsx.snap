@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
+exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"
@@ -88,7 +88,7 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
         data-testid="ask-a-question-button"
         type="button"
       >
-        Ask a question
+        Start a discussion
       </button>
     </div>
   </div>
@@ -97,302 +97,309 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
     class="desktop:grid-col-6 margin-top-6"
     data-testid="ops-eval-and-learning-learning-form"
   >
-    <div
-      class="usa-form-group"
-      data-scroll="modelLearningSystems"
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
     >
-      <legend
-        class="usa-label"
-      >
-        Will the model have a learning strategy?
-      </legend>
       <div
-        class="usa-alert usa-alert--warning flex it-solutions-warning"
-        data-testid="alert"
+        class="usa-form-group"
+        data-scroll="modelLearningSystems"
       >
-        <div
-          class="usa-alert__body"
+        <legend
+          class="usa-label"
         >
-          <p
-            class="usa-alert__text"
+          Will the model have a learning strategy?
+        </legend>
+        <div
+          class="usa-alert usa-alert--warning flex it-solutions-warning"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
           >
-            Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="button"
-              id="ops-eval-and-learning-learning-systems-warning"
-              type="button"
+            <p
+              class="usa-alert__text"
             >
-              Go to IT solutions tracker.
-            </button>
-          </p>
+              <span>
+                Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="button"
+                  id="ops-eval-and-learning-learning-systems-warning"
+                  type="button"
+                >
+                  Go to IT solutions tracker.
+                </button>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
+            name="modelLearningSystems"
+            type="checkbox"
+            value="LEARNING_CONTRACTOR"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
+          >
+            We plan to have a learning contractor (cross-model or individual)
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
+            name="modelLearningSystems"
+            type="checkbox"
+            value="IT_PLATFORM_CONNECT"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
+          >
+            We plan to use an IT platform (Connect)
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
+            name="modelLearningSystems"
+            type="checkbox"
+            value="PARTICIPANT_COLLABORATION"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
+          >
+            We plan to enable participant-to-participant collaboration
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+            name="modelLearningSystems"
+            type="checkbox"
+            value="EDUCATE_BENEFICIARIES"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+          >
+            We plan to educate beneficiaries
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-learning-systems-OTHER"
+            name="modelLearningSystems"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-learning-systems-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
+            name="modelLearningSystems"
+            type="checkbox"
+            value="NO_LEARNING_SYSTEM"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
+          >
+            No, we will not have a learning strategy
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
         </div>
       </div>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group"
+        data-scroll="anticipatedChallenges"
       >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
-          name="modelLearningSystems"
-          type="checkbox"
-          value="EDUCATE_BENEFICIARIES"
-        />
         <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+          class="usa-label"
+          data-testid="label"
+          for="ops-eval-and-learning-learning-anticipated-challenges"
         >
-          We plan to educate beneficiaries
+          What challenges do you anticipate during Model design and implementation?
         </label>
         <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
-          name="modelLearningSystems"
-          type="checkbox"
-          value="IT_PLATFORM_CONNECT"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
+          class="text-base margin-y-1 margin-top-2 line-height-body-4"
         >
-          We plan to use an IT platform (Connect)
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
-          name="modelLearningSystems"
-          type="checkbox"
-          value="LEARNING_CONTRACTOR"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
+          Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.
+        </p>
+        <textarea
+          aria-labelledby="label-ops-eval-and-learning-learning-anticipated-challenges hint-ops-eval-and-learning-learning-anticipated-challenges"
+          class="height-card usa-textarea"
+          data-testid="ops-eval-and-learning-learning-anticipated-challenges"
+          id="ops-eval-and-learning-learning-anticipated-challenges"
+          name="anticipatedChallenges"
         >
-          We plan to have a learning contractor (cross-model or individual)
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
+          Hard challenges
+        </textarea>
       </div>
       <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
-          name="modelLearningSystems"
-          type="checkbox"
-          value="PARTICIPANT_COLLABORATION"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
-        >
-          We plan to enable participant-to-participant collaboration
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-learning-systems-OTHER"
-          name="modelLearningSystems"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-learning-systems-OTHER"
-        >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
-          name="modelLearningSystems"
-          type="checkbox"
-          value="NO_LEARNING_SYSTEM"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
-        >
-          No, we will not have a learning strategy
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
-      </div>
-    </div>
-    <div
-      class="usa-form-group"
-      data-scroll="anticipatedChallenges"
-    >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="ops-eval-and-learning-learning-anticipated-challenges"
-      >
-        What challenges do you anticipate during Model design and implementation?
-      </label>
-      <p
-        class="text-base margin-y-1 margin-top-2 line-height-body-4"
-      >
-        Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.
-      </p>
-      <textarea
-        aria-labelledby="label-ops-eval-and-learning-learning-anticipated-challenges hint-ops-eval-and-learning-learning-anticipated-challenges"
-        class="height-card usa-textarea"
-        data-testid="ops-eval-and-learning-learning-anticipated-challenges"
-        id="ops-eval-and-learning-learning-anticipated-challenges"
-        name="anticipatedChallenges"
-      >
-        Hard challenges
-      </textarea>
-    </div>
-    <div
-      class="usa-form-group margin-top-8 margin-bottom-3"
-    >
-      <div
-        class="usa-summary-box bg-white border-base-light padding-2"
-        data-testid="summary-box"
+        class="usa-form-group margin-top-8 margin-bottom-3"
       >
         <div
-          class="usa-summary-box__body"
+          class="usa-summary-box bg-white border-base-light padding-2"
+          data-testid="summary-box"
         >
-          <h3
-            class="usa-summary-box__heading"
-          />
           <div
-            class="usa-summary-box__text"
+            class="usa-summary-box__body"
           >
-            <p
-              class="margin-0"
-            >
-              Model Plan status
-            </p>
+            <h3
+              class="usa-summary-box__heading"
+            />
             <div
-              class="mint-checkbox usa-checkbox"
+              class="usa-summary-box__text"
             >
-              <input
-                class="usa-checkbox__input"
-                data-testid="ops-eval-and-learning-learning-status"
-                id="ops-eval-and-learning-learning-status"
-                name="status"
-                type="checkbox"
-                value="IN_PROGRESS"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="ops-eval-and-learning-learning-status"
-              >
-                This section of the Model Plan (Operations, evaluation, and learning) is ready for review.
-              </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
+                class="margin-0"
+              >
+                Model Plan status
+              </p>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  data-testid="ops-eval-and-learning-learning-status"
+                  id="ops-eval-and-learning-learning-status"
+                  name="status"
+                  type="checkbox"
+                  value="IN_PROGRESS"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="ops-eval-and-learning-learning-status"
+                >
+                  This section of the Model Plan (Operations, evaluation, and learning) is ready for review.
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="margin-top-6 margin-bottom-3"
-    >
+      <div
+        class="margin-top-6 margin-bottom-3"
+      >
+        <button
+          class="usa-button usa-button usa-button--outline margin-bottom-1"
+          data-testid="button"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          class="usa-button"
+          data-testid="button"
+          type="submit"
+        >
+          Save and start next Model Plan section
+        </button>
+      </div>
       <button
-        class="usa-button usa-button usa-button--outline margin-bottom-1"
+        class="usa-button usa-button usa-button--unstyled"
         data-testid="button"
         type="button"
       >
-        Back
+        <svg
+          aria-hidden="true"
+          class="usa-icon margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          />
+        </svg>
+        Save and return to task list
       </button>
-      <button
-        class="usa-button"
-        data-testid="button"
-        type="submit"
-      >
-        Save and start next Model Plan section
-      </button>
-    </div>
-    <button
-      class="usa-button usa-button usa-button--unstyled"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon margin-right-1"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-        />
-      </svg>
-      Save and return to task list
-    </button>
+    </fieldset>
   </form>
   <div
     class="mint-page-number margin-y-6"

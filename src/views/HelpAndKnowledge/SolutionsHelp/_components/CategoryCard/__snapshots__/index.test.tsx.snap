@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Operational Solution Category Card matches snapshot 1`] = `
+exports[`Operational Solution Category Card > matches snapshot 1`] = `
 <DocumentFragment>
   <li
-    class="usa-card radius-sm operational-solution-help__category"
+    class="usa-card radius-sm width-full operational-solution-help__category"
     data-testid="Card"
   >
     <div
@@ -16,13 +16,13 @@ exports[`Operational Solution Category Card matches snapshot 1`] = `
         Data reporting
       </header>
       <div
-        class="usa-card__body padding-y-0 flex-1"
+        class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
         data-testid="CardBody"
       >
         <a
           aria-label="Learn more about Data reporting"
           class="usa-link display-flex flex-align-center"
-          href="/help-and-knowledge/operational-solutions?category=data-reporting"
+          href="/help-and-knowledge/operational-solutions?category=data"
         >
           Learn more
           <svg

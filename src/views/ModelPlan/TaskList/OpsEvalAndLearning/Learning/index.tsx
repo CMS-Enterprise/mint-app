@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   IconArrowBack,
   Label
 } from '@trussworks/react-uswds';
@@ -24,6 +25,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetLearning from 'queries/OpsEvalAndLearning/GetLearning';
 import {
@@ -34,12 +36,9 @@ import {
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { ModelLearningSystemType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  sortOtherEnum,
-  translateModelLearningSystemType
-} from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -51,8 +50,17 @@ import {
 } from '..';
 
 const Learning = () => {
-  const { t } = useTranslation('operationsEvaluationAndLearning');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
+
+  const { t: opsEvalAndLearningMiscT } = useTranslation(
+    'opsEvalAndLearningMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    modelLearningSystems: modelLearningSystemsConfig
+  } = usePlanTranslation('opsEvalAndLearning');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
@@ -161,28 +169,30 @@ const Learning = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -207,17 +217,17 @@ const Learning = () => {
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -232,153 +242,169 @@ const Learning = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="modelLearningSystems"
-                  error={!!flatErrors.modelLearningSystems}
-                >
-                  <FieldArray
-                    name="modelLearningSystems"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label">
-                          {t('learningSystem')}
-                        </legend>
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="modelLearningSystems"
+                    error={!!flatErrors.modelLearningSystems}
+                  >
+                    <FieldArray
+                      name="modelLearningSystems"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label">
+                            {opsEvalAndLearningT('modelLearningSystems.label')}
+                          </legend>
 
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="ops-eval-and-learning-learning-systems-warning"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
+                          {itSolutionsStarted && (
+                            <ITSolutionsWarning
+                              id="ops-eval-and-learning-learning-systems-warning"
+                              onClick={() =>
+                                handleFormSubmit(
+                                  `/models/${modelID}/task-list/it-solutions`
+                                )
+                              }
+                            />
+                          )}
 
-                        <FieldErrorMsg>
-                          {flatErrors.modelLearningSystems}
-                        </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors.modelLearningSystems}
+                          </FieldErrorMsg>
 
-                        {Object.keys(ModelLearningSystemType)
-                          .sort(sortOtherEnum)
-                          .map(type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`ops-eval-and-learning-learning-systems-${type}`}
-                                  name="modelLearningSystems"
-                                  label={translateModelLearningSystemType(type)}
-                                  value={type}
-                                  checked={values?.modelLearningSystems.includes(
-                                    type as ModelLearningSystemType
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.modelLearningSystems.indexOf(
-                                        e.target
-                                          .value as ModelLearningSystemType
-                                      );
-                                      arrayHelpers.remove(idx);
+                          {getKeys(modelLearningSystemsConfig.options).map(
+                            type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`ops-eval-and-learning-learning-systems-${type}`}
+                                    name="modelLearningSystems"
+                                    label={
+                                      modelLearningSystemsConfig.options[type]
                                     }
-                                  }}
-                                />
-                                {type === ModelLearningSystemType.OTHER &&
-                                  values.modelLearningSystems.includes(
-                                    type
-                                  ) && (
-                                    <div className="margin-left-4 margin-top-neg-3">
-                                      <Label
-                                        htmlFor="ops-eval-and-learning-learning-systems-other"
-                                        className="text-normal maxw-none"
-                                      >
-                                        {h('pleaseSpecify')}
-                                      </Label>
-                                      <FieldErrorMsg>
-                                        {flatErrors.modelLearningSystemsOther}
-                                      </FieldErrorMsg>
-                                      <Field
-                                        as={TextAreaField}
-                                        className="maxw-none mint-textarea"
-                                        id="ops-eval-and-learning-learning-systems-other"
-                                        maxLength={5000}
-                                        name="modelLearningSystemsOther"
-                                      />
-                                    </div>
-                                  )}
-                              </Fragment>
-                            );
-                          })}
-                        <AddNote
-                          id="ops-eval-and-learning-learning-systems-note"
-                          field="modelLearningSystemsNote"
-                        />
-                      </>
-                    )}
-                  />
-                </FieldGroup>
+                                    value={type}
+                                    checked={values?.modelLearningSystems.includes(
+                                      type
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.modelLearningSystems.indexOf(
+                                          e.target
+                                            .value as ModelLearningSystemType
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
 
-                <FieldGroup
-                  scrollElement="anticipatedChallenges"
-                  error={!!flatErrors.anticipatedChallenges}
-                >
-                  <Label htmlFor="ops-eval-and-learning-learning-anticipated-challenges">
-                    {t('obstacles')}
-                  </Label>
-                  <p className="text-base margin-y-1 margin-top-2 line-height-body-4">
-                    {t('obstaclesInfo')}
-                  </p>
-                  <FieldErrorMsg>
-                    {flatErrors.anticipatedChallenges}
-                  </FieldErrorMsg>
-                  <Field
-                    as={TextAreaField}
-                    className="height-card"
-                    error={flatErrors.anticipatedChallenges}
-                    id="ops-eval-and-learning-learning-anticipated-challenges"
-                    data-testid="ops-eval-and-learning-learning-anticipated-challenges"
-                    name="anticipatedChallenges"
-                  />
-                </FieldGroup>
+                                  {type === ModelLearningSystemType.OTHER &&
+                                    values.modelLearningSystems.includes(
+                                      type
+                                    ) && (
+                                      <div className="margin-left-4">
+                                        <Label
+                                          htmlFor="ops-eval-and-learning-learning-systems-other"
+                                          className="text-normal maxw-none"
+                                        >
+                                          {opsEvalAndLearningT(
+                                            'modelLearningSystemsOther.label'
+                                          )}
+                                        </Label>
 
-                {!loading && values.status && (
-                  <ReadyForReview
-                    id="ops-eval-and-learning-learning-status"
-                    field="status"
-                    sectionName={t('heading')}
-                    status={values.status}
-                    setFieldValue={setFieldValue}
-                    readyForReviewBy={readyForReviewByUserAccount?.commonName}
-                    readyForReviewDts={readyForReviewDts}
-                  />
-                )}
+                                        <FieldErrorMsg>
+                                          {flatErrors.modelLearningSystemsOther}
+                                        </FieldErrorMsg>
 
-                <div className="margin-top-6 margin-bottom-3">
+                                        <Field
+                                          as={TextAreaField}
+                                          className="maxw-none mint-textarea"
+                                          id="ops-eval-and-learning-learning-systems-other"
+                                          maxLength={5000}
+                                          name="modelLearningSystemsOther"
+                                        />
+                                      </div>
+                                    )}
+                                </Fragment>
+                              );
+                            }
+                          )}
+
+                          <AddNote
+                            id="ops-eval-and-learning-learning-systems-note"
+                            field="modelLearningSystemsNote"
+                          />
+                        </>
+                      )}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="anticipatedChallenges"
+                    error={!!flatErrors.anticipatedChallenges}
+                  >
+                    <Label htmlFor="ops-eval-and-learning-learning-anticipated-challenges">
+                      {opsEvalAndLearningT('anticipatedChallenges.label')}
+                    </Label>
+
+                    <p className="text-base margin-y-1 margin-top-2 line-height-body-4">
+                      {opsEvalAndLearningT('anticipatedChallenges.sublabel')}
+                    </p>
+
+                    <FieldErrorMsg>
+                      {flatErrors.anticipatedChallenges}
+                    </FieldErrorMsg>
+
+                    <Field
+                      as={TextAreaField}
+                      className="height-card"
+                      error={flatErrors.anticipatedChallenges}
+                      id="ops-eval-and-learning-learning-anticipated-challenges"
+                      data-testid="ops-eval-and-learning-learning-anticipated-challenges"
+                      name="anticipatedChallenges"
+                    />
+                  </FieldGroup>
+
+                  {!loading && values.status && (
+                    <ReadyForReview
+                      id="ops-eval-and-learning-learning-status"
+                      field="status"
+                      sectionName={opsEvalAndLearningMiscT('heading')}
+                      status={values.status}
+                      setFieldValue={setFieldValue}
+                      readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                      readyForReviewDts={readyForReviewDts}
+                    />
+                  )}
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {miscellaneousT('back')}
+                    </Button>
+
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('saveAndStartNext')}
+                    </Button>
+                  </div>
+
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('saveAndStartNext')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (
@@ -394,6 +420,7 @@ const Learning = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

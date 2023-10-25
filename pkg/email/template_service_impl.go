@@ -52,6 +52,54 @@ var planDiscussionCreatedSubjectTemplate string
 //go:embed templates/plan_discussion_created_body.html
 var planDiscussionCreatedBodyTemplate string
 
+// ModelPlanDateChangedTemplateName is the template name definition for the corresponding email template
+const ModelPlanDateChangedTemplateName string = "model_plan_date_changed"
+
+//go:embed templates/model_plan_date_changed_subject.html
+var modelPlanDateChangedSubjectTemplate string
+
+//go:embed templates/model_plan_date_changed_body.html
+var modelPlanDateChangedBodyTemplate string
+
+// ModelPlanShareTemplateName is the template name definition for the corresponding email template
+const ModelPlanShareTemplateName string = "model_plan_share"
+
+//go:embed templates/model_plan_share_subject.html
+var modelPlanShareSubjectTemplate string
+
+//go:embed templates/model_plan_share_body.html
+var modelPlanShareBodyTemplate string
+
+//go:embed templates/shared_style.html
+var sharedStyleTemplate string
+
+//go:embed templates/shared_header.html
+var sharedHeaderTemplate string
+
+//go:embed templates/shared_access_banner.html
+var sharedAccessBannerTemplate string
+
+//go:embed templates/shared_footer.html
+var sharedFooterTemplate string
+
+// ReportAProblemTemplateName is the template name definition for the corresponding email template
+const ReportAProblemTemplateName string = "report_a_problem"
+
+//go:embed templates/report_a_problem_body.html
+var reportAProblemBodyTemplate string
+
+//go:embed templates/report_a_problem_subject.html
+var reportAProblemSubjectTemplate string
+
+// SendFeedbackTemplateName is the template name definition of the send feedback email template
+const SendFeedbackTemplateName string = "send_feedback"
+
+//go:embed templates/send_feedback_body.html
+var sendFeedbackBodyTemplate string
+
+//go:embed templates/send_feedback_subject.html
+var sendFeedbackSubjectTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
@@ -99,6 +147,25 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
+	err = t.loadEmailTemplate(ModelPlanDateChangedTemplateName, modelPlanDateChangedSubjectTemplate, modelPlanDateChangedBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(ModelPlanShareTemplateName, modelPlanShareSubjectTemplate, modelPlanShareBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(ReportAProblemTemplateName, reportAProblemSubjectTemplate, reportAProblemBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(SendFeedbackTemplateName, sendFeedbackSubjectTemplate, sendFeedbackBodyTemplate)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -116,7 +183,14 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 		return err
 	}
 
-	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate)
+	predefinedTemplates := map[string]string{
+		"shared_style.html":         sharedStyleTemplate,
+		"shared_header.html":        sharedHeaderTemplate,
+		"shared_footer.html":        sharedFooterTemplate,
+		"shared_access_banner.html": sharedAccessBannerTemplate,
+	}
+
+	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
 	if err != nil {
 		return err
 	}

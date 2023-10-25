@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Subtasks Table Component matches snapshot 1`] = `
+exports[`Subtasks Table Component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class=""
@@ -10,6 +10,18 @@ exports[`Subtasks Table Component matches snapshot 1`] = `
     >
       Subtasks
     </h3>
+    <div
+      class="margin-top-2 margin-bottom-3 display-flex"
+    >
+      <button
+        class="usa-button usa-button usa-button--outline"
+        data-testid="button"
+        id="add-subtasks"
+        type="button"
+      >
+        Add subtasks
+      </button>
+    </div>
     <div
       class="grid-container padding-0"
       data-testid="gridContainer"

@@ -27,8 +27,7 @@ const mockData: GetNonClaimsBasedPaymentType = {
   sharedSystemsInvolvedAdditionalClaimPayment: null,
   sharedSystemsInvolvedAdditionalClaimPaymentNote: null,
   planningToUseInnovationPaymentContractor: null,
-  planningToUseInnovationPaymentContractorNote: null,
-  fundingStructure: null
+  planningToUseInnovationPaymentContractorNote: null
 };
 
 const paymentsMock = [

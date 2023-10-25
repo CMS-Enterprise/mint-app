@@ -1,4 +1,0 @@
-type PrepareForClearance {
-  status: PrepareForClearanceStatus!
-  latestClearanceDts: Time
-}

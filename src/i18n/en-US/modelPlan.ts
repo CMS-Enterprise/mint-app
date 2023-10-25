@@ -1,35 +1,5 @@
-const modelPlan = {
+const plan = {
   home: 'Home',
-  teamRoles: {
-    modelLead: 'Model Lead',
-    leadership: 'Leadership',
-    evaluation: 'Evaluation',
-    learning: 'Learning',
-    modelTeam: 'Model Team',
-    itLead: 'IT Lead',
-    quality: 'Quality'
-  },
-  planStatuses: {
-    planDraft: 'Draft model plan',
-    planComplete: 'Model plan complete',
-    icipComplete: 'ICIP complete',
-    cmmiClearance: 'Internal (CMMI) clearance',
-    cmsClearance: 'CMS clearance',
-    hhsClearance: 'HHS clearance',
-    ombASRFClearance: 'OMB/ASRF clearance',
-    cleared: 'Cleared',
-    announced: 'Announced',
-    paused: 'Paused',
-    canceled: 'Canceled'
-  },
-  status: {
-    heading: 'Update status',
-    copy:
-      'After you’ve iterated on your Model Plan, update the status so others know what stage it’s at in the design and clearance process.',
-    label: 'What is the status of your Model Plan?',
-    updateButton: 'Update status',
-    return: 'Don’t update status and return to task list'
-  },
   favorite: {
     modelLead: 'Model lead(s)',
     startDate: 'Start date',
@@ -46,4 +16,4 @@ const modelPlan = {
   }
 };
 
-export default modelPlan;
+export default plan;

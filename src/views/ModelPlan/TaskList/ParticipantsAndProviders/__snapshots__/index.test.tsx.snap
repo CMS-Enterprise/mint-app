@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Participants and Providers matches snapshot 1`] = `
+exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"
@@ -88,7 +88,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
         data-testid="ask-a-question-button"
         type="button"
       >
-        Ask a question
+        Start a discussion
       </button>
     </div>
   </div>
@@ -109,81 +109,106 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
           class="margin-top-6"
           data-testid="participants-and-providers-form"
         >
-          <div
-            class="usa-form-group margin-top-4"
-            data-scroll="participants"
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
           >
-            <label
-              class="usa-label"
-              data-testid="label"
-              for="participants-and-providers-participants"
-              id="label-participants-and-providers-participants"
+            <div
+              class="usa-form-group margin-top-4"
+              data-scroll="participants"
             >
-              Who are the particpants? Select all that apply.
-            </label>
-            <div>
-              <div
-                class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
-                id="participants-and-providers-participants"
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="participants-and-providers-participants"
+                id="label-participants-and-providers-participants"
               >
-                <span
-                  class="css-1f43avz-a11yText-A11yText"
-                  id="react-select-3-live-region"
-                />
-                <span
-                  aria-atomic="false"
-                  aria-live="polite"
-                  aria-relevant="additions text"
-                  class="css-1f43avz-a11yText-A11yText"
-                />
+                Who are the participants? Select all that apply.
+              </label>
+              <div>
                 <div
-                  class=" css-jvusj8-control"
+                  class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+                  id="participants-and-providers-participants"
                 >
+                  <span
+                    class="css-1f43avz-a11yText-A11yText"
+                    id="react-select-3-live-region"
+                  />
+                  <span
+                    aria-atomic="false"
+                    aria-live="polite"
+                    aria-relevant="additions text"
+                    class="css-1f43avz-a11yText-A11yText"
+                  />
                   <div
-                    class=" css-319lph-ValueContainer"
+                    class=" css-jvusj8-control"
                   >
                     <div
-                      class=" css-14el2xx-placeholder"
-                      id="react-select-3-placeholder"
-                    >
-                      3 selected
-                    </div>
-                    <div
-                      class=" css-6j8wv5-Input"
-                      data-value=""
-                    >
-                      <input
-                        aria-autocomplete="list"
-                        aria-expanded="false"
-                        aria-haspopup="true"
-                        aria-labelledby="label-participants-and-providers-participants"
-                        autocapitalize="none"
-                        autocomplete="off"
-                        autocorrect="off"
-                        class=""
-                        id="react-select-3-input"
-                        role="combobox"
-                        spellcheck="false"
-                        style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
-                        tabindex="0"
-                        type="text"
-                        value=""
-                      />
-                    </div>
-                  </div>
-                  <div
-                    class=" css-1hb7zxy-IndicatorsContainer"
-                  >
-                    <button
-                      aria-label="Clear selection"
-                      class="usa-button--unstyled"
-                      id="clear-selection"
-                      tabindex="0"
-                      type="button"
+                      class=" css-319lph-ValueContainer"
                     >
                       <div
+                        class=" css-14el2xx-placeholder"
+                        id="react-select-3-placeholder"
+                      >
+                        3 selected
+                      </div>
+                      <div
+                        class=" css-6j8wv5-Input"
+                        data-value=""
+                      >
+                        <input
+                          aria-autocomplete="list"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          aria-labelledby="label-participants-and-providers-participants"
+                          autocapitalize="none"
+                          autocomplete="off"
+                          autocorrect="off"
+                          class=""
+                          id="react-select-3-input"
+                          role="combobox"
+                          spellcheck="false"
+                          style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                          tabindex="0"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class=" css-1hb7zxy-IndicatorsContainer"
+                    >
+                      <button
+                        aria-label="Clear selection"
+                        class="usa-button--unstyled"
+                        id="clear-selection"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class=" css-1e245h0-indicatorContainer"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="css-tj5bde-Svg"
+                            focusable="false"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            width="20"
+                          >
+                            <path
+                              d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                      <span
+                        class=" css-1vtyy7d-indicatorSeparator"
+                      />
+                      <div
                         aria-hidden="true"
-                        class=" css-1e245h0-indicatorContainer"
+                        class=" css-1232v1p-indicatorContainer"
                       >
                         <svg
                           aria-hidden="true"
@@ -194,402 +219,384 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                           width="20"
                         >
                           <path
-                            d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
                           />
                         </svg>
                       </div>
-                    </button>
-                    <span
-                      class=" css-1vtyy7d-indicatorSeparator"
-                    />
-                    <div
-                      aria-hidden="true"
-                      class=" css-1232v1p-indicatorContainer"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="css-tj5bde-Svg"
-                        focusable="false"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        width="20"
-                      >
-                        <path
-                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                        />
-                      </svg>
                     </div>
                   </div>
+                  <div>
+                    <input
+                      name="participants"
+                      type="hidden"
+                      value="MEDICARE_PROVIDERS"
+                    />
+                    <input
+                      name="participants"
+                      type="hidden"
+                      value="STATES"
+                    />
+                    <input
+                      name="participants"
+                      type="hidden"
+                      value="OTHER"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <input
-                    name="participants"
-                    type="hidden"
-                    value="MEDICARE_PROVIDERS"
-                  />
-                  <input
-                    name="participants"
-                    type="hidden"
-                    value="STATES"
-                  />
-                  <input
-                    name="participants"
-                    type="hidden"
-                    value="OTHER"
-                  />
+                <div
+                  class="easi-multiselect--selected"
+                >
+                  <h4
+                    class="text-normal margin-bottom-1"
+                  >
+                    Selected participants
+                  </h4>
+                  <ul
+                    class="usa-list--unstyled"
+                    id="participants-and-providers-participants-tags"
+                  >
+                    <li
+                      class="margin-bottom-05 margin-right-05 display-inline-block"
+                    >
+                      <span
+                        class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                        data-testid="multiselect-tag--Medicare providers"
+                        id="selected-MEDICARE_PROVIDERS"
+                      >
+                        Medicare providers 
+                        <svg
+                          aria-label="Remove Medicare providers"
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="button"
+                          tabindex="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </span>
+                    </li>
+                    <li
+                      class="margin-bottom-05 margin-right-05 display-inline-block"
+                    >
+                      <span
+                        class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                        data-testid="multiselect-tag--States"
+                        id="selected-STATES"
+                      >
+                        States 
+                        <svg
+                          aria-label="Remove States"
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="button"
+                          tabindex="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </span>
+                    </li>
+                    <li
+                      class="margin-bottom-05 margin-right-05 display-inline-block"
+                    >
+                      <span
+                        class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                        data-testid="multiselect-tag--Other"
+                        id="selected-OTHER"
+                      >
+                        Other 
+                        <svg
+                          aria-label="Remove Other"
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="button"
+                          tabindex="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </span>
+                    </li>
+                  </ul>
                 </div>
+              </div>
+              <p
+                class="margin-top-4 text-bold"
+              >
+                Participant specific questions
+              </p>
+              <div
+                class="usa-form-group"
+                data-scroll="medicareProviderType"
+              >
+                <label
+                  class="usa-label text-normal"
+                  data-testid="label"
+                  for="participants-and-providers-medicare-type"
+                >
+                  Which type of medicare providers?
+                </label>
+                <textarea
+                  aria-labelledby="label-participants-and-providers-medicare-type hint-participants-and-providers-medicare-type"
+                  class="usa-textarea"
+                  data-testid="participants-and-providers-medicare-type"
+                  id="participants-and-providers-medicare-type"
+                  name="medicareProviderType"
+                >
+                  Oncology Providers
+                </textarea>
               </div>
               <div
-                class="easi-multiselect--selected"
+                class="usa-form-group"
+                data-scroll="statesEngagement"
               >
-                <h4
-                  class="text-normal margin-bottom-1"
+                <label
+                  class="usa-label text-normal"
+                  data-testid="label"
+                  for="participants-and-providers-states-engagement"
                 >
-                  Selected participants
-                </h4>
-                <ul
-                  class="usa-list--unstyled"
-                  id="participants-and-providers-participants-tags"
+                  Please describe how states will engage with your model.
+                </label>
+                <textarea
+                  aria-labelledby="label-participants-and-providers-states-engagement hint-participants-and-providers-states-engagement"
+                  class="usa-textarea"
+                  data-testid="participants-and-providers-states-engagement"
+                  id="participants-and-providers-states-engagement"
+                  name="statesEngagement"
                 >
-                  <li
-                    class="margin-bottom-05 margin-right-05 display-inline-block"
+                  States will determine administration specific to the state
+                </textarea>
+              </div>
+              <div
+                class="usa-form-group"
+                data-scroll="participantsOther"
+              >
+                <label
+                  class="usa-label text-normal"
+                  data-testid="label"
+                  for="participants-and-providers-participants-other"
+                >
+                  Please describe the other participants engaging with this model
+                </label>
+                <textarea
+                  aria-labelledby="label-participants-and-providers-participants-other hint-participants-and-providers-participants-other"
+                  class="usa-textarea"
+                  data-testid="participants-and-providers-participants-other"
+                  id="participants-and-providers-participants-other"
+                  name="participantsOther"
+                >
+                  The candy people
+                </textarea>
+              </div>
+              <div
+                class="margin-top-4 margin-bottom-8"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <span
-                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
-                      data-testid="multiselect-tag--Medicare providers"
-                      id="selected-MEDICARE_PROVIDERS"
-                    >
-                      Medicare providers 
-                      <svg
-                        aria-label="Remove Medicare providers"
-                        class="usa-icon margin-left-05"
-                        focusable="false"
-                        height="1em"
-                        role="button"
-                        tabindex="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                    </span>
-                  </li>
-                  <li
-                    class="margin-bottom-05 margin-right-05 display-inline-block"
-                  >
-                    <span
-                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
-                      data-testid="multiselect-tag--States"
-                      id="selected-STATES"
-                    >
-                      States 
-                      <svg
-                        aria-label="Remove States"
-                        class="usa-icon margin-left-05"
-                        focusable="false"
-                        height="1em"
-                        role="button"
-                        tabindex="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                    </span>
-                  </li>
-                  <li
-                    class="margin-bottom-05 margin-right-05 display-inline-block"
-                  >
-                    <span
-                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
-                      data-testid="multiselect-tag--Other"
-                      id="selected-OTHER"
-                    >
-                      Other 
-                      <svg
-                        aria-label="Remove Other"
-                        class="usa-icon margin-left-05"
-                        focusable="false"
-                        height="1em"
-                        role="button"
-                        tabindex="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                    </span>
-                  </li>
-                </ul>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
               </div>
             </div>
-            <p
-              class="margin-top-4 text-bold"
-            >
-              Participant specific questions
-            </p>
             <div
-              class="usa-form-group"
-              data-scroll="medicareProviderType"
+              class="usa-form-group margin-y-4 margin-bottom-8"
+              data-scroll="participantsCurrentlyInModels"
             >
               <label
-                class="usa-label text-normal"
+                class="usa-label"
                 data-testid="label"
-                for="participants-and-providers-medicare-type"
+                for="participants-and-providers-current-participants"
               >
-                Which type of medicare providers?
+                Are the participants in CMMI models now?
               </label>
-              <textarea
-                aria-labelledby="label-participants-and-providers-medicare-type hint-participants-and-providers-medicare-type"
-                class="usa-textarea"
-                data-testid="participants-and-providers-medicare-type"
-                id="participants-and-providers-medicare-type"
-                name="medicareProviderType"
+              <p
+                class="text-base margin-0 line-height-body-3"
               >
-                Oncology Providers
-              </textarea>
+                If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.
+              </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="participants-and-providers-current-participants-true"
+                    id="participants-and-providers-current-participants-true"
+                    name="participantsCurrentlyInModels"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="participants-and-providers-current-participants-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="participants-and-providers-current-participants-false"
+                    id="participants-and-providers-current-participants-false"
+                    name="participantsCurrentlyInModels"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="participants-and-providers-current-participants-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-4 margin-bottom-8"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
+              </div>
             </div>
             <div
               class="usa-form-group"
-              data-scroll="statesEngagement"
+              data-scroll="modelApplicationLevel"
             >
               <label
-                class="usa-label text-normal"
+                class="usa-label"
                 data-testid="label"
-                for="participants-and-providers-states-engagement"
+                for="participants-and-providers-application-level"
               >
-                Please describe how states will engage with your model.
+                At what level will the model apply?
               </label>
-              <textarea
-                aria-labelledby="label-participants-and-providers-states-engagement hint-participants-and-providers-states-engagement"
-                class="usa-textarea"
-                data-testid="participants-and-providers-states-engagement"
-                id="participants-and-providers-states-engagement"
-                name="statesEngagement"
+              <p
+                class="text-base margin-0 line-height-body-3"
               >
-                States will determine administration specific to the state
+                (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
+              </p>
+              <textarea
+                aria-labelledby="label-participants-and-providers-application-level hint-participants-and-providers-application-level"
+                class="usa-textarea"
+                id="participants-and-providers-application-level"
+                name="modelApplicationLevel"
+              >
+                c92.00 and c92.01
               </textarea>
             </div>
             <div
-              class="usa-form-group"
-              data-scroll="participantsOther"
-            >
-              <label
-                class="usa-label text-normal"
-                data-testid="label"
-                for="participants-and-providers-participants-other"
-              >
-                Please describe the other participants engaging with this model
-              </label>
-              <textarea
-                aria-labelledby="label-participants-and-providers-participants-other hint-participants-and-providers-participants-other"
-                class="usa-textarea"
-                data-testid="participants-and-providers-participants-other"
-                id="participants-and-providers-participants-other"
-                name="participantsOther"
-              >
-                The candy people
-              </textarea>
-            </div>
-            <div
-              class="margin-top-4 margin-bottom-8"
+              class="margin-top-6 margin-bottom-3"
             >
               <button
-                class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
-                type="button"
+                class="usa-button"
+                data-testid="button"
+                type="submit"
               >
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                Add an additional note
+                Next
               </button>
             </div>
-          </div>
-          <div
-            class="usa-form-group margin-y-4 margin-bottom-8"
-            data-scroll="participantsCurrentlyInModels"
-          >
-            <label
-              class="usa-label"
-              data-testid="label"
-              for="participants-and-providers-current-participants"
-            >
-              Are the participants in CMMI models now?
-            </label>
-            <p
-              class="text-base margin-0 line-height-body-3"
-            >
-              If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.
-            </p>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
-            >
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="participants-and-providers-current-participants"
-                  name="participantsCurrentlyInModels"
-                  type="radio"
-                  value="TRUE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="participants-and-providers-current-participants"
-                >
-                  Yes
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="participants-and-providers-current-participants-no"
-                  name="participantsCurrentlyInModels"
-                  type="radio"
-                  value="FALSE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="participants-and-providers-current-participants-no"
-                >
-                  No
-                </label>
-              </div>
-            </fieldset>
-            <div
-              class="margin-top-4 margin-bottom-8"
-            >
-              <button
-                class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
-                type="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                Add an additional note
-              </button>
-            </div>
-          </div>
-          <div
-            class="usa-form-group"
-            data-scroll="modelApplicationLevel"
-          >
-            <label
-              class="usa-label"
-              data-testid="label"
-              for="participants-and-providers-application-level"
-            >
-              At what level will the model apply?
-            </label>
-            <p
-              class="text-base margin-0 line-height-body-3"
-            >
-              (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
-            </p>
-            <textarea
-              aria-labelledby="label-participants-and-providers-application-level hint-participants-and-providers-application-level"
-              class="usa-textarea"
-              id="participants-and-providers-application-level"
-              name="modelApplicationLevel"
-            >
-              c92.00 and c92.01
-            </textarea>
-          </div>
-          <div
-            class="margin-top-6 margin-bottom-3"
-          >
             <button
-              class="usa-button"
+              class="usa-button usa-button usa-button--unstyled"
               data-testid="button"
-              type="submit"
+              type="button"
             >
-              Next
+              <svg
+                aria-hidden="true"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Save and return to task list
             </button>
-          </div>
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-              />
-            </svg>
-            Save and return to task list
-          </button>
+          </fieldset>
         </form>
       </div>
       <div

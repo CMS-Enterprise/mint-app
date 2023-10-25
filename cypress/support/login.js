@@ -9,7 +9,7 @@ Cypress.Commands.add('login', () => {
     log: false,
     parseSpecialCharSequences: false
   });
-  cy.get('#okta-signin-submit').click();
+  cy.get('#okta-signin-submit').click({ force: true });
 
   cy.get('.beacon-loading').should('not.exist');
   cy.get('body').then($body => {
@@ -19,7 +19,7 @@ Cypress.Commands.add('login', () => {
           token => {
             cy.get('input[name="answer"]').type(token, { log: false });
             cy.get('input[name="rememberDevice"]').check({ force: true });
-            cy.get('input[value="Verify"').click();
+            cy.get('input[value="Verify"]').click();
           }
         );
       });
@@ -34,7 +34,8 @@ Cypress.Commands.add('login', () => {
 Cypress.Commands.add(
   'localLogin',
   ({ name, role = 'MINT_USER_NONPROD', nda }) => {
-    cy.visit('/login');
+    // Adding an extended timeout here to give Vite enough time to compile sass on it's first run
+    cy.visit('/login', { timeout: 120000 });
 
     cy.get('[data-testid="LocalAuth-Visit"]').click();
     cy.get('[data-testid="LocalAuth-EUA"]').type(name);

@@ -28,10 +28,13 @@ export default {
 const solution: SolutionCardType = {
   __typename: 'OperationalSolution',
   id: 'fcd84732-3de2-4b7d-b025-4f977ed137d2',
-  name: 'Through a contractor',
+  name: 'Shared Systems',
+  isOther: false,
+  otherHeader: null,
   key: OperationalSolutionKey.SHARED_SYSTEMS,
   pocName: 'John Mint',
   pocEmail: 'john.mint@oddball.io',
+  isCommonSolution: true,
   needed: true,
   nameOther: null
 };
@@ -41,6 +44,9 @@ const customSolution: SolutionCardType = {
   id: 'fcd84732-3de2-4b7d-b025-4f977ed137d2',
   name: null,
   nameOther: 'My Custom Solutuon',
+  isOther: true,
+  otherHeader: null,
+  isCommonSolution: true,
   key: null,
   pocName: 'John Mint',
   pocEmail: 'john.mint@oddball.io',

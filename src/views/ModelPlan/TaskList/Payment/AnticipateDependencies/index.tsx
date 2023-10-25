@@ -11,13 +11,13 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -25,6 +25,7 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetAnticipateDependencies from 'queries/Payments/GetAnticipateDependencies';
 import {
   GetAnticipateDependencies as GetAnticipateDependenciesType,
@@ -34,6 +35,7 @@ import {
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
@@ -41,8 +43,19 @@ import { NotFoundPartial } from 'views/NotFound';
 import { renderCurrentPage, renderTotalPages } from '..';
 
 const AnticipateDependencies = () => {
-  const { t } = useTranslation('payments');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: paymentsT } = useTranslation('payments');
+
+  const { t: paymentsMiscT } = useTranslation('paymentsMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    creatingDependenciesBetweenServices: creatingDependenciesBetweenServicesConfig,
+    needsClaimsDataCollection: needsClaimsDataCollectionConfig,
+    providingThirdPartyFile: providingThirdPartyFileConfig,
+    isContractorAwareTestDataRequirements: isContractorAwareTestDataRequirementsConfig
+  } = usePlanTranslation('payments');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<AnticipateDependenciesFormType>>(null);
@@ -142,18 +155,19 @@ const AnticipateDependencies = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {paymentsMiscT('heading')}
       </PageHeading>
 
       <p
@@ -164,8 +178,9 @@ const AnticipateDependencies = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -187,19 +202,20 @@ const AnticipateDependencies = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -216,203 +232,184 @@ const AnticipateDependencies = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <PageHeading
-                        headingLevel="h3"
-                        className="margin-bottom-3"
-                      >
-                        {t('claimSpecificQuestionsContinued')}
-                      </PageHeading>
-
-                      <FieldGroup
-                        scrollElement="creatingDependenciesBetweenServices"
-                        error={!!flatErrors.creatingDependenciesBetweenServices}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="creatingDependenciesBetweenServices"
-                          className="maxw-none"
+                      <Fieldset disabled={!!error || loading}>
+                        <PageHeading
+                          headingLevel="h3"
+                          className="margin-bottom-3"
                         >
-                          {t('ancitipateCreatingDependencies')}
-                        </Label>
-                        <p className="text-base margin-y-1">
-                          {t('ancitipateCreatingDependenciesSubcopy')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.creatingDependenciesBetweenServices}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-creating-dependencies-between-services-${key}`}
-                              data-testid={`payment-creating-dependencies-between-services-${key}`}
-                              name="creatingDependenciesBetweenServices"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={
-                                values.creatingDependenciesBetweenServices ===
-                                key
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'creatingDependenciesBetweenServices',
-                                  key
-                                );
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-creating-dependencies-between-services-note"
-                          field="creatingDependenciesBetweenServicesNote"
-                        />
-                      </FieldGroup>
+                          {paymentsMiscT('claimSpecificQuestionsContinued')}
+                        </PageHeading>
 
-                      <FieldGroup
-                        scrollElement="needsClaimsDataCollection"
-                        error={!!flatErrors.needsClaimsDataCollection}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="needsClaimsDataCollection"
-                          className="maxw-none"
+                        <FieldGroup
+                          scrollElement="creatingDependenciesBetweenServices"
+                          error={
+                            !!flatErrors.creatingDependenciesBetweenServices
+                          }
+                          className="margin-top-4"
                         >
-                          {t('needsClaimsDataCollection')}
-                        </Label>
-                        <p className="text-base margin-y-1">
-                          {t('needsClaimsDataCollectionSubcopy')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.needsClaimsDataCollection}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-needs-claims-data-collection-${key}`}
-                              data-testid={`payment-needs-claims-data-collection-${key}`}
-                              name="needsClaimsDataCollection"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={values.needsClaimsDataCollection === key}
-                              onChange={() => {
-                                setFieldValue('needsClaimsDataCollection', key);
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-needs-claims-data-collection-note"
-                          field="needsClaimsDataCollectionNote"
-                        />
-                      </FieldGroup>
+                          <Label
+                            htmlFor="creatingDependenciesBetweenServices"
+                            className="maxw-none"
+                          >
+                            {paymentsT(
+                              'creatingDependenciesBetweenServices.label'
+                            )}
+                          </Label>
 
-                      <FieldGroup
-                        scrollElement="providingThirdPartyFile"
-                        error={!!flatErrors.providingThirdPartyFile}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="providingThirdPartyFile"
-                          className="maxw-none"
+                          <p className="text-base margin-y-1">
+                            {paymentsT(
+                              'creatingDependenciesBetweenServices.sublabel'
+                            )}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.creatingDependenciesBetweenServices}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="creatingDependenciesBetweenServices"
+                            id="payment-creating-dependencies-between-services"
+                            value={values.creatingDependenciesBetweenServices}
+                            setFieldValue={setFieldValue}
+                            options={
+                              creatingDependenciesBetweenServicesConfig.options
+                            }
+                          />
+
+                          <AddNote
+                            id="payment-creating-dependencies-between-services-note"
+                            field="creatingDependenciesBetweenServicesNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="needsClaimsDataCollection"
+                          error={!!flatErrors.needsClaimsDataCollection}
+                          className="margin-top-4"
                         >
-                          {t('thirdParty')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.providingThirdPartyFile}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-providing-third-party-file-${key}`}
-                              data-testid={`payment-providing-third-party-file-${key}`}
-                              name="providingThirdPartyFile"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={values.providingThirdPartyFile === key}
-                              onChange={() => {
-                                setFieldValue('providingThirdPartyFile', key);
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                      </FieldGroup>
+                          <Label
+                            htmlFor="needsClaimsDataCollection"
+                            className="maxw-none"
+                          >
+                            {paymentsT('needsClaimsDataCollection.label')}
+                          </Label>
 
-                      <Alert type="info" slim className="margin-y-6">
-                        {t('alert')}
-                      </Alert>
+                          <p className="text-base margin-y-1">
+                            {paymentsT('needsClaimsDataCollection.sublabel')}
+                          </p>
 
-                      <FieldGroup
-                        scrollElement="isContractorAwareTestDataRequirements"
-                        error={
-                          !!flatErrors.isContractorAwareTestDataRequirements
-                        }
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="isContractorAwareTestDataRequirements"
-                          className="maxw-none"
+                          <FieldErrorMsg>
+                            {flatErrors.needsClaimsDataCollection}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="needsClaimsDataCollection"
+                            id="payment-needs-claims-data-collection"
+                            value={values.needsClaimsDataCollection}
+                            setFieldValue={setFieldValue}
+                            options={needsClaimsDataCollectionConfig.options}
+                          />
+
+                          <AddNote
+                            id="payment-needs-claims-data-collection-note"
+                            field="needsClaimsDataCollectionNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="providingThirdPartyFile"
+                          error={!!flatErrors.providingThirdPartyFile}
+                          className="margin-top-4"
                         >
-                          {t('isContractorAwareTestDataRequirements')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.isContractorAwareTestDataRequirements}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-contractor-aware-test-data-requirements-${key}`}
-                              data-testid={`payment-contractor-aware-test-data-requirements-${key}`}
-                              name="isContractorAwareTestDataRequirements"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={
-                                values.isContractorAwareTestDataRequirements ===
-                                key
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'isContractorAwareTestDataRequirements',
-                                  key
-                                );
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                      </FieldGroup>
+                          <Label
+                            htmlFor="providingThirdPartyFile"
+                            className="maxw-none"
+                          >
+                            {paymentsT('providingThirdPartyFile.label')}
+                          </Label>
 
-                      <div className="margin-top-6 margin-bottom-3">
+                          <FieldErrorMsg>
+                            {flatErrors.providingThirdPartyFile}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="providingThirdPartyFile"
+                            id="payment-providing-third-party-file"
+                            value={values.providingThirdPartyFile}
+                            setFieldValue={setFieldValue}
+                            options={providingThirdPartyFileConfig.options}
+                          />
+                        </FieldGroup>
+
+                        <Alert type="info" slim className="margin-y-6">
+                          {paymentsMiscT('alert')}
+                        </Alert>
+
+                        <FieldGroup
+                          scrollElement="isContractorAwareTestDataRequirements"
+                          error={
+                            !!flatErrors.isContractorAwareTestDataRequirements
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="isContractorAwareTestDataRequirements"
+                            className="maxw-none"
+                          >
+                            {paymentsT(
+                              'isContractorAwareTestDataRequirements.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.isContractorAwareTestDataRequirements}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="isContractorAwareTestDataRequirements"
+                            id="payment-contractor-aware-test-data-requirements"
+                            value={values.isContractorAwareTestDataRequirements}
+                            setFieldValue={setFieldValue}
+                            options={
+                              isContractorAwareTestDataRequirementsConfig.options
+                            }
+                          />
+                        </FieldGroup>
+
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--outline margin-bottom-1"
+                            onClick={() => {
+                              handleFormSubmit('back');
+                            }}
+                          >
+                            {miscellaneousT('back')}
+                          </Button>
+
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {miscellaneousT('next')}
+                          </Button>
+                        </div>
+
                         <Button
                           type="button"
-                          className="usa-button usa-button--outline margin-bottom-1"
-                          onClick={() => {
-                            handleFormSubmit('back');
-                          }}
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('task-list')}
                         >
-                          {h('back')}
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
-                        </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('task-list')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -426,6 +423,7 @@ const AnticipateDependencies = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

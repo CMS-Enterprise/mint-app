@@ -52,4 +52,7 @@ const (
 	OpSKPostPortal                OperationalSolutionKey = "POST_PORTAL"
 	OpSKRfa                       OperationalSolutionKey = "RFA"
 	OpSKSharedSystems             OperationalSolutionKey = "SHARED_SYSTEMS"
+	OpSKBCDA                      OperationalSolutionKey = "BCDA"
+	OpSKISP                       OperationalSolutionKey = "ISP"
+	OpSKMIDS                      OperationalSolutionKey = "MIDS"
 )

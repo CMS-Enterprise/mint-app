@@ -10,7 +10,8 @@ export default gql`
         content
         createdBy
         createdDts
-        status
+        userRole
+        userRoleDescription
         isAssessment
         createdByUserAccount {
           commonName
@@ -19,10 +20,11 @@ export default gql`
           id
           discussionID
           content
+          userRole
+          userRoleDescription
           isAssessment
           createdBy
           createdDts
-          resolution
           createdByUserAccount {
             commonName
           }

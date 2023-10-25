@@ -1,0 +1,734 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Get Access Article > matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="tablet:grid-col-12"
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled margin-top-6"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
+        </button>
+        <div
+          class="usa-in-page-nav-container"
+        >
+          <aside
+            class="usa-in-page-nav"
+            data-root-margin="0px 0px 0px 0px"
+            data-scroll-offset="0"
+            data-threshold="1"
+            data-title-heading-level="h3"
+            data-title-text="On this page"
+          >
+            <nav
+              aria-label="On this page"
+              class="usa-in-page-nav__nav"
+            >
+              <h4
+                class="usa-in-page-nav__heading"
+              >
+                On this page
+              </h4>
+              <ul
+                class="usa-in-page-nav__list"
+              >
+                <li
+                  class="usa-in-page-nav__item usa-in-page-nav__item--sub-item"
+                >
+                  <a
+                    class="usa-in-page-nav__link"
+                    href="#which-job-code-should-i-request"
+                  >
+                    Which job code should I request?
+                  </a>
+                </li>
+                <li
+                  class="usa-in-page-nav__item usa-in-page-nav__item--sub-item"
+                >
+                  <a
+                    class="usa-in-page-nav__link"
+                    href="#access-through-eua"
+                  >
+                    Requesting access through EUA
+                  </a>
+                </li>
+                <li
+                  class="usa-in-page-nav__item usa-in-page-nav__item--sub-item"
+                >
+                  <a
+                    class="usa-in-page-nav__link"
+                    href="#access-through-idm"
+                  >
+                    Requesting access through IDM
+                  </a>
+                </li>
+                <li
+                  class="usa-in-page-nav__item usa-in-page-nav__item--sub-item"
+                >
+                  <a
+                    class="usa-in-page-nav__link"
+                    href="#questions-or-issues"
+                  >
+                    Questions or issues?
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </aside>
+          <main>
+            <h1
+              aria-live="polite"
+              class="mint-h1 margin-bottom-2 margin-top-4"
+              tabindex="-1"
+            >
+              How to get access to MINT
+            </h1>
+            <p
+              class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-5"
+            >
+              This guide covers the steps to get access to MINT through Enterprise User Administration (EUA) or Identity Management (IDM).
+            </p>
+            <div
+              class="nav-anchor"
+              id="which-job-code-should-i-request"
+            >
+              <h2
+                aria-live="polite"
+                class="mint-h1 margin-top-4 margin-bottom-1"
+                tabindex="-1"
+              >
+                Which job code should I request?
+              </h2>
+              <p
+                class="font-body-md line-height-sans-4"
+              >
+                Use this chart to determine what job code to request by selecting the role that aligns most closely with what you do.
+              </p>
+              <table
+                class="usa-table usa-table--borderless src-components-Table-Table-module__fullwidth--fOyj6 src-components-Table-Table-module__fixed--RFjRe"
+                data-testid="table"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="col"
+                    >
+                      Your role
+                    </th>
+                    <th
+                      class="padding-y-1"
+                      scope="col"
+                    >
+                      Job code to request
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="row"
+                    >
+                      <ul
+                        class="margin-y-0"
+                      >
+                        <li>
+                          CMS employees
+                        </li>
+                      </ul>
+                    </th>
+                    <td
+                      class="text-baseline"
+                    >
+                      MINT_USER in 
+                      <a
+                        aria-label="Open EUA in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://eua.cms.gov"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        EUA
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="row"
+                    >
+                      <p
+                        class="margin-y-0"
+                      >
+                        These contractors 
+                        <span
+                          class="text-bold text-italic"
+                        >
+                          with
+                        </span>
+                         EUA access
+                      </p>
+                      <ul
+                        class="margin-y-0"
+                      >
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Medicare Administrative Contractors
+                        </li>
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Shared System Maintainers
+                        </li>
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Medicare Integrated Systems Testers
+                        </li>
+                      </ul>
+                    </th>
+                    <td
+                      class="text-baseline"
+                    >
+                      MINT_CONTRACTOR_FFS in 
+                      <a
+                        aria-label="Open EUA in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://eua.cms.gov"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        EUA
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="row"
+                    >
+                      <p
+                        class="margin-y-0"
+                      >
+                        These contractors 
+                        <span
+                          class="text-bold text-italic"
+                        >
+                          without
+                        </span>
+                         EUA access
+                      </p>
+                      <ul
+                        class="margin-y-0"
+                      >
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Medicare Administrative Contractors
+                        </li>
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Shared System Maintainers
+                        </li>
+                        <li
+                          class="line-height-sans-4"
+                        >
+                          Medicare Integrated Systems Testers
+                        </li>
+                      </ul>
+                    </th>
+                    <td
+                      class="text-baseline"
+                    >
+                      MINT Contractor in 
+                      <a
+                        aria-label="Open IDM in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://home.idm.cms.gov/"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        IDM
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th
+                      class="padding-y-1"
+                      scope="row"
+                    >
+                      <ul
+                        class="margin-y-0"
+                      >
+                        <li>
+                          Any other CMS contractors with an approved need for access to MINT
+                        </li>
+                      </ul>
+                    </th>
+                    <td
+                      class="text-baseline"
+                    >
+                      MINT Contractor in 
+                      <a
+                        aria-label="Open IDM in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://home.idm.cms.gov/"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        IDM
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              class="nav-anchor"
+              id="access-through-eua"
+            >
+              <h2
+                aria-live="polite"
+                class="mint-h1 margin-top-4 margin-bottom-1"
+                tabindex="-1"
+              >
+                Requesting access through EUA
+              </h2>
+              <ol
+                class="usa-process-list"
+              >
+                <li
+                  class="usa-process-list__item maxw-none"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Sign in to EUA
+                  </h3>
+                  <p
+                    class="margin-bottom-0"
+                  >
+                    Visit 
+                    <a
+                      aria-label="Open EUA in a new tab"
+                      class="usa-link usa-link--external"
+                      href="https://eua.cms.gov"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      eua.cms.gov
+                    </a>
+                     and sign in with your credentials.
+                  </p>
+                </li>
+                <li
+                  class="usa-process-list__item maxw-none"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Request a job code
+                  </h3>
+                  <ul
+                    class="margin-top-1 padding-left-4"
+                  >
+                    <li>
+                      Click 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Modify My Job Codes
+                      </span>
+                       in the Tasks menu on the left side of the screen.
+                    </li>
+                    <li>
+                      Read and confirm the process of modifying job codes. Then, click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Next
+                      </span>
+                       button.
+                    </li>
+                    <li>
+                      You’ll see a screen with all of your active job codes. Below the list, click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Add a Job Code
+                      </span>
+                       button.
+                    </li>
+                    <li>
+                      Type the name of the job code into the search box (either 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        MINT_USER
+                      </span>
+                       or 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        MINT_CONTRACTOR_FFS
+                      </span>
+                       determined using the chart above) and click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Search
+                      </span>
+                       button.
+                    </li>
+                    <li>
+                      Check the box next to the job code, then click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Select
+                      </span>
+                       button.
+                    </li>
+                    <li>
+                      Enter a justification reason, then click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Finish
+                      </span>
+                       button.
+                    </li>
+                  </ul>
+                </li>
+                <li
+                  class="usa-process-list__item maxw-none padding-bottom-3"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Job code approval
+                  </h3>
+                  <p>
+                    Once you’ve submitted your job code request, you’ll receive an email with the status. Your request must be approved by your supervisor and the MINT Team. You’ll receive email updates during that process.
+                  </p>
+                </li>
+                <li
+                  class="usa-process-list__item maxw-none"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Sign in to MINT
+                  </h3>
+                  After you’ve received an email that your job code request is approved, you can 
+                  <a
+                    class="usa-link"
+                    href="/signin"
+                  >
+                    sign in to MINT
+                  </a>
+                   using your EUA credentials (this is your four-character user ID and password).
+                </li>
+              </ol>
+            </div>
+            <div
+              class="nav-anchor margin-bottom-4"
+              id="access-through-idm"
+            >
+              <h2>
+                Requesting access through IDM
+              </h2>
+              <ol
+                class="usa-process-list"
+              >
+                <li
+                  class="usa-process-list__item maxw-none"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Sign in to IDM
+                  </h3>
+                  <p>
+                    If you have access to EUA and are currently signed in, we recommend completing these steps in an incognito browser.
+                  </p>
+                  <p
+                    class="margin-bottom-0"
+                  >
+                    Visit 
+                    <a
+                      aria-label="Open IDM in a new tab"
+                      class="usa-link usa-link--external"
+                      href="https://home.idm.cms.gov"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      home.idm.cms.gov
+                    </a>
+                     and sign in with your credentials. Do not use your PIV card.
+                  </p>
+                </li>
+                <li
+                  class="usa-process-list__item maxw-none"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Request a role
+                  </h3>
+                  <ul
+                    class="margin-top-1 padding-left-4"
+                  >
+                    <li>
+                      Click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Role Request
+                      </span>
+                       button.
+                    </li>
+                    <li>
+                      The Role Request window will appear with a dropdown to select an application. Select 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Model Innovation Tool (MINT)
+                      </span>
+                      .
+                    </li>
+                    <li>
+                      Then, select the role 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        MINT Contractor
+                      </span>
+                      .
+                    </li>
+                  </ul>
+                </li>
+                <li
+                  class="usa-process-list__item maxw-none padding-bottom-3"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Remote Identity Proofing (RIDP)
+                  </h3>
+                  <p>
+                    If you have previously requested a role for another application through your IDM account, you may not need to complete this step.
+                  </p>
+                  <ul
+                    class="margin-top-1 padding-left-4"
+                  >
+                    <li>
+                      Review the RIDP terms and conditions, check the “I agree to the terms and conditions” selection box, then click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Next
+                      </span>
+                       button. The Identity Verification form appears.
+                    </li>
+                    <li>
+                      Complete the Identity Verification form and click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Next
+                      </span>
+                       button. The RIDP proofing questions appear. 
+                    </li>
+                    <li>
+                      Answer the proofing questions and click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Verify
+                      </span>
+                       button. 
+                    </li>
+                    <li>
+                      You will see an RIDP success message. Then, click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Continue
+                      </span>
+                       button. 
+                    </li>
+                  </ul>
+                </li>
+                <li
+                  class="usa-process-list__item maxw-none padding-bottom-3"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Review request
+                  </h3>
+                  <ul
+                    class="margin-top-1 padding-left-4"
+                  >
+                    <li>
+                      Review the role request information and enter the reason you need to access MINT.
+                    </li>
+                    <li>
+                      Then, click the 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Submit Role Request
+                      </span>
+                       button. The Role Request window displays a Request ID and a message which states that the request was successfully submitted to an approver for action.
+                    </li>
+                    <li>
+                      The 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        My Requests
+                      </span>
+                       indicator on the Self Service Dashboard will update to display your current number of pending requests.
+                    </li>
+                  </ul>
+                </li>
+                <li
+                  class="usa-process-list__item maxw-none padding-bottom-3"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Role approval
+                  </h3>
+                  <ul
+                    class="margin-top-1 padding-left-4"
+                  >
+                    <li>
+                      After you submit your role request, the approver is notified. Follow-up emails may send upon approval, rejection, or expiration if no action is taken by an approver.
+                    </li>
+                    <li>
+                      If you wish to check the status of your role request, click 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        My Requests
+                      </span>
+                       on the Self Service Dashboard. All of your open requests will be listed there. You can also see all of your approved roles by clicking on 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        Manage My Roles
+                      </span>
+                      .
+                    </li>
+                  </ul>
+                </li>
+                <li
+                  class="usa-process-list__item maxw-none"
+                >
+                  <h3
+                    class="usa-process-list__heading"
+                    data-testid="processListHeading"
+                  >
+                    Sign in to MINT
+                  </h3>
+                  After your role request is approved, you can 
+                  <a
+                    class="usa-link"
+                    href="/signin"
+                  >
+                    sign in to MINT
+                  </a>
+                   using your IDM credentials.
+                </li>
+              </ol>
+            </div>
+            <div
+              class="nav-anchor"
+              id="questions-or-issues"
+            >
+              <div
+                class="usa-alert usa-alert--info flex margin-bottom-2"
+                data-testid="alert"
+              >
+                <div
+                  class="usa-alert__body"
+                >
+                  <h4
+                    class="usa-alert__heading"
+                  >
+                    Questions or issues?
+                  </h4>
+                  <p
+                    class="usa-alert__text"
+                  >
+                    <span />
+                  </p>
+                  <dt
+                    class="margin-bottom-0 margin-top-2"
+                  >
+                    If you encounter issues or have questions about requesting access to MINT, please email 
+                    <a
+                      class="usa-link"
+                      href="mailto:MINTTeam@cms.hhs.gov"
+                    >
+                      MINTTeam@cms.hhs.gov
+                    </a>
+                     for assistance.
+                  </dt>
+                  <p />
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

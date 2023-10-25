@@ -3,19 +3,31 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, BeneficiariesType, TriStateAnswer, FrequencyType, OverlapType, ConfidenceType, SelectionMethodType, DiscussionStatus, TeamRole, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, ModelStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllSingleModelData
 // ====================================================
 
+export interface GetAllSingleModelData_modelPlan_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_basics_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetAllSingleModelData_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
   modelCategory: ModelCategory | null;
+  amsModelID: string | null;
+  demoCode: string | null;
   cmsCenters: CMSCenter[];
-  cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
+  cmsOther: string | null;
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
@@ -33,80 +45,14 @@ export interface GetAllSingleModelData_modelPlan_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  readyForReviewBy: UUID | null;
-  readyForReviewDts: Time | null;
-  createdBy: UUID;
-  createdDts: Time;
-  modifiedBy: UUID | null;
-  modifiedDts: Time | null;
-  status: TaskStatus;
-}
-
-export interface GetAllSingleModelData_modelPlan_beneficiaries {
-  __typename: "PlanBeneficiaries";
-  id: UUID;
-  beneficiaries: BeneficiariesType[];
-  beneficiariesOther: string | null;
-  beneficiariesNote: string | null;
-  treatDualElligibleDifferent: TriStateAnswer | null;
-  treatDualElligibleDifferentHow: string | null;
-  treatDualElligibleDifferentNote: string | null;
-  excludeCertainCharacteristics: TriStateAnswer | null;
-  excludeCertainCharacteristicsCriteria: string | null;
-  excludeCertainCharacteristicsNote: string | null;
-  beneficiarySelectionFrequency: FrequencyType | null;
-  beneficiarySelectionFrequencyNote: string | null;
-  beneficiarySelectionFrequencyOther: string | null;
-  beneficiaryOverlap: OverlapType | null;
-  beneficiaryOverlapNote: string | null;
-  precedenceRules: string | null;
-  readyForReviewBy: UUID | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_basics_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
-  numberPeopleImpacted: number | null;
-  estimateConfidence: ConfidenceType | null;
-  confidenceNote: string | null;
-  beneficiarySelectionNote: string | null;
-  beneficiarySelectionOther: string | null;
-  beneficiarySelectionMethod: SelectionMethodType[];
 }
 
-export interface GetAllSingleModelData_modelPlan_discussions_replies {
-  __typename: "DiscussionReply";
-  id: UUID;
-  discussionID: UUID;
-  content: string | null;
-  createdBy: UUID;
-  createdDts: Time;
-  resolution: boolean | null;
-}
-
-export interface GetAllSingleModelData_modelPlan_discussions {
-  __typename: "PlanDiscussion";
-  id: UUID;
-  content: string | null;
-  createdBy: UUID;
-  createdDts: Time;
-  status: DiscussionStatus;
-  replies: GetAllSingleModelData_modelPlan_discussions_replies[];
-}
-
-export interface GetAllSingleModelData_modelPlan_collaborators_userAccount {
+export interface GetAllSingleModelData_modelPlan_generalCharacteristics_readyForReviewByUserAccount {
   __typename: "UserAccount";
-  id: UUID;
   commonName: string;
-  email: string;
-  username: string;
-}
-
-export interface GetAllSingleModelData_modelPlan_collaborators {
-  __typename: "PlanCollaborator";
-  id: UUID;
-  userAccount: GetAllSingleModelData_modelPlan_collaborators_userAccount;
-  userID: UUID;
-  teamRole: TeamRole;
-  modelPlanID: UUID;
-  createdDts: Time;
 }
 
 export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
@@ -121,13 +67,9 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   waiversRequired: boolean | null;
   waiversRequiredTypes: WaiverType[];
   waiversRequiredNote: string | null;
-  readyForReviewBy: UUID | null;
-  readyForReviewDts: Time | null;
-  status: TaskStatus;
   isNewModel: boolean | null;
   existingModel: string | null;
   resemblesExistingModel: boolean | null;
-  resemblesExistingModelWhich: string[];
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   hasComponentsOrTracks: boolean | null;
@@ -165,107 +107,14 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   agreementTypesOther: string | null;
   multiplePatricipationAgreementsNeeded: boolean | null;
   multiplePatricipationAgreementsNeededNote: string | null;
-}
-
-export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
-  __typename: "PlanOpsEvalAndLearning";
-  id: UUID;
-  ccmInvolvment: CcmInvolvmentType[];
-  iddocSupport: boolean | null;
-  sendFilesBetweenCcw: boolean | null;
-  sendFilesBetweenCcwNote: string | null;
-  appToSendFilesToKnown: boolean | null;
-  appToSendFilesToWhich: string | null;
-  appToSendFilesToNote: string | null;
-  useCcwForFileDistribiutionToParticipants: boolean | null;
-  useCcwForFileDistribiutionToParticipantsNote: string | null;
-  developNewQualityMeasures: boolean | null;
-  developNewQualityMeasuresNote: string | null;
-  qualityPerformanceImpactsPayment: boolean | null;
-  qualityPerformanceImpactsPaymentNote: string | null;
-  dataSharingStarts: DataStartsType | null;
-  dataSharingStartsOther: string | null;
-  dataSharingFrequency: DataFrequencyType[];
-  dataSharingFrequencyOther: string | null;
-  dataSharingStartsNote: string | null;
-  dataCollectionStarts: DataStartsType | null;
-  dataCollectionStartsOther: string | null;
-  dataCollectionFrequency: DataFrequencyType[];
-  dataCollectionFrequencyOther: string | null;
-  dataCollectionFrequencyNote: string | null;
-  qualityReportingStarts: DataStartsType | null;
-  qualityReportingStartsOther: string | null;
-  qualityReportingStartsNote: string | null;
-  evaluationApproaches: EvaluationApproachType[];
-  evaluationApproachOther: string | null;
-  evalutaionApproachNote: string | null;
-  ccmInvolvmentOther: string | null;
-  ccmInvolvmentNote: string | null;
-  dataNeededForMonitoring: DataForMonitoringType[];
-  dataNeededForMonitoringOther: string | null;
-  dataNeededForMonitoringNote: string | null;
-  dataToSendParticicipants: DataToSendParticipantsType[];
-  dataToSendParticicipantsOther: string | null;
-  dataToSendParticicipantsNote: string | null;
-  shareCclfData: boolean | null;
-  shareCclfDataNote: string | null;
-  technicalContactsIdentified: boolean | null;
-  technicalContactsIdentifiedDetail: string | null;
-  technicalContactsIdentifiedNote: string | null;
-  captureParticipantInfo: boolean | null;
-  captureParticipantInfoNote: string | null;
-  icdOwner: string | null;
-  draftIcdDueDate: Time | null;
-  icdNote: string | null;
-  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType | null;
-  eftSetUp: boolean | null;
-  unsolicitedAdjustmentsIncluded: boolean | null;
-  dataFlowDiagramsNeeded: boolean | null;
-  produceBenefitEnhancementFiles: boolean | null;
-  fileNamingConventions: string | null;
-  dataMonitoringNote: string | null;
-  uatNeeds: string | null;
-  stcNeeds: string | null;
-  testingTimelines: string | null;
-  testingNote: string | null;
-  dataMonitoringFileTypes: MonitoringFileType[];
-  dataMonitoringFileOther: string | null;
-  dataResponseType: string | null;
-  dataResponseFileFrequency: string | null;
-  modelLearningSystems: ModelLearningSystemType[];
-  modelLearningSystemsOther: string | null;
-  modelLearningSystemsNote: string | null;
-  anticipatedChallenges: string | null;
-  readyForReviewBy: UUID | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_generalCharacteristics_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
-  agencyOrStateHelp: AgencyOrStateHelpType[];
-  agencyOrStateHelpOther: string | null;
-  agencyOrStateHelpNote: string | null;
-  stakeholders: StakeholdersType[];
-  stakeholdersOther: string | null;
-  stakeholdersNote: string | null;
-  helpdeskUse: boolean | null;
-  helpdeskUseNote: string | null;
-  contractorSupport: ContractorSupportType[];
-  contractorSupportOther: string | null;
-  contractorSupportHow: string | null;
-  contractorSupportNote: string | null;
-  iddocSupportNote: string | null;
-  benchmarkForPerformance: BenchmarkForPerformanceType | null;
-  benchmarkForPerformanceNote: string | null;
-  computePerformanceScores: boolean | null;
-  computePerformanceScoresNote: string | null;
-  riskAdjustPerformance: boolean | null;
-  riskAdjustFeedback: boolean | null;
-  riskAdjustPayments: boolean | null;
-  riskAdjustOther: boolean | null;
-  riskAdjustNote: string | null;
-  appealPerformance: boolean | null;
-  appealFeedback: boolean | null;
-  appealPayments: boolean | null;
-  appealOther: boolean | null;
-  appealNote: string | null;
+}
+
+export interface GetAllSingleModelData_modelPlan_participantsAndProviders_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
 }
 
 export interface GetAllSingleModelData_modelPlan_participantsAndProviders {
@@ -317,9 +166,154 @@ export interface GetAllSingleModelData_modelPlan_participantsAndProviders {
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
-  readyForReviewBy: UUID | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_participantsAndProviders_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_beneficiaries_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_beneficiaries {
+  __typename: "PlanBeneficiaries";
+  id: UUID;
+  beneficiaries: BeneficiariesType[];
+  beneficiariesNote: string | null;
+  beneficiariesOther: string | null;
+  beneficiaryOverlap: OverlapType | null;
+  beneficiaryOverlapNote: string | null;
+  beneficiarySelectionNote: string | null;
+  beneficiarySelectionOther: string | null;
+  beneficiarySelectionMethod: SelectionMethodType[];
+  treatDualElligibleDifferent: TriStateAnswer | null;
+  treatDualElligibleDifferentHow: string | null;
+  treatDualElligibleDifferentNote: string | null;
+  excludeCertainCharacteristics: TriStateAnswer | null;
+  excludeCertainCharacteristicsCriteria: string | null;
+  excludeCertainCharacteristicsNote: string | null;
+  beneficiarySelectionFrequency: FrequencyType | null;
+  beneficiarySelectionFrequencyNote: string | null;
+  beneficiarySelectionFrequencyOther: string | null;
+  precedenceRules: string | null;
+  numberPeopleImpacted: number | null;
+  estimateConfidence: ConfidenceType | null;
+  confidenceNote: string | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_beneficiaries_readyForReviewByUserAccount | null;
+  readyForReviewDts: Time | null;
+  status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
+  __typename: "PlanOpsEvalAndLearning";
+  id: UUID;
+  ccmInvolvment: CcmInvolvmentType[];
+  ccmInvolvmentOther: string | null;
+  ccmInvolvmentNote: string | null;
+  iddocSupport: boolean | null;
+  iddocSupportNote: string | null;
+  sendFilesBetweenCcw: boolean | null;
+  sendFilesBetweenCcwNote: string | null;
+  appToSendFilesToKnown: boolean | null;
+  appToSendFilesToWhich: string | null;
+  appToSendFilesToNote: string | null;
+  useCcwForFileDistribiutionToParticipants: boolean | null;
+  useCcwForFileDistribiutionToParticipantsNote: string | null;
+  developNewQualityMeasures: boolean | null;
+  developNewQualityMeasuresNote: string | null;
+  qualityPerformanceImpactsPayment: boolean | null;
+  qualityPerformanceImpactsPaymentNote: string | null;
+  dataSharingStarts: DataStartsType | null;
+  dataSharingStartsOther: string | null;
+  dataSharingFrequency: DataFrequencyType[];
+  dataSharingFrequencyOther: string | null;
+  dataSharingStartsNote: string | null;
+  dataCollectionStarts: DataStartsType | null;
+  dataCollectionStartsOther: string | null;
+  dataCollectionFrequency: DataFrequencyType[];
+  dataCollectionFrequencyOther: string | null;
+  dataCollectionFrequencyNote: string | null;
+  qualityReportingStarts: DataStartsType | null;
+  qualityReportingStartsOther: string | null;
+  qualityReportingStartsNote: string | null;
+  evaluationApproaches: EvaluationApproachType[];
+  evaluationApproachOther: string | null;
+  evalutaionApproachNote: string | null;
+  dataNeededForMonitoring: DataForMonitoringType[];
+  dataNeededForMonitoringOther: string | null;
+  dataNeededForMonitoringNote: string | null;
+  dataToSendParticicipants: DataToSendParticipantsType[];
+  dataToSendParticicipantsOther: string | null;
+  dataToSendParticicipantsNote: string | null;
+  shareCclfData: boolean | null;
+  shareCclfDataNote: string | null;
+  technicalContactsIdentified: boolean | null;
+  technicalContactsIdentifiedDetail: string | null;
+  technicalContactsIdentifiedNote: string | null;
+  captureParticipantInfo: boolean | null;
+  captureParticipantInfoNote: string | null;
+  icdOwner: string | null;
+  draftIcdDueDate: Time | null;
+  icdNote: string | null;
+  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType | null;
+  eftSetUp: boolean | null;
+  unsolicitedAdjustmentsIncluded: boolean | null;
+  dataFlowDiagramsNeeded: boolean | null;
+  produceBenefitEnhancementFiles: boolean | null;
+  fileNamingConventions: string | null;
+  dataMonitoringNote: string | null;
+  uatNeeds: string | null;
+  stcNeeds: string | null;
+  testingTimelines: string | null;
+  testingNote: string | null;
+  dataMonitoringFileTypes: MonitoringFileType[];
+  dataMonitoringFileOther: string | null;
+  dataResponseType: string | null;
+  dataResponseFileFrequency: string | null;
+  modelLearningSystems: ModelLearningSystemType[];
+  modelLearningSystemsOther: string | null;
+  modelLearningSystemsNote: string | null;
+  anticipatedChallenges: string | null;
+  agencyOrStateHelp: AgencyOrStateHelpType[];
+  agencyOrStateHelpOther: string | null;
+  agencyOrStateHelpNote: string | null;
+  stakeholders: StakeholdersType[];
+  stakeholdersOther: string | null;
+  stakeholdersNote: string | null;
+  helpdeskUse: boolean | null;
+  helpdeskUseNote: string | null;
+  contractorSupport: ContractorSupportType[];
+  contractorSupportOther: string | null;
+  contractorSupportHow: string | null;
+  contractorSupportNote: string | null;
+  benchmarkForPerformance: BenchmarkForPerformanceType | null;
+  benchmarkForPerformanceNote: string | null;
+  computePerformanceScores: boolean | null;
+  computePerformanceScoresNote: string | null;
+  riskAdjustPerformance: boolean | null;
+  riskAdjustFeedback: boolean | null;
+  riskAdjustPayments: boolean | null;
+  riskAdjustOther: boolean | null;
+  riskAdjustNote: string | null;
+  appealPerformance: boolean | null;
+  appealFeedback: boolean | null;
+  appealPayments: boolean | null;
+  appealOther: boolean | null;
+  appealNote: string | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_opsEvalAndLearning_readyForReviewByUserAccount | null;
+  readyForReviewDts: Time | null;
+  status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_payments_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
 }
 
 export interface GetAllSingleModelData_modelPlan_payments {
@@ -357,11 +351,9 @@ export interface GetAllSingleModelData_modelPlan_payments {
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   fundingSource: FundingSource[];
-  fundingSourceTrustFund: string | null;
   fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
-  fundingSourceRTrustFund: string | null;
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
   payRecipients: PayRecipient[];
@@ -377,36 +369,85 @@ export interface GetAllSingleModelData_modelPlan_payments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: string | null;
   planningToUseInnovationPaymentContractor: boolean | null;
   planningToUseInnovationPaymentContractorNote: string | null;
-  fundingStructure: string | null;
   willRecoverPayments: boolean | null;
   willRecoverPaymentsNote: string | null;
   anticipateReconcilingPaymentsRetrospectively: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
-  readyForReviewBy: UUID | null;
+  readyForReviewByUserAccount: GetAllSingleModelData_modelPlan_payments_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
+}
+
+export interface GetAllSingleModelData_modelPlan_collaborators_userAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+  email: string;
+  username: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_collaborators {
+  __typename: "PlanCollaborator";
+  id: UUID;
+  userAccount: GetAllSingleModelData_modelPlan_collaborators_userAccount;
+  userID: UUID;
+  teamRole: TeamRole;
+  modelPlanID: UUID;
+  createdDts: Time;
+}
+
+export interface GetAllSingleModelData_modelPlan_discussions_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_discussions_replies {
+  __typename: "DiscussionReply";
+  id: UUID;
+  discussionID: UUID;
+  content: string | null;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount;
+  userRole: DiscussionUserRole | null;
+  userRoleDescription: string | null;
+  createdDts: Time;
+}
+
+export interface GetAllSingleModelData_modelPlan_discussions {
+  __typename: "PlanDiscussion";
+  id: UUID;
+  content: string | null;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_createdByUserAccount;
+  userRole: DiscussionUserRole | null;
+  userRoleDescription: string | null;
+  createdDts: Time;
+  replies: GetAllSingleModelData_modelPlan_discussions_replies[];
 }
 
 export interface GetAllSingleModelData_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
+  nameHistory: string[];
+  abbreviation: string | null;
   archived: boolean;
-  createdBy: UUID;
+  createdByUserAccount: GetAllSingleModelData_modelPlan_createdByUserAccount;
   createdDts: Time;
-  modifiedBy: UUID | null;
-  modifiedDts: Time | null;
-  basics: GetAllSingleModelData_modelPlan_basics;
-  beneficiaries: GetAllSingleModelData_modelPlan_beneficiaries;
-  discussions: GetAllSingleModelData_modelPlan_discussions[];
-  collaborators: GetAllSingleModelData_modelPlan_collaborators[];
-  generalCharacteristics: GetAllSingleModelData_modelPlan_generalCharacteristics;
-  opsEvalAndLearning: GetAllSingleModelData_modelPlan_opsEvalAndLearning;
-  participantsAndProviders: GetAllSingleModelData_modelPlan_participantsAndProviders;
-  payments: GetAllSingleModelData_modelPlan_payments;
   status: ModelStatus;
+  basics: GetAllSingleModelData_modelPlan_basics;
+  generalCharacteristics: GetAllSingleModelData_modelPlan_generalCharacteristics;
+  participantsAndProviders: GetAllSingleModelData_modelPlan_participantsAndProviders;
+  beneficiaries: GetAllSingleModelData_modelPlan_beneficiaries;
+  opsEvalAndLearning: GetAllSingleModelData_modelPlan_opsEvalAndLearning;
+  payments: GetAllSingleModelData_modelPlan_payments;
+  collaborators: GetAllSingleModelData_modelPlan_collaborators[];
+  discussions: GetAllSingleModelData_modelPlan_discussions[];
 }
 
 export interface GetAllSingleModelData {

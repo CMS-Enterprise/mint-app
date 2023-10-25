@@ -1,7 +1,10 @@
 INSERT INTO plan_basics (
     id,
     model_plan_id,
+    demo_code,
+    ams_model_id,
     model_category,
+    additional_model_categories,
     cms_centers,
     cms_other,
     cmmi_groups,
@@ -33,7 +36,10 @@ INSERT INTO plan_basics (
 VALUES (
     :id,
     :model_plan_id,
+    :demo_code,
+    :ams_model_id,
     :model_category,
+    :additional_model_categories,
     :cms_centers,
     :cms_other,
     :cmmi_groups,
@@ -65,7 +71,10 @@ VALUES (
 RETURNING
 id,
 model_plan_id,
+demo_code,
+ams_model_id,
 model_category,
+additional_model_categories,
 cms_centers,
 cms_other,
 cmmi_groups,

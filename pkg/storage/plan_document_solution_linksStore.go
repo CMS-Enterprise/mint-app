@@ -49,12 +49,13 @@ func (s *Store) PlanDocumentSolutionLinksCreate(
 	}
 
 	var ret []*models.PlanDocumentSolutionLink
-	statement, err := s.db.PrepareNamed(planDocumentSolutionLinksCreateSQL)
+	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinksCreateSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	err = statement.Select(&ret, arg)
+	err = stmt.Select(&ret, arg)
 	if err != nil {
 		return nil, err
 	}
@@ -78,10 +79,11 @@ func (s *Store) PlanDocumentSolutionLinksRemove(
 		return false, err
 	}
 
-	statement, err := tx.PrepareNamed(planDocumentSolutionLinkDeleteByIDsSQL)
+	stmt, err := tx.PrepareNamed(planDocumentSolutionLinkDeleteByIDsSQL)
 	if err != nil {
 		return false, err
 	}
+	defer stmt.Close()
 
 	docIDs := convertToStringArray(documentIDs)
 	arg := map[string]interface{}{
@@ -89,7 +91,7 @@ func (s *Store) PlanDocumentSolutionLinksRemove(
 		"document_ids": docIDs,
 	}
 
-	_, err = statement.Exec(arg)
+	_, err = stmt.Exec(arg)
 	if err != nil {
 		return false, err
 	}
@@ -107,13 +109,15 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 	logger *zap.Logger,
 	solutionID uuid.UUID,
 ) ([]*models.PlanDocumentSolutionLink, error) {
-	statement, err := s.db.PrepareNamed(planDocumentSolutionLinksGetBySolutionIDSQL)
+
+	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinksGetBySolutionIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	var solutionLinks []*models.PlanDocumentSolutionLink
-	err = statement.Select(&solutionLinks, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	err = stmt.Select(&solutionLinks, utilitySQL.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
@@ -123,13 +127,15 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 
 // PlanDocumentNumLinkedSolutions implements store logic to retrieve the number of linked solutions for a document by ID
 func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uuid.UUID) (int, error) {
-	statement, err := s.db.PrepareNamed(planDocumentNumLinkedSolutionsSQL)
+
+	stmt, err := s.db.PrepareNamed(planDocumentNumLinkedSolutionsSQL)
 	if err != nil {
 		return 0, genericmodel.HandleModelFetchGenericError(logger, err, documentID)
 	}
+	defer stmt.Close()
 
 	result := 0
-	err = statement.Get(&result, map[string]interface{}{
+	err = stmt.Get(&result, map[string]interface{}{
 		"document_id": documentID,
 	})
 	if err != nil {
@@ -140,13 +146,19 @@ func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uu
 }
 
 // PlanDocumentSolutionLinkGetByIDs returns a single plan document solution link by ID
-func (s *Store) PlanDocumentSolutionLinkGetByIDs(logger *zap.Logger, solutionID uuid.UUID, documentID uuid.UUID) (*models.PlanDocumentSolutionLink, error) {
+func (s *Store) PlanDocumentSolutionLinkGetByIDs(
+	_ *zap.Logger,
+	solutionID uuid.UUID,
+	documentID uuid.UUID,
+) (*models.PlanDocumentSolutionLink, error) {
+
 	link := &models.PlanDocumentSolutionLink{}
 
 	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinkGetByIDsSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	arg := map[string]interface{}{
 		"solution_id": solutionID,

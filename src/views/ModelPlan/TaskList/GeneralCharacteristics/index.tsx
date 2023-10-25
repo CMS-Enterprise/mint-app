@@ -12,14 +12,14 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -29,22 +29,30 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
 import {
   GetGeneralCharacteristics as GetGeneralCharacteristicsType,
   GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsFormType,
   GetGeneralCharacteristicsVariables
 } from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
+import { UpdateExistingModelLinksVariables } from 'queries/GeneralCharacteristics/types/UpdateExistingModelLinks';
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
+import UpdateExistingModelLinks from 'queries/GeneralCharacteristics/UpdateExistingModelLinks';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import GetExistingModelPlans from 'queries/GetExistingModelPlans';
 import GetDraftModelPlans from 'queries/GetModelPlans';
-import { GetExistingModelPlans as ExistingModelPlanType } from 'queries/types/GetExistingModelPlans';
+import {
+  GetExistingModelPlans as ExistingModelPlanType,
+  GetExistingModelPlans_existingModelCollection as GetExistingModelPlansExistingModelCollectionType
+} from 'queries/types/GetExistingModelPlans';
 import {
   GetModelPlans as GetDraftModelPlansType,
+  GetModelPlans_modelPlanCollection as GetModelPlansModelPlanCollectionType,
   GetModelPlansVariables
 } from 'queries/types/GetModelPlans';
 import { ModelPlanFilter } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
@@ -54,29 +62,51 @@ import Involvements from './Involvements';
 import KeyCharacteristics from './KeyCharacteristics';
 import TargetsAndOptions from './TargetsAndOptions';
 
+interface GetGeneralCharacteristicsFormTypeWithLinks
+  extends GetGeneralCharacteristicsFormType {
+  existingModelLinks: (string | number)[];
+}
+
 export const CharacteristicsContent = () => {
-  const { t } = useTranslation('generalCharacteristics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: generalCharacteristicsT } = useTranslation(
+    'generalCharacteristics'
+  );
+  const { t: generalCharacteristicsMiscT } = useTranslation(
+    'generalCharacteristicsMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    isNewModel: isNewModelConfig,
+    resemblesExistingModel: resemblesExistingModelConfig,
+    hasComponentsOrTracks: hasComponentsOrTracksConfig
+  } = usePlanTranslation('generalCharacteristics');
+
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetGeneralCharacteristicsFormType>>(
-    null
-  );
+  const formikRef = useRef<
+    FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
+  >(null);
   const history = useHistory();
 
-  const { data: modelData, error: modelError } = useQuery<
-    GetDraftModelPlansType,
-    GetModelPlansVariables
-  >(GetDraftModelPlans, {
-    variables: {
-      filter: ModelPlanFilter.INCLUDE_ALL,
-      isMAC: false
+  const {
+    data: modelData,
+    error: modelError,
+    loading: modelLoading
+  } = useQuery<GetDraftModelPlansType, GetModelPlansVariables>(
+    GetDraftModelPlans,
+    {
+      variables: {
+        filter: ModelPlanFilter.INCLUDE_ALL,
+        isMAC: false
+      }
     }
-  });
+  );
 
   const {
     data: existingModelData,
-    error: existingModelError
+    error: existingModelError,
+    loading: existingModelLoading
   } = useQuery<ExistingModelPlanType>(GetExistingModelPlans);
 
   // Combined MINT models with existing models from DB.  Sorts them alphabetically and returns options for MultiSelect
@@ -107,7 +137,6 @@ export const CharacteristicsContent = () => {
     isNewModel,
     existingModel,
     resemblesExistingModel,
-    resemblesExistingModelWhich,
     resemblesExistingModelHow,
     resemblesExistingModelNote,
     hasComponentsOrTracks,
@@ -115,47 +144,74 @@ export const CharacteristicsContent = () => {
     hasComponentsOrTracksNote
   } =
     data?.modelPlan?.generalCharacteristics ||
-    ({} as GetGeneralCharacteristicsFormType);
+    ({} as GetGeneralCharacteristicsFormTypeWithLinks);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const existingModelLinks: (string | number)[] = useMemo(() => {
+    return (
+      data?.modelPlan.existingModelLinks?.map(
+        link => (link.existingModelID || link.currentModelPlanID)!
+      ) || []
+    );
+  }, [data?.modelPlan?.existingModelLinks]);
 
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (redirect?: 'next' | 'back') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/characteristics/key-characteristics`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
+  const [updateExistingLinks] = useMutation<UpdateExistingModelLinksVariables>(
+    UpdateExistingModelLinks
+  );
+
+  const handleFormSubmit = async (redirect?: 'next' | 'back') => {
+    const { existingModelLinks: existingLinksInitial, ...initialValues } =
+      formikRef?.current?.initialValues || {};
+
+    const { existingModelLinks: existingLinks, ...values } =
+      formikRef?.current?.values || {};
+
+    const linksToUpdate = separateLinksByType(
+      existingLinks || [],
+      modelData?.modelPlanCollection || [],
+      existingModelData?.existingModelCollection || []
+    );
+
+    await Promise.allSettled([
+      update({
+        variables: {
+          id,
+          changes: dirtyInput(initialValues, values)
+        }
+      }),
+      updateExistingLinks({
+        variables: {
+          modelPlanID: modelID,
+          ...linksToUpdate
         }
       })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
+    ])
+      .then(response => {
+        if (redirect === 'next') {
+          history.push(
+            `/models/${modelID}/task-list/characteristics/key-characteristics`
+          );
+        } else if (redirect === 'back') {
+          history.push(`/models/${modelID}/task-list/`);
+        }
+      })
+      .catch(err => {
+        formikRef?.current?.setErrors(err);
       });
   };
 
-  const initialValues: GetGeneralCharacteristicsFormType = {
+  const initialValues: GetGeneralCharacteristicsFormTypeWithLinks = {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
     isNewModel: isNewModel ?? null,
     existingModel: existingModel ?? null,
     resemblesExistingModel: resemblesExistingModel ?? null,
-    resemblesExistingModelWhich: resemblesExistingModelWhich ?? [],
+    existingModelLinks: existingModelLinks ?? [],
     resemblesExistingModelHow: resemblesExistingModelHow ?? '',
     resemblesExistingModelNote: resemblesExistingModelNote ?? '',
     hasComponentsOrTracks: hasComponentsOrTracks ?? null,
@@ -172,28 +228,31 @@ export const CharacteristicsContent = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {generalCharacteristicsMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {generalCharacteristicsMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -206,7 +265,9 @@ export const CharacteristicsContent = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetGeneralCharacteristicsFormType>) => {
+        {(
+          formikProps: FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
+        ) => {
           const {
             errors,
             handleSubmit,
@@ -215,25 +276,27 @@ export const CharacteristicsContent = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <Form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-form"
@@ -241,276 +304,264 @@ export const CharacteristicsContent = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="isNewModel"
-                  error={!!flatErrors.isNewModel}
-                  className="margin-y-4 margin-bottom-8"
+                <Fieldset
+                  disabled={
+                    !!error || loading || modelLoading || existingModelLoading
+                  }
                 >
-                  <Label htmlFor="plan-characteristics-is-new-model">
-                    {t('isNewModel')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
+                  <FieldGroup
+                    scrollElement="isNewModel"
+                    error={!!flatErrors.isNewModel}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-is-new-model">
+                      {generalCharacteristicsT('isNewModel.label')}
+                    </Label>
+
+                    <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
+
+                    <BooleanRadio
+                      field="isNewModel"
                       id="plan-characteristics-is-new-model"
-                      name="isNewModel"
-                      label={t('newModel')}
-                      value="TRUE"
-                      checked={values.isNewModel === true}
-                      onChange={() => {
-                        setFieldValue('isNewModel', true);
-                        setFieldValue('existingModel', '');
-                      }}
+                      value={values.isNewModel}
+                      setFieldValue={setFieldValue}
+                      options={isNewModelConfig.options}
+                      childName="existingModel"
                     />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-is-new-model-no"
-                      name="isNewModel"
-                      label={t('newTrack')}
-                      value="FALSE"
-                      checked={values.isNewModel === false}
-                      onChange={() => {
-                        setFieldValue('isNewModel', false);
-                      }}
-                    />
-                  </Fieldset>
-                  {values.isNewModel === false && (
-                    <FieldGroup
-                      scrollElement="existingModel"
-                      error={!!flatErrors.existingModel}
-                    >
-                      <Label
-                        htmlFor="plan-characteristics-existing-model"
-                        className="margin-bottom-1 text-normal"
-                      >
-                        {t('whichExistingModel')}
-                      </Label>
-                      <p className="text-base margin-0">{t('startTypeing')}</p>
-                      <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
 
-                      <ComboBox
-                        disabled={!!modelError || !!existingModelError}
-                        data-test-id="plan-characteristics-existing-model"
-                        id="plan-characteristics-existing-model"
-                        name="existingModel"
-                        className={classNames({
-                          disabled: !!modelError || !!existingModelError
-                        })}
-                        inputProps={{
-                          id: 'plan-characteristics-existing-model',
-                          name: 'existingModel',
-                          'aria-describedby':
-                            'plan-characteristics-existing-model'
-                        }}
-                        options={modelPlanOptions}
-                        defaultValue={
-                          modelPlanOptions.find(
-                            modelPlan => modelPlan.label === existingModel
-                          )?.value || ''
-                        }
-                        onChange={modelPlanID => {
-                          const model = modelPlanOptions.find(
-                            modelPlan => modelPlan.value === modelPlanID
-                          );
-                          if (model) {
-                            setFieldValue('existingModel', model.label);
-                          } else {
-                            setFieldValue('existingModel', '');
-                          }
-                        }}
-                      />
-                    </FieldGroup>
-                  )}
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="resemblesExistingModel"
-                  error={!!flatErrors.resemblesExistingModel}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="plan-characteristics-resembles-existing-model">
-                    {t('resembleModel')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.resemblesExistingModel}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-resembles-existing-model"
-                      name="resemblesExistingModel"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.resemblesExistingModel === true}
-                      onChange={() => {
-                        setFieldValue('resemblesExistingModel', true);
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-resembles-existing-model-no"
-                      name="resemblesExistingModel"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.resemblesExistingModel === false}
-                      onChange={() => {
-                        setFieldValue('resemblesExistingModel', false);
-                      }}
-                    />
-                  </Fieldset>
-                  {values.resemblesExistingModel && (
-                    <>
+                    {values.isNewModel === false && (
                       <FieldGroup
-                        scrollElement="resemblesExistingModelWhich"
-                        error={!!flatErrors.resemblesExistingModelWhich}
-                        className="margin-top-4"
+                        scrollElement="existingModel"
+                        error={!!flatErrors.existingModel}
                       >
                         <Label
-                          htmlFor="plan-characteristics-resembles-which-model"
-                          className="text-normal"
-                          id="label-plan-characteristics-resembles-which-model"
+                          htmlFor="plan-characteristics-existing-model"
+                          className="margin-bottom-1 text-normal"
                         >
-                          {t('modelResemblance')}
+                          {generalCharacteristicsT('existingModel.label')}
                         </Label>
-                        <p className="text-base margin-y-1">
-                          {t('startTypeing')}
+
+                        <p className="text-base margin-0">
+                          {generalCharacteristicsT('existingModel.sublabel')}
                         </p>
+
                         <FieldErrorMsg>
-                          {flatErrors.resemblesExistingModelWhich}
+                          {flatErrors.existingModel}
                         </FieldErrorMsg>
 
-                        <Field
-                          as={MultiSelect}
-                          id="plan-characteristics-resembles-which-model"
-                          ariaLabel="label-plan-characteristics-resembles-which-model"
-                          name="resemblesExistingModelWhich"
-                          options={modelPlanOptions}
-                          selectedLabel={t('selectedModels')}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('resemblesExistingModelWhich', value);
+                        <ComboBox
+                          disabled={!!modelError || !!existingModelError}
+                          data-test-id="plan-characteristics-existing-model"
+                          id="plan-characteristics-existing-model"
+                          name="existingModel"
+                          className={classNames({
+                            disabled: !!modelError || !!existingModelError
+                          })}
+                          inputProps={{
+                            id: 'plan-characteristics-existing-model',
+                            name: 'existingModel',
+                            'aria-describedby':
+                              'plan-characteristics-existing-model'
                           }}
-                          initialValues={
-                            initialValues.resemblesExistingModelWhich
+                          options={modelPlanOptions}
+                          defaultValue={
+                            modelPlanOptions.find(
+                              modelPlan => modelPlan.label === existingModel
+                            )?.value || ''
                           }
+                          onChange={modelPlanID => {
+                            const model = modelPlanOptions.find(
+                              modelPlan => modelPlan.value === modelPlanID
+                            );
+                            if (model) {
+                              setFieldValue('existingModel', model.label);
+                            } else {
+                              setFieldValue('existingModel', '');
+                            }
+                          }}
                         />
                       </FieldGroup>
-                      <FieldGroup
-                        scrollElement="resemblesExistingModelHow"
-                        error={!!flatErrors.resemblesExistingModelHow}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="plan-characteristics-resembles-how-model"
-                          className="text-normal"
-                        >
-                          {t('waysResembleModel')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.resemblesExistingModelHow}
-                        </FieldErrorMsg>
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          error={flatErrors.resemblesExistingModelHow}
-                          id="plan-characteristics-resembles-how-model"
-                          name="resemblesExistingModelHow"
-                        />
-                      </FieldGroup>
+                    )}
+                  </FieldGroup>
 
-                      <AddNote
-                        id="plan-characteristics-resemble-existing-note"
-                        field="resemblesExistingModelNote"
-                      />
-                    </>
-                  )}
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="resemblesExistingModel"
+                    error={!!flatErrors.resemblesExistingModel}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-resembles-existing-model">
+                      {generalCharacteristicsT('resemblesExistingModel.label')}
+                    </Label>
 
-                <FieldGroup
-                  scrollElement="hasComponentsOrTracks"
-                  error={!!flatErrors.hasComponentsOrTracks}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <Label htmlFor="plan-characteristics-has-component-or-tracks">
-                    {t('differentComponents')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.hasComponentsOrTracks}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-has-component-or-tracks"
-                      name="hasComponentsOrTracks"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.hasComponentsOrTracks === true}
-                      onChange={() => {
-                        setFieldValue('hasComponentsOrTracks', true);
-                        setFieldValue('hasComponentsOrTracksDiffer', '');
-                      }}
+                    <FieldErrorMsg>
+                      {flatErrors.resemblesExistingModel}
+                    </FieldErrorMsg>
+
+                    <BooleanRadio
+                      field="resemblesExistingModel"
+                      id="plan-characteristics-resembles-existing-model"
+                      value={values.resemblesExistingModel}
+                      setFieldValue={setFieldValue}
+                      options={resemblesExistingModelConfig.options}
                     />
-                    {values.hasComponentsOrTracks === true && (
-                      <div className="display-flex margin-left-4 margin-bottom-1">
+
+                    {values.resemblesExistingModel && (
+                      <>
                         <FieldGroup
-                          className="flex-1"
-                          scrollElement="hasComponentsOrTracksDiffer"
-                          error={!!flatErrors.hasComponentsOrTracksDiffer}
+                          scrollElement="resemblesExistingModelWhich"
+                          error={!!flatErrors.resemblesExistingModelWhich}
+                          className="margin-top-4"
                         >
                           <Label
-                            htmlFor="plan-characteristics-tracks-differ-how"
-                            className="margin-bottom-1 text-normal"
+                            htmlFor="plan-characteristics-resembles-which-model"
+                            className="text-normal"
+                            id="label-plan-characteristics-resembles-which-model"
                           >
-                            {t('tracksDiffer')}
+                            {generalCharacteristicsT(
+                              'existingModelLinks.label'
+                            )}
                           </Label>
+
+                          <p className="text-base margin-y-1">
+                            {generalCharacteristicsT(
+                              'existingModelLinks.sublabel'
+                            )}
+                          </p>
+
                           <FieldErrorMsg>
-                            {flatErrors.hasComponentsOrTracksDiffer}
+                            {flatErrors.resemblesExistingModelWhich}
                           </FieldErrorMsg>
+
                           <Field
-                            as={TextAreaField}
-                            error={!!flatErrors.hasComponentsOrTracksDiffer}
-                            className="margin-top-0 height-15"
-                            data-testid="plan-characteristics-tracks-differ-how"
-                            id="plan-characteristics-tracks-differ-how"
-                            name="hasComponentsOrTracksDiffer"
+                            as={MultiSelect}
+                            id="plan-characteristics-resembles-which-model"
+                            ariaLabel="label-plan-characteristics-resembles-which-model"
+                            name="existingModelLinks"
+                            options={modelPlanOptions}
+                            selectedLabel={generalCharacteristicsT(
+                              'existingModelLinks.multiSelectLabel'
+                            )}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue('existingModelLinks', value);
+                            }}
+                            initialValues={initialValues.existingModelLinks}
                           />
                         </FieldGroup>
-                      </div>
+                        <FieldGroup
+                          scrollElement="resemblesExistingModelHow"
+                          error={!!flatErrors.resemblesExistingModelHow}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="plan-characteristics-resembles-how-model"
+                            className="text-normal"
+                          >
+                            {generalCharacteristicsT(
+                              'resemblesExistingModelHow.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.resemblesExistingModelHow}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={TextAreaField}
+                            className="height-15"
+                            error={flatErrors.resemblesExistingModelHow}
+                            id="plan-characteristics-resembles-how-model"
+                            name="resemblesExistingModelHow"
+                          />
+                        </FieldGroup>
+
+                        <AddNote
+                          id="plan-characteristics-resemble-existing-note"
+                          field="resemblesExistingModelNote"
+                        />
+                      </>
                     )}
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-has-component-or-tracks-no"
-                      name="hasComponentsOrTracks"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.hasComponentsOrTracks === false}
-                      onChange={() => {
-                        setFieldValue('hasComponentsOrTracks', false);
-                      }}
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="hasComponentsOrTracks"
+                    error={!!flatErrors.hasComponentsOrTracks}
+                    className="margin-y-4 margin-bottom-8"
+                  >
+                    <Label htmlFor="plan-characteristics-has-component-or-tracks">
+                      {generalCharacteristicsT('hasComponentsOrTracks.label')}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.hasComponentsOrTracks}
+                    </FieldErrorMsg>
+
+                    <BooleanRadio
+                      field="hasComponentsOrTracks"
+                      id="plan-characteristics-has-component-or-tracks"
+                      value={values.hasComponentsOrTracks}
+                      setFieldValue={setFieldValue}
+                      options={hasComponentsOrTracksConfig.options}
+                      childName="hasComponentsOrTracksDiffer"
+                    >
+                      {values.hasComponentsOrTracks === true ? (
+                        <div className="display-flex margin-left-4 margin-bottom-1">
+                          <FieldGroup
+                            className="flex-1"
+                            scrollElement="hasComponentsOrTracksDiffer"
+                            error={!!flatErrors.hasComponentsOrTracksDiffer}
+                          >
+                            <Label
+                              htmlFor="plan-characteristics-tracks-differ-how"
+                              className="margin-bottom-1 text-normal"
+                            >
+                              {generalCharacteristicsT(
+                                'hasComponentsOrTracksDiffer.label'
+                              )}
+                            </Label>
+
+                            <FieldErrorMsg>
+                              {flatErrors.hasComponentsOrTracksDiffer}
+                            </FieldErrorMsg>
+
+                            <Field
+                              as={TextAreaField}
+                              error={!!flatErrors.hasComponentsOrTracksDiffer}
+                              className="margin-top-0 height-15"
+                              data-testid="plan-characteristics-tracks-differ-how"
+                              id="plan-characteristics-tracks-differ-how"
+                              name="hasComponentsOrTracksDiffer"
+                            />
+                          </FieldGroup>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </BooleanRadio>
+
+                    <AddNote
+                      id="plan-characteristics-has-component-or-tracks-note"
+                      field="hasComponentsOrTracksNote"
                     />
-                  </Fieldset>
+                  </FieldGroup>
 
-                  <AddNote
-                    id="plan-characteristics-has-component-or-tracks-note"
-                    field="hasComponentsOrTracksNote"
-                  />
-                </FieldGroup>
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('back')}
+                  >
+                    <IconArrowBack className="margin-right-1" aria-hidden />
 
-                <div className="margin-top-6 margin-bottom-3">
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('back')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
-              {id && (
+
+              {id && !(loading || modelLoading || existingModelLoading) && (
                 <AutoSave
                   values={values}
                   onSave={() => {
@@ -523,6 +574,7 @@ export const CharacteristicsContent = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={1} totalPages={5} className="margin-y-6" />
     </>
   );
@@ -565,6 +617,32 @@ export const Characteristics = () => {
       </GridContainer>
     </MainContent>
   );
+};
+
+type SeparateLinksType = {
+  existingModelIDs: number[];
+  currentModelPlanIDs: string[];
+};
+
+// Function to get a formatted object for the input payload of UpdateExistingModelLinks mutation
+// Separates all selected existingModelLinks values into a type of either draftModelPlans or existingModelPlans
+export const separateLinksByType = (
+  existingLinks: (string | number)[],
+  draftModelPlans: GetModelPlansModelPlanCollectionType[],
+  existingModelPlans: GetExistingModelPlansExistingModelCollectionType[]
+): SeparateLinksType => {
+  const existingModelIDs = [...existingLinks].filter(linkID =>
+    existingModelPlans.find(modelPlan => modelPlan.id === linkID)
+  ) as number[];
+
+  const currentModelPlanIDs = [...existingLinks].filter(linkID =>
+    draftModelPlans.find(modelPlan => modelPlan.id === linkID?.toString())
+  ) as string[];
+
+  return {
+    existingModelIDs,
+    currentModelPlanIDs
+  };
 };
 
 export default Characteristics;

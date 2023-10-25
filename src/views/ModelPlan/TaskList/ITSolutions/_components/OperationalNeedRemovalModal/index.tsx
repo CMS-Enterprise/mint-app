@@ -77,8 +77,15 @@ const OperationalNeedRemovalModal = ({
 
   return (
     <>
-      <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-y-0">
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
           {t('removeNeedModal.heading', {
             operationalNeedName: nameOther
           })}

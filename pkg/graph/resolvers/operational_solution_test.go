@@ -117,6 +117,30 @@ func makeMulipleModelsAndReturnNeedIDs(suite *ResolverSuite, numModels int) []uu
 	return opNeedSlice
 
 }
+func (suite *ResolverSuite) TestOperationalSolutionIsCommonLogic() {
+
+	plan := suite.createModelPlan("plan for solutions")
+	needType := models.OpNKManageCd
+	solTypeCommon := models.OpSKMarx
+	solTypeUnCommon := models.OpSKCrossModelContract
+
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
+
+	changes := map[string]interface{}{}
+	changes["needed"] = false
+
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solTypeCommon, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(sol)
+	suite.True(*sol.IsCommonSolution)
+
+	sol2, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solTypeUnCommon, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(sol2)
+	suite.False(*sol2.IsCommonSolution)
+
+}
 func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	// 1. Create solution, ensure fields are as expected
 	plan := suite.createModelPlan("plan for solutions")

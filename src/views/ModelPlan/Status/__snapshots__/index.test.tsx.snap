@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Status Update page matches snapshot 1`] = `
+exports[`Model Plan Status Update page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -88,29 +88,14 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
               name="role"
             >
               <option
-                value="ANNOUNCED"
+                value="PLAN_DRAFT"
               >
-                Announced
+                Draft model plan
               </option>
               <option
-                value="CANCELED"
+                value="PLAN_COMPLETE"
               >
-                Canceled
-              </option>
-              <option
-                value="CLEARED"
-              >
-                Cleared
-              </option>
-              <option
-                value="CMS_CLEARANCE"
-              >
-                CMS clearance
-              </option>
-              <option
-                value="HHS_CLEARANCE"
-              >
-                HHS clearance
+                Model plan complete
               </option>
               <option
                 value="ICIP_COMPLETE"
@@ -123,9 +108,39 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
                 Internal (CMMI) clearance
               </option>
               <option
+                value="CMS_CLEARANCE"
+              >
+                CMS clearance
+              </option>
+              <option
+                value="HHS_CLEARANCE"
+              >
+                HHS clearance
+              </option>
+              <option
                 value="OMB_ASRF_CLEARANCE"
               >
                 OMB/ASRF clearance
+              </option>
+              <option
+                value="CLEARED"
+              >
+                Cleared
+              </option>
+              <option
+                value="ANNOUNCED"
+              >
+                Announced
+              </option>
+              <option
+                value="ACTIVE"
+              >
+                Active
+              </option>
+              <option
+                value="ENDED"
+              >
+                Ended
               </option>
               <option
                 value="PAUSED"
@@ -133,14 +148,9 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
                 Paused
               </option>
               <option
-                value="PLAN_COMPLETE"
+                value="CANCELED"
               >
-                Model plan complete
-              </option>
-              <option
-                value="PLAN_DRAFT"
-              >
-                Draft model plan
+                Canceled
               </option>
             </select>
           </div>

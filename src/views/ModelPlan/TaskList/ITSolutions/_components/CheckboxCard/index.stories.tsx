@@ -39,10 +39,13 @@ const solution: GetOperationalNeedSolutionsType = {
   mustStartDts: null,
   mustFinishDts: null,
   status: OpSolutionStatus.IN_PROGRESS,
+  isCommonSolution: true,
   needed: true,
   pocName: 'John Doe',
   pocEmail: '',
-  nameOther: null
+  nameOther: null,
+  isOther: false,
+  otherHeader: null
 };
 
 export const Default = () => (

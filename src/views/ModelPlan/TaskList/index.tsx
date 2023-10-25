@@ -25,9 +25,9 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GetModelPlan from 'queries/GetModelPlan';
@@ -50,7 +50,6 @@ import {
 } from 'queries/types/GetModelPlan';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
-import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
@@ -96,6 +95,25 @@ const taskListSectionMap: TaskListSectionMapType = {
   prepareForClearance: TaskListSection.PREPARE_FOR_CLEARANCE
 };
 
+export const getLatestModifiedDate = (
+  operationalNeedsArray: OperationalNeedsType[]
+) => {
+  const updatedNeeds = operationalNeedsArray.filter(need => need.modifiedDts);
+
+  if (updatedNeeds.length !== 0) {
+    return updatedNeeds.reduce((a, b) =>
+      a.modifiedDts! > b.modifiedDts! ? a : b
+    ).modifiedDts;
+  }
+
+  return null;
+};
+
+export type StatusMessageType = {
+  message: string;
+  status: 'success' | 'error';
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
@@ -109,7 +127,10 @@ const TaskList = () => {
 
   const flags = useFlags();
 
-  const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+  const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
+  const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
+    null
+  );
 
   const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
 
@@ -154,8 +175,7 @@ const TaskList = () => {
   };
 
   const itSolutions: ITSolutionsType = {
-    // modifiedDts: operationalNeeds?.modifiedDts,
-    modifiedDts: null, // TODO: Get most recently updated operational need
+    modifiedDts: getLatestModifiedDate(operationalNeeds),
     status: getITSolutionsStatus(operationalNeeds)
   };
 
@@ -169,10 +189,6 @@ const TaskList = () => {
     itSolutions,
     prepareForClearance
   };
-
-  const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
-    discussions
-  );
 
   useEffect(() => {
     if (discussionID) setIsDiscussionOpen(true);
@@ -191,7 +207,6 @@ const TaskList = () => {
       className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
-      <ModelSubNav modelID={modelID} link="read-only" />
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
@@ -203,6 +218,7 @@ const TaskList = () => {
             <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
           </BreadcrumbBar>
         </Grid>
+
         {error && (
           <ErrorAlert
             testId="formik-validation-errors"
@@ -215,11 +231,19 @@ const TaskList = () => {
             />
           </ErrorAlert>
         )}
+
+        {statusMessage && (
+          <Alert slim type={statusMessage.status} closeAlert={setStatusMessage}>
+            {statusMessage.message}
+          </Alert>
+        )}
+
         {loading && (
           <div className="height-viewport">
             <PageLoading />
           </div>
         )}
+
         {!loading && data && (
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
@@ -252,8 +276,6 @@ const TaskList = () => {
 
               <DicussionBanner
                 discussions={discussions}
-                unansweredQuestions={unansweredQuestions}
-                answeredQuestions={answeredQuestions}
                 setIsDiscussionOpen={setIsDiscussionOpen}
               />
 
@@ -349,6 +371,7 @@ const TaskList = () => {
               <TaskListSideNav
                 modelPlan={modelPlan}
                 collaborators={collaborators}
+                setStatusMessage={setStatusMessage}
               />
             </Grid>
           </Grid>
@@ -360,16 +383,12 @@ const TaskList = () => {
 
 type DiscussionBannerType = {
   discussions: DiscussionType[];
-  unansweredQuestions: number;
-  answeredQuestions: number;
   setIsDiscussionOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 // Banner to display discussion information and launch discussion center
 const DicussionBanner = ({
   discussions,
-  unansweredQuestions,
-  answeredQuestions,
   setIsDiscussionOpen
 }: DiscussionBannerType) => {
   const { t: d } = useTranslation('discussions');
@@ -386,21 +405,14 @@ const DicussionBanner = ({
       >
         {discussions?.length > 0 ? (
           <>
-            <div>
-              <IconAnnouncement />{' '}
-              {unansweredQuestions > 0 && (
-                <>
-                  <strong>{unansweredQuestions}</strong> {d('unanswered')}
-                  {unansweredQuestions > 1 && 's'}{' '}
-                </>
-              )}
-              {answeredQuestions > 0 && (
-                <>
-                  {unansweredQuestions > 0 && 'and '}
-                  <strong>{answeredQuestions}</strong> {d('answered')}
-                  {answeredQuestions > 1 && 's'}
-                </>
-              )}
+            <div className="display-flex flex-align-center">
+              <IconAnnouncement className="margin-right-1" />
+              <div>
+                <strong>{discussions.length}</strong>
+                {d('discussionBanner.discussion', {
+                  count: discussions.length
+                })}
+              </div>
             </div>
             <Button
               type="button"
@@ -419,9 +431,9 @@ const DicussionBanner = ({
               unstyled
               onClick={() => setIsDiscussionOpen(true)}
             >
-              {d('askAQuestionLink')}{' '}
-            </Button>{' '}
-            {d('toGetStarted')}
+              {d('askAQuestionLink')}
+            </Button>
+            .
           </>
         )}
       </div>
@@ -457,9 +469,7 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             data-testid="document-items"
           >
             <strong>{documents.length} </strong>
-            <Trans i18nKey="modelPlanTaskList:documentSummaryBox.existingDocuments">
-              indexZero {documents.length > 1 ? 's' : ''}
-            </Trans>
+            {t('documentSummaryBox.document', { count: documents.length })}
           </p>
 
           <UswdsReactLink
@@ -474,15 +484,13 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             variant="unstyled"
             to={`/models/${modelID}/documents/add-document`}
           >
-            {t('documentSummaryBox.uploadAnother')}
+            {t('documentSummaryBox.addAnother')}
           </UswdsReactLink>
         </>
       ) : (
         <>
           <p className="margin-0 margin-bottom-1">
-            <Trans i18nKey="modelPlanTaskList:documentSummaryBox.copy">
-              indexZero
-            </Trans>
+            {t('documentSummaryBox.copy')}
           </p>
 
           <UswdsReactLink

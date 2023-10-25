@@ -6,15 +6,6 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     cy.intercept('POST', '/api/graph/query', req => {
       aliasQuery(req, 'GetModelPlan');
-      aliasQuery(req, 'GetOpsEvalAndLearning');
-      aliasQuery(req, 'GetIDDOC');
-      aliasQuery(req, 'GetIDDOCTesting');
-      aliasQuery(req, 'GetIDDOCMonitoring');
-      aliasQuery(req, 'GetPerformance');
-      aliasQuery(req, 'GetEvaluation');
-      aliasQuery(req, 'GetCCWAndQuality');
-      aliasQuery(req, 'GetDataSharing');
-      aliasQuery(req, 'GetLearning');
     });
   });
 
@@ -29,18 +20,12 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     // Clicks the Ops Eval and Learning tasklist item
     cy.get('[data-testid="ops-eval-and-learning"]').click();
 
-    cy.wait('@GetOpsEvalAndLearning')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/ops-eval-and-learning/
-      );
-    });
-
     // Page - /ops-eval-and-learning
+
+    cy.get('#ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA').should(
+      'not.be.disabled'
+    );
+
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
     cy.get('#ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA')
@@ -81,7 +66,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .type('They will provide wireframes of workflows')
       .should('have.value', 'They will provide wireframes of workflows');
 
-    cy.get('#ops-eval-and-learning-iddoc-support')
+    cy.get('#ops-eval-and-learning-iddoc-support-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -89,11 +74,10 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc
 
-    cy.wait('@GetIDDOC').its('response.statusCode').should('eq', 200).wait(500);
+    cy.get('#ops-eval-and-learning-technical-contacts-identified-use-true')
+      .as('contacts')
+      .should('not.be.disabled');
 
-    cy.get('#ops-eval-and-learning-technical-contacts-identified-use-true').as(
-      'contacts'
-    );
     cy.get('@contacts').check({ force: true });
     cy.get('@contacts').should('be.checked');
 
@@ -103,7 +87,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.get('@technical-contacts').type('Bill in accounting');
     cy.get('@technical-contacts').should('have.value', 'Bill in accounting');
 
-    cy.get('#ops-eval-and-learning-capture-participant-info')
+    cy.get('#ops-eval-and-learning-capture-participant-info-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -120,10 +104,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc-testing
 
-    cy.wait('@GetIDDOCTesting')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    cy.get('#ops-eval-and-learning-uat-needs').should('not.be.disabled');
 
     cy.get('#ops-eval-and-learning-uat-needs')
       .type('Users to make sure this works correctly')
@@ -162,10 +143,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc-monitoring
 
-    cy.wait('@GetIDDOCMonitoring')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(200);
+    cy.get('#ops-eval-and-learning-eft-setup-true').should('not.be.disabled');
 
     cy.get('#ops-eval-and-learning-fulltime-or-incremental-INCREMENTAL')
       .check({ force: true })
@@ -196,10 +174,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/performance
 
-    cy.wait('@GetPerformance')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    cy.get('#ops-eval-and-learning-benchmark-performance-YES_RECONCILE').should(
+      'not.be.disabled'
+    );
 
     cy.get('#ops-eval-and-learning-benchmark-performance-YES_RECONCILE')
       .check({ force: true })
@@ -245,10 +222,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/evaluation
 
-    cy.wait('@GetEvaluation')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    cy.get('#ops-eval-and-learning-evaluation-approach-OTHER').should(
+      'not.be.disabled'
+    );
 
     cy.get('#ops-eval-and-learning-evaluation-approach-OTHER')
       .check({ force: true })
@@ -302,10 +278,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/ccw-and-quality
 
-    cy.wait('@GetCCWAndQuality')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    cy.get('#ops-eval-and-learning-send-files-true').should('not.be.disabled');
 
     cy.get('#ops-eval-and-learning-send-files-true')
       .check({ force: true })
@@ -331,10 +304,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/data-sharing
 
-    cy.wait('@GetDataSharing')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    cy.get('#ops-eval-and-learning-data-sharing-starts').should(
+      'not.be.disabled'
+    );
 
     cy.get('#ops-eval-and-learning-data-sharing-starts').select('Other');
 
@@ -382,10 +354,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/learning
 
-    cy.wait('@GetLearning')
-      .its('response.statusCode')
-      .should('eq', 200)
-      .wait(500);
+    cy.get('#ops-eval-and-learning-learning-systems-OTHER').should(
+      'not.be.disabled'
+    );
 
     cy.get('#ops-eval-and-learning-learning-systems-OTHER')
       .check({ force: true })

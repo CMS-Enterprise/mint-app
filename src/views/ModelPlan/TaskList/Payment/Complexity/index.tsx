@@ -19,6 +19,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -26,6 +27,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetComplexity from 'queries/Payments/GetComplexity';
 import {
   GetComplexity as GetComplexityType,
@@ -37,33 +39,29 @@ import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   AnticipatedPaymentFrequencyType,
   ClaimsBasedPayType,
-  ComplexityCalculationLevelType,
   PayType
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  translateAnticipatedPaymentFrequencyType,
-  translateComplexityLevel
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-const dataFrequencyOptions: AnticipatedPaymentFrequencyType[] = [
-  AnticipatedPaymentFrequencyType.ANNUALLY,
-  AnticipatedPaymentFrequencyType.BIANNUALLY,
-  AnticipatedPaymentFrequencyType.QUARTERLY,
-  AnticipatedPaymentFrequencyType.MONTHLY,
-  AnticipatedPaymentFrequencyType.SEMIMONTHLY,
-  AnticipatedPaymentFrequencyType.WEEKLY,
-  AnticipatedPaymentFrequencyType.DAILY,
-  AnticipatedPaymentFrequencyType.OTHER
-];
-
 const Complexity = () => {
-  const { t } = useTranslation('payments');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: paymentsT } = useTranslation('payments');
+
+  const { t: paymentsMiscT } = useTranslation('paymentsMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    expectedCalculationComplexityLevel: expectedCalculationComplexityLevelConfig,
+    canParticipantsSelectBetweenPaymentMechanisms: canParticipantsSelectBetweenPaymentMechanismsConfig,
+    anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig
+  } = usePlanTranslation('payments');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ComplexityFormType>>(null);
@@ -178,18 +176,19 @@ const Complexity = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {paymentsMiscT('heading')}
       </PageHeading>
 
       <p
@@ -200,8 +199,9 @@ const Complexity = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -223,19 +223,20 @@ const Complexity = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -252,241 +253,252 @@ const Complexity = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="expectedCalculationComplexityLevel"
-                        error={!!flatErrors.expectedCalculationComplexityLevel}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="expectedCalculationComplexityLevel"
-                          className="maxw-none"
-                        >
-                          {t('expectedCalculationComplexityLevel')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.expectedCalculationComplexityLevel}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[
-                            ComplexityCalculationLevelType.LOW,
-                            ComplexityCalculationLevelType.MIDDLE,
-                            ComplexityCalculationLevelType.HIGH
-                          ].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-complexity-${key}`}
-                              data-testid={`payment-complexity-${key}`}
-                              name="expectedCalculationComplexityLevel"
-                              label={translateComplexityLevel(key)}
-                              value={key}
-                              checked={
-                                values.expectedCalculationComplexityLevel ===
-                                key
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'expectedCalculationComplexityLevel',
-                                  key
-                                );
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-complexity-note"
-                          field="expectedCalculationComplexityLevelNote"
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="canParticipantsSelectBetweenPaymentMechanisms"
-                        error={
-                          !!flatErrors.canParticipantsSelectBetweenPaymentMechanisms
-                        }
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="canParticipantsSelectBetweenPaymentMechanisms"
-                          className="maxw-none"
-                        >
-                          {t('canParticipantsSelectBetweenPaymentMechanisms')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {
-                            flatErrors.canParticipantsSelectBetweenPaymentMechanisms
+                      <Fieldset disabled={!!error || loading}>
+                        <FieldGroup
+                          scrollElement="expectedCalculationComplexityLevel"
+                          error={
+                            !!flatErrors.expectedCalculationComplexityLevel
                           }
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-multiple-payments-Yes"
-                            name="canParticipantsSelectBetweenPaymentMechanisms"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.canParticipantsSelectBetweenPaymentMechanisms ===
-                              true
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="expectedCalculationComplexityLevel"
+                            className="maxw-none"
+                          >
+                            {paymentsT(
+                              'expectedCalculationComplexityLevel.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.expectedCalculationComplexityLevel}
+                          </FieldErrorMsg>
+
+                          <Fieldset>
+                            {getKeys(
+                              expectedCalculationComplexityLevelConfig.options
+                            ).map(key => (
+                              <Field
+                                as={Radio}
+                                key={key}
+                                id={`payment-complexity-${key}`}
+                                data-testid={`payment-complexity-${key}`}
+                                name="expectedCalculationComplexityLevel"
+                                label={
+                                  expectedCalculationComplexityLevelConfig
+                                    .options[key]
+                                }
+                                value={key}
+                                checked={
+                                  values.expectedCalculationComplexityLevel ===
+                                  key
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'expectedCalculationComplexityLevel',
+                                    key
+                                  );
+                                }}
+                              />
+                            ))}
+                          </Fieldset>
+
+                          <AddNote
+                            id="payment-complexity-note"
+                            field="expectedCalculationComplexityLevelNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="canParticipantsSelectBetweenPaymentMechanisms"
+                          error={
+                            !!flatErrors.canParticipantsSelectBetweenPaymentMechanisms
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="canParticipantsSelectBetweenPaymentMechanisms"
+                            className="maxw-none"
+                          >
+                            {paymentsT(
+                              'canParticipantsSelectBetweenPaymentMechanisms.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {
+                              flatErrors.canParticipantsSelectBetweenPaymentMechanisms
                             }
-                            onChange={() => {
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="canParticipantsSelectBetweenPaymentMechanisms"
+                            id="payment-multiple-payments"
+                            value={
+                              values.canParticipantsSelectBetweenPaymentMechanisms
+                            }
+                            setFieldValue={setFieldValue}
+                            options={
+                              canParticipantsSelectBetweenPaymentMechanismsConfig.options
+                            }
+                            childName="canParticipantsSelectBetweenPaymentMechanismsHow"
+                          >
+                            {values.canParticipantsSelectBetweenPaymentMechanisms ? (
+                              <FieldGroup
+                                className="margin-left-4 margin-y-1"
+                                scrollElement="canParticipantsSelectBetweenPaymentMechanismsHow"
+                                error={
+                                  !!flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
+                                }
+                              >
+                                <Label
+                                  htmlFor="payment-multiple-payments-how"
+                                  className="text-normal"
+                                >
+                                  {paymentsT(
+                                    'canParticipantsSelectBetweenPaymentMechanismsHow.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {
+                                    flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
+                                  }
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextInput}
+                                  error={
+                                    flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
+                                  }
+                                  id="payment-multiple-payments-how"
+                                  data-testid="payment-multiple-payments-how"
+                                  name="canParticipantsSelectBetweenPaymentMechanismsHow"
+                                />
+                              </FieldGroup>
+                            ) : (
+                              <></>
+                            )}
+                          </BooleanRadio>
+
+                          <AddNote
+                            id="payment-multiple-payments-note"
+                            field="canParticipantsSelectBetweenPaymentMechanismsNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="anticipatedPaymentFrequency"
+                          error={!!flatErrors.anticipatedPaymentFrequency}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="anticipatedPaymentFrequency"
+                            id="label-anticipatedPaymentFrequency"
+                          >
+                            {paymentsT('anticipatedPaymentFrequency.label')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.anticipatedPaymentFrequency}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={MultiSelect}
+                            id="payment-frequency-payments"
+                            name="anticipatedPaymentFrequency"
+                            ariaLabel="label-anticipatedPaymentFrequency"
+                            options={composeMultiSelectOptions(
+                              anticipatedPaymentFrequencyConfig.options
+                            )}
+                            selectedLabel={paymentsT(
+                              'anticipatedPaymentFrequency.multiSelectLabel'
+                            )}
+                            onChange={(value: string[] | []) => {
                               setFieldValue(
-                                'canParticipantsSelectBetweenPaymentMechanisms',
-                                true
+                                'anticipatedPaymentFrequency',
+                                value
                               );
                             }}
+                            initialValues={
+                              initialValues.anticipatedPaymentFrequency
+                            }
                           />
-                          {values.canParticipantsSelectBetweenPaymentMechanisms && (
+
+                          {(values?.anticipatedPaymentFrequency || []).includes(
+                            AnticipatedPaymentFrequencyType.OTHER
+                          ) && (
                             <FieldGroup
-                              className="margin-left-4 margin-y-1"
-                              scrollElement="canParticipantsSelectBetweenPaymentMechanismsHow"
+                              scrollElement="anticipatedPaymentFrequencyOther"
                               error={
-                                !!flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
+                                !!flatErrors.anticipatedPaymentFrequencyOther
                               }
                             >
                               <Label
-                                htmlFor="payment-multiple-payments-how"
+                                htmlFor="anticipatedPaymentFrequencyOther"
                                 className="text-normal"
                               >
-                                {t(
-                                  'canParticipantsSelectBetweenPaymentMechanismsHow'
+                                {paymentsT(
+                                  'anticipatedPaymentFrequencyOther.label'
                                 )}
                               </Label>
+
                               <FieldErrorMsg>
-                                {
-                                  flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
-                                }
+                                {flatErrors.anticipatedPaymentFrequencyOther}
                               </FieldErrorMsg>
+
                               <Field
                                 as={TextInput}
                                 error={
-                                  flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
+                                  flatErrors.anticipatedPaymentFrequencyOther
                                 }
-                                id="payment-multiple-payments-how"
-                                data-testid="payment-multiple-payments-how"
-                                name="canParticipantsSelectBetweenPaymentMechanismsHow"
+                                id="payment-frequency-payments-other"
+                                data-testid="payment-frequency-payments-other"
+                                name="anticipatedPaymentFrequencyOther"
                               />
                             </FieldGroup>
                           )}
-                          <Field
-                            as={Radio}
-                            id="payment-multiple-payments-No"
-                            name="canParticipantsSelectBetweenPaymentMechanisms"
-                            label={h('no')}
-                            value="NO"
-                            checked={
-                              values.canParticipantsSelectBetweenPaymentMechanisms ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'canParticipantsSelectBetweenPaymentMechanisms',
-                                false
-                              );
-                            }}
+
+                          <AddNote
+                            id="payment-frequency-payments-note"
+                            field="anticipatedPaymentFrequencyNote"
                           />
-                        </Fieldset>
-                        <AddNote
-                          id="payment-multiple-payments-note"
-                          field="canParticipantsSelectBetweenPaymentMechanismsNote"
-                        />
-                      </FieldGroup>
+                        </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="anticipatedPaymentFrequency"
-                        error={!!flatErrors.anticipatedPaymentFrequency}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="anticipatedPaymentFrequency"
-                          id="label-anticipatedPaymentFrequency"
-                        >
-                          {t('anticipatedPaymentFrequency')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.anticipatedPaymentFrequency}
-                        </FieldErrorMsg>
-
-                        <Field
-                          as={MultiSelect}
-                          id="payment-frequency-payments"
-                          name="anticipatedPaymentFrequency"
-                          ariaLabel="label-anticipatedPaymentFrequency"
-                          options={dataFrequencyOptions.map(key => ({
-                            value: key,
-                            label: translateAnticipatedPaymentFrequencyType(key)
-                          }))}
-                          selectedLabel={t(
-                            'selectedAnticipatedPaymentFrequency'
-                          )}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('anticipatedPaymentFrequency', value);
-                          }}
-                          initialValues={
-                            initialValues.anticipatedPaymentFrequency
-                          }
-                        />
-
-                        {(values?.anticipatedPaymentFrequency || []).includes(
-                          AnticipatedPaymentFrequencyType.OTHER
-                        ) && (
-                          <FieldGroup
-                            scrollElement="anticipatedPaymentFrequencyOther"
-                            error={
-                              !!flatErrors.anticipatedPaymentFrequencyOther
-                            }
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--outline margin-bottom-1"
+                            onClick={() => {
+                              handleFormSubmit('back');
+                            }}
                           >
-                            <Label
-                              htmlFor="anticipatedPaymentFrequencyOther"
-                              className="text-normal"
-                            >
-                              {t('selectClaimsOther')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.anticipatedPaymentFrequencyOther}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextInput}
-                              error={
-                                flatErrors.anticipatedPaymentFrequencyOther
-                              }
-                              id="payment-frequency-payments-other"
-                              data-testid="payment-frequency-payments-other"
-                              name="anticipatedPaymentFrequencyOther"
-                            />
-                          </FieldGroup>
-                        )}
-                        <AddNote
-                          id="payment-frequency-payments-note"
-                          field="anticipatedPaymentFrequencyNote"
-                        />
-                      </FieldGroup>
+                            {miscellaneousT('back')}
+                          </Button>
 
-                      <div className="margin-top-6 margin-bottom-3">
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {miscellaneousT('next')}
+                          </Button>
+                        </div>
+
                         <Button
                           type="button"
-                          className="usa-button usa-button--outline margin-bottom-1"
-                          onClick={() => {
-                            handleFormSubmit('back');
-                          }}
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('task-list')}
                         >
-                          {h('back')}
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
-                        </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('task-list')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -500,6 +512,7 @@ const Complexity = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

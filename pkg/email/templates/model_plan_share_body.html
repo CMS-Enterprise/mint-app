@@ -1,0 +1,77 @@
+{{template "shared_header.html"}}
+
+<h3>{{.UserName}} has shared a Model Plan with you:</h3>
+<br/>
+<!-- Only show the optional message if it exists -->
+{{if and .OptionalMessage (gt (len .OptionalMessage) 0)}}
+  <p style="color: #565C65;">"{{.OptionalMessage}}"</p>
+  <br/>
+{{end}}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+      <td align="center">      
+        <div class="container-border">
+          <h2 style="display: inline-block;">{{.ModelName}}</h2>
+            {{if .ModelShortName}}<h2 style="display: inline-block;"> ({{.ModelShortName}})</h2>{{end}}
+          <br/>
+          <br/>
+
+          <p><b>Category</b></p>
+          <p>
+              {{if .ModelCategories}}
+                  {{- range $index, $element := .ModelCategories -}}
+                      {{ if $index }}, {{ end }}
+                      {{$element}}
+                  {{- end -}}
+              {{else}}
+                To be determined
+              {{end}}
+          </p>
+          <br/>
+
+          <p><b>Status</b></p>
+          <p>{{.ModelStatus}}</p>
+          <br/>
+
+          <p><b>Last updated</b></p>
+          <p>{{.ModelLastUpdated.Format "01/02/2006"}}</p>
+          <br/>
+
+          <p><b>Model lead(s)</b></p>
+          <p>
+              {{if .ModelLeads}}
+                  {{- range $index, $element := .ModelLeads -}}
+                      {{- if $index -}},&nbsp{{- end -}}
+                      {{$element}}
+                  {{- end -}}
+              {{else}}
+                To be determined
+              {{end}}
+          </p>
+          <br/>
+
+          <p>
+              {{if .ModelViewFilter}}
+                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}">
+                  View {{.HumanizedModelViewFilter}} details in MINT
+                </a>
+              {{else}}
+                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only">
+                  View more details in MINT
+                </a>
+              {{end}}
+          </p>
+
+          <br>
+        </div>
+      </td>
+    </tr>
+</table>
+
+<br/>
+<br/>
+
+{{template "shared_access_banner.html" .}}
+
+{{template "shared_footer.html"}}

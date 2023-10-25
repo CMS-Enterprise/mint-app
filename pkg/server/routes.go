@@ -84,7 +84,6 @@ func (s *Server) routes(
 	}
 
 	store, storeErr := storage.NewStore(
-		s.logger,
 		s.NewDBConfig(),
 		ldClient,
 	)
@@ -96,7 +95,7 @@ func (s *Server) routes(
 	jwtVerifier := okta.NewJwtVerifier(oktaConfig.OktaClientID, oktaConfig.OktaIssuer)
 
 	oktaMiddlewareFactory := okta.NewMiddlewareFactory(
-		handlers.NewHandlerBase(s.logger),
+		handlers.NewHandlerBase(),
 		jwtVerifier,
 		store,
 		!s.environment.Prod(),
@@ -111,7 +110,7 @@ func (s *Server) routes(
 	)
 
 	if s.NewLocalAuthIsEnabled() {
-		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger, store)
+		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(store)
 		s.router.Use(localAuthenticationMiddleware)
 	}
 	dataLoaders := loaders.NewDataLoaders(store)
@@ -122,10 +121,10 @@ func (s *Server) routes(
 
 	s.router.Use(userAccountServiceMiddleware)
 
-	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
+	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware()
 
 	// set up handler base
-	base := handlers.NewHandlerBase(s.logger)
+	base := handlers.NewHandlerBase()
 
 	// endpoints that dont require authorization go directly on the main router
 	s.router.HandleFunc("/api/v1/healthcheck", handlers.NewHealthCheckHandler(base, s.Config).Handle())
@@ -170,9 +169,13 @@ func (s *Server) routes(
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
 
+	dateChangedRecipientEmails := strings.Split(s.Config.GetString(appconfig.DateChangedRecipientEmailsKey), ",")
+
 	addressBook := email.AddressBook{
-		DefaultSender: s.Config.GetString(appconfig.EmailSenderKey),
-		MINTTeamEmail: s.Config.GetString(appconfig.MINTTeamEmailKey),
+		DefaultSender:                  s.Config.GetString(appconfig.EmailSenderKey),
+		MINTTeamEmail:                  s.Config.GetString(appconfig.MINTTeamEmailKey),
+		ModelPlanDateChangedRecipients: dateChangedRecipientEmails,
+		DevTeamEmail:                   s.Config.GetString(appconfig.DevTeamEmailKey),
 	}
 
 	var emailService *oddmail.GoSimpleMailService

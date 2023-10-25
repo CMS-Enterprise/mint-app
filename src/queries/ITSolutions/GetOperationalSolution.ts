@@ -11,6 +11,9 @@ export default gql`
       pocName
       pocEmail
       status
+      isOther
+      isCommonSolution
+      otherHeader
       mustFinishDts
       mustStartDts
       documents {
@@ -26,6 +29,8 @@ export default gql`
         optionalNotes
         otherType
         numLinkedSolutions
+        isLink
+        url
       }
       operationalSolutionSubtasks {
         id

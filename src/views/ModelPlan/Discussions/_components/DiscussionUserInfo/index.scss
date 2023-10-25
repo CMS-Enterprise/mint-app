@@ -1,0 +1,13 @@
+@use 'uswds-core' as *;
+
+.discussion-user-info {
+  .dui__userRole {
+    margin: 0 0 0 2.5rem;
+
+    &--connected {
+      border-left: .25rem solid color('base-lightest');
+      margin-left: .9rem;
+      padding-left: 1.4rem;
+    }
+  }
+}

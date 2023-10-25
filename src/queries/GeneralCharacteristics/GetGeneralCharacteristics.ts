@@ -5,12 +5,16 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
+      existingModelLinks {
+        id
+        existingModelID
+        currentModelPlanID
+      }
       generalCharacteristics {
         id
         isNewModel
         existingModel
         resemblesExistingModel
-        resemblesExistingModelWhich
         resemblesExistingModelHow
         resemblesExistingModelNote
         hasComponentsOrTracks

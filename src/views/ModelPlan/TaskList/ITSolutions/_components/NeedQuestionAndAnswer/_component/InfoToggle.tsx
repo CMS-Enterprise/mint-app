@@ -2,26 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconExpandLess, IconExpandMore } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { NeedMap } from 'data/operationalNeedMap';
-import {
-  translateAgreementTypes,
-  translateAppealsQuestionType,
-  translateBenchmarkForPerformanceType,
-  translateBoolean,
-  translateCommunicationType,
-  translateDataForMonitoringType,
-  translateDataToSendParticipantsType,
-  translateEvaluationApproachType,
-  translateModelLearningSystemType,
-  translateNonClaimsBasedPayType,
-  translateOverlapType,
-  translateParticipantIDType,
-  translateParticipantSelectiontType,
-  translatePayType,
-  translateRecruitmentType
-} from 'utils/modelPlan';
 
 // Type definition for operational needs dependent on multiple questions/translations
 type MultiPartType = {
@@ -29,34 +13,11 @@ type MultiPartType = {
   answer: boolean | string;
 };
 
-type NeedMapType = {
-  [key: string]: (type: any) => string;
-};
-
 type InfoToggleTypes = {
   data: any;
   answers: any;
   needConfig: NeedMap;
   modelID: string;
-};
-
-// Collection of translations needed for operational needs questions/answers
-const needsTranslations: NeedMapType = {
-  translateBoolean,
-  translateAgreementTypes,
-  translateParticipantIDType,
-  translateRecruitmentType,
-  translateParticipantSelectiontType,
-  translateCommunicationType,
-  translateBenchmarkForPerformanceType,
-  translateEvaluationApproachType,
-  translateDataForMonitoringType,
-  translateDataToSendParticipantsType,
-  translateModelLearningSystemType,
-  translatePayType,
-  translateNonClaimsBasedPayType,
-  translateAppealsQuestionType,
-  translateOverlapType
 };
 
 const InfoToggle = ({
@@ -108,18 +69,22 @@ const InfoToggle = ({
                       key={answer.toString()}
                       data-testid={answer.toString()}
                     >
-                      {needsTranslations[needConfig.answer](answer)}
+                      {i18next.t(
+                        `${needConfig.parentField}:${needConfig.fieldName}.options.${answer}`
+                      )}
                     </li>
                   ))}
 
                 {needConfig.multiPart &&
-                  needConfig.multiPartQuestion &&
                   answers.map((answer: MultiPartType) => (
                     <li className="margin-y-1" key={answer.question}>
-                      {needsTranslations[needConfig.multiPartQuestion!](
-                        answer.question
+                      {i18next.t(
+                        `${needConfig.parentField}:${answer.question}.label`
                       )}{' '}
-                      - {needsTranslations[needConfig.answer](answer.answer)}
+                      -{' '}
+                      {i18next.t(
+                        `${needConfig.parentField}:${answer.question}.options.${answer.answer}`
+                      )}
                     </li>
                   ))}
               </ul>

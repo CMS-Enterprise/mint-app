@@ -30,8 +30,8 @@ export const getTimeElapsed = (discussionCreated: string) => {
 
   Object.keys(timePassed).forEach(time => {
     if (Math.abs(timePassed[time as keyof typeof getTimeElapsed]) >= 1) {
-      const floatTime = Math.abs(
-        timePassed[time as keyof typeof getTimeElapsed]
+      const floatTime = Math.round(
+        Math.abs(timePassed[time as keyof typeof getTimeElapsed])
       );
 
       // Only show parent most level of time, rather than all increments
@@ -41,6 +41,46 @@ export const getTimeElapsed = (discussionCreated: string) => {
             ? time
             : time.slice(0, -1) // If singular, remove last letter 's's from time string
         } `;
+      }
+    }
+  });
+
+  return dateString;
+};
+
+export const getDaysElapsed = (discussionCreated: string) => {
+  const now = DateTime.local();
+  const creationTime = DateTime.fromISO(discussionCreated);
+
+  const timePassed = now
+    .diff(creationTime, ['years', 'months', 'days'])
+    .toObject();
+
+  let dateString = '';
+
+  Object.keys(timePassed).forEach(time => {
+    if (Math.abs(timePassed[time as keyof typeof getTimeElapsed]) >= 1) {
+      const floatTime = Math.round(
+        Math.abs(timePassed[time as keyof typeof getTimeElapsed])
+      );
+
+      // Only show parent most level of time, rather than all increments
+      if (dateString === '') {
+        dateString += `${floatTime} ${
+          timePassed[time as keyof typeof getTimeElapsed] !== 1
+            ? time
+            : time.slice(0, -1) // If singular, remove last letter 's's from time string
+        } ago`;
+      }
+    }
+    if (time === 'days') {
+      if (
+        Math.abs(timePassed[time as keyof typeof getTimeElapsed]) > 0 &&
+        Math.abs(timePassed[time as keyof typeof getTimeElapsed]) < 1
+      ) {
+        if (dateString === '') {
+          dateString = 'today';
+        }
       }
     }
   });

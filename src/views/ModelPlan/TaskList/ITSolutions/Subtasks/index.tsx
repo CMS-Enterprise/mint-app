@@ -251,15 +251,24 @@ const Subtasks = ({
 
   const renderModal = () => {
     return (
-      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-y-0">
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
           {t('removeModal.header', {
             subTaskName: inputName
           })}
         </PageHeading>
+
         <p className="margin-top-2 margin-bottom-3">
           {t('removeModal.warning')}
         </p>
+
         <Button
           type="button"
           className="margin-right-4"
@@ -319,7 +328,7 @@ const Subtasks = ({
             {managingSubtasks ? t('manageSubtaskInfo') : t('addSubtaskInfo')}
           </p>
 
-          <Grid tablet={{ col: 8 }}>
+          <Grid tablet={{ col: 12 }} desktop={{ col: 8 }}>
             {solution && (
               <NeedQuestionAndAnswer
                 operationalNeedID={operationalNeedID}
@@ -378,7 +387,7 @@ const Subtasks = ({
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldArray name="subtasks">
                           {({ push, remove }) => {
                             const { subtasks } = formValues;
@@ -564,7 +573,7 @@ const Subtasks = ({
             </Formik>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
+        <Grid desktop={{ col: 3 }} className="padding-x-1">
           <ITSolutionsSidebar
             modelID={modelID}
             renderTextFor="need"

@@ -14,6 +14,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type ChangeHistorySortParams struct {
+	Field ChangeHistorySortKey `json:"field"`
+	Order models.SortDirection `json:"order"`
+}
+
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
@@ -26,9 +31,10 @@ type CurrentUser struct {
 
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
-	DiscussionID uuid.UUID `json:"discussionID"`
-	Content      string    `json:"content"`
-	Resolution   bool      `json:"resolution"`
+	DiscussionID        uuid.UUID                  `json:"discussionID"`
+	Content             string                     `json:"content"`
+	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
+	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
 // The current user's Launch Darkly key
@@ -41,6 +47,11 @@ type LaunchDarklySettings struct {
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`
 	AgreedDts *time.Time `json:"agreedDts,omitempty"`
+}
+
+type PageParams struct {
+	Offset int `json:"offset"`
+	Limit  int `json:"limit"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
@@ -60,8 +71,10 @@ type PlanCrTdlCreateInput struct {
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
-	ModelPlanID uuid.UUID `json:"modelPlanID"`
-	Content     string    `json:"content"`
+	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Content             string                     `json:"content"`
+	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
+	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
 // PlanDocumentInput
@@ -74,9 +87,49 @@ type PlanDocumentInput struct {
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
 
+// PlanDocumentLinkInput
+type PlanDocumentLinkInput struct {
+	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
+	URL                  string              `json:"url"`
+	Name                 string              `json:"name"`
+	DocumentType         models.DocumentType `json:"documentType"`
+	Restricted           bool                `json:"restricted"`
+	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
+	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
+}
+
 type PrepareForClearance struct {
 	Status             PrepareForClearanceStatus `json:"status"`
 	LatestClearanceDts *time.Time                `json:"latestClearanceDts,omitempty"`
+}
+
+type ReportAProblemInput struct {
+	IsAnonymousSubmission bool                    `json:"isAnonymousSubmission"`
+	AllowContact          *bool                   `json:"allowContact,omitempty"`
+	Section               *ReportAProblemSection  `json:"section,omitempty"`
+	SectionOther          *string                 `json:"sectionOther,omitempty"`
+	WhatDoing             *string                 `json:"whatDoing,omitempty"`
+	WhatWentWrong         *string                 `json:"whatWentWrong,omitempty"`
+	Severity              *ReportAProblemSeverity `json:"severity,omitempty"`
+	SeverityOther         *string                 `json:"severityOther,omitempty"`
+}
+
+type SearchFilter struct {
+	Type  SearchFilterType `json:"type"`
+	Value interface{}      `json:"value"`
+}
+
+// The inputs to the user feedback form
+type SendFeedbackEmailInput struct {
+	IsAnonymousSubmission bool               `json:"isAnonymousSubmission"`
+	AllowContact          *bool              `json:"allowContact,omitempty"`
+	CmsRole               *string            `json:"cmsRole,omitempty"`
+	MintUsedFor           []MintUses         `json:"mintUsedFor,omitempty"`
+	MintUsedForOther      *string            `json:"mintUsedForOther,omitempty"`
+	SystemEasyToUse       *EaseOfUse         `json:"systemEasyToUse,omitempty"`
+	SystemEasyToUseOther  *string            `json:"systemEasyToUseOther,omitempty"`
+	HowSatisfied          *SatisfactionLevel `json:"howSatisfied,omitempty"`
+	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
 }
 
 type TaskListSectionLockStatus struct {
@@ -514,6 +567,58 @@ func (e CcmInvolvmentType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type ChangeHistorySortKey string
+
+const (
+	// Sort by the date the change was made
+	ChangeHistorySortKeyChangeDate ChangeHistorySortKey = "CHANGE_DATE"
+	// Sort by the user who made the change
+	ChangeHistorySortKeyActor ChangeHistorySortKey = "ACTOR"
+	// Sort by the model plan ID that was changed
+	ChangeHistorySortKeyModelPlanID ChangeHistorySortKey = "MODEL_PLAN_ID"
+	// Sort by the table ID that was changed
+	ChangeHistorySortKeyTableID ChangeHistorySortKey = "TABLE_ID"
+	// Sort by the table name that was changed
+	ChangeHistorySortKeyTableName ChangeHistorySortKey = "TABLE_NAME"
+)
+
+var AllChangeHistorySortKey = []ChangeHistorySortKey{
+	ChangeHistorySortKeyChangeDate,
+	ChangeHistorySortKeyActor,
+	ChangeHistorySortKeyModelPlanID,
+	ChangeHistorySortKeyTableID,
+	ChangeHistorySortKeyTableName,
+}
+
+func (e ChangeHistorySortKey) IsValid() bool {
+	switch e {
+	case ChangeHistorySortKeyChangeDate, ChangeHistorySortKeyActor, ChangeHistorySortKeyModelPlanID, ChangeHistorySortKeyTableID, ChangeHistorySortKeyTableName:
+		return true
+	}
+	return false
+}
+
+func (e ChangeHistorySortKey) String() string {
+	return string(e)
+}
+
+func (e *ChangeHistorySortKey) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ChangeHistorySortKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ChangeHistorySortKey", str)
+	}
+	return nil
+}
+
+func (e ChangeHistorySortKey) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type ChangeType string
 
 const (
@@ -769,6 +874,49 @@ func (e DataToSendParticipantsType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type EaseOfUse string
+
+const (
+	EaseOfUseAgree    EaseOfUse = "AGREE"
+	EaseOfUseDisagree EaseOfUse = "DISAGREE"
+	EaseOfUseUnsure   EaseOfUse = "UNSURE"
+)
+
+var AllEaseOfUse = []EaseOfUse{
+	EaseOfUseAgree,
+	EaseOfUseDisagree,
+	EaseOfUseUnsure,
+}
+
+func (e EaseOfUse) IsValid() bool {
+	switch e {
+	case EaseOfUseAgree, EaseOfUseDisagree, EaseOfUseUnsure:
+		return true
+	}
+	return false
+}
+
+func (e EaseOfUse) String() string {
+	return string(e)
+}
+
+func (e *EaseOfUse) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = EaseOfUse(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid EaseOfUse", str)
+	}
+	return nil
+}
+
+func (e EaseOfUse) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type EvaluationApproachType string
 
 const (
@@ -956,6 +1104,57 @@ func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type MintUses string
+
+const (
+	MintUsesViewModel             MintUses = "VIEW_MODEL"
+	MintUsesEditModel             MintUses = "EDIT_MODEL"
+	MintUsesShareModel            MintUses = "SHARE_MODEL"
+	MintUsesTrackSolutions        MintUses = "TRACK_SOLUTIONS"
+	MintUsesContributeDiscussions MintUses = "CONTRIBUTE_DISCUSSIONS"
+	MintUsesViewHelp              MintUses = "VIEW_HELP"
+	MintUsesOther                 MintUses = "OTHER"
+)
+
+var AllMintUses = []MintUses{
+	MintUsesViewModel,
+	MintUsesEditModel,
+	MintUsesShareModel,
+	MintUsesTrackSolutions,
+	MintUsesContributeDiscussions,
+	MintUsesViewHelp,
+	MintUsesOther,
+}
+
+func (e MintUses) IsValid() bool {
+	switch e {
+	case MintUsesViewModel, MintUsesEditModel, MintUsesShareModel, MintUsesTrackSolutions, MintUsesContributeDiscussions, MintUsesViewHelp, MintUsesOther:
+		return true
+	}
+	return false
+}
+
+func (e MintUses) String() string {
+	return string(e)
+}
+
+func (e *MintUses) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MintUses(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MintUses", str)
+	}
+	return nil
+}
+
+func (e MintUses) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -1512,6 +1711,98 @@ func (e ProviderLeaveType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type ReportAProblemSection string
+
+const (
+	ReportAProblemSectionReadView    ReportAProblemSection = "READ_VIEW"
+	ReportAProblemSectionTaskList    ReportAProblemSection = "TASK_LIST"
+	ReportAProblemSectionItSolutions ReportAProblemSection = "IT_SOLUTIONS"
+	ReportAProblemSectionHelpCenter  ReportAProblemSection = "HELP_CENTER"
+	ReportAProblemSectionOther       ReportAProblemSection = "OTHER"
+)
+
+var AllReportAProblemSection = []ReportAProblemSection{
+	ReportAProblemSectionReadView,
+	ReportAProblemSectionTaskList,
+	ReportAProblemSectionItSolutions,
+	ReportAProblemSectionHelpCenter,
+	ReportAProblemSectionOther,
+}
+
+func (e ReportAProblemSection) IsValid() bool {
+	switch e {
+	case ReportAProblemSectionReadView, ReportAProblemSectionTaskList, ReportAProblemSectionItSolutions, ReportAProblemSectionHelpCenter, ReportAProblemSectionOther:
+		return true
+	}
+	return false
+}
+
+func (e ReportAProblemSection) String() string {
+	return string(e)
+}
+
+func (e *ReportAProblemSection) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ReportAProblemSection(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ReportAProblemSection", str)
+	}
+	return nil
+}
+
+func (e ReportAProblemSection) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type ReportAProblemSeverity string
+
+const (
+	ReportAProblemSeverityPreventedTask ReportAProblemSeverity = "PREVENTED_TASK"
+	ReportAProblemSeverityDelayedTask   ReportAProblemSeverity = "DELAYED_TASK"
+	ReportAProblemSeverityMinor         ReportAProblemSeverity = "MINOR"
+	ReportAProblemSeverityOther         ReportAProblemSeverity = "OTHER"
+)
+
+var AllReportAProblemSeverity = []ReportAProblemSeverity{
+	ReportAProblemSeverityPreventedTask,
+	ReportAProblemSeverityDelayedTask,
+	ReportAProblemSeverityMinor,
+	ReportAProblemSeverityOther,
+}
+
+func (e ReportAProblemSeverity) IsValid() bool {
+	switch e {
+	case ReportAProblemSeverityPreventedTask, ReportAProblemSeverityDelayedTask, ReportAProblemSeverityMinor, ReportAProblemSeverityOther:
+		return true
+	}
+	return false
+}
+
+func (e ReportAProblemSeverity) String() string {
+	return string(e)
+}
+
+func (e *ReportAProblemSeverity) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ReportAProblemSeverity(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ReportAProblemSeverity", str)
+	}
+	return nil
+}
+
+func (e ReportAProblemSeverity) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 // A user role associated with a job code
 type Role string
 
@@ -1556,6 +1847,184 @@ func (e *Role) UnmarshalGQL(v interface{}) error {
 }
 
 func (e Role) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SatisfactionLevel string
+
+const (
+	SatisfactionLevelVerySatisfied    SatisfactionLevel = "VERY_SATISFIED"
+	SatisfactionLevelSatisfied        SatisfactionLevel = "SATISFIED"
+	SatisfactionLevelNeutral          SatisfactionLevel = "NEUTRAL"
+	SatisfactionLevelDissatisfied     SatisfactionLevel = "DISSATISFIED"
+	SatisfactionLevelVeryDissatisfied SatisfactionLevel = "VERY_DISSATISFIED"
+)
+
+var AllSatisfactionLevel = []SatisfactionLevel{
+	SatisfactionLevelVerySatisfied,
+	SatisfactionLevelSatisfied,
+	SatisfactionLevelNeutral,
+	SatisfactionLevelDissatisfied,
+	SatisfactionLevelVeryDissatisfied,
+}
+
+func (e SatisfactionLevel) IsValid() bool {
+	switch e {
+	case SatisfactionLevelVerySatisfied, SatisfactionLevelSatisfied, SatisfactionLevelNeutral, SatisfactionLevelDissatisfied, SatisfactionLevelVeryDissatisfied:
+		return true
+	}
+	return false
+}
+
+func (e SatisfactionLevel) String() string {
+	return string(e)
+}
+
+func (e *SatisfactionLevel) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SatisfactionLevel(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SatisfactionLevel", str)
+	}
+	return nil
+}
+
+func (e SatisfactionLevel) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SearchFilterType string
+
+const (
+	// Filter search results to include changes on or after the specified date.
+	// Expected value: A string in RFC3339 format representing the date and time.
+	// Example: "2006-01-02T15:04:05Z07:00"
+	SearchFilterTypeChangedAfter SearchFilterType = "CHANGED_AFTER"
+	// Filter search results to include changes on or before the specified date.
+	// Expected value: A string in RFC3339 format representing the date and time.
+	// Example: "2006-01-02T15:04:05Z07:00"
+	SearchFilterTypeChangedBefore SearchFilterType = "CHANGED_BEFORE"
+	// Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
+	// Expected value: A string representing the name or username of the actor.
+	// Example: "MINT"
+	SearchFilterTypeChangedByActor SearchFilterType = "CHANGED_BY_ACTOR"
+	// Filter search results to include changes made to the specified object.
+	// Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
+	// Example: "BASICS"
+	SearchFilterTypeModelPlanSection SearchFilterType = "MODEL_PLAN_SECTION"
+	// Filter search results to include changes made to the specified model plan by ID.
+	// Expected value: A string representing the ID of the model plan.
+	// Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
+	SearchFilterTypeModelPlanID SearchFilterType = "MODEL_PLAN_ID"
+	// Filter search results to include model plans with the specified status.
+	// Expected value: A string representing the status of the model plan.
+	// Example: "ACTIVE"
+	SearchFilterTypeModelPlanStatus SearchFilterType = "MODEL_PLAN_STATUS"
+	// Filter results with a free text search. This is a fuzzy search on the entire record.
+	// Expected value: A string representing the free text search query.
+	// Example: "Operational Need"
+	SearchFilterTypeFreeText SearchFilterType = "FREE_TEXT"
+	// Filter results by table id.
+	// Expected value: An integer representing the table ID.
+	// Example: 14
+	SearchFilterTypeTableID SearchFilterType = "TABLE_ID"
+	// Filter results by table name.
+	// Expected value: A string representing the table name.
+	// Example: "plan_basics"
+	SearchFilterTypeTableName SearchFilterType = "TABLE_NAME"
+)
+
+var AllSearchFilterType = []SearchFilterType{
+	SearchFilterTypeChangedAfter,
+	SearchFilterTypeChangedBefore,
+	SearchFilterTypeChangedByActor,
+	SearchFilterTypeModelPlanSection,
+	SearchFilterTypeModelPlanID,
+	SearchFilterTypeModelPlanStatus,
+	SearchFilterTypeFreeText,
+	SearchFilterTypeTableID,
+	SearchFilterTypeTableName,
+}
+
+func (e SearchFilterType) IsValid() bool {
+	switch e {
+	case SearchFilterTypeChangedAfter, SearchFilterTypeChangedBefore, SearchFilterTypeChangedByActor, SearchFilterTypeModelPlanSection, SearchFilterTypeModelPlanID, SearchFilterTypeModelPlanStatus, SearchFilterTypeFreeText, SearchFilterTypeTableID, SearchFilterTypeTableName:
+		return true
+	}
+	return false
+}
+
+func (e SearchFilterType) String() string {
+	return string(e)
+}
+
+func (e *SearchFilterType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SearchFilterType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SearchFilterType", str)
+	}
+	return nil
+}
+
+func (e SearchFilterType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SearchableTaskListSection string
+
+const (
+	SearchableTaskListSectionBasics                          SearchableTaskListSection = "BASICS"
+	SearchableTaskListSectionGeneralCharacteristics          SearchableTaskListSection = "GENERAL_CHARACTERISTICS"
+	SearchableTaskListSectionParticipantsAndProviders        SearchableTaskListSection = "PARTICIPANTS_AND_PROVIDERS"
+	SearchableTaskListSectionBeneficiaries                   SearchableTaskListSection = "BENEFICIARIES"
+	SearchableTaskListSectionOperationsEvaluationAndLearning SearchableTaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
+	SearchableTaskListSectionPayment                         SearchableTaskListSection = "PAYMENT"
+)
+
+var AllSearchableTaskListSection = []SearchableTaskListSection{
+	SearchableTaskListSectionBasics,
+	SearchableTaskListSectionGeneralCharacteristics,
+	SearchableTaskListSectionParticipantsAndProviders,
+	SearchableTaskListSectionBeneficiaries,
+	SearchableTaskListSectionOperationsEvaluationAndLearning,
+	SearchableTaskListSectionPayment,
+}
+
+func (e SearchableTaskListSection) IsValid() bool {
+	switch e {
+	case SearchableTaskListSectionBasics, SearchableTaskListSectionGeneralCharacteristics, SearchableTaskListSectionParticipantsAndProviders, SearchableTaskListSectionBeneficiaries, SearchableTaskListSectionOperationsEvaluationAndLearning, SearchableTaskListSectionPayment:
+		return true
+	}
+	return false
+}
+
+func (e SearchableTaskListSection) String() string {
+	return string(e)
+}
+
+func (e *SearchableTaskListSection) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SearchableTaskListSection(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SearchableTaskListSection", str)
+	}
+	return nil
+}
+
+func (e SearchableTaskListSection) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

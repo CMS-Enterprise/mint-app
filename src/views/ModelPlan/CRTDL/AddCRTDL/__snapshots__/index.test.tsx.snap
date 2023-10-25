@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
+exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content margin-bottom-6"
@@ -234,19 +234,19 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
                 </div>
               </div>
             </div>
-          </fieldset>
-          <div
-            class="margin-y-4 display-block"
-          >
-            <button
-              class="usa-button"
-              data-testid="button"
-              id="submit-cr-and-tdl"
-              type="submit"
+            <div
+              class="margin-y-4 display-block"
             >
-              Update a CR or TDL
-            </button>
-          </div>
+              <button
+                class="usa-button"
+                data-testid="button"
+                id="submit-cr-and-tdl"
+                type="submit"
+              >
+                Update a CR or TDL
+              </button>
+            </div>
+          </fieldset>
         </form>
         <a
           class="usa-link"

@@ -6,9 +6,6 @@ package gqlresolvers
 
 import (
 	"context"
-	"time"
-
-	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -19,7 +16,30 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
+	"github.com/google/uuid"
 )
+
+// Fields is the resolver for the fields field.
+func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
+	return obj.Fields.ToInterface()
+}
+
+// ExistingModel is the resolver for the existingModel field.
+func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
+	if obj.ExistingModelID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
+}
+
+// CurrentModelPlan is the resolver for the currentModelPlan field.
+func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error) {
+	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
+}
 
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
@@ -88,7 +108,16 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, c
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanBasics(logger, id, changes, principal, r.store)
+	return resolvers.UpdatePlanBasics(
+		logger,
+		id,
+		changes,
+		principal,
+		r.store,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+	)
 }
 
 // UpdatePlanGeneralCharacteristics is the resolver for the updatePlanGeneralCharacteristics field.
@@ -127,6 +156,13 @@ func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input mode
 
 	planDocument, err := resolvers.PlanDocumentCreate(logger, &input, principal, r.store, r.s3Client)
 	return planDocument, err
+}
+
+// LinkNewPlanDocument is the resolver for the linkNewPlanDocument field.
+func (r *mutationResolver) LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentCreateLinked(logger, input, principal, r.store)
 }
 
 // DeletePlanDocument is the resolver for the deletePlanDocument field.
@@ -329,6 +365,279 @@ func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context,
 	return resolvers.OperationalSolutionSubtaskDelete(logger, r.store, principal, id)
 }
 
+// UpdateExistingModelLinks is the resolver for the updateExistingModelLinks field.
+func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+	return resolvers.ExistingModelLinksUpdate(logger, r.store, principal, modelPlanID, existingModelIDs, currentModelPlanIDs)
+}
+
+// ShareModelPlan is the resolver for the shareModelPlan field.
+func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.ModelPlanShare(
+		ctx,
+		logger,
+		r.store,
+		principal,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		modelPlanID,
+		viewFilter,
+		usernames,
+		optionalMessage,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
+	)
+}
+
+// ReportAProblem is the resolver for the reportAProblem field.
+func (r *mutationResolver) ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.ReportAProblem(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
+}
+
+// SendFeedbackEmail is the resolver for the sendFeedbackEmail field.
+func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	return resolvers.SendFeedbackEmail(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
+}
+
+// Solutions is the resolver for the solutions field.
+func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
+}
+
+// Documents is the resolver for the documents field.
+func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models.OperationalSolution) ([]*models.PlanDocument, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentsReadBySolutionID(
+		logger,
+		obj.ID,
+		principal,
+		r.store,
+		r.s3Client,
+	)
+}
+
+// OperationalSolutionSubtasks is the resolver for the operationalSolutionSubtasks field.
+func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error) {
+	return resolvers.OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx, obj.ID)
+}
+
+// AdditionalModelCategories is the resolver for the additionalModelCategories field.
+func (r *planBasicsResolver) AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error) {
+	modelCategories := models.ConvertEnums[models.ModelCategory](obj.AdditionalModelCategories)
+	return modelCategories, nil
+}
+
+// CmsCenters is the resolver for the cmsCenters field.
+func (r *planBasicsResolver) CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error) {
+	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)
+	return cmsCenters, nil
+}
+
+// CmmiGroups is the resolver for the cmmiGroups field.
+func (r *planBasicsResolver) CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error) {
+	cmmiGroups := models.ConvertEnums[model.CMMIGroup](obj.CMMIGroups)
+	return cmmiGroups, nil
+}
+
+// Beneficiaries is the resolver for the beneficiaries field.
+func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
+	bTypes := models.ConvertEnums[model.BeneficiariesType](obj.Beneficiaries)
+	return bTypes, nil
+}
+
+// BeneficiarySelectionMethod is the resolver for the beneficiarySelectionMethod field.
+func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
+	sTypes := models.ConvertEnums[model.SelectionMethodType](obj.BeneficiarySelectionMethod)
+	return sTypes, nil
+}
+
+// Replies is the resolver for the replies field.
+func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
+	return resolvers.DiscussionReplyCollectionByDiscusionIDLOADER(ctx, obj.ID)
+}
+
+// URL is the resolver for the url field.
+func (r *planDocumentResolver) URL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.URL.Ptr(), nil
+}
+
+// OtherType is the resolver for the otherType field.
+func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.OtherTypeDescription.Ptr(), nil
+}
+
+// OptionalNotes is the resolver for the optionalNotes field.
+func (r *planDocumentResolver) OptionalNotes(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.OptionalNotes.Ptr(), nil
+}
+
+// DownloadURL is the resolver for the downloadUrl field.
+func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	if obj.IsLink {
+		return nil, nil
+	}
+	url, err := r.s3Client.NewGetPresignedURL(obj.FileKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return url, nil
+}
+
+// NumLinkedSolutions is the resolver for the numLinkedSolutions field.
+func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *models.PlanDocument) (int, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
+}
+
+// AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
+func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
+	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)
+	return apmTypes, nil
+}
+
+// KeyCharacteristics is the resolver for the keyCharacteristics field.
+func (r *planGeneralCharacteristicsResolver) KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error) {
+	keyCharacteristics := models.ConvertEnums[model.KeyCharacteristic](obj.KeyCharacteristics)
+	return keyCharacteristics, nil
+}
+
+// GeographiesTargetedTypes is the resolver for the geographiesTargetedTypes field.
+func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyType, error) {
+	geographyTypes := models.ConvertEnums[model.GeographyType](obj.GeographiesTargetedTypes)
+	return geographyTypes, nil
+}
+
+// GeographiesTargetedAppliedTo is the resolver for the geographiesTargetedAppliedTo field.
+func (r *planGeneralCharacteristicsResolver) GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error) {
+	geographyApplications := models.ConvertEnums[model.GeographyApplication](obj.GeographiesTargetedAppliedTo)
+	return geographyApplications, nil
+}
+
+// AgreementTypes is the resolver for the agreementTypes field.
+func (r *planGeneralCharacteristicsResolver) AgreementTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgreementType, error) {
+	agreementTypes := models.ConvertEnums[model.AgreementType](obj.AgreementTypes)
+	return agreementTypes, nil
+}
+
+// AuthorityAllowances is the resolver for the authorityAllowances field.
+func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AuthorityAllowance, error) {
+	authorityAllowances := models.ConvertEnums[model.AuthorityAllowance](obj.AuthorityAllowances)
+	return authorityAllowances, nil
+}
+
+// WaiversRequiredTypes is the resolver for the waiversRequiredTypes field.
+func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
+	waiverTypes := models.ConvertEnums[model.WaiverType](obj.WaiversRequiredTypes)
+	return waiverTypes, nil
+}
+
+// Participants is the resolver for the participants field.
+func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
+	participants := models.ConvertEnums[model.ParticipantsType](obj.Participants)
+	return participants, nil
+}
+
+// SelectionMethod is the resolver for the selectionMethod field.
+func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error) {
+	selectionTypes := models.ConvertEnums[model.ParticipantSelectionType](obj.SelectionMethod)
+	return selectionTypes, nil
+}
+
+// CommunicationMethod is the resolver for the communicationMethod field.
+func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
+	communicationTypes := models.ConvertEnums[model.ParticipantCommunicationType](obj.CommunicationMethod)
+	return communicationTypes, nil
+}
+
+// ParticipantsIds is the resolver for the participantsIds field.
+func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error) {
+	participantsIDTypes := models.ConvertEnums[model.ParticipantsIDType](obj.ParticipantsIds)
+	return participantsIDTypes, nil
+}
+
+// ProviderAddMethod is the resolver for the providerAddMethod field.
+func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
+	providerAddTypes := models.ConvertEnums[model.ProviderAddType](obj.ProviderAddMethod)
+	return providerAddTypes, nil
+}
+
+// ProviderLeaveMethod is the resolver for the providerLeaveMethod field.
+func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
+	providerLeaveTypes := models.ConvertEnums[model.ProviderLeaveType](obj.ProviderLeaveMethod)
+	return providerLeaveTypes, nil
+}
+
+// FundingSource is the resolver for the fundingSource field.
+func (r *planPaymentsResolver) FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
+	return models.ConvertEnums[models.FundingSource](obj.FundingSource), nil
+}
+
+// FundingSourceTrustFundType is the resolver for the fundingSourceTrustFundType field.
+func (r *planPaymentsResolver) FundingSourceTrustFundType(ctx context.Context, obj *models.PlanPayments) ([]models.TrustFundType, error) {
+	return models.ConvertEnums[models.TrustFundType](obj.FundingSourceTrustFundType), nil
+}
+
+// FundingSourceR is the resolver for the fundingSourceR field.
+func (r *planPaymentsResolver) FundingSourceR(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
+	return models.ConvertEnums[models.FundingSource](obj.FundingSourceR), nil
+}
+
+// FundingSourceRTrustFundType is the resolver for the fundingSourceRTrustFundType field.
+func (r *planPaymentsResolver) FundingSourceRTrustFundType(ctx context.Context, obj *models.PlanPayments) ([]models.TrustFundType, error) {
+	return models.ConvertEnums[models.TrustFundType](obj.FundingSourceRTrustFundType), nil
+}
+
+// PayRecipients is the resolver for the payRecipients field.
+func (r *planPaymentsResolver) PayRecipients(ctx context.Context, obj *models.PlanPayments) ([]models.PayRecipient, error) {
+	return models.ConvertEnums[models.PayRecipient](obj.PayRecipients), nil
+}
+
+// PayType is the resolver for the payType field.
+func (r *planPaymentsResolver) PayType(ctx context.Context, obj *models.PlanPayments) ([]models.PayType, error) {
+	return models.ConvertEnums[models.PayType](obj.PayType), nil
+}
+
+// PayClaims is the resolver for the payClaims field.
+func (r *planPaymentsResolver) PayClaims(ctx context.Context, obj *models.PlanPayments) ([]models.ClaimsBasedPayType, error) {
+	return models.ConvertEnums[models.ClaimsBasedPayType](obj.PayClaims), nil
+}
+
+// NonClaimsPayments is the resolver for the nonClaimsPayments field.
+func (r *planPaymentsResolver) NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error) {
+	return models.ConvertEnums[model.NonClaimsBasedPayType](obj.NonClaimsPayments), nil
+}
+
+// NonClaimsPaymentOther is the resolver for the nonClaimsPaymentOther field.
+func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	return obj.NonClaimsPaymentsOther, nil
+}
+
+// AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
+func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error) {
+	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
+}
+
+// PossibleSolutions is the resolver for the possibleSolutions field.
+func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.Key, r.store)
+}
+
+// PointsOfContact is the resolver for the pointsOfContact field.
+func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Context, obj *models.PossibleOperationalSolution) ([]*models.PossibleOperationalSolutionContact, error) {
+	return resolvers.PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, obj.ID)
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -461,46 +770,18 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 	return resolvers.UserAccountGetByUsername(logger, r.store, username)
 }
 
-// SearchChangeTable is the resolver for the searchChangeTable field.
-func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+// ExistingModelLink is the resolver for the existingModelLink field.
+func (r *queryResolver) ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error) {
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTable(logger, r.searchClient, request, limit, offset, "modified_dts:desc")
+	return resolvers.ExistingModelLinkGetByID(logger, r.store, principal, id)
 }
 
-// SearchChangeTableWithFreeText is the resolver for the searchChangeTableWithFreeText field.
-func (r *queryResolver) SearchChangeTableWithFreeText(ctx context.Context, searchText string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+// SearchChanges is the resolver for the searchChanges field.
+func (r *queryResolver) SearchChanges(ctx context.Context, filters []*model.SearchFilter, sortBy *model.ChangeHistorySortParams, page *model.PageParams) ([]*models.ChangeTableRecord, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchChangeTableWithFreeText(logger, r.searchClient, searchText, limit, offset)
-}
-
-// SearchChangeTableByModelPlanID is the resolver for the searchChangeTableByModelPlanID field.
-func (r *queryResolver) SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableByModelPlanID(logger, r.searchClient, modelPlanID, limit, offset)
-}
-
-// SearchChangeTableByDateRange is the resolver for the searchChangeTableByDateRange field.
-func (r *queryResolver) SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableByDateRange(logger, r.searchClient, startDate, endDate, limit, offset)
-}
-
-// SearchChangeTableByActor is the resolver for the searchChangeTableByActor field.
-func (r *queryResolver) SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableByActor(logger, r.searchClient, actor, limit, offset)
-}
-
-// SearchChangeTableByModelStatus is the resolver for the searchChangeTableByModelStatus field.
-func (r *queryResolver) SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.SearchChangeTableByModelStatus(logger, r.searchClient, modelStatus, limit, offset)
+	return resolvers.SearchChangesWithFilters(logger, r.searchClient, filters, sortBy, page)
 }
 
 // SearchChangeTableDateHistogramConsolidatedAggregations is the resolver for the searchChangeTableDateHistogramConsolidatedAggregations field.
@@ -508,6 +789,14 @@ func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(c
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableDateHistogramConsolidatedAggregations(logger, r.searchClient, interval, limit, offset)
+}
+
+// MostRecentDiscussionRoleSelection is the resolver for the mostRecentDiscussionRoleSelection field.
+func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.GetMostRecentDiscussionRoleSelection(logger, r.store, principal)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
@@ -524,8 +813,65 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
+// AuditChange returns generated.AuditChangeResolver implementation.
+func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
+
+// ExistingModelLink returns generated.ExistingModelLinkResolver implementation.
+func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
+	return &existingModelLinkResolver{r}
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+
+// OperationalNeed returns generated.OperationalNeedResolver implementation.
+func (r *Resolver) OperationalNeed() generated.OperationalNeedResolver {
+	return &operationalNeedResolver{r}
+}
+
+// OperationalSolution returns generated.OperationalSolutionResolver implementation.
+func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
+	return &operationalSolutionResolver{r}
+}
+
+// PlanBasics returns generated.PlanBasicsResolver implementation.
+func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
+
+// PlanBeneficiaries returns generated.PlanBeneficiariesResolver implementation.
+func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
+	return &planBeneficiariesResolver{r}
+}
+
+// PlanDiscussion returns generated.PlanDiscussionResolver implementation.
+func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
+	return &planDiscussionResolver{r}
+}
+
+// PlanDocument returns generated.PlanDocumentResolver implementation.
+func (r *Resolver) PlanDocument() generated.PlanDocumentResolver { return &planDocumentResolver{r} }
+
+// PlanGeneralCharacteristics returns generated.PlanGeneralCharacteristicsResolver implementation.
+func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteristicsResolver {
+	return &planGeneralCharacteristicsResolver{r}
+}
+
+// PlanParticipantsAndProviders returns generated.PlanParticipantsAndProvidersResolver implementation.
+func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndProvidersResolver {
+	return &planParticipantsAndProvidersResolver{r}
+}
+
+// PlanPayments returns generated.PlanPaymentsResolver implementation.
+func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
+
+// PossibleOperationalNeed returns generated.PossibleOperationalNeedResolver implementation.
+func (r *Resolver) PossibleOperationalNeed() generated.PossibleOperationalNeedResolver {
+	return &possibleOperationalNeedResolver{r}
+}
+
+// PossibleOperationalSolution returns generated.PossibleOperationalSolutionResolver implementation.
+func (r *Resolver) PossibleOperationalSolution() generated.PossibleOperationalSolutionResolver {
+	return &possibleOperationalSolutionResolver{r}
+}
 
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
@@ -533,6 +879,19 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 // Subscription returns generated.SubscriptionResolver implementation.
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
+type auditChangeResolver struct{ *Resolver }
+type existingModelLinkResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type operationalNeedResolver struct{ *Resolver }
+type operationalSolutionResolver struct{ *Resolver }
+type planBasicsResolver struct{ *Resolver }
+type planBeneficiariesResolver struct{ *Resolver }
+type planDiscussionResolver struct{ *Resolver }
+type planDocumentResolver struct{ *Resolver }
+type planGeneralCharacteristicsResolver struct{ *Resolver }
+type planParticipantsAndProvidersResolver struct{ *Resolver }
+type planPaymentsResolver struct{ *Resolver }
+type possibleOperationalNeedResolver struct{ *Resolver }
+type possibleOperationalSolutionResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }

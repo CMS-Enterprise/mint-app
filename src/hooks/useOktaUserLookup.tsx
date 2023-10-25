@@ -8,6 +8,7 @@ import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOkta
 export type OktaUserType = {
   username: string;
   displayName: string;
+  email: string;
 };
 
 type OktaHookProps = {

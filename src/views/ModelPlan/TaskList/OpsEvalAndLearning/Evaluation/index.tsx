@@ -10,13 +10,13 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -27,6 +27,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
 import {
@@ -42,16 +43,10 @@ import {
   DataToSendParticipantsType,
   EvaluationApproachType
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  mapMultiSelectOptions,
-  sortOtherEnum,
-  translateCcmInvolvmentType,
-  translateDataForMonitoringType,
-  translateDataToSendParticipantsType,
-  translateEvaluationApproachType
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -62,8 +57,21 @@ import {
 } from '..';
 
 const Evaluation = () => {
-  const { t } = useTranslation('operationsEvaluationAndLearning');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
+
+  const { t: opsEvalAndLearningMiscT } = useTranslation(
+    'opsEvalAndLearningMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    evaluationApproaches: evaluationApproachesConfig,
+    ccmInvolvment: ccmInvolvmentConfig,
+    dataNeededForMonitoring: dataNeededForMonitoringConfig,
+    dataToSendParticicipants: dataToSendParticicipantsConfig,
+    shareCclfData: shareCclfDataConfig
+  } = usePlanTranslation('opsEvalAndLearning');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<EvaluationFormType>>(null);
@@ -184,28 +192,29 @@ const Evaluation = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -230,17 +239,17 @@ const Evaluation = () => {
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -255,120 +264,139 @@ const Evaluation = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="evaluationApproaches"
-                  error={!!flatErrors.evaluationApproaches}
-                >
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="evaluationApproaches"
+                    error={!!flatErrors.evaluationApproaches}
+                  >
+                    <FieldArray
+                      name="evaluationApproaches"
+                      render={arrayHelpers => (
+                        <>
+                          <Label
+                            htmlFor="ops-eval-and-learning-evaluation-approac"
+                            id="ops-eval-and-learning-evaluation-approac"
+                            className="maxw-none"
+                          >
+                            {opsEvalAndLearningT('evaluationApproaches.label')}
+                          </Label>
+
+                          {itSolutionsStarted && (
+                            <ITSolutionsWarning
+                              id="ops-eval-and-learning-evaluation-approach-warning"
+                              onClick={() =>
+                                handleFormSubmit(
+                                  `/models/${modelID}/task-list/it-solutions`
+                                )
+                              }
+                            />
+                          )}
+
+                          <FieldErrorMsg>
+                            {flatErrors.evaluationApproaches}
+                          </FieldErrorMsg>
+
+                          {getKeys(evaluationApproachesConfig.options).map(
+                            type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`ops-eval-and-learning-evaluation-approach-${type}`}
+                                    data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
+                                    name="evaluationApproaches"
+                                    label={
+                                      evaluationApproachesConfig.options[type]
+                                    }
+                                    value={type}
+                                    checked={values?.evaluationApproaches.includes(
+                                      type
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.evaluationApproaches.indexOf(
+                                          e.target
+                                            .value as EvaluationApproachType
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
+
+                                  {type === EvaluationApproachType.OTHER &&
+                                    values.evaluationApproaches.includes(
+                                      type
+                                    ) && (
+                                      <div className="margin-left-4">
+                                        <Label
+                                          htmlFor="ops-eval-and-learning-evaluation-approach-other"
+                                          className="text-normal maxw-none"
+                                        >
+                                          {opsEvalAndLearningT(
+                                            'evaluationApproachOther.label'
+                                          )}
+                                        </Label>
+
+                                        <FieldErrorMsg>
+                                          {flatErrors.evaluationApproachOther}
+                                        </FieldErrorMsg>
+
+                                        <Field
+                                          as={TextInput}
+                                          className="maxw-none"
+                                          id="ops-eval-and-learning-evaluation-approach-other"
+                                          maxLength={50}
+                                          name="evaluationApproachOther"
+                                        />
+                                      </div>
+                                    )}
+                                </Fragment>
+                              );
+                            }
+                          )}
+                          <AddNote
+                            id="ops-eval-and-learning-evaluation-approach-note"
+                            field="evalutaionApproachNote"
+                          />
+                        </>
+                      )}
+                    />
+                  </FieldGroup>
+
                   <FieldArray
-                    name="evaluationApproaches"
+                    name="ccmInvolvment"
                     render={arrayHelpers => (
                       <>
-                        <legend className="usa-label">
-                          {t('evaluationApproach')}
-                        </legend>
+                        <Label
+                          htmlFor="ops-eval-and-learning-cmmi-involvement"
+                          id="ops-eval-and-learning-cmmi-involvement"
+                          className="maxw-none"
+                        >
+                          {opsEvalAndLearningT('ccmInvolvment.label')}
+                        </Label>
 
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="ops-eval-and-learning-evaluation-approach-warning"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
+                        <p className="text-base margin-y-1">
+                          {opsEvalAndLearningT('ccmInvolvment.sublabel')}
+                        </p>
 
                         <FieldErrorMsg>
-                          {flatErrors.evaluationApproaches}
+                          {flatErrors.ccmInvolvment}
                         </FieldErrorMsg>
 
-                        {Object.keys(EvaluationApproachType)
-                          .sort(sortOtherEnum)
-                          .map(type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`ops-eval-and-learning-evaluation-approach-${type}`}
-                                  data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
-                                  name="evaluationApproaches"
-                                  label={translateEvaluationApproachType(type)}
-                                  value={type}
-                                  checked={values?.evaluationApproaches.includes(
-                                    type as EvaluationApproachType
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.evaluationApproaches.indexOf(
-                                        e.target.value as EvaluationApproachType
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
-                                  }}
-                                />
-                                {type === EvaluationApproachType.OTHER &&
-                                  values.evaluationApproaches.includes(
-                                    type
-                                  ) && (
-                                    <div className="margin-left-4 margin-top-neg-2">
-                                      <Label
-                                        htmlFor="ops-eval-and-learning-evaluation-approach-other"
-                                        className="text-normal maxw-none"
-                                      >
-                                        {t('evaluationOther')}
-                                      </Label>
-                                      <FieldErrorMsg>
-                                        {flatErrors.evaluationApproachOther}
-                                      </FieldErrorMsg>
-                                      <Field
-                                        as={TextInput}
-                                        className="maxw-none"
-                                        id="ops-eval-and-learning-evaluation-approach-other"
-                                        maxLength={50}
-                                        name="evaluationApproachOther"
-                                      />
-                                    </div>
-                                  )}
-                              </Fragment>
-                            );
-                          })}
-                        <AddNote
-                          id="ops-eval-and-learning-evaluation-approach-note"
-                          field="evalutaionApproachNote"
-                        />
-                      </>
-                    )}
-                  />
-                </FieldGroup>
-
-                <FieldArray
-                  name="ccmInvolvment"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">{t('ccw')}</legend>
-
-                      <p className="text-base margin-y-1">{t('ccwInfo')}</p>
-
-                      <FieldErrorMsg>{flatErrors.ccmInvolvment}</FieldErrorMsg>
-
-                      {Object.keys(CcmInvolvmentType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
+                        {getKeys(ccmInvolvmentConfig.options).map(type => {
                           return (
                             <Fragment key={type}>
                               <Field
                                 as={CheckboxField}
                                 id={`ops-eval-and-learning-cmmi-involvement-${type}`}
                                 name="ccmInvolvment"
-                                label={translateCcmInvolvmentType(type)}
+                                label={ccmInvolvmentConfig.options[type]}
                                 value={type}
-                                checked={values?.ccmInvolvment.includes(
-                                  type as CcmInvolvmentType
-                                )}
+                                checked={values?.ccmInvolvment.includes(type)}
                                 onChange={(
                                   e: React.ChangeEvent<HTMLInputElement>
                                 ) => {
@@ -389,11 +417,15 @@ const Evaluation = () => {
                                       htmlFor="ops-eval-and-learning-cmmi-involvement-other"
                                       className="text-normal"
                                     >
-                                      {h('pleaseSpecify')}
+                                      {opsEvalAndLearningT(
+                                        'ccmInvolvmentOther.label'
+                                      )}
                                     </Label>
+
                                     <FieldErrorMsg>
                                       {flatErrors.ccmInvolvmentOther}
                                     </FieldErrorMsg>
+
                                     <Field
                                       as={TextAreaField}
                                       className="maxw-none mint-textarea"
@@ -406,215 +438,229 @@ const Evaluation = () => {
                             </Fragment>
                           );
                         })}
-                      <AddNote
-                        id="ops-eval-and-learning-cmmi-involvement-note"
-                        field="ccmInvolvmentNote"
-                      />
-                    </>
-                  )}
-                />
 
-                <FieldGroup
-                  scrollElement="dataNeededForMonitoring"
-                  error={!!flatErrors.dataNeededForMonitoring}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="ops-eval-and-learning-data-needed"
-                    id="label-ops-eval-and-learning-data-needed"
-                    className="maxw-none"
-                  >
-                    {t('dataNeeded')}
-                  </Label>
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="ops-eval-and-learning-data-needed-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
-                    />
-                  )}
-
-                  <p className="text-base margin-y-1">{t('dataNeededInfo')}</p>
-
-                  <FieldErrorMsg>
-                    {flatErrors.dataNeededForMonitoring}
-                  </FieldErrorMsg>
-                  <Field
-                    as={MultiSelect}
-                    id="ops-eval-and-learning-data-needed"
-                    name="dataNeededForMonitoring"
-                    ariaLabel="label-ops-eval-and-learning-data-needed"
-                    options={mapMultiSelectOptions(
-                      translateDataForMonitoringType,
-                      DataForMonitoringType
+                        <AddNote
+                          id="ops-eval-and-learning-cmmi-involvement-note"
+                          field="ccmInvolvmentNote"
+                        />
+                      </>
                     )}
-                    selectedLabel={t('selectedData')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('dataNeededForMonitoring', value);
-                    }}
-                    initialValues={initialValues.dataNeededForMonitoring}
                   />
-                  {(values?.dataNeededForMonitoring || []).includes(
-                    DataForMonitoringType.OTHER
-                  ) && (
-                    <div className="margin-top-2">
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-needed-other"
-                        className="text-normal"
-                      >
-                        {t('dataNeededOther')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.dataNeededForMonitoringOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextInput}
-                        maxLength={50}
-                        error={flatErrors.dataNeededForMonitoringOther}
-                        id="ops-eval-and-learning-data-needed-other"
-                        name="dataNeededForMonitoringOther"
-                      />
-                    </div>
-                  )}
 
-                  <AddNote
-                    id="ops-eval-and-learning-data-needed-note"
-                    field="dataNeededForMonitoringNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="dataToSendParticicipants"
-                  error={!!flatErrors.dataToSendParticicipants}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="ops-eval-and-learning-data-to-send"
-                    id="label-ops-eval-and-learning-data-to-send"
-                    className="maxw-none"
+                  <FieldGroup
+                    scrollElement="dataNeededForMonitoring"
+                    error={!!flatErrors.dataNeededForMonitoring}
+                    className="margin-top-4"
                   >
-                    {t('dataToSend')}
-                  </Label>
-                  {itSolutionsStarted && (
-                    <ITSolutionsWarning
-                      id="ops-eval-and-learning-data-to-send-warning"
-                      onClick={() =>
-                        handleFormSubmit(
-                          `/models/${modelID}/task-list/it-solutions`
-                        )
-                      }
-                    />
-                  )}
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-needed"
+                      id="label-ops-eval-and-learning-data-needed"
+                      className="maxw-none"
+                    >
+                      {opsEvalAndLearningT('dataNeededForMonitoring.label')}
+                    </Label>
 
-                  <FieldErrorMsg>
-                    {flatErrors.dataToSendParticicipants}
-                  </FieldErrorMsg>
-                  <Field
-                    as={MultiSelect}
-                    id="ops-eval-and-learning-data-to-send"
-                    name="dataToSendParticicipants"
-                    ariaLabel="label-ops-eval-and-learning-data-to-send"
-                    options={mapMultiSelectOptions(
-                      translateDataToSendParticipantsType,
-                      DataToSendParticipantsType
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-data-needed-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
                     )}
-                    selectedLabel={t('selectedData')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('dataToSendParticicipants', value);
-                    }}
-                    initialValues={initialValues.dataToSendParticicipants}
-                  />
-                  {(values?.dataToSendParticicipants || []).includes(
-                    DataToSendParticipantsType.OTHER_MIPS_DATA
-                  ) && (
-                    <div className="margin-top-2">
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-to-send-other"
-                        className="text-normal"
-                      >
-                        {t('dataToSendOther')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.dataToSendParticicipantsgOther}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextInput}
-                        maxLength={50}
-                        error={flatErrors.dataToSendParticicipantsOther}
-                        id="ops-eval-and-learning-data-to-send-other"
-                        name="dataToSendParticicipantsOther"
-                      />
-                    </div>
-                  )}
 
-                  <AddNote
-                    id="ops-eval-and-learning-data-to-send-note"
-                    field="dataToSendParticicipantsNote"
-                  />
-                </FieldGroup>
+                    <p className="text-base margin-y-1">
+                      {opsEvalAndLearningT('dataNeededForMonitoring.sublabel')}
+                    </p>
 
-                <FieldGroup
-                  scrollElement="shareCclfData"
-                  error={!!flatErrors.shareCclfData}
-                  className="margin-top-6"
-                >
-                  <Label
-                    htmlFor="ops-eval-and-learning-share-cclf-data"
-                    className="maxw-none"
+                    <FieldErrorMsg>
+                      {flatErrors.dataNeededForMonitoring}
+                    </FieldErrorMsg>
+
+                    <Field
+                      as={MultiSelect}
+                      id="ops-eval-and-learning-data-needed"
+                      name="dataNeededForMonitoring"
+                      ariaLabel="label-ops-eval-and-learning-data-needed"
+                      options={composeMultiSelectOptions(
+                        dataNeededForMonitoringConfig.options
+                      )}
+                      selectedLabel={opsEvalAndLearningT(
+                        'dataNeededForMonitoring.multiSelectLabel'
+                      )}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('dataNeededForMonitoring', value);
+                      }}
+                      initialValues={initialValues.dataNeededForMonitoring}
+                    />
+
+                    {(values?.dataNeededForMonitoring || []).includes(
+                      DataForMonitoringType.OTHER
+                    ) && (
+                      <div className="margin-top-2">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-needed-other"
+                          className="text-normal"
+                        >
+                          {opsEvalAndLearningT(
+                            'dataNeededForMonitoringOther.label'
+                          )}
+                        </Label>
+
+                        <FieldErrorMsg>
+                          {flatErrors.dataNeededForMonitoringOther}
+                        </FieldErrorMsg>
+
+                        <Field
+                          as={TextInput}
+                          maxLength={50}
+                          error={flatErrors.dataNeededForMonitoringOther}
+                          id="ops-eval-and-learning-data-needed-other"
+                          name="dataNeededForMonitoringOther"
+                        />
+                      </div>
+                    )}
+
+                    <AddNote
+                      id="ops-eval-and-learning-data-needed-note"
+                      field="dataNeededForMonitoringNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="dataToSendParticicipants"
+                    error={!!flatErrors.dataToSendParticicipants}
+                    className="margin-top-4"
                   >
-                    {t('claimLineFeed')}
-                  </Label>
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-to-send"
+                      id="label-ops-eval-and-learning-data-to-send"
+                      className="maxw-none"
+                    >
+                      {opsEvalAndLearningT('dataToSendParticicipants.label')}
+                    </Label>
 
-                  <FieldErrorMsg>{flatErrors.shareCclfData}</FieldErrorMsg>
-                  <Fieldset>
-                    {[true, false].map(key => (
-                      <Field
-                        as={Radio}
-                        key={key}
-                        id={`ops-eval-and-learning-share-cclf-data-${key}`}
-                        data-testid={`ops-eval-and-learning-share-cclf-data-${key}`}
-                        name="shareCclfData"
-                        label={key ? h('yes') : h('no')}
-                        value={key ? 'YES' : 'NO'}
-                        checked={values.shareCclfData === key}
-                        onChange={() => {
-                          setFieldValue('shareCclfData', key);
-                        }}
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-data-to-send-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
                       />
-                    ))}
-                  </Fieldset>
+                    )}
 
-                  <AddNote
-                    id="ops-eval-and-learning-share-cclf-data-note"
-                    field="shareCclfDataNote"
-                  />
-                </FieldGroup>
+                    <FieldErrorMsg>
+                      {flatErrors.dataToSendParticicipants}
+                    </FieldErrorMsg>
 
-                <div className="margin-top-6 margin-bottom-3">
+                    <Field
+                      as={MultiSelect}
+                      id="ops-eval-and-learning-data-to-send"
+                      name="dataToSendParticicipants"
+                      ariaLabel="label-ops-eval-and-learning-data-to-send"
+                      options={composeMultiSelectOptions(
+                        dataToSendParticicipantsConfig.options
+                      )}
+                      selectedLabel={opsEvalAndLearningT(
+                        'dataToSendParticicipants.multiSelectLabel'
+                      )}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('dataToSendParticicipants', value);
+                      }}
+                      initialValues={initialValues.dataToSendParticicipants}
+                    />
+
+                    {(values?.dataToSendParticicipants || []).includes(
+                      DataToSendParticipantsType.OTHER_MIPS_DATA
+                    ) && (
+                      <div className="margin-top-2">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-to-send-other"
+                          className="text-normal"
+                        >
+                          {opsEvalAndLearningT(
+                            'dataToSendParticicipantsOther.label'
+                          )}
+                        </Label>
+
+                        <FieldErrorMsg>
+                          {flatErrors.dataToSendParticicipantsOther}
+                        </FieldErrorMsg>
+
+                        <Field
+                          as={TextInput}
+                          maxLength={50}
+                          error={flatErrors.dataToSendParticicipantsOther}
+                          id="ops-eval-and-learning-data-to-send-other"
+                          name="dataToSendParticicipantsOther"
+                        />
+                      </div>
+                    )}
+
+                    <AddNote
+                      id="ops-eval-and-learning-data-to-send-note"
+                      field="dataToSendParticicipantsNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="shareCclfData"
+                    error={!!flatErrors.shareCclfData}
+                    className="margin-top-6"
+                  >
+                    <Label
+                      htmlFor="ops-eval-and-learning-share-cclf-data"
+                      className="maxw-none"
+                    >
+                      {opsEvalAndLearningT('shareCclfData.label')}
+                    </Label>
+
+                    <FieldErrorMsg>{flatErrors.shareCclfData}</FieldErrorMsg>
+
+                    <BooleanRadio
+                      field="shareCclfData"
+                      id="ops-eval-and-learning-share-cclf-data"
+                      value={values.shareCclfData}
+                      setFieldValue={setFieldValue}
+                      options={shareCclfDataConfig.options}
+                    />
+
+                    <AddNote
+                      id="ops-eval-and-learning-share-cclf-data-note"
+                      field="shareCclfDataNote"
+                    />
+                  </FieldGroup>
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {miscellaneousT('back')}
+                    </Button>
+
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
+
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
 
               {id && (
@@ -630,6 +676,7 @@ const Evaluation = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

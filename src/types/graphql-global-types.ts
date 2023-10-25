@@ -181,16 +181,24 @@ export enum DataToSendParticipantsType {
   PROVIDER_LEVEL_DATA = "PROVIDER_LEVEL_DATA",
 }
 
-export enum DiscussionStatus {
-  ANSWERED = "ANSWERED",
-  UNANSWERED = "UNANSWERED",
-  WAITING_FOR_RESPONSE = "WAITING_FOR_RESPONSE",
+export enum DiscussionUserRole {
+  CMS_SYSTEM_SERVICE_TEAM = "CMS_SYSTEM_SERVICE_TEAM",
+  IT_ARCHITECT = "IT_ARCHITECT",
+  LEADERSHIP = "LEADERSHIP",
+  MEDICARE_ADMINISTRATIVE_CONTRACTOR = "MEDICARE_ADMINISTRATIVE_CONTRACTOR",
+  MINT_TEAM = "MINT_TEAM",
+  MODEL_IT_LEAD = "MODEL_IT_LEAD",
+  MODEL_TEAM = "MODEL_TEAM",
+  NONE_OF_THE_ABOVE = "NONE_OF_THE_ABOVE",
+  SHARED_SYSTEM_MAINTAINER = "SHARED_SYSTEM_MAINTAINER",
 }
 
 export enum DocumentType {
   CONCEPT_PAPER = "CONCEPT_PAPER",
+  DESIGN_PARAMETERS_MEMO = "DESIGN_PARAMETERS_MEMO",
   ICIP_DRAFT = "ICIP_DRAFT",
   MARKET_RESEARCH = "MARKET_RESEARCH",
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION = "OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION",
   OTHER = "OTHER",
   POLICY_PAPER = "POLICY_PAPER",
 }
@@ -245,14 +253,12 @@ export enum KeyCharacteristic {
 
 export enum ModelCategory {
   ACCOUNTABLE_CARE = "ACCOUNTABLE_CARE",
-  DEMONSTRATION = "DEMONSTRATION",
-  EPISODE_BASED_PAYMENT_INITIATIVES = "EPISODE_BASED_PAYMENT_INITIATIVES",
-  INIT_ACCEL_DEV_AND_TEST = "INIT_ACCEL_DEV_AND_TEST",
-  INIT_MEDICAID_CHIP_POP = "INIT_MEDICAID_CHIP_POP",
-  INIT_SPEED_ADOPT_BEST_PRACTICE = "INIT_SPEED_ADOPT_BEST_PRACTICE",
-  INIT__MEDICARE_MEDICAID_ENROLLEES = "INIT__MEDICARE_MEDICAID_ENROLLEES",
-  PRIMARY_CARE_TRANSFORMATION = "PRIMARY_CARE_TRANSFORMATION",
-  UNKNOWN = "UNKNOWN",
+  DISEASE_SPECIFIC_AND_EPISODIC = "DISEASE_SPECIFIC_AND_EPISODIC",
+  HEALTH_PLAN = "HEALTH_PLAN",
+  PRESCRIPTION_DRUG = "PRESCRIPTION_DRUG",
+  STATE_BASED = "STATE_BASED",
+  STATUTORY = "STATUTORY",
+  TO_BE_DETERMINED = "TO_BE_DETERMINED",
 }
 
 export enum ModelLearningSystemType {
@@ -271,10 +277,12 @@ export enum ModelPlanFilter {
 }
 
 export enum ModelStatus {
+  ACTIVE = "ACTIVE",
   ANNOUNCED = "ANNOUNCED",
   CANCELED = "CANCELED",
   CLEARED = "CLEARED",
   CMS_CLEARANCE = "CMS_CLEARANCE",
+  ENDED = "ENDED",
   HHS_CLEARANCE = "HHS_CLEARANCE",
   ICIP_COMPLETE = "ICIP_COMPLETE",
   INTERNAL_CMMI_CLEARANCE = "INTERNAL_CMMI_CLEARANCE",
@@ -359,6 +367,7 @@ export enum OperationalSolutionKey {
   ACO_OS = "ACO_OS",
   APPS = "APPS",
   ARS = "ARS",
+  BCDA = "BCDA",
   CBOSC = "CBOSC",
   CCW = "CCW",
   CDX = "CDX",
@@ -380,11 +389,13 @@ export enum OperationalSolutionKey {
   INNOVATION = "INNOVATION",
   INTERNAL_STAFF = "INTERNAL_STAFF",
   IPC = "IPC",
+  ISP = "ISP",
   LDG = "LDG",
   LOI = "LOI",
   LV = "LV",
   MARX = "MARX",
   MDM = "MDM",
+  MIDS = "MIDS",
   OTHER_NEW_PROCESS = "OTHER_NEW_PROCESS",
   OUTLOOK_MAILBOX = "OUTLOOK_MAILBOX",
   POST_PORTAL = "POST_PORTAL",
@@ -554,6 +565,8 @@ export enum TeamRole {
   LEARNING = "LEARNING",
   MODEL_LEAD = "MODEL_LEAD",
   MODEL_TEAM = "MODEL_TEAM",
+  OACT = "OACT",
+  PAYMENT = "PAYMENT",
   QUALITY = "QUALITY",
 }
 
@@ -561,6 +574,11 @@ export enum TriStateAnswer {
   NO = "NO",
   TBD = "TBD",
   YES = "YES",
+}
+
+export enum TrustFundType {
+  MEDICARE_PART_A_HI_TRUST_FUND = "MEDICARE_PART_A_HI_TRUST_FUND",
+  MEDICARE_PART_B_SMI_TRUST_FUND = "MEDICARE_PART_B_SMI_TRUST_FUND",
 }
 
 export enum WaiverType {
@@ -580,7 +598,8 @@ export interface CreateOperationalSolutionSubtaskInput {
 export interface DiscussionReplyCreateInput {
   discussionID: UUID;
   content: string;
-  resolution: boolean;
+  userRole?: DiscussionUserRole | null;
+  userRoleDescription?: string | null;
 }
 
 /**
@@ -590,6 +609,7 @@ export interface DiscussionReplyCreateInput {
  */
 export interface ModelPlanChanges {
   modelName?: string | null;
+  abbreviation?: string | null;
   someNumbers?: number[] | null;
   archived?: boolean | null;
   status?: ModelStatus | null;
@@ -612,7 +632,10 @@ export interface OperationalSolutionChanges {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanBasicsChanges {
+  demoCode?: string | null;
+  amsModelID?: string | null;
   modelCategory?: ModelCategory | null;
+  additionalModelCategories?: ModelCategory[] | null;
   cmsCenters?: CMSCenter[] | null;
   cmsOther?: string | null;
   cmmiGroups?: CMMIGroup[] | null;
@@ -692,7 +715,8 @@ export interface PlanCrTdlCreateInput {
  */
 export interface PlanDiscussionChanges {
   content?: string | null;
-  status?: DiscussionStatus | null;
+  userRole?: DiscussionUserRole | null;
+  userRoleDescription?: string | null;
 }
 
 /**
@@ -701,6 +725,8 @@ export interface PlanDiscussionChanges {
 export interface PlanDiscussionCreateInput {
   modelPlanID: UUID;
   content: string;
+  userRole?: DiscussionUserRole | null;
+  userRoleDescription?: string | null;
 }
 
 /**
@@ -725,7 +751,6 @@ export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
   existingModel?: string | null;
   resemblesExistingModel?: boolean | null;
-  resemblesExistingModelWhich?: string[] | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
   hasComponentsOrTracks?: boolean | null;
@@ -936,11 +961,11 @@ export interface PlanParticipantsAndProvidersChanges {
 
 export interface PlanPaymentsChanges {
   fundingSource?: FundingSource[] | null;
-  fundingSourceTrustFund?: string | null;
+  fundingSourceTrustFundType?: TrustFundType[] | null;
   fundingSourceOther?: string | null;
   fundingSourceNote?: string | null;
   fundingSourceR?: FundingSource[] | null;
-  fundingSourceRTrustFund?: string | null;
+  fundingSourceRTrustFundType?: TrustFundType[] | null;
   fundingSourceROther?: string | null;
   fundingSourceRNote?: string | null;
   payRecipients?: PayRecipient[] | null;
@@ -980,7 +1005,6 @@ export interface PlanPaymentsChanges {
   sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null;
   planningToUseInnovationPaymentContractor?: boolean | null;
   planningToUseInnovationPaymentContractorNote?: string | null;
-  fundingStructure?: string | null;
   expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote?: string | null;
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;

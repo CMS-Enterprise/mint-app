@@ -4,6 +4,8 @@ import { Grid, IconArrowForward } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
+import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
@@ -36,8 +38,12 @@ const CategoryFooter = ({
                   key={key}
                   to={`/help-and-knowledge/operational-solutions?category=${key}`}
                 >
-                  {t(`categories.${key}.header`)}
-                  <IconArrowForward className="margin-left-1" />
+                  <span>
+                    {t(`categories.${key}.header`)}&nbsp;
+                    {solutionCategories[key as OperationalSolutionCategoryRoute]
+                      ?.subHeader && t(`categories.${key}.subHeader`)}
+                    <IconArrowForward className="margin-left-1 top-2px" />
+                  </span>
                 </UswdsReactLink>
               </Grid>
             );

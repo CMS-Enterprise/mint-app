@@ -1,0 +1,61 @@
+{{template "shared_header.html" "Problem Report"}}
+
+<h3>Reporter</h3>
+
+{{if .IsAnonymousSubmission }}
+  <p>Anonymous</p>
+{{else}}
+  <p>{{.ReporterName}}</p>
+  <a href="mailto:{{.ReporterEmail}}">{{.ReporterEmail}}</a>
+  <br />
+  <br />
+  {{if .AllowContact}}
+    <p>{{.AllowContact}}</p>
+  {{else}}
+    <i>User didn't specify if they could be contacted</i>
+  {{end}}
+{{end}}
+
+<br />
+<hr />
+<br />
+
+<p class="bold">Which part of MINT were you using when you encountered the issue?</p>
+
+{{ if .Section}}
+  <p>{{.Section}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br />
+
+<p class="bold">What were you doing?</p>
+
+{{ if .WhatDoing}}
+  <p>{{.WhatDoing}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br />
+
+<p class="bold">What went wrong?</p>
+
+{{ if .WhatWentWrong}}
+  <p>{{.WhatWentWrong}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+<br />
+
+<p class="bold" >How severe was the problem?</p>
+
+{{ if .Severity}}
+  <p>{{.Severity}}</p>
+{{else}}
+  <i>Left Blank</i>
+{{end}}
+
+{{template "shared_footer.html"}}

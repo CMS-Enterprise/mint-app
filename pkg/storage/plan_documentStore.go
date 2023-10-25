@@ -48,20 +48,20 @@ var planDocumentSolutionLinksDeleteByDocumentIDSQL string
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
 	principal string,
-	inputDocument *models.PlanDocument,
-	s3Client *upload.S3Client) (*models.PlanDocument, error) {
+	inputDocument *models.PlanDocument) (*models.PlanDocument, error) {
 
 	inputDocument.ID = utilityUUID.ValueOrNewUUID(inputDocument.ID)
 	inputDocument.ModifiedBy = nil
 	inputDocument.ModifiedDts = nil
 
 	retDoc := &models.PlanDocument{}
-	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
+	stmt, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
+	defer stmt.Close()
 
-	err = statement.Get(retDoc, inputDocument)
+	err = stmt.Get(retDoc, inputDocument)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 	}
@@ -70,14 +70,20 @@ func (s *Store) PlanDocumentCreate(
 }
 
 // PlanDocumentRead reads a plan document object by id
-func (s *Store) PlanDocumentRead(logger *zap.Logger, s3Client *upload.S3Client, id uuid.UUID) (*models.PlanDocument, error) {
-	statement, err := s.db.PrepareNamed(planDocumentGetByIDSQL)
+func (s *Store) PlanDocumentRead(
+	_ *zap.Logger,
+	s3Client *upload.S3Client,
+	id uuid.UUID,
+) (*models.PlanDocument, error) {
+
+	stmt, err := s.db.PrepareNamed(planDocumentGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	var document models.PlanDocument
-	err = statement.Get(&document, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&document, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -96,13 +102,14 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 	modelPlanID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	statement, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDSQL)
+	stmt, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	err = stmt.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
 	}
@@ -122,13 +129,14 @@ func (s *Store) PlanDocumentsReadBySolutionID(
 	solutionID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	statement, err := s.db.PrepareNamed(planDocumentsGetBySolutionIDSQL)
+	stmt, err := s.db.PrepareNamed(planDocumentsGetBySolutionIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	err = stmt.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
@@ -148,13 +156,14 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	modelPlanID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	statement, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDNotRestrictedSQL)
+	stmt, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDNotRestrictedSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	err = stmt.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
 	}
@@ -174,13 +183,14 @@ func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
 	solutionID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	statement, err := s.db.PrepareNamed(planDocumentGetBySolutionIDNotRestrictedSQL)
+	stmt, err := s.db.PrepareNamed(planDocumentGetBySolutionIDNotRestrictedSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	err = stmt.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
@@ -207,6 +217,14 @@ func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents [
 }
 
 func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *models.PlanDocument) error {
+
+	// if this is a link to another website, we are not currently able to scan the link.
+	// in this case, we'll just assume it's clean, otherwise the user won't be able to do anything with the link, making it useless.
+	if document.IsLink {
+		document.VirusScanned = true
+		document.VirusClean = true
+		return nil
+	}
 	status, err := fetchDocumentTag(s3Client, document, "av-status")
 	if err != nil {
 		return err
@@ -243,12 +261,14 @@ func logIfNoRowsFetched(logger *zap.Logger, modelPlanID uuid.UUID, documents []*
 
 // PlanDocumentUpdate updates a plan document object by id with provided values
 func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument) (*models.PlanDocument, error) {
-	statement, err := s.db.PrepareNamed(planDocumentUpdateSQL)
+
+	stmt, err := s.db.PrepareNamed(planDocumentUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
 	}
+	defer stmt.Close()
 
-	err = statement.Get(plan, plan)
+	err = stmt.Get(plan, plan)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, plan)
 	}
@@ -258,29 +278,33 @@ func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument
 
 // PlanDocumentDelete deletes a plan document object by id
 func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (sql.Result, error) {
+
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
+
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
 	}
 
-	statement, err := tx.PrepareNamed(planDocumentSolutionLinksDeleteByDocumentIDSQL)
+	stmt, err := tx.PrepareNamed(planDocumentSolutionLinksDeleteByDocumentIDSQL)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(utilitySQL.CreateDocumentIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = statement.Exec(utilitySQL.CreateDocumentIDQueryMap(id))
+	stmt, err = tx.PrepareNamed(planDocumentDeleteByIDSQL)
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
-	statement, err = tx.PrepareNamed(planDocumentDeleteByIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	sqlResult, err := statement.Exec(utilitySQL.CreateIDQueryMap(id))
+	sqlResult, err := stmt.Exec(utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}

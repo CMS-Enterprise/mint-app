@@ -4,13 +4,14 @@ import ReactModal from 'react-modal';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
 
+import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
 import MobileNav from 'views/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { HelpSolutionType, solutionHelpRoute } from '../../solutionsMap';
+import { HelpSolutionType } from '../../solutionsMap';
 import Contact from '../_components/Contact';
 import Header from '../_components/Header';
 import About from '../About';
@@ -22,32 +23,34 @@ import './index.scss';
 // Formats the query params on modal route change
 export const formatQueryParam = (
   paramValues: string[],
-  section: 'about' | 'timeline' | 'points-of-contact'
+  section: 'about' | 'timeline' | 'points-of-contact',
+  closeRoute: string
 ) =>
-  `${solutionHelpRoute}?${paramValues
+  `${closeRoute}?${paramValues
     .filter(param => !param.includes('section'))
     .join('&')}&section=${section}`;
 
 const subComponents = (
   solution: HelpSolutionType,
-  location: any
+  location: any,
+  closeRoute: string
 ): subComponentsProps => {
   const paramValues = location.search.substring(1).split('&');
 
   return {
     about: {
-      route: formatQueryParam(paramValues, 'about'),
-      helpRoute: formatQueryParam(paramValues, 'about'),
+      route: formatQueryParam(paramValues, 'about', closeRoute),
+      helpRoute: formatQueryParam(paramValues, 'about', closeRoute),
       component: <About solution={solution} />
     },
     timeline: {
-      route: formatQueryParam(paramValues, 'timeline'),
-      helpRoute: formatQueryParam(paramValues, 'timeline'),
+      route: formatQueryParam(paramValues, 'timeline', closeRoute),
+      helpRoute: formatQueryParam(paramValues, 'timeline', closeRoute),
       component: <Timeline solution={solution} />
     },
     'points-of-contact': {
-      route: formatQueryParam(paramValues, 'points-of-contact'),
-      helpRoute: formatQueryParam(paramValues, 'points-of-contact'),
+      route: formatQueryParam(paramValues, 'points-of-contact', closeRoute),
+      helpRoute: formatQueryParam(paramValues, 'points-of-contact', closeRoute),
       component: <PointsOfContact solution={solution} />
     }
   };
@@ -56,11 +59,13 @@ const subComponents = (
 type SolutionDetailsModalProps = {
   solution: HelpSolutionType;
   openedFrom: string | undefined;
+  closeRoute: string;
 };
 
 const SolutionDetailsModal = ({
   solution,
-  openedFrom
+  openedFrom,
+  closeRoute
 }: SolutionDetailsModalProps) => {
   const location = useLocation();
 
@@ -93,7 +98,7 @@ const SolutionDetailsModal = ({
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
-    history.push(prevRoute || '/help-and-knowledge/operational-solutions', {
+    history.push(prevRoute || closeRoute, {
       fromModal: true
     });
   };
@@ -133,7 +138,7 @@ const SolutionDetailsModal = ({
 
           {isMobile && (
             <MobileNav
-              subComponents={subComponents(solution, location)}
+              subComponents={subComponents(solution, location, closeRoute)}
               subinfo={section}
               isHelpArticle
               solutionDetailRoute={prevRoute}
@@ -145,25 +150,41 @@ const SolutionDetailsModal = ({
               {!isMobile && (
                 <Grid desktop={{ col: 3 }}>
                   <SideNav
-                    subComponents={subComponents(solution, location)}
+                    subComponents={subComponents(
+                      solution,
+                      location,
+                      closeRoute
+                    )}
                     isHelpArticle
                     solutionNavigation
                     paramActive
                   />
 
-                  <Contact contact={solution.pointsOfContact[0]} />
+                  <Contact contact={solution.pointsOfContact?.[0]} />
+
+                  <Alert
+                    type="info"
+                    noIcon
+                    lessPadding
+                    className="margin-top-5"
+                  >
+                    {t('itLeadInfo')}
+                  </Alert>
                 </Grid>
               )}
 
               <Grid desktop={{ col: 8 }}>
-                {subComponents(solution, location)[section]?.component}
+                {
+                  subComponents(solution, location, closeRoute)[section]
+                    ?.component
+                }
               </Grid>
 
               <Grid desktop={{ col: 1 }} />
 
               {isMobile && (
                 <Grid desktop={{ col: 3 }}>
-                  <Contact contact={solution.pointsOfContact[0]} />
+                  <Contact contact={solution.pointsOfContact?.[0]} />
                 </Grid>
               )}
             </Grid>

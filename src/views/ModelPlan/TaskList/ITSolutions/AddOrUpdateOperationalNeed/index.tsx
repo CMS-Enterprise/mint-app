@@ -58,7 +58,7 @@ const AddOrUpdateOperationalNeed = () => {
 
   const isUpdating = !!operationalNeedID;
 
-  const { data } = useQuery<
+  const { data, loading, error } = useQuery<
     GetOperationalNeedType,
     GetOperationalNeedVariables
   >(GetOperationalNeed, {
@@ -132,10 +132,9 @@ const AddOrUpdateOperationalNeed = () => {
               history.push(`/models/${modelID}/task-list/it-solutions`);
             } else {
               // Contiues to add solution
-              history.push({
-                pathname: `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`,
-                state: { isCustomNeed: true }
-              });
+              history.push(
+                `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution?isCustomNeed=true`
+              );
             }
           }
         })
@@ -167,7 +166,7 @@ const AddOrUpdateOperationalNeed = () => {
       <Expire delay={45000}>{message}</Expire>
 
       <Grid row gap>
-        <Grid tablet={{ col: 9 }}>
+        <Grid desktop={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
             {isUpdating
               ? t('updateThisOpertationalNeed')
@@ -227,7 +226,7 @@ const AddOrUpdateOperationalNeed = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset>
+                      <Fieldset disabled={!!error || loading}>
                         <FieldGroup
                           scrollElement="nameOther"
                           error={!!flatErrors.nameOther}
@@ -309,7 +308,7 @@ const AddOrUpdateOperationalNeed = () => {
             </Formik>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
+        <Grid desktop={{ col: 3 }} className="padding-x-1">
           {/* to pass down remove operational need to sidebar */}
           <ITSolutionsSidebar
             modelID={modelID}

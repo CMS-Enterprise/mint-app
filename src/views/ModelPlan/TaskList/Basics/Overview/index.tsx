@@ -23,6 +23,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetBasics from 'queries/Basics/GetBasics';
 import {
   GetBasics as GetBasicsType,
@@ -30,17 +31,22 @@ import {
   GetBasicsVariables
 } from 'queries/Basics/types/GetBasics';
 import {
-  UpdatePlanBasics as UpdatePlanBasicsType,
+  UpdatePlanBasics as UpdatebasicsType,
   UpdatePlanBasicsVariables
 } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Overview = () => {
-  const { t } = useTranslation('basics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: basicsT } = useTranslation('basics');
+  const { t: basicsMiscT } = useTranslation('basicsMisc');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const { modelType: modelTypeConfig } = usePlanTranslation('basics');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<BasicsFormType>>(null);
@@ -60,7 +66,7 @@ const Overview = () => {
   const { id, modelType, problem, goal, testInterventions, note } =
     data?.modelPlan?.basics || ({} as BasicsFormType);
 
-  const [update] = useMutation<UpdatePlanBasicsType, UpdatePlanBasicsVariables>(
+  const [update] = useMutation<UpdatebasicsType, UpdatePlanBasicsVariables>(
     UpdatePlanBasics
   );
 
@@ -109,28 +115,29 @@ const Overview = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-1">
-        {t('heading')}
+        {basicsMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -156,25 +163,27 @@ const Overview = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <Form
                 className="tablet:grid-col-6 margin-top-6"
                 onSubmit={e => {
@@ -182,109 +191,118 @@ const Overview = () => {
                   window.scrollTo(0, 0);
                 }}
               >
-                <FieldGroup
-                  scrollElement="modelType"
-                  error={!!flatErrors.modelType}
-                  className="margin-top-4"
-                >
-                  <Label htmlFor="modelType">{t('modelType')}</Label>
-                  <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
-                  <Fieldset>
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup
+                    scrollElement="modelType"
+                    error={!!flatErrors.modelType}
+                    className="margin-top-4"
+                  >
+                    <Label htmlFor="modelType">
+                      {basicsT('modelType.label')}
+                    </Label>
+
+                    <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
+
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="ModelType-Voluntary"
+                        name="modelType"
+                        label={modelTypeConfig.options.VOLUNTARY}
+                        value="VOLUNTARY"
+                        checked={values.modelType === 'VOLUNTARY'}
+                      />
+                      <Field
+                        as={Radio}
+                        id="ModelType-Mandatory"
+                        name="modelType"
+                        label={modelTypeConfig.options.MANDATORY}
+                        value="MANDATORY"
+                        checked={values.modelType === 'MANDATORY'}
+                      />
+                    </Fieldset>
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="problem"
+                    error={!!flatErrors.problem}
+                    className="margin-top-4"
+                  >
                     <Field
-                      as={Radio}
-                      id="ModelType-Voluntary"
-                      name="modelType"
-                      label={t('voluntary')}
-                      value="VOLUNTARY"
-                      checked={values.modelType === 'VOLUNTARY'}
+                      as={TextAreaField}
+                      error={flatErrors.problem}
+                      id="ModelType-Problem"
+                      name="problem"
+                      label={basicsT('problem.label')}
                     />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="goal"
+                    error={!!flatErrors.goal}
+                    className="margin-top-4"
+                  >
                     <Field
-                      as={Radio}
-                      id="ModelType-Mandatory"
-                      name="modelType"
-                      label={t('Mandatory')}
-                      value="MANDATORY"
-                      checked={values.modelType === 'MANDATORY'}
+                      as={TextAreaField}
+                      error={flatErrors.goal}
+                      id="ModelType-Goal"
+                      name="goal"
+                      hint={basicsT('goal.sublabel')}
+                      label={basicsT('goal.label')}
                     />
-                  </Fieldset>
-                </FieldGroup>
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="problem"
-                  error={!!flatErrors.problem}
-                  className="margin-top-4"
-                >
-                  <Field
-                    as={TextAreaField}
-                    error={flatErrors.problem}
-                    id="ModelType-Problem"
-                    name="problem"
-                    label={t('problem')}
-                  />
-                </FieldGroup>
+                  <FieldGroup
+                    scrollElement="testInterventions"
+                    error={!!flatErrors.testInterventions}
+                    className="margin-top-4"
+                  >
+                    <Field
+                      as={TextAreaField}
+                      error={flatErrors.testInterventions}
+                      id="ModelType-testInterventions"
+                      name="testInterventions"
+                      label={basicsT('testInterventions.label')}
+                    />
+                  </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="goal"
-                  error={!!flatErrors.goal}
-                  className="margin-top-4"
-                >
-                  <Field
-                    as={TextAreaField}
-                    error={flatErrors.goal}
-                    id="ModelType-Goal"
-                    name="goal"
-                    hint={t('goalHelp')}
-                    label={t('goal')}
-                  />
-                </FieldGroup>
+                  <AddNote id="ModelType-note" field="note" />
 
-                <FieldGroup
-                  scrollElement="testInterventions"
-                  error={!!flatErrors.testInterventions}
-                  className="margin-top-4"
-                >
-                  <Field
-                    as={TextAreaField}
-                    error={flatErrors.testInterventions}
-                    id="ModelType-testInterventions"
-                    name="testInterventions"
-                    label={t('testInterventions')}
-                  />
-                </FieldGroup>
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => handleFormSubmit('task-list')}
+                    >
+                      {miscellaneousT('back')}
+                    </Button>
 
-                <AddNote id="ModelType-note" field="note" />
-
-                <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="submit"
+                      disabled={!(dirty || isValid)}
+                      className=""
+                      onClick={() => setErrors({})}
+                    >
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => handleFormSubmit('back')}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-                  <Button
-                    type="submit"
-                    disabled={!(dirty || isValid)}
-                    className=""
-                    onClick={() => setErrors({})}
-                  >
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    if (Object.keys(formikRef.current!.touched).length !== 0) {
+                    if (getKeys(formikRef.current!.touched).length !== 0) {
                       handleFormSubmit();
                     }
                   }}
@@ -295,6 +313,7 @@ const Overview = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={2} totalPages={3} className="margin-bottom-10" />
     </div>
   );

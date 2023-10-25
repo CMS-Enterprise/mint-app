@@ -10,13 +10,13 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -27,6 +27,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
 import {
@@ -40,18 +41,29 @@ import {
   AlternativePaymentModelType,
   KeyCharacteristic
 } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  mapMultiSelectOptions,
-  translateAlternativePaymentTypes,
-  translateKeyCharacteristics
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const KeyCharacteristics = () => {
-  const { t } = useTranslation('generalCharacteristics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: generalCharacteristicsT } = useTranslation(
+    'generalCharacteristics'
+  );
+  const { t: generalCharacteristicsMiscT } = useTranslation(
+    'generalCharacteristicsMisc'
+  );
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    alternativePaymentModelTypes: alternativePaymentModelTypesConfig,
+    keyCharacteristics: keyCharacteristicsConfig,
+    collectPlanBids: collectPlanBidsConfig,
+    managePartCDEnrollment: managePartCDEnrollmentConfig,
+    planContractUpdated: planContractUpdatedConfig
+  } = usePlanTranslation('generalCharacteristics');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<KeyCharacteristicsFormType>>(null);
@@ -153,28 +165,31 @@ const KeyCharacteristics = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>
+          {generalCharacteristicsMiscT('breadcrumb')}
+        </Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {generalCharacteristicsMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {miscellaneousT('for')} {modelName}
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -196,19 +211,20 @@ const KeyCharacteristics = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
@@ -222,339 +238,329 @@ const KeyCharacteristics = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldGroup
-                  scrollElement="alternativePaymentModelTypes"
-                  error={!!flatErrors.alternativePaymentModelTypes}
-                  className="margin-y-4 margin-bottom-8"
-                >
-                  <legend className="usa-label maxw-none">
-                    {t('modelAPM')}
-                  </legend>
-                  <Alert type="info" slim data-testid="mandatory-fields-alert">
-                    <span className="mandatory-fields-alert__text">
-                      {t('MIPSInfo')}
-                    </span>
-                  </Alert>
-
-                  <FieldErrorMsg>
-                    {flatErrors.alternativePaymentModelTypes}
-                  </FieldErrorMsg>
-
-                  <Fieldset>
-                    {Object.keys(AlternativePaymentModelType)
-                      .filter(x => x !== AlternativePaymentModelType.NOT_APM)
-                      .map(type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`plan-characteristics-alternative-payment-${type}`}
-                              name="alternativePaymentModelTypes"
-                              label={translateAlternativePaymentTypes(type)}
-                              value={type}
-                              checked={values.alternativePaymentModelTypes.includes(
-                                type as AlternativePaymentModelType
-                              )}
-                              disabled={values.alternativePaymentModelTypes.includes(
-                                AlternativePaymentModelType.NOT_APM
-                              )}
-                            />
-                          </Fragment>
-                        );
-                      })}
-                    <Field
-                      as={CheckboxField}
-                      id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
-                      name="alternativePaymentModelTypes"
-                      label={translateAlternativePaymentTypes(
-                        AlternativePaymentModelType.NOT_APM
-                      )}
-                      value={AlternativePaymentModelType.NOT_APM}
-                      checked={values.alternativePaymentModelTypes.includes(
-                        AlternativePaymentModelType.NOT_APM
-                      )}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        if (e.target.checked) {
-                          setFieldValue(
-                            'alternativePaymentModelTypes',
-                            AlternativePaymentModelType.NOT_APM
-                          );
-                        } else {
-                          setFieldValue('alternativePaymentModelTypes', []);
-                        }
-                      }}
-                    />
-                  </Fieldset>
-
-                  <AddNote
-                    id="plan-characteristics-alternative-payment-note"
-                    field="alternativePaymentModelNote"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="keyCharacteristics"
-                  error={!!flatErrors.keyCharacteristics}
-                  className="margin-top-4"
-                >
-                  <Label
-                    htmlFor="plan-characteristics-key-characteristics"
-                    id="label-plan-characteristics-key-characteristics"
-                  >
-                    {t('keyCharacteristics')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.keyCharacteristics}</FieldErrorMsg>
-
-                  <Field
-                    as={MultiSelect}
-                    id="plan-characteristics-key-characteristics"
-                    name="keyCharacteristics"
-                    ariaLabel="label-plan-characteristics-key-characteristics"
-                    role="combobox"
-                    options={mapMultiSelectOptions(
-                      translateKeyCharacteristics,
-                      KeyCharacteristic
-                    )}
-                    selectedLabel={t('selectedKeyCharacteristics')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('keyCharacteristics', value);
-                    }}
-                    initialValues={initialValues.keyCharacteristics}
-                  />
-                </FieldGroup>
-
-                <AddNote
-                  id="plan-characteristics-key-characteristics-note"
-                  field="keyCharacteristicsNote"
-                />
-
-                {values.keyCharacteristics.includes(
-                  KeyCharacteristic.OTHER
-                ) && (
+                <Fieldset disabled={!!error || loading}>
                   <FieldGroup
-                    scrollElement="keyCharacteristicsOther"
-                    className="margin-top-neg-4"
-                    error={!!flatErrors.keyCharacteristicsOther}
+                    scrollElement="alternativePaymentModelTypes"
+                    error={!!flatErrors.alternativePaymentModelTypes}
+                    className="margin-y-4 margin-bottom-8"
                   >
-                    <Label htmlFor="plan-characteristics-key-other">
-                      {t('specificQuestions')}
-                    </Label>
-                    <p className="margin-y-1 margin-top-3">
-                      {t('pleaseDescribe')}
-                    </p>
+                    <legend className="usa-label maxw-none">
+                      {generalCharacteristicsT(
+                        'alternativePaymentModelTypes.label'
+                      )}
+                    </legend>
+
+                    <Alert
+                      type="info"
+                      slim
+                      data-testid="mandatory-fields-alert"
+                    >
+                      <span className="mandatory-fields-alert__text">
+                        {generalCharacteristicsT(
+                          'alternativePaymentModelTypes.sublabel'
+                        )}
+                      </span>
+                    </Alert>
+
                     <FieldErrorMsg>
-                      {flatErrors.keyCharacteristicsOther}
+                      {flatErrors.alternativePaymentModelTypes}
                     </FieldErrorMsg>
-                    <Field
-                      as={TextInput}
-                      data-testid="plan-characteristics-key-other"
-                      error={!!flatErrors.keyCharacteristicsOther}
-                      id="plan-characteristics-key-other"
-                      maxLength={50}
-                      name="keyCharacteristicsOther"
+
+                    <Fieldset>
+                      {getKeys(alternativePaymentModelTypesConfig.options)
+                        .filter(x => x !== AlternativePaymentModelType.NOT_APM)
+                        .map(type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`plan-characteristics-alternative-payment-${type}`}
+                                name="alternativePaymentModelTypes"
+                                label={
+                                  alternativePaymentModelTypesConfig.options[
+                                    type
+                                  ]
+                                }
+                                value={type}
+                                checked={values.alternativePaymentModelTypes.includes(
+                                  type
+                                )}
+                                disabled={values.alternativePaymentModelTypes.includes(
+                                  AlternativePaymentModelType.NOT_APM
+                                )}
+                              />
+                            </Fragment>
+                          );
+                        })}
+
+                      <Field
+                        as={CheckboxField}
+                        id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
+                        name="alternativePaymentModelTypes"
+                        label={
+                          alternativePaymentModelTypesConfig.options[
+                            AlternativePaymentModelType.NOT_APM
+                          ]
+                        }
+                        value={AlternativePaymentModelType.NOT_APM}
+                        checked={values.alternativePaymentModelTypes.includes(
+                          AlternativePaymentModelType.NOT_APM
+                        )}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          if (e.target.checked) {
+                            setFieldValue(
+                              'alternativePaymentModelTypes',
+                              AlternativePaymentModelType.NOT_APM
+                            );
+                          } else {
+                            setFieldValue('alternativePaymentModelTypes', []);
+                          }
+                        }}
+                      />
+                    </Fieldset>
+
+                    <AddNote
+                      id="plan-characteristics-alternative-payment-note"
+                      field="alternativePaymentModelNote"
                     />
                   </FieldGroup>
-                )}
 
-                {(values.keyCharacteristics.includes(
-                  'PART_C' as KeyCharacteristic
-                ) ||
-                  values.keyCharacteristics.includes(
-                    'PART_D' as KeyCharacteristic
-                  )) && (
-                  <>
-                    <FieldGroup
-                      scrollElement="collectPlanBids"
-                      error={!!flatErrors.collectPlanBids}
-                      className="margin-y-4"
+                  <FieldGroup
+                    scrollElement="keyCharacteristics"
+                    error={!!flatErrors.keyCharacteristics}
+                    className="margin-top-4"
+                  >
+                    <Label
+                      htmlFor="plan-characteristics-key-characteristics"
+                      id="label-plan-characteristics-key-characteristics"
                     >
-                      <Label
-                        htmlFor="plan-characteristics-collect-bids"
-                        className="text-normal"
-                      >
-                        {t('reviewPlanBids')}
-                      </Label>
-                      {itSolutionsStarted && (
-                        <ITSolutionsWarning
-                          id="plan-characteristics-collect-bids-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        />
+                      {generalCharacteristicsT('keyCharacteristics.label')}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.keyCharacteristics}
+                    </FieldErrorMsg>
+
+                    <Field
+                      as={MultiSelect}
+                      id="plan-characteristics-key-characteristics"
+                      name="keyCharacteristics"
+                      ariaLabel="label-plan-characteristics-key-characteristics"
+                      role="combobox"
+                      options={composeMultiSelectOptions(
+                        keyCharacteristicsConfig.options
                       )}
+                      selectedLabel={generalCharacteristicsT(
+                        'keyCharacteristics.multiSelectLabel'
+                      )}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('keyCharacteristics', value);
+                      }}
+                      initialValues={initialValues.keyCharacteristics}
+                    />
+                  </FieldGroup>
+
+                  <AddNote
+                    id="plan-characteristics-key-characteristics-note"
+                    field="keyCharacteristicsNote"
+                  />
+
+                  {values.keyCharacteristics.includes(
+                    KeyCharacteristic.OTHER
+                  ) && (
+                    <FieldGroup
+                      scrollElement="keyCharacteristicsOther"
+                      className="margin-top-neg-4"
+                      error={!!flatErrors.keyCharacteristicsOther}
+                    >
+                      <Label htmlFor="plan-characteristics-key-other">
+                        {generalCharacteristicsMiscT('specificQuestions')}
+                      </Label>
+
+                      <p className="margin-y-1 margin-top-3">
+                        {generalCharacteristicsT(
+                          'keyCharacteristicsOther.label'
+                        )}
+                      </p>
+
                       <FieldErrorMsg>
-                        {flatErrors.collectPlanBids}
+                        {flatErrors.keyCharacteristicsOther}
                       </FieldErrorMsg>
-                      <Fieldset>
-                        <Field
-                          as={Radio}
+
+                      <Field
+                        as={TextInput}
+                        data-testid="plan-characteristics-key-other"
+                        error={!!flatErrors.keyCharacteristicsOther}
+                        id="plan-characteristics-key-other"
+                        maxLength={50}
+                        name="keyCharacteristicsOther"
+                      />
+                    </FieldGroup>
+                  )}
+
+                  {(values.keyCharacteristics.includes(
+                    KeyCharacteristic.PART_C
+                  ) ||
+                    values.keyCharacteristics.includes(
+                      KeyCharacteristic.PART_D
+                    )) && (
+                    <>
+                      <FieldGroup
+                        scrollElement="collectPlanBids"
+                        error={!!flatErrors.collectPlanBids}
+                        className="margin-y-4"
+                      >
+                        <Label
+                          htmlFor="plan-characteristics-collect-bids"
+                          className="text-normal"
+                        >
+                          {generalCharacteristicsT('collectPlanBids.label')}
+                        </Label>
+
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="plan-characteristics-collect-bids-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <FieldErrorMsg>
+                          {flatErrors.collectPlanBids}
+                        </FieldErrorMsg>
+
+                        <BooleanRadio
+                          field="collectPlanBids"
                           id="plan-characteristics-collect-bids"
-                          name="collectPlanBids"
-                          label={h('yes')}
-                          value="TRUE"
-                          checked={values.collectPlanBids === true}
-                          onChange={() => {
-                            setFieldValue('collectPlanBids', true);
-                          }}
+                          value={values.collectPlanBids}
+                          setFieldValue={setFieldValue}
+                          options={collectPlanBidsConfig.options}
                         />
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-collect-bids-no"
-                          name="collectPlanBids"
-                          label={h('no')}
-                          value="FALSE"
-                          checked={values.collectPlanBids === false}
-                          onChange={() => {
-                            setFieldValue('collectPlanBids', false);
-                          }}
-                        />
-                      </Fieldset>
-                    </FieldGroup>
+                      </FieldGroup>
 
-                    <AddNote
-                      id="plan-characteristics-collect-bids-note"
-                      field="collectPlanBidsNote"
-                      className="margin-bottom-0"
-                    />
+                      <AddNote
+                        id="plan-characteristics-collect-bids-note"
+                        field="collectPlanBidsNote"
+                        className="margin-bottom-0"
+                      />
 
-                    <FieldGroup
-                      scrollElement="managePartCDEnrollment"
-                      error={!!flatErrors.managePartCDEnrollment}
-                      className="margin-y-4"
-                    >
-                      <Label
-                        htmlFor="plan-characteristics-manage-enrollment"
-                        className="text-normal"
+                      <FieldGroup
+                        scrollElement="managePartCDEnrollment"
+                        error={!!flatErrors.managePartCDEnrollment}
+                        className="margin-y-4"
                       >
-                        {t('manageEnrollment')}
-                      </Label>
-                      {itSolutionsStarted && (
-                        <ITSolutionsWarning
-                          id="plan-characteristics-manage-enrollment-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        />
-                      )}
-                      <FieldErrorMsg>
-                        {flatErrors.managePartCDEnrollment}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        <Field
-                          as={Radio}
+                        <Label
+                          htmlFor="plan-characteristics-manage-enrollment"
+                          className="text-normal"
+                        >
+                          {generalCharacteristicsT(
+                            'managePartCDEnrollment.label'
+                          )}
+                        </Label>
+
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="plan-characteristics-manage-enrollment-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <FieldErrorMsg>
+                          {flatErrors.managePartCDEnrollment}
+                        </FieldErrorMsg>
+
+                        <BooleanRadio
+                          field="managePartCDEnrollment"
                           id="plan-characteristics-manage-enrollment"
-                          name="managePartCDEnrollment"
-                          label={h('yes')}
-                          value="TRUE"
-                          checked={values.managePartCDEnrollment === true}
-                          onChange={() => {
-                            setFieldValue('managePartCDEnrollment', true);
-                          }}
+                          value={values.managePartCDEnrollment}
+                          setFieldValue={setFieldValue}
+                          options={managePartCDEnrollmentConfig.options}
                         />
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-manage-enrollment-no"
-                          name="managePartCDEnrollment"
-                          label={h('no')}
-                          value="FALSE"
-                          checked={values.managePartCDEnrollment === false}
-                          onChange={() => {
-                            setFieldValue('managePartCDEnrollment', false);
-                          }}
-                        />
-                      </Fieldset>
-                    </FieldGroup>
+                      </FieldGroup>
 
-                    <AddNote
-                      id="plan-characteristics-manage-enrollment-note"
-                      field="managePartCDEnrollmentNote"
-                      className="margin-bottom-0"
-                    />
+                      <AddNote
+                        id="plan-characteristics-manage-enrollment-note"
+                        field="managePartCDEnrollmentNote"
+                        className="margin-bottom-0"
+                      />
 
-                    <FieldGroup
-                      scrollElement="planContractUpdated"
-                      error={!!flatErrors.planContractUpdated}
-                      className="margin-y-4"
-                    >
-                      <Label
-                        htmlFor="plan-characteristics-contact-updated"
-                        className="text-normal"
+                      <FieldGroup
+                        scrollElement="planContractUpdated"
+                        error={!!flatErrors.planContractUpdated}
+                        className="margin-y-4"
                       >
-                        {t('updatedContract')}
-                      </Label>
-                      {itSolutionsStarted && (
-                        <ITSolutionsWarning
-                          id="plan-characteristics-contact-updated-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        />
-                      )}
-                      <FieldErrorMsg>
-                        {flatErrors.planContractUpdated}
-                      </FieldErrorMsg>
-                      <Fieldset>
-                        <Field
-                          as={Radio}
+                        <Label
+                          htmlFor="plan-characteristics-contact-updated"
+                          className="text-normal"
+                        >
+                          {generalCharacteristicsT('planContractUpdated.label')}
+                        </Label>
+
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="plan-characteristics-contact-updated-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <FieldErrorMsg>
+                          {flatErrors.planContractUpdated}
+                        </FieldErrorMsg>
+
+                        <BooleanRadio
+                          field="planContractUpdated"
                           id="plan-characteristics-contact-updated"
-                          name="planContractUpdated"
-                          label={h('yes')}
-                          value="TRUE"
-                          checked={values.planContractUpdated === true}
-                          onChange={() => {
-                            setFieldValue('planContractUpdated', true);
-                          }}
+                          value={values.planContractUpdated}
+                          setFieldValue={setFieldValue}
+                          options={planContractUpdatedConfig.options}
                         />
-                        <Field
-                          as={Radio}
-                          id="plan-characteristics-contact-updated-no"
-                          name="planContractUpdated"
-                          label={h('no')}
-                          value="FALSE"
-                          checked={values.planContractUpdated === false}
-                          onChange={() => {
-                            setFieldValue('planContractUpdated', false);
-                          }}
-                        />
-                      </Fieldset>
-                    </FieldGroup>
+                      </FieldGroup>
 
-                    <AddNote
-                      id="plan-characteristics-contact-updated-note"
-                      field="planContractUpdatedNote"
-                    />
-                  </>
-                )}
+                      <AddNote
+                        id="plan-characteristics-contact-updated-note"
+                        field="planContractUpdatedNote"
+                      />
+                    </>
+                  )}
 
-                <div className="margin-top-6 margin-bottom-3">
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        handleFormSubmit('back');
+                      }}
+                    >
+                      {miscellaneousT('back')}
+                    </Button>
+
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => {
-                      handleFormSubmit('back');
-                    }}
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit('task-list')}
                   >
-                    {h('back')}
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+
+                    {miscellaneousT('saveAndReturn')}
                   </Button>
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit('task-list')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
+                </Fieldset>
               </Form>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -568,6 +574,7 @@ const KeyCharacteristics = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={2} totalPages={5} className="margin-y-6" />
     </>
   );

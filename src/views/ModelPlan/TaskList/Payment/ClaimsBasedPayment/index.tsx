@@ -11,13 +11,13 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import BooleanRadio from 'components/BooleanRadioForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -28,6 +28,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
 import {
@@ -38,19 +39,28 @@ import {
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  mapMultiSelectOptions,
-  translateClaimsBasedPayType
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
 const ClaimsBasedPayment = () => {
-  const { t } = useTranslation('payments');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: paymentsT } = useTranslation('payments');
+
+  const { t: paymentsMiscT } = useTranslation('paymentsMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    payClaims: payClaimsConfig,
+    shouldAnyProvidersExcludedFFSSystems: shouldAnyProvidersExcludedFFSSystemsConfig,
+    changesMedicarePhysicianFeeSchedule: changesMedicarePhysicianFeeScheduleConfig,
+    affectsMedicareSecondaryPayerClaims: affectsMedicareSecondaryPayerClaimsConfig
+  } = usePlanTranslation('payments');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ClaimsBasedPaymentFormType>>(null);
@@ -157,18 +167,18 @@ const ClaimsBasedPayment = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {paymentsMiscT('heading')}
       </PageHeading>
 
       <p
@@ -179,8 +189,9 @@ const ClaimsBasedPayment = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -202,25 +213,27 @@ const ClaimsBasedPayment = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
-              {Object.keys(errors).length > 0 && (
+              {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
-                  {Object.keys(flatErrors).map(key => {
+                  {getKeys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
                         key={`Error.${key}`}
-                        errorKey={key}
+                        errorKey={`${key}`}
                         message={flatErrors[key]}
                       />
                     );
                   })}
                 </ErrorAlert>
               )}
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
@@ -231,313 +244,305 @@ const ClaimsBasedPayment = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <PageHeading
-                        headingLevel="h3"
-                        className="margin-bottom-3"
-                      >
-                        {t('claimSpecificQuestions')}
-                      </PageHeading>
-
-                      <FieldGroup
-                        scrollElement="payClaims"
-                        error={!!flatErrors.payClaims}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="payment-pay-claims"
-                          id="label-payment-pay-claims"
+                      <Fieldset disabled={!!error || loading}>
+                        <PageHeading
+                          headingLevel="h3"
+                          className="margin-bottom-3"
                         >
-                          {t('selectClaims')}
-                        </Label>
-                        <p className="text-base margin-bottom-1 margin-top-05">
-                          {t('selectClaimsSubcopy')}
-                        </p>
-                        <FieldErrorMsg>{flatErrors.payClaims}</FieldErrorMsg>
+                          {paymentsMiscT('claimSpecificQuestions')}
+                        </PageHeading>
 
-                        <Field
-                          as={MultiSelect}
-                          id="payment-pay-claims"
-                          name="payClaims"
-                          ariaLabel="label-payment-pay-claims"
-                          options={mapMultiSelectOptions(
-                            translateClaimsBasedPayType,
-                            ClaimsBasedPayType
-                          )}
-                          selectedLabel={t('selectedClaimsOptions')}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('payClaims', value);
-                          }}
-                          initialValues={initialValues.payClaims}
-                        />
-
-                        {(values?.payClaims || []).includes(
-                          ClaimsBasedPayType.OTHER
-                        ) && (
-                          <FieldGroup
-                            scrollElement="payClaimsOther"
-                            error={!!flatErrors.payClaimsOther}
+                        <FieldGroup
+                          scrollElement="payClaims"
+                          error={!!flatErrors.payClaims}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="payment-pay-claims"
+                            id="label-payment-pay-claims"
                           >
-                            <Label
-                              htmlFor="payClaimsOther"
-                              className="text-normal"
-                            >
-                              {t('selectClaimsOther')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.payClaimsOther}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextField}
-                              error={flatErrors.payClaimsOther}
-                              id="payment-pay-claims-other"
-                              data-testid="payment-pay-claims-other"
-                              name="payClaimsOther"
-                            />
-                          </FieldGroup>
-                        )}
+                            {paymentsT('payClaims.label')}
+                          </Label>
 
-                        <AddNote id="pay-claims-note" field="payClaimsNote" />
-                      </FieldGroup>
+                          <p className="text-base margin-bottom-1 margin-top-05">
+                            {paymentsT('payClaims.sublabel')}
+                          </p>
 
-                      <FieldGroup
-                        scrollElement="shouldAnyProvidersExcludedFFSSystems"
-                        error={
-                          !!flatErrors.shouldAnyProvidersExcludedFFSSystems
-                        }
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="shouldAnyProvidersExcludedFFSSystems"
-                          className="maxw-none"
-                        >
-                          {t('excludedFromPayment')}
-                        </Label>
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="payment-provider-exclusion-ffs-system-warning"
-                            className="margin-top-neg-5"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
-                        <FieldErrorMsg>
-                          {flatErrors.shouldAnyProvidersExcludedFFSSystems}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-provider-exclusion-ffs-system-${key}`}
-                              data-testid={`payment-provider-exclusion-ffs-system-${key}`}
-                              name="shouldAnyProvidersExcludedFFSSystems"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={
-                                values.shouldAnyProvidersExcludedFFSSystems ===
-                                key
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'shouldAnyProvidersExcludedFFSSystems',
-                                  key
-                                );
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-provider-exclusion-ffs-system-note"
-                          field="shouldAnyProviderExcludedFFSSystemsNote"
-                        />
-                      </FieldGroup>
+                          <FieldErrorMsg>{flatErrors.payClaims}</FieldErrorMsg>
 
-                      <FieldGroup
-                        scrollElement="changesMedicarePhysicianFeeSchedule"
-                        error={!!flatErrors.changesMedicarePhysicianFeeSchedule}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="changesMedicarePhysicianFeeSchedule"
-                          className="maxw-none"
-                        >
-                          {t('chageMedicareFeeSchedule')}
-                        </Label>
-                        <p className="text-base margin-y-1">
-                          {t('chageMedicareFeeScheduleSubcopy')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.changesMedicarePhysicianFeeSchedule}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`payment-change-medicare-phyisican-fee-schedule-${key}`}
-                              data-testid={`payment-change-medicare-phyisican-fee-schedule-${key}`}
-                              name="changesMedicarePhysicianFeeSchedule"
-                              label={key ? h('yes') : h('no')}
-                              value={key ? 'YES' : 'NO'}
-                              checked={
-                                values.changesMedicarePhysicianFeeSchedule ===
-                                key
-                              }
-                              onChange={() => {
-                                setFieldValue(
-                                  'changesMedicarePhysicianFeeSchedule',
-                                  key
-                                );
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="payment-change-medicare-phyisican-fee-schedule-note"
-                          field="changesMedicarePhysicianFeeScheduleNote"
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="affectsMedicareSecondaryPayerClaims"
-                        error={!!flatErrors.affectsMedicareSecondaryPayerClaims}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="affectsMedicareSecondaryPayerClaims"
-                          className="maxw-none"
-                        >
-                          {t('affectMedicareSecondaryPayerClaim')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.affectsMedicareSecondaryPayerClaims}
-                        </FieldErrorMsg>
-                        <Fieldset>
                           <Field
-                            as={Radio}
-                            id="payment-affects-medicare-secondary-payer-claims-Yes"
-                            name="affectsMedicareSecondaryPayerClaims"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.affectsMedicareSecondaryPayerClaims ===
-                              true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'affectsMedicareSecondaryPayerClaims',
-                                true
-                              );
+                            as={MultiSelect}
+                            id="payment-pay-claims"
+                            name="payClaims"
+                            ariaLabel="label-payment-pay-claims"
+                            options={composeMultiSelectOptions(
+                              payClaimsConfig.options
+                            )}
+                            selectedLabel={paymentsT(
+                              'payClaims.multiSelectLabel'
+                            )}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue('payClaims', value);
                             }}
+                            initialValues={initialValues.payClaims}
                           />
-                          {values.affectsMedicareSecondaryPayerClaims && (
+
+                          {(values?.payClaims || []).includes(
+                            ClaimsBasedPayType.OTHER
+                          ) && (
                             <FieldGroup
-                              className="margin-left-4 margin-y-1"
-                              scrollElement="affectsMedicareSecondaryPayerClaimsHow"
-                              error={
-                                !!flatErrors.affectsMedicareSecondaryPayerClaimsHow
-                              }
+                              scrollElement="payClaimsOther"
+                              error={!!flatErrors.payClaimsOther}
                             >
                               <Label
-                                htmlFor="payment-affects-medicare-secondary-payer-claims-how"
+                                htmlFor="payClaimsOther"
                                 className="text-normal"
                               >
-                                {h('howSo')}
+                                {paymentsT('payClaimsOther.label')}
                               </Label>
+
                               <FieldErrorMsg>
-                                {
-                                  flatErrors.affectsMedicareSecondaryPayerClaimsHow
-                                }
+                                {flatErrors.payClaimsOther}
                               </FieldErrorMsg>
+
                               <Field
-                                as={TextAreaField}
-                                className="height-15"
-                                error={
-                                  flatErrors.affectsMedicareSecondaryPayerClaimsHow
-                                }
-                                id="payment-affects-medicare-secondary-payer-claims-how"
-                                data-testid="payment-affects-medicare-secondary-payer-claims-how"
-                                name="affectsMedicareSecondaryPayerClaimsHow"
+                                as={TextField}
+                                error={flatErrors.payClaimsOther}
+                                id="payment-pay-claims-other"
+                                data-testid="payment-pay-claims-other"
+                                name="payClaimsOther"
                               />
                             </FieldGroup>
                           )}
-                          <Field
-                            as={Radio}
-                            id="payment-affects-medicare-secondary-payer-claims-No"
-                            name="affectsMedicareSecondaryPayerClaims"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.affectsMedicareSecondaryPayerClaims ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'affectsMedicareSecondaryPayerClaims',
-                                false
-                              );
-                            }}
-                          />
-                        </Fieldset>
-                        <AddNote
-                          id="payment-affects-medicare-secondary-payer-claims-note"
-                          field="affectsMedicareSecondaryPayerClaimsNote"
-                        />
-                      </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="payModelDifferentiation"
-                        error={!!flatErrors.payModelDifferentiation}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="payModelDifferentiation"
-                          className="maxw-none"
+                          <AddNote id="pay-claims-note" field="payClaimsNote" />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="shouldAnyProvidersExcludedFFSSystems"
+                          error={
+                            !!flatErrors.shouldAnyProvidersExcludedFFSSystems
+                          }
+                          className="margin-top-4"
                         >
-                          {t('affectCurrentPolicy')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.payModelDifferentiation}
-                        </FieldErrorMsg>
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          error={flatErrors.payModelDifferentiation}
-                          id="payment-affect-current-policy"
-                          data-testid="payment-affect-current-policy"
-                          name="payModelDifferentiation"
-                        />
-                      </FieldGroup>
+                          <Label
+                            htmlFor="shouldAnyProvidersExcludedFFSSystems"
+                            className="maxw-none"
+                          >
+                            {paymentsT(
+                              'shouldAnyProvidersExcludedFFSSystems.label'
+                            )}
+                          </Label>
 
-                      <div className="margin-top-6 margin-bottom-3">
+                          {itSolutionsStarted && (
+                            <ITSolutionsWarning
+                              id="payment-provider-exclusion-ffs-system-warning"
+                              className="margin-top-neg-5"
+                              onClick={() =>
+                                handleFormSubmit(
+                                  `/models/${modelID}/task-list/it-solutions`
+                                )
+                              }
+                            />
+                          )}
+
+                          <FieldErrorMsg>
+                            {flatErrors.shouldAnyProvidersExcludedFFSSystems}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="shouldAnyProvidersExcludedFFSSystems"
+                            id="payment-provider-exclusion-ffs-system"
+                            value={values.shouldAnyProvidersExcludedFFSSystems}
+                            setFieldValue={setFieldValue}
+                            options={
+                              shouldAnyProvidersExcludedFFSSystemsConfig.options
+                            }
+                          />
+
+                          <AddNote
+                            id="payment-provider-exclusion-ffs-system-note"
+                            field="shouldAnyProviderExcludedFFSSystemsNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="changesMedicarePhysicianFeeSchedule"
+                          error={
+                            !!flatErrors.changesMedicarePhysicianFeeSchedule
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="changesMedicarePhysicianFeeSchedule"
+                            className="maxw-none"
+                          >
+                            {paymentsT(
+                              'changesMedicarePhysicianFeeSchedule.label'
+                            )}
+                          </Label>
+
+                          <p className="text-base margin-y-1">
+                            {paymentsT(
+                              'changesMedicarePhysicianFeeSchedule.sublabel'
+                            )}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.changesMedicarePhysicianFeeSchedule}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="changesMedicarePhysicianFeeSchedule"
+                            id="payment-change-medicare-phyisican-fee-schedule"
+                            value={values.changesMedicarePhysicianFeeSchedule}
+                            setFieldValue={setFieldValue}
+                            options={
+                              changesMedicarePhysicianFeeScheduleConfig.options
+                            }
+                          />
+
+                          <AddNote
+                            id="payment-change-medicare-phyisican-fee-schedule-note"
+                            field="changesMedicarePhysicianFeeScheduleNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="affectsMedicareSecondaryPayerClaims"
+                          error={
+                            !!flatErrors.affectsMedicareSecondaryPayerClaims
+                          }
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="affectsMedicareSecondaryPayerClaims"
+                            className="maxw-none"
+                          >
+                            {paymentsT(
+                              'affectsMedicareSecondaryPayerClaims.label'
+                            )}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.affectsMedicareSecondaryPayerClaims}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="affectsMedicareSecondaryPayerClaims"
+                            id="payment-affects-medicare-secondary-payer-claims"
+                            value={values.affectsMedicareSecondaryPayerClaims}
+                            setFieldValue={setFieldValue}
+                            options={
+                              affectsMedicareSecondaryPayerClaimsConfig.options
+                            }
+                            childName="affectsMedicareSecondaryPayerClaimsHow"
+                          >
+                            {values.affectsMedicareSecondaryPayerClaims ? (
+                              <FieldGroup
+                                className="margin-left-4 margin-y-1"
+                                scrollElement="affectsMedicareSecondaryPayerClaimsHow"
+                                error={
+                                  !!flatErrors.affectsMedicareSecondaryPayerClaimsHow
+                                }
+                              >
+                                <Label
+                                  htmlFor="payment-affects-medicare-secondary-payer-claims-how"
+                                  className="text-normal"
+                                >
+                                  {paymentsT(
+                                    'affectsMedicareSecondaryPayerClaimsHow.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {
+                                    flatErrors.affectsMedicareSecondaryPayerClaimsHow
+                                  }
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextAreaField}
+                                  className="height-15"
+                                  error={
+                                    flatErrors.affectsMedicareSecondaryPayerClaimsHow
+                                  }
+                                  id="payment-affects-medicare-secondary-payer-claims-how"
+                                  data-testid="payment-affects-medicare-secondary-payer-claims-how"
+                                  name="affectsMedicareSecondaryPayerClaimsHow"
+                                />
+                              </FieldGroup>
+                            ) : (
+                              <></>
+                            )}
+                          </BooleanRadio>
+
+                          <AddNote
+                            id="payment-affects-medicare-secondary-payer-claims-note"
+                            field="affectsMedicareSecondaryPayerClaimsNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="payModelDifferentiation"
+                          error={!!flatErrors.payModelDifferentiation}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="payModelDifferentiation"
+                            className="maxw-none"
+                          >
+                            {paymentsT('payModelDifferentiation.label')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.payModelDifferentiation}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={TextAreaField}
+                            className="height-15"
+                            error={flatErrors.payModelDifferentiation}
+                            id="payment-affect-current-policy"
+                            data-testid="payment-affect-current-policy"
+                            name="payModelDifferentiation"
+                          />
+                        </FieldGroup>
+
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--outline margin-bottom-1"
+                            onClick={() => {
+                              handleFormSubmit('back');
+                            }}
+                          >
+                            {miscellaneousT('back')}
+                          </Button>
+
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {miscellaneousT('next')}
+                          </Button>
+                        </div>
+
                         <Button
                           type="button"
-                          className="usa-button usa-button--outline margin-bottom-1"
-                          onClick={() => {
-                            handleFormSubmit('back');
-                          }}
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('task-list')}
                         >
-                          {h('back')}
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
-                        </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('task-list')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -551,6 +556,7 @@ const ClaimsBasedPayment = () => {
           );
         }}
       </Formik>
+
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(

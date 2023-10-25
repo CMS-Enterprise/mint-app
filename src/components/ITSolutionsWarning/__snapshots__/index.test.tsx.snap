@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`The ITSolutionsWarning component matches snapshot 1`] = `
+exports[`The ITSolutionsWarning component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="usa-alert usa-alert--warning flex it-solutions-warning"
@@ -12,15 +12,17 @@ exports[`The ITSolutionsWarning component matches snapshot 1`] = `
       <p
         class="usa-alert__text"
       >
-        Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="button"
-          id="test-id"
-          type="button"
-        >
-          Go to IT solutions tracker.
-        </button>
+        <span>
+          Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            id="test-id"
+            type="button"
+          >
+            Go to IT solutions tracker.
+          </button>
+        </span>
       </p>
     </div>
   </div>

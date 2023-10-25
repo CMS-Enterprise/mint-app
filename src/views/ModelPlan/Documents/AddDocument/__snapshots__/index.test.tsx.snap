@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Add Documents page matches snapshot 1`] = `
+exports[`Model Plan Add Documents page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -85,12 +85,12 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
           class="mint-h1 margin-top-4 margin-bottom-0"
           tabindex="-1"
         >
-          Upload a document
+          Add a document
         </h1>
         <p
           class="margin-bottom-2 font-body-md line-height-body-4"
         >
-          Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.
+          Choose to upload or link to a document, such as a recent concept document, policy paper, or any additional model background information.
         </p>
         <p
           class="margin-bottom-2 font-body-md line-height-body-4"
@@ -104,6 +104,32 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
           </span>
             are required
         </p>
+        <ul
+          class="usa-button-group usa-button-group--segmented"
+        >
+          <li
+            class="usa-button-group__item"
+          >
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="button"
+            >
+              Upload document
+            </button>
+          </li>
+          <li
+            class="usa-button-group__item"
+          >
+            <button
+              class="usa-button usa-button--outline"
+              data-testid="button"
+              type="button"
+            >
+              Link to document
+            </button>
+          </li>
+        </ul>
         <div>
           <div>
             <form
@@ -223,6 +249,23 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
+                      id="FileUpload-DESIGN_PARAMETERS_MEMO"
+                      name="documentType"
+                      type="radio"
+                      value="DESIGN_PARAMETERS_MEMO"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-DESIGN_PARAMETERS_MEMO"
+                    >
+                      Design Parameter Memo
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
                       id="FileUpload-ICIP_DRAFT"
                       name="documentType"
                       type="radio"
@@ -250,6 +293,23 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                       for="FileUpload-MARKET_RESEARCH"
                     >
                       Market Research
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                      name="documentType"
+                      type="radio"
+                      value="OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                    >
+                      Office of the Administrator Presentation
                     </label>
                   </div>
                   <div
@@ -385,10 +445,12 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                     <p
                       class="usa-alert__text"
                     >
-                      <span
-                        class="mandatory-fields-alert__text"
-                      >
-                        To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
+                      <span>
+                        <span
+                          class="mandatory-fields-alert__text"
+                        >
+                          To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
+                        </span>
                       </span>
                     </p>
                   </div>
@@ -399,7 +461,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   disabled=""
                   type="submit"
                 >
-                  Upload document
+                  Add document
                 </button>
               </div>
             </form>
@@ -431,7 +493,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                 d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
               />
             </svg>
-            Don’t upload and return to previous page
+            Don’t add and return to previous page
           </button>
         </div>
       </div>

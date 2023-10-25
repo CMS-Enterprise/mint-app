@@ -1,26 +1,31 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import GetFunding from 'gql/apolloGQL/Payments/GetFunding';
+import { GetFundingQuery, TrustFundType } from 'gql/gen/graphql';
+import Sinon from 'sinon';
 
-import GetFunding from 'queries/Payments/GetFunding';
-import { GetFunding_modelPlan_payments as GetFundingType } from 'queries/Payments/types/GetFunding';
 import {
   FundingSource as FundingSourceType,
   PayType
 } from 'types/graphql-global-types';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import FundingSource from './index';
 
-const mockData: GetFundingType = {
+type FundingType = GetFundingQuery['modelPlan']['payments'];
+
+const modelPlanID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+
+const mockData: FundingType = {
   __typename: 'PlanPayments',
   id: '123',
   fundingSource: [FundingSourceType.TRUST_FUND],
-  fundingSourceTrustFund: 'Trust Fund',
+  fundingSourceTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
   fundingSourceOther: null,
   fundingSourceNote: null,
   fundingSourceR: [],
-  fundingSourceRTrustFund: null,
+  fundingSourceRTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
   fundingSourceROther: null,
   fundingSourceRNote: null,
   payRecipients: [],
@@ -35,12 +40,13 @@ const paymentMock = [
   {
     request: {
       query: GetFunding,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelPlanID }
     },
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          __typename: 'ModelPlan',
+          id: modelPlanID,
           modelName: 'My excellent plan that I just initiated',
           payments: mockData,
           operationalNeeds: [
@@ -55,18 +61,19 @@ const paymentMock = [
 ];
 
 describe('Model Plan Payment', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders without errors', async () => {
-    render(
+    const { getAllByRole } = render(
       <MemoryRouter
-        initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment'
-        ]}
+        initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
       >
-        <MockedProvider mocks={paymentMock} addTypename={false}>
+        <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/payment">
             <FundingSource />
           </Route>
-        </MockedProvider>
+        </VerboseMockedProvider>
       </MemoryRouter>
     );
 
@@ -77,32 +84,29 @@ describe('Model Plan Payment', () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('payment-funding-source-trust-fund')
-      ).toHaveValue('Trust Fund');
+      const checkbox = getAllByRole('checkbox', { name: /Trust Fund/i })[0];
+      expect(checkbox).toBeChecked();
     });
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { asFragment, getAllByRole } = render(
       <MemoryRouter
-        initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment'
-        ]}
+        initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
       >
-        <MockedProvider mocks={paymentMock} addTypename={false}>
+        <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/payment">
             <FundingSource />
           </Route>
-        </MockedProvider>
+        </VerboseMockedProvider>
       </MemoryRouter>
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('payment-funding-source-form')
-      ).toBeInTheDocument();
+      const checkbox = getAllByRole('checkbox', { name: /Trust Fund/i })[0];
+      expect(checkbox).toBeChecked();
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

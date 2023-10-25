@@ -28,9 +28,16 @@ func CreatePlanDiscussion(
 	principal authentication.Principal,
 	store *storage.Store,
 ) (*models.PlanDiscussion, error) {
-	planDiscussion := models.NewPlanDiscussion(principal.Account().ID, principal.AllowASSESSMENT(), input.ModelPlanID, input.Content)
+	planDiscussion := models.NewPlanDiscussion(
+		principal.Account().ID,
+		principal.AllowASSESSMENT(),
+		input.ModelPlanID,
+		input.Content,
+		input.UserRole,
+		input.UserRoleDescription,
+	)
 
-	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)
+	err := BaseStructPreCreate(logger, planDiscussion, principal, store, false)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +130,7 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}
@@ -148,10 +155,22 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 }
 
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
-func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreateInput, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	discussionReply := models.NewDiscussionReply(principal.Account().ID, principal.AllowASSESSMENT(), input.DiscussionID, input.Content, input.Resolution)
+func CreateDiscussionReply(
+	logger *zap.Logger,
+	input *model.DiscussionReplyCreateInput,
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.DiscussionReply, error) {
+	discussionReply := models.NewDiscussionReply(
+		principal.Account().ID,
+		principal.AllowASSESSMENT(),
+		input.DiscussionID,
+		input.Content,
+		input.UserRole,
+		input.UserRoleDescription,
+	)
 
-	err := BaseStructPreCreate(logger, discussionReply, principal, store, true)
+	err := BaseStructPreCreate(logger, discussionReply, principal, store, false)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +186,7 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 	if err != nil {
 		return nil, err
 	}
-	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}
@@ -223,4 +242,13 @@ func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.
 	}
 
 	return result.([]*models.PlanDiscussion), nil
+}
+
+// GetMostRecentDiscussionRoleSelection implements resolver logic to get the most recent user role selection
+func GetMostRecentDiscussionRoleSelection(
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
+) (*models.DiscussionRoleSelection, error) {
+	return store.GetMostRecentDiscussionRoleSelection(logger, principal.Account().ID)
 }

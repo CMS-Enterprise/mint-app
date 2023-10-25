@@ -28,6 +28,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import getPeopleImpacted from 'queries/Beneficiaries/getPeopleImpacted';
 import {
   GetPeopleImpacted as PeopleImpactedType,
@@ -36,22 +37,25 @@ import {
 } from 'queries/Beneficiaries/types/GetPeopleImpacted';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
-import {
-  ConfidenceType,
-  SelectionMethodType
-} from 'types/graphql-global-types';
+import { SelectionMethodType } from 'types/graphql-global-types';
+import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import {
-  sortOtherEnum,
-  translateConfidenceType,
-  translateSelectionMethodType
-} from 'utils/modelPlan';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const PeopleImpact = () => {
-  const { t } = useTranslation('beneficiaries');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: beneficiariesT } = useTranslation('beneficiaries');
+
+  const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    estimateConfidence: estimateConfidenceConfig,
+    beneficiarySelectionMethod: beneficiarySelectionMethodConfig
+  } = usePlanTranslation('beneficiaries');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
@@ -110,13 +114,6 @@ const PeopleImpact = () => {
       });
   };
 
-  const mappedSelectionMethodType = Object.keys(SelectionMethodType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateSelectionMethodType(key)
-    }));
-
   const initialValues: PeopleImpactedFormType = {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
@@ -137,18 +134,18 @@ const PeopleImpact = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{miscellaneousT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{beneficiariesMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
+        {beneficiariesMiscT('heading')}
       </PageHeading>
 
       <p
@@ -159,8 +156,9 @@ const PeopleImpact = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
+
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {miscellaneousT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -182,13 +180,14 @@ const PeopleImpact = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={miscellaneousT('checkAndFix')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -211,188 +210,218 @@ const PeopleImpact = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="numberPeopleImpacted"
-                        error={!!flatErrors.numberPeopleImpacted}
-                      >
-                        <Label htmlFor="expected-people-impacted">
-                          {t('howManyImpacted')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.numberPeopleImpacted}
-                        </FieldErrorMsg>
-                        <Field
-                          as={RangeInput}
-                          className="maxw-none width-full"
-                          error={flatErrors.numberPeopleImpacted}
-                          id="expected-people-impacted"
-                          name="numberPeopleImpacted"
-                          min={0}
-                          max={10000}
-                          step={1}
-                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setFieldValue(
-                              'numberPeopleImpacted',
-                              Number(e.target.value)
-                            );
-                          }}
-                        />
-                        <div className="display-flex mint-header__basic">
-                          <span>{t('zero')}</span>
-                          <span>{t('tenThousand')}</span>
-                        </div>
-                        <Label
-                          htmlFor="expected-people-impacted"
-                          className="text-normal"
+                      <Fieldset disabled={!!error || loading}>
+                        <FieldGroup
+                          scrollElement="numberPeopleImpacted"
+                          error={!!flatErrors.numberPeopleImpacted}
                         >
-                          {t('numberOfPeopleImpacted')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.numberPeopleImpacted}
-                        </FieldErrorMsg>
-                        <Field
-                          as={TextInput}
-                          type="number"
-                          className="width-card"
-                          error={flatErrors.numberPeopleImpacted}
-                          id="expected-people-impacted"
-                          data-testid="expected-people-impacted"
-                          name="numberPeopleImpacted"
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            if (Number.isNaN(e.target.value)) return;
-                            setFieldValue(
-                              'numberPeopleImpacted',
-                              Number(e.target.value)
-                            );
-                          }}
-                        />
+                          <Label htmlFor="expected-people-impacted">
+                            {beneficiariesT('numberPeopleImpacted.label')}
+                          </Label>
 
-                        <Label
-                          htmlFor="beneficiaries-impact-estimateConfidence"
-                          className="text-normal"
-                        >
-                          {t('levelOfConfidence')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.participantsCurrentlyInModels}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          {[
-                            ConfidenceType.NOT_AT_ALL,
-                            ConfidenceType.SLIGHTLY,
-                            ConfidenceType.FAIRLY,
-                            ConfidenceType.COMPLETELY
-                          ].map(key => (
-                            <Field
-                              as={Radio}
-                              key={key}
-                              id={`beneficiaries-impact-confidence-${key}`}
-                              name="participantsCurrentlyInModels"
-                              label={translateConfidenceType(key)}
-                              value={key}
-                              checked={values.estimateConfidence === key}
-                              onChange={() => {
-                                setFieldValue('estimateConfidence', key);
-                              }}
-                            />
-                          ))}
-                        </Fieldset>
-                        <AddNote
-                          id="beneficiaries-impact-confidence-note"
-                          field="confidenceNote"
-                        />
-                      </FieldGroup>
+                          <FieldErrorMsg>
+                            {flatErrors.numberPeopleImpacted}
+                          </FieldErrorMsg>
 
-                      <FieldGroup
-                        scrollElement="beneficiaries-chooseBeneficiaries"
-                        error={!!flatErrors.beneficiarySelectionMethod}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="beneficiaries-chooseBeneficiaries"
-                          id="label-beneficiaries-chooseBeneficiaries"
-                        >
-                          {t('chooseBeneficiaries')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.beneficiarySelectionMethod}
-                        </FieldErrorMsg>
+                          <Field
+                            as={RangeInput}
+                            className="maxw-none width-full"
+                            error={flatErrors.numberPeopleImpacted}
+                            id="expected-people-impacted"
+                            name="numberPeopleImpacted"
+                            min={0}
+                            max={10000}
+                            step={1}
+                            onInput={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setFieldValue(
+                                'numberPeopleImpacted',
+                                Number(e.target.value)
+                              );
+                            }}
+                          />
 
-                        <Field
-                          as={MultiSelect}
-                          id="beneficiaries-chooseBeneficiaries"
-                          name="beneficiarySelectionMethod"
-                          ariaLabel="label-beneficiaries-chooseBeneficiaries"
-                          options={mappedSelectionMethodType}
-                          selectedLabel={t('selectedMethods')}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('beneficiarySelectionMethod', value);
-                          }}
-                          initialValues={
-                            initialValues.beneficiarySelectionMethod
-                          }
-                        />
+                          <div className="display-flex mint-header__basic">
+                            <span>{beneficiariesMiscT('zero')}</span>
 
-                        {(values?.beneficiarySelectionMethod || []).includes(
-                          SelectionMethodType.OTHER
-                        ) && (
-                          <FieldGroup
-                            scrollElement="beneficiaries-chooseBeneficiarie-other"
-                            error={!!flatErrors.beneficiarySelectionOther}
+                            <span>{beneficiariesMiscT('tenThousand')}</span>
+                          </div>
+
+                          <Label
+                            htmlFor="expected-people-impacted"
+                            className="text-normal"
                           >
-                            <Label
-                              htmlFor="beneficiaries-choose-beneficiaries-other"
-                              className="text-normal"
+                            {beneficiariesMiscT('numberOfPeopleImpacted')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.numberPeopleImpacted}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={TextInput}
+                            type="number"
+                            className="width-card"
+                            error={flatErrors.numberPeopleImpacted}
+                            id="expected-people-impacted"
+                            data-testid="expected-people-impacted"
+                            name="numberPeopleImpacted"
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              if (Number.isNaN(e.target.value)) return;
+                              setFieldValue(
+                                'numberPeopleImpacted',
+                                Number(e.target.value)
+                              );
+                            }}
+                          />
+
+                          <Label
+                            htmlFor="beneficiaries-impact-estimateConfidence"
+                            className="text-normal"
+                          >
+                            {beneficiariesT('estimateConfidence.label')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.estimateConfidence}
+                          </FieldErrorMsg>
+
+                          <Fieldset>
+                            {getKeys(estimateConfidenceConfig.options).map(
+                              key => (
+                                <Field
+                                  as={Radio}
+                                  key={key}
+                                  id={`beneficiaries-impact-confidence-${key}`}
+                                  name="estimateConfidence"
+                                  label={estimateConfidenceConfig.options[key]}
+                                  value={key}
+                                  checked={values.estimateConfidence === key}
+                                  onChange={() => {
+                                    setFieldValue('estimateConfidence', key);
+                                  }}
+                                />
+                              )
+                            )}
+                          </Fieldset>
+
+                          <AddNote
+                            id="beneficiaries-impact-confidence-note"
+                            field="confidenceNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup
+                          scrollElement="beneficiaries-chooseBeneficiaries"
+                          error={!!flatErrors.beneficiarySelectionMethod}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="beneficiaries-chooseBeneficiaries"
+                            id="label-beneficiaries-chooseBeneficiaries"
+                          >
+                            {beneficiariesT('beneficiarySelectionMethod.label')}
+                          </Label>
+
+                          <FieldErrorMsg>
+                            {flatErrors.beneficiarySelectionMethod}
+                          </FieldErrorMsg>
+
+                          <Field
+                            as={MultiSelect}
+                            id="beneficiaries-chooseBeneficiaries"
+                            name="beneficiarySelectionMethod"
+                            ariaLabel="label-beneficiaries-chooseBeneficiaries"
+                            options={composeMultiSelectOptions(
+                              beneficiarySelectionMethodConfig.options
+                            )}
+                            selectedLabel={beneficiariesT(
+                              'beneficiarySelectionMethod.multiSelectLabel'
+                            )}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue(
+                                'beneficiarySelectionMethod',
+                                value
+                              );
+                            }}
+                            initialValues={
+                              initialValues.beneficiarySelectionMethod
+                            }
+                          />
+
+                          {(values?.beneficiarySelectionMethod || []).includes(
+                            SelectionMethodType.OTHER
+                          ) && (
+                            <FieldGroup
+                              scrollElement="beneficiaries-chooseBeneficiarie-other"
+                              error={!!flatErrors.beneficiarySelectionOther}
                             >
-                              {t('selectionMethodOther')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.beneficiarySelectionOther}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextField}
-                              error={flatErrors.beneficiarySelectionOther}
-                              id="beneficiaries-choose-beneficiaries-other"
-                              data-testid="beneficiaries-choose-beneficiaries-other"
-                              name="beneficiarySelectionOther"
-                            />
-                          </FieldGroup>
-                        )}
+                              <Label
+                                htmlFor="beneficiaries-choose-beneficiaries-other"
+                                className="text-normal"
+                              >
+                                {beneficiariesT(
+                                  'beneficiarySelectionOther.label'
+                                )}
+                              </Label>
 
-                        <AddNote
-                          id="beneficiaries-selection-note"
-                          field="beneficiarySelectionNote"
-                        />
-                      </FieldGroup>
+                              <FieldErrorMsg>
+                                {flatErrors.beneficiarySelectionOther}
+                              </FieldErrorMsg>
 
-                      <div className="margin-top-6 margin-bottom-3">
+                              <Field
+                                as={TextField}
+                                error={flatErrors.beneficiarySelectionOther}
+                                id="beneficiaries-choose-beneficiaries-other"
+                                data-testid="beneficiaries-choose-beneficiaries-other"
+                                name="beneficiarySelectionOther"
+                              />
+                            </FieldGroup>
+                          )}
+
+                          <AddNote
+                            id="beneficiaries-selection-note"
+                            field="beneficiarySelectionNote"
+                          />
+                        </FieldGroup>
+
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--outline margin-bottom-1"
+                            onClick={() => {
+                              handleFormSubmit('back');
+                            }}
+                          >
+                            {miscellaneousT('back')}
+                          </Button>
+
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {miscellaneousT('next')}
+                          </Button>
+                        </div>
+
                         <Button
                           type="button"
-                          className="usa-button usa-button--outline margin-bottom-1"
-                          onClick={() => {
-                            handleFormSubmit('back');
-                          }}
+                          className="usa-button usa-button--unstyled"
+                          onClick={() => handleFormSubmit('task-list')}
                         >
-                          {h('back')}
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
-                        </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('task-list')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
+                      </Fieldset>
                     </Form>
                   </Grid>
                 </Grid>
               </GridContainer>
+
               {id && (
                 <AutoSave
                   values={values}
@@ -406,6 +435,7 @@ const PeopleImpact = () => {
           );
         }}
       </Formik>
+
       <PageNumber currentPage={2} totalPages={3} className="margin-y-6" />
     </>
   );

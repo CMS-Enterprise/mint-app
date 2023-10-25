@@ -61,8 +61,10 @@ func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
 
 func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content string) *models.PlanDiscussion {
 	input := &model.PlanDiscussionCreateInput{
-		ModelPlanID: mp.ID,
-		Content:     content,
+		ModelPlanID:         mp.ID,
+		Content:             content,
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("test role"),
 	}
 	pd, err := CreatePlanDiscussion(
 		suite.testConfigs.Context,
@@ -78,13 +80,22 @@ func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content s
 	return pd
 }
 
-func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, content string, resolution bool) *models.DiscussionReply {
+func (suite *ResolverSuite) createDiscussionReply(
+	pd *models.PlanDiscussion,
+	content string,
+) *models.DiscussionReply {
 	input := &model.DiscussionReplyCreateInput{
-		DiscussionID: pd.ID,
-		Content:      content,
-		Resolution:   resolution,
+		DiscussionID:        pd.ID,
+		Content:             content,
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("this is a test"),
 	}
-	dr, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	dr, err := CreateDiscussionReply(
+		suite.testConfigs.Logger,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	return dr
 }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "03dabeb1-ceb2-4b5e-9efa-e07ae3df43ee",
+		"_postman_id": "e2e558ab-89c3-422c-b990-cf47b083cf7a",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20435042"
@@ -19,7 +19,27 @@
 									"let responseData = pm.response.json().data.createModelPlan",
 									"",
 									"modelPlanID = responseData.id",
-									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);"
+									"basicsID = responseData.basics.id",
+									"generalCharacteristicsID = responseData.generalCharacteristics.id",
+									"participantsAndProvidersID = responseData.participantsAndProviders.id",
+									"beneficiariesID = responseData.beneficiaries.id",
+									"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
+									"modelLeadID = responseData.collaborators[0].id",
+									"paymentsID = responseData.payments.id",
+									"firstOpNeed = responseData.operationalNeeds[0].id",
+									"userID = responseData.createdByUserAccount.id",
+									"",
+									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
+									"pm.collectionVariables.set(\"basicsID\", basicsID);",
+									"",
+									"pm.collectionVariables.set(\"generalCharacteristicsID\", generalCharacteristicsID);",
+									"pm.collectionVariables.set(\"participantsAndProvidersID\", participantsAndProvidersID);",
+									"pm.collectionVariables.set(\"beneficiariesID\", beneficiariesID);",
+									"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
+									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
+									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
+									"pm.collectionVariables.set(\"operationalNeedID\", firstOpNeed);",
+									"pm.collectionVariables.set(\"userID\", userID);"
 								],
 								"type": "text/javascript"
 							}
@@ -31,8 +51,40 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-								"variables": "{\n  \"modelName\": \"Test\"\n}"
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n  }\n}\n  ",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Share Model Plan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation shareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $usernames: [String!]!, $optionalMessage: String) {\n    shareModelPlan(modelPlanID: $modelPlanID, viewFilter: $viewFilter, usernames: $usernames, optionalMessage: $optionalMessage)\n}\n",
+								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"usernames\": [\"ABCD\", \"TEST\"],\n  \"optionalMessage\": \"\"\n}\n"
 							}
 						},
 						"url": {
@@ -52,7 +104,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\",\n  \"changes\": {\n    \"modelName\": \"My Updated Model\",\n    \"archived\": true,\n    \"status\": \"PLAN_DRAFT\"\n  }\n}"
 							}
 						},
@@ -73,7 +125,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
 							}
 						},
@@ -94,7 +146,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -115,7 +167,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n    \"filter\": \"INCLUDE_ALL\"\n}"
 							}
 						},
@@ -183,8 +235,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanBasics ($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        modelCategory\n        cmsCenters\n        cmsOther\n        cmmiGroups\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        wrapUpEnds\n        highLevelNote\n        phasedIn\n        phasedInNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n    }\n}",
-								"variables": "{\n  \"id\": \"{{basicsID}}\",\n  \"changes\": {\n    \"modelCategory\": \"\",\n    \"cmsCenters\": [\n      \"\"\n    ],\n    \"cmsOther\": \"\",\n    \"cmmiGroups\": [\n      \"\"\n    ],\n    \"modelType\": \"\",\n    \"problem\": \"\",\n    \"goal\": \"\",\n    \"testInterventions\": \"\",\n    \"note\": \"\",\n    \"completeICIP\": \"\",\n    \"clearanceStarts\": \"\",\n    \"clearanceEnds\": \"\",\n    \"announced\": \"\",\n    \"applicationsStart\": \"\",\n    \"applicationsEnd\": \"\",\n    \"performancePeriodStarts\": \"\",\n    \"performancePeriodEnds\": \"\",\n    \"wrapUpEnds\": \"\",\n    \"highLevelNote\": \"\",\n    \"phasedIn\": true,\n    \"phasedInNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"query": "mutation updatePlanBasics ($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        demoCode\n        amsModelID\n        modelCategory\n        cmsCenters\n        cmsOther\n        cmmiGroups\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        wrapUpEnds\n        highLevelNote\n        phasedIn\n        phasedInNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n    }\n}",
+								"variables": "{\n  \"id\": \"{{basicsID}}\",\n  \"changes\": {\n    \"demoCode\": \"\",\n    \"amsModelID\": \"\",\n    \"modelCategory\": \"\",\n    \"cmsCenters\": [\n      \"\"\n    ],\n    \"cmsOther\": \"\",\n    \"cmmiGroups\": [\n      \"\"\n    ],\n    \"modelType\": \"\",\n    \"problem\": \"\",\n    \"goal\": \"\",\n    \"testInterventions\": \"\",\n    \"note\": \"\",\n    \"completeICIP\": \"\",\n    \"clearanceStarts\": \"\",\n    \"clearanceEnds\": \"\",\n    \"announced\": \"\",\n    \"applicationsStart\": \"\",\n    \"applicationsEnd\": \"\",\n    \"performancePeriodStarts\": \"\",\n    \"performancePeriodEnds\": \"\",\n    \"wrapUpEnds\": \"\",\n    \"highLevelNote\": \"\",\n    \"phasedIn\": true,\n    \"phasedInNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -288,8 +340,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanPayments ($id: UUID!, $changes: PlanPaymentsChanges!) {\n    updatePlanPayments (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        fundingSource\n        fundingSourceTrustFund\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFund\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n        payClaimsOther\n        payClaimsNote\n        shouldAnyProvidersExcludedFFSSystems\n        shouldAnyProviderExcludedFFSSystemsNote\n        changesMedicarePhysicianFeeSchedule\n        changesMedicarePhysicianFeeScheduleNote\n        affectsMedicareSecondaryPayerClaims\n        affectsMedicareSecondaryPayerClaimsHow\n        affectsMedicareSecondaryPayerClaimsNote\n        payModelDifferentiation\n        creatingDependenciesBetweenServices\n        creatingDependenciesBetweenServicesNote\n        needsClaimsDataCollection\n        needsClaimsDataCollectionNote\n        providingThirdPartyFile\n        isContractorAwareTestDataRequirements\n        beneficiaryCostSharingLevelAndHandling\n        waiveBeneficiaryCostSharingForAnyServices\n        waiveBeneficiaryCostSharingServiceSpecification\n        waiverOnlyAppliesPartOfPayment\n        waiveBeneficiaryCostSharingNote\n        nonClaimsPayments\n        nonClaimsPaymentOther\n        nonClaimsPaymentsNote\n        paymentCalculationOwner\n        numberPaymentsPerPayCycle\n        numberPaymentsPerPayCycleNote\n        sharedSystemsInvolvedAdditionalClaimPayment\n        sharedSystemsInvolvedAdditionalClaimPaymentNote\n        planningToUseInnovationPaymentContractor\n        planningToUseInnovationPaymentContractorNote\n        fundingStructure\n        expectedCalculationComplexityLevel\n        expectedCalculationComplexityLevelNote\n        canParticipantsSelectBetweenPaymentMechanisms\n        canParticipantsSelectBetweenPaymentMechanismsHow\n        canParticipantsSelectBetweenPaymentMechanismsNote\n        anticipatedPaymentFrequency\n        anticipatedPaymentFrequencyOther\n        anticipatedPaymentFrequencyNote\n        willRecoverPayments\n        willRecoverPaymentsNote\n        anticipateReconcilingPaymentsRetrospectively\n        anticipateReconcilingPaymentsRetrospectivelyNote\n        paymentStartDate\n        paymentStartDateNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n    }\n}",
-								"variables": "{\n  \"id\": \"{{paymentsID}}\",\n  \"changes\": {\n    \"fundingSource\": [\n      \"\"\n    ],\n    \"fundingSourceTrustFund\": \"\",\n    \"fundingSourceOther\": \"\",\n    \"fundingSourceNote\": \"\",\n    \"fundingSourceR\": [\n      \"\"\n    ],\n    \"fundingSourceRTrustFund\": \"\",\n    \"fundingSourceROther\": \"\",\n    \"fundingSourceRNote\": \"\",\n    \"payRecipients\": [\n      \"\"\n    ],\n    \"payRecipientsOtherSpecification\": \"\",\n    \"payRecipientsNote\": \"\",\n    \"payType\": [\n      \"\"\n    ],\n    \"payTypeNote\": \"\",\n    \"payClaims\": [\n      \"\"\n    ],\n    \"payClaimsOther\": \"\",\n    \"payClaimsNote\": \"\",\n    \"shouldAnyProvidersExcludedFFSSystems\": true,\n    \"shouldAnyProviderExcludedFFSSystemsNote\": \"\",\n    \"changesMedicarePhysicianFeeSchedule\": true,\n    \"changesMedicarePhysicianFeeScheduleNote\": \"\",\n    \"affectsMedicareSecondaryPayerClaims\": true,\n    \"affectsMedicareSecondaryPayerClaimsHow\": \"\",\n    \"affectsMedicareSecondaryPayerClaimsNote\": \"\",\n    \"payModelDifferentiation\": \"\",\n    \"creatingDependenciesBetweenServices\": true,\n    \"creatingDependenciesBetweenServicesNote\": \"\",\n    \"needsClaimsDataCollection\": true,\n    \"needsClaimsDataCollectionNote\": \"\",\n    \"providingThirdPartyFile\": true,\n    \"isContractorAwareTestDataRequirements\": true,\n    \"beneficiaryCostSharingLevelAndHandling\": \"\",\n    \"waiveBeneficiaryCostSharingForAnyServices\": true,\n    \"waiveBeneficiaryCostSharingServiceSpecification\": \"\",\n    \"waiverOnlyAppliesPartOfPayment\": true,\n    \"waiveBeneficiaryCostSharingNote\": \"\",\n    \"nonClaimsPayments\": [\n      \"\"\n    ],\n    \"nonClaimsPaymentOther\": \"\",\n    \"nonClaimsPaymentsNote\": \"\",\n    \"paymentCalculationOwner\": \"\",\n    \"numberPaymentsPerPayCycle\": \"\",\n    \"numberPaymentsPerPayCycleNote\": \"\",\n    \"sharedSystemsInvolvedAdditionalClaimPayment\": true,\n    \"sharedSystemsInvolvedAdditionalClaimPaymentNote\": \"\",\n    \"planningToUseInnovationPaymentContractor\": true,\n    \"planningToUseInnovationPaymentContractorNote\": \"\",\n    \"fundingStructure\": \"\",\n    \"expectedCalculationComplexityLevel\": \"\",\n    \"expectedCalculationComplexityLevelNote\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanisms\": true,\n    \"canParticipantsSelectBetweenPaymentMechanismsHow\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanismsNote\": \"\",\n    \"anticipatedPaymentFrequency\": [\n      \"\"\n    ],\n    \"anticipatedPaymentFrequencyOther\": \"\",\n    \"anticipatedPaymentFrequencyNote\": \"\",\n    \"willRecoverPayments\": true,\n    \"willRecoverPaymentsNote\": \"\",\n    \"anticipateReconcilingPaymentsRetrospectively\": true,\n    \"anticipateReconcilingPaymentsRetrospectivelyNote\": \"\",\n    \"paymentStartDate\": \"\",\n    \"paymentStartDateNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"query": "mutation updatePlanPayments ($id: UUID!, $changes: PlanPaymentsChanges!) {\n    updatePlanPayments (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        fundingSource\n        fundingSourceTrustFund\n        fundingSourceTrustFundType\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFund\n        fundingSourceRTrustFundType\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n        payClaimsOther\n        payClaimsNote\n        shouldAnyProvidersExcludedFFSSystems\n        shouldAnyProviderExcludedFFSSystemsNote\n        changesMedicarePhysicianFeeSchedule\n        changesMedicarePhysicianFeeScheduleNote\n        affectsMedicareSecondaryPayerClaims\n        affectsMedicareSecondaryPayerClaimsHow\n        affectsMedicareSecondaryPayerClaimsNote\n        payModelDifferentiation\n        creatingDependenciesBetweenServices\n        creatingDependenciesBetweenServicesNote\n        needsClaimsDataCollection\n        needsClaimsDataCollectionNote\n        providingThirdPartyFile\n        isContractorAwareTestDataRequirements\n        beneficiaryCostSharingLevelAndHandling\n        waiveBeneficiaryCostSharingForAnyServices\n        waiveBeneficiaryCostSharingServiceSpecification\n        waiverOnlyAppliesPartOfPayment\n        waiveBeneficiaryCostSharingNote\n        nonClaimsPayments\n        nonClaimsPaymentOther\n        nonClaimsPaymentsNote\n        paymentCalculationOwner\n        numberPaymentsPerPayCycle\n        numberPaymentsPerPayCycleNote\n        sharedSystemsInvolvedAdditionalClaimPayment\n        sharedSystemsInvolvedAdditionalClaimPaymentNote\n        planningToUseInnovationPaymentContractor\n        planningToUseInnovationPaymentContractorNote\n        expectedCalculationComplexityLevel\n        expectedCalculationComplexityLevelNote\n        canParticipantsSelectBetweenPaymentMechanisms\n        canParticipantsSelectBetweenPaymentMechanismsHow\n        canParticipantsSelectBetweenPaymentMechanismsNote\n        anticipatedPaymentFrequency\n        anticipatedPaymentFrequencyOther\n        anticipatedPaymentFrequencyNote\n        willRecoverPayments\n        willRecoverPaymentsNote\n        anticipateReconcilingPaymentsRetrospectively\n        anticipateReconcilingPaymentsRetrospectivelyNote\n        paymentStartDate\n        paymentStartDateNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n    }\n}",
+								"variables": "{\n  \"id\": \"{{paymentsID}}\",\n  \"changes\": {\n    \"fundingSource\": [\n      \"\"\n    ],\n    \"fundingSourceTrustFund\": \"\",\n    \"fundingSourceTrustFundType\": \"\",\n    \"fundingSourceOther\": \"\",\n    \"fundingSourceNote\": \"\",\n    \"fundingSourceR\": [\n      \"\"\n    ],\n    \"fundingSourceRTrustFund\": \"\",\n    \"fundingSourceRTrustFundType\": \"\",\n    \"fundingSourceROther\": \"\",\n    \"fundingSourceRNote\": \"\",\n    \"payRecipients\": [\n      \"\"\n    ],\n    \"payRecipientsOtherSpecification\": \"\",\n    \"payRecipientsNote\": \"\",\n    \"payType\": [\n      \"\"\n    ],\n    \"payTypeNote\": \"\",\n    \"payClaims\": [\n      \"\"\n    ],\n    \"payClaimsOther\": \"\",\n    \"payClaimsNote\": \"\",\n    \"shouldAnyProvidersExcludedFFSSystems\": true,\n    \"shouldAnyProviderExcludedFFSSystemsNote\": \"\",\n    \"changesMedicarePhysicianFeeSchedule\": true,\n    \"changesMedicarePhysicianFeeScheduleNote\": \"\",\n    \"affectsMedicareSecondaryPayerClaims\": true,\n    \"affectsMedicareSecondaryPayerClaimsHow\": \"\",\n    \"affectsMedicareSecondaryPayerClaimsNote\": \"\",\n    \"payModelDifferentiation\": \"\",\n    \"creatingDependenciesBetweenServices\": true,\n    \"creatingDependenciesBetweenServicesNote\": \"\",\n    \"needsClaimsDataCollection\": true,\n    \"needsClaimsDataCollectionNote\": \"\",\n    \"providingThirdPartyFile\": true,\n    \"isContractorAwareTestDataRequirements\": true,\n    \"beneficiaryCostSharingLevelAndHandling\": \"\",\n    \"waiveBeneficiaryCostSharingForAnyServices\": true,\n    \"waiveBeneficiaryCostSharingServiceSpecification\": \"\",\n    \"waiverOnlyAppliesPartOfPayment\": true,\n    \"waiveBeneficiaryCostSharingNote\": \"\",\n    \"nonClaimsPayments\": [\n      \"\"\n    ],\n    \"nonClaimsPaymentOther\": \"\",\n    \"nonClaimsPaymentsNote\": \"\",\n    \"paymentCalculationOwner\": \"\",\n    \"numberPaymentsPerPayCycle\": \"\",\n    \"numberPaymentsPerPayCycleNote\": \"\",\n    \"sharedSystemsInvolvedAdditionalClaimPayment\": true,\n    \"sharedSystemsInvolvedAdditionalClaimPaymentNote\": \"\",\n    \"planningToUseInnovationPaymentContractor\": true,\n    \"planningToUseInnovationPaymentContractorNote\": \"\",\n    \"expectedCalculationComplexityLevel\": \"\",\n    \"expectedCalculationComplexityLevelNote\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanisms\": true,\n    \"canParticipantsSelectBetweenPaymentMechanismsHow\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanismsNote\": \"\",\n    \"anticipatedPaymentFrequency\": [\n      \"\"\n    ],\n    \"anticipatedPaymentFrequencyOther\": \"\",\n    \"anticipatedPaymentFrequencyNote\": \"\",\n    \"willRecoverPayments\": true,\n    \"willRecoverPaymentsNote\": \"\",\n    \"anticipateReconcilingPaymentsRetrospectively\": true,\n    \"anticipateReconcilingPaymentsRetrospectivelyNote\": \"\",\n    \"paymentStartDate\": \"\",\n    \"paymentStartDateNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -309,7 +361,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query planPayments ($id: UUID!) {\n    planPayments (id: $id) {\n        id\n        modelPlanID\n        fundingSource\n        fundingSourceTrustFund\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFund\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n        payClaimsOther\n        payClaimsNote\n        shouldAnyProvidersExcludedFFSSystems\n        shouldAnyProviderExcludedFFSSystemsNote\n        changesMedicarePhysicianFeeSchedule\n        changesMedicarePhysicianFeeScheduleNote\n        affectsMedicareSecondaryPayerClaims\n        affectsMedicareSecondaryPayerClaimsHow\n        affectsMedicareSecondaryPayerClaimsNote\n        payModelDifferentiation\n        creatingDependenciesBetweenServices\n        creatingDependenciesBetweenServicesNote\n        needsClaimsDataCollection\n        needsClaimsDataCollectionNote\n        providingThirdPartyFile\n        isContractorAwareTestDataRequirements\n        beneficiaryCostSharingLevelAndHandling\n        waiveBeneficiaryCostSharingForAnyServices\n        waiveBeneficiaryCostSharingServiceSpecification\n        waiverOnlyAppliesPartOfPayment\n        waiveBeneficiaryCostSharingNote\n        nonClaimsPayments\n        nonClaimsPaymentOther\n        paymentCalculationOwner\n        numberPaymentsPerPayCycle\n        numberPaymentsPerPayCycleNote\n        sharedSystemsInvolvedAdditionalClaimPayment\n        sharedSystemsInvolvedAdditionalClaimPaymentNote\n        planningToUseInnovationPaymentContractor\n        planningToUseInnovationPaymentContractorNote\n        fundingStructure\n        expectedCalculationComplexityLevel\n        expectedCalculationComplexityLevelNote\n        canParticipantsSelectBetweenPaymentMechanisms\n        canParticipantsSelectBetweenPaymentMechanismsHow\n        canParticipantsSelectBetweenPaymentMechanismsNote\n        anticipatedPaymentFrequency\n        anticipatedPaymentFrequencyOther\n        anticipatedPaymentFrequencyNote\n        willRecoverPayments\n        willRecoverPaymentsNote\n        anticipateReconcilingPaymentsRetrospectively\n        anticipateReconcilingPaymentsRetrospectivelyNote\n        paymentStartDate\n        paymentStartDateNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        status\n    }\n}",
+								"query": "query planPayments ($id: UUID!) {\n    planPayments (id: $id) {\n        id\n        modelPlanID\n        fundingSource\n        fundingSourceTrustFund\n        fundingSourceTrustFundType\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFund\n        fundingSourceRTrustFundType\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n        payClaimsOther\n        payClaimsNote\n        shouldAnyProvidersExcludedFFSSystems\n        shouldAnyProviderExcludedFFSSystemsNote\n        changesMedicarePhysicianFeeSchedule\n        changesMedicarePhysicianFeeScheduleNote\n        affectsMedicareSecondaryPayerClaims\n        affectsMedicareSecondaryPayerClaimsHow\n        affectsMedicareSecondaryPayerClaimsNote\n        payModelDifferentiation\n        creatingDependenciesBetweenServices\n        creatingDependenciesBetweenServicesNote\n        needsClaimsDataCollection\n        needsClaimsDataCollectionNote\n        providingThirdPartyFile\n        isContractorAwareTestDataRequirements\n        beneficiaryCostSharingLevelAndHandling\n        waiveBeneficiaryCostSharingForAnyServices\n        waiveBeneficiaryCostSharingServiceSpecification\n        waiverOnlyAppliesPartOfPayment\n        waiveBeneficiaryCostSharingNote\n        nonClaimsPayments\n        nonClaimsPaymentOther\n        paymentCalculationOwner\n        numberPaymentsPerPayCycle\n        numberPaymentsPerPayCycleNote\n        sharedSystemsInvolvedAdditionalClaimPayment\n        sharedSystemsInvolvedAdditionalClaimPaymentNote\n        planningToUseInnovationPaymentContractor\n        planningToUseInnovationPaymentContractorNote\n        expectedCalculationComplexityLevel\n        expectedCalculationComplexityLevelNote\n        canParticipantsSelectBetweenPaymentMechanisms\n        canParticipantsSelectBetweenPaymentMechanismsHow\n        canParticipantsSelectBetweenPaymentMechanismsNote\n        anticipatedPaymentFrequency\n        anticipatedPaymentFrequencyOther\n        anticipatedPaymentFrequencyNote\n        willRecoverPayments\n        willRecoverPaymentsNote\n        anticipateReconcilingPaymentsRetrospectively\n        anticipateReconcilingPaymentsRetrospectivelyNote\n        paymentStartDate\n        paymentStartDateNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        status\n    }\n}",
 								"variables": "{\n  \"id\": \"{{paymentsID}}\"\n}"
 							}
 						},
@@ -356,8 +408,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n    id\n    modelPlanID\n    userID\n    teamRole\n    userAccount \n    {\n        commonName\n        familyName\n        givenName\n        email\n        locale\n    }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"CLAB\",\n    \"teamRole\": \"MODEL_LEAD\"\n  }\n}"
+								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n    id\n    modelPlanID\n    userID\n    teamRoles\n    userAccount \n    {\n        commonName\n        familyName\n        givenName\n        email\n        locale\n    }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"TEST\",\n    \"teamRoles\": [\"MODEL_LEAD\"]\n  }\n}"
 							}
 						},
 						"url": {
@@ -377,8 +429,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanCollaborator ($id: UUID!, $newRole: TeamRole!) {\n    updatePlanCollaborator (id: $id, newRole: $newRole) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"{{modelLeadID}}\",\n  \"newRole\": \"LEARNING\"\n}"
+								"query": "mutation updatePlanCollaborator ($id: UUID!, $newRoles: [TeamRole!]!) {\n    updatePlanCollaborator (id: $id, newRoles: $newRoles) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"{{modelLeadID}}\",\n  \"newRoles\": [\"LEARNING\"]\n}"
 							}
 						},
 						"url": {
@@ -398,7 +450,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanCollaborator ($id: UUID!) {\n    deletePlanCollaborator (id: $id) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation deletePlanCollaborator ($id: UUID!) {\n    deletePlanCollaborator (id: $id) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
 							}
 						},
@@ -419,7 +471,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query planCollaboratorByID ($id: UUID!) {\n    planCollaboratorByID (id: $id) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "query planCollaboratorByID ($id: UUID!) {\n    planCollaboratorByID (id: $id) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
 							}
 						},
@@ -461,8 +513,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"content\": \"This is a question\"\n  }\n}"
+								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        userRole\n        userRoleDescription\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"content\": \"This is a question\",\n    \"userRole\": \"NONE_OF_THE_ABOVE\",\n    \"userRoleDescription\": \"this is a test\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -482,8 +534,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {\n    updatePlanDiscussion (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"id\": \"{{discussionID}}\",\n  \"changes\": {\n    \"content\": \"Great Changes\",\n    \"status\": \"UNANSWERED\"\n  }\n}"
+								"query": "mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {\n    updatePlanDiscussion (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        content\n        userRole\n        userRoleDescription\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"variables": "{\n  \"id\": \"{{discussionID}}\",\n  \"changes\": {\n    \"content\": \"Great Changes\",\n    \"userRole\": \"none_of_the_above\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -503,7 +555,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanDiscussion ($id: UUID!) {\n    deletePlanDiscussion (id: $id) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"query": "mutation deletePlanDiscussion ($id: UUID!) {\n    deletePlanDiscussion (id: $id) {\n        id\n        modelPlanID\n        content\n        userRole\n        userRoleDescription\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"id\": \"{{discussionID}}\"\n}"
 							}
 						},
@@ -540,8 +592,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createDiscussionReply ($input: DiscussionReplyCreateInput!) {\n    createDiscussionReply (input: $input) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"discussionID\": \"{{discussionID}}\",\n    \"content\": \"This is a resolution\",\n    \"resolution\": true\n  }\n}"
+								"query": "mutation createDiscussionReply ($input: DiscussionReplyCreateInput!) {\n    createDiscussionReply (input: $input) {\n        id\n        discussionID\n        content\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"discussionID\": \"{{discussionID}}\",\n    \"content\": \"This is not a resolution\",\n    \"userRole\": \"NONE_OF_THE_ABOVE\",\n    \"userRoleDescription\": \"this is a test\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -561,8 +613,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {\n    updateDiscussionReply (id: $id, changes: $changes) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"id\": \"{{discussionReplyID}}\",\n  \"changes\": {\n    \"content\": \"This is a resolution\",\n    \"resolution\": true\n  }\n}"
+								"query": "mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {\n    updateDiscussionReply (id: $id, changes: $changes) {\n        id\n        discussionID\n        content\n        userRole\n        userRoleDescription\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"variables": "{\n  \"id\": \"{{discussionReplyID}}\",\n  \"changes\": {\n    \"content\": \"This is a resolution\",\n    \"userRole\": \"NONE_OF_THE_ABOVE\",\n    \"userRoleDescription\": \"this is a test\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -582,8 +634,29 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deleteDiscussionReply ($id: UUID!) {\n    deleteDiscussionReply (id: $id) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"query": "mutation deleteDiscussionReply ($id: UUID!) {\n    deleteDiscussionReply (id: $id) {\n        id\n        discussionID\n        content\n        userRole\n        userRoleDescription\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"id\": \"{{discussionReplyID}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Most Recent Discussion Role Selection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\n    mostRecentDiscussionRoleSelection {\n        userRole\n        userRoleDescription\n    }\n}\n",
+								"variables": "{\n    \n}"
 							}
 						},
 						"url": {
@@ -601,15 +674,66 @@
 			"name": "Plan Documents",
 			"item": [
 				{
-					"name": "Create Plan Document",
+					"name": "Create Plan Document Upload",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.uploadNewPlanDocument",
+									"",
+									"documentID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"documentID\", documentID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanDocument ($input: PlanDocumentInput!) {\n    createPlanDocument (input: $input) {\n        presignedURL\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"id\": \"\",\n    \"modelPlanID\": \"\",\n    \"documentParameters\": {\n      \"fileName\": \"\",\n      \"fileSize\": 0,\n      \"fileType\": \"\",\n      \"documentType\": \"\",\n      \"otherTypeDescription\": \"\",\n      \"optionalNotes\": \"\"\n    },\n    \"url\": \"\"\n  }\n}"
+								"query": "mutation uploadNewPlanDocument ($input: PlanDocumentInput!) {\n    uploadNewPlanDocument (input: $input) {\n        id\n        fileName\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"fileData\": \"Hello!\",\n    \"documentType\": \"POLICY_PAPER\",\n    \"restricted\": false\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Plan Document Linked",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.linkNewPlanDocument",
+									"",
+									"documentID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"documentID\", documentID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation linkNewPlanDocument  {\n    linkNewPlanDocument (input: {\n        modelPlanID: \"{{modelPlanID}}\",\n        name:\"Google\",\n        url: \"https://www.google.com\",\n        documentType:CONCEPT_PAPER,\n        restricted:false,\n        otherTypeDescription:\"This is just a link to google\",\n        optionalNotes:\"You can find many documents here\",\n\n    }) {\n        id\n        modelPlanID\n        isLink\n        url\n        fileType\n        bucket\n        fileKey\n        virusScanned\n        virusClean\n        restricted\n        fileName\n        fileSize\n        documentType\n        otherType\n        optionalNotes\n        downloadUrl\n        deletedAt\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts        \n    }\n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -1018,44 +1142,20 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Variables",
-			"item": [
+				},
 				{
-					"name": "ModelPlanCreate AND SET VARIABLES",
+					"name": "Report a Problem",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let responseData = pm.response.json().data.createModelPlan",
+									"let responseData = pm.response.json().data.sendFeedbackEmail",
 									"",
-									"modelPlanID = responseData.id",
-									"basicsID = responseData.basics.id",
-									"generalCharacteristicsID = responseData.generalCharacteristics.id",
-									"participantsAndProvidersID = responseData.participantsAndProviders.id",
-									"beneficiariesID = responseData.beneficiaries.id",
-									"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
-									"modelLeadID = responseData.collaborators[0].id",
-									"paymentsID = responseData.payments.id",
-									"itToolsID = responseData.itTools.id",
-									"",
-									"",
-									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
-									"pm.collectionVariables.set(\"basicsID\", basicsID);",
-									"",
-									"pm.collectionVariables.set(\"generalCharacteristicsID\", generalCharacteristicsID);",
-									"pm.collectionVariables.set(\"participantsAndProvidersID\", participantsAndProvidersID);",
-									"pm.collectionVariables.set(\"beneficiariesID\", beneficiariesID);",
-									"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
-									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
-									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
-									"pm.collectionVariables.set(\"itToolsID\", itToolsID);",
-									"",
-									"console.log(modelPlanID)"
+									"pm.test(\"Feedback Email was sent\", function (){",
+									"    pm.expect(responseData).to.equal(true)",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1067,21 +1167,14 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      userID\n      teamRole\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    itTools {\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
+								"query": "mutation reportAProblem{\n  \n  reportAProblem(input:{\n      isAnonymousSubmission: false\n      allowContact: true\n      section: OTHER\n      sectionOther: \"Awesome Section\"\n      whatDoing: \"Making an awesome model\"\n      whatWentWrong: \"I made a mistake\"\n      severity: OTHER\n      severityOther: \"Made me sad\"\n      })\n}",
 								"variables": ""
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
@@ -1363,7 +1456,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    solutionType:MARX,\n    changes: {\n      needed: true\n    #   nameOther: \"My special solution\"\n      otherHeader: \"The Happy Helper Team\"\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    solutionType:MARX,\n    changes: {\n      needed: true\n    #   nameOther: \"My special solution\"\n      otherHeader: \"The Happy Helper Team\"\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1399,7 +1492,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    # solutionType:MARX,\n    changes: {\n      needed: true\n      nameOther: \"My special solution\"\n    #   otherHeader: \"The Happy Helper Team\"\n      pocName: \"Mr. Clean\"\n      pocEmail: \"cleanClean@cleaning.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    # solutionType:MARX,\n    changes: {\n      needed: true\n      nameOther: \"My special solution\"\n    #   otherHeader: \"The Happy Helper Team\"\n      pocName: \"Mr. Clean\"\n      pocEmail: \"cleanClean@cleaning.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1431,7 +1524,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  updateOperationalSolution(id:\"{{operationalSolutionID}}\"\n  ,changes: {\n    #   nameOther: \"My Change I guess\"\n      needed: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    needed\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  updateOperationalSolution(id:\"{{operationalSolutionID}}\"\n  ,changes: {\n    #   nameOther: \"My Change I guess\"\n      needed: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    needed\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1463,7 +1556,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n}",
+								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        isCommonSolution\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n}",
 								"variables": "{\r\n  \"id\": \"{{operationalSolutionID}}\"\r\n}"
 							}
 						},
@@ -1495,7 +1588,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\",,includeNotNeeded:true){\n        id\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        needed\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n\n    \n  }\n}\n",
+								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\",,includeNotNeeded:true){\n        id\n        isCommonSolution\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        needed\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n\n    \n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -1694,120 +1787,15 @@
 			"name": "Search",
 			"item": [
 				{
-					"name": "SearchChangeData",
+					"name": "SearchChanges",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query searchChangeTable($request: SearchRequest!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTable(request: $request, limit: $limit, offset: $offset) {\r\n    guid\r\n    tableID\r\n    primaryKey\r\n    foreignKey\r\n    fields\r\n    modifiedDts\r\n    modifiedBy {\r\n      id\r\n      username\r\n      isEUAID\r\n      commonName\r\n      locale\r\n      email\r\n      givenName\r\n      familyName\r\n      zoneInfo\r\n      hasLoggedIn\r\n    }\r\n  }\r\n}",
-								"variables": "{\r\n  \"request\": {\r\n    \"query\": {\r\n      \"query\": {\r\n        \"bool\": {\r\n          \"filter\": [\r\n            {\r\n              \"term\": {\r\n                \"table_id\": \"1\"\r\n              }\r\n            },\r\n            {\r\n              \"term\": {\r\n                \"primary_key.keyword\": \"{{modelPlanID}}\"\r\n              }\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeDataByModelPlanID",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableByModelPlanID($modelPlanID: UUID!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTableByModelPlanID(modelPlanID: $modelPlanID, limit: $limit, offset: $offset) {\r\n    guid\r\n    tableID\r\n    primaryKey\r\n    foreignKey\r\n    fields\r\n    modifiedDts\r\n    modifiedBy {\r\n      id\r\n      username\r\n      isEUAID\r\n      commonName\r\n      locale\r\n      email\r\n      givenName\r\n      familyName\r\n      zoneInfo\r\n      hasLoggedIn\r\n    }\r\n  }\r\n}",
-								"variables": "{\r\n  \"modelPlanID\": \"{{modelPlanID}}\",\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableWithFreeText",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableWithFreeText ($searchText: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableWithFreeText (searchText: $searchText, limit: $limit, offset: $offset) {\n    guid\n    tableID\n    primaryKey\n    foreignKey\n    fields\n    modifiedDts\n    modifiedBy {\n      id\n      username\n      isEUAID\n      commonName\n      locale\n      email\n      givenName\n      familyName\n      zoneInfo\n      hasLoggedIn\n    }\n  }\n}",
-								"variables": "{\n  \"searchText\": \"mint\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableByDateRange",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableByDateRange ($startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByDateRange (startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\n    guid\n    tableID\n    primaryKey\n    foreignKey\n    fields\n    modifiedDts\n    modifiedBy {\n      id\n      username\n      isEUAID\n      commonName\n      locale\n      email\n      givenName\n      familyName\n      zoneInfo\n      hasLoggedIn\n    }\n  }\n}",
-								"variables": "{\n  \"startDate\": \"2023-03-01T00:00:00Z\",\n  \"endDate\": \"2024-03-31T23:59:59Z\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableByActor",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableByActor ($actor: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByActor (actor: $actor, limit: $limit, offset: $offset) {\n    guid\n    tableID\n    primaryKey\n    foreignKey\n    fields\n    modifiedDts\n    modifiedBy {\n      id\n      username\n      isEUAID\n      commonName\n      locale\n      email\n      givenName\n      familyName\n      zoneInfo\n      hasLoggedIn\n    }\n  }\n}",
-								"variables": "{\n  \"actor\": \"Doe\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableByModelStatus",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableByModelStatus ($modelStatus: ModelStatus!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByModelStatus (modelStatus: $modelStatus, limit: $limit, offset: $offset) {\n    guid\n    tableID\n    primaryKey\n    foreignKey\n    fields\n    modifiedDts\n    modifiedBy {\n      id\n      username\n      isEUAID\n      commonName\n      locale\n      email\n      givenName\n      familyName\n      zoneInfo\n      hasLoggedIn\n    }\n  }\n}",
-								"variables": "{\n  \"modelStatus\": \"PLAN_DRAFT\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
+								"query": "query searchChanges($filters: [SearchFilter!], $sortBy: ChangeHistorySortParams, $page: PageParams) {\r\n  searchChanges(filters: $filters, sortBy: $sortBy, page: $page) {\r\n    guid\r\n    modelPlanID\r\n    tableID\r\n    tableName\r\n    primaryKey\r\n    foreignKey\r\n    fields {\r\n      changes {\r\n        name\r\n        value {\r\n          ... on FieldValue {\r\n            new\r\n            old\r\n          }\r\n        }\r\n      }\r\n    }\r\n    modifiedDts\r\n    modifiedBy {\r\n      id\r\n      username\r\n      isEUAID\r\n      commonName\r\n      locale\r\n      email\r\n      givenName\r\n      familyName\r\n      zoneInfo\r\n      hasLoggedIn\r\n    }\r\n  }\r\n}\r\n",
+								"variables": "{\r\n  \"filters\": [\r\n    {\r\n        \"type\": \"CHANGED_AFTER\",\r\n        \"value\": \"2023-01-01T00:00:00.000Z\"\r\n    },\r\n    {\r\n        \"type\": \"CHANGED_BEFORE\",\r\n        \"value\": \"2024-01-01T00:00:00.000Z\"\r\n    },\r\n    {\r\n        \"type\": \"MODEL_PLAN_SECTION\",\r\n        \"value\": \"BASICS\"\r\n    },\r\n    {\r\n        \"type\": \"CHANGED_BY_ACTOR\",\r\n        \"value\": \"MINT\"\r\n    },\r\n    {\r\n        \"type\": \"FREE_TEXT\",\r\n        \"value\": \"high level note\"\r\n    },\r\n    {\r\n        \"type\": \"MODEL_PLAN_ID\",\r\n        \"value\": \"b7dbeec2-bbd0-4097-9a0e-650f74e4c307\"\r\n    }\r\n  ],\r\n  \"sortBy\": {\r\n    \"field\": \"CHANGE_DATE\",\r\n    \"order\": \"DESC\"   \r\n  },\r\n  \"page\": {\r\n    \"limit\": 200,\r\n    \"offset\": 0\r\n  }\r\n}"
 							}
 						},
 						"url": {
@@ -1829,6 +1817,94 @@
 							"graphql": {
 								"query": "query searchChangeTableDateHistogramConsolidatedAggregations ($interval: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableDateHistogramConsolidatedAggregations (interval: $interval, limit: $limit, offset: $offset) {\n        key\n        docCount\n        maxModifiedDts\n        minModifiedDts\n    }\n}",
 								"variables": "{\n  \"interval\": \"5m\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ExistingModelLink",
+			"item": [
+				{
+					"name": "ExistingModelLinksUpdate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.updateExistingModelLinks",
+									"",
+									"",
+									"if (responseData.length>0){",
+									"existingModelLinkID = responseData[0].id",
+									"",
+									"pm.collectionVariables.set(\"existingModelLinkID\", existingModelLinkID);",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateExistingModelLinks{\n  \n  updateExistingModelLinks(modelPlanID:\"{{modelPlanID}}\", existingModelIDs:\n#   null\n  [100014,100015] \n  currentModelPlanIDs: \n  null,\n#   [\"{{modelPlanID}}\"  ]\n  )\n  {\n      id\n\n        currentModelPlan {\n            id\n            modelName\n        }\n        existingModel{\n            id\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExistingModelLink GET",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query existingModelLink{\n  \n  existingModelLink(id:\"{{existingModelLinkID}}\"){\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModelPlanGetExisting ModelLinks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    nameHistory\n    existingModelLinks{\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n    }\n  }\n  \n  \n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -1927,10 +2003,6 @@
 			"value": ""
 		},
 		{
-			"key": "itToolsID",
-			"value": ""
-		},
-		{
 			"key": "operationalNeedID",
 			"value": ""
 		},
@@ -1958,6 +2030,14 @@
 			"key": "documentID",
 			"value": "0b188e43-21a6-45b4-8dc2-a09929d3402d",
 			"type": "string"
+		},
+		{
+			"key": "existingModelLinkID",
+			"value": ""
+		},
+		{
+			"key": "userID",
+			"value": ""
 		}
 	]
 }

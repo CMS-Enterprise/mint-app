@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
+import { IconArrowForward, Link } from '@trussworks/react-uswds';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import Alert from 'components/shared/Alert';
 import OktaSignInWidget from 'components/shared/OktaSignInWidget';
 import { localAuthStorageKey } from 'constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
 import DevLogin from 'views/AuthenticationWrapper/DevLogin';
 
+import './index.scss';
+
 const Login = () => {
+  const { t: getAccessT } = useTranslation('getAccess');
+
+  const [error, setError] = useState(false);
+
   let defaultAuth = false;
   const { oktaAuth, authState } = useOktaAuth();
   const history = useHistory();
@@ -59,7 +69,32 @@ const Login = () => {
           </button>
         </div>
       )}
-      <OktaSignInWidget onSuccess={onSuccess} onError={() => {}} />
+
+      {error && (
+        <Alert type="error">
+          <Trans i18nKey="general:oktaErrorMessage.noPermission">
+            indexZero
+            <Link href="mailto:MINTTeam@cms.hhs.gov">email</Link>
+            indexTwo
+          </Trans>
+        </Alert>
+      )}
+
+      <OktaSignInWidget
+        onSuccess={onSuccess}
+        onError={() => {}}
+        setError={setError}
+      />
+
+      <Alert type="info" className="access-alert">
+        <div className="margin-bottom-0 margin-top-neg-05 text-bold">
+          {getAccessT('accessInfo')}
+        </div>
+        <UswdsReactLink to="/how-to-get-access">
+          {getAccessT('learnHow')}
+          <IconArrowForward className="margin-left-1 text-tbottom" />
+        </UswdsReactLink>
+      </Alert>
     </MainContent>
   );
 };

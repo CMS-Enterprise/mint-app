@@ -3,6 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { possibleSolutionsMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
@@ -38,6 +39,9 @@ const mockData = [
           pocName: 'John Doe',
           pocEmail: 'j.doe@oddball.io',
           nameOther: 'My custom solution',
+          isOther: true,
+          isCommonSolution: true,
+          otherHeader: null,
           documents: [],
           status: OpSolutionStatus.COMPLETED,
           mustFinishDts: '2022-05-12T15:01:39.190679Z',
@@ -60,7 +64,8 @@ const mockData = [
       }
     }
   },
-  ...needQuestionAndAnswerMock
+  ...needQuestionAndAnswerMock,
+  ...possibleSolutionsMock
 ];
 
 // const

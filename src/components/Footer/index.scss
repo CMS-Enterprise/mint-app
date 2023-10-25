@@ -12,6 +12,11 @@
     align-items: center;
     margin-bottom: 1em;
   }
+
+  &__lightbulb {
+    display: flex;
+    flex-direction: row-reverse;
+  }
 }
 
 body .usa-footer {
@@ -20,4 +25,8 @@ body .usa-footer {
         color: $black;
       }
     }
+}
+
+.lightbulb {
+  color: $mint-cool-vivid
 }

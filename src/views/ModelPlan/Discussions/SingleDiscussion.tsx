@@ -2,24 +2,26 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconAnnouncement } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { DateTime } from 'luxon';
 
-import AssessmentIcon from 'components/shared/AssessmentIcon';
-import IconInitial from 'components/shared/IconInitial';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { getTimeElapsed } from 'utils/date';
+import { getDaysElapsed } from 'utils/date';
+
+import DiscussionUserInfo from './_components/DiscussionUserInfo';
 
 type SingleDiscussionProps = {
   discussion: DiscussionType | ReplyType;
   index: number;
   connected?: boolean;
   answerQuestion?: boolean;
-  hasEditAccess?: boolean;
-  setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
+  setIsDiscussionOpen?: (value: boolean) => void;
+  isLast: boolean;
+  replies: ReplyType[];
 };
 
 const SingleDiscussion = ({
@@ -27,62 +29,70 @@ const SingleDiscussion = ({
   index,
   connected,
   answerQuestion,
-  hasEditAccess,
-  setDiscussionStatusMessage,
   setDiscussionType,
-  setReply
+  setReply,
+  setIsDiscussionOpen,
+  isLast,
+  replies
 }: SingleDiscussionProps) => {
-  const { t } = useTranslation('discussions');
+  const { t: discussionT } = useTranslation('discussions');
+
+  const latestDate = [...replies].reduce(
+    (pre: any, cur: any) => (Date.parse(pre) > Date.parse(cur) ? pre : cur),
+    0
+  );
+  const timeLastUpdated = DateTime.fromISO(
+    latestDate.createdDts
+  ).toLocaleString(DateTime.TIME_SIMPLE);
+  const daysLastUpdated = getDaysElapsed(latestDate.createdDts);
 
   return (
-    <div className="mint-discussions__single-discussion">
-      <div className="display-flex flex-wrap flex-justify">
-        {discussion.isAssessment ? (
-          <div className="display-flex flex-align-center">
-            <AssessmentIcon size={3} />{' '}
-            <span>
-              {t('assessment')} | {discussion.createdByUserAccount.commonName}
-            </span>
-          </div>
-        ) : (
-          <IconInitial
-            user={discussion.createdByUserAccount.commonName}
-            index={index}
-          />
-        )}
-        <span className="margin-left-5 margin-top-05 text-base">
-          {getTimeElapsed(discussion.createdDts)
-            ? getTimeElapsed(discussion.createdDts) + t('ago')
-            : t('justNow')}
-        </span>
-      </div>
+    <div className="mint-discussions__single-discussion margin-bottom-4">
+      <DiscussionUserInfo discussionTopic={discussion} index={index} />
 
       <div
         className={classNames({
-          'margin-bottom-4': answerQuestion,
+          // 'margin-bottom-4': answerQuestion,
           'mint-discussions__connected': connected,
           'mint-discussions__not-connected': !connected
         })}
       >
-        <p className="margin-y-0 padding-y-1">{discussion.content}</p>
-        <div className="display-flex margin-bottom-2">
-          {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
-          {hasEditAccess && answerQuestion && (
-            <>
-              <IconAnnouncement className="text-primary margin-right-1" />
-              <Button
-                type="button"
-                unstyled
-                role="button"
-                onClick={() => {
-                  setDiscussionStatusMessage('');
-                  setDiscussionType('reply');
-                  setReply(discussion);
-                }}
-              >
-                {t('answer')}
-              </Button>
-            </>
+        <p
+          className={classNames('margin-top-0 margin-bottom-105', {
+            // 'padding-top-5': !!discussion.userRole,
+            'margin-bottom-2': isLast
+          })}
+        >
+          {discussion.content}
+        </p>
+
+        <div
+          className="display-flex flex-align-center"
+          style={{ gap: '0.5rem' }}
+        >
+          <IconAnnouncement className="text-primary" />
+          <Button
+            type="button"
+            unstyled
+            onClick={() => {
+              if (setIsDiscussionOpen) {
+                setIsDiscussionOpen(true);
+              }
+              setDiscussionType('reply');
+              setReply(discussion);
+            }}
+          >
+            {replies.length === 0
+              ? discussionT('reply')
+              : discussionT('replies', { count: replies.length })}
+          </Button>
+          {replies.length > 0 && (
+            <p className="margin-y-0 text-base">
+              {discussionT('lastReply', {
+                date: daysLastUpdated,
+                time: timeLastUpdated
+              })}
+            </p>
           )}
         </div>
       </div>
