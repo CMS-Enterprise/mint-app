@@ -80,13 +80,17 @@ export const MultiSelectTag = ({
   parentId,
   label,
   className,
-  handleRemove
+  handleRemove,
+  disabledOption,
+  disabledLabel
 }: {
   id: string;
   parentId?: string;
   label: string;
   className?: string;
   handleRemove?: (value: string) => void;
+  disabledOption?: boolean;
+  disabledLabel?: string;
 }) => {
   return (
     <Tag
@@ -98,7 +102,7 @@ export const MultiSelectTag = ({
       )}
     >
       {label}{' '}
-      {handleRemove && (
+      {!(disabledOption && label === disabledLabel) && handleRemove && (
         <IconClose
           onClick={() => handleRemove(label)}
           onKeyDown={e => {
@@ -196,7 +200,10 @@ const MultiSelect = ({
   onChange,
   initialValues,
   className,
-  ariaLabel
+  ariaLabel,
+  tagOrder = 'asc',
+  disabledOption,
+  disabledLabel
 }: {
   id?: string;
   inputId?: string;
@@ -207,6 +214,9 @@ const MultiSelect = ({
   initialValues?: string[];
   className?: string;
   ariaLabel: string;
+  tagOrder?: 'asc' | 'desc' | string;
+  disabledOption?: boolean;
+  disabledLabel?: string;
 }) => {
   const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
     initialValues
@@ -225,6 +235,28 @@ const MultiSelect = ({
         : []
     );
   }, [initialValues, originalOptions]);
+
+  const sortSelectedTags = (order: 'asc' | 'desc' | string) => {
+    switch (order) {
+      case 'desc':
+        return [
+          ...selected
+        ].sort((a: { value: string }, b: { value: string }) =>
+          b.value.localeCompare(a.value)
+        );
+      case 'asc':
+        return [
+          ...selected
+        ].sort((a: { value: string }, b: { value: string }) =>
+          a.value.localeCompare(b.value)
+        );
+      default:
+        return [
+          ...selected.filter(tag => tag.value === order),
+          ...selected.filter(tag => tag.value !== order)
+        ];
+    }
+  };
 
   return (
     <div>
@@ -259,7 +291,7 @@ const MultiSelect = ({
             {selectedLabel || 'Selected options'}
           </h4>
           <ul className="usa-list--unstyled" id={`${id}-tags`}>
-            {selected.map(({ value, label }) => (
+            {sortSelectedTags(tagOrder).map(({ value, label }) => (
               <li
                 className="margin-bottom-05 margin-right-05 display-inline-block"
                 key={value}
@@ -269,6 +301,8 @@ const MultiSelect = ({
                   parentId={`${id}-tags`}
                   key={value}
                   label={label}
+                  disabledOption={disabledOption}
+                  disabledLabel={disabledLabel}
                   handleRemove={() => {
                     const updatedValues = selected.filter(
                       option => option.value !== value
