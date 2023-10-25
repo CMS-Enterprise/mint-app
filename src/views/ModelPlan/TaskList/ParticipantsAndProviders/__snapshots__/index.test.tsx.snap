@@ -290,12 +290,12 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                     >
                       <span
                         class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
-                        data-testid="multiselect-tag--States"
-                        id="selected-STATES"
+                        data-testid="multiselect-tag--Other"
+                        id="selected-OTHER"
                       >
-                        States 
+                        Other 
                         <svg
-                          aria-label="Remove States"
+                          aria-label="Remove Other"
                           class="usa-icon margin-left-05"
                           focusable="false"
                           height="1em"
@@ -320,12 +320,12 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                     >
                       <span
                         class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
-                        data-testid="multiselect-tag--Other"
-                        id="selected-OTHER"
+                        data-testid="multiselect-tag--States"
+                        id="selected-STATES"
                       >
-                        Other 
+                        States 
                         <svg
-                          aria-label="Remove Other"
+                          aria-label="Remove States"
                           class="usa-icon margin-left-05"
                           focusable="false"
                           height="1em"

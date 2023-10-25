@@ -536,3 +536,284 @@ exports[`Adding a collaborator page > matches snapshot 2`] = `
   </main>
 </DocumentFragment>
 `;
+
+exports[`Adding a collaborator page > matches snapshot 3`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+    >
+      <div
+        class="desktop:grid-col-6"
+      >
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-top-6 margin-bottom-2"
+          tabindex="-1"
+        >
+          Add a team member
+        </h1>
+        <div
+          class="margin-bottom-6 line-height-body-6"
+        >
+          Search for a team member to add to your model team. Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.
+        </div>
+        <form
+          action="#"
+        >
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
+          >
+            <div
+              class="usa-form-group"
+              data-scroll="userAccount.commonName"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="model-team-cedar-contact"
+                id="label-model-team-cedar-contact"
+              >
+                Team member name
+              </label>
+              <label
+                class="usa-label text-normal margin-top-1 margin-bottom-105 text-base"
+                data-testid="label"
+                for="model-team-cedar-contact"
+                id="hint-model-team-cedar-contact"
+              >
+                Start typing the person’s name you want to add
+                <span
+                  class="usa-hint"
+                />
+              </label>
+              <div
+                class="margin-top-1 cedar-contact-select maxw-none usa-combo-box css-b62m3t-container"
+                id="model-team-cedar-contact"
+              >
+                <span
+                  class="css-1f43avz-a11yText-A11yText"
+                  id="react-select-model-team-cedar-contact-live-region"
+                />
+                <span
+                  aria-atomic="false"
+                  aria-live="polite"
+                  aria-relevant="additions text"
+                  class="css-1f43avz-a11yText-A11yText"
+                />
+                <div
+                  class="cedar-contact-select__control css-1b5q38d-control"
+                >
+                  <div
+                    class="cedar-contact-select__value-container css-319lph-ValueContainer"
+                  >
+                    <div
+                      class="cedar-contact-select__placeholder css-14el2xx-placeholder"
+                      id="react-select-model-team-cedar-contact-placeholder"
+                    />
+                    <div
+                      class="cedar-contact-select__input-container css-6j8wv5-Input"
+                      data-value=""
+                    >
+                      <input
+                        aria-autocomplete="list"
+                        aria-describedby="react-select-model-team-cedar-contact-placeholder"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        aria-labelledby="label-model-team-cedar-contact"
+                        autocapitalize="none"
+                        autocomplete="off"
+                        autocorrect="off"
+                        class="cedar-contact-select__input"
+                        data-testid="cedar-contact-select"
+                        id="react-select-model-team-cedar-contact-input"
+                        role="combobox"
+                        spellcheck="false"
+                        style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                        tabindex="0"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <span
+                      class="cedar-contact-select__indicator-separator css-1okebmr-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1e245h0-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-tj5bde-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <input
+                  name="model-team-cedar-contact"
+                  type="hidden"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="usa-form-group"
+              data-scroll="teamRoles"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="collaborator-role"
+              >
+                Team member role
+              </label>
+              <div>
+                <div
+                  class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+                  id="collaborator-role"
+                >
+                  <span
+                    class="css-1f43avz-a11yText-A11yText"
+                    id="react-select-2-live-region"
+                  />
+                  <span
+                    aria-atomic="false"
+                    aria-live="polite"
+                    aria-relevant="additions text"
+                    class="css-1f43avz-a11yText-A11yText"
+                  />
+                  <div
+                    class=" css-jvusj8-control"
+                  >
+                    <div
+                      class=" css-319lph-ValueContainer"
+                    >
+                      <div
+                        class=" css-14el2xx-placeholder"
+                        id="react-select-2-placeholder"
+                      >
+                        0 selected
+                      </div>
+                      <div
+                        class=" css-6j8wv5-Input"
+                        data-value=""
+                      >
+                        <input
+                          aria-autocomplete="list"
+                          aria-describedby="react-select-2-placeholder"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          autocapitalize="none"
+                          autocomplete="off"
+                          autocorrect="off"
+                          class=""
+                          id="react-select-2-input"
+                          role="combobox"
+                          spellcheck="false"
+                          style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                          tabindex="0"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class=" css-1hb7zxy-IndicatorsContainer"
+                    >
+                      <span
+                        class=" css-1vtyy7d-indicatorSeparator"
+                      />
+                      <div
+                        aria-hidden="true"
+                        class=" css-1232v1p-indicatorContainer"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      name="role"
+                      type="hidden"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-alert usa-alert--info usa-alert--slim flex margin-y-4"
+              data-testid="mandatory-fields-alert"
+            >
+              <div
+                class="usa-alert__body"
+              >
+                <p
+                  class="usa-alert__text"
+                >
+                  <span>
+                    <span
+                      class="mandatory-fields-alert__text"
+                    >
+                      If this team member is no longer the Model Lead, you must add a new Model Lead before removing that role for this team member.
+                    </span>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div
+              class="margin-y-4 display-block"
+            >
+              <button
+                class="usa-button"
+                data-testid="button"
+                disabled=""
+                type="submit"
+              >
+                Add team member
+              </button>
+            </div>
+          </fieldset>
+        </form>
+        <a
+          class="usa-link"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators"
+        >
+          <span>
+            ← 
+          </span>
+           Don’t add a team member and return to the previous page
+        </a>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
