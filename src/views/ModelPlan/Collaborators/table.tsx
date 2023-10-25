@@ -54,9 +54,14 @@ const CollaboratorsTable = ({
         accessor: 'teamRoles',
 
         Cell: ({ value }: any) => {
+          const modelLeadFirst = [
+            ...value.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
+            ...value.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
+          ];
+
           return (
             <>
-              {value
+              {modelLeadFirst
                 .map((role: TeamRole) => {
                   return collaboratorsT(`teamRole.options.${role}`);
                 })
