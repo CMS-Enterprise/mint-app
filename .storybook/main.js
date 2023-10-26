@@ -6,7 +6,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-controls',
-    "storybook-addon-apollo-client"
+    'storybook-addon-apollo-client'
   ],
   framework: {
     name: '@storybook/react-vite',
