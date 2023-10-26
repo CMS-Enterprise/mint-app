@@ -241,19 +241,19 @@ const MultiSelect = ({
       case 'desc':
         return [
           ...selected
-        ].sort((a: { value: string }, b: { value: string }) =>
-          b.value.localeCompare(a.value)
+        ].sort((a: { label: string }, b: { label: string }) =>
+          b.label.localeCompare(a.label)
         );
       case 'asc':
         return [
           ...selected
-        ].sort((a: { value: string }, b: { value: string }) =>
-          a.value.localeCompare(b.value)
+        ].sort((a: { label: string }, b: { label: string }) =>
+          a.label.localeCompare(b.label)
         );
       default:
         return [
-          ...selected.filter(tag => tag.value === order),
-          ...selected.filter(tag => tag.value !== order)
+          ...selected.filter(tag => tag.label === order),
+          ...selected.filter(tag => tag.label !== order)
         ];
     }
   };
