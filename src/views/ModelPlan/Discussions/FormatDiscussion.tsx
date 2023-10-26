@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import SectionWrapper from 'components/shared/SectionWrapper';
@@ -38,13 +37,7 @@ const FormatDiscussion = ({
     <>
       {discussionsContentList.map((discussion, index) => {
         return (
-          <div
-            key={discussion.id}
-            className={classNames({
-              'margin-top-4': index > 0,
-              'margin-top-2': index === 0
-            })}
-          >
+          <div key={discussion.id} className="margin-top-4">
             <SingleDiscussion
               discussion={discussion}
               index={index}

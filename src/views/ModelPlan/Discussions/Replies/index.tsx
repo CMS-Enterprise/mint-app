@@ -36,10 +36,10 @@ const Replies = ({
               })}
             </>
           ) : (
-            <>
+            <p className="margin-top-0">
               {/*  https://github.com/i18next/i18next/issues/1220#issuecomment-654161038 */}
               {discussionsT('replies', { count: 0, context: '0' })}
-            </>
+            </p>
           )}
         </p>
         {hasReplies && (

@@ -117,7 +117,7 @@ const QuestionAndReply = ({
 
           <PageHeading
             headingLevel="h2"
-            className="margin-top-0 margin-bottom-1 line-height-sans-2"
+            className="margin-top-4 margin-bottom-1 line-height-sans-2"
           >
             {t('reply')}
           </PageHeading>
