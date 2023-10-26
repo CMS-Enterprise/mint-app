@@ -41,6 +41,7 @@ type QuestionAndReplyProps = {
   reply?: DiscussionType | ReplyType | null;
   setDiscussionReplyID?: (value: string | null | undefined) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
+  setDiscussionStatusMessage: (value: string) => void;
   setInitQuestion?: (value: boolean) => void;
 };
 
@@ -53,6 +54,7 @@ const QuestionAndReply = ({
   reply,
   setDiscussionReplyID,
   setDiscussionType,
+  setDiscussionStatusMessage,
   setInitQuestion
 }: QuestionAndReplyProps) => {
   const { t } = useTranslation('discussions');
@@ -261,6 +263,7 @@ const QuestionAndReply = ({
                       className="usa-button usa-button--outline margin-bottom-1"
                       type="button"
                       onClick={() => {
+                        setDiscussionStatusMessage('');
                         if (closeModal) {
                           closeModal();
                         }
