@@ -17,11 +17,10 @@ type SingleDiscussionProps = {
   discussion: DiscussionType | ReplyType;
   index: number;
   connected?: boolean;
-  answerQuestion?: boolean;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
-  isLast: boolean;
+  setDiscussionStatusMessage: (value: string) => void;
   replies: ReplyType[];
 };
 
@@ -29,11 +28,10 @@ const SingleDiscussion = ({
   discussion,
   index,
   connected,
-  answerQuestion,
   setDiscussionType,
   setReply,
   setIsDiscussionOpen,
-  isLast,
+  setDiscussionStatusMessage,
   replies
 }: SingleDiscussionProps) => {
   const { t: discussionT } = useTranslation('discussions');
@@ -53,7 +51,6 @@ const SingleDiscussion = ({
 
       <div
         className={classNames({
-          // 'margin-bottom-4': answerQuestion,
           'mint-discussions__connected': connected,
           'mint-discussions__not-connected': !connected
         })}
@@ -72,6 +69,7 @@ const SingleDiscussion = ({
             type="button"
             unstyled
             onClick={() => {
+              setDiscussionStatusMessage('');
               if (setIsDiscussionOpen) {
                 setIsDiscussionOpen(true);
               }

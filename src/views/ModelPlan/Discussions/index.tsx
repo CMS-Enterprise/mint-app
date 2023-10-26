@@ -261,6 +261,7 @@ const Discussions = ({
                   setDiscussionType={setDiscussionType}
                   setReply={setReply}
                   setIsDiscussionOpen={setIsDiscussionOpen}
+                  setDiscussionStatusMessage={setDiscussionStatusMessage}
                 />
               ),
               expanded: true,

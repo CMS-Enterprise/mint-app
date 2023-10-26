@@ -130,7 +130,7 @@ export default ({
         id="tip-editor"
         className={classNames(className, {
           readonly: !editable,
-          'margin-bottom-2': !editable
+          editable
         })}
       />
       {editor && editable && (
