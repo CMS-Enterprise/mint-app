@@ -87,9 +87,11 @@ const Collaborators = () => {
     collab => collab.id === collaboratorId
   );
 
-  const initialValues: CollaboratorFormType = specificCollaborator[0];
+  const initialValues: CollaboratorFormType = specificCollaborator[0] ?? {
+    userAccount: {}
+  };
 
-  const isModelLead = specificCollaborator[0].teamRoles?.includes(
+  const isModelLead = specificCollaborator[0]?.teamRoles?.includes(
     TeamRole.MODEL_LEAD
   );
 
