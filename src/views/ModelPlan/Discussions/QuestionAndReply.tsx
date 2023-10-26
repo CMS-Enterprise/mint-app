@@ -76,7 +76,10 @@ const QuestionAndReply = ({
 
   return (
     <>
-      <PageHeading headingLevel="h1" className="margin-y-0 line-height-sans-2">
+      <PageHeading
+        headingLevel="h1"
+        className="margin-top-0 margin-bottom-3 line-height-sans-2"
+      >
         {renderType === 'question'
           ? t('discussionPanelHeading')
           : t('discussionPanelReply')}
@@ -118,6 +121,7 @@ const QuestionAndReply = ({
           >
             {t('reply')}
           </PageHeading>
+
           <p className="margin-top-0 margin-bottom-3">
             <Trans
               i18nKey={t('allFieldsRequired')}
@@ -258,7 +262,11 @@ const QuestionAndReply = ({
 
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
 
-                    <Mention setFieldValue={setFieldValue} editable />
+                    <Mention
+                      setFieldValue={setFieldValue}
+                      editable
+                      disabled={loading}
+                    />
                   </FieldGroup>
 
                   <div className="margin-y-5 display-block">

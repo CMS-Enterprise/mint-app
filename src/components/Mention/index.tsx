@@ -70,6 +70,7 @@ const getMentions = (data: any) => {
 export default ({
   setFieldValue,
   editable,
+  disabled,
   initialContent,
   className
 }: {
@@ -79,6 +80,7 @@ export default ({
     shouldValidate?: boolean | undefined
   ) => void;
   editable?: boolean;
+  disabled?: boolean;
   initialContent?: any;
   className?: string;
 }) => {
@@ -114,7 +116,7 @@ export default ({
 
   const editor = useEditor(
     {
-      editable,
+      editable: editable && !disabled,
       extensions: [
         StarterKit,
         CustomMention(history).configure({
@@ -134,7 +136,7 @@ export default ({
       },
       content: initialContent
     },
-    [initialContent]
+    [initialContent, disabled]
   );
 
   return (
