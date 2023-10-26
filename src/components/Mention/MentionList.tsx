@@ -17,7 +17,7 @@ const MentionList = forwardRef((props: any, ref) => {
       props.command({
         id: item.username,
         label: item.displayName,
-        user: item.displayName
+        email: item.email
       });
     }
   };

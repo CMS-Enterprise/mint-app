@@ -3,8 +3,14 @@ import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import CharacterCount from '@tiptap/extension-character-count';
 import Mention from '@tiptap/extension-mention';
-import { EditorContent, mergeAttributes, useEditor } from '@tiptap/react';
+import {
+  EditorContent,
+  NodeViewWrapper,
+  ReactNodeViewRenderer,
+  useEditor
+} from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import classNames from 'classnames';
 
 import SearchOktaUsers from 'queries/SearchOktaUsers';
 import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOktaUsers';
@@ -12,6 +18,16 @@ import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOkta
 import suggestion from './suggestion';
 
 import './style.scss';
+
+const MentionComponent = ({ node }: { node: any }) => {
+  const { label } = node.attrs;
+
+  return (
+    <NodeViewWrapper className="react-component display-inline">
+      <span className="tiptap mention">{`@${label}`}</span>
+    </NodeViewWrapper>
+  );
+};
 
 const CustomMention = (history: RouteComponentProps['history']) => {
   return Mention.extend({
@@ -22,69 +38,36 @@ const CustomMention = (history: RouteComponentProps['history']) => {
         ...this.parent?.(),
         'data-id-db': {
           default: ''
+        },
+        email: {
+          default: ''
         }
       };
     },
-    renderHTML({ HTMLAttributes }) {
-      const elem = document.createElement('button');
-
-      Object.entries(
-        mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
-      ).forEach(([attr, val]) => elem.setAttribute(attr, val));
-
-      elem.addEventListener('click', e => {
-        // TODO: Add event handler here
-        // If event target not an HTMLButtonElement, exit
-        if (!(e.target instanceof HTMLButtonElement)) {
-          return;
-        }
-
-        // Data from mention stored here
-        const mentionData = e.target?.dataset;
-        console.log(mentionData);
-        // ex: history.push(mentionData.userAccountRoute);
-      });
-
-      elem.textContent = `@${HTMLAttributes['data-label']}`;
-
-      return elem;
+    addNodeView() {
+      return ReactNodeViewRenderer(MentionComponent);
     }
   });
 };
 
-// // Possible Util to extract only mentions from content
-//
-// const getMentions = (data: any) => {
-//   const mentions: any = [];
-//   data?.content?.forEach((para: any) => {
-//     para?.content?.forEach((content: any) => {
-//       if (content?.type === 'mention') {
-//         mentions.push(content?.attrs);
-//       }
-//     });
-//   });
-//   return mentions;
-// };
-
-const getContent = (editorData: any) => {
-  const data = { ...editorData };
-  const text: any = [];
-  data?.content?.forEach((para: any) => {
-    para?.content?.forEach((content: any) => {
-      if (content?.type === 'text') {
-        text.push(content?.text);
-      } else if (content?.type === 'mention') {
-        text.push(`@${content?.attrs?.label}`);
-      }
-    });
-  });
-  return text.join(' ');
-};
-
-export default ({ setFieldValue }: any) => {
+export default ({
+  setFieldValue,
+  editable,
+  initialContent,
+  className
+}: {
+  setFieldValue?: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => void;
+  editable?: boolean;
+  initialContent?: any;
+  className?: string;
+}) => {
   const history = useHistory();
 
-  const limit = 280;
+  const limit = 1000;
 
   const [getUsersLazyQuery] = useLazyQuery<SearchOktaUsersType>(
     SearchOktaUsers
@@ -98,7 +81,8 @@ export default ({ setFieldValue }: any) => {
         res?.data?.searchOktaUsers?.map(user => {
           return {
             username: user.username,
-            displayName: `${user.displayName} (${user.username})`
+            displayName: `${user.displayName} (${user.username})`,
+            email: user.email
           };
         }) || []
     );
@@ -109,35 +93,47 @@ export default ({ setFieldValue }: any) => {
     items: fetchUsers
   };
 
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      CharacterCount.configure({
-        limit
-      }),
-      CustomMention(history).configure({
-        HTMLAttributes: {
-          class: 'mention',
-          type: 'button',
-          'aria-label': 'User mentioned'
-        },
-        suggestion: asyncSuggestions
-      })
-    ],
-    onUpdate: ({ editor: input }) => {
-      const fieldValue = getContent(input?.getJSON());
-      setFieldValue('content', fieldValue);
-    }
-  });
+  const editor = useEditor(
+    {
+      editable,
+      extensions: [
+        StarterKit,
+        CharacterCount.configure({
+          limit
+        }),
+        CustomMention(history).configure({
+          HTMLAttributes: {
+            class: 'mention',
+            'aria-label': 'User mentioned'
+          },
+          suggestion: asyncSuggestions
+        })
+      ],
+      onUpdate: ({ editor: input }) => {
+        if (setFieldValue) {
+          setFieldValue('content', input?.getHTML());
+        }
+      },
+      content: initialContent
+    },
+    [initialContent]
+  );
 
   const percentage = editor
     ? Math.round((100 / limit) * editor.storage.characterCount.characters())
     : 0;
 
   return (
-    <div className="margin-top-1">
-      <EditorContent editor={editor} id="tip-editor" />
-      {editor && (
+    <div>
+      <EditorContent
+        editor={editor}
+        id="tip-editor"
+        className={classNames(className, {
+          readonly: !editable,
+          'margin-bottom-2': !editable
+        })}
+      />
+      {editor && editable && (
         <div
           className={`character-count ${
             editor.storage.characterCount.characters() === limit

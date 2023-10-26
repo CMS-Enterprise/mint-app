@@ -101,7 +101,10 @@ const QuestionAndReply = ({
             <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
-              <p className="margin-y-0">{reply.content?.rawContent}</p>
+              <Mention
+                editable={false}
+                initialContent={reply.content?.rawContent}
+              />
             </div>
           </div>
 
@@ -239,7 +242,10 @@ const QuestionAndReply = ({
                     scrollElement="content"
                     error={!!flatErrors.content}
                   >
-                    <Label htmlFor="discussion-content" className="text-normal">
+                    <Label
+                      htmlFor="discussion-content"
+                      className="text-normal margin-bottom-1"
+                    >
                       {renderType === 'question'
                         ? t('typeQuestion')
                         : t('typeReply')}
@@ -247,7 +253,7 @@ const QuestionAndReply = ({
                     </Label>
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
 
-                    <Mention setFieldValue={setFieldValue} />
+                    <Mention setFieldValue={setFieldValue} editable />
                   </FieldGroup>
 
                   <div className="margin-y-5 display-block">

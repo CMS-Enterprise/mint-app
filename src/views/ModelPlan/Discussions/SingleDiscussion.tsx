@@ -4,6 +4,7 @@ import { Button, IconAnnouncement } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
+import Mention from 'components/Mention';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
@@ -57,14 +58,10 @@ const SingleDiscussion = ({
           'mint-discussions__not-connected': !connected
         })}
       >
-        <p
-          className={classNames('margin-top-0 margin-bottom-105', {
-            // 'padding-top-5': !!discussion.userRole,
-            'margin-bottom-2': isLast
-          })}
-        >
-          {discussion.content?.rawContent}
-        </p>
+        <Mention
+          editable={false}
+          initialContent={discussion.content?.rawContent}
+        />
 
         <div
           className="display-flex flex-align-center"
