@@ -72,10 +72,11 @@ func TaggedEntityGet(
 }
 
 // CreateOrGetTagEntityID updates the tagged html with the correct entity ids, and returns an array of tags to store in the database.
-func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTMLInput, taggedField string, taggedTable string, taggedContentID uuid.UUID, getAccountInformation userhelpers.GetAccountInfoFunc) ([]*models.Tag, error) {
+// , taggedField string, taggedTable string, taggedContentID uuid.UUID,
+func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTMLInput, getAccountInformation userhelpers.GetAccountInfoFunc) error {
 
-	//TODO remove TagArrayFromHTMLMentions
-	tags := []*models.Tag{}
+	// //TODO remove TagArrayFromHTMLMentions
+	// tags := []*models.Tag{}
 	for _, mention := range tHTML.Mentions {
 		tagType := mention.Type
 		entityIDStr := mention.EntityRaw
@@ -85,40 +86,18 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 			isMacUser := false
 			collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
 			if err != nil {
-				return nil, err
+				return err
 			}
 			mention.EntityUUID = &collabAccount.ID
 			oldHTML, err := mention.ToHTML() //TODO store the original raw instead of this
 			if err != nil {
-				return nil, err //TODO: SW re-visit and make it not be blocking if possible
+				return err //TODO: SW re-visit and make it not be blocking if possible
 			}
 			mention.EntityDB = mention.EntityUUID
 			newHTML, err := mention.ToHTML()
 			if err != nil {
-				return nil, err //TODO: SW re-visit and make it not be blocking if possible
+				return err //TODO: SW re-visit and make it not be blocking if possible
 			}
-			// dataIDDBAttribute := html.Attribute{Key: "data-id-db", Val: mention.EntityUUID.String()}
-
-			// var oldbuf strings.Builder
-			//TODO: update the tag object to the appropriate string.
-			/*
-				If you can't convert the tag to a complete string, perhaps resort to string manipulation. Should store the original raw values so you can update it though
-
-
-			*/
-
-			// mention.RawHTML.T
-			// if err := render.ErrNoNamespaces.Render(&oldbuf, mention.RawHTML); err != nil {
-			// 	panic(err) // handle the error according to your needs
-			// }
-			// oldValue := fmt.Sprint(mention.RawHTML)
-			// mention.RawHTML.Attr = append(mention.RawHTML.Attr, dataIDDBAttribute) //TODO: SW, this won't actually work because it isn't a pointer
-
-			// // var newbuf strings.Builder
-			// // if err := render.ErrNoNamespaces.Render(&oldbuf, mention.RawHTML.Data); err != nil {
-			// // 	panic(err) // handle the error according to your needs
-			// // }
-			// newValue := fmt.Sprint(mention.RawHTML)
 
 			newTotalRaw := strings.Replace(string(tHTML.RawContent), string(oldHTML), string(newHTML), -1)
 			tHTML.RawContent = models.HTML(newTotalRaw)
@@ -127,11 +106,12 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 			//TODO: SW do we want to actually check for the possible solution, or just assume here?
 			number, err := strconv.Atoi(entityIDStr)
 			if err != nil {
-				return nil, fmt.Errorf("error setting possible solution ID for mention %w", err)
+				return fmt.Errorf("error setting possible solution ID for mention %w", err)
 			}
 			mention.EntityIntID = &number
+			mention.EntityDB = mention.EntityIntID
 		default:
-			return nil, fmt.Errorf("could not set entity id because the tag type is invalid %s", tagType)
+			return fmt.Errorf("could not set entity id because the tag type is invalid %s", tagType)
 		}
 		//TODO:
 		/*
@@ -144,11 +124,12 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 
 		*/
 
-		tag := mention.ToTag(taggedField, taggedTable, taggedContentID)
-		tags = append(tags, &tag)
+		// tag := mention.ToTag(taggedField, taggedTable, taggedContentID)
+		// tags = append(tags, &tag)
 
 	}
 	// return tags
 
-	return tags, nil
+	// return tags, nil
+	return nil
 }

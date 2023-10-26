@@ -43,18 +43,24 @@ func CreatePlanDiscussion(
 	if err != nil {
 		return nil, err
 	}
+	//TODO don't return the tags, simplify this to not deal with anything but setting the entities and updating the content. We will iterate through the other bits later
+	err = CreateOrGetTagEntityID(ctx, store, &planDiscussion.Content, getAccountInformation)
+
+	//  "content", "plan_discussion", discussion.ID,
+	//TODO, we need to update the raw discussion content before we save it
+	if err != nil {
+		//TOOD: do we need to stop execution here?
+		return nil, err
+	}
 
 	discussion, err := store.PlanDiscussionCreate(logger, planDiscussion)
 	if err != nil {
 		return nil, err
 	}
-	tags, err := CreateOrGetTagEntityID(ctx, store, &discussion.Content, "content", "plan_discussion", discussion.ID, getAccountInformation)
-	//TODO, we need to update the raw discussion content before we save it
-	if err != nil {
-		//TOOD: do we need to stop execution here?
-		return discussion, err
-	}
-	// tags := models.TagArrayFromHTMLMentions("content", "plan_discussion", discussion.ID, discussion.Content.Mentions)
+	// tags :=
+
+	// TODO: Should we put this in a transaction and have the other methods terminate or not?
+	tags := models.TagArrayFromHTMLMentions("content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions)
 	_, err = store.TagCollectionCreate(logger, tags, discussion.CreatedBy)
 	if err != nil {
 		return discussion, err

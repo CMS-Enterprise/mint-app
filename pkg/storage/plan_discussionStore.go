@@ -116,8 +116,9 @@ func (s *Store) PlanDiscussionCreate(
 
 	discussion.ModifiedBy = nil
 	discussion.ModifiedDts = nil
+	retDiscussion := models.PlanDiscussion{}
 
-	err = stmt.Get(discussion, discussion)
+	err = stmt.Get(&retDiscussion, discussion)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
@@ -128,7 +129,7 @@ func (s *Store) PlanDiscussionCreate(
 	// 	return discussion, err
 	// }
 
-	return discussion, nil
+	return &retDiscussion, nil
 }
 
 // DiscussionReplyCreate creates a discussion reply
