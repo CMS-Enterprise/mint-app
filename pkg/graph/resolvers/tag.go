@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
-	"golang.org/x/net/html"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -72,7 +72,7 @@ func TaggedEntityGet(
 }
 
 // CreateOrGetTagEntityID updates the tagged html with the correct entity ids, and returns an array of tags to store in the database.
-func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML models.TaggedHTML, taggedField string, taggedTable string, taggedContentID uuid.UUID, getAccountInformation userhelpers.GetAccountInfoFunc) ([]*models.Tag, error) {
+func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTMLInput, taggedField string, taggedTable string, taggedContentID uuid.UUID, getAccountInformation userhelpers.GetAccountInfoFunc) ([]*models.Tag, error) {
 
 	//TODO remove TagArrayFromHTMLMentions
 	tags := []*models.Tag{}
@@ -88,8 +88,40 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML mod
 				return nil, err
 			}
 			mention.EntityUUID = &collabAccount.ID
-			dataIDDBAttribute := html.Attribute{Key: "data-id-db", Val: mention.EntityUUID.String()}
-			mention.RawHTML.Attr = append(mention.RawHTML.Attr, dataIDDBAttribute) //TODO: SW, this won't actually work because it isn't a pointer
+			oldHTML, err := mention.ToHTML() //TODO store the original raw instead of this
+			if err != nil {
+				return nil, err //TODO: SW re-visit and make it not be blocking if possible
+			}
+			mention.EntityDB = mention.EntityUUID
+			newHTML, err := mention.ToHTML()
+			if err != nil {
+				return nil, err //TODO: SW re-visit and make it not be blocking if possible
+			}
+			// dataIDDBAttribute := html.Attribute{Key: "data-id-db", Val: mention.EntityUUID.String()}
+
+			// var oldbuf strings.Builder
+			//TODO: update the tag object to the appropriate string.
+			/*
+				If you can't convert the tag to a complete string, perhaps resort to string manipulation. Should store the original raw values so you can update it though
+
+
+			*/
+
+			// mention.RawHTML.T
+			// if err := render.ErrNoNamespaces.Render(&oldbuf, mention.RawHTML); err != nil {
+			// 	panic(err) // handle the error according to your needs
+			// }
+			// oldValue := fmt.Sprint(mention.RawHTML)
+			// mention.RawHTML.Attr = append(mention.RawHTML.Attr, dataIDDBAttribute) //TODO: SW, this won't actually work because it isn't a pointer
+
+			// // var newbuf strings.Builder
+			// // if err := render.ErrNoNamespaces.Render(&oldbuf, mention.RawHTML.Data); err != nil {
+			// // 	panic(err) // handle the error according to your needs
+			// // }
+			// newValue := fmt.Sprint(mention.RawHTML)
+
+			newTotalRaw := strings.Replace(string(tHTML.RawContent), string(oldHTML), string(newHTML), -1)
+			tHTML.RawContent = models.HTML(newTotalRaw)
 			// mention.RawHTML. // TODO: SW add the attribute
 		case models.TagTypePossibleSolution:
 			//TODO: SW do we want to actually check for the possible solution, or just assume here?

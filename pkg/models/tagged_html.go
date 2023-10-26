@@ -1,11 +1,13 @@
 package models
 
 import (
+	"bytes"
 	"context"
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
 	"io"
 	"strings"
 
@@ -15,6 +17,10 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/sanitization"
 )
+
+const mentionTagTemplate = `<span data-type="mention" tag-type="{{.Type}}" class="mention" data-id="{{.EntityRaw}}" ` +
+	`{{if .EntityDB}}data-id-db="{{.EntityDB}}" {{end}}` +
+	`data-label="{{.DataLabel}}">{{.InnerHTML}}</span>`
 
 // TaggedHTML represents rich text HTML with possible tagged HTML mention
 type TaggedHTML struct {
@@ -29,12 +35,20 @@ type HTMLMention struct {
 	Type        TagType
 	DataLabel   string
 	EntityRaw   string
+	InnerHTML   string
 	EntityUUID  *uuid.UUID
 	EntityIntID *int
+	EntityDB    interface{} // This is for marshaliing to the template
 }
 
 // hTML represents html code. It is sanitized when unmarshaled from graphQL or when converted to hTML to only allow specific tags
 type hTML string
+
+// HTML sanitizes a string and returns hTML
+func HTML(htmlString string) hTML { //nolint:all // it is desirable that hTML is not exported, so we can enforce sanitization
+	sanitized := sanitization.SanitizeHTML(htmlString)
+	return hTML(sanitized)
+}
 
 // TaggedHTMLInput Is the input type for HTML that could contain tags
 type TaggedHTMLInput TaggedHTML
@@ -128,6 +142,7 @@ func extractHTMLMentions(htmlString string) ([]*html.Node, error) {
 	if err != nil {
 		return nil, err
 	}
+	//TODO: Perhaps use regex instead of HTMl, as it lets us keep the original string
 
 	// Find and print all links on the web page
 	var links []*html.Node
@@ -144,6 +159,7 @@ func extractHTMLMentions(htmlString string) ([]*html.Node, error) {
 		}
 	}
 	link(htmlDoc)
+	//TODO: SW this only extracts the opening tag, not the attributes or the internal text and closing tag. We could have a function that returns the data, but maybe do a string capture
 
 	return links, nil
 
@@ -197,7 +213,7 @@ func parseHTMLMentionTag(mentionNode html.Node) (HTMLMention, error) {
 
 }
 
-// ToTag converts a TagString to a tag
+// ToTag converts an HTMLMention to a tag
 func (hm HTMLMention) ToTag(taggedField string, taggedTable string, taggedContentID uuid.UUID) Tag {
 	tag := Tag{
 		TagType:            hm.Type,
@@ -209,6 +225,23 @@ func (hm HTMLMention) ToTag(taggedField string, taggedTable string, taggedConten
 		EntityIntID:        hm.EntityIntID,
 	}
 	return tag
+}
+
+// ToHTML converts an HTMLMention to an HTMLString
+func (hm HTMLMention) ToHTML() (hTML, error) { //nolint:all // it is desirable that hTML is not exported, so we can enforce sanitization
+	// Create a new template and parse the template string
+	t, err := template.New("webpage").Parse(mentionTagTemplate)
+	if err != nil {
+		return "", err
+	}
+	var buffer bytes.Buffer
+	err = t.Execute(&buffer, &hm)
+	if err != nil {
+		return "", err
+	}
+
+	mentionString := buffer.String()
+	return HTML(mentionString), nil
 }
 
 // TagArrayFromHTMLMentions converts an array of HTMLMention to an array of Tags

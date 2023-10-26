@@ -48,7 +48,8 @@ func CreatePlanDiscussion(
 	if err != nil {
 		return nil, err
 	}
-	tags, err := CreateOrGetTagEntityID(ctx, store, discussion.Content.ToTaggedHTML(), "content", "plan_discussion", discussion.ID, getAccountInformation)
+	tags, err := CreateOrGetTagEntityID(ctx, store, &discussion.Content, "content", "plan_discussion", discussion.ID, getAccountInformation)
+	//TODO, we need to update the raw discussion content before we save it
 	if err != nil {
 		//TOOD: do we need to stop execution here?
 		return discussion, err
