@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { SolutionContactType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
@@ -31,7 +31,7 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof Contact>;
+} as Meta<typeof Contact>;
 
 export const Default = () => (
   <MemoryRouter

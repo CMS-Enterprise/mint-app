@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { helpSolutions } from '../../solutionsMap';
 
@@ -20,6 +20,6 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof SolutionHelpCard>;
+} as Meta<typeof SolutionHelpCard>;
 
 export const Default = () => <SolutionHelpCard solution={helpSolutions[0]} />;

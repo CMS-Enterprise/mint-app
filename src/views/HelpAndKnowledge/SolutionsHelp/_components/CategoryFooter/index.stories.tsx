@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import CategoryFooter from '.';
 
@@ -14,6 +14,6 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof CategoryFooter>;
+} as Meta<typeof CategoryFooter>;
 
 export const Default = () => <CategoryFooter />;

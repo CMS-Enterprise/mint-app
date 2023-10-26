@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import CategoryCard from '.';
 
@@ -14,7 +14,7 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof CategoryCard>;
+} as Meta<typeof CategoryCard>;
 
 export const Default = () => (
   <CategoryCard category="Data reporting" route="data" />
