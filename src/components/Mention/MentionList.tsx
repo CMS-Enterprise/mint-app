@@ -5,7 +5,17 @@ import React, {
   useState
 } from 'react';
 
+import Spinner from 'components/Spinner';
+
 import './MentionList.scss';
+
+export const SuggestionLoading = () => {
+  return (
+    <div className="items width-card-lg padding-1">
+      <Spinner size="small" />
+    </div>
+  );
+};
 
 const MentionList = forwardRef((props: any, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0);

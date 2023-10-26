@@ -124,12 +124,12 @@ export default ({
           suggestion: asyncSuggestions
         })
       ],
-      onUpdate: ({ editor: input }) => {
+      onUpdate: ({ editor: input }: any) => {
         if (setFieldValue) {
           setFieldValue('content', input?.getHTML());
         }
       },
-      onSelectionUpdate: ({ editor: input }) => {
+      onSelectionUpdate: ({ editor: input }: any) => {
         setTagAlert(!!getMentions(input?.getJSON()).length);
       },
       content: initialContent

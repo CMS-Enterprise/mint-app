@@ -1,18 +1,42 @@
 import { ReactRenderer } from '@tiptap/react';
 import tippy from 'tippy.js';
 
-import MentionList from './MentionList';
+import MentionList, { SuggestionLoading } from './MentionList';
 
 export default {
   render: () => {
     let reactRenderer: any;
+    let spinner: any;
     let popup: any;
 
     return {
+      onBeforeStart: (props: any) => {
+        if (!props.clientRect) {
+          return;
+        }
+
+        reactRenderer = new ReactRenderer(SuggestionLoading, {
+          props,
+          editor: props.editor
+        });
+
+        spinner = tippy('body', {
+          getReferenceClientRect: props.clientRect,
+          appendTo: () => document.body,
+          content: reactRenderer.element,
+          showOnCreate: true,
+          interactive: false,
+          trigger: 'manual',
+          placement: 'bottom-start'
+        });
+      },
+
       onStart: (props: any) => {
         if (!props.clientRect) {
           return;
         }
+
+        spinner[0].hide();
 
         reactRenderer = new ReactRenderer(MentionList, {
           props,
