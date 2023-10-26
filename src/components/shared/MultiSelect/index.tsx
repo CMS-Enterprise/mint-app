@@ -201,7 +201,7 @@ const MultiSelect = ({
   initialValues,
   className,
   ariaLabel,
-  tagOrder = 'asc',
+  tagOrder,
   disabledOption,
   disabledLabel
 }: {
@@ -250,6 +250,7 @@ const MultiSelect = ({
         ].sort((a: { label: string }, b: { label: string }) =>
           a.label.localeCompare(b.label)
         );
+
       default:
         return [
           ...selected.filter(tag => tag.label === order),
@@ -257,6 +258,8 @@ const MultiSelect = ({
         ];
     }
   };
+
+  const renderSelectedTags = tagOrder ? sortSelectedTags(tagOrder) : selected;
 
   return (
     <div>
@@ -291,7 +294,7 @@ const MultiSelect = ({
             {selectedLabel || 'Selected options'}
           </h4>
           <ul className="usa-list--unstyled" id={`${id}-tags`}>
-            {sortSelectedTags(tagOrder).map(({ value, label }) => (
+            {renderSelectedTags.map(({ value, label }) => (
               <li
                 className="margin-bottom-05 margin-right-05 display-inline-block"
                 key={value}
