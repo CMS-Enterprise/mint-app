@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
-import CharacterCount from '@tiptap/extension-character-count';
 import Mention from '@tiptap/extension-mention';
 import {
   EditorContent,
@@ -12,6 +12,7 @@ import {
 import StarterKit from '@tiptap/starter-kit';
 import classNames from 'classnames';
 
+import Alert from 'components/shared/Alert';
 import SearchOktaUsers from 'queries/SearchOktaUsers';
 import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOktaUsers';
 
@@ -50,6 +51,22 @@ const CustomMention = (history: RouteComponentProps['history']) => {
   });
 };
 
+// Possible Util to extract only mentions from content
+
+const getMentions = (data: any) => {
+  const mentions: any = [];
+
+  data?.content?.forEach((para: any) => {
+    para?.content?.forEach((content: any) => {
+      if (content?.type === 'mention') {
+        mentions.push(content?.attrs);
+      }
+    });
+  });
+
+  return mentions;
+};
+
 export default ({
   setFieldValue,
   editable,
@@ -65,9 +82,11 @@ export default ({
   initialContent?: any;
   className?: string;
 }) => {
+  const { t } = useTranslation('discussions');
+
   const history = useHistory();
 
-  const limit = 1000;
+  const [tagAlert, setTagAlert] = useState<boolean>(false);
 
   const [getUsersLazyQuery] = useLazyQuery<SearchOktaUsersType>(
     SearchOktaUsers
@@ -98,13 +117,9 @@ export default ({
       editable,
       extensions: [
         StarterKit,
-        CharacterCount.configure({
-          limit
-        }),
         CustomMention(history).configure({
           HTMLAttributes: {
-            class: 'mention',
-            'aria-label': 'User mentioned'
+            class: 'mention'
           },
           suggestion: asyncSuggestions
         })
@@ -114,17 +129,16 @@ export default ({
           setFieldValue('content', input?.getHTML());
         }
       },
+      onSelectionUpdate: ({ editor: input }) => {
+        setTagAlert(!!getMentions(input?.getJSON()).length);
+      },
       content: initialContent
     },
     [initialContent]
   );
 
-  const percentage = editor
-    ? Math.round((100 / limit) * editor.storage.characterCount.characters())
-    : 0;
-
   return (
-    <div>
+    <>
       <EditorContent
         editor={editor}
         id="tip-editor"
@@ -133,39 +147,11 @@ export default ({
           editable
         })}
       />
-      {editor && editable && (
-        <div
-          className={`character-count ${
-            editor.storage.characterCount.characters() === limit
-              ? 'character-count--warning'
-              : ''
-          }`}
-        >
-          <svg
-            height="20"
-            width="20"
-            viewBox="0 0 20 20"
-            className="character-count__graph"
-          >
-            <circle r="10" cx="10" cy="10" fill="#e9ecef" />
-            <circle
-              r="5"
-              cx="10"
-              cy="10"
-              fill="transparent"
-              stroke="currentColor"
-              strokeWidth="10"
-              strokeDasharray={`calc(${percentage} * 31.4 / 100) 31.4`}
-              transform="rotate(-90) translate(-20)"
-            />
-            <circle r="6" cx="10" cy="10" fill="white" />
-          </svg>
-
-          <div className="character-count__text">
-            {editor.storage.characterCount.characters()}/{limit} characters
-          </div>
-        </div>
+      {tagAlert && editable && (
+        <Alert type="info" slim>
+          {t('tagAlert')}
+        </Alert>
       )}
-    </div>
+    </>
   );
 };

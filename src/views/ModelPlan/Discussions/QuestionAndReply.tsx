@@ -253,6 +253,9 @@ const QuestionAndReply = ({
                         : t('typeReply')}
                       <RequiredAsterisk />
                     </Label>
+
+                    <p className="margin-top-0 text-base">{t('tagHint')}</p>
+
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
 
                     <Mention setFieldValue={setFieldValue} editable />
