@@ -364,6 +364,7 @@ const Discussions = ({
   };
 
   const chooseRenderMethod = () => {
+    if (loading) return <PageLoading />;
     if (readOnly || error || discussionType === 'discussion') {
       return renderDiscussions();
     }
@@ -384,7 +385,7 @@ const Discussions = ({
 
   return (
     <>
-      {loading && !discussions ? (
+      {loading ? (
         <PageLoading />
       ) : (
         <Grid desktop={{ col: 12 }}>
