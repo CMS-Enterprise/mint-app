@@ -327,7 +327,9 @@ const Collaborators = () => {
                           }}
                           initialValues={initialValues.teamRoles}
                           tagOrder={teamRoleConfig.options[TeamRole.MODEL_LEAD]}
-                          disabledOption={isLastModelLead(allCollaborators)}
+                          disabledOption={
+                            isModelLead && isLastModelLead(allCollaborators)
+                          }
                           disabledLabel={
                             teamRoleConfig.options[TeamRole.MODEL_LEAD]
                           }
