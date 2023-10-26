@@ -307,25 +307,24 @@ const Discussions = ({
     );
   };
 
-  const StatusBanner = ({ errorOnly }: { errorOnly?: boolean }) => {
+  const showStatusBanner = (errorOnly?: 'errorOnly') => {
     if (discussionStatus !== 'error' && errorOnly) {
       return <></>;
     }
-    return (
-      <>
-        {discussionStatusMessage && !alertClosed && (
-          <Expire delay={45000} callback={setDiscussionStatusMessage}>
-            <Alert
-              type={discussionStatus}
-              className="margin-bottom-4"
-              closeAlert={closeAlert}
-            >
-              {discussionStatusMessage}
-            </Alert>
-          </Expire>
-        )}
-      </>
-    );
+    if (discussionStatusMessage && !alertClosed) {
+      return (
+        <Expire delay={45000} callback={setDiscussionStatusMessage}>
+          <Alert
+            type={discussionStatus}
+            className="margin-bottom-4"
+            closeAlert={closeAlert}
+          >
+            {discussionStatusMessage}
+          </Alert>
+        </Expire>
+      );
+    }
+    return <></>;
   };
 
   const renderDiscussions = () => {
@@ -362,7 +361,7 @@ const Discussions = ({
         )}
 
         {/* General error message for mutations that expires after 45 seconds */}
-        <StatusBanner />
+        {showStatusBanner()}
         {/* Render error if failed to fetch discussions */}
         {error ? (
           <Alert type="error" className="margin-bottom-4">
@@ -383,7 +382,7 @@ const Discussions = ({
     // If discussionType === "question" or "reply"
     return (
       <>
-        <StatusBanner errorOnly />
+        {showStatusBanner('errorOnly')}
         <QuestionAndReply
           renderType={discussionType}
           handleCreateDiscussion={handleCreateDiscussion}
@@ -413,7 +412,7 @@ const Discussions = ({
             >
               {discussionType !== 'discussion' && (
                 <>
-                  <StatusBanner errorOnly />
+                  {showStatusBanner('errorOnly')}
                   <QuestionAndReply
                     renderType={discussionType}
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
