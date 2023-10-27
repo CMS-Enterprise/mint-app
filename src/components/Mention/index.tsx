@@ -20,7 +20,7 @@ import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOkta
 import suggestion from './suggestion';
 import { formatedSolutionMentions, getMentions } from './util';
 
-import './style.scss';
+import './index.scss';
 
 const MentionComponent = ({ node }: { node: any }) => {
   const { label } = node.attrs;

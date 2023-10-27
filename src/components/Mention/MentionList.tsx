@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import Spinner from 'components/Spinner';
 
-import './MentionList.scss';
+import './index.scss';
 
 export const SuggestionLoading = () => {
   return (
