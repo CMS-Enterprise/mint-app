@@ -11,12 +11,14 @@ import {
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import classNames from 'classnames';
+import { sortBy } from 'lodash';
 
 import Alert from 'components/shared/Alert';
 import SearchOktaUsers from 'queries/SearchOktaUsers';
 import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOktaUsers';
 
 import suggestion from './suggestion';
+import { formatedSolutionMentions, getMentions } from './util';
 
 import './style.scss';
 
@@ -51,22 +53,6 @@ const CustomMention = (history: RouteComponentProps['history']) => {
   });
 };
 
-// Possible Util to extract only mentions from content
-
-const getMentions = (data: any) => {
-  const mentions: any = [];
-
-  data?.content?.forEach((para: any) => {
-    para?.content?.forEach((content: any) => {
-      if (content?.type === 'mention') {
-        mentions.push(content?.attrs);
-      }
-    });
-  });
-
-  return mentions;
-};
-
 export default ({
   setFieldValue,
   editable,
@@ -95,17 +81,22 @@ export default ({
   );
 
   const fetchUsers = ({ query }: { query: string }) => {
+    if (!query) return formatedSolutionMentions();
     return getUsersLazyQuery({
       variables: { searchTerm: query }
-    }).then(
-      res =>
-        res?.data?.searchOktaUsers?.map(user => {
-          return {
-            username: user.username,
-            displayName: `${user.displayName} (${user.username})`,
-            email: user.email
-          };
-        }) || []
+    }).then(res =>
+      sortBy(
+        (
+          res?.data?.searchOktaUsers?.map(user => {
+            return {
+              username: user.username,
+              displayName: `${user.displayName} (${user.username})`,
+              email: user.email
+            };
+          }) || []
+        ).concat(formatedSolutionMentions(query)),
+        'displayName'
+      )
     );
   };
 

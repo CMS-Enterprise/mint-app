@@ -61,6 +61,10 @@ export default {
           return;
         }
 
+        spinner[0].hide();
+
+        popup[0].show();
+
         popup[0].setProps({
           getReferenceClientRect: props.clientRect
         });
@@ -69,8 +73,15 @@ export default {
       onKeyDown(props: any) {
         if (props.event.key === 'Escape') {
           popup[0].hide();
+          spinner[0].hide();
 
           return true;
+        }
+
+        if (props.event.key.length === 1) {
+          popup[0].hide();
+
+          spinner[0].show();
         }
 
         return reactRenderer.ref?.onKeyDown(props);
@@ -78,6 +89,7 @@ export default {
 
       onExit() {
         popup[0].destroy();
+        spinner[0].destroy();
         reactRenderer.destroy();
       }
     };
