@@ -13,7 +13,7 @@ export const collaborators: TranslationCollaborators = {
     gqlField: 'teamRole',
     goField: 'TeamRole',
     dbField: 'team_role',
-    label: 'Team member role',
+    label: 'Team member role(s)',
     dataType: 'enum',
     formType: 'select',
     options: {
@@ -35,6 +35,7 @@ type NestedTranslation = Record<string, string>;
 export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   csvTitle: 'Collaborator',
   EUAID: 'EUA ID',
+  roles: 'Role(s)',
   teamBreadcrumb: 'Add model team members',
   addATeamMember: 'Add a team member',
   updateATeamMember: 'Edit a team member',
