@@ -78,7 +78,7 @@ export default {
           return true;
         }
 
-        if (props.event.key.length === 1) {
+        if (props.event.key.length === 1 || props.event.key === 'Backspace') {
           popup[0].hide();
 
           spinner[0].show();
