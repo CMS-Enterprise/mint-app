@@ -4,6 +4,7 @@ import React, {
   useImperativeHandle,
   useState
 } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Spinner from 'components/Spinner';
 
@@ -18,6 +19,8 @@ export const SuggestionLoading = () => {
 };
 
 const MentionList = forwardRef((props: any, ref) => {
+  const { t } = useTranslation('discussions');
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const selectItem = (index: any) => {
@@ -83,7 +86,7 @@ const MentionList = forwardRef((props: any, ref) => {
           </button>
         ))
       ) : (
-        <div className="item">No result</div>
+        <div className="item">{t('noResults')}</div>
       )}
     </div>
   );

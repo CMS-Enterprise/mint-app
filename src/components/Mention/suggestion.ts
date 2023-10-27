@@ -3,6 +3,21 @@ import tippy from 'tippy.js';
 
 import MentionList, { SuggestionLoading } from './MentionList';
 
+const getClientRect = (props: any) => {
+  const elem = document.getElementById('tip-editor');
+  const rect = elem?.getBoundingClientRect();
+
+  const mentionRect = props.clientRect();
+
+  return () =>
+    new DOMRect(
+      rect?.left,
+      mentionRect.y,
+      mentionRect.width,
+      mentionRect.height
+    );
+};
+
 export default {
   render: () => {
     let reactRenderer: any;
@@ -10,6 +25,8 @@ export default {
     let popup: any;
 
     return {
+      // If we had async initial data - load a spinning symbol until onStart gets called
+      // We have hardcoded in memory data for current implementation, doesn't currently get called
       onBeforeStart: (props: any) => {
         if (!props.clientRect) {
           return;
@@ -21,8 +38,9 @@ export default {
         });
 
         spinner = tippy('body', {
-          getReferenceClientRect: props.clientRect,
-          appendTo: () => document.body,
+          getReferenceClientRect: getClientRect(props),
+          appendTo: () =>
+            document.getElementById('tip-editor') || document.body,
           content: reactRenderer.element,
           showOnCreate: true,
           interactive: false,
@@ -31,6 +49,7 @@ export default {
         });
       },
 
+      // Render any available suggestions when mention trigger is first called - @
       onStart: (props: any) => {
         if (!props.clientRect) {
           return;
@@ -44,8 +63,9 @@ export default {
         });
 
         popup = tippy('body', {
-          getReferenceClientRect: props.clientRect,
-          appendTo: () => document.body,
+          getReferenceClientRect: getClientRect(props),
+          appendTo: () =>
+            document.getElementById('tip-editor') || document.body,
           content: reactRenderer.element,
           showOnCreate: true,
           interactive: true,
@@ -54,6 +74,7 @@ export default {
         });
       },
 
+      // When async data/suggestions return, hide the spinner and show the updated list
       onUpdate(props: any) {
         reactRenderer.updateProps(props);
 
@@ -64,12 +85,9 @@ export default {
         spinner[0].hide();
 
         popup[0].show();
-
-        popup[0].setProps({
-          getReferenceClientRect: props.clientRect
-        });
       },
 
+      // If a valid character key, render the spinner until onUpdate gets called to rerender updated list
       onKeyDown(props: any) {
         if (props.event.key === 'Escape') {
           popup[0].hide();

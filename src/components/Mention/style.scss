@@ -23,6 +23,11 @@
   }
 }
 
+[data-tippy-root] {
+  width: 99.7%;
+  margin-left: .1rem !important;
+}
+
 .tippy-box {
   max-width: none !important;
 }

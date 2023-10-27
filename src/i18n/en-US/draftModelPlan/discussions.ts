@@ -91,7 +91,9 @@ const discussions = {
   tagHint:
     'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
   tagAlert:
-    'When you save your discussion, the selected team(s) and individual(s) will be notified via email.'
+    'When you save your discussion, the selected team(s) and individual(s) will be notified via email.',
+  noResults:
+    'There are no teams or users that match your search. Please try again.'
 };
 
 export default discussions;
