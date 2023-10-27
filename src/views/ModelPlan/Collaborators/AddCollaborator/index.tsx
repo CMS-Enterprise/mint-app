@@ -195,7 +195,7 @@ const Collaborators = () => {
               : collaboratorsMiscT('addATeamMember')}
           </PageHeading>
 
-          <div className="margin-bottom-6 line-height-body-6">
+          <div className="margin-bottom-4 line-height-body-6">
             {!collaboratorId && collaboratorsMiscT('searchTeamInfo')}{' '}
             {collaboratorsMiscT('teamInfo')}
           </div>
@@ -247,6 +247,7 @@ const Collaborators = () => {
                   >
                     <Fieldset disabled={queryLoading}>
                       <FieldGroup
+                        className="margin-top-0"
                         scrollElement="userAccount.commonName"
                         error={!!flatErrors['userAccount.commonName']}
                       >
