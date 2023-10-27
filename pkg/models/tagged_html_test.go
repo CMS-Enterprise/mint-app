@@ -6,10 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestExtractHTMLMentions(t *testing.T) {
+func TestExtractHTMLSpansRegex(t *testing.T) {
 	htmlMention := `<p>Hey <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type="mention" class="mention" data-id="TEST" data-label="Terry Thompson">@Terry Thompson</span> to let them know?</p>`
 	// htmlMention := `<p>Hey <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type="mention" class="mention" data-id="TEST" data-label="Terry Thompson">@Terry Thompson</span> to let them know?</p>`
-	mentionNodes, err := extractHTMLMentions(htmlMention) //Can we just
+	mentionNodes, err := extractHTMLSpansRegex(htmlMention) //Can we just
 	assert.NotNil(t, mentionNodes)
 	assert.NoError(t, err)
 
