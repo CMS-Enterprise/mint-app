@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 
@@ -44,6 +44,6 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof SubtasksTable>;
+} as Meta<typeof SubtasksTable>;
 
 export const Default = () => <SubtasksTable subtasks={subtasks} />;

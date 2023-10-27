@@ -1,5 +1,6 @@
 import '../src/i18n';
 import '../src/index.scss';
+import 'regenerator-runtime/runtime';
 import { MockedProvider } from '@apollo/client/testing'; // Use for Apollo Version 3+
 
 export const parameters = {
