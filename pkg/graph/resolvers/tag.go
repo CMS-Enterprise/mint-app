@@ -3,7 +3,6 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -79,7 +78,6 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 	// tags := []*models.Tag{}
 	for _, mention := range tHTML.Mentions {
 		tagType := mention.Type
-		entityIDStr := mention.EntityRaw
 		// TODO: SW update to check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
 		switch tagType { //TODO: Solution is an int id, user is a UUID
 		case models.TagTypeUserAccount:
@@ -103,33 +101,28 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 			tHTML.RawContent = models.HTML(newTotalRaw)
 			// mention.RawHTML. // TODO: SW add the attribute
 		case models.TagTypePossibleSolution:
-			//TODO: SW do we want to actually check for the possible solution, or just assume here?
-			number, err := strconv.Atoi(entityIDStr)
+			logger := appcontext.ZLogger(ctx)
+
+			sol, err := store.PossibleOperationalSolutionGetByKey(logger, models.OperationalSolutionKey(mention.EntityRaw))
 			if err != nil {
-				return fmt.Errorf("error setting possible solution ID for mention %w", err)
+				return err //TODO, maybe consider just letting this fail?
 			}
-			mention.EntityIntID = &number
+			mention.EntityIntID = &sol.ID
 			mention.EntityDB = mention.EntityIntID
 		default:
 			return fmt.Errorf("could not set entity id because the tag type is invalid %s", tagType)
 		}
-		//TODO:
-		/*
-			1. Get the reference to the correct entity in the database
-			2. Add the data-id-db attribute to the tag
-			3. Store the old raw value of the tag, do a string replace with the old value and the new value
-			    a. any considerations if the tag is in there twice and identical? Hopefully we would not need to do the action twice
-			4. Return the updated tHTML, store the tags on it as well so they can be saved separately
 
+		// Updated the parent Raw content with the new fields
+		newHTML, err := mention.ToHTML()
+		if err != nil {
+			return err //TODO: SW re-visit and make it not be blocking if possible
+		}
 
-		*/
+		newTotalRaw := strings.Replace(string(tHTML.RawContent), string(mention.RawHTML), string(newHTML), -1)
+		tHTML.RawContent = models.HTML(newTotalRaw)
 
-		// tag := mention.ToTag(taggedField, taggedTable, taggedContentID)
-		// tags = append(tags, &tag)
-
+		mention.RawHTML = newHTML
 	}
-	// return tags
-
-	// return tags, nil
 	return nil
 }

@@ -186,6 +186,8 @@ func (s *Store) DiscussionReplyUpdate(
 	reply *models.DiscussionReply,
 ) (*models.DiscussionReply, error) {
 
+	//TODO: SW update reply as well
+
 	stmt, err := s.db.PrepareNamed(discussionReplyUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, reply)
@@ -206,6 +208,8 @@ func (s *Store) PlanDiscussionDelete(
 	id uuid.UUID,
 	userID uuid.UUID,
 ) (*models.PlanDiscussion, error) {
+
+	//TODO: SW update this as well
 
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
