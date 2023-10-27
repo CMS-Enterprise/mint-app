@@ -241,6 +241,14 @@ export const CollaboratorsContent = () => {
 
             <div className="margin-top-5 display-block">
               <UswdsReactLink
+                data-testid="button--back"
+                className="usa-button usa-button--outline"
+                variant="unstyled"
+                to="/models/new-plan"
+              >
+                {miscellaneousT('back')}
+              </UswdsReactLink>
+              <UswdsReactLink
                 data-testid="continue-to-tasklist"
                 className="usa-button usa-button--outline"
                 variant="unstyled"
