@@ -6781,8 +6781,8 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schema.graphql", Input: `#import "./schema_types/scalars.graphql"
-#import "./schema_enums/enums.graphql"
+	{Name: "../schema.graphql", Input: `#import "./schema_enums/enums.graphql"
+#import "./schema_types/scalars.graphql"
 #import "./schema_types/plan_ops_eval_and_learning.graphql"
 
 """
@@ -8246,9 +8246,7 @@ type UserAccount {
   zoneInfo: String!
   hasLoggedIn: Boolean
 }`, BuiltIn: false},
-	{Name: "../schema_enums/enums.graphql", Input: `#import "./ops_eval_and_learning.graphql"
-
-enum SortDirection {
+	{Name: "../schema_enums/enums.graphql", Input: `enum SortDirection {
   ASC
   DESC
 }
