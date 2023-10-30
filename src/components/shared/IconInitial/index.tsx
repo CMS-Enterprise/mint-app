@@ -1,5 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { TeamRole } from 'gql/gen/graphql';
 
 import { getUserInitials } from 'utils/modelPlan';
 
@@ -7,6 +9,7 @@ type IconInitialType = {
   user: string;
   index?: number;
   className?: string;
+  teamRoles?: TeamRole[];
 };
 
 export const arrayOfColors: string[] = [
@@ -16,10 +19,22 @@ export const arrayOfColors: string[] = [
   'bg-accent-warm-lighter'
 ];
 
-const IconInitial = ({ user, index = 0, className }: IconInitialType) => {
+const IconInitial = ({
+  user,
+  index = 0,
+  className,
+  teamRoles
+}: IconInitialType) => {
+  const { t: collaboratorsT } = useTranslation('collaborators');
+
   return (
     <li
-      className={classNames('display-flex flex-align-center', className)}
+      className={classNames(
+        'display-flex',
+        { 'flex-align-center': !teamRoles },
+        { 'flex-align-start': teamRoles },
+        className
+      )}
       key={user}
     >
       <div
@@ -29,7 +44,17 @@ const IconInitial = ({ user, index = 0, className }: IconInitialType) => {
       >
         {getUserInitials(user)}
       </div>
-      <p className="margin-y-0">{user}</p>
+      <div className="margin-y-0">
+        <p className="margin-y-0">{user}</p>
+        <p className="font-body-2xs margin-y-0">
+          {teamRoles &&
+            teamRoles
+              .map(role => {
+                return collaboratorsT(`teamRole.options.${role}`);
+              })
+              .join(', ')}
+        </p>
+      </div>
     </li>
   );
 };

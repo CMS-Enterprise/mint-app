@@ -75,7 +75,7 @@ export const CollaboratorsContent = () => {
 
   const history = useHistory();
   const location = useLocation<{ previousPage: string }>();
-  const { previousPage } = location.state;
+  const { previousPage } = location.state || {};
 
   const { message, showMessageOnNextPage } = useMessage();
 

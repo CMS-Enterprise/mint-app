@@ -216,6 +216,7 @@ const TaskListSideNav = ({
                     key={collaborator.userAccount.username}
                     user={collaborator.userAccount.commonName}
                     index={index}
+                    teamRoles={collaborator.teamRoles}
                   />
                 );
               })}
