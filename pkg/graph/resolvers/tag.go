@@ -6,9 +6,11 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -99,7 +101,7 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 
 			newTotalRaw := strings.Replace(string(tHTML.RawContent), string(oldHTML), string(newHTML), -1)
 			tHTML.RawContent = models.HTML(newTotalRaw)
-			// mention.RawHTML. // TODO: SW add the attribute
+
 		case models.TagTypePossibleSolution:
 			logger := appcontext.ZLogger(ctx)
 
@@ -125,4 +127,26 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 		mention.RawHTML = newHTML
 	}
 	return nil
+}
+
+// TagCollectionCreate converts an array of mentions, and creates an array in the database for unique tags.
+func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal authentication.Principal,
+	taggedField string, taggedTable string, taggedContentID uuid.UUID, mentions []*models.HTMLMention) ([]*models.Tag, error) {
+
+	tags := models.TagArrayFromHTMLMentions(taggedField, taggedTable, taggedContentID, mentions)
+
+	uniqTags := lo.UniqBy(tags, func(tag *models.Tag) string {
+
+		key := fmt.Sprint(tag.TagType, tag.EntityRaw) //The entity raw, and tag type will be unique.
+		return key
+	})
+
+	//TODO: SW make this only store unique ones
+	retTags, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+	return retTags, nil
+	//TODO: EASI-3288 send an email to tagged individuals
+
 }
