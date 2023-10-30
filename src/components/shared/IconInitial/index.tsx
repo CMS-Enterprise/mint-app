@@ -27,6 +27,11 @@ const IconInitial = ({
 }: IconInitialType) => {
   const { t: collaboratorsT } = useTranslation('collaborators');
 
+  const modelLeadFirst = teamRoles && [
+    ...teamRoles.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
+    ...teamRoles.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
+  ];
+
   return (
     <li
       className={classNames(
@@ -48,7 +53,7 @@ const IconInitial = ({
         <p className="margin-y-0">{user}</p>
         <p className="font-body-2xs margin-y-0">
           {teamRoles &&
-            teamRoles
+            modelLeadFirst!
               .map(role => {
                 return collaboratorsT(`teamRole.options.${role}`);
               })
