@@ -189,7 +189,12 @@ const TaskListSideNav = ({
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
 
           <div className="margin-bottom-2">
-            <UswdsReactLink to={`/models/${modelID}/collaborators`}>
+            <UswdsReactLink
+              to={{
+                pathname: `/models/${modelID}/collaborators`,
+                state: { previousPage: 'task-list' }
+              }}
+            >
               {t('sideNav.editTeam')}
             </UswdsReactLink>
           </div>

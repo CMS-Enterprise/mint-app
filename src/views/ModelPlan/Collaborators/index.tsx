@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Button,
-  Grid,
-  GridContainer
-} from '@trussworks/react-uswds';
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useParams
+} from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
+import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import { TeamRole } from 'gql/gen/graphql';
 
+import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
@@ -73,6 +73,8 @@ export const CollaboratorsContent = () => {
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
   const history = useHistory();
+  const location = useLocation<{ previousPage: string }>();
+  const { previousPage } = location.state;
 
   const { message, showMessageOnNextPage } = useMessage();
 
@@ -183,6 +185,20 @@ export const CollaboratorsContent = () => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
+  const breadcrumbs = [
+    { text: miscellaneousT('home'), url: '/' },
+    { text: collaboratorsMiscT('teamBreadcrumb') }
+  ];
+
+  const breadcrumbsFromTaskList = [
+    { text: miscellaneousT('home'), url: '/' },
+    {
+      text: miscellaneousT('tasklistBreadcrumb'),
+      url: `/models/${modelID}/task-list/`
+    },
+    { text: collaboratorsMiscT('manageModelTeam') }
+  ];
+
   return (
     <MainContent>
       {RemoveCollaborator()}
@@ -192,16 +208,13 @@ export const CollaboratorsContent = () => {
           <Grid desktop={{ col: 12 }}>
             {message && <Expire delay={45000}>{message}</Expire>}
 
-            <BreadcrumbBar variant="wrap">
-              <Breadcrumb>
-                <BreadcrumbLink asCustom={Link} to="/">
-                  <span>{miscellaneousT('home')}</span>
-                </BreadcrumbLink>
-              </Breadcrumb>
-              <Breadcrumb current>
-                {collaboratorsMiscT('teamBreadcrumb')}
-              </Breadcrumb>
-            </BreadcrumbBar>
+            <Breadcrumbs
+              items={
+                previousPage === 'task-list'
+                  ? breadcrumbsFromTaskList
+                  : breadcrumbs
+              }
+            />
 
             <PageHeading className="margin-top-4 margin-bottom-2">
               {collaboratorsMiscT('headingTeamMembers')}
