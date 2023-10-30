@@ -85,6 +85,9 @@ export default {
         popup[0].setProps({
           getReferenceClientRect: getClientRect(props)
         });
+        spinner[0].setProps({
+          getReferenceClientRect: getClientRect(props)
+        });
 
         spinner[0].hide();
 

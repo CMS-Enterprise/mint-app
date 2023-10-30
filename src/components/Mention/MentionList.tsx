@@ -12,7 +12,7 @@ import './index.scss';
 
 export const SuggestionLoading = () => {
   return (
-    <div className="items width-card-lg padding-1">
+    <div className="items width-full padding-1">
       <Spinner size="small" />
     </div>
   );
@@ -35,6 +35,7 @@ const MentionList = forwardRef((props: any, ref) => {
     }
   };
 
+  // Handler dropdown scroll event on keypress
   const scrollIntoView = () => {
     const selectedElm = document.getElementsByClassName('is-selected')[0];
     selectedElm.scrollIntoView({ block: 'nearest' });
