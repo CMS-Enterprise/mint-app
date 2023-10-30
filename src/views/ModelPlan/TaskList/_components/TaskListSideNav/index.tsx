@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
+import orderBy from 'lodash/orderBy';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -107,6 +108,21 @@ const TaskListSideNav = ({
     );
   };
 
+  const orderByLastName = (object: GetCollaboratorsType[]) =>
+    orderBy(object, item => item.userAccount.commonName.split(' ')[1]);
+
+  const modelLeads = orderByLastName(
+    collaborators.filter(collaborator =>
+      collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
+    )
+  );
+
+  const everyoneElse = orderByLastName(
+    collaborators.filter(
+      collaborator => !collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
+    )
+  );
+
   return (
     <>
       {renderModal()}
@@ -201,15 +217,7 @@ const TaskListSideNav = ({
 
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
-              {[
-                ...collaborators.filter(collaborator =>
-                  collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
-                ),
-                ...collaborators.filter(
-                  collaborator =>
-                    !collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
-                )
-              ].map((collaborator, index) => {
+              {[...modelLeads, ...everyoneElse].map((collaborator, index) => {
                 return (
                   <IconInitial
                     className="margin-bottom-1"
