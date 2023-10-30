@@ -20,16 +20,11 @@ var tagCreateSQL string
 var tagGetByTableFieldAndContentIDSQL string
 
 // TagCreate writes a new tage to the database
-func (s *Store) TagCreate( //TODO: SE Remove this
+func (s *Store) TagCreate( //TODO: SW replace this with a statement to create a collection of tags
 	logger *zap.Logger,
 	tag *models.Tag,
 ) (*models.Tag, error) {
 	tag.ID = utilityUUID.ValueOrNewUUID(tag.ID)
-	// TODO: note this is done in CreateOrGetTagEntityID
-	// err := s.setTagEntityIDs(tag)
-	// if err != nil {
-	// 	return nil, err
-	// }
 
 	stmt, err := s.db.PrepareNamed(tagCreateSQL)
 	if err != nil {
