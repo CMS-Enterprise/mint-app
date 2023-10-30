@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Route,
@@ -31,6 +31,7 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import AddCollaborator from './AddCollaborator';
@@ -106,6 +107,8 @@ export const CollaboratorsContent = () => {
     return (data?.modelPlan?.collaborators ?? []) as GetCollaboratorsType[];
   }, [data?.modelPlan?.collaborators]);
 
+  const { modelName } = useContext(ModelInfoContext);
+
   // Setting state of isLastLead to toggle edit/remove links
   useEffect(() => {
     setIsLastLead(isLastModelLead(collaborators));
@@ -124,7 +127,7 @@ export const CollaboratorsContent = () => {
           setModalOpen(false);
           if (collaborator.userAccount.username === euaId) {
             showMessageOnNextPage(
-              <SuccessRemovalMessage modelName={data?.modelPlan?.modelName} />
+              <SuccessRemovalMessage modelName={modelName} />
             );
             history.push('/');
           } else {
@@ -216,13 +219,33 @@ export const CollaboratorsContent = () => {
               }
             />
 
-            <PageHeading className="margin-top-4 margin-bottom-2">
-              {collaboratorsMiscT('headingTeamMembers')}
-            </PageHeading>
+            {previousPage === 'task-list' ? (
+              <>
+                <PageHeading className="margin-top-4 margin-bottom-2">
+                  {collaboratorsMiscT('manageModelTeam')}
+                </PageHeading>
+                <p
+                  className="margin-top-0 margin-bottom-2 font-body-lg"
+                  data-testid="model-plan-name"
+                >
+                  <Trans i18nKey="draftModelPlan:for" /> {modelName}
+                </p>
 
-            <div className="font-body-lg margin-bottom-6">
-              {collaboratorsMiscT('teamMemberInfo')}
-            </div>
+                <div className="font-body-lg margin-bottom-6">
+                  {collaboratorsMiscT('manageModelTeamInfo')}
+                </div>
+              </>
+            ) : (
+              <>
+                <PageHeading className="margin-top-4 margin-bottom-2">
+                  {collaboratorsMiscT('headingTeamMembers')}
+                </PageHeading>
+
+                <div className="font-body-lg margin-bottom-6">
+                  {collaboratorsMiscT('teamMemberInfo')}
+                </div>
+              </>
+            )}
 
             <h4 className="margin-bottom-1">
               {collaboratorsMiscT('teamMembers')}

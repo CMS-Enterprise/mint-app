@@ -42,6 +42,8 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   addTeamMemberButton: 'Add team member',
   updateTeamMember: 'Update team member',
   manageModelTeam: 'Manage model team',
+  manageModelTeamInfo:
+    'Add and remove model team members and manage their roles.',
   searchTeamInfo: 'Search for a team member to add to your model team.',
   startTyping: 'Start typing the person’s name you want to add',
   teamInfo:
