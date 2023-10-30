@@ -49,7 +49,7 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   teamInfo:
     'Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
   searchMemberInfo:
-    'This team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.',
+    'This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.',
   lastModelLeadMemberInfo:
     'If this team member is no longer the Model Lead, you must add a new Model Lead before removing that role for this team member.',
   dontAddTeamMember: 'Don’t add a team member and return to the previous page',
