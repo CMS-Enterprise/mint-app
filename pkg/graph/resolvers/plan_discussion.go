@@ -174,16 +174,18 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(
+	ctx context.Context,
 	logger *zap.Logger,
 	input *model.DiscussionReplyCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.DiscussionReply, error) {
 	discussionReply := models.NewDiscussionReply(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.DiscussionID,
-		input.Content.ToTaggedHTML(),
+		input.Content,
 		input.UserRole,
 		input.UserRoleDescription,
 	)
@@ -192,9 +194,24 @@ func CreateDiscussionReply(
 	if err != nil {
 		return nil, err
 	}
+	err = CreateOrGetTagEntityID(ctx, store, &discussionReply.Content, getAccountInformation)
 
-	result, err := store.DiscussionReplyCreate(logger, discussionReply)
-	return result, err
+	if err != nil {
+		//TOOD: do we need to stop execution here?
+		return nil, err
+	}
+
+	reply, err := store.DiscussionReplyCreate(logger, discussionReply)
+	if err != nil {
+		return reply, err
+	}
+	//TODO: should we put this in a transaction?
+	tags, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions)
+	if err != nil {
+		return reply, err
+	}
+	reply.Content.Tags = tags
+	return reply, err
 }
 
 // UpdateDiscussionReply implements resolver logic to update a Discussion reply object

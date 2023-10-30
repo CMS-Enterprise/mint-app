@@ -145,8 +145,9 @@ func (s *Store) DiscussionReplyCreate(
 		return nil, genericmodel.HandleModelCreationError(logger, err, reply)
 	}
 	defer stmt.Close()
+	retReply := models.DiscussionReply{}
 
-	err = stmt.Get(reply, reply)
+	err = stmt.Get(&retReply, reply)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, reply)
 	}
@@ -157,7 +158,7 @@ func (s *Store) DiscussionReplyCreate(
 	// 	return reply, err
 	// }
 
-	return reply, nil
+	return &retReply, nil
 }
 
 // PlanDiscussionUpdate updates a plan discussion object

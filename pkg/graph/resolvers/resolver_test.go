@@ -97,10 +97,12 @@ func (suite *ResolverSuite) createDiscussionReply(
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 	dr, err := CreateDiscussionReply(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return dr

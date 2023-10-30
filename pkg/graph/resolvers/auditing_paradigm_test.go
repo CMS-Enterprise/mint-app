@@ -9,6 +9,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 func (suite *ResolverSuite) TestDeletionActorAccuracy() {
@@ -32,13 +33,13 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	testPR3 := getTestPrincipal(suite.testConfigs.Store, "TestDR3")
 	testPR4 := getTestPrincipal(suite.testConfigs.Store, "TestDR4")
 
-	dr1, err := CreateDiscussionReply(suite.testConfigs.Logger, input, testPR1, suite.testConfigs.Store)
+	dr1, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, input, testPR1, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
-	dr2, err := CreateDiscussionReply(suite.testConfigs.Logger, input, testPR2, suite.testConfigs.Store)
+	dr2, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, input, testPR2, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
-	dr3, err := CreateDiscussionReply(suite.testConfigs.Logger, input, testPR3, suite.testConfigs.Store)
+	dr3, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, input, testPR3, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
-	dr4, err := CreateDiscussionReply(suite.testConfigs.Logger, input, testPR4, suite.testConfigs.Store)
+	dr4, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, input, testPR4, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 
 	/* Delete DRs async to simulate a race condition */

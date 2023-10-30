@@ -230,7 +230,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 
-	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	result, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)
@@ -255,7 +255,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	regularUserPrincipal := suite.testConfigs.Principal
 	regularUserPrincipal.JobCodeASSESSMENT = false
 
-	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
+	result, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)

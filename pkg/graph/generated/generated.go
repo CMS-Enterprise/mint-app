@@ -42,6 +42,7 @@ type Config struct {
 
 type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
+	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
 	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
@@ -951,6 +952,9 @@ type ComplexityRoot struct {
 
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
+}
+type DiscussionReplyResolver interface {
+	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedHTML, error)
 }
 type ExistingModelLinkResolver interface {
 	ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error)
@@ -11945,7 +11949,7 @@ func (ec *executionContext) _DiscussionReply_content(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Content, nil
+		return ec.resolvers.DiscussionReply().Content(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11954,17 +11958,17 @@ func (ec *executionContext) _DiscussionReply_content(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.TaggedHTML)
+	res := resTmp.(*models.TaggedHTML)
 	fc.Result = res
-	return ec.marshalOTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, field.Selections, res)
+	return ec.marshalOTaggedHTML2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "DiscussionReply",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "rawContent":
@@ -52627,7 +52631,38 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "content":
-			out.Values[i] = ec._DiscussionReply_content(ctx, field, obj)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DiscussionReply_content(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "userRole":
 			out.Values[i] = ec._DiscussionReply_userRole(ctx, field, obj)
 		case "userRoleDescription":
@@ -68936,10 +68971,6 @@ func (ec *executionContext) marshalOTaggedEntity2githubᚗcomᚋcmsgovᚋmintᚑ
 		return graphql.Null
 	}
 	return ec._TaggedEntity(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx context.Context, sel ast.SelectionSet, v models.TaggedHTML) graphql.Marshaler {
-	return ec._TaggedHTML(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalOTaggedHTML2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx context.Context, sel ast.SelectionSet, v *models.TaggedHTML) graphql.Marshaler {

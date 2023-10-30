@@ -25,6 +25,12 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
+// Content is the resolver for the content field.
+func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedHTML, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.TaggedHTMLGet(logger, r.store, string(obj.Content.RawContent), "discussion_reply", "content", obj.ID) //TODO: SW review implementation
+}
+
 // ExistingModel is the resolver for the existingModel field.
 func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
 	if obj.ExistingModelID == nil { //Don't do a DB call if nil
@@ -292,7 +298,7 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreateDiscussionReply(logger, &input, principal, r.store)
+	return resolvers.CreateDiscussionReply(ctx, logger, &input, principal, r.store, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
@@ -963,6 +969,11 @@ func (r *taggedHTMLResolver) RawContent(ctx context.Context, obj *models.TaggedH
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
+// DiscussionReply returns generated.DiscussionReplyResolver implementation.
+func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
+	return &discussionReplyResolver{r}
+}
+
 // ExistingModelLink returns generated.ExistingModelLinkResolver implementation.
 func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
 	return &existingModelLinkResolver{r}
@@ -1041,6 +1052,7 @@ func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
 func (r *Resolver) TaggedHTML() generated.TaggedHTMLResolver { return &taggedHTMLResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
+type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }

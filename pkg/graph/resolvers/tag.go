@@ -85,7 +85,7 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 		case models.TagTypeUserAccount:
 			isMacUser := false
 			collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
-			if err != nil {
+			if err != nil { //TODO: SW more gracefully handle this
 				return err
 			}
 			mention.EntityUUID = &collabAccount.ID
