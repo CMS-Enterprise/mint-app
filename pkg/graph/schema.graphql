@@ -483,16 +483,6 @@ input PlanDiscussionCreateInput {
   userRoleDescription: String
 }
 
-"""
-PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
-  content: TaggedHTMLInput
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
 
 """
 DiscussionReply represents a discussion reply
@@ -519,17 +509,6 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 input DiscussionReplyCreateInput {
   discussionID: UUID!
   content: TaggedHTMLInput!
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
-
-"""
-DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
-  content: TaggedHTMLInput
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -1740,20 +1719,8 @@ deletePlanDocument(id: UUID!): Int!
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-deletePlanDiscussion(id: UUID!): PlanDiscussion!
-@hasRole(role: MINT_USER)
-
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-deleteDiscussionReply(id: UUID!): DiscussionReply!
-@hasRole(role: MINT_USER)
 
 lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_USER)

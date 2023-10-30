@@ -287,44 +287,12 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 	)
 }
 
-// UpdatePlanDiscussion is the resolver for the updatePlanDiscussion field.
-func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
-}
-
-// DeletePlanDiscussion is the resolver for the deletePlanDiscussion field.
-func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.DeletePlanDiscussion(logger, id, principal, r.store)
-}
-
 // CreateDiscussionReply is the resolver for the createDiscussionReply field.
 func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.CreateDiscussionReply(logger, &input, principal, r.store)
-}
-
-// UpdateDiscussionReply is the resolver for the updateDiscussionReply field.
-func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
-}
-
-// DeleteDiscussionReply is the resolver for the deleteDiscussionReply field.
-func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
@@ -1092,3 +1060,34 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedHTMLResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
+}
+func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeletePlanDiscussion(logger, id, principal, r.store)
+}
+func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
+}
+func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+}

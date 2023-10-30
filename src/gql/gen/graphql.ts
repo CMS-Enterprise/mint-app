@@ -298,17 +298,6 @@ export type DiscussionReply = {
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
-/**
- * DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https://gqlgen.com/reference/changesets/
- */
-export type DiscussionReplyChanges = {
-  content?: InputMaybe<Scalars['TaggedHTMLInput']['input']>;
-  userRole?: InputMaybe<DiscussionUserRole>;
-  userRoleDescription?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** DiscussionReplyCreateInput represents the necessary fields to create a discussion reply */
 export type DiscussionReplyCreateInput = {
   content: Scalars['TaggedHTMLInput']['input'];
@@ -629,11 +618,9 @@ export type Mutation = {
   createPlanCrTdl: PlanCrTdl;
   createPlanDiscussion: PlanDiscussion;
   createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
-  deleteDiscussionReply: DiscussionReply;
   deleteOperationalSolutionSubtask: Scalars['Int']['output'];
   deletePlanCollaborator: PlanCollaborator;
   deletePlanCrTdl: PlanCrTdl;
-  deletePlanDiscussion: PlanDiscussion;
   deletePlanDocument: Scalars['Int']['output'];
   deletePlanFavorite: PlanFavorite;
   linkNewPlanDocument: PlanDocument;
@@ -646,7 +633,6 @@ export type Mutation = {
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
-  updateDiscussionReply: DiscussionReply;
   updateExistingModelLinks: Array<ExistingModelLink>;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
@@ -655,7 +641,6 @@ export type Mutation = {
   updatePlanBeneficiaries: PlanBeneficiaries;
   updatePlanCollaborator: PlanCollaborator;
   updatePlanCrTdl: PlanCrTdl;
-  updatePlanDiscussion: PlanDiscussion;
   updatePlanGeneralCharacteristics: PlanGeneralCharacteristics;
   updatePlanOpsEvalAndLearning: PlanOpsEvalAndLearning;
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
@@ -737,12 +722,6 @@ export type MutationCreatePlanDocumentSolutionLinksArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationDeleteDiscussionReplyArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
 export type MutationDeleteOperationalSolutionSubtaskArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -756,12 +735,6 @@ export type MutationDeletePlanCollaboratorArgs = {
 
 /** Mutations definition for the schema */
 export type MutationDeletePlanCrTdlArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationDeletePlanDiscussionArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -841,13 +814,6 @@ export type MutationUpdateCustomOperationalNeedByIdArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationUpdateDiscussionReplyArgs = {
-  changes: DiscussionReplyChanges;
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
 export type MutationUpdateExistingModelLinksArgs = {
   currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
@@ -899,13 +865,6 @@ export type MutationUpdatePlanCollaboratorArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdatePlanCrTdlArgs = {
   changes: PlanCrTdlChanges;
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationUpdatePlanDiscussionArgs = {
-  changes: PlanDiscussionChanges;
   id: Scalars['UUID']['input'];
 };
 
@@ -1418,17 +1377,6 @@ export type PlanDiscussion = {
   replies: Array<DiscussionReply>;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
-};
-
-/**
- * PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https://gqlgen.com/reference/changesets/
- */
-export type PlanDiscussionChanges = {
-  content?: InputMaybe<Scalars['TaggedHTMLInput']['input']>;
-  userRole?: InputMaybe<DiscussionUserRole>;
-  userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** PlanDiscussionCreateInput represents the necessary fields to create a plan discussion */
