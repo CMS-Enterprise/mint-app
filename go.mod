@@ -3,13 +3,13 @@ module github.com/cmsgov/mint-app
 go 1.21
 
 require (
-	github.com/99designs/gqlgen v0.17.38
-	github.com/aws/aws-sdk-go v1.46.1
+	github.com/99designs/gqlgen v0.17.40
+	github.com/aws/aws-sdk-go v1.46.6
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.20.4
 	github.com/go-openapi/swag v0.22.4
 	github.com/golang/mock v1.6.0
-	github.com/google/uuid v1.3.1
+	github.com/google/uuid v1.4.0
 	github.com/gorilla/mux v1.8.0
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/guregu/null v4.0.0+incompatible
@@ -46,6 +46,7 @@ require (
 	github.com/hashicorp/golang-lru/v2 v2.0.3 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
+	github.com/sosodev/duration v1.1.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 )
 
