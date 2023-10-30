@@ -82,6 +82,10 @@ export default {
           return;
         }
 
+        popup[0].setProps({
+          getReferenceClientRect: getClientRect(props)
+        });
+
         spinner[0].hide();
 
         popup[0].show();
