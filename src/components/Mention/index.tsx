@@ -22,6 +22,9 @@ import { formatedSolutionMentions, getMentions } from './util';
 
 import './index.scss';
 
+/* The rendered Mention after selected from MentionList
+This component can be any react jsx component, but must be wrapped in <NodeViewWrapper />
+Attrs of selected mention are accessed through node prop */
 const MentionComponent = ({ node }: { node: any }) => {
   const { label } = node.attrs;
 
@@ -32,6 +35,8 @@ const MentionComponent = ({ node }: { node: any }) => {
   );
 };
 
+/* Extended TipTap Mention class with additional attributes
+Additionally sets a addNodeView to render custo JSX as mention */
 const CustomMention = (history: RouteComponentProps['history']) => {
   return Mention.extend({
     atom: true,
@@ -118,10 +123,12 @@ export default ({
         })
       ],
       onUpdate: ({ editor: input }: any) => {
+        // Uses the form setter prop (Formik) for mutation input
         if (setFieldValue) {
           setFieldValue('content', input?.getHTML());
         }
       },
+      // Sets a alert of a mention is selected, and users/teams will be emailed
       onSelectionUpdate: ({ editor: input }: any) => {
         setTagAlert(!!getMentions(input?.getJSON()).length);
       },

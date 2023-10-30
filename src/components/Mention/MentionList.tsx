@@ -1,3 +1,6 @@
+/* MentionList renders the TipTap suggestion dropdown in addition to defining
+defining keyboard events */
+
 import React, {
   forwardRef,
   useEffect,
@@ -23,6 +26,7 @@ const MentionList = forwardRef((props: any, ref) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // Sets the selected mention within the editor props
   const selectItem = (index: any) => {
     const item = props.items[index];
 
@@ -45,13 +49,11 @@ const MentionList = forwardRef((props: any, ref) => {
     setSelectedIndex(
       (selectedIndex + props.items?.length - 1) % props.items?.length
     );
-
     scrollIntoView();
   };
 
   const downHandler = () => {
     setSelectedIndex((selectedIndex + 1) % props.items?.length);
-
     scrollIntoView();
   };
 

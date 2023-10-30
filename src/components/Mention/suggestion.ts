@@ -3,6 +3,8 @@ import tippy from 'tippy.js';
 
 import MentionList, { SuggestionLoading } from './MentionList';
 
+/* Returns the current textarea/RTE editor dimension to append the Mentionslist dropdown
+MentionList should have the same width as this parent clientRect */
 const getClientRect = (props: any) => {
   const elem = document.getElementById('tip-editor');
   const rect = elem?.getBoundingClientRect();
