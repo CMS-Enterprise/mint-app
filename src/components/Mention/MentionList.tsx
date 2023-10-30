@@ -35,14 +35,23 @@ const MentionList = forwardRef((props: any, ref) => {
     }
   };
 
+  const scrollIntoView = () => {
+    const selectedElm = document.getElementsByClassName('is-selected')[0];
+    selectedElm.scrollIntoView({ block: 'nearest' });
+  };
+
   const upHandler = () => {
     setSelectedIndex(
       (selectedIndex + props.items?.length - 1) % props.items?.length
     );
+
+    scrollIntoView();
   };
 
   const downHandler = () => {
     setSelectedIndex((selectedIndex + 1) % props.items?.length);
+
+    scrollIntoView();
   };
 
   const enterHandler = () => {
