@@ -234,6 +234,10 @@ export const CollaboratorsContent = () => {
                 <div className="font-body-lg margin-bottom-6">
                   {collaboratorsMiscT('manageModelTeamInfo')}
                 </div>
+
+                <UswdsReactLink to={`/models/${modelID}/task-list/`}>
+                  <span>&larr; </span> {miscellaneousT('returnToTaskList')}
+                </UswdsReactLink>
               </>
             ) : (
               <>
@@ -275,26 +279,28 @@ export const CollaboratorsContent = () => {
                 />
               ))}
 
-            <div className="margin-top-5 display-block">
-              <UswdsReactLink
-                data-testid="button--back"
-                className="usa-button usa-button--outline"
-                variant="unstyled"
-                to="/models/new-plan"
-              >
-                {miscellaneousT('back')}
-              </UswdsReactLink>
-              <UswdsReactLink
-                data-testid="continue-to-tasklist"
-                className="usa-button usa-button--outline"
-                variant="unstyled"
-                to={`/models/${modelID}/task-list`}
-              >
-                {collaborators.length > 0
-                  ? miscellaneousT('continueToTaskList')
-                  : collaboratorsMiscT('continueWithoutAdding')}
-              </UswdsReactLink>
-            </div>
+            {previousPage !== 'task-list' && (
+              <div className="margin-top-5 display-block">
+                <UswdsReactLink
+                  data-testid="button--back"
+                  className="usa-button usa-button--outline"
+                  variant="unstyled"
+                  to="/models/new-plan"
+                >
+                  {miscellaneousT('back')}
+                </UswdsReactLink>
+                <UswdsReactLink
+                  data-testid="continue-to-tasklist"
+                  className="usa-button usa-button--outline"
+                  variant="unstyled"
+                  to={`/models/${modelID}/task-list`}
+                >
+                  {collaborators.length > 0
+                    ? miscellaneousT('continueToTaskList')
+                    : collaboratorsMiscT('continueWithoutAdding')}
+                </UswdsReactLink>
+              </div>
+            )}
           </Grid>
         </Grid>
       </GridContainer>
