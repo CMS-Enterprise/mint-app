@@ -56,6 +56,7 @@ const SingleDiscussion = ({
         })}
       >
         <MentionTextArea
+          id={`mention-editor-${index}`}
           editable={false}
           initialContent={discussion.content?.rawContent}
         />

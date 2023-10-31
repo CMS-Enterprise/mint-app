@@ -6,9 +6,9 @@ import MentionList, { SuggestionLoading } from './MentionList';
 /* Returns the current textarea/RTE editor dimension to append the Mentionslist dropdown
 MentionList should have the same width as this parent clientRect */
 const getClientRect = (props: any) => {
-  const elem = document.getElementById('tip-editor');
+  const editorID = props.editor.options.editorProps.attributes.id;
+  const elem = document.getElementById(editorID);
   const rect = elem?.getBoundingClientRect();
-
   const mentionRect = props.clientRect();
 
   return () =>
@@ -20,7 +20,7 @@ const getClientRect = (props: any) => {
     );
 };
 
-export default {
+const suggestion = {
   render: () => {
     let reactRenderer: any;
     let spinner: any;
@@ -30,6 +30,8 @@ export default {
       // If we had async initial data - load a spinning symbol until onStart gets called
       // We have hardcoded in memory data for current implementation, doesn't currently get called
       onBeforeStart: (props: any) => {
+        const editorID = props.editor.options.editorProps.attributes.id;
+
         if (!props.clientRect) {
           return;
         }
@@ -41,8 +43,7 @@ export default {
 
         spinner = tippy('body', {
           getReferenceClientRect: getClientRect(props),
-          appendTo: () =>
-            document.getElementById('tip-editor') || document.body,
+          appendTo: () => document.getElementById(editorID) || document.body,
           content: reactRenderer.element,
           showOnCreate: true,
           interactive: false,
@@ -53,6 +54,8 @@ export default {
 
       // Render any available suggestions when mention trigger is first called - @
       onStart: (props: any) => {
+        const editorID = props.editor.options.editorProps.attributes.id;
+
         if (!props.clientRect) {
           return;
         }
@@ -66,8 +69,7 @@ export default {
 
         popup = tippy('body', {
           getReferenceClientRect: getClientRect(props),
-          appendTo: () =>
-            document.getElementById('tip-editor') || document.body,
+          appendTo: () => document.getElementById(editorID) || document.body,
           content: reactRenderer.element,
           showOnCreate: true,
           interactive: true,
@@ -122,3 +124,5 @@ export default {
     };
   }
 };
+
+export default suggestion;

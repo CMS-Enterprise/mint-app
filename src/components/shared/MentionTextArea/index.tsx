@@ -56,12 +56,14 @@ const CustomMention = Mention.extend({
 });
 
 const MentionTextArea = ({
+  id,
   setFieldValue,
   editable,
   disabled,
   initialContent,
   className
 }: {
+  id: string;
   setFieldValue?: (
     field: string,
     value: any,
@@ -104,6 +106,11 @@ const MentionTextArea = ({
   const editor = useEditor(
     {
       editable: editable && !disabled,
+      editorProps: {
+        attributes: {
+          id
+        }
+      },
       extensions: [
         StarterKit,
         CustomMention.configure({
@@ -135,10 +142,10 @@ const MentionTextArea = ({
     <>
       <EditorContent
         editor={editor}
-        id="tip-editor"
+        id={id}
         className={classNames(className, {
-          readonly: !editable,
-          editable
+          tiptap__readonly: !editable,
+          tiptap__editable: editable
         })}
       />
 

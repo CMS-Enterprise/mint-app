@@ -35,7 +35,11 @@ const TruncatedText = ({
   if (text.length < charLimit) {
     return (
       <div className={className}>
-        <MentionTextArea editable={false} initialContent={text} />
+        <MentionTextArea
+          id={`mention-${id}`}
+          editable={false}
+          initialContent={text}
+        />
       </div>
     );
   }
@@ -49,6 +53,7 @@ const TruncatedText = ({
     <div className={className}>
       <span className="display-block" id={id}>
         <MentionTextArea
+          id={`mention-${id}`}
           editable={false}
           initialContent={isOpen ? startOfText : text}
         />

@@ -107,6 +107,7 @@ const QuestionAndReply = ({
 
             <div className="margin-left-5">
               <MentionTextArea
+                id={`mention-${discussionReplyID}`}
                 editable={false}
                 initialContent={reply.content?.rawContent}
               />
@@ -263,6 +264,7 @@ const QuestionAndReply = ({
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
 
                     <MentionTextArea
+                      id="mention-editor"
                       setFieldValue={setFieldValue}
                       editable
                       disabled={loading}

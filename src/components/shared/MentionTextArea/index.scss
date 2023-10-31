@@ -8,6 +8,22 @@
   p {
     margin: 0px;
   }
+
+  &__readonly {
+    margin-bottom: 1rem;
+  
+    .ProseMirror {
+      outline: none;
+      border: none;
+      padding: 0;
+    }
+  }
+
+  &__editable {
+    .ProseMirror {
+      min-height: 150px;
+    }  
+  }
 }
 
 [data-tippy-root] {
@@ -23,7 +39,7 @@
   color: #005EA2;
   border: none;
   background-color: transparent;
-  padding: 0;
+  padding: 0;  
 }
 
 .items {
@@ -51,20 +67,4 @@
   &.is-selected {
     background-color: #d9e8f6;
   }
-}
-
-.readonly {
-  margin-bottom: 1rem;
-
-  .ProseMirror {
-    outline: none;
-    border: none;
-    padding: 0;
-  }
-}
-
-.editable {
-  .ProseMirror {
-    min-height: 150px;
-  }  
 }
