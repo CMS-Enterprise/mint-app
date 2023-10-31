@@ -58,7 +58,6 @@ const CollaboratorsTable = ({
             ...value.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
             ...value.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
           ];
-
           return (
             <>
               {modelLeadFirst
@@ -139,17 +138,15 @@ const CollaboratorsTable = ({
         alphanumeric: (rowOne, rowTwo, columnName) => {
           return sortColumnValues(
             rowOne.values[columnName],
-            rowTwo.values[columnName]
+            rowTwo.values[columnName],
+            TeamRole.MODEL_LEAD
           );
         }
       },
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(
-          () => [{ id: 'userAccount.commonName', asc: true }],
-          []
-        ),
+        sortBy: useMemo(() => [{ id: 'teamRoles', desc: true }], []),
         pageIndex: 0
       }
     },

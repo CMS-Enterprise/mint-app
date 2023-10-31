@@ -65,7 +65,8 @@ export const currentTableSortDescription = <T extends {}>(headerGroup: {
 
 export const sortColumnValues = (
   rowOneElem: sortColumnProps,
-  rowTwoElem: sortColumnProps
+  rowTwoElem: sortColumnProps,
+  specificValueFirst?: any
 ) => {
   // Checking if passed sort value can be formatted as a date
   const rowOneDateCheck: any =
@@ -95,6 +96,13 @@ export const sortColumnValues = (
   }
 
   if (rowTwo === null) {
+    return -1;
+  }
+
+  if (rowOne.includes(specificValueFirst)) {
+    return 1;
+  }
+  if (rowTwo.includes(specificValueFirst)) {
     return -1;
   }
 
