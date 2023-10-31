@@ -3,7 +3,7 @@ module github.com/cmsgov/mint-app
 go 1.21
 
 require (
-	github.com/99designs/gqlgen v0.17.40
+	github.com/99designs/gqlgen v0.17.38
 	github.com/aws/aws-sdk-go v1.46.6
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.20.4
