@@ -43,22 +43,19 @@ import { isLastModelLead } from '..';
 
 const Collaborators = () => {
   const { t: collaboratorsT } = useTranslation('collaborators');
-
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
-
   const { t: miscellaneousT } = useTranslation('miscellaneous');
-
   const { teamRole: teamRoleConfig } = usePlanTranslation('collaborators');
 
-  const { modelID } = useParams<{ modelID: string }>();
-
-  const { collaboratorId } = useParams<{ collaboratorId: string }>();
-
-  const formikRef = useRef<FormikProps<CollaboratorFormType>>(null);
-
+  const history = useHistory();
   const { showMessageOnNextPage } = useMessage();
 
-  const history = useHistory();
+  const { modelID, collaboratorId } = useParams<{
+    modelID: string;
+    collaboratorId: string;
+  }>();
+
+  const formikRef = useRef<FormikProps<CollaboratorFormType>>(null);
 
   const [create, { loading }] = useMutation<
     CreateCollaboratorsType,
