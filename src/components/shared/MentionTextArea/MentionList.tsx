@@ -70,7 +70,10 @@ const MentionList = forwardRef((props: any, ref) => {
         return true;
       }
 
-      if (event.key === 'ArrowDown' || event.key === 'Tab') {
+      if (
+        event.key === 'ArrowDown' ||
+        (!event.shiftKey && event.key === 'Tab')
+      ) {
         downHandler();
         return true;
       }
