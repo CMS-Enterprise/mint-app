@@ -260,7 +260,9 @@ export const CollaboratorsContent = () => {
               variant="unstyled"
               to={{
                 pathname: `/models/${modelID}/collaborators/add-collaborator`,
-                state: { previousPage: 'task-list' }
+                state: {
+                  previousPage: previousPage === 'task-list' ? 'task-list' : ''
+                }
               }}
             >
               {collaboratorsMiscT('addTeamMemberButton')}

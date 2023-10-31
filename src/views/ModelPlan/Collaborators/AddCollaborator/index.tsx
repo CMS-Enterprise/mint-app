@@ -129,7 +129,9 @@ const Collaborators = () => {
             );
             history.push({
               pathname: `/models/${modelID}/collaborators`,
-              state: { previousPage: previousPage ? 'task-list' : '' }
+              state: {
+                previousPage: previousPage === 'task-list' ? 'task-list' : ''
+              }
             });
           }
         })
@@ -169,7 +171,9 @@ const Collaborators = () => {
             );
             history.push({
               pathname: `/models/${modelID}/collaborators`,
-              state: { previousPage: 'task-list' }
+              state: {
+                previousPage: previousPage === 'task-list' ? 'task-list' : ''
+              }
             });
           }
         })
