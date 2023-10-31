@@ -1,8 +1,11 @@
 package resolvers
 
 import (
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 func (suite *ResolverSuite) TestTaggedHTMLGet() {
@@ -66,9 +69,84 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 }
 
 func (suite *ResolverSuite) TestCreateOrGetTagEntityID() {
+	tag1EUA := "SKZO"
+	tag1Label := "Alexander Stark"
+	tag1Type := models.TagTypeUserAccount
+	tag1 := `<span data-type="mention" tag-type="` + string(tag1Type) + `" class="mention" data-id="` + tag1EUA + `" data-label="` + tag1Label + `">@` + tag1Label + `</span>`
+	tag2EUA := "TEST"
+	tag2Label := "Terry Thompson"
+	tag2Type := models.TagTypeUserAccount
+	tag2 := `<span data-type="mention" tag-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2EUA + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
+	tag3ID := "CONNECT"
+	tag3Label := "Salesforce CONNECT"
+	tag3Type := models.TagTypePossibleSolution
+	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
+	htmlMention := `<p>Hey ` + tag1 + `!  Will you be able to join the meeting next week?  If not, can you contact ` + tag2 + ` to let them know?</p> We are planning on using the ` + tag3 + `solution.`
+	taggedHTML, err := models.NewTaggedHTMLFromString(htmlMention)
+	suite.NoError(err)
+
+	input := models.TaggedHTMLInput(taggedHTML)
+
+	err = CreateOrGetTagEntityID(suite.testConfigs.Context, suite.testConfigs.Store, &input, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	suite.NoError(err)
+	suite.Len(taggedHTML.Mentions, 3)
+
+	tag1User, err := UserAccountGetByUsername(suite.testConfigs.Logger, suite.testConfigs.Store, tag1EUA)
+	suite.NoError(err)
+	suite.EqualValues(tag1User.ID, *taggedHTML.Mentions[0].EntityUUID)
+
+	tag2User, err := UserAccountGetByUsername(suite.testConfigs.Logger, suite.testConfigs.Store, tag2EUA)
+	suite.NoError(err)
+	suite.EqualValues(tag2User.ID, *taggedHTML.Mentions[1].EntityUUID)
+
+	// tag3Sol, err := Possible(suite.testConfigs.Logger, suite.testConfigs.Store, tag2EUA)
+	tag3Sol, err := suite.testConfigs.Store.PossibleOperationalSolutionGetByKey(suite.testConfigs.Logger, models.OperationalSolutionKey(tag3ID))
+	suite.NoError(err)
+	suite.EqualValues(tag3Sol.ID, *taggedHTML.Mentions[2].EntityIntID)
+
+	// TODO:
+	/*
+		1. Make the tagged HTML
+		2. Verify that the id matches as expected
+		3. Verify the different error conditions function as expected
+
+
+	*/
 
 }
 
 func (suite *ResolverSuite) TestTagCollectionCreate() {
+	tag1EUA := "SKZO"
+	tag1Label := "Alexander Stark"
+	tag1Type := models.TagTypeUserAccount
+	tag1 := `<span data-type="mention" tag-type="` + string(tag1Type) + `" class="mention" data-id="` + tag1EUA + `" data-label="` + tag1Label + `">@` + tag1Label + `</span>`
+	tag2EUA := "TEST"
+	tag2Label := "Terry Thompson"
+	tag2Type := models.TagTypeUserAccount
+	tag2 := `<span data-type="mention" tag-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2EUA + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
+	tag3ID := "CONNECT"
+	tag3Label := "Salesforce CONNECT"
+	tag3Type := models.TagTypePossibleSolution
+	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
+	htmlMention := `<p>Hey ` + tag1 + `!  Will you be able to join the meeting next week?  If not, can you contact ` + tag2 + ` to let them know?</p> We are planning on using the ` + tag3 + `solution.` + tag1 + tag1
+	// We have made a mention with 5 Mentions. This should only create 5 tags in the database
+	taggedHTML, err := models.NewTaggedHTMLFromString(htmlMention)
+	suite.NoError(err)
+
+	input := models.TaggedHTMLInput(taggedHTML)
+
+	err = CreateOrGetTagEntityID(suite.testConfigs.Context, suite.testConfigs.Store, &input, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	suite.NoError(err)
+	suite.Len(taggedHTML.Mentions, 5)
+
+	fieldName := "nonsenseTestField"
+	tableName := "nonsenseTableName"
+	taggedContentID := uuid.New()
+
+	tags, err := TagCollectionCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, fieldName, tableName, taggedContentID, taggedHTML.Mentions)
+	suite.NoError(err) //ASSERT Tags are created
+
+	// ASSERT that tags are not duplicated
+	suite.Len(tags, 3)
 
 }
