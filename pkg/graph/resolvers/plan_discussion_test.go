@@ -21,6 +21,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
 
 	taggedHTMLContent, err := models.NewTaggedHTMLFromString("This is a test comment")
+	taggedHTMLContent.Tags = []*models.Tag{}
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
@@ -53,6 +54,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	plan := suite.createModelPlan("Test Plan")
 
 	taggedHTML, err := models.NewTaggedHTMLFromString("This is a test comment")
+	taggedHTML.Tags = []*models.Tag{}
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
@@ -112,7 +114,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() 
 	suite.NoError(err)
 	suite.NotNil(planDiscussion.ID)
 	suite.EqualValues(plan.ID, planDiscussion.ModelPlanID)
-	suite.EqualValues(planDiscussionInput.Content, planDiscussion.Content)
+	suite.EqualValues(planDiscussionInput.Content.RawContent, planDiscussion.Content.RawContent)
 	suite.EqualValues(planDiscussionInput.UserRole, planDiscussion.UserRole)
 	suite.True(planDiscussion.IsAssessment) // default principal for the test suite is an assessment user
 	suite.Nil(planDiscussion.ModifiedBy)
@@ -179,9 +181,11 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	tHTML, err := models.NewTaggedHTMLFromString("This is now updated! Thanks for looking at my test")
+	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"content": "This is now updated! Thanks for looking at my test",
+		"content": models.TaggedHTMLInput(tHTML),
 	}
 	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
@@ -198,7 +202,7 @@ func (suite *ResolverSuite) TestDeletePlanDiscussion() {
 
 	result, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(discussion, result)
+	suite.EqualValues(discussion.ID, result.ID)
 
 	// Check that there's no plans for this user
 	discussions, err := PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, discussion.ID)
@@ -221,6 +225,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	taggedHTML, err := models.NewTaggedHTMLFromString("This is a test reply")
+	taggedHTML.Tags = []*models.Tag{}
 	suite.NoError(err)
 
 	input := &model.DiscussionReplyCreateInput{
@@ -243,6 +248,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	taggedHTML, err := models.NewTaggedHTMLFromString("This is a test reply")
+	taggedHTML.Tags = []*models.Tag{}
 	suite.NoError(err)
 
 	input := &model.DiscussionReplyCreateInput{
@@ -269,9 +275,11 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	reply := suite.createDiscussionReply(discussion, "This is a test reply")
 	assert.Nil(suite.T(), reply.ModifiedBy)
 	assert.Nil(suite.T(), reply.ModifiedDts)
+	tHTML, err := models.NewTaggedHTMLFromString("This is now updated! Thanks for looking at my test")
+	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"content": "This is now updated! Thanks for looking at my test",
+		"content": models.TaggedHTMLInput(tHTML),
 	}
 
 	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)

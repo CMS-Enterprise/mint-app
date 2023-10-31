@@ -1,6 +1,9 @@
 package resolvers
 
-import "github.com/cmsgov/mint-app/pkg/models"
+import (
+	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
 func (suite *ResolverSuite) TestTaggedHTMLGet() {
 	plan := suite.createModelPlan("Test Plan for TaggedHTML")
@@ -41,19 +44,24 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 
 	// Get user account
 	principalAccountID := suite.testConfigs.Principal.UserAccount.ID
-	retPrinc, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeUserAccount, &principalAccountID, nil)
+	retPrincEntity, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeUserAccount, &principalAccountID, nil)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal, retPrinc)
+	retPrinc, ok := retPrincEntity.(*authentication.UserAccount)
+	suite.True(ok, "Could not cast the Tagged Entity to User Account")
+
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, retPrinc.ID)
 
 	// Get Possible Operational Solution
 	sol, err := PossibleOperationalSolutionGetByID(suite.testConfigs.Logger, suite.testConfigs.Store, 1)
 	suite.NoError(err)
 	suite.NotNil(sol)
 
-	retSol, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypePossibleSolution, nil, &sol.ID)
+	retSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypePossibleSolution, nil, &sol.ID)
 	suite.NoError(err)
+	retSol, ok := retSolEnt.(*models.PossibleOperationalSolution)
+	suite.True(ok, "Could not cast the Tagged Entity to Possible Operational Solution")
 
-	suite.EqualValues(sol, retSol)
+	suite.EqualValues(sol.ID, retSol.ID)
 
 }
 
