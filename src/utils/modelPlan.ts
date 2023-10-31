@@ -1,5 +1,8 @@
+import { TeamRole } from 'gql/gen/graphql';
 import i18next from 'i18next';
+import { orderBy } from 'lodash';
 
+import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import {
   DocumentType,
@@ -207,3 +210,19 @@ export const getUserInitials = (user: string) =>
 // Check if a single character is a valid letter
 export const returnValidLetter = (str: string) =>
   str.length === 1 && str.match(/[a-z]/i) ? str : '';
+
+const orderByLastName = (object: any[]) =>
+  orderBy(object, item => item.userAccount.commonName.split(' ')[1]);
+
+export const collaboratorsOrderedByModelLeads = (
+  collab: GetCollaboratorsType[]
+) => {
+  const modelLeads = orderByLastName(
+    collab.filter(c => c.teamRoles.includes(TeamRole.MODEL_LEAD))
+  );
+  const everyoneElse = orderByLastName(
+    collab.filter(c => !c.teamRoles.includes(TeamRole.MODEL_LEAD))
+  );
+
+  return [...modelLeads, ...everyoneElse];
+};
