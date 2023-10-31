@@ -39,6 +39,22 @@ func (suite *ResolverSuite) TestTagCollectionGet() {
 
 func (suite *ResolverSuite) TestTaggedEntityGet() {
 
+	// Get user account
+	principalAccountID := suite.testConfigs.Principal.UserAccount.ID
+	retPrinc, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeUserAccount, &principalAccountID, nil)
+	suite.NoError(err)
+	suite.EqualValues(suite.testConfigs.Principal, retPrinc)
+
+	// Get Possible Operational Solution
+	sol, err := PossibleOperationalSolutionGetByID(suite.testConfigs.Logger, suite.testConfigs.Store, 1)
+	suite.NoError(err)
+	suite.NotNil(sol)
+
+	retSol, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypePossibleSolution, nil, &sol.ID)
+	suite.NoError(err)
+
+	suite.EqualValues(sol, retSol)
+
 }
 
 func (suite *ResolverSuite) TestCreateOrGetTagEntityID() {
