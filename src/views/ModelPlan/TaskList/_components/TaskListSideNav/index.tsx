@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
-import orderBy from 'lodash/orderBy';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -16,7 +15,7 @@ import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
-import { TeamRole } from 'types/graphql-global-types';
+import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 
 import { StatusMessageType } from '../..';
 
@@ -71,7 +70,7 @@ const TaskListSideNav = ({
           history.push(`/`);
         }
       })
-      .catch(errors => {
+      .catch(() => {
         setModalOpen(false);
       });
   };
@@ -107,21 +106,6 @@ const TaskListSideNav = ({
       </Modal>
     );
   };
-
-  const orderByLastName = (object: GetCollaboratorsType[]) =>
-    orderBy(object, item => item.userAccount.commonName.split(' ')[1]);
-
-  const modelLeads = orderByLastName(
-    collaborators.filter(collaborator =>
-      collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
-    )
-  );
-
-  const everyoneElse = orderByLastName(
-    collaborators.filter(
-      collaborator => !collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
-    )
-  );
 
   return (
     <>
@@ -217,17 +201,19 @@ const TaskListSideNav = ({
 
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
-              {[...modelLeads, ...everyoneElse].map((collaborator, index) => {
-                return (
-                  <IconInitial
-                    className="margin-bottom-1"
-                    key={collaborator.userAccount.username}
-                    user={collaborator.userAccount.commonName}
-                    index={index}
-                    teamRoles={collaborator.teamRoles}
-                  />
-                );
-              })}
+              {collaboratorsOrderedByModelLeads(collaborators).map(
+                (collaborator, index) => {
+                  return (
+                    <IconInitial
+                      className="margin-bottom-1"
+                      key={collaborator.userAccount.username}
+                      user={collaborator.userAccount.commonName}
+                      index={index}
+                      teamRoles={collaborator.teamRoles}
+                    />
+                  );
+                }
+              )}
             </ul>
           </div>
         </div>
