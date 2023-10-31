@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -48,6 +48,8 @@ const Collaborators = () => {
   const { teamRole: teamRoleConfig } = usePlanTranslation('collaborators');
 
   const history = useHistory();
+  const location = useLocation<{ previousPage: string }>();
+  const { previousPage } = location.state || {};
   const { showMessageOnNextPage } = useMessage();
 
   const { modelID, collaboratorId } = useParams<{
@@ -125,7 +127,10 @@ const Collaborators = () => {
                 </Alert>
               </>
             );
-            history.push(`/models/${modelID}/collaborators`);
+            history.push({
+              pathname: `/models/${modelID}/collaborators`,
+              state: { previousPage: previousPage ? 'task-list' : '' }
+            });
           }
         })
         .catch(errors => {
@@ -162,7 +167,10 @@ const Collaborators = () => {
                 </Alert>
               </>
             );
-            history.push(`/models/${modelID}/collaborators`);
+            history.push({
+              pathname: `/models/${modelID}/collaborators`,
+              state: { previousPage: 'task-list' }
+            });
           }
         })
         .catch(errors => {

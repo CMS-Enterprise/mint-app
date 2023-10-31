@@ -258,7 +258,10 @@ export const CollaboratorsContent = () => {
             <UswdsReactLink
               className="usa-button margin-bottom-2"
               variant="unstyled"
-              to={`/models/${modelID}/collaborators/add-collaborator`}
+              to={{
+                pathname: `/models/${modelID}/collaborators/add-collaborator`,
+                state: { previousPage: 'task-list' }
+              }}
             >
               {collaboratorsMiscT('addTeamMemberButton')}
             </UswdsReactLink>
