@@ -4,7 +4,7 @@ import { Button, IconAnnouncement } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
-import Mention from 'components/Mention';
+import MentionTextArea from 'components/shared/MentionTextArea';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
@@ -55,7 +55,7 @@ const SingleDiscussion = ({
           'mint-discussions__not-connected': !connected
         })}
       >
-        <Mention
+        <MentionTextArea
           editable={false}
           initialContent={discussion.content?.rawContent}
         />

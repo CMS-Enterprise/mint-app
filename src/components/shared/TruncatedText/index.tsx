@@ -11,7 +11,7 @@ import {
 // it is over the character limit the text will be truncated and a
 // button to expand / unexpand the text will be provided if the user
 // desires to see the entire text
-import Mention from 'components/Mention';
+import MentionTextArea from 'components/shared/MentionTextArea';
 
 type TruncatedTextProps = {
   id: string;
@@ -35,7 +35,7 @@ const TruncatedText = ({
   if (text.length < charLimit) {
     return (
       <div className={className}>
-        <Mention editable={false} initialContent={text} />
+        <MentionTextArea editable={false} initialContent={text} />
       </div>
     );
   }
@@ -48,7 +48,7 @@ const TruncatedText = ({
   return (
     <div className={className}>
       <span className="display-block" id={id}>
-        <Mention
+        <MentionTextArea
           editable={false}
           initialContent={isOpen ? startOfText : text}
         />

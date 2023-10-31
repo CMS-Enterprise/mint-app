@@ -21,6 +21,12 @@ export const SuggestionLoading = () => {
   );
 };
 
+// Handler dropdown scroll event on keypress
+const scrollIntoView = () => {
+  const selectedElm = document.querySelector('.is-selected');
+  selectedElm?.scrollIntoView({ block: 'nearest' });
+};
+
 const MentionList = forwardRef((props: any, ref) => {
   const { t } = useTranslation('discussions');
 
@@ -37,12 +43,6 @@ const MentionList = forwardRef((props: any, ref) => {
         email: item.email
       });
     }
-  };
-
-  // Handler dropdown scroll event on keypress
-  const scrollIntoView = () => {
-    const selectedElm = document.getElementsByClassName('is-selected')[0];
-    selectedElm.scrollIntoView({ block: 'nearest' });
   };
 
   const upHandler = () => {

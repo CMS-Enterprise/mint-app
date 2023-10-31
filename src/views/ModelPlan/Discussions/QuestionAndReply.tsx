@@ -12,11 +12,11 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
-import Mention from 'components/Mention';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MentionTextArea from 'components/shared/MentionTextArea';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import {
@@ -106,7 +106,7 @@ const QuestionAndReply = ({
             <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
-              <Mention
+              <MentionTextArea
                 editable={false}
                 initialContent={reply.content?.rawContent}
               />
@@ -262,7 +262,7 @@ const QuestionAndReply = ({
 
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
 
-                    <Mention
+                    <MentionTextArea
                       setFieldValue={setFieldValue}
                       editable
                       disabled={loading}

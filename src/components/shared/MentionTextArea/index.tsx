@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import Mention from '@tiptap/extension-mention';
 import {
@@ -37,28 +36,26 @@ const MentionComponent = ({ node }: { node: any }) => {
 
 /* Extended TipTap Mention class with additional attributes
 Additionally sets a addNodeView to render custo JSX as mention */
-const CustomMention = (history: RouteComponentProps['history']) => {
-  return Mention.extend({
-    atom: true,
-    selectable: true,
-    addAttributes() {
-      return {
-        ...this.parent?.(),
-        'data-id-db': {
-          default: ''
-        },
-        email: {
-          default: ''
-        }
-      };
-    },
-    addNodeView() {
-      return ReactNodeViewRenderer(MentionComponent);
-    }
-  });
-};
+const CustomMention = Mention.extend({
+  atom: true,
+  selectable: true,
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      'data-id-db': {
+        default: ''
+      },
+      email: {
+        default: ''
+      }
+    };
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(MentionComponent);
+  }
+});
 
-export default ({
+const MentionTextArea = ({
   setFieldValue,
   editable,
   disabled,
@@ -77,8 +74,6 @@ export default ({
 }) => {
   const { t } = useTranslation('discussions');
 
-  const history = useHistory();
-
   const [tagAlert, setTagAlert] = useState<boolean>(false);
 
   const [getUsersLazyQuery] = useLazyQuery<SearchOktaUsersType>(
@@ -86,6 +81,7 @@ export default ({
   );
 
   const fetchUsers = ({ query }: { query: string }) => {
+    // If "@" trigger is typed without a following query, return on the solution contacts
     if (!query) return formatedSolutionMentions();
     return getUsersLazyQuery({
       variables: { searchTerm: query }
@@ -105,21 +101,19 @@ export default ({
     );
   };
 
-  const asyncSuggestions = {
-    ...suggestion,
-    items: fetchUsers
-  };
-
   const editor = useEditor(
     {
       editable: editable && !disabled,
       extensions: [
         StarterKit,
-        CustomMention(history).configure({
+        CustomMention.configure({
           HTMLAttributes: {
             class: 'mention'
           },
-          suggestion: asyncSuggestions
+          suggestion: {
+            ...suggestion,
+            items: fetchUsers
+          }
         })
       ],
       onUpdate: ({ editor: input }: any) => {
@@ -147,6 +141,7 @@ export default ({
           editable
         })}
       />
+
       {tagAlert && editable && (
         <Alert type="info" slim>
           {t('tagAlert')}
@@ -155,3 +150,5 @@ export default ({
     </>
   );
 };
+
+export default MentionTextArea;
