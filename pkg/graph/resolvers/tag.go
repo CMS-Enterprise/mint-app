@@ -84,6 +84,7 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 		}
 		tagType := mention.Type
 
+		// Conditionally set the entity DB by tag type
 		switch tagType {
 		case models.TagTypeUserAccount:
 			isMacUser := false
@@ -94,20 +95,6 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 			}
 			mention.EntityUUID = &collabAccount.ID
 			mention.EntityDB = mention.EntityUUID
-			// oldHTML, err := mention.ToHTML() //TODO store the original raw instead of this
-			// if err != nil {
-			// 	errs = append(errs, err)
-			// 	continue
-			// }
-			// mention.EntityDB = mention.EntityUUID
-			// newHTML, err := mention.ToHTML()
-			// if err != nil {
-			// 	errs = append(errs, err)
-			// 	continue
-			// }
-
-			// newTotalRaw := strings.Replace(string(tHTML.RawContent), string(oldHTML), string(newHTML), -1)
-			// tHTML.RawContent = models.HTML(newTotalRaw)
 
 		case models.TagTypePossibleSolution:
 			logger := appcontext.ZLogger(ctx)
@@ -130,6 +117,7 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 			continue
 		}
 
+		// Update the Tagged HTML Raw content by replacing the tags old value, with the new representation
 		newTotalRaw := strings.Replace(string(tHTML.RawContent), string(mention.RawHTML), string(newHTML), -1)
 		tHTML.RawContent = models.HTML(newTotalRaw)
 

@@ -104,15 +104,20 @@ func (suite *ResolverSuite) TestCreateOrGetTagEntityID() {
 	suite.NoError(err)
 	suite.EqualValues(tag3Sol.ID, *taggedHTML.Mentions[2].EntityIntID)
 
-	// TODO:
-	/*
-		1. Make the tagged HTML
-		2. Verify that the id matches as expected
-		3. Verify the different error conditions function as expected
+	// if the data-id-db tag is set, the content won't be updated
+	tag4EUA := "SKZO"
+	tag4Label := "Alexander Stark"
+	tag4Type := models.TagTypeUserAccount
+	tag4 := `<span data-type="mention" tag-type="` + string(tag4Type) + `" class="mention" data-id="` + tag4EUA + `" data-id-db="` + tag4Label + `" data-label="` + tag4Label + `">@` + tag4Label + `</span>`
 
-
-	*/
-
+	tHTML, err := models.NewTaggedHTMLFromString(tag4)
+	suite.NoError(err)
+	input2 := models.TaggedHTMLInput(tHTML)
+	err = CreateOrGetTagEntityID(suite.testConfigs.Context, suite.testConfigs.Store, &input2, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	suite.NoError(err)
+	suite.Len(input2.Mentions, 1)
+	suite.EqualValues(input2.Mentions[0].EntityDB, tag4Label)
+	suite.EqualValues(string(input.RawContent), tag4)
 }
 
 func (suite *ResolverSuite) TestTagCollectionCreate() {
