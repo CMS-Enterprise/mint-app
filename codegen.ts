@@ -4,8 +4,12 @@ const config: CodegenConfig = {
   schema: 'pkg/graph/schema.graphql',
   documents: ['src/gql/apolloGQL/**/*.ts'],
   generates: {
-    './src/gql/gen/': {
-      preset: 'client',
+    './src/gql/gen/graphql.tsx': {
+      plugins: [
+        'typescript',
+        'typescript-operations',
+        'typescript-react-apollo'
+      ],
       config: {
         scalars: {
           // old codegen mappings from global.d.ts

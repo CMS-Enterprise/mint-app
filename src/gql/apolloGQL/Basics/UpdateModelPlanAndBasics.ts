@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client';
+import { graphql } from '../../gen/gql';
 
-export default gql`
-  mutation UpdateModelPlanAndBasicsOLD(
+export default graphql(/* GraphQL */ `
+  mutation UpdateModelPlanAndBasics(
     $id: UUID!
     $changes: ModelPlanChanges!
     $basicsId: UUID!
@@ -14,4 +14,4 @@ export default gql`
       id
     }
   }
-`;
+`);

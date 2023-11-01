@@ -272,7 +272,7 @@ const Overview = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => handleFormSubmit('task-list')}
+                      onClick={() => handleFormSubmit('back')}
                     >
                       {miscellaneousT('back')}
                     </Button>

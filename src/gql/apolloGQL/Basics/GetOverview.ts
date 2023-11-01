@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client';
+import { graphql } from '../../gen/gql';
 
-export default gql`
-  query GetBasicsOLD($id: UUID!) {
+export default graphql(/* GraphQL */ `
+  query GetOverview($id: UUID!) {
     modelPlan(id: $id) {
       id
       modelName
@@ -15,4 +15,4 @@ export default gql`
       }
     }
   }
-`;
+`);

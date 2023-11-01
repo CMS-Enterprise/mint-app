@@ -13,6 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query GetBasics($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      abbreviation\n      nameHistory(sort: DESC)\n      basics {\n        id\n        demoCode\n        amsModelID\n        modelCategory\n        additionalModelCategories\n        cmsCenters\n        cmsOther\n        cmmiGroups\n      }\n    }\n  }\n": types.GetBasicsDocument,
+    "\n  mutation UpdateBasics($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics(id: $id, changes: $changes) {\n      id\n    }\n  }\n": types.UpdateBasicsDocument,
     "\n  mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {\n    linkNewPlanDocument(input: $input) {\n      id\n    }\n  }\n": types.LinkNewPlanDocumentDocument,
     "\n  mutation CreatReportAProblem($input: ReportAProblemInput!) {\n    reportAProblem(input: $input)\n  }\n": types.CreatReportAProblemDocument,
     "\n  mutation CreatSendFeedback($input: SendFeedbackEmailInput!) {\n    sendFeedbackEmail(input: $input)\n  }\n": types.CreatSendFeedbackDocument,
@@ -37,6 +39,14 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetBasics($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      abbreviation\n      nameHistory(sort: DESC)\n      basics {\n        id\n        demoCode\n        amsModelID\n        modelCategory\n        additionalModelCategories\n        cmsCenters\n        cmsOther\n        cmmiGroups\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetBasics($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      abbreviation\n      nameHistory(sort: DESC)\n      basics {\n        id\n        demoCode\n        amsModelID\n        modelCategory\n        additionalModelCategories\n        cmsCenters\n        cmsOther\n        cmmiGroups\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateBasics($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics(id: $id, changes: $changes) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateBasics($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics(id: $id, changes: $changes) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
