@@ -2,7 +2,13 @@
   Typed translation mappings for question centric architecture for a model plan
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
-import { CmmiGroup, CmsCenter, ModelCategory } from 'gql/gen/graphql';
+import {
+  CmmiGroup,
+  CmsCenter,
+  ModelCategory,
+  ModelType,
+  TaskStatus
+} from 'gql/gen/graphql';
 
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
@@ -32,7 +38,6 @@ import {
   KeyCharacteristic,
   ModelLearningSystemType,
   ModelStatus,
-  ModelType,
   MonitoringFileType,
   NonClaimsBasedPayType,
   OverlapType,
@@ -48,7 +53,6 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
-  TaskStatus,
   TeamRole,
   TriStateAnswer,
   TrustFundType,

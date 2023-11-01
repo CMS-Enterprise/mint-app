@@ -2618,6 +2618,13 @@ export type GetBasicsQueryVariables = Exact<{
 
 export type GetBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmsOther?: string | null, cmmiGroups: Array<CmmiGroup> } } };
 
+export type GetMilestonesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
+
 export type GetOverviewQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -2753,6 +2760,68 @@ export type GetBasicsQueryHookResult = ReturnType<typeof useGetBasicsQuery>;
 export type GetBasicsLazyQueryHookResult = ReturnType<typeof useGetBasicsLazyQuery>;
 export type GetBasicsSuspenseQueryHookResult = ReturnType<typeof useGetBasicsSuspenseQuery>;
 export type GetBasicsQueryResult = Apollo.QueryResult<GetBasicsQuery, GetBasicsQueryVariables>;
+export const GetMilestonesDocument = gql`
+    query GetMilestones($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    basics {
+      id
+      completeICIP
+      clearanceStarts
+      clearanceEnds
+      announced
+      applicationsStart
+      applicationsEnd
+      performancePeriodStarts
+      performancePeriodEnds
+      highLevelNote
+      wrapUpEnds
+      phasedIn
+      phasedInNote
+      readyForReviewByUserAccount {
+        id
+        commonName
+      }
+      readyForReviewDts
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMilestonesQuery__
+ *
+ * To run a query within a React component, call `useGetMilestonesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMilestonesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMilestonesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMilestonesQuery(baseOptions: Apollo.QueryHookOptions<GetMilestonesQuery, GetMilestonesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMilestonesQuery, GetMilestonesQueryVariables>(GetMilestonesDocument, options);
+      }
+export function useGetMilestonesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMilestonesQuery, GetMilestonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMilestonesQuery, GetMilestonesQueryVariables>(GetMilestonesDocument, options);
+        }
+export function useGetMilestonesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMilestonesQuery, GetMilestonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMilestonesQuery, GetMilestonesQueryVariables>(GetMilestonesDocument, options);
+        }
+export type GetMilestonesQueryHookResult = ReturnType<typeof useGetMilestonesQuery>;
+export type GetMilestonesLazyQueryHookResult = ReturnType<typeof useGetMilestonesLazyQuery>;
+export type GetMilestonesSuspenseQueryHookResult = ReturnType<typeof useGetMilestonesSuspenseQuery>;
+export type GetMilestonesQueryResult = Apollo.QueryResult<GetMilestonesQuery, GetMilestonesQueryVariables>;
 export const GetOverviewDocument = gql`
     query GetOverview($id: UUID!) {
   modelPlan(id: $id) {

@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client';
+import { graphql } from '../../gen/gql';
 
-export default gql`
-  query GetMilestonesOLD($id: UUID!) {
+export default graphql(/* GraphQL */ `
+  query GetMilestones($id: UUID!) {
     modelPlan(id: $id) {
       id
       modelName
@@ -28,4 +28,4 @@ export default gql`
       }
     }
   }
-`;
+`);

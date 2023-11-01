@@ -7,7 +7,7 @@ import { Bool } from 'types/translation';
 
 type AddNoteType = {
   field: string;
-  value: boolean | null;
+  value: boolean | null | undefined;
   id: string;
   options: Record<Bool, string>;
   setFieldValue: (
