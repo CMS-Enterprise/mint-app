@@ -40,13 +40,7 @@ const CollaboratorsTable = ({
         Header: collaboratorsMiscT('table.name'),
         accessor: 'userAccount.commonName',
         Cell: ({ row, value }: any) => {
-          return (
-            <IconInitial
-              className="margin-bottom-1"
-              user={value}
-              index={row.index}
-            />
-          );
+          return <IconInitial user={value} index={row.index} />;
         }
       },
       {
@@ -158,14 +152,13 @@ const CollaboratorsTable = ({
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, index) => (
+              {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps()}
                   aria-sort={getColumnSortStatus(column)}
                   className="table-header"
                   scope="col"
                   style={{
-                    paddingLeft: '0',
                     paddingBottom: '.5rem'
                   }}
                 >
@@ -183,37 +176,13 @@ const CollaboratorsTable = ({
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, index) => {
+          {rows.map(row => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map((cell, i) => {
-                  if (i === 0) {
-                    return (
-                      <th
-                        {...cell.getCellProps()}
-                        scope="row"
-                        style={{
-                          paddingLeft: '0',
-                          borderBottom:
-                            index === rows.length - 1 ? 'none' : 'auto'
-                        }}
-                      >
-                        {cell.render('Cell')}
-                      </th>
-                    );
-                  }
+                {row.cells.map(cell => {
                   return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        paddingLeft: '0',
-                        borderBottom:
-                          index === rows.length - 1 ? 'none' : 'auto'
-                      }}
-                    >
-                      {cell.render('Cell')}
-                    </td>
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   );
                 })}
               </tr>
