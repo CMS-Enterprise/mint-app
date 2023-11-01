@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -10,7 +9,6 @@ import {
   IconAnnouncement
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -31,7 +29,6 @@ import {
   DiscussionUserRole,
   PlanDiscussionCreateInput
 } from 'types/graphql-global-types';
-import { isAssessment, isMAC } from 'utils/user';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
@@ -75,13 +72,6 @@ const Discussions = ({
       id: modelID
     }
   });
-
-  const flags = useFlags();
-
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
-  const isCollaborator = data?.modelPlan?.isCollaborator;
-  const hasEditAccess: boolean =
-    isCollaborator || isAssessment(groups, flags) || isMAC(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
@@ -282,7 +272,7 @@ const Discussions = ({
     if (discussions.length === 0) {
       return (
         <Alert className="margin-bottom-2" type="info">
-          {hasEditAccess ? t('useLinkAbove') : t('nonEditor.noDiscussions')}
+          {t('useLinkAbove')}
         </Alert>
       );
     }
@@ -315,28 +305,25 @@ const Discussions = ({
           {t('heading')}
         </PageHeading>
 
-        {/* Ask a Question link available to Collaborators and Assessment Users */}
-        {hasEditAccess && (
-          <div className="display-flex margin-bottom-4">
-            <IconAnnouncement className="text-primary margin-right-1" />
-            <Button
-              type="button"
-              unstyled
-              onClick={() => {
-                if (readOnly) {
-                  setIsDiscussionOpen(true);
-                  setDiscussionType('question');
-                } else {
-                  setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
-                  setDiscussionStatusMessage(''); // Clearing status before asking a new question
-                  setDiscussionType('question');
-                }
-              }}
-            >
-              {t('askAQuestionLink')}
-            </Button>
-          </div>
-        )}
+        <div className="display-flex margin-bottom-4">
+          <IconAnnouncement className="text-primary margin-right-1" />
+          <Button
+            type="button"
+            unstyled
+            onClick={() => {
+              if (readOnly) {
+                setIsDiscussionOpen(true);
+                setDiscussionType('question');
+              } else {
+                setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
+                setDiscussionStatusMessage(''); // Clearing status before asking a new question
+                setDiscussionType('question');
+              }
+            }}
+          >
+            {t('askAQuestionLink')}
+          </Button>
+        </div>
 
         {/* General error message for mutations that expires after 45 seconds */}
         {discussionStatusMessage && !alertClosed && (
