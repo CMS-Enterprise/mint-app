@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { helpSolutions } from '../../solutionsMap';
 
@@ -23,7 +23,7 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof SolutionHelpCardGroup>;
+} as Meta<typeof SolutionHelpCardGroup>;
 
 export const Default = () => (
   <SolutionHelpCardGroup solutions={helpSolutions} setResultsNum={() => null} />

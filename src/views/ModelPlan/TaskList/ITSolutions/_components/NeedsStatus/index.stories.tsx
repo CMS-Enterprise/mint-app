@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { OpSolutionStatus } from 'types/graphql-global-types';
 
@@ -11,7 +11,7 @@ import NeedsStatus, {
 export default {
   title: 'Operational Need Solution Status Tag',
   component: NeedsStatus
-} as ComponentMeta<typeof NeedsStatus>;
+} as Meta<typeof NeedsStatus>;
 
 export const NeedTags = () => (
   <div>

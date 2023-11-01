@@ -184,6 +184,7 @@ export const filteredViewOutput = (value: string) => {
 
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: filterViewT } = useTranslation('filterView');
 
   const {
     modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
@@ -409,7 +410,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         closeModal={() => setIsFilterViewModalOpen(false)}
         shouldCloseOnOverlayClick
         className="radius-md"
-        modalHeading={h('filterView.text')}
+        modalHeading={filterViewT('filterView')}
       >
         <FilterViewModal
           closeModal={() => setIsFilterViewModalOpen(false)}

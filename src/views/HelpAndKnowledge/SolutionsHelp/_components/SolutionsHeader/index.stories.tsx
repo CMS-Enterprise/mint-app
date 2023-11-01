@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { helpSolutions } from '../../solutionsMap';
 
@@ -25,7 +25,7 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof SolutionsHeader>;
+} as Meta<typeof SolutionsHeader>;
 
 export const Default = () => (
   <MemoryRouter initialEntries={['/help-and-knowledge/operational-solutions']}>

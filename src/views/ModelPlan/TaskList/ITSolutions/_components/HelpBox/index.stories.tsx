@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import HelpBox from '.';
 
@@ -20,6 +20,6 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof HelpBox>;
+} as Meta<typeof HelpBox>;
 
 export const Default = () => <HelpBox />;

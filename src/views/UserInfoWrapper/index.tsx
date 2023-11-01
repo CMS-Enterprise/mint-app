@@ -33,12 +33,14 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
       JSON.parse(window.localStorage[localAuthStorageKey]).favorLocalAuth
     ) {
       const oktaUser: oktaUserProps = await oktaAuth.getUser();
+
       const user = {
         name: oktaUser.name,
         euaId: oktaUser.euaId || '',
         groups: oktaUser.groups || [],
         acceptedNDA: data?.ndaInfo
       };
+
       dispatch(setUser(user));
     } else {
       const user = {
@@ -48,6 +50,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         groups: authState?.accessToken?.claims['mint-groups'] || [],
         acceptedNDA: data?.ndaInfo
       };
+
       dispatch(setUser(user));
     }
   };

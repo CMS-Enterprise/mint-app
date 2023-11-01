@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { OperationalSolutionCategories } from 'data/operationalSolutionCategories';
 
@@ -25,7 +25,7 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof SolutionsTag>;
+} as Meta<typeof SolutionsTag>;
 
 export const Default = () => (
   <MemoryRouter initialEntries={['/help-and-knowledge/operational-solutions']}>
