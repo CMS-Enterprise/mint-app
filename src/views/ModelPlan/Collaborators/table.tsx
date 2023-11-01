@@ -58,15 +58,11 @@ const CollaboratorsTable = ({
             ...value.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
             ...value.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
           ];
-          return (
-            <>
-              {modelLeadFirst
-                .map((role: TeamRole) => {
-                  return collaboratorsT(`teamRole.options.${role}`);
-                })
-                .join(', ')}
-            </>
-          );
+          return modelLeadFirst
+            .map((role: TeamRole) => {
+              return collaboratorsT(`teamRole.options.${role}`);
+            })
+            .join(', ');
         }
       },
       {
