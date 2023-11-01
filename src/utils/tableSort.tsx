@@ -130,13 +130,11 @@ export const sortColumnValues = (
     return rowOne.toUpperCase() > rowTwo.toUpperCase() ? 1 : -1;
   }
 
-  if (Array.isArray(rowOne) && Array.isArray(rowTwo)) {
-    if (rowOne.includes(specificValueFirst)) {
-      return 1;
-    }
-    if (rowTwo.includes(specificValueFirst)) {
-      return -1;
-    }
+  if (Array.isArray(rowOne) && rowOne.includes(specificValueFirst)) {
+    return 1;
+  }
+  if (Array.isArray(rowTwo) && rowTwo.includes(specificValueFirst)) {
+    return -1;
   }
 
   // Default case if both are number/datetime
