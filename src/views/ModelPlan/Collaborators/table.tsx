@@ -145,7 +145,7 @@ const CollaboratorsTable = ({
 
   return (
     <div className="collaborator-table">
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
+      <UswdsTable bordered={false} {...getTableProps()} fullWidth>
         <caption className="usa-sr-only">
           {collaboratorsMiscT('requestsTable.caption')}
         </caption>
