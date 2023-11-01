@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// TagType represents the posible types of tags you can have in a TaggedString
+// TagType represents the posible types of tags you can have in an HTML Mention
 type TagType string
 
 // Validate checks that a valid value of TagType is returned
@@ -42,9 +42,3 @@ type Tag struct {
 type TaggedEntity interface {
 	IsTaggedEntity()
 }
-
-// // TaggedContent represents raw tagged content, as well as the data connections represented by it
-// type TaggedContent struct {
-// 	RawContent string `json:"rawContent"`
-// 	Tags       []*Tag `json:"tags"`
-// }

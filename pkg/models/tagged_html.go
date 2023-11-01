@@ -63,11 +63,8 @@ func (thi TaggedHTMLInput) ToTaggedHTML() TaggedHTML {
 
 // UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTMLInput type
 func (thi *TaggedHTMLInput) UnmarshalGQLContext(ctx context.Context, v interface{}) error {
-	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
-
 	rawHTML, ok := v.(string)
 	if !ok {
-		logger.Info("invalid TaggedHTMLInput")
 		return errors.New("invalid TaggedHTMLInput")
 	}
 
@@ -78,16 +75,13 @@ func (thi *TaggedHTMLInput) UnmarshalGQLContext(ctx context.Context, v interface
 		return err
 	}
 	*thi = TaggedHTMLInput(th)
-	// *thi = TaggedHTMLInput{
-	// 	RawContent: hTML(sanitizedHTMLString),
-	// }
 	return nil
 
 }
 
 // MarshalGQLContext marshals the TaggedHTMLInput type to JSON to return to graphQL
 func (thi TaggedHTMLInput) MarshalGQLContext(ctx context.Context, w io.Writer) error {
-	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
+	logger := appcontext.ZLogger(ctx)
 
 	// Marshal the TaggedHTMLInput value to JSON so that it's properly escaped (wrapped in quotation marks)
 	jsonValue, err := json.Marshal(thi.RawContent)
@@ -112,8 +106,13 @@ func NewTaggedHTMLFromString(htmlString string) (TaggedHTML, error) {
 	}
 	// mentions, err := htmlMentionsFromString(sanitized)
 	mentions, err := htmlMentionsFromStringRegex(sanitized)
+	if mentions != nil { //TODO: SW, you might not need to do a nil or len check, you might be able to just set it
+		if len(mentions) > 0 { // At least some mentions parsed correctly, so attach them to the Tagged HTML
+			th.Mentions = mentions
+		}
+	}
 	if err != nil {
-		return th, err //TODO: SW , should we return nil , err or ok to return partial?
+		return th, err //If the Mentions fail to parse, still return the main Tagged HTML
 	}
 	th.Mentions = mentions
 
@@ -167,7 +166,7 @@ func parseHTMLMentionTagRegEx(mentionstring string) (HTMLMention, error) {
 	tagType = TagType(attributes["tag-type"])
 	err := tagType.Validate()
 	if err != nil {
-		return HTMLMention{}, err //TODO: SW should we return a pointer instead?
+		return HTMLMention{}, err
 	}
 
 	dataLabel = attributes["data-label"]
