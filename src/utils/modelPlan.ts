@@ -211,8 +211,13 @@ export const getUserInitials = (user: string) =>
 export const returnValidLetter = (str: string) =>
   str.length === 1 && str.match(/[a-z]/i) ? str : '';
 
-const orderByLastName = (object: any[]) =>
-  orderBy(object, item => item.userAccount.commonName.split(' ')[1]);
+export const orderByLastName = (
+  object: any[],
+  order?: boolean | 'asc' | 'desc'
+) =>
+  orderBy(object, item => item.userAccount.commonName.split(' ')[1], [
+    order ?? false
+  ]);
 
 export const collaboratorsOrderedByModelLeads = (
   collab: GetCollaboratorsType[]

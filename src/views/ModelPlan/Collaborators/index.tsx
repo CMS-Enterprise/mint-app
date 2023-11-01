@@ -31,6 +31,7 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
+import { orderByLastName } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -277,7 +278,7 @@ export const CollaboratorsContent = () => {
                 />
               ) : (
                 <CollaboratorsTable
-                  collaborators={collaborators}
+                  collaborators={orderByLastName(collaborators, 'desc')}
                   setModalOpen={setModalOpen}
                   setRemoveCollaborator={setRemoveCollaborator}
                   isLastLead={isLastLead}
