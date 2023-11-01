@@ -7,6 +7,8 @@ package graph
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
@@ -16,7 +18,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
-	"github.com/google/uuid"
 )
 
 // Fields is the resolver for the fields field.

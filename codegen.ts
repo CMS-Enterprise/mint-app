@@ -11,6 +11,7 @@ const config: CodegenConfig = {
         'typescript-react-apollo'
       ],
       config: {
+        // reactApolloVersion: 2,
         scalars: {
           // old codegen mappings from global.d.ts
           // maintain until we add better scalar mapping with graphql-codegen
