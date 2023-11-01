@@ -112,6 +112,8 @@ const splitLink = split(
     );
   },
   wsLink,
+  // TODO: figure out typescript warning, update package - apollo-upload-client
+  // @ts-ignore
   authLink.concat(uploadLink)
 );
 

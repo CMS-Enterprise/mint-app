@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -16,9 +15,12 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import GetFunding from 'gql/apolloGQL/Payments/GetFunding';
-import UpdatePayments from 'gql/apolloGQL/Payments/UpdatePayments';
-import { GetFundingQuery, PayType } from 'gql/gen/graphql';
+import {
+  GetFundingQuery,
+  PayType,
+  useGetFundingQuery,
+  useUpdatePaymentsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -67,7 +69,7 @@ const FundingSource = () => {
   const formikRef = useRef<FormikProps<FundingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery(GetFunding, {
+  const { data, loading, error } = useGetFundingQuery({
     variables: {
       id: modelID
     }
@@ -100,7 +102,7 @@ const FundingSource = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useMutation(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | string) => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
