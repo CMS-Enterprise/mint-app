@@ -112,7 +112,7 @@ const splitLink = split(
     );
   },
   wsLink,
-  // TODO: figure out typescript warning, update package - apollo-upload-client
+  // TODO: Update package - apollo-upload-client (requires nodejs upgrade - https://jiraent.cms.gov/browse/EASI-3505)
   // @ts-ignore
   authLink.concat(uploadLink)
 );
