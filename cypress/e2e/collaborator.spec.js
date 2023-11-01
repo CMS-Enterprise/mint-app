@@ -8,7 +8,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.contains('a', 'Edit team').click();
 
-    cy.contains('h1', 'Add model team members');
+    cy.contains('h1', 'Manage model team');
 
     cy.get('table').within(() => {
       cy.get('thead').within(() => {
@@ -19,7 +19,7 @@ describe('The Collaborator/Team Member Form', () => {
       });
 
       cy.get('tbody').within(() => {
-        cy.contains('th', 'MINT Doe');
+        cy.contains('td', 'MINT Doe');
         cy.contains('td', 'Model Lead');
       });
     });
@@ -50,7 +50,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'Jerry Seinfeld');
+        cy.contains('td', 'Jerry Seinfeld');
         cy.contains('td', 'Evaluation');
       });
     });
@@ -62,7 +62,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'BTAL Doe').siblings().contains('a', 'Edit').click();
+        cy.contains('td', 'BTAL Doe').siblings().contains('a', 'Edit').click();
       });
     });
 
@@ -94,7 +94,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'BTAL Doe').siblings('td').contains('Model Team');
+        cy.contains('td', 'BTAL Doe').siblings('td').contains('Model Team');
       });
     });
 
@@ -105,7 +105,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'BTAL Doe')
+        cy.contains('td', 'BTAL Doe')
           .siblings()
           .contains('button', 'Remove')
           .click();
@@ -116,7 +116,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'BTAL Doe').should('not.exist');
+        cy.contains('td', 'BTAL Doe').should('not.exist');
       });
     });
 
