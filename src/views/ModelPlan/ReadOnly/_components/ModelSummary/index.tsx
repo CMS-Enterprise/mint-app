@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, IconExpandMore } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -19,9 +19,7 @@ import { formatDateLocal } from 'utils/date';
 type ModelSummaryProps = {
   characteristics: CharacteristicsType;
   crTdls: CRTDLsTypes[] | null;
-  descriptionRef: RefObject<HTMLElement>;
   goal: string;
-  isDescriptionExpandable: boolean;
   loading: boolean;
   modelLeads: CollaboratorsType[];
   modelName: string;
@@ -31,9 +29,7 @@ type ModelSummaryProps = {
 const ModelSummary = ({
   characteristics,
   crTdls,
-  descriptionRef,
   goal,
-  isDescriptionExpandable,
   loading,
   modelLeads,
   modelName,
@@ -74,6 +70,25 @@ const ModelSummary = ({
     return idNumbers.join(', ');
   };
 
+  const descriptionRef = React.createRef<HTMLElement>();
+
+  const [
+    isDescriptionExpandable,
+    setIsDescriptionExpandable
+  ] = useState<boolean>(false);
+
+  const [descriptionOpen, isDescriptionOpen] = useState<boolean>(false);
+
+  // Enable the description toggle if it overflows
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const { current: el } = descriptionRef;
+    if (!el) return;
+    if (el.scrollHeight > el.offsetHeight) {
+      setIsDescriptionExpandable(true);
+    }
+  }, [descriptionRef, descriptionOpen]);
+
   return (
     <CollapsableLink
       className="margin-top-3 padding-0"
@@ -82,6 +97,7 @@ const ModelSummary = ({
       closeLabel={h('hideSummary')}
       styleLeftBar={false}
       id={`${modelName?.replace(/\s+/g, '-').toLowerCase()}--description`}
+      showDescription={isDescriptionOpen}
       label={h('showSummary')}
     >
       <div

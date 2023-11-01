@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -212,13 +212,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   // Used to check if user is assessment for rendering subnav to task list
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
-  const descriptionRef = React.createRef<HTMLElement>();
-
-  const [
-    isDescriptionExpandable,
-    setIsDescriptionExpandable
-  ] = useState<boolean>(false);
-
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
   );
@@ -228,16 +221,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   );
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
-
-  // Enable the description toggle if it overflows
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const { current: el } = descriptionRef;
-    if (!el) return;
-    if (el.scrollHeight > el.offsetHeight) {
-      setIsDescriptionExpandable(true);
-    }
-  });
 
   const { data, loading, error, refetch } = useQuery<GetModelSummaryType>(
     GetModelSummary,
@@ -369,11 +352,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         {!isViewingFilteredGroup && (
           <div className="mint-no-print">
             <ModelSummary
-              descriptionRef={descriptionRef}
               goal={basics?.goal ?? ''}
               loading={loading}
               modelName={modelName}
-              isDescriptionExpandable={isDescriptionExpandable}
               characteristics={generalCharacteristics}
               performancePeriodStarts={basics?.performancePeriodStarts}
               modelLeads={collaborators?.filter(
