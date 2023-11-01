@@ -99,13 +99,6 @@ export const sortColumnValues = (
     return -1;
   }
 
-  if (rowOne.includes(specificValueFirst)) {
-    return 1;
-  }
-  if (rowTwo.includes(specificValueFirst)) {
-    return -1;
-  }
-
   // If string and number, sort out number first
   if (typeof rowOne === 'number' && typeof rowTwo === 'string') {
     return 1;
@@ -135,6 +128,15 @@ export const sortColumnValues = (
   // If both items are strings, enforce capitalization (temporarily) and then compare
   if (typeof rowOne === 'string' && typeof rowTwo === 'string') {
     return rowOne.toUpperCase() > rowTwo.toUpperCase() ? 1 : -1;
+  }
+
+  if (Array.isArray(rowOne) && Array.isArray(rowTwo)) {
+    if (rowOne.includes(specificValueFirst)) {
+      return 1;
+    }
+    if (rowTwo.includes(specificValueFirst)) {
+      return -1;
+    }
   }
 
   // Default case if both are number/datetime
