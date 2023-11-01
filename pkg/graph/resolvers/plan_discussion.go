@@ -18,7 +18,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// CreatePlanDiscussion implements resolver logic to create a plan Discussion object
+// CreatePlanDiscussion implements resolver logic to create a plan Discussion object. It will also save any Mentions to the tag table
 func CreatePlanDiscussion(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -34,7 +34,7 @@ func CreatePlanDiscussion(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.ModelPlanID,
-		input.Content, // TODO: SW update this to save the tags as well
+		input.Content,
 		input.UserRole,
 		input.UserRoleDescription,
 	)
@@ -43,7 +43,7 @@ func CreatePlanDiscussion(
 	if err != nil {
 		return nil, err
 	}
-	//TODO don't return the tags, simplify this to not deal with anything but setting the entities and updating the content. We will iterate through the other bits later
+	//TODO: SW don't return the tags, simplify this to not deal with anything but setting the entities and updating the content. We will iterate through the other bits later
 	err = CreateOrGetTagEntityID(ctx, store, &planDiscussion.Content, getAccountInformation)
 
 	if err != nil {
@@ -56,7 +56,7 @@ func CreatePlanDiscussion(
 		return nil, err
 	}
 
-	//TODO: should we put this in a transaction?
+	//TODO: SW should we put this in a transaction?
 	tags, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions)
 	if err != nil {
 		return discussion, err

@@ -75,28 +75,34 @@ func TaggedEntityGet(
 // CreateOrGetTagEntityID updates the tagged html with the correct entity ids, and returns an array of tags to store in the database.
 // , taggedField string, taggedTable string, taggedContentID uuid.UUID,
 func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTMLInput, getAccountInformation userhelpers.GetAccountInfoFunc) error {
+	// TODO: SW don't make this fail for just one, keep iterating and return an error list
+	errs := []error{}
 
-	// //TODO remove TagArrayFromHTMLMentions
-	// tags := []*models.Tag{}
 	for _, mention := range tHTML.Mentions {
+		if mention.EntityDB != nil { // TODO: SW update to check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
+			continue // TODO: SW verify this logic works. Also test for this specifically
+		}
 		tagType := mention.Type
-		// TODO: SW update to check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
+
 		switch tagType { //TODO: Solution is an int id, user is a UUID
 		case models.TagTypeUserAccount:
 			isMacUser := false
 			collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
 			if err != nil { //TODO: SW more gracefully handle this
-				return err
+				errs = append(errs, err)
+				continue
 			}
 			mention.EntityUUID = &collabAccount.ID
 			oldHTML, err := mention.ToHTML() //TODO store the original raw instead of this
 			if err != nil {
-				return err //TODO: SW re-visit and make it not be blocking if possible
+				errs = append(errs, err)
+				continue
 			}
 			mention.EntityDB = mention.EntityUUID
 			newHTML, err := mention.ToHTML()
 			if err != nil {
-				return err //TODO: SW re-visit and make it not be blocking if possible
+				errs = append(errs, err)
+				continue
 			}
 
 			newTotalRaw := strings.Replace(string(tHTML.RawContent), string(oldHTML), string(newHTML), -1)
@@ -107,7 +113,8 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 
 			sol, err := store.PossibleOperationalSolutionGetByKey(logger, models.OperationalSolutionKey(mention.EntityRaw))
 			if err != nil {
-				return err //TODO, maybe consider just letting this fail?
+				errs = append(errs, err)
+				continue
 			}
 			mention.EntityIntID = &sol.ID
 			mention.EntityDB = mention.EntityIntID
@@ -118,13 +125,17 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 		// Updated the parent Raw content with the new fields
 		newHTML, err := mention.ToHTML()
 		if err != nil {
-			return err //TODO: SW re-visit and make it not be blocking if possible
+			errs = append(errs, err)
+			continue
 		}
 
 		newTotalRaw := strings.Replace(string(tHTML.RawContent), string(mention.RawHTML), string(newHTML), -1)
 		tHTML.RawContent = models.HTML(newTotalRaw)
 
 		mention.RawHTML = newHTML
+	}
+	if len(errs) > 0 {
+		return fmt.Errorf("issues encountered getting database ids for tagged entities. %v", errs) // We aren't wrapping these errors because this is an array
 	}
 	return nil
 }
@@ -141,7 +152,6 @@ func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal aut
 		return key
 	})
 
-	//TODO: SW make this only store unique ones
 	retTags, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID)
 	if err != nil {
 		return nil, err

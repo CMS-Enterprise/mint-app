@@ -98,7 +98,7 @@ func (thi TaggedHTMLInput) MarshalGQLContext(ctx context.Context, w io.Writer) e
 	return nil
 }
 
-// NewTaggedHTMLFromString converts a rawString into TaggedHTMl
+// NewTaggedHTMLFromString converts a rawString into TaggedHTMl. It will store the input string as the raw content, and then sanitize and parse the input.
 func NewTaggedHTMLFromString(htmlString string) (TaggedHTML, error) {
 	sanitized := sanitization.SanitizeHTML(htmlString)
 	th := TaggedHTML{
