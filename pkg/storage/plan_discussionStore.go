@@ -122,12 +122,6 @@ func (s *Store) PlanDiscussionCreate(
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
-	// TODO: SW this should be a transaction remove here
-	// tags := models.TagArrayFromHTMLMentions("content", "plan_discussion", discussion.ID, discussion.Content.Mentions)
-	// _, err = s.TagCollectionCreate(logger, tags, discussion.CreatedBy)
-	// if err != nil {
-	// 	return discussion, err
-	// }
 
 	return &retDiscussion, nil
 }
@@ -151,12 +145,6 @@ func (s *Store) DiscussionReplyCreate(
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, reply)
 	}
-	//TODO: SW this should be a transaction
-	// tags := models.TagArrayFromTagStrings("content", "discussion_reply", reply.ID, reply.Content.Tags)
-	// _, err = s.TagCollectionCreate(logger, tags, reply.CreatedBy)
-	// if err != nil {
-	// 	return reply, err
-	// }
 
 	return &retReply, nil
 }
@@ -186,8 +174,6 @@ func (s *Store) DiscussionReplyUpdate(
 	logger *zap.Logger,
 	reply *models.DiscussionReply,
 ) (*models.DiscussionReply, error) {
-
-	//TODO: SW update reply as well
 
 	stmt, err := s.db.PrepareNamed(discussionReplyUpdateSQL)
 	if err != nil {

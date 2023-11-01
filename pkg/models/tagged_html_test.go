@@ -39,7 +39,6 @@ func TestHTMLMentionFromString(t *testing.T) {
 	taggedHTML, err := NewTaggedHTMLFromString(htmlMention)
 	assert.NoError(t, err)
 	assert.Len(t, taggedHTML.Mentions, 3)
-	//TODO: SW can assert the tag content matches the provied tags
 
 	taggedHTML1 := taggedHTML.Mentions[0]
 	taggedHTML2 := taggedHTML.Mentions[1]

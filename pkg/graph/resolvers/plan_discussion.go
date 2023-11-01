@@ -47,7 +47,7 @@ func CreatePlanDiscussion(
 	err = CreateOrGetTagEntityID(ctx, store, &planDiscussion.Content, getAccountInformation)
 
 	if err != nil {
-		//TOOD: do we need to stop execution here?
+		//TODO: do we need to stop execution here? Should we fail silently instead?
 		return nil, err
 	}
 
@@ -56,7 +56,7 @@ func CreatePlanDiscussion(
 		return nil, err
 	}
 
-	//TODO: SW should we put this in a transaction?
+	//TODO: should we put this in a transaction?
 	tags, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions)
 	if err != nil {
 		return discussion, err

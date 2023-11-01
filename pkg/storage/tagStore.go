@@ -23,7 +23,7 @@ var tagCreateCollectionSQL string
 var tagGetByTableFieldAndContentIDSQL string
 
 // TagCreate writes a new tage to the database
-func (s *Store) TagCreate( //TODO: SW replace this with a statement to create a collection of tags
+func (s *Store) TagCreate(
 	logger *zap.Logger,
 	tag *models.Tag,
 ) (*models.Tag, error) {

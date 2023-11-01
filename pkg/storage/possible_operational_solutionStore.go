@@ -147,7 +147,7 @@ func (s *Store) PossibleOperationalSolutionGetByID(logger *zap.Logger, id int) (
 
 // PossibleOperationalSolutionGetByKey returns a possible solution associated to a specific id
 func (s *Store) PossibleOperationalSolutionGetByKey(logger *zap.Logger, solKey models.OperationalSolutionKey) (*models.PossibleOperationalSolution, error) {
-	//TODO: SW restructure as data-loaders
+	//TODO: restructure as data-loaders
 
 	opSol := models.PossibleOperationalSolution{}
 	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionGetByKeySQL)

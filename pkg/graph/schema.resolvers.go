@@ -28,7 +28,7 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 // Content is the resolver for the content field.
 func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedHTML, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.TaggedHTMLGet(logger, r.store, string(obj.Content.RawContent), "discussion_reply", "content", obj.ID) //TODO: SW review implementation
+	return resolvers.TaggedHTMLGet(logger, r.store, string(obj.Content.RawContent), "discussion_reply", "content", obj.ID)
 }
 
 // ExistingModel is the resolver for the existingModel field.
@@ -532,7 +532,7 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 // Content is the resolver for the content field.
 func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedHTML, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.TaggedHTMLGet(logger, r.store, string(obj.Content.RawContent), "plan_discussion", "content", obj.ID) //TODO: SW review implementation
+	return resolvers.TaggedHTMLGet(logger, r.store, string(obj.Content.RawContent), "plan_discussion", "content", obj.ID)
 }
 
 // Replies is the resolver for the replies field.

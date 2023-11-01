@@ -125,12 +125,17 @@ func htmlMentionsFromStringRegex(htmlString string) ([]*HTMLMention, error) {
 	if err != nil {
 		return nil, err
 	}
+	errs := []error{}
 	for _, mentionString := range mentionStrings {
 		htmlMention, err := parseHTMLMentionTagRegEx(mentionString)
 		if err != nil {
-			fmt.Println("error parsing %w", err) //TODO: SW when implementing actually handle this error
+			errs = append(errs, fmt.Errorf("error parsing html mention %s, %w", mentionString, err))
+
 		}
 		mentions = append(mentions, &htmlMention)
+	}
+	if len(errs) > 1 {
+		return mentions, fmt.Errorf("issues encountered parsing html Mentions . %v", errs) // We aren't wrapping these errors because this is an array
 	}
 	return mentions, nil
 
@@ -155,8 +160,6 @@ func extractHTMLSpansRegex(htmlString string) ([]string, error) {
 func parseHTMLMentionTagRegEx(mentionstring string) (HTMLMention, error) {
 	var entityIDStr string
 	var dataLabel string
-	// var entityUUID *uuid.UUID
-	// var entityIntID *int
 	var tagType TagType
 	var class string
 
@@ -175,18 +178,16 @@ func parseHTMLMentionTagRegEx(mentionstring string) (HTMLMention, error) {
 	if class != "mention" {
 		return HTMLMention{}, fmt.Errorf("this is not a valid mention provided class is : %s", class)
 	}
-	dataIDDB := attributes["data-id-db"] // TODO: SW this should not be set yet actually
+	dataIDDB := attributes["data-id-db"]
 	fmt.Print(dataIDDB)
 
 	return HTMLMention{
 		RawHTML:   HTML(mentionstring),
 		InnerHTML: innerHTML,
 		Type:      tagType,
-		EntityRaw: entityIDStr, //TODO, maybe we need to keep it generic at this point. Perhaps when writing the tag we can get the reference and perhaps update the tag?
+		EntityRaw: entityIDStr, // Store the raw value to set conditionally later
 		DataLabel: dataLabel,
 		EntityDB:  dataIDDB,
-		// EntityUUID:  entityUUID,
-		// EntityIntID: entityIntID,
 	}, nil
 
 }

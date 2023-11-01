@@ -17,10 +17,10 @@ import (
 )
 
 // TaggedHTMLGet returns the tag content of a parent object
-func TaggedHTMLGet( //TODO: SW rename
+func TaggedHTMLGet(
 	logger *zap.Logger,
 	store *storage.Store,
-	rawContent string, //TODO, if we want, we could get this from the database as well
+	rawContent string, // if desired, we could get this from the database as well
 	taggedTable string,
 	taggedField string,
 	taggedContentID uuid.UUID) (*models.TaggedHTML, error) {
@@ -84,29 +84,30 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 		}
 		tagType := mention.Type
 
-		switch tagType { //TODO: Solution is an int id, user is a UUID
+		switch tagType {
 		case models.TagTypeUserAccount:
 			isMacUser := false
 			collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
-			if err != nil { //TODO: SW more gracefully handle this
+			if err != nil {
 				errs = append(errs, err)
 				continue
 			}
 			mention.EntityUUID = &collabAccount.ID
-			oldHTML, err := mention.ToHTML() //TODO store the original raw instead of this
-			if err != nil {
-				errs = append(errs, err)
-				continue
-			}
 			mention.EntityDB = mention.EntityUUID
-			newHTML, err := mention.ToHTML()
-			if err != nil {
-				errs = append(errs, err)
-				continue
-			}
+			// oldHTML, err := mention.ToHTML() //TODO store the original raw instead of this
+			// if err != nil {
+			// 	errs = append(errs, err)
+			// 	continue
+			// }
+			// mention.EntityDB = mention.EntityUUID
+			// newHTML, err := mention.ToHTML()
+			// if err != nil {
+			// 	errs = append(errs, err)
+			// 	continue
+			// }
 
-			newTotalRaw := strings.Replace(string(tHTML.RawContent), string(oldHTML), string(newHTML), -1)
-			tHTML.RawContent = models.HTML(newTotalRaw)
+			// newTotalRaw := strings.Replace(string(tHTML.RawContent), string(oldHTML), string(newHTML), -1)
+			// tHTML.RawContent = models.HTML(newTotalRaw)
 
 		case models.TagTypePossibleSolution:
 			logger := appcontext.ZLogger(ctx)
