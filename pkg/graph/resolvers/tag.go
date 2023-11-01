@@ -79,7 +79,7 @@ func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *mo
 	errs := []error{}
 
 	for _, mention := range tHTML.Mentions {
-		if mention.EntityDB != nil { // TODO: SW update to check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
+		if mention.EntityDB != nil && mention.EntityDB != "" { // TODO: SW update to check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
 			continue // TODO: SW verify this logic works. Also test for this specifically
 		}
 		tagType := mention.Type
