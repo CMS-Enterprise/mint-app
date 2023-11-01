@@ -211,22 +211,26 @@ export const getUserInitials = (user: string) =>
 export const returnValidLetter = (str: string) =>
   str.length === 1 && str.match(/[a-z]/i) ? str : '';
 
-export const orderByLastName = (
-  object: any[],
-  order?: boolean | 'asc' | 'desc'
-) =>
+const orderByLastName = (object: any[], order?: boolean | 'asc' | 'desc') =>
   orderBy(object, item => item.userAccount.commonName.split(' ')[1], [
     order ?? false
   ]);
 
 export const collaboratorsOrderedByModelLeads = (
-  collab: GetCollaboratorsType[]
+  collab: GetCollaboratorsType[],
+  order?: boolean | 'asc' | 'desc'
 ) => {
   const modelLeads = orderByLastName(
-    collab.filter(c => c.teamRoles.includes(TeamRole.MODEL_LEAD))
+    collab.filter(
+      c => c.teamRoles.includes(TeamRole.MODEL_LEAD),
+      order ?? false
+    )
   );
   const everyoneElse = orderByLastName(
-    collab.filter(c => !c.teamRoles.includes(TeamRole.MODEL_LEAD))
+    collab.filter(
+      c => !c.teamRoles.includes(TeamRole.MODEL_LEAD),
+      order ?? false
+    )
   );
 
   return [...modelLeads, ...everyoneElse];
