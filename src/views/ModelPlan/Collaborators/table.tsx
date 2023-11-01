@@ -136,7 +136,6 @@ const CollaboratorsTable = ({
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'teamRoles', desc: true }], []),
         pageIndex: 0
       }
     },
