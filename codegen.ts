@@ -17,6 +17,9 @@ const config: CodegenConfig = {
     },
     './src/gql/gen/': {
       preset: 'client',
+      presetConfig: {
+        fragmentMasking: { unmaskFunctionName: 'getFragmentData' }
+      },
       config: {
         scalars: {
           // old codegen mappings from global.d.ts
