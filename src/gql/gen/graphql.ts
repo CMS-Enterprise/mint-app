@@ -2489,6 +2489,7 @@ export type TaggedEntity = PossibleOperationalSolution | UserAccount;
 /** TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags */
 export type TaggedHtml = {
   __typename: 'TaggedHTML';
+  /** RawContent is HTML. It is sanitized on the backend */
   rawContent: Scalars['String']['output'];
   tags: Array<Tag>;
 };

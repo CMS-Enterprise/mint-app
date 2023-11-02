@@ -7296,7 +7296,10 @@ union TaggedEntity =  UserAccount | PossibleOperationalSolution
 TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
 """
 type TaggedHTML {
-  rawContent: String! #TODO: SW change this to an HTML type?
+  """
+  RawContent is HTML. It is sanitized on the backend
+  """
+  rawContent: String! 
   tags: [Tag!]!
 }
 

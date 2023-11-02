@@ -138,7 +138,7 @@ func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal aut
 		return key
 	})
 
-	retTags, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID)
+	retTags, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID) // Note, this will fail if any tag is invalid.
 	if err != nil {
 		return nil, err
 	}
