@@ -42,15 +42,6 @@ type HTMLMention struct {
 	EntityDB    interface{} // This is for marshaliing to the template
 }
 
-// hTML represents html code. It is sanitized when unmarshaled from graphQL or when converted to hTML to only allow specific tags
-type hTML string
-
-// HTML sanitizes a string and returns hTML
-func HTML(htmlString string) hTML { //nolint:all // it is desirable that hTML is not exported, so we can enforce sanitization
-	sanitized := sanitization.SanitizeHTML(htmlString)
-	return hTML(sanitized)
-}
-
 // TaggedHTMLInput Is the input type for HTML that could contain tags
 type TaggedHTMLInput TaggedHTML
 
