@@ -26,7 +26,7 @@ const mentionTagTemplate = `<span data-type="mention" tag-type="{{.Type}}" class
 type TaggedHTML struct {
 	RawContent hTML
 	Mentions   []*HTMLMention
-	Tags       []*Tag // TODO: Verify, this is the actual tag from the dB
+	Tags       []*Tag
 }
 
 // HTMLMention represents Meta data about an entity tagged in text
