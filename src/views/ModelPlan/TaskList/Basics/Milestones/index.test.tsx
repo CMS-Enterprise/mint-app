@@ -71,8 +71,8 @@ describe('Model Basics Milestones page', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('model-plan-name')).toHaveValue(
-        'My excellent plan that I just initiated'
+      expect(getByTestId('ModelType-phasedInNote')).toHaveValue(
+        'Phased in note'
       );
     });
 
