@@ -963,7 +963,7 @@ func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.Tagge
 
 // RawContent is the resolver for the rawContent field.
 func (r *taggedHTMLResolver) RawContent(ctx context.Context, obj *models.TaggedHTML) (string, error) {
-	return string(obj.RawContent), nil
+	return obj.RawContent.String(), nil
 }
 
 // AuditChange returns generated.AuditChangeResolver implementation.
