@@ -72,15 +72,12 @@ func TaggedEntityGet(
 
 }
 
-// CreateOrGetTagEntityID updates the tagged html with the correct entity ids, and returns an array of tags to store in the database.
-// , taggedField string, taggedTable string, taggedContentID uuid.UUID,
-func CreateOrGetTagEntityID(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTMLInput, getAccountInformation userhelpers.GetAccountInfoFunc) error {
-	// TODO: SW don't make this fail for just one, keep iterating and return an error list
+// UpdateTaggedHTMLMentionsAndRawContent updates the tagged html with the correct entity ids, and updates the RAW HTMl with the new representation of the mentions
+func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTMLInput, getAccountInformation userhelpers.GetAccountInfoFunc) error {
 	errs := []error{}
-
 	for _, mention := range tHTML.Mentions {
-		if mention.EntityDB != nil && mention.EntityDB != "" { // TODO: SW update to check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
-			continue // TODO: SW verify this logic works. Also test for this specifically
+		if mention.EntityDB != nil && mention.EntityDB != "" { // Check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
+			continue
 		}
 		tagType := mention.Type
 

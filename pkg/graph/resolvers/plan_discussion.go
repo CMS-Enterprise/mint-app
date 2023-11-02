@@ -43,12 +43,14 @@ func CreatePlanDiscussion(
 	if err != nil {
 		return nil, err
 	}
-	//TODO: SW don't return the tags, simplify this to not deal with anything but setting the entities and updating the content. We will iterate through the other bits later
-	err = CreateOrGetTagEntityID(ctx, store, &planDiscussion.Content, getAccountInformation)
+
+	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &planDiscussion.Content, getAccountInformation)
 
 	if err != nil {
-		//TODO: do we need to stop execution here? Should we fail silently instead?
-		return nil, err
+
+		logger.Info("not all mentions were able to be updated")
+		//TODO: do we need to stop execution here? Should we silently continue instead? Should we filter out any bad tags?
+		// return nil, err
 	}
 
 	discussion, err := store.PlanDiscussionCreate(logger, planDiscussion)
@@ -56,7 +58,7 @@ func CreatePlanDiscussion(
 		return nil, err
 	}
 
-	//TODO: should we put this in a transaction?
+	//TODO: should we put this in a transaction? Likely, discussions should be saved even if tags arent'
 	tags, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions)
 	if err != nil {
 		return discussion, err
@@ -194,7 +196,7 @@ func CreateDiscussionReply(
 	if err != nil {
 		return nil, err
 	}
-	err = CreateOrGetTagEntityID(ctx, store, &discussionReply.Content, getAccountInformation)
+	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &discussionReply.Content, getAccountInformation)
 
 	if err != nil {
 		//TOOD: do we need to stop execution here?

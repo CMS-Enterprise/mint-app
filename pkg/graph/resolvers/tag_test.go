@@ -68,7 +68,7 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 
 }
 
-func (suite *ResolverSuite) TestCreateOrGetTagEntityID() {
+func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 	tag1EUA := "SKZO"
 	tag1Label := "Alexander Stark"
 	tag1Type := models.TagTypeUserAccount
@@ -87,7 +87,7 @@ func (suite *ResolverSuite) TestCreateOrGetTagEntityID() {
 
 	input := models.TaggedHTMLInput(taggedHTML)
 
-	err = CreateOrGetTagEntityID(suite.testConfigs.Context, suite.testConfigs.Store, &input, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	err = UpdateTaggedHTMLMentionsAndRawContent(suite.testConfigs.Context, suite.testConfigs.Store, &input, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.Len(taggedHTML.Mentions, 3)
 
@@ -113,7 +113,7 @@ func (suite *ResolverSuite) TestCreateOrGetTagEntityID() {
 	tHTML, err := models.NewTaggedHTMLFromString(tag4)
 	suite.NoError(err)
 	input2 := models.TaggedHTMLInput(tHTML)
-	err = CreateOrGetTagEntityID(suite.testConfigs.Context, suite.testConfigs.Store, &input2, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	err = UpdateTaggedHTMLMentionsAndRawContent(suite.testConfigs.Context, suite.testConfigs.Store, &input2, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.Len(input2.Mentions, 1)
 	suite.EqualValues(input2.Mentions[0].EntityDB, tag4Label)
@@ -140,7 +140,7 @@ func (suite *ResolverSuite) TestTagCollectionCreate() {
 
 	input := models.TaggedHTMLInput(taggedHTML)
 
-	err = CreateOrGetTagEntityID(suite.testConfigs.Context, suite.testConfigs.Store, &input, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	err = UpdateTaggedHTMLMentionsAndRawContent(suite.testConfigs.Context, suite.testConfigs.Store, &input, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.Len(taggedHTML.Mentions, 5)
 

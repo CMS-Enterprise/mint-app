@@ -196,8 +196,6 @@ func (s *Store) PlanDiscussionDelete(
 	userID uuid.UUID,
 ) (*models.PlanDiscussion, error) {
 
-	//TODO: SW update this as well
-
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 
