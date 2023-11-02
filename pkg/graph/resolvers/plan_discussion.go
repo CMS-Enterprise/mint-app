@@ -199,8 +199,9 @@ func CreateDiscussionReply(
 	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &discussionReply.Content, getAccountInformation)
 
 	if err != nil {
-		//TOOD: do we need to stop execution here?
-		return nil, err
+		logger.Info("not all mentions were able to be updated")
+		//TODO: do we need to stop execution here? Should we silently continue instead? Should we filter out any bad tags?
+		// return nil, err
 	}
 
 	reply, err := store.DiscussionReplyCreate(logger, discussionReply)
