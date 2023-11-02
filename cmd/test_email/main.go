@@ -117,7 +117,7 @@ func sendPlanDiscussionCreatedEmail(
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
-		DiscussionContent: string(planDiscussion.Content.RawContent), // TODO: allow email to parse HTML instead of just string
+		DiscussionContent: planDiscussion.Content.RawContent.InnerHTML(),
 	})
 	if err != nil {
 		return err
@@ -126,8 +126,8 @@ func sendPlanDiscussionCreatedEmail(
 	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
-		UserName:          "Test User",                               // Note: Hardcoded for the test. In real use, it would be dynamic.
-		DiscussionContent: string(planDiscussion.Content.RawContent), // TODO: allow email to parse HTML template instead of just string
+		UserName:          "Test User", // Note: Hardcoded for the test. In real use, it would be dynamic.
+		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
 		ModelID:           modelPlanID.String(),
 		ModelName:         "Test Model Plan Name", // Note: Hardcoded for the test. In real use, it would be dynamic.
 	})

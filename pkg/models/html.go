@@ -24,6 +24,12 @@ func (h *hTML) ToTemplate() template.HTML {
 	sanitizedHTML := sanitization.SanitizeHTML(*h)
 	return template.HTML(sanitizedHTML) //nolint //the html is sanitized again on the previous line so we can ignore the warning about
 }
+func (h *hTML) InnerHTML() string {
+	if h == nil {
+		return ""
+	}
+	return sanitization.InnerHTML(h.String())
+}
 
 func (h hTML) String() string {
 	// TODO: Remove this hotfix that was introduced as a result of entities being rendered as escaped HTML in non-rich-text views

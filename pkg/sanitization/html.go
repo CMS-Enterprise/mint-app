@@ -20,6 +20,11 @@ func SanitizeHTML[stringType ~string](input stringType) stringType {
 	return stringType(output)
 }
 
+// InnerHTML uses a blank policy to remove all tags from HTML leaving only the innerHTML
+func InnerHTML[stringType ~string](input stringType) stringType {
+	return stringType(bluemonday.NewPolicy().Sanitize(string(input)))
+}
+
 // getHTMLSanitizerPolicy returns the sanitization policy for HTML
 func getHTMLSanitizerPolicy() *bluemonday.Policy {
 
