@@ -14,10 +14,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query GetBasics($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      abbreviation\n      nameHistory(sort: DESC)\n      basics {\n        id\n        demoCode\n        amsModelID\n        modelCategory\n        additionalModelCategories\n        cmsCenters\n        cmsOther\n        cmmiGroups\n      }\n    }\n  }\n": types.GetBasicsDocument,
+    "\n  query GetMilestones($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      basics {\n        id\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        highLevelNote\n        wrapUpEnds\n        phasedIn\n        phasedInNote\n        readyForReviewByUserAccount {\n          ...ReadyForReviewUserFragment\n        }\n        readyForReviewDts\n        status\n      }\n    }\n  }\n": types.GetMilestonesDocument,
+    "\n  query GetOverview($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      basics {\n        id\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n      }\n    }\n  }\n": types.GetOverviewDocument,
     "\n  mutation UpdateBasics($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics(id: $id, changes: $changes) {\n      id\n    }\n  }\n": types.UpdateBasicsDocument,
+    "\n  mutation UpdateModelPlanAndBasics(\n    $id: UUID!\n    $changes: ModelPlanChanges!\n    $basicsId: UUID!\n    $basicsChanges: PlanBasicsChanges!\n  ) {\n    updateModelPlan(id: $id, changes: $changes) {\n      id\n    }\n    updatePlanBasics(id: $basicsId, changes: $basicsChanges) {\n      id\n    }\n  }\n": types.UpdateModelPlanAndBasicsDocument,
     "\n  mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {\n    linkNewPlanDocument(input: $input) {\n      id\n    }\n  }\n": types.LinkNewPlanDocumentDocument,
     "\n  mutation CreatReportAProblem($input: ReportAProblemInput!) {\n    reportAProblem(input: $input)\n  }\n": types.CreatReportAProblemDocument,
     "\n  mutation CreatSendFeedback($input: SendFeedbackEmailInput!) {\n    sendFeedbackEmail(input: $input)\n  }\n": types.CreatSendFeedbackDocument,
+    "\n  fragment ReadyForReviewUserFragment on UserAccount {\n    id\n    commonName\n  }\n": types.ReadyForReviewUserFragmentFragmentDoc,
     "\n  query GetFunding($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      payments {\n        id\n        fundingSource\n        fundingSourceTrustFundType\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFundType\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n      }\n      operationalNeeds {\n        modifiedDts\n      }\n    }\n  }\n": types.GetFundingDocument,
     "\n  mutation UpdatePayments($id: UUID!, $changes: PlanPaymentsChanges!) {\n    updatePlanPayments(id: $id, changes: $changes) {\n      id\n    }\n  }\n": types.UpdatePaymentsDocument,
     "\n  mutation CreateShareModelPlan(\n    $modelPlanID: UUID!\n    $viewFilter: ModelViewFilter\n    $usernames: [String!]!\n    $optionalMessage: String\n  ) {\n    shareModelPlan(\n      modelPlanID: $modelPlanID\n      viewFilter: $viewFilter\n      usernames: $usernames\n      optionalMessage: $optionalMessage\n    )\n  }\n": types.CreateShareModelPlanDocument,
@@ -46,7 +50,19 @@ export function graphql(source: "\n  query GetBasics($id: UUID!) {\n    modelPla
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  query GetMilestones($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      basics {\n        id\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        highLevelNote\n        wrapUpEnds\n        phasedIn\n        phasedInNote\n        readyForReviewByUserAccount {\n          ...ReadyForReviewUserFragment\n        }\n        readyForReviewDts\n        status\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetMilestones($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      basics {\n        id\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        highLevelNote\n        wrapUpEnds\n        phasedIn\n        phasedInNote\n        readyForReviewByUserAccount {\n          ...ReadyForReviewUserFragment\n        }\n        readyForReviewDts\n        status\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetOverview($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      basics {\n        id\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetOverview($id: UUID!) {\n    modelPlan(id: $id) {\n      id\n      modelName\n      basics {\n        id\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  mutation UpdateBasics($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics(id: $id, changes: $changes) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateBasics($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics(id: $id, changes: $changes) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateModelPlanAndBasics(\n    $id: UUID!\n    $changes: ModelPlanChanges!\n    $basicsId: UUID!\n    $basicsChanges: PlanBasicsChanges!\n  ) {\n    updateModelPlan(id: $id, changes: $changes) {\n      id\n    }\n    updatePlanBasics(id: $basicsId, changes: $basicsChanges) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateModelPlanAndBasics(\n    $id: UUID!\n    $changes: ModelPlanChanges!\n    $basicsId: UUID!\n    $basicsChanges: PlanBasicsChanges!\n  ) {\n    updateModelPlan(id: $id, changes: $changes) {\n      id\n    }\n    updatePlanBasics(id: $basicsId, changes: $basicsChanges) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -59,6 +75,10 @@ export function graphql(source: "\n  mutation CreatReportAProblem($input: Report
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation CreatSendFeedback($input: SendFeedbackEmailInput!) {\n    sendFeedbackEmail(input: $input)\n  }\n"): (typeof documents)["\n  mutation CreatSendFeedback($input: SendFeedbackEmailInput!) {\n    sendFeedbackEmail(input: $input)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment ReadyForReviewUserFragment on UserAccount {\n    id\n    commonName\n  }\n"): (typeof documents)["\n  fragment ReadyForReviewUserFragment on UserAccount {\n    id\n    commonName\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -20,8 +20,7 @@ export default graphql(/* GraphQL */ `
         phasedIn
         phasedInNote
         readyForReviewByUserAccount {
-          id
-          commonName
+          ...ReadyForReviewUserFragment
         }
         readyForReviewDts
         status

@@ -2,17 +2,18 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import GetBasics from 'gql/apolloGQL/Basics/GetBasics';
+import {
+  CmmiGroup,
+  CmsCenter,
+  GetBasicsQuery,
+  ModelCategory
+} from 'gql/gen/graphql';
 import Sinon from 'sinon';
 
-import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
-import { GetModelPlanInfo_modelPlan as GetModelPlanInfoType } from 'queries/Basics/types/GetModelPlanInfo';
-import {
-  CMMIGroup,
-  CMSCenter,
-  ModelCategory
-} from 'types/graphql-global-types';
-
 import Basics from './index';
+
+type GetModelPlanInfoType = GetBasicsQuery['modelPlan'];
 
 const basicMockData: GetModelPlanInfoType = {
   __typename: 'ModelPlan',
@@ -28,10 +29,10 @@ const basicMockData: GetModelPlanInfoType = {
     modelCategory: ModelCategory.STATE_BASED,
     additionalModelCategories: [],
     cmmiGroups: [
-      CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,
-      CMMIGroup.POLICY_AND_PROGRAMS_GROUP
+      CmmiGroup.STATE_AND_POPULATION_HEALTH_GROUP,
+      CmmiGroup.POLICY_AND_PROGRAMS_GROUP
     ],
-    cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
+    cmsCenters: [CmsCenter.CENTER_FOR_MEDICARE, CmsCenter.OTHER],
     cmsOther: 'The Center for Awesomeness '
   }
 };
@@ -39,7 +40,7 @@ const basicMockData: GetModelPlanInfoType = {
 const mocks = [
   {
     request: {
-      query: GetModelPlanInfo,
+      query: GetBasics,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {
@@ -50,7 +51,7 @@ const mocks = [
   }
 ];
 
-describe('Model Plan Task List Basics page', () => {
+describe('Model Plan Basics page', () => {
   // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
   Sinon.stub(Math, 'random').returns(0.5);
 

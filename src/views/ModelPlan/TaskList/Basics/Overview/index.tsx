@@ -222,6 +222,7 @@ const Overview = () => {
                       as={TextAreaField}
                       error={flatErrors.problem}
                       id="ModelType-Problem"
+                      data-testid="ModelType-Problem"
                       name="problem"
                       label={basicsT('problem.label')}
                     />
