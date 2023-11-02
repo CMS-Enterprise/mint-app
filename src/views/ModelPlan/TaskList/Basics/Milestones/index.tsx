@@ -66,8 +66,7 @@ const Milestones = () => {
   const { data, loading, error } = useGetMilestonesQuery({
     variables: {
       id: modelID
-    },
-    fetchPolicy: 'network-only'
+    }
   });
 
   const { modelName } = data?.modelPlan || {};
@@ -89,7 +88,7 @@ const Milestones = () => {
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } = data?.modelPlan?.basics || ({} as MilestonesFormType);
+  } = (data?.modelPlan?.basics || {}) as MilestonesFormType;
 
   const [update] = useUpdateBasicsMutation();
 

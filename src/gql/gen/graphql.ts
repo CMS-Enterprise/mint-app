@@ -2622,10 +2622,7 @@ export type GetMilestonesQueryVariables = Exact<{
 }>;
 
 
-export type GetMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: (
-        { __typename: 'UserAccount' }
-        & { ' $fragmentRefs'?: { 'ReadyForReviewUserFragmentFragment': ReadyForReviewUserFragmentFragment } }
-      ) | null } } };
+export type GetMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
 
 export type GetOverviewQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2673,7 +2670,7 @@ export type CreatSendFeedbackMutationVariables = Exact<{
 
 export type CreatSendFeedbackMutation = { __typename: 'Mutation', sendFeedbackEmail: boolean };
 
-export type ReadyForReviewUserFragmentFragment = { __typename: 'UserAccount', id: UUID, commonName: string } & { ' $fragmentName'?: 'ReadyForReviewUserFragmentFragment' };
+export type ReadyForReviewUserFragmentFragment = { __typename: 'UserAccount', id: UUID, commonName: string };
 
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];

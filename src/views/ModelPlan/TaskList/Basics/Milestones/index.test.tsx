@@ -3,8 +3,6 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import GetMilestones from 'gql/apolloGQL/Basics/GetMilestones';
-import ReadyForReviewUserFragment from 'gql/apolloGQL/Fragments/ReadyForReviewUser';
-import { makeFragmentData } from 'gql/gen';
 import { GetMilestonesQuery } from 'gql/gen/graphql';
 
 import { TaskStatus } from 'types/graphql-global-types';
@@ -12,15 +10,6 @@ import { TaskStatus } from 'types/graphql-global-types';
 import Milestones from './index';
 
 type GetMilestonesType = GetMilestonesQuery['modelPlan']['basics'];
-
-const accountFragment = makeFragmentData(
-  {
-    __typename: 'UserAccount',
-    commonName: 'ASDF',
-    id: '000'
-  },
-  ReadyForReviewUserFragment
-);
 
 const milestonesMockData: GetMilestonesType = {
   __typename: 'PlanBasics',
@@ -39,7 +28,8 @@ const milestonesMockData: GetMilestonesType = {
   phasedInNote: 'Phased in note',
   readyForReviewByUserAccount: {
     __typename: 'UserAccount',
-    ...accountFragment
+    commonName: 'ASDF',
+    id: '000'
   },
   readyForReviewDts: '2022-05-12T15:01:39.190679Z',
   status: TaskStatus.IN_PROGRESS
@@ -64,7 +54,7 @@ const mocks = [
   }
 ];
 
-describe('Model Bass Milestones page', () => {
+describe('Model Basics Milestones page', () => {
   it('renders without errors and matches snapshot', async () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter

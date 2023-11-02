@@ -55,8 +55,8 @@ const Overview = () => {
 
   const { modelName } = data?.modelPlan || {};
 
-  const { id, modelType, problem, goal, testInterventions, note } =
-    data?.modelPlan?.basics || ({} as BasicsFormType);
+  const { id, modelType, problem, goal, testInterventions, note } = (data
+    ?.modelPlan?.basics || {}) as BasicsFormType;
 
   const [update] = useUpdateBasicsMutation();
 

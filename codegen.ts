@@ -18,8 +18,7 @@ const config: CodegenConfig = {
     './src/gql/gen/': {
       preset: 'client',
       presetConfig: {
-        // useFragmentData is not a react hook, renaming to appease eslint - https://the-guild.dev/graphql/codegen/plugins/presets/preset-client
-        fragmentMasking: { unmaskFunctionName: 'getFragmentData' }
+        fragmentMasking: false
       },
       config: {
         scalars: {
