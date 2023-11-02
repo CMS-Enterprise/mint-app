@@ -19,13 +19,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import {
-  CmsCenter,
-  GetBasicsQuery,
-  ModelCategory,
-  PlanBasicsChanges
-  // UpdateModelPlanAndBasicsMutationVariables
-} from 'gql/gen/graphql';
+import { CmsCenter, GetBasicsQuery, ModelCategory } from 'gql/gen/graphql';
 import {
   UpdateModelPlanAndBasicsMutationVariables,
   useGetBasicsQuery,

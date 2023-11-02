@@ -93,7 +93,7 @@ const FundingSource = () => {
     payType,
     payTypeNote,
     payClaims
-  } = data?.modelPlan?.payments || ({} as FundingFormType);
+  } = (data?.modelPlan?.payments || {}) as FundingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
