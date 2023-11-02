@@ -117,7 +117,7 @@ func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 	suite.NoError(err)
 	suite.Len(input2.Mentions, 1)
 	suite.EqualValues(input2.Mentions[0].EntityDB, tag4Label)
-	suite.EqualValues(string(input.RawContent), tag4)
+	suite.EqualValues(string(input2.RawContent), tag4)
 }
 
 func (suite *ResolverSuite) TestTagCollectionCreate() {
