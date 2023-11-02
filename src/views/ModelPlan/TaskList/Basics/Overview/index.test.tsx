@@ -46,7 +46,7 @@ describe('Basics overview page', () => {
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/overview'
         ]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
+        <MockedProvider mocks={mocks} addTypename={false} showWarnings>
           <Route path="/models/:modelID/task-list/overview">
             <Overview />
           </Route>
@@ -55,7 +55,7 @@ describe('Basics overview page', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('"ModelType-Problem"')).toHaveValue('My problem');
+      expect(getByTestId('ModelType-Problem')).toHaveValue('My problem');
     });
 
     expect(asFragment()).toMatchSnapshot();

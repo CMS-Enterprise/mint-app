@@ -15,11 +15,11 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import { GetMilestonesQuery } from 'gql/gen/graphql';
 import {
-  GetMilestonesQuery,
   useGetMilestonesQuery,
   useUpdateBasicsMutation
-} from 'gql/gen/graphql';
+} from 'gql/gen/graphql-types';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';

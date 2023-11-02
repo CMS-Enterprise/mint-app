@@ -1,7 +1,6 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -20,13 +19,11 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { CmsCenter, GetBasicsQuery, ModelCategory } from 'gql/gen/graphql';
 import {
-  CmsCenter,
-  GetBasicsQuery,
-  ModelCategory,
   useGetBasicsQuery,
   useUpdateModelPlanAndBasicsMutation
-} from 'gql/gen/graphql';
+} from 'gql/gen/graphql-types';
 
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';

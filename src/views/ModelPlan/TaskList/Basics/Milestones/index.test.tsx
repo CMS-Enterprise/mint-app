@@ -54,7 +54,7 @@ const mocks = [
   }
 ];
 
-describe('Model Bascis Milestones page', () => {
+describe('Model Basics Milestones page', () => {
   it('renders without errors and matches snapshot', async () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
@@ -76,8 +76,6 @@ describe('Model Bascis Milestones page', () => {
       );
     });
 
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    expect(asFragment()).toMatchSnapshot();
   });
 });

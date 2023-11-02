@@ -20,57 +20,57 @@ export type Scalars = {
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: { input: any; output: any; }
   /** Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z */
-  Time: { input: Time; output: Time; }
+  Time: { input: any; output: any; }
   /** UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A */
-  UUID: { input: UUID; output: UUID; }
+  UUID: { input: any; output: any; }
   /**
    * https://gqlgen.com/reference/file-upload/
    * Represents a multipart file upload
    */
-  Upload: { input: Upload; output: Upload; }
+  Upload: { input: any; output: any; }
 };
 
 export enum ActionType {
   /** An administrative action */
-  ADMIN = 'ADMIN',
+  Admin = 'ADMIN',
   /** A normal flow action */
-  NORMAL = 'NORMAL'
+  Normal = 'NORMAL'
 }
 
 export enum AgencyOrStateHelpType {
-  NO = 'NO',
-  OTHER = 'OTHER',
-  YES_AGENCY_IAA = 'YES_AGENCY_IAA',
-  YES_AGENCY_IDEAS = 'YES_AGENCY_IDEAS',
-  YES_STATE = 'YES_STATE'
+  No = 'NO',
+  Other = 'OTHER',
+  YesAgencyIaa = 'YES_AGENCY_IAA',
+  YesAgencyIdeas = 'YES_AGENCY_IDEAS',
+  YesState = 'YES_STATE'
 }
 
 export enum AgreementType {
-  COOPERATIVE = 'COOPERATIVE',
-  OTHER = 'OTHER',
-  PARTICIPATION = 'PARTICIPATION'
+  Cooperative = 'COOPERATIVE',
+  Other = 'OTHER',
+  Participation = 'PARTICIPATION'
 }
 
 export enum AlternativePaymentModelType {
-  ADVANCED = 'ADVANCED',
-  MIPS = 'MIPS',
-  NOT_APM = 'NOT_APM',
-  REGULAR = 'REGULAR'
+  Advanced = 'ADVANCED',
+  Mips = 'MIPS',
+  NotApm = 'NOT_APM',
+  Regular = 'REGULAR'
 }
 
 export enum AnticipatedPaymentFrequencyType {
-  ANNUALLY = 'ANNUALLY',
-  BIANNUALLY = 'BIANNUALLY',
-  DAILY = 'DAILY',
-  MONTHLY = 'MONTHLY',
-  OTHER = 'OTHER',
-  QUARTERLY = 'QUARTERLY',
-  SEMIMONTHLY = 'SEMIMONTHLY',
-  WEEKLY = 'WEEKLY'
+  Annually = 'ANNUALLY',
+  Biannually = 'BIANNUALLY',
+  Daily = 'DAILY',
+  Monthly = 'MONTHLY',
+  Other = 'OTHER',
+  Quarterly = 'QUARTERLY',
+  Semimonthly = 'SEMIMONTHLY',
+  Weekly = 'WEEKLY'
 }
 
 export type AuditChange = {
-  __typename: 'AuditChange';
+  __typename?: 'AuditChange';
   action: Scalars['String']['output'];
   fields: Scalars['Map']['output'];
   foreignKey?: Maybe<Scalars['UUID']['output']>;
@@ -83,64 +83,64 @@ export type AuditChange = {
 };
 
 export enum AuthorityAllowance {
-  ACA = 'ACA',
-  CONGRESSIONALLY_MANDATED = 'CONGRESSIONALLY_MANDATED',
-  OTHER = 'OTHER',
-  SSA_PART_B = 'SSA_PART_B'
+  Aca = 'ACA',
+  CongressionallyMandated = 'CONGRESSIONALLY_MANDATED',
+  Other = 'OTHER',
+  SsaPartB = 'SSA_PART_B'
 }
 
 export enum BenchmarkForPerformanceType {
-  NO = 'NO',
-  YES_NO_RECONCILE = 'YES_NO_RECONCILE',
-  YES_RECONCILE = 'YES_RECONCILE'
+  No = 'NO',
+  YesNoReconcile = 'YES_NO_RECONCILE',
+  YesReconcile = 'YES_RECONCILE'
 }
 
 export enum BeneficiariesType {
-  DISEASE_SPECIFIC = 'DISEASE_SPECIFIC',
-  DUALLY_ELIGIBLE = 'DUALLY_ELIGIBLE',
-  MEDICAID = 'MEDICAID',
-  MEDICARE_ADVANTAGE = 'MEDICARE_ADVANTAGE',
-  MEDICARE_FFS = 'MEDICARE_FFS',
-  MEDICARE_PART_D = 'MEDICARE_PART_D',
-  NA = 'NA',
-  OTHER = 'OTHER'
+  DiseaseSpecific = 'DISEASE_SPECIFIC',
+  DuallyEligible = 'DUALLY_ELIGIBLE',
+  Medicaid = 'MEDICAID',
+  MedicareAdvantage = 'MEDICARE_ADVANTAGE',
+  MedicareFfs = 'MEDICARE_FFS',
+  MedicarePartD = 'MEDICARE_PART_D',
+  Na = 'NA',
+  Other = 'OTHER'
 }
 
 export enum CmmiGroup {
-  PATIENT_CARE_MODELS_GROUP = 'PATIENT_CARE_MODELS_GROUP',
-  POLICY_AND_PROGRAMS_GROUP = 'POLICY_AND_PROGRAMS_GROUP',
-  SEAMLESS_CARE_MODELS_GROUP = 'SEAMLESS_CARE_MODELS_GROUP',
-  STATE_AND_POPULATION_HEALTH_GROUP = 'STATE_AND_POPULATION_HEALTH_GROUP',
-  TBD = 'TBD'
+  PatientCareModelsGroup = 'PATIENT_CARE_MODELS_GROUP',
+  PolicyAndProgramsGroup = 'POLICY_AND_PROGRAMS_GROUP',
+  SeamlessCareModelsGroup = 'SEAMLESS_CARE_MODELS_GROUP',
+  StateAndPopulationHealthGroup = 'STATE_AND_POPULATION_HEALTH_GROUP',
+  Tbd = 'TBD'
 }
 
 export enum CmsCenter {
-  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY = 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY',
-  CENTER_FOR_MEDICARE = 'CENTER_FOR_MEDICARE',
-  CENTER_FOR_PROGRAM_INTEGRITY = 'CENTER_FOR_PROGRAM_INTEGRITY',
-  CMMI = 'CMMI',
-  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE',
-  OTHER = 'OTHER'
+  CenterForClinicalStandardsAndQuality = 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY',
+  CenterForMedicare = 'CENTER_FOR_MEDICARE',
+  CenterForProgramIntegrity = 'CENTER_FOR_PROGRAM_INTEGRITY',
+  Cmmi = 'CMMI',
+  FederalCoordinatedHealthCareOffice = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE',
+  Other = 'OTHER'
 }
 
 export enum CcmInvolvmentType {
-  NO = 'NO',
-  OTHER = 'OTHER',
-  YES_EVALUATION = 'YES_EVALUATION',
-  YES__IMPLEMENTATION = 'YES__IMPLEMENTATION'
+  No = 'NO',
+  Other = 'OTHER',
+  YesEvaluation = 'YES_EVALUATION',
+  YesImplementation = 'YES__IMPLEMENTATION'
 }
 
 export enum ChangeHistorySortKey {
   /** Sort by the user who made the change */
-  ACTOR = 'ACTOR',
+  Actor = 'ACTOR',
   /** Sort by the date the change was made */
-  CHANGE_DATE = 'CHANGE_DATE',
+  ChangeDate = 'CHANGE_DATE',
   /** Sort by the model plan ID that was changed */
-  MODEL_PLAN_ID = 'MODEL_PLAN_ID',
+  ModelPlanId = 'MODEL_PLAN_ID',
   /** Sort by the table ID that was changed */
-  TABLE_ID = 'TABLE_ID',
+  TableId = 'TABLE_ID',
   /** Sort by the table name that was changed */
-  TABLE_NAME = 'TABLE_NAME'
+  TableName = 'TABLE_NAME'
 }
 
 export type ChangeHistorySortParams = {
@@ -149,7 +149,7 @@ export type ChangeHistorySortParams = {
 };
 
 export type ChangeTableRecord = {
-  __typename: 'ChangeTableRecord';
+  __typename?: 'ChangeTableRecord';
   action: Scalars['String']['output'];
   fields: ChangedFields;
   foreignKey?: Maybe<Scalars['UUID']['output']>;
@@ -168,44 +168,44 @@ export type ChangeTableRecord = {
 };
 
 export enum ChangeType {
-  ADDED = 'ADDED',
-  REMOVED = 'REMOVED',
-  UPDATED = 'UPDATED'
+  Added = 'ADDED',
+  Removed = 'REMOVED',
+  Updated = 'UPDATED'
 }
 
 export type ChangedFields = {
-  __typename: 'ChangedFields';
+  __typename?: 'ChangedFields';
   changes: Array<Field>;
 };
 
 export enum ClaimsBasedPayType {
-  ADJUSTMENTS_TO_FFS_PAYMENTS = 'ADJUSTMENTS_TO_FFS_PAYMENTS',
-  CARE_MANAGEMENT_HOME_VISITS = 'CARE_MANAGEMENT_HOME_VISITS',
-  OTHER = 'OTHER',
-  REDUCTIONS_TO_BENEFICIARY_COST_SHARING = 'REDUCTIONS_TO_BENEFICIARY_COST_SHARING',
-  SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE = 'SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE',
-  SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS = 'SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS',
-  TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE = 'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE'
+  AdjustmentsToFfsPayments = 'ADJUSTMENTS_TO_FFS_PAYMENTS',
+  CareManagementHomeVisits = 'CARE_MANAGEMENT_HOME_VISITS',
+  Other = 'OTHER',
+  ReductionsToBeneficiaryCostSharing = 'REDUCTIONS_TO_BENEFICIARY_COST_SHARING',
+  ServicesNotCoveredThroughTraditionalMedicare = 'SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE',
+  SnfClaimsWithout_3DayHospitalAdmissions = 'SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS',
+  TelehealthServicesNotTraditionalMedicare = 'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE'
 }
 
 export enum ComplexityCalculationLevelType {
-  HIGH = 'HIGH',
-  LOW = 'LOW',
-  MIDDLE = 'MIDDLE'
+  High = 'HIGH',
+  Low = 'LOW',
+  Middle = 'MIDDLE'
 }
 
 export enum ConfidenceType {
-  COMPLETELY = 'COMPLETELY',
-  FAIRLY = 'FAIRLY',
-  NOT_AT_ALL = 'NOT_AT_ALL',
-  SLIGHTLY = 'SLIGHTLY'
+  Completely = 'COMPLETELY',
+  Fairly = 'FAIRLY',
+  NotAtAll = 'NOT_AT_ALL',
+  Slightly = 'SLIGHTLY'
 }
 
 export enum ContractorSupportType {
-  MULTIPLE = 'MULTIPLE',
-  NONE = 'NONE',
-  ONE = 'ONE',
-  OTHER = 'OTHER'
+  Multiple = 'MULTIPLE',
+  None = 'NONE',
+  One = 'ONE',
+  Other = 'OTHER'
 }
 
 export type CreateOperationalSolutionSubtaskInput = {
@@ -215,65 +215,65 @@ export type CreateOperationalSolutionSubtaskInput = {
 
 /** The current user of the application */
 export type CurrentUser = {
-  __typename: 'CurrentUser';
+  __typename?: 'CurrentUser';
   launchDarkly: LaunchDarklySettings;
 };
 
 export enum DataForMonitoringType {
-  CLINICAL_DATA = 'CLINICAL_DATA',
-  ENCOUNTER_DATA = 'ENCOUNTER_DATA',
-  MEDICAID_CLAIMS = 'MEDICAID_CLAIMS',
-  MEDICARE_CLAIMS = 'MEDICARE_CLAIMS',
-  NON_CLINICAL_DATA = 'NON_CLINICAL_DATA',
-  NON_MEDICAL_DATA = 'NON_MEDICAL_DATA',
-  NOT_PLANNING_TO_COLLECT_DATA = 'NOT_PLANNING_TO_COLLECT_DATA',
-  NO_PAY_CLAIMS = 'NO_PAY_CLAIMS',
-  OTHER = 'OTHER',
-  QUALITY_CLAIMS_BASED_MEASURES = 'QUALITY_CLAIMS_BASED_MEASURES',
-  QUALITY_REPORTED_MEASURES = 'QUALITY_REPORTED_MEASURES',
-  SITE_VISITS = 'SITE_VISITS'
+  ClinicalData = 'CLINICAL_DATA',
+  EncounterData = 'ENCOUNTER_DATA',
+  MedicaidClaims = 'MEDICAID_CLAIMS',
+  MedicareClaims = 'MEDICARE_CLAIMS',
+  NonClinicalData = 'NON_CLINICAL_DATA',
+  NonMedicalData = 'NON_MEDICAL_DATA',
+  NotPlanningToCollectData = 'NOT_PLANNING_TO_COLLECT_DATA',
+  NoPayClaims = 'NO_PAY_CLAIMS',
+  Other = 'OTHER',
+  QualityClaimsBasedMeasures = 'QUALITY_CLAIMS_BASED_MEASURES',
+  QualityReportedMeasures = 'QUALITY_REPORTED_MEASURES',
+  SiteVisits = 'SITE_VISITS'
 }
 
 export enum DataFrequencyType {
-  ANNUALLY = 'ANNUALLY',
-  BIANNUALLY = 'BIANNUALLY',
-  DAILY = 'DAILY',
-  MONTHLY = 'MONTHLY',
-  NOT_PLANNING_TO_DO_THIS = 'NOT_PLANNING_TO_DO_THIS',
-  OTHER = 'OTHER',
-  QUARTERLY = 'QUARTERLY',
-  SEMI_MONTHLY = 'SEMI_MONTHLY',
-  WEEKLY = 'WEEKLY'
+  Annually = 'ANNUALLY',
+  Biannually = 'BIANNUALLY',
+  Daily = 'DAILY',
+  Monthly = 'MONTHLY',
+  NotPlanningToDoThis = 'NOT_PLANNING_TO_DO_THIS',
+  Other = 'OTHER',
+  Quarterly = 'QUARTERLY',
+  SemiMonthly = 'SEMI_MONTHLY',
+  Weekly = 'WEEKLY'
 }
 
 export enum DataFullTimeOrIncrementalType {
-  FULL_TIME = 'FULL_TIME',
-  INCREMENTAL = 'INCREMENTAL'
+  FullTime = 'FULL_TIME',
+  Incremental = 'INCREMENTAL'
 }
 
 export enum DataStartsType {
-  AT_SOME_OTHER_POINT_IN_TIME = 'AT_SOME_OTHER_POINT_IN_TIME',
-  DURING_APPLICATION_PERIOD = 'DURING_APPLICATION_PERIOD',
-  EARLY_IN_THE_FIRST_PERFORMANCE_YEAR = 'EARLY_IN_THE_FIRST_PERFORMANCE_YEAR',
-  IN_THE_SUBSEQUENT_PERFORMANCE_YEAR = 'IN_THE_SUBSEQUENT_PERFORMANCE_YEAR',
-  LATER_IN_THE_FIRST_PERFORMANCE_YEAR = 'LATER_IN_THE_FIRST_PERFORMANCE_YEAR',
-  NOT_PLANNING_TO_DO_THIS = 'NOT_PLANNING_TO_DO_THIS',
-  OTHER = 'OTHER',
-  SHORTLY_BEFORE_THE_START_DATE = 'SHORTLY_BEFORE_THE_START_DATE'
+  AtSomeOtherPointInTime = 'AT_SOME_OTHER_POINT_IN_TIME',
+  DuringApplicationPeriod = 'DURING_APPLICATION_PERIOD',
+  EarlyInTheFirstPerformanceYear = 'EARLY_IN_THE_FIRST_PERFORMANCE_YEAR',
+  InTheSubsequentPerformanceYear = 'IN_THE_SUBSEQUENT_PERFORMANCE_YEAR',
+  LaterInTheFirstPerformanceYear = 'LATER_IN_THE_FIRST_PERFORMANCE_YEAR',
+  NotPlanningToDoThis = 'NOT_PLANNING_TO_DO_THIS',
+  Other = 'OTHER',
+  ShortlyBeforeTheStartDate = 'SHORTLY_BEFORE_THE_START_DATE'
 }
 
 export enum DataToSendParticipantsType {
-  BASELINE_HISTORICAL_DATA = 'BASELINE_HISTORICAL_DATA',
-  BENEFICIARY_LEVEL_DATA = 'BENEFICIARY_LEVEL_DATA',
-  CLAIMS_LEVEL_DATA = 'CLAIMS_LEVEL_DATA',
-  NOT_PLANNING_TO_SEND_DATA = 'NOT_PLANNING_TO_SEND_DATA',
-  OTHER_MIPS_DATA = 'OTHER_MIPS_DATA',
-  PARTICIPANT_LEVEL_DATA = 'PARTICIPANT_LEVEL_DATA',
-  PROVIDER_LEVEL_DATA = 'PROVIDER_LEVEL_DATA'
+  BaselineHistoricalData = 'BASELINE_HISTORICAL_DATA',
+  BeneficiaryLevelData = 'BENEFICIARY_LEVEL_DATA',
+  ClaimsLevelData = 'CLAIMS_LEVEL_DATA',
+  NotPlanningToSendData = 'NOT_PLANNING_TO_SEND_DATA',
+  OtherMipsData = 'OTHER_MIPS_DATA',
+  ParticipantLevelData = 'PARTICIPANT_LEVEL_DATA',
+  ProviderLevelData = 'PROVIDER_LEVEL_DATA'
 }
 
 export type DateHistogramAggregationBucket = {
-  __typename: 'DateHistogramAggregationBucket';
+  __typename?: 'DateHistogramAggregationBucket';
   docCount: Scalars['Int']['output'];
   key: Scalars['String']['output'];
   maxModifiedDts: Scalars['Time']['output'];
@@ -282,7 +282,7 @@ export type DateHistogramAggregationBucket = {
 
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
-  __typename: 'DiscussionReply';
+  __typename?: 'DiscussionReply';
   content?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -317,50 +317,50 @@ export type DiscussionReplyCreateInput = {
 };
 
 export type DiscussionRoleSelection = {
-  __typename: 'DiscussionRoleSelection';
+  __typename?: 'DiscussionRoleSelection';
   userRole: DiscussionUserRole;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
 export enum DiscussionUserRole {
-  CMS_SYSTEM_SERVICE_TEAM = 'CMS_SYSTEM_SERVICE_TEAM',
-  IT_ARCHITECT = 'IT_ARCHITECT',
-  LEADERSHIP = 'LEADERSHIP',
-  MEDICARE_ADMINISTRATIVE_CONTRACTOR = 'MEDICARE_ADMINISTRATIVE_CONTRACTOR',
-  MINT_TEAM = 'MINT_TEAM',
-  MODEL_IT_LEAD = 'MODEL_IT_LEAD',
-  MODEL_TEAM = 'MODEL_TEAM',
-  NONE_OF_THE_ABOVE = 'NONE_OF_THE_ABOVE',
-  SHARED_SYSTEM_MAINTAINER = 'SHARED_SYSTEM_MAINTAINER'
+  CmsSystemServiceTeam = 'CMS_SYSTEM_SERVICE_TEAM',
+  ItArchitect = 'IT_ARCHITECT',
+  Leadership = 'LEADERSHIP',
+  MedicareAdministrativeContractor = 'MEDICARE_ADMINISTRATIVE_CONTRACTOR',
+  MintTeam = 'MINT_TEAM',
+  ModelItLead = 'MODEL_IT_LEAD',
+  ModelTeam = 'MODEL_TEAM',
+  NoneOfTheAbove = 'NONE_OF_THE_ABOVE',
+  SharedSystemMaintainer = 'SHARED_SYSTEM_MAINTAINER'
 }
 
 export enum DocumentType {
-  CONCEPT_PAPER = 'CONCEPT_PAPER',
-  DESIGN_PARAMETERS_MEMO = 'DESIGN_PARAMETERS_MEMO',
-  ICIP_DRAFT = 'ICIP_DRAFT',
-  MARKET_RESEARCH = 'MARKET_RESEARCH',
-  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION = 'OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION',
-  OTHER = 'OTHER',
-  POLICY_PAPER = 'POLICY_PAPER'
+  ConceptPaper = 'CONCEPT_PAPER',
+  DesignParametersMemo = 'DESIGN_PARAMETERS_MEMO',
+  IcipDraft = 'ICIP_DRAFT',
+  MarketResearch = 'MARKET_RESEARCH',
+  OfficeOfTheAdministratorPresentation = 'OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION',
+  Other = 'OTHER',
+  PolicyPaper = 'POLICY_PAPER'
 }
 
 export enum EaseOfUse {
-  AGREE = 'AGREE',
-  DISAGREE = 'DISAGREE',
-  UNSURE = 'UNSURE'
+  Agree = 'AGREE',
+  Disagree = 'DISAGREE',
+  Unsure = 'UNSURE'
 }
 
 export enum EvaluationApproachType {
-  COMPARISON_MATCH = 'COMPARISON_MATCH',
-  CONTROL_INTERVENTION = 'CONTROL_INTERVENTION',
-  INTERRUPTED_TIME = 'INTERRUPTED_TIME',
-  NON_MEDICARE_DATA = 'NON_MEDICARE_DATA',
-  OTHER = 'OTHER'
+  ComparisonMatch = 'COMPARISON_MATCH',
+  ControlIntervention = 'CONTROL_INTERVENTION',
+  InterruptedTime = 'INTERRUPTED_TIME',
+  NonMedicareData = 'NON_MEDICARE_DATA',
+  Other = 'OTHER'
 }
 
 /** ExistingModel represents a model that already exists outside of the scope of MINT */
 export type ExistingModel = {
-  __typename: 'ExistingModel';
+  __typename?: 'ExistingModel';
   authority?: Maybe<Scalars['String']['output']>;
   category?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
@@ -385,7 +385,7 @@ export type ExistingModel = {
 };
 
 export type ExistingModelLink = {
-  __typename: 'ExistingModelLink';
+  __typename?: 'ExistingModelLink';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -401,123 +401,123 @@ export type ExistingModelLink = {
 };
 
 export type Field = {
-  __typename: 'Field';
+  __typename?: 'Field';
   name: Scalars['String']['output'];
   nameCamelCase: Scalars['String']['output'];
   value: FieldValue;
 };
 
 export type FieldValue = {
-  __typename: 'FieldValue';
+  __typename?: 'FieldValue';
   new?: Maybe<Scalars['Any']['output']>;
   old?: Maybe<Scalars['Any']['output']>;
 };
 
 export enum FrequencyType {
-  ANNUALLY = 'ANNUALLY',
-  BIANNUALLY = 'BIANNUALLY',
-  MONTHLY = 'MONTHLY',
-  OTHER = 'OTHER',
-  QUARTERLY = 'QUARTERLY',
-  ROLLING = 'ROLLING'
+  Annually = 'ANNUALLY',
+  Biannually = 'BIANNUALLY',
+  Monthly = 'MONTHLY',
+  Other = 'OTHER',
+  Quarterly = 'QUARTERLY',
+  Rolling = 'ROLLING'
 }
 
 export enum FundingSource {
-  OTHER = 'OTHER',
-  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
-  TRUST_FUND = 'TRUST_FUND'
+  Other = 'OTHER',
+  PatientProtectionAffordableCareAct = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
+  TrustFund = 'TRUST_FUND'
 }
 
 export enum GqlTableName {
-  ANALYZEDAUDIT = 'analyzedAudit',
-  DISCUSSIONREPLY = 'discussionReply',
-  EXISTINGMODEL = 'existingModel',
-  EXISTINGMODELLINK = 'existingModelLink',
-  MODELPLAN = 'modelPlan',
-  NDAAGREEMENT = 'ndaAgreement',
-  OPERATIONALNEED = 'operationalNeed',
-  OPERATIONALSOLUTION = 'operationalSolution',
-  OPERATIONALSOLUTIONSUBTASK = 'operationalSolutionSubtask',
-  PLANBASICS = 'planBasics',
-  PLANBENEFICIARIES = 'planBeneficiaries',
-  PLANCOLLABORATOR = 'planCollaborator',
-  PLANCRTDL = 'planCrTdl',
-  PLANDISCUSSION = 'planDiscussion',
-  PLANDOCUMENT = 'planDocument',
-  PLANDOCUMENTSOLUTIONLINK = 'planDocumentSolutionLink',
-  PLANGENERALCHARACTERISTICS = 'planGeneralCharacteristics',
-  PLANOPSEVALANDLEARNING = 'planOpsEvalAndLearning',
-  PLANPARTICIPANTSANDPROVIDERS = 'planParticipantsAndProviders',
-  PLANPAYMENTS = 'planPayments',
-  POSSIBLEOPERATIONALNEED = 'possibleOperationalNeed',
-  POSSIBLEOPERATIONALSOLUTION = 'possibleOperationalSolution',
-  USERACCOUNT = 'userAccount'
+  AnalyzedAudit = 'analyzedAudit',
+  DiscussionReply = 'discussionReply',
+  ExistingModel = 'existingModel',
+  ExistingModelLink = 'existingModelLink',
+  ModelPlan = 'modelPlan',
+  NdaAgreement = 'ndaAgreement',
+  OperationalNeed = 'operationalNeed',
+  OperationalSolution = 'operationalSolution',
+  OperationalSolutionSubtask = 'operationalSolutionSubtask',
+  PlanBasics = 'planBasics',
+  PlanBeneficiaries = 'planBeneficiaries',
+  PlanCollaborator = 'planCollaborator',
+  PlanCrTdl = 'planCrTdl',
+  PlanDiscussion = 'planDiscussion',
+  PlanDocument = 'planDocument',
+  PlanDocumentSolutionLink = 'planDocumentSolutionLink',
+  PlanGeneralCharacteristics = 'planGeneralCharacteristics',
+  PlanOpsEvalAndLearning = 'planOpsEvalAndLearning',
+  PlanParticipantsAndProviders = 'planParticipantsAndProviders',
+  PlanPayments = 'planPayments',
+  PossibleOperationalNeed = 'possibleOperationalNeed',
+  PossibleOperationalSolution = 'possibleOperationalSolution',
+  UserAccount = 'userAccount'
 }
 
 export enum GeographyApplication {
-  BENEFICIARIES = 'BENEFICIARIES',
-  OTHER = 'OTHER',
-  PARTICIPANTS = 'PARTICIPANTS',
-  PROVIDERS = 'PROVIDERS'
+  Beneficiaries = 'BENEFICIARIES',
+  Other = 'OTHER',
+  Participants = 'PARTICIPANTS',
+  Providers = 'PROVIDERS'
 }
 
 export enum GeographyType {
-  OTHER = 'OTHER',
-  REGION = 'REGION',
-  STATE = 'STATE'
+  Other = 'OTHER',
+  Region = 'REGION',
+  State = 'STATE'
 }
 
 export enum KeyCharacteristic {
-  EPISODE_BASED = 'EPISODE_BASED',
-  OTHER = 'OTHER',
-  PART_C = 'PART_C',
-  PART_D = 'PART_D',
-  PAYMENT = 'PAYMENT',
-  POPULATION_BASED = 'POPULATION_BASED',
-  PREVENTATIVE = 'PREVENTATIVE',
-  SERVICE_DELIVERY = 'SERVICE_DELIVERY',
-  SHARED_SAVINGS = 'SHARED_SAVINGS'
+  EpisodeBased = 'EPISODE_BASED',
+  Other = 'OTHER',
+  PartC = 'PART_C',
+  PartD = 'PART_D',
+  Payment = 'PAYMENT',
+  PopulationBased = 'POPULATION_BASED',
+  Preventative = 'PREVENTATIVE',
+  ServiceDelivery = 'SERVICE_DELIVERY',
+  SharedSavings = 'SHARED_SAVINGS'
 }
 
 /** The current user's Launch Darkly key */
 export type LaunchDarklySettings = {
-  __typename: 'LaunchDarklySettings';
+  __typename?: 'LaunchDarklySettings';
   signedHash: Scalars['String']['output'];
   userKey: Scalars['String']['output'];
 };
 
 export enum MintUses {
-  CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
-  EDIT_MODEL = 'EDIT_MODEL',
-  OTHER = 'OTHER',
-  SHARE_MODEL = 'SHARE_MODEL',
-  TRACK_SOLUTIONS = 'TRACK_SOLUTIONS',
-  VIEW_HELP = 'VIEW_HELP',
-  VIEW_MODEL = 'VIEW_MODEL'
+  ContributeDiscussions = 'CONTRIBUTE_DISCUSSIONS',
+  EditModel = 'EDIT_MODEL',
+  Other = 'OTHER',
+  ShareModel = 'SHARE_MODEL',
+  TrackSolutions = 'TRACK_SOLUTIONS',
+  ViewHelp = 'VIEW_HELP',
+  ViewModel = 'VIEW_MODEL'
 }
 
 export enum ModelCategory {
-  ACCOUNTABLE_CARE = 'ACCOUNTABLE_CARE',
-  DISEASE_SPECIFIC_AND_EPISODIC = 'DISEASE_SPECIFIC_AND_EPISODIC',
-  HEALTH_PLAN = 'HEALTH_PLAN',
-  PRESCRIPTION_DRUG = 'PRESCRIPTION_DRUG',
-  STATE_BASED = 'STATE_BASED',
-  STATUTORY = 'STATUTORY',
-  TO_BE_DETERMINED = 'TO_BE_DETERMINED'
+  AccountableCare = 'ACCOUNTABLE_CARE',
+  DiseaseSpecificAndEpisodic = 'DISEASE_SPECIFIC_AND_EPISODIC',
+  HealthPlan = 'HEALTH_PLAN',
+  PrescriptionDrug = 'PRESCRIPTION_DRUG',
+  StateBased = 'STATE_BASED',
+  Statutory = 'STATUTORY',
+  ToBeDetermined = 'TO_BE_DETERMINED'
 }
 
 export enum ModelLearningSystemType {
-  EDUCATE_BENEFICIARIES = 'EDUCATE_BENEFICIARIES',
-  IT_PLATFORM_CONNECT = 'IT_PLATFORM_CONNECT',
-  LEARNING_CONTRACTOR = 'LEARNING_CONTRACTOR',
-  NO_LEARNING_SYSTEM = 'NO_LEARNING_SYSTEM',
-  OTHER = 'OTHER',
-  PARTICIPANT_COLLABORATION = 'PARTICIPANT_COLLABORATION'
+  EducateBeneficiaries = 'EDUCATE_BENEFICIARIES',
+  ItPlatformConnect = 'IT_PLATFORM_CONNECT',
+  LearningContractor = 'LEARNING_CONTRACTOR',
+  NoLearningSystem = 'NO_LEARNING_SYSTEM',
+  Other = 'OTHER',
+  ParticipantCollaboration = 'PARTICIPANT_COLLABORATION'
 }
 
 /** ModelPlan represent the data point for plans about a model. It is the central data type in the application */
 export type ModelPlan = {
-  __typename: 'ModelPlan';
+  __typename?: 'ModelPlan';
   abbreviation?: Maybe<Scalars['String']['output']>;
   archived: Scalars['Boolean']['output'];
   basics: PlanBasics;
@@ -567,56 +567,56 @@ export type ModelPlanChanges = {
 };
 
 export enum ModelPlanFilter {
-  COLLAB_ONLY = 'COLLAB_ONLY',
-  INCLUDE_ALL = 'INCLUDE_ALL',
-  WITH_CR_TDLS = 'WITH_CR_TDLS'
+  CollabOnly = 'COLLAB_ONLY',
+  IncludeAll = 'INCLUDE_ALL',
+  WithCrTdls = 'WITH_CR_TDLS'
 }
 
 export enum ModelStatus {
-  ACTIVE = 'ACTIVE',
-  ANNOUNCED = 'ANNOUNCED',
-  CANCELED = 'CANCELED',
-  CLEARED = 'CLEARED',
-  CMS_CLEARANCE = 'CMS_CLEARANCE',
-  ENDED = 'ENDED',
-  HHS_CLEARANCE = 'HHS_CLEARANCE',
-  ICIP_COMPLETE = 'ICIP_COMPLETE',
-  INTERNAL_CMMI_CLEARANCE = 'INTERNAL_CMMI_CLEARANCE',
-  OMB_ASRF_CLEARANCE = 'OMB_ASRF_CLEARANCE',
-  PAUSED = 'PAUSED',
-  PLAN_COMPLETE = 'PLAN_COMPLETE',
-  PLAN_DRAFT = 'PLAN_DRAFT'
+  Active = 'ACTIVE',
+  Announced = 'ANNOUNCED',
+  Canceled = 'CANCELED',
+  Cleared = 'CLEARED',
+  CmsClearance = 'CMS_CLEARANCE',
+  Ended = 'ENDED',
+  HhsClearance = 'HHS_CLEARANCE',
+  IcipComplete = 'ICIP_COMPLETE',
+  InternalCmmiClearance = 'INTERNAL_CMMI_CLEARANCE',
+  OmbAsrfClearance = 'OMB_ASRF_CLEARANCE',
+  Paused = 'PAUSED',
+  PlanComplete = 'PLAN_COMPLETE',
+  PlanDraft = 'PLAN_DRAFT'
 }
 
 export enum ModelType {
-  MANDATORY = 'MANDATORY',
-  TBD = 'TBD',
-  VOLUNTARY = 'VOLUNTARY'
+  Mandatory = 'MANDATORY',
+  Tbd = 'TBD',
+  Voluntary = 'VOLUNTARY'
 }
 
 export enum ModelViewFilter {
-  CBOSC = 'CBOSC',
-  CCW = 'CCW',
-  CMMI = 'CMMI',
-  DFSDM = 'DFSDM',
-  IDDOC = 'IDDOC',
-  IPC = 'IPC',
-  MDM = 'MDM',
-  OACT = 'OACT',
-  PBG = 'PBG'
+  Cbosc = 'CBOSC',
+  Ccw = 'CCW',
+  Cmmi = 'CMMI',
+  Dfsdm = 'DFSDM',
+  Iddoc = 'IDDOC',
+  Ipc = 'IPC',
+  Mdm = 'MDM',
+  Oact = 'OACT',
+  Pbg = 'PBG'
 }
 
 export enum MonitoringFileType {
-  BENEFICIARY = 'BENEFICIARY',
-  OTHER = 'OTHER',
-  PART_A = 'PART_A',
-  PART_B = 'PART_B',
-  PROVIDER = 'PROVIDER'
+  Beneficiary = 'BENEFICIARY',
+  Other = 'OTHER',
+  PartA = 'PART_A',
+  PartB = 'PART_B',
+  Provider = 'PROVIDER'
 }
 
 /** Mutations definition for the schema */
 export type Mutation = {
-  __typename: 'Mutation';
+  __typename?: 'Mutation';
   addOrUpdateCustomOperationalNeed: OperationalNeed;
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
@@ -944,36 +944,36 @@ export type MutationUploadNewPlanDocumentArgs = {
 
 /** NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible */
 export type NdaInfo = {
-  __typename: 'NDAInfo';
+  __typename?: 'NDAInfo';
   agreed: Scalars['Boolean']['output'];
   agreedDts?: Maybe<Scalars['Time']['output']>;
 };
 
 export enum NonClaimsBasedPayType {
-  ADVANCED_PAYMENT = 'ADVANCED_PAYMENT',
-  BUNDLED_EPISODE_OF_CARE = 'BUNDLED_EPISODE_OF_CARE',
-  CAPITATION_POPULATION_BASED_FULL = 'CAPITATION_POPULATION_BASED_FULL',
-  CAPITATION_POPULATION_BASED_PARTIAL = 'CAPITATION_POPULATION_BASED_PARTIAL',
-  CARE_COORDINATION_MANAGEMENT_FEE = 'CARE_COORDINATION_MANAGEMENT_FEE',
-  GLOBAL_BUDGET = 'GLOBAL_BUDGET',
-  GRANTS = 'GRANTS',
-  INCENTIVE_PAYMENT = 'INCENTIVE_PAYMENT',
-  MAPD_SHARED_SAVINGS = 'MAPD_SHARED_SAVINGS',
-  OTHER = 'OTHER',
-  SHARED_SAVINGS = 'SHARED_SAVINGS'
+  AdvancedPayment = 'ADVANCED_PAYMENT',
+  BundledEpisodeOfCare = 'BUNDLED_EPISODE_OF_CARE',
+  CapitationPopulationBasedFull = 'CAPITATION_POPULATION_BASED_FULL',
+  CapitationPopulationBasedPartial = 'CAPITATION_POPULATION_BASED_PARTIAL',
+  CareCoordinationManagementFee = 'CARE_COORDINATION_MANAGEMENT_FEE',
+  GlobalBudget = 'GLOBAL_BUDGET',
+  Grants = 'GRANTS',
+  IncentivePayment = 'INCENTIVE_PAYMENT',
+  MapdSharedSavings = 'MAPD_SHARED_SAVINGS',
+  Other = 'OTHER',
+  SharedSavings = 'SHARED_SAVINGS'
 }
 
 export enum OpSolutionStatus {
-  AT_RISK = 'AT_RISK',
-  BACKLOG = 'BACKLOG',
-  COMPLETED = 'COMPLETED',
-  IN_PROGRESS = 'IN_PROGRESS',
-  NOT_STARTED = 'NOT_STARTED',
-  ONBOARDING = 'ONBOARDING'
+  AtRisk = 'AT_RISK',
+  Backlog = 'BACKLOG',
+  Completed = 'COMPLETED',
+  InProgress = 'IN_PROGRESS',
+  NotStarted = 'NOT_STARTED',
+  Onboarding = 'ONBOARDING'
 }
 
 export type OperationalNeed = {
-  __typename: 'OperationalNeed';
+  __typename?: 'OperationalNeed';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -996,41 +996,41 @@ export type OperationalNeedSolutionsArgs = {
 };
 
 export enum OperationalNeedKey {
-  ACQUIRE_AN_EVAL_CONT = 'ACQUIRE_AN_EVAL_CONT',
-  ACQUIRE_A_LEARN_CONT = 'ACQUIRE_A_LEARN_CONT',
-  ADJUST_FFS_CLAIMS = 'ADJUST_FFS_CLAIMS',
-  APP_SUPPORT_CON = 'APP_SUPPORT_CON',
-  CLAIMS_BASED_MEASURES = 'CLAIMS_BASED_MEASURES',
-  COMM_W_PART = 'COMM_W_PART',
-  COMPUTE_SHARED_SAVINGS_PAYMENT = 'COMPUTE_SHARED_SAVINGS_PAYMENT',
-  DATA_TO_MONITOR = 'DATA_TO_MONITOR',
-  DATA_TO_SUPPORT_EVAL = 'DATA_TO_SUPPORT_EVAL',
-  EDUCATE_BENEF = 'EDUCATE_BENEF',
-  ESTABLISH_BENCH = 'ESTABLISH_BENCH',
-  HELPDESK_SUPPORT = 'HELPDESK_SUPPORT',
-  IDDOC_SUPPORT = 'IDDOC_SUPPORT',
-  IT_PLATFORM_FOR_LEARNING = 'IT_PLATFORM_FOR_LEARNING',
-  MAKE_NON_CLAIMS_BASED_PAYMENTS = 'MAKE_NON_CLAIMS_BASED_PAYMENTS',
-  MANAGE_BEN_OVERLAP = 'MANAGE_BEN_OVERLAP',
-  MANAGE_CD = 'MANAGE_CD',
-  MANAGE_FFS_EXCL_PAYMENTS = 'MANAGE_FFS_EXCL_PAYMENTS',
-  MANAGE_PROV_OVERLAP = 'MANAGE_PROV_OVERLAP',
-  PART_TO_PART_COLLAB = 'PART_TO_PART_COLLAB',
-  PROCESS_PART_APPEALS = 'PROCESS_PART_APPEALS',
-  QUALITY_PERFORMANCE_SCORES = 'QUALITY_PERFORMANCE_SCORES',
-  RECOVER_PAYMENTS = 'RECOVER_PAYMENTS',
-  RECRUIT_PARTICIPANTS = 'RECRUIT_PARTICIPANTS',
-  REV_COL_BIDS = 'REV_COL_BIDS',
-  REV_SCORE_APP = 'REV_SCORE_APP',
-  SEND_REPDATA_TO_PART = 'SEND_REPDATA_TO_PART',
-  SIGN_PARTICIPATION_AGREEMENTS = 'SIGN_PARTICIPATION_AGREEMENTS',
-  UPDATE_CONTRACT = 'UPDATE_CONTRACT',
-  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
-  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
+  AcquireAnEvalCont = 'ACQUIRE_AN_EVAL_CONT',
+  AcquireALearnCont = 'ACQUIRE_A_LEARN_CONT',
+  AdjustFfsClaims = 'ADJUST_FFS_CLAIMS',
+  AppSupportCon = 'APP_SUPPORT_CON',
+  ClaimsBasedMeasures = 'CLAIMS_BASED_MEASURES',
+  CommWPart = 'COMM_W_PART',
+  ComputeSharedSavingsPayment = 'COMPUTE_SHARED_SAVINGS_PAYMENT',
+  DataToMonitor = 'DATA_TO_MONITOR',
+  DataToSupportEval = 'DATA_TO_SUPPORT_EVAL',
+  EducateBenef = 'EDUCATE_BENEF',
+  EstablishBench = 'ESTABLISH_BENCH',
+  HelpdeskSupport = 'HELPDESK_SUPPORT',
+  IddocSupport = 'IDDOC_SUPPORT',
+  ItPlatformForLearning = 'IT_PLATFORM_FOR_LEARNING',
+  MakeNonClaimsBasedPayments = 'MAKE_NON_CLAIMS_BASED_PAYMENTS',
+  ManageBenOverlap = 'MANAGE_BEN_OVERLAP',
+  ManageCd = 'MANAGE_CD',
+  ManageFfsExclPayments = 'MANAGE_FFS_EXCL_PAYMENTS',
+  ManageProvOverlap = 'MANAGE_PROV_OVERLAP',
+  PartToPartCollab = 'PART_TO_PART_COLLAB',
+  ProcessPartAppeals = 'PROCESS_PART_APPEALS',
+  QualityPerformanceScores = 'QUALITY_PERFORMANCE_SCORES',
+  RecoverPayments = 'RECOVER_PAYMENTS',
+  RecruitParticipants = 'RECRUIT_PARTICIPANTS',
+  RevColBids = 'REV_COL_BIDS',
+  RevScoreApp = 'REV_SCORE_APP',
+  SendRepdataToPart = 'SEND_REPDATA_TO_PART',
+  SignParticipationAgreements = 'SIGN_PARTICIPATION_AGREEMENTS',
+  UpdateContract = 'UPDATE_CONTRACT',
+  UtilizeQualityMeasuresDevelopmentContractor = 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
+  VetProvidersForProgramIntegrity = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
 }
 
 export type OperationalSolution = {
-  __typename: 'OperationalSolution';
+  __typename?: 'OperationalSolution';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1068,49 +1068,49 @@ export type OperationalSolutionChanges = {
 };
 
 export enum OperationalSolutionKey {
-  ACO_OS = 'ACO_OS',
-  APPS = 'APPS',
-  ARS = 'ARS',
-  BCDA = 'BCDA',
-  CBOSC = 'CBOSC',
-  CCW = 'CCW',
-  CDX = 'CDX',
-  CMS_BOX = 'CMS_BOX',
-  CMS_QUALTRICS = 'CMS_QUALTRICS',
-  CONNECT = 'CONNECT',
-  CONTRACTOR = 'CONTRACTOR',
-  CPI_VETTING = 'CPI_VETTING',
-  CROSS_MODEL_CONTRACT = 'CROSS_MODEL_CONTRACT',
-  EDFR = 'EDFR',
-  EFT = 'EFT',
-  EXISTING_CMS_DATA_AND_PROCESS = 'EXISTING_CMS_DATA_AND_PROCESS',
-  GOVDELIVERY = 'GOVDELIVERY',
-  GS = 'GS',
-  HDR = 'HDR',
-  HIGLAS = 'HIGLAS',
-  HPMS = 'HPMS',
-  IDR = 'IDR',
-  INNOVATION = 'INNOVATION',
-  INTERNAL_STAFF = 'INTERNAL_STAFF',
-  IPC = 'IPC',
-  ISP = 'ISP',
-  LDG = 'LDG',
-  LOI = 'LOI',
-  LV = 'LV',
-  MARX = 'MARX',
-  MDM = 'MDM',
-  MIDS = 'MIDS',
-  OTHER_NEW_PROCESS = 'OTHER_NEW_PROCESS',
-  OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
-  POST_PORTAL = 'POST_PORTAL',
-  QV = 'QV',
-  RFA = 'RFA',
-  RMADA = 'RMADA',
-  SHARED_SYSTEMS = 'SHARED_SYSTEMS'
+  AcoOs = 'ACO_OS',
+  Apps = 'APPS',
+  Ars = 'ARS',
+  Bcda = 'BCDA',
+  Cbosc = 'CBOSC',
+  Ccw = 'CCW',
+  Cdx = 'CDX',
+  CmsBox = 'CMS_BOX',
+  CmsQualtrics = 'CMS_QUALTRICS',
+  Connect = 'CONNECT',
+  Contractor = 'CONTRACTOR',
+  CpiVetting = 'CPI_VETTING',
+  CrossModelContract = 'CROSS_MODEL_CONTRACT',
+  Edfr = 'EDFR',
+  Eft = 'EFT',
+  ExistingCmsDataAndProcess = 'EXISTING_CMS_DATA_AND_PROCESS',
+  Govdelivery = 'GOVDELIVERY',
+  Gs = 'GS',
+  Hdr = 'HDR',
+  Higlas = 'HIGLAS',
+  Hpms = 'HPMS',
+  Idr = 'IDR',
+  Innovation = 'INNOVATION',
+  InternalStaff = 'INTERNAL_STAFF',
+  Ipc = 'IPC',
+  Isp = 'ISP',
+  Ldg = 'LDG',
+  Loi = 'LOI',
+  Lv = 'LV',
+  Marx = 'MARX',
+  Mdm = 'MDM',
+  Mids = 'MIDS',
+  OtherNewProcess = 'OTHER_NEW_PROCESS',
+  OutlookMailbox = 'OUTLOOK_MAILBOX',
+  PostPortal = 'POST_PORTAL',
+  Qv = 'QV',
+  Rfa = 'RFA',
+  Rmada = 'RMADA',
+  SharedSystems = 'SHARED_SYSTEMS'
 }
 
 export type OperationalSolutionSubtask = {
-  __typename: 'OperationalSolutionSubtask';
+  __typename?: 'OperationalSolutionSubtask';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1124,15 +1124,15 @@ export type OperationalSolutionSubtask = {
 };
 
 export enum OperationalSolutionSubtaskStatus {
-  DONE = 'DONE',
-  IN_PROGRESS = 'IN_PROGRESS',
-  TODO = 'TODO'
+  Done = 'DONE',
+  InProgress = 'IN_PROGRESS',
+  Todo = 'TODO'
 }
 
 export enum OverlapType {
-  NO = 'NO',
-  YES_NEED_POLICIES = 'YES_NEED_POLICIES',
-  YES_NO_ISSUES = 'YES_NO_ISSUES'
+  No = 'NO',
+  YesNeedPolicies = 'YES_NEED_POLICIES',
+  YesNoIssues = 'YES_NO_ISSUES'
 }
 
 export type PageParams = {
@@ -1141,72 +1141,72 @@ export type PageParams = {
 };
 
 export enum ParticipantCommunicationType {
-  IT_TOOL = 'IT_TOOL',
-  MASS_EMAIL = 'MASS_EMAIL',
-  NO_COMMUNICATION = 'NO_COMMUNICATION',
-  OTHER = 'OTHER'
+  ItTool = 'IT_TOOL',
+  MassEmail = 'MASS_EMAIL',
+  NoCommunication = 'NO_COMMUNICATION',
+  Other = 'OTHER'
 }
 
 export enum ParticipantRiskType {
-  CAPITATION = 'CAPITATION',
-  ONE_SIDED = 'ONE_SIDED',
-  OTHER = 'OTHER',
-  TWO_SIDED = 'TWO_SIDED'
+  Capitation = 'CAPITATION',
+  OneSided = 'ONE_SIDED',
+  Other = 'OTHER',
+  TwoSided = 'TWO_SIDED'
 }
 
 export enum ParticipantSelectionType {
-  APPLICATION_REVIEW_AND_SCORING_TOOL = 'APPLICATION_REVIEW_AND_SCORING_TOOL',
-  APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
-  BASIC_CRITERIA = 'BASIC_CRITERIA',
-  CMS_COMPONENT_OR_PROCESS = 'CMS_COMPONENT_OR_PROCESS',
-  MODEL_TEAM_REVIEW_APPLICATIONS = 'MODEL_TEAM_REVIEW_APPLICATIONS',
-  NO_SELECTING_PARTICIPANTS = 'NO_SELECTING_PARTICIPANTS',
-  OTHER = 'OTHER',
-  SUPPORT_FROM_CMMI = 'SUPPORT_FROM_CMMI'
+  ApplicationReviewAndScoringTool = 'APPLICATION_REVIEW_AND_SCORING_TOOL',
+  ApplicationSupportContractor = 'APPLICATION_SUPPORT_CONTRACTOR',
+  BasicCriteria = 'BASIC_CRITERIA',
+  CmsComponentOrProcess = 'CMS_COMPONENT_OR_PROCESS',
+  ModelTeamReviewApplications = 'MODEL_TEAM_REVIEW_APPLICATIONS',
+  NoSelectingParticipants = 'NO_SELECTING_PARTICIPANTS',
+  Other = 'OTHER',
+  SupportFromCmmi = 'SUPPORT_FROM_CMMI'
 }
 
 export enum ParticipantsIdType {
-  CCNS = 'CCNS',
-  NO_IDENTIFIERS = 'NO_IDENTIFIERS',
-  NPIS = 'NPIS',
-  OTHER = 'OTHER',
-  TINS = 'TINS'
+  Ccns = 'CCNS',
+  NoIdentifiers = 'NO_IDENTIFIERS',
+  Npis = 'NPIS',
+  Other = 'OTHER',
+  Tins = 'TINS'
 }
 
 export enum ParticipantsType {
-  COMMERCIAL_PAYERS = 'COMMERCIAL_PAYERS',
-  COMMUNITY_BASED_ORGANIZATIONS = 'COMMUNITY_BASED_ORGANIZATIONS',
-  CONVENER = 'CONVENER',
-  ENTITIES = 'ENTITIES',
-  MEDICAID_MANAGED_CARE_ORGANIZATIONS = 'MEDICAID_MANAGED_CARE_ORGANIZATIONS',
-  MEDICAID_PROVIDERS = 'MEDICAID_PROVIDERS',
-  MEDICARE_ADVANTAGE_PLANS = 'MEDICARE_ADVANTAGE_PLANS',
-  MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS = 'MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS',
-  MEDICARE_PROVIDERS = 'MEDICARE_PROVIDERS',
-  NON_PROFIT_ORGANIZATIONS = 'NON_PROFIT_ORGANIZATIONS',
-  OTHER = 'OTHER',
-  STANDALONE_PART_D_PLANS = 'STANDALONE_PART_D_PLANS',
-  STATES = 'STATES',
-  STATE_MEDICAID_AGENCIES = 'STATE_MEDICAID_AGENCIES'
+  CommercialPayers = 'COMMERCIAL_PAYERS',
+  CommunityBasedOrganizations = 'COMMUNITY_BASED_ORGANIZATIONS',
+  Convener = 'CONVENER',
+  Entities = 'ENTITIES',
+  MedicaidManagedCareOrganizations = 'MEDICAID_MANAGED_CARE_ORGANIZATIONS',
+  MedicaidProviders = 'MEDICAID_PROVIDERS',
+  MedicareAdvantagePlans = 'MEDICARE_ADVANTAGE_PLANS',
+  MedicareAdvantagePrescriptionDrugPlans = 'MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS',
+  MedicareProviders = 'MEDICARE_PROVIDERS',
+  NonProfitOrganizations = 'NON_PROFIT_ORGANIZATIONS',
+  Other = 'OTHER',
+  StandalonePartDPlans = 'STANDALONE_PART_D_PLANS',
+  States = 'STATES',
+  StateMedicaidAgencies = 'STATE_MEDICAID_AGENCIES'
 }
 
 export enum PayRecipient {
-  BENEFICIARIES = 'BENEFICIARIES',
-  OTHER = 'OTHER',
-  PARTICIPANTS = 'PARTICIPANTS',
-  PROVIDERS = 'PROVIDERS',
-  STATES = 'STATES'
+  Beneficiaries = 'BENEFICIARIES',
+  Other = 'OTHER',
+  Participants = 'PARTICIPANTS',
+  Providers = 'PROVIDERS',
+  States = 'STATES'
 }
 
 export enum PayType {
-  CLAIMS_BASED_PAYMENTS = 'CLAIMS_BASED_PAYMENTS',
-  GRANTS = 'GRANTS',
-  NON_CLAIMS_BASED_PAYMENTS = 'NON_CLAIMS_BASED_PAYMENTS'
+  ClaimsBasedPayments = 'CLAIMS_BASED_PAYMENTS',
+  Grants = 'GRANTS',
+  NonClaimsBasedPayments = 'NON_CLAIMS_BASED_PAYMENTS'
 }
 
 /** Represents plan basics */
 export type PlanBasics = {
-  __typename: 'PlanBasics';
+  __typename?: 'PlanBasics';
   additionalModelCategories: Array<ModelCategory>;
   amsModelID?: Maybe<Scalars['String']['output']>;
   announced?: Maybe<Scalars['Time']['output']>;
@@ -1283,7 +1283,7 @@ export type PlanBasicsChanges = {
 
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
 export type PlanBeneficiaries = {
-  __typename: 'PlanBeneficiaries';
+  __typename?: 'PlanBeneficiaries';
   beneficiaries: Array<BeneficiariesType>;
   beneficiariesNote?: Maybe<Scalars['String']['output']>;
   beneficiariesOther?: Maybe<Scalars['String']['output']>;
@@ -1349,7 +1349,7 @@ export type PlanBeneficiariesChanges = {
 
 /** PlanCollaborator represents a collaborator on a plan */
 export type PlanCollaborator = {
-  __typename: 'PlanCollaborator';
+  __typename?: 'PlanCollaborator';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1371,7 +1371,7 @@ export type PlanCollaboratorCreateInput = {
 };
 
 export type PlanCrTdl = {
-  __typename: 'PlanCrTdl';
+  __typename?: 'PlanCrTdl';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1403,7 +1403,7 @@ export type PlanCrTdlCreateInput = {
 
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
-  __typename: 'PlanDiscussion';
+  __typename?: 'PlanDiscussion';
   content?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1440,7 +1440,7 @@ export type PlanDiscussionCreateInput = {
 
 /** PlanDocument represents a document on a plan */
 export type PlanDocument = {
-  __typename: 'PlanDocument';
+  __typename?: 'PlanDocument';
   bucket: Scalars['String']['output'];
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1491,7 +1491,7 @@ export type PlanDocumentLinkInput = {
 };
 
 export type PlanDocumentSolutionLink = {
-  __typename: 'PlanDocumentSolutionLink';
+  __typename?: 'PlanDocumentSolutionLink';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1504,7 +1504,7 @@ export type PlanDocumentSolutionLink = {
 };
 
 export type PlanFavorite = {
-  __typename: 'PlanFavorite';
+  __typename?: 'PlanFavorite';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1519,7 +1519,7 @@ export type PlanFavorite = {
 
 /** PlanGeneralCharacteristics represents a plan general characteristics object */
 export type PlanGeneralCharacteristics = {
-  __typename: 'PlanGeneralCharacteristics';
+  __typename?: 'PlanGeneralCharacteristics';
   additionalServicesInvolved?: Maybe<Scalars['Boolean']['output']>;
   additionalServicesInvolvedDescription?: Maybe<Scalars['String']['output']>;
   additionalServicesInvolvedNote?: Maybe<Scalars['String']['output']>;
@@ -1647,7 +1647,7 @@ export type PlanGeneralCharacteristicsChanges = {
 
 /** PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning */
 export type PlanOpsEvalAndLearning = {
-  __typename: 'PlanOpsEvalAndLearning';
+  __typename?: 'PlanOpsEvalAndLearning';
   agencyOrStateHelp: Array<AgencyOrStateHelpType>;
   agencyOrStateHelpNote?: Maybe<Scalars['String']['output']>;
   agencyOrStateHelpOther?: Maybe<Scalars['String']['output']>;
@@ -1863,7 +1863,7 @@ export type PlanOpsEvalAndLearningChanges = {
 
 /** PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants */
 export type PlanParticipantsAndProviders = {
-  __typename: 'PlanParticipantsAndProviders';
+  __typename?: 'PlanParticipantsAndProviders';
   communicationMethod: Array<ParticipantCommunicationType>;
   communicationMethodOther?: Maybe<Scalars['String']['output']>;
   communicationNote?: Maybe<Scalars['String']['output']>;
@@ -1985,7 +1985,7 @@ export type PlanParticipantsAndProvidersChanges = {
 
 /** PlanPayments is the task list section that deals with information regarding Payments */
 export type PlanPayments = {
-  __typename: 'PlanPayments';
+  __typename?: 'PlanPayments';
   affectsMedicareSecondaryPayerClaims?: Maybe<Scalars['Boolean']['output']>;
   affectsMedicareSecondaryPayerClaimsHow?: Maybe<Scalars['String']['output']>;
   affectsMedicareSecondaryPayerClaimsNote?: Maybe<Scalars['String']['output']>;
@@ -2126,7 +2126,7 @@ export type PlanPaymentsChanges = {
 };
 
 export type PossibleOperationalNeed = {
-  __typename: 'PossibleOperationalNeed';
+  __typename?: 'PossibleOperationalNeed';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2141,7 +2141,7 @@ export type PossibleOperationalNeed = {
 };
 
 export type PossibleOperationalSolution = {
-  __typename: 'PossibleOperationalSolution';
+  __typename?: 'PossibleOperationalSolution';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2157,7 +2157,7 @@ export type PossibleOperationalSolution = {
 
 /** PossibleOperationalSolutionContact represents a contact for a possible operational solution */
 export type PossibleOperationalSolutionContact = {
-  __typename: 'PossibleOperationalSolutionContact';
+  __typename?: 'PossibleOperationalSolutionContact';
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2173,40 +2173,40 @@ export type PossibleOperationalSolutionContact = {
 };
 
 export type PrepareForClearance = {
-  __typename: 'PrepareForClearance';
+  __typename?: 'PrepareForClearance';
   latestClearanceDts?: Maybe<Scalars['Time']['output']>;
   status: PrepareForClearanceStatus;
 };
 
 export enum PrepareForClearanceStatus {
-  CANNOT_START = 'CANNOT_START',
-  IN_PROGRESS = 'IN_PROGRESS',
-  READY = 'READY',
-  READY_FOR_CLEARANCE = 'READY_FOR_CLEARANCE'
+  CannotStart = 'CANNOT_START',
+  InProgress = 'IN_PROGRESS',
+  Ready = 'READY',
+  ReadyForClearance = 'READY_FOR_CLEARANCE'
 }
 
 export enum ProviderAddType {
-  MANDATORILY = 'MANDATORILY',
-  NA = 'NA',
-  ONLINE_TOOLS = 'ONLINE_TOOLS',
-  OTHER = 'OTHER',
-  PROSPECTIVELY = 'PROSPECTIVELY',
-  RETROSPECTIVELY = 'RETROSPECTIVELY',
-  VOLUNTARILY = 'VOLUNTARILY'
+  Mandatorily = 'MANDATORILY',
+  Na = 'NA',
+  OnlineTools = 'ONLINE_TOOLS',
+  Other = 'OTHER',
+  Prospectively = 'PROSPECTIVELY',
+  Retrospectively = 'RETROSPECTIVELY',
+  Voluntarily = 'VOLUNTARILY'
 }
 
 export enum ProviderLeaveType {
-  AFTER_A_CERTAIN_WITH_IMPLICATIONS = 'AFTER_A_CERTAIN_WITH_IMPLICATIONS',
-  NOT_ALLOWED_TO_LEAVE = 'NOT_ALLOWED_TO_LEAVE',
-  NOT_APPLICABLE = 'NOT_APPLICABLE',
-  OTHER = 'OTHER',
-  VARIES_BY_TYPE_OF_PROVIDER = 'VARIES_BY_TYPE_OF_PROVIDER',
-  VOLUNTARILY_WITHOUT_IMPLICATIONS = 'VOLUNTARILY_WITHOUT_IMPLICATIONS'
+  AfterACertainWithImplications = 'AFTER_A_CERTAIN_WITH_IMPLICATIONS',
+  NotAllowedToLeave = 'NOT_ALLOWED_TO_LEAVE',
+  NotApplicable = 'NOT_APPLICABLE',
+  Other = 'OTHER',
+  VariesByTypeOfProvider = 'VARIES_BY_TYPE_OF_PROVIDER',
+  VoluntarilyWithoutImplications = 'VOLUNTARILY_WITHOUT_IMPLICATIONS'
 }
 
 /** Query definition for the schema */
 export type Query = {
-  __typename: 'Query';
+  __typename?: 'Query';
   auditChanges: Array<AuditChange>;
   crTdl: PlanCrTdl;
   currentUser: CurrentUser;
@@ -2334,11 +2334,11 @@ export type QueryUserAccountArgs = {
 };
 
 export enum RecruitmentType {
-  APPLICATION_COLLECTION_TOOL = 'APPLICATION_COLLECTION_TOOL',
-  LOI = 'LOI',
-  NA = 'NA',
-  NOFO = 'NOFO',
-  OTHER = 'OTHER'
+  ApplicationCollectionTool = 'APPLICATION_COLLECTION_TOOL',
+  Loi = 'LOI',
+  Na = 'NA',
+  Nofo = 'NOFO',
+  Other = 'OTHER'
 }
 
 export type ReportAProblemInput = {
@@ -2353,36 +2353,36 @@ export type ReportAProblemInput = {
 };
 
 export enum ReportAProblemSection {
-  HELP_CENTER = 'HELP_CENTER',
-  IT_SOLUTIONS = 'IT_SOLUTIONS',
-  OTHER = 'OTHER',
-  READ_VIEW = 'READ_VIEW',
-  TASK_LIST = 'TASK_LIST'
+  HelpCenter = 'HELP_CENTER',
+  ItSolutions = 'IT_SOLUTIONS',
+  Other = 'OTHER',
+  ReadView = 'READ_VIEW',
+  TaskList = 'TASK_LIST'
 }
 
 export enum ReportAProblemSeverity {
-  DELAYED_TASK = 'DELAYED_TASK',
-  MINOR = 'MINOR',
-  OTHER = 'OTHER',
-  PREVENTED_TASK = 'PREVENTED_TASK'
+  DelayedTask = 'DELAYED_TASK',
+  Minor = 'MINOR',
+  Other = 'OTHER',
+  PreventedTask = 'PREVENTED_TASK'
 }
 
 /** A user role associated with a job code */
 export enum Role {
   /** A MINT assessment team user */
-  MINT_ASSESSMENT = 'MINT_ASSESSMENT',
+  MintAssessment = 'MINT_ASSESSMENT',
   /** A MINT MAC user */
-  MINT_MAC = 'MINT_MAC',
+  MintMac = 'MINT_MAC',
   /** A basic MINT user */
-  MINT_USER = 'MINT_USER'
+  MintUser = 'MINT_USER'
 }
 
 export enum SatisfactionLevel {
-  DISSATISFIED = 'DISSATISFIED',
-  NEUTRAL = 'NEUTRAL',
-  SATISFIED = 'SATISFIED',
-  VERY_DISSATISFIED = 'VERY_DISSATISFIED',
-  VERY_SATISFIED = 'VERY_SATISFIED'
+  Dissatisfied = 'DISSATISFIED',
+  Neutral = 'NEUTRAL',
+  Satisfied = 'SATISFIED',
+  VeryDissatisfied = 'VERY_DISSATISFIED',
+  VerySatisfied = 'VERY_SATISFIED'
 }
 
 export type SearchFilter = {
@@ -2396,74 +2396,74 @@ export enum SearchFilterType {
    * Expected value: A string in RFC3339 format representing the date and time.
    * Example: "2006-01-02T15:04:05Z07:00"
    */
-  CHANGED_AFTER = 'CHANGED_AFTER',
+  ChangedAfter = 'CHANGED_AFTER',
   /**
    * Filter search results to include changes on or before the specified date.
    * Expected value: A string in RFC3339 format representing the date and time.
    * Example: "2006-01-02T15:04:05Z07:00"
    */
-  CHANGED_BEFORE = 'CHANGED_BEFORE',
+  ChangedBefore = 'CHANGED_BEFORE',
   /**
    * Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
    * Expected value: A string representing the name or username of the actor.
    * Example: "MINT"
    */
-  CHANGED_BY_ACTOR = 'CHANGED_BY_ACTOR',
+  ChangedByActor = 'CHANGED_BY_ACTOR',
   /**
    * Filter results with a free text search. This is a fuzzy search on the entire record.
    * Expected value: A string representing the free text search query.
    * Example: "Operational Need"
    */
-  FREE_TEXT = 'FREE_TEXT',
+  FreeText = 'FREE_TEXT',
   /**
    * Filter search results to include changes made to the specified model plan by ID.
    * Expected value: A string representing the ID of the model plan.
    * Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
    */
-  MODEL_PLAN_ID = 'MODEL_PLAN_ID',
+  ModelPlanId = 'MODEL_PLAN_ID',
   /**
    * Filter search results to include changes made to the specified object.
    * Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
    * Example: "BASICS"
    */
-  MODEL_PLAN_SECTION = 'MODEL_PLAN_SECTION',
+  ModelPlanSection = 'MODEL_PLAN_SECTION',
   /**
    * Filter search results to include model plans with the specified status.
    * Expected value: A string representing the status of the model plan.
    * Example: "ACTIVE"
    */
-  MODEL_PLAN_STATUS = 'MODEL_PLAN_STATUS',
+  ModelPlanStatus = 'MODEL_PLAN_STATUS',
   /**
    * Filter results by table id.
    * Expected value: An integer representing the table ID.
    * Example: 14
    */
-  TABLE_ID = 'TABLE_ID',
+  TableId = 'TABLE_ID',
   /**
    * Filter results by table name.
    * Expected value: A string representing the table name.
    * Example: "plan_basics"
    */
-  TABLE_NAME = 'TABLE_NAME'
+  TableName = 'TABLE_NAME'
 }
 
 export enum SearchableTaskListSection {
-  BASICS = 'BASICS',
-  BENEFICIARIES = 'BENEFICIARIES',
-  GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
-  OPERATIONS_EVALUATION_AND_LEARNING = 'OPERATIONS_EVALUATION_AND_LEARNING',
-  PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
-  PAYMENT = 'PAYMENT'
+  Basics = 'BASICS',
+  Beneficiaries = 'BENEFICIARIES',
+  GeneralCharacteristics = 'GENERAL_CHARACTERISTICS',
+  OperationsEvaluationAndLearning = 'OPERATIONS_EVALUATION_AND_LEARNING',
+  ParticipantsAndProviders = 'PARTICIPANTS_AND_PROVIDERS',
+  Payment = 'PAYMENT'
 }
 
 export enum SelectionMethodType {
-  HISTORICAL = 'HISTORICAL',
-  NA = 'NA',
-  OTHER = 'OTHER',
-  PROSPECTIVE = 'PROSPECTIVE',
-  PROVIDER_SIGN_UP = 'PROVIDER_SIGN_UP',
-  RETROSPECTIVE = 'RETROSPECTIVE',
-  VOLUNTARY = 'VOLUNTARY'
+  Historical = 'HISTORICAL',
+  Na = 'NA',
+  Other = 'OTHER',
+  Prospective = 'PROSPECTIVE',
+  ProviderSignUp = 'PROVIDER_SIGN_UP',
+  Retrospective = 'RETROSPECTIVE',
+  Voluntary = 'VOLUNTARY'
 }
 
 /** The inputs to the user feedback form */
@@ -2480,22 +2480,22 @@ export type SendFeedbackEmailInput = {
 };
 
 export enum SortDirection {
-  ASC = 'ASC',
-  DESC = 'DESC'
+  Asc = 'ASC',
+  Desc = 'DESC'
 }
 
 export enum StakeholdersType {
-  BENEFICIARIES = 'BENEFICIARIES',
-  COMMUNITY_ORGANIZATIONS = 'COMMUNITY_ORGANIZATIONS',
-  OTHER = 'OTHER',
-  PARTICIPANTS = 'PARTICIPANTS',
-  PROFESSIONAL_ORGANIZATIONS = 'PROFESSIONAL_ORGANIZATIONS',
-  PROVIDERS = 'PROVIDERS',
-  STATES = 'STATES'
+  Beneficiaries = 'BENEFICIARIES',
+  CommunityOrganizations = 'COMMUNITY_ORGANIZATIONS',
+  Other = 'OTHER',
+  Participants = 'PARTICIPANTS',
+  ProfessionalOrganizations = 'PROFESSIONAL_ORGANIZATIONS',
+  Providers = 'PROVIDERS',
+  States = 'STATES'
 }
 
 export type Subscription = {
-  __typename: 'Subscription';
+  __typename?: 'Subscription';
   onLockTaskListSectionContext: TaskListSectionLockStatusChanged;
   onTaskListSectionLocksChanged: TaskListSectionLockStatusChanged;
 };
@@ -2511,17 +2511,17 @@ export type SubscriptionOnTaskListSectionLocksChangedArgs = {
 };
 
 export enum TaskListSection {
-  BASICS = 'BASICS',
-  BENEFICIARIES = 'BENEFICIARIES',
-  GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
-  OPERATIONS_EVALUATION_AND_LEARNING = 'OPERATIONS_EVALUATION_AND_LEARNING',
-  PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
-  PAYMENT = 'PAYMENT',
-  PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE'
+  Basics = 'BASICS',
+  Beneficiaries = 'BENEFICIARIES',
+  GeneralCharacteristics = 'GENERAL_CHARACTERISTICS',
+  OperationsEvaluationAndLearning = 'OPERATIONS_EVALUATION_AND_LEARNING',
+  ParticipantsAndProviders = 'PARTICIPANTS_AND_PROVIDERS',
+  Payment = 'PAYMENT',
+  PrepareForClearance = 'PREPARE_FOR_CLEARANCE'
 }
 
 export type TaskListSectionLockStatus = {
-  __typename: 'TaskListSectionLockStatus';
+  __typename?: 'TaskListSectionLockStatus';
   isAssessment: Scalars['Boolean']['output'];
   lockedByUserAccount: UserAccount;
   modelPlanID: Scalars['UUID']['output'];
@@ -2529,46 +2529,46 @@ export type TaskListSectionLockStatus = {
 };
 
 export type TaskListSectionLockStatusChanged = {
-  __typename: 'TaskListSectionLockStatusChanged';
+  __typename?: 'TaskListSectionLockStatusChanged';
   actionType: ActionType;
   changeType: ChangeType;
   lockStatus: TaskListSectionLockStatus;
 };
 
 export enum TaskStatus {
-  IN_PROGRESS = 'IN_PROGRESS',
-  READY = 'READY',
-  READY_FOR_CLEARANCE = 'READY_FOR_CLEARANCE',
-  READY_FOR_REVIEW = 'READY_FOR_REVIEW'
+  InProgress = 'IN_PROGRESS',
+  Ready = 'READY',
+  ReadyForClearance = 'READY_FOR_CLEARANCE',
+  ReadyForReview = 'READY_FOR_REVIEW'
 }
 
 export enum TaskStatusInput {
-  IN_PROGRESS = 'IN_PROGRESS',
-  READY_FOR_CLEARANCE = 'READY_FOR_CLEARANCE',
-  READY_FOR_REVIEW = 'READY_FOR_REVIEW'
+  InProgress = 'IN_PROGRESS',
+  ReadyForClearance = 'READY_FOR_CLEARANCE',
+  ReadyForReview = 'READY_FOR_REVIEW'
 }
 
 export enum TeamRole {
-  EVALUATION = 'EVALUATION',
-  IT_LEAD = 'IT_LEAD',
-  LEADERSHIP = 'LEADERSHIP',
-  LEARNING = 'LEARNING',
-  MODEL_LEAD = 'MODEL_LEAD',
-  MODEL_TEAM = 'MODEL_TEAM',
-  OACT = 'OACT',
-  PAYMENT = 'PAYMENT',
-  QUALITY = 'QUALITY'
+  Evaluation = 'EVALUATION',
+  ItLead = 'IT_LEAD',
+  Leadership = 'LEADERSHIP',
+  Learning = 'LEARNING',
+  ModelLead = 'MODEL_LEAD',
+  ModelTeam = 'MODEL_TEAM',
+  Oact = 'OACT',
+  Payment = 'PAYMENT',
+  Quality = 'QUALITY'
 }
 
 export enum TriStateAnswer {
-  NO = 'NO',
-  TBD = 'TBD',
-  YES = 'YES'
+  No = 'NO',
+  Tbd = 'TBD',
+  Yes = 'YES'
 }
 
 export enum TrustFundType {
-  MEDICARE_PART_A_HI_TRUST_FUND = 'MEDICARE_PART_A_HI_TRUST_FUND',
-  MEDICARE_PART_B_SMI_TRUST_FUND = 'MEDICARE_PART_B_SMI_TRUST_FUND'
+  MedicarePartAHiTrustFund = 'MEDICARE_PART_A_HI_TRUST_FUND',
+  MedicarePartBSmiTrustFund = 'MEDICARE_PART_B_SMI_TRUST_FUND'
 }
 
 export type UpdateOperationalSolutionSubtaskChangesInput = {
@@ -2582,7 +2582,7 @@ export type UpdateOperationalSolutionSubtaskInput = {
 };
 
 export type UserAccount = {
-  __typename: 'UserAccount';
+  __typename?: 'UserAccount';
   commonName: Scalars['String']['output'];
   email: Scalars['String']['output'];
   familyName: Scalars['String']['output'];
@@ -2597,7 +2597,7 @@ export type UserAccount = {
 
 /** Represents a person response from the Okta API */
 export type UserInfo = {
-  __typename: 'UserInfo';
+  __typename?: 'UserInfo';
   displayName: Scalars['String']['output'];
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
@@ -2606,9 +2606,9 @@ export type UserInfo = {
 };
 
 export enum WaiverType {
-  FRAUD_ABUSE = 'FRAUD_ABUSE',
-  MEDICAID = 'MEDICAID',
-  PROGRAM_PAYMENT = 'PROGRAM_PAYMENT'
+  FraudAbuse = 'FRAUD_ABUSE',
+  Medicaid = 'MEDICAID',
+  ProgramPayment = 'PROGRAM_PAYMENT'
 }
 
 export type GetBasicsQueryVariables = Exact<{
@@ -2616,21 +2616,21 @@ export type GetBasicsQueryVariables = Exact<{
 }>;
 
 
-export type GetBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmsOther?: string | null, cmmiGroups: Array<CmmiGroup> } } };
+export type GetBasicsQuery = { __typename?: 'Query', modelPlan: { __typename?: 'ModelPlan', id: any, modelName: string, abbreviation?: string | null, nameHistory: Array<string>, basics: { __typename?: 'PlanBasics', id: any, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmsOther?: string | null, cmmiGroups: Array<CmmiGroup> } } };
 
 export type GetMilestonesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
+export type GetMilestonesQuery = { __typename?: 'Query', modelPlan: { __typename?: 'ModelPlan', id: any, modelName: string, basics: { __typename?: 'PlanBasics', id: any, completeICIP?: any | null, clearanceStarts?: any | null, clearanceEnds?: any | null, announced?: any | null, applicationsStart?: any | null, applicationsEnd?: any | null, performancePeriodStarts?: any | null, performancePeriodEnds?: any | null, highLevelNote?: string | null, wrapUpEnds?: any | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: any | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename?: 'UserAccount', id: any, commonName: string } | null } } };
 
 export type GetOverviewQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetOverviewQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null } } };
+export type GetOverviewQuery = { __typename?: 'Query', modelPlan: { __typename?: 'ModelPlan', id: any, modelName: string, basics: { __typename?: 'PlanBasics', id: any, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null } } };
 
 export type UpdateBasicsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2638,7 +2638,7 @@ export type UpdateBasicsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateBasicsMutation = { __typename: 'Mutation', updatePlanBasics: { __typename: 'PlanBasics', id: UUID } };
+export type UpdateBasicsMutation = { __typename?: 'Mutation', updatePlanBasics: { __typename?: 'PlanBasics', id: any } };
 
 export type UpdateModelPlanAndBasicsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2648,37 +2648,37 @@ export type UpdateModelPlanAndBasicsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateModelPlanAndBasicsMutation = { __typename: 'Mutation', updateModelPlan: { __typename: 'ModelPlan', id: UUID }, updatePlanBasics: { __typename: 'PlanBasics', id: UUID } };
+export type UpdateModelPlanAndBasicsMutation = { __typename?: 'Mutation', updateModelPlan: { __typename?: 'ModelPlan', id: any }, updatePlanBasics: { __typename?: 'PlanBasics', id: any } };
 
 export type LinkNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentLinkInput;
 }>;
 
 
-export type LinkNewPlanDocumentMutation = { __typename: 'Mutation', linkNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
+export type LinkNewPlanDocumentMutation = { __typename?: 'Mutation', linkNewPlanDocument: { __typename?: 'PlanDocument', id: any } };
 
 export type CreatReportAProblemMutationVariables = Exact<{
   input: ReportAProblemInput;
 }>;
 
 
-export type CreatReportAProblemMutation = { __typename: 'Mutation', reportAProblem: boolean };
+export type CreatReportAProblemMutation = { __typename?: 'Mutation', reportAProblem: boolean };
 
 export type CreatSendFeedbackMutationVariables = Exact<{
   input: SendFeedbackEmailInput;
 }>;
 
 
-export type CreatSendFeedbackMutation = { __typename: 'Mutation', sendFeedbackEmail: boolean };
+export type CreatSendFeedbackMutation = { __typename?: 'Mutation', sendFeedbackEmail: boolean };
 
-export type ReadyForReviewUserFragmentFragment = { __typename: 'UserAccount', id: UUID, commonName: string };
+export type ReadyForReviewUserFragmentFragment = { __typename?: 'UserAccount', id: any, commonName: string };
 
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetFundingQuery = { __typename?: 'Query', modelPlan: { __typename?: 'ModelPlan', id: any, modelName: string, payments: { __typename?: 'PlanPayments', id: any, fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename?: 'OperationalNeed', modifiedDts?: any | null }> } };
 
 export type UpdatePaymentsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2686,7 +2686,7 @@ export type UpdatePaymentsMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePaymentsMutation = { __typename: 'Mutation', updatePlanPayments: { __typename: 'PlanPayments', id: UUID } };
+export type UpdatePaymentsMutation = { __typename?: 'Mutation', updatePlanPayments: { __typename?: 'PlanPayments', id: any } };
 
 export type CreateShareModelPlanMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -2696,17 +2696,17 @@ export type CreateShareModelPlanMutationVariables = Exact<{
 }>;
 
 
-export type CreateShareModelPlanMutation = { __typename: 'Mutation', shareModelPlan: boolean };
+export type CreateShareModelPlanMutation = { __typename?: 'Mutation', shareModelPlan: boolean };
 
 export type GetPossibleSolutionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, role?: string | null }> }> };
+export type GetPossibleSolutionsQuery = { __typename?: 'Query', possibleOperationalSolutions: Array<{ __typename?: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename?: 'PossibleOperationalSolutionContact', id: any, name: string, email: string, isTeam: boolean, role?: string | null }> }> };
 
 export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
+export type GetNdaQuery = { __typename?: 'Query', ndaInfo: { __typename?: 'NDAInfo', agreed: boolean, agreedDts?: any | null } };
 
 export const ReadyForReviewUserFragmentFragmentDoc = gql`
     fragment ReadyForReviewUserFragment on UserAccount {

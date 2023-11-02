@@ -15,12 +15,11 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { GetFundingQuery, PayType } from 'gql/gen/graphql';
 import {
-  GetFundingQuery,
-  PayType,
   useGetFundingQuery,
   useUpdatePaymentsMutation
-} from 'gql/gen/graphql';
+} from 'gql/gen/graphql-types';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
