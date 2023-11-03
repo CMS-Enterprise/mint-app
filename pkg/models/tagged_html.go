@@ -12,7 +12,7 @@ import (
 	"regexp"
 
 	"github.com/google/uuid"
-	"golang.org/x/net/html"
+	htmlPackage "golang.org/x/net/html"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/sanitization"
@@ -24,15 +24,15 @@ const mentionTagTemplate = `<span data-type="mention" tag-type="{{.Type}}" class
 
 // TaggedHTML represents rich text HTML with possible tagged HTML mention
 type TaggedHTML struct {
-	RawContent hTML
+	RawContent html
 	Mentions   []*HTMLMention
 	Tags       []*Tag
 }
 
 // HTMLMention represents Meta data about an entity tagged in text
 type HTMLMention struct {
-	RawHTMLNode html.Node
-	RawHTML     hTML
+	RawHTMLNode htmlPackage.Node
+	RawHTML     html
 	Type        TagType
 	DataLabel   string
 	EntityRaw   string
@@ -93,7 +93,7 @@ func (thi TaggedHTMLInput) MarshalGQLContext(ctx context.Context, w io.Writer) e
 func NewTaggedHTMLFromString(htmlString string) (TaggedHTML, error) {
 	sanitized := sanitization.SanitizeHTML(htmlString)
 	th := TaggedHTML{
-		RawContent: hTML(sanitized),
+		RawContent: html(sanitized),
 	}
 	// mentions, err := htmlMentionsFromString(sanitized)
 	mentions, err := htmlMentionsFromStringRegex(sanitized)
@@ -236,7 +236,7 @@ func (hm HTMLMention) ToTag(taggedField string, taggedTable string, taggedConten
 }
 
 // ToHTML converts an HTMLMention to an HTMLString
-func (hm HTMLMention) ToHTML() (hTML, error) { //nolint:all // it is desirable that hTML is not exported, so we can enforce sanitization
+func (hm HTMLMention) ToHTML() (html, error) { //nolint:all // it is desirable that hTML is not exported, so we can enforce sanitization
 	// Create a new template and parse the template string
 	t, err := template.New("webpage").Parse(mentionTagTemplate)
 	if err != nil {
