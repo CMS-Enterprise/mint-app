@@ -20,7 +20,7 @@ export default gql`
           id
           commonName
         }
-        teamRole
+        teamRoles
       }
       crTdls @include(if: $isMAC) {
         idNumber

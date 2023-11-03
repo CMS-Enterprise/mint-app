@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { TeamRole } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import IconInitial from 'components/shared/IconInitial';
@@ -39,20 +40,23 @@ const CollaboratorsTable = ({
         Header: collaboratorsMiscT('table.name'),
         accessor: 'userAccount.commonName',
         Cell: ({ row, value }: any) => {
-          return (
-            <IconInitial
-              className="margin-bottom-1"
-              user={value}
-              index={row.index}
-            />
-          );
+          return <IconInitial user={value} index={row.index} />;
         }
       },
       {
         Header: collaboratorsMiscT('table.role'),
-        accessor: 'teamRole',
-        Cell: ({ row, value }: any) => {
-          return <>{collaboratorsT(`teamRole.options.${value}`)}</>;
+        accessor: 'teamRoles',
+
+        Cell: ({ value }: any) => {
+          const modelLeadFirst = [
+            ...value.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
+            ...value.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
+          ];
+          return modelLeadFirst
+            .map((role: TeamRole) => {
+              return collaboratorsT(`teamRole.options.${role}`);
+            })
+            .join(', ');
         }
       },
       {
@@ -65,9 +69,6 @@ const CollaboratorsTable = ({
       {
         Header: collaboratorsMiscT('table.actions'),
         Cell: ({ row }: any) => {
-          if (row.original.teamRole === 'MODEL_LEAD' && isLastLead) {
-            return <></>;
-          }
           return (
             <>
               <UswdsReactLink
@@ -79,22 +80,25 @@ const CollaboratorsTable = ({
               >
                 {collaboratorsMiscT('table.edit')}
               </UswdsReactLink>
-
-              {collaborators.length > 1 && (
-                <button
-                  className="usa-button usa-button--unstyled line-height-body-5 text-red"
-                  type="button"
-                  aria-label={`${collaboratorsMiscT('modal.remove')} ${
-                    row.original.userAccount.commonName
-                  }`}
-                  onClick={() => {
-                    setRemoveCollaborator(row.original);
-                    setModalOpen(true);
-                  }}
-                >
-                  {collaboratorsMiscT('modal.remove')}
-                </button>
-              )}
+              {!(
+                row.original.teamRoles.includes(TeamRole.MODEL_LEAD) &&
+                isLastLead
+              ) &&
+                collaborators.length > 1 && (
+                  <button
+                    className="usa-button usa-button--unstyled line-height-body-5 text-red"
+                    type="button"
+                    aria-label={`${collaboratorsMiscT('modal.remove')} ${
+                      row.original.userAccount.commonName
+                    }`}
+                    onClick={() => {
+                      setRemoveCollaborator(row.original);
+                      setModalOpen(true);
+                    }}
+                  >
+                    {collaboratorsMiscT('modal.remove')}
+                  </button>
+                )}
             </>
           );
         }
@@ -124,17 +128,14 @@ const CollaboratorsTable = ({
         alphanumeric: (rowOne, rowTwo, columnName) => {
           return sortColumnValues(
             rowOne.values[columnName],
-            rowTwo.values[columnName]
+            rowTwo.values[columnName],
+            TeamRole.MODEL_LEAD
           );
         }
       },
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(
-          () => [{ id: 'userAccount.commonName', asc: true }],
-          []
-        ),
         pageIndex: 0
       }
     },
@@ -143,21 +144,20 @@ const CollaboratorsTable = ({
 
   return (
     <div className="collaborator-table">
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
+      <UswdsTable bordered={false} {...getTableProps()} fullWidth>
         <caption className="usa-sr-only">
           {collaboratorsMiscT('requestsTable.caption')}
         </caption>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, index) => (
+              {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps()}
                   aria-sort={getColumnSortStatus(column)}
                   className="table-header"
                   scope="col"
                   style={{
-                    paddingLeft: '0',
                     paddingBottom: '.5rem'
                   }}
                 >
@@ -175,37 +175,13 @@ const CollaboratorsTable = ({
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, index) => {
+          {rows.map(row => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map((cell, i) => {
-                  if (i === 0) {
-                    return (
-                      <th
-                        {...cell.getCellProps()}
-                        scope="row"
-                        style={{
-                          paddingLeft: '0',
-                          borderBottom:
-                            index === rows.length - 1 ? 'none' : 'auto'
-                        }}
-                      >
-                        {cell.render('Cell')}
-                      </th>
-                    );
-                  }
+                {row.cells.map(cell => {
                   return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        paddingLeft: '0',
-                        borderBottom:
-                          index === rows.length - 1 ? 'none' : 'auto'
-                      }}
-                    >
-                      {cell.render('Cell')}
-                    </td>
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   );
                 })}
               </tr>

@@ -10,7 +10,7 @@ SELECT
     collab.id,
     collab.model_plan_id,
     collab.user_id,
-    collab.team_role,
+    collab.team_roles,
     collab.created_by,
     collab.created_dts,
     collab.modified_by,

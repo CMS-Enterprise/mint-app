@@ -39,7 +39,7 @@ const mockCollaborator: GetModelPlanCollaboratorsType = {
         username: 'ABCD',
         commonName: 'John Doe'
       },
-      teamRole: TeamRole.MODEL_LEAD,
+      teamRoles: [TeamRole.MODEL_LEAD],
       createdDts: '2022-10-22T00:00:00Z'
     }
   ]

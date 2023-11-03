@@ -18,10 +18,12 @@ type MultiSelectOptionProps = {
   value: string;
   label: string;
   subLabel?: string;
+  isDisabled?: boolean;
 };
 
 export const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
   const { data, isSelected, innerProps, innerRef, isFocused } = props;
+
   return (
     <div
       {...innerProps}
@@ -39,6 +41,7 @@ export const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
         onChange={() => null}
         onBlur={() => null}
         value={data.value}
+        disabled={data.isDisabled}
       />
       {data.subLabel && (
         <span className="text-base margin-left-4">{data.subLabel}</span>
@@ -77,13 +80,17 @@ export const MultiSelectTag = ({
   parentId,
   label,
   className,
-  handleRemove
+  handleRemove,
+  disabledOption,
+  disabledLabel
 }: {
   id: string;
   parentId?: string;
   label: string;
   className?: string;
   handleRemove?: (value: string) => void;
+  disabledOption?: boolean;
+  disabledLabel?: string;
 }) => {
   return (
     <Tag
@@ -95,7 +102,7 @@ export const MultiSelectTag = ({
       )}
     >
       {label}{' '}
-      {handleRemove && (
+      {!(disabledOption && label === disabledLabel) && handleRemove && (
         <IconClose
           onClick={() => handleRemove(label)}
           onKeyDown={e => {
@@ -193,7 +200,10 @@ const MultiSelect = ({
   onChange,
   initialValues,
   className,
-  ariaLabel
+  ariaLabel,
+  tagOrder,
+  disabledOption,
+  disabledLabel
 }: {
   id?: string;
   inputId?: string;
@@ -204,6 +214,9 @@ const MultiSelect = ({
   initialValues?: string[];
   className?: string;
   ariaLabel: string;
+  tagOrder?: 'asc' | 'desc' | string;
+  disabledOption?: boolean;
+  disabledLabel?: string;
 }) => {
   const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
     initialValues
@@ -223,6 +236,31 @@ const MultiSelect = ({
     );
   }, [initialValues, originalOptions]);
 
+  const sortSelectedTags = (order: 'asc' | 'desc' | string) => {
+    switch (order) {
+      case 'desc':
+        return [
+          ...selected
+        ].sort((a: { label: string }, b: { label: string }) =>
+          b.label.localeCompare(a.label)
+        );
+      case 'asc':
+        return [
+          ...selected
+        ].sort((a: { label: string }, b: { label: string }) =>
+          a.label.localeCompare(b.label)
+        );
+
+      default:
+        return [
+          ...selected.filter(tag => tag.label === order),
+          ...selected.filter(tag => tag.label !== order)
+        ];
+    }
+  };
+
+  const renderSelectedTags = tagOrder ? sortSelectedTags(tagOrder) : selected;
+
   return (
     <div>
       <Select
@@ -233,7 +271,7 @@ const MultiSelect = ({
           'easi-multiselect usa-combo-box margin-top-1',
           className
         )}
-        isClearable
+        isClearable={!disabledOption}
         options={options}
         components={{ ClearIndicator, Option }}
         isMulti
@@ -256,7 +294,7 @@ const MultiSelect = ({
             {selectedLabel || 'Selected options'}
           </h4>
           <ul className="usa-list--unstyled" id={`${id}-tags`}>
-            {selected.map(({ value, label }) => (
+            {renderSelectedTags.map(({ value, label }) => (
               <li
                 className="margin-bottom-05 margin-right-05 display-inline-block"
                 key={value}
@@ -266,6 +304,8 @@ const MultiSelect = ({
                   parentId={`${id}-tags`}
                   key={value}
                   label={label}
+                  disabledOption={disabledOption}
+                  disabledLabel={disabledLabel}
                   handleRemove={() => {
                     const updatedValues = selected.filter(
                       option => option.value !== value

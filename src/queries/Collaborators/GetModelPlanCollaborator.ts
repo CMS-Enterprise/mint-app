@@ -11,7 +11,7 @@ export default gql`
         username
       }
       userID
-      teamRole
+      teamRoles
     }
   }
 `;

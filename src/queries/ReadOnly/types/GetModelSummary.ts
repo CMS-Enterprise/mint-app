@@ -31,7 +31,7 @@ export interface GetModelSummary_modelPlan_collaborators_userAccount {
 export interface GetModelSummary_modelPlan_collaborators {
   __typename: "PlanCollaborator";
   userAccount: GetModelSummary_modelPlan_collaborators_userAccount;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
 }
 
 export interface GetModelSummary_modelPlan_crTdls {

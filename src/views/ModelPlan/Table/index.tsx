@@ -20,6 +20,7 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { TeamRole } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -366,7 +367,7 @@ const ModelPlansTable = ({
         Cell: ({ value }: any) => {
           if (value) {
             const leads = value.filter((item: CollaboratorsType) => {
-              return item.teamRole.toLowerCase().includes('model_lead');
+              return item.teamRoles.includes(TeamRole.MODEL_LEAD);
             });
             return (
               <>

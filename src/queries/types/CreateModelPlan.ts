@@ -54,7 +54,7 @@ export interface CreateModelPlan_createModelPlan_collaborators {
   id: UUID;
   userAccount: CreateModelPlan_createModelPlan_collaborators_userAccount;
   userID: UUID;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
 }
 
 export interface CreateModelPlan_createModelPlan {

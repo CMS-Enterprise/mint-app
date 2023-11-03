@@ -41,7 +41,7 @@ func CreatePlanCollaborator(
 		return nil, nil, err
 	}
 
-	collaborator := models.NewPlanCollaborator(principal.Account().ID, input.ModelPlanID, collabAccount.ID, input.TeamRole)
+	collaborator := models.NewPlanCollaborator(principal.Account().ID, input.ModelPlanID, collabAccount.ID, input.TeamRoles)
 	err = BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
 		return nil, nil, err
@@ -112,7 +112,7 @@ func sendCollaboratorAddedEmail(
 }
 
 // UpdatePlanCollaborator implements resolver logic to update a plan collaborator
-func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.TeamRole, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
+func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRoles []models.TeamRole, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
 	// Get existing collaborator
 	existingCollaborator, err := store.PlanCollaboratorFetchByID(id)
 	if err != nil {
@@ -123,7 +123,7 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 		return nil, err
 	}
 
-	existingCollaborator.TeamRole = newRole
+	existingCollaborator.TeamRoles = models.ConvertEnumsToStringArray(newRoles)
 
 	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
 }

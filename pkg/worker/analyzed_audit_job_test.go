@@ -39,11 +39,23 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.createPlanCrTdl(plan, "123-456", time.Now().UTC(), "Title", "Note")
 
 	// Add collaborator. Only model leads should be added
-	modelLead := suite.createPlanCollaborator(plan, "MINT", "New Model Lead", "MODEL_LEAD", "test@email.com")
+	modelLead := suite.createPlanCollaborator(
+		plan,
+		"MINT",
+		"New Model Lead",
+		[]models.TeamRole{models.TeamRoleModelLead},
+		"test@email.com",
+	)
 	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(modelLead.UserID)
 
 	suite.NoError(err)
-	collaborator := suite.createPlanCollaborator(plan, "COLB", "New Colaborator", "MODEL_TEAM", "test@email.com")
+	collaborator := suite.createPlanCollaborator(
+		plan,
+		"COLB",
+		"New Colaborator",
+		[]models.TeamRole{models.TeamRoleModelTeam},
+		"test@email.com",
+	)
 	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
 
 	suite.NoError(err)
