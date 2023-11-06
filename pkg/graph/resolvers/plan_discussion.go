@@ -77,6 +77,7 @@ func CreatePlanDiscussion(
 			addressBook.MINTTeamEmail,
 			discussion,
 			input.ModelPlanID,
+			principal.Account().CommonName,
 		)
 
 		if sendEmailErr != nil {
@@ -99,6 +100,7 @@ func sendPlanDiscussionCreatedEmail(
 	receiverEmail string,
 	planDiscussion *models.PlanDiscussion,
 	modelPlanID uuid.UUID,
+	createdByUserName string,
 ) error {
 	if emailService == nil || emailTemplateService == nil {
 		return nil
@@ -108,15 +110,16 @@ func sendPlanDiscussionCreatedEmail(
 	if err != nil {
 		return err
 	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
-		DiscussionContent: planDiscussion.Content.RawContent.InnerHTML(),
-	})
+	modelPlan, err := ModelPlanGetByIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
+		ModelName:         modelPlan.ModelName,
+		ModelAbbreviation: *modelPlan.Abbreviation,
+		UserName:          createdByUserName,
+	})
 	if err != nil {
 		return err
 	}

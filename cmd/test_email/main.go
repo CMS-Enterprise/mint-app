@@ -132,9 +132,14 @@ func sendPlanDiscussionCreatedEmail(
 	if err != nil {
 		return err
 	}
+	createdByUserName := "Test User"
+	modelName := "Test Model Plan Name"
+	modelAbbreviation := "TMPN"
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
-		DiscussionContent: planDiscussion.Content.RawContent.InnerHTML(),
+		UserName:          createdByUserName,
+		ModelName:         modelName,
+		ModelAbbreviation: modelAbbreviation,
 	})
 	if err != nil {
 		return err
@@ -143,7 +148,7 @@ func sendPlanDiscussionCreatedEmail(
 	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
-		UserName:          "Test User", // Note: Hardcoded for the test. In real use, it would be dynamic.
+		UserName:          createdByUserName, // Note: Hardcoded for the test. In real use, it would be dynamic.
 		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
 		ModelID:           modelPlanID.String(),
 		ModelName:         "Test Model Plan Name", // Note: Hardcoded for the test. In real use, it would be dynamic.
