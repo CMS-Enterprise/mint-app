@@ -520,7 +520,7 @@ const ModelPlansTable = ({
         />
       )}
 
-      <UswdsTable {...getTableProps()} fullWidth scrollable>
+      <UswdsTable {...getTableProps()} fullWidth>
         <caption className="usa-sr-only">
           {homeT<string>('requestsTable.caption')}
         </caption>

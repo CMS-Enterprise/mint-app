@@ -495,7 +495,7 @@ export const Table = ({
         closeModal={() => setExternalLinkModalOpen(false)}
         url={externalLinkUrl}
       />
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
+      <UswdsTable bordered={false} {...getTableProps()} fullWidth>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (

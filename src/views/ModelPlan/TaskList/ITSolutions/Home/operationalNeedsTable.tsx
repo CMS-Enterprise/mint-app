@@ -367,7 +367,7 @@ const OperationalNeedsTable = ({
         className="margin-bottom-4"
       />
 
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
+      <UswdsTable bordered={false} {...getTableProps()} fullWidth>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>

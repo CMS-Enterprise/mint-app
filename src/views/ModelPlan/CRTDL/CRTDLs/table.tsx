@@ -306,7 +306,7 @@ const Table = ({
   return (
     <div className="model-plan-table" data-testid="cr-tdl-table">
       {renderModal()}
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
+      <UswdsTable bordered={false} {...getTableProps()} fullWidth>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (
