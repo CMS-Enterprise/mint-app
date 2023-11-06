@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -593,6 +594,11 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
+}
+
+// ExistingModelID is the resolver for the existingModelID field.
+func (r *planGeneralCharacteristicsResolver) ExistingModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error) {
+	panic(fmt.Errorf("not implemented: ExistingModelID - existingModelID"))
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
