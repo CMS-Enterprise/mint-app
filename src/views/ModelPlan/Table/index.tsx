@@ -586,7 +586,8 @@ const ModelPlansTable = ({
                         {...cell.getCellProps()}
                         style={{
                           paddingLeft: '0',
-                          borderBottom: 'auto'
+                          borderBottom: 'auto',
+                          whiteSpace: 'normal'
                         }}
                       >
                         {cell.render('Cell')}
