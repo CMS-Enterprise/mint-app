@@ -415,6 +415,7 @@ const Discussions = ({
                   {showStatusBanner('errorOnly')}
                   <QuestionAndReply
                     renderType={discussionType}
+                    discussionReplyID={discussionReplyID}
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
                     closeModal={() => setIsDiscussionOpen(false)}
                     handleCreateDiscussion={handleCreateDiscussion}
