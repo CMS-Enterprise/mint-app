@@ -144,8 +144,9 @@ func sendPlanDiscussionCreatedEmail(
 }
 
 // UpdatePlanDiscussion implements resolver logic to update a plan Discussion object
+// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
-	// THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
+
 	// Get existing discussion
 	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
 	if err != nil {
@@ -162,8 +163,8 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 }
 
 // DeletePlanDiscussion implements resolver logic to Delete a plan Discussion object
+// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
-	// THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 
 	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
 	if err != nil {
@@ -221,8 +222,8 @@ func CreateDiscussionReply(
 }
 
 // UpdateDiscussionReply implements resolver logic to update a Discussion reply object
+// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	// THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 	// Get existing reply
 	existingReply, err := store.DiscussionReplyByID(logger, id)
 	if err != nil {
@@ -238,8 +239,8 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 }
 
 // DeleteDiscussionReply implements resolver logic to Delete a Discussion reply object
+// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	// THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 	existingReply, err := store.DiscussionReplyByID(logger, id)
 	if err != nil {
 		return nil, err
