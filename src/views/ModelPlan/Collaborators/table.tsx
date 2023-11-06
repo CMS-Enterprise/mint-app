@@ -181,7 +181,14 @@ const CollaboratorsTable = ({
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td
+                      {...cell.getCellProps()}
+                      style={{
+                        whiteSpace: 'normal'
+                      }}
+                    >
+                      {cell.render('Cell')}
+                    </td>
                   );
                 })}
               </tr>

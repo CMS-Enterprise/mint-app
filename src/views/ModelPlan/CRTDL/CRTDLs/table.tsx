@@ -372,7 +372,8 @@ const Table = ({
                         style={{
                           paddingLeft: '0',
                           borderBottom:
-                            index === page.length - 1 ? 'none' : 'auto'
+                            index === page.length - 1 ? 'none' : 'auto',
+                          whiteSpace: 'normal'
                         }}
                       >
                         {cell.render('Cell')}

@@ -570,7 +570,8 @@ export const Table = ({
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          paddingLeft: '0'
+                          paddingLeft: '0',
+                          whiteSpace: 'normal'
                         }}
                       >
                         {cell.render('Cell')}
