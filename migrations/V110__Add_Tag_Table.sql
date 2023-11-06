@@ -22,3 +22,6 @@ CREATE TABLE tag ( -- Should this name be different / longer?
 
 ALTER TABLE tag
 ADD CONSTRAINT entity_uuid_or_intid_required CHECK ( (entity_uuid IS NOT NULL AND entity_intid IS NULL) OR (entity_uuid IS NULL AND entity_intid IS NOT NULL));
+
+
+COMMENT ON CONSTRAINT entity_uuid_or_intid_required IS 'Ensures that either entity_uuid or entity_intid is set, but not both (or neither)'
