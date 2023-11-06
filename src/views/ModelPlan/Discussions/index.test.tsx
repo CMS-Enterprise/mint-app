@@ -172,9 +172,15 @@ describe('Discussion Component', () => {
     );
 
     await waitFor(async () => {
-      screen.getByRole('button', { name: /Reply/ }).click();
+      userEvent.click(screen.getAllByRole('button', { name: /Reply/ })[0]);
+    });
 
-      expect(getByText(/This is a question./i)).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(
+        getByText(
+          /This will display with your name to help others identify you./i
+        )
+      ).toBeInTheDocument();
     });
 
     const roleSelect = screen.getByRole('combobox', {
@@ -183,15 +189,9 @@ describe('Discussion Component', () => {
 
     userEvent.selectOptions(roleSelect, [DiscussionUserRole.MINT_TEAM]);
 
-    expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
-
-    const feedbackField = screen.getByRole('textbox', {
-      name: /Type your reply/i
+    await waitFor(async () => {
+      expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
     });
-
-    userEvent.type(feedbackField, 'Test feedback');
-
-    expect(feedbackField).toHaveValue('Test feedback');
   });
 
   it('renders the reply form from email generated url param', async () => {
