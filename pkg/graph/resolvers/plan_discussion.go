@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"go.uber.org/zap"
 
@@ -47,19 +48,18 @@ func CreatePlanDiscussion(
 	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &planDiscussion.Content, getAccountInformation)
 
 	if err != nil {
-
-		logger.Info("not all mentions were able to be updated")
-		//TODO: do we need to stop execution here? Should we silently continue instead? Should we filter out any bad tags?
-		// return nil, err
+		return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
 	}
 
 	discussion, tx, err := store.PlanDiscussionCreate(logger, planDiscussion, nil)
-	defer tx.Rollback() // TODO, verify this, but we don't want to call rollback except in the parent context
+	if tx != nil {
+		defer tx.Rollback()
+	}
+
 	if err != nil {
 		return nil, err
 	}
 
-	//TODO: should we put this in a transaction? Likely, discussions should be saved even if tags arent'
 	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions, tx)
 	if err != nil {
 		return discussion, err
@@ -209,18 +209,17 @@ func CreateDiscussionReply(
 	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &discussionReply.Content, getAccountInformation)
 
 	if err != nil {
-		logger.Info("not all mentions were able to be updated")
-		//TODO: do we need to stop execution here? Should we silently continue instead? Should we filter out any bad tags?
-		// return nil, err
+		return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
 	}
 
 	reply, tx, err := store.DiscussionReplyCreate(logger, discussionReply, nil)
-	defer tx.Rollback() // TODO, verify this, but we don't want to call rollback except in the parent context
+	if tx != nil {
+		defer tx.Rollback()
+	}
 	if err != nil {
 		return reply, err
 	}
-	//TODO: should we put this in a transaction?
-	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx) // TODO: SW Do we need to return tx here?
+	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx)
 	if err != nil {
 		return reply, err
 	}

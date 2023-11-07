@@ -36,7 +36,6 @@ func (suite *ResolverSuite) TestTagCollectionGet() {
 	content := "hello " + tag1
 
 	discussion := suite.createPlanDiscussion(plan, content)
-	// tags, err := TagCollectionGet(logger, store, taggedTable, taggedField, taggedContentID)
 
 	tags, err := TagCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store, "plan_discussion", "content", discussion.ID)
 	suite.NoError(err)

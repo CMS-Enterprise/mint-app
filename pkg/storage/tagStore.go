@@ -59,21 +59,18 @@ func (s *Store) TagCollectionCreate(_ *zap.Logger, tags []*models.Tag, createdBy
 		return nil, tx, sErr
 	}
 	defer stmt.Close()
-	errs := []*error{}
+
 	mapSlice := []map[string]interface{}{}
 	for _, tag := range tags {
 		tag.ID = utilityUUID.ValueOrNewUUID(tag.ID) //Note, there are helper functions to do most of this, but converting manually let's us set ID and created by here as well.
 		tag.CreatedBy = createdBy
 		tMap, err := models.StructToMap(*tag)
 		if err != nil {
-			errs = append(errs, &err)
-			continue
+			return nil, tx, fmt.Errorf(" issue creating tags: error: %w", err)
 		}
 		mapSlice = append(mapSlice, tMap)
 	}
-	if len(errs) > 0 {
-		return nil, tx, fmt.Errorf(" issue creating tags: first error: %w", *errs[0])
-	}
+
 	jsonTag, err := models.MapArrayToJSONArray(mapSlice)
 	if err != nil {
 		return nil, tx, fmt.Errorf(" error converting tagArray to json: %w", err)

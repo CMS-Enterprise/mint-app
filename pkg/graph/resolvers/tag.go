@@ -75,7 +75,7 @@ func TaggedEntityGet(
 
 // UpdateTaggedHTMLMentionsAndRawContent updates the tagged html with the correct entity ids, and updates the RAW HTMl with the new representation of the mentions
 func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTMLInput, getAccountInformation userhelpers.GetAccountInfoFunc) error {
-	errs := []error{}
+
 	for _, mention := range tHTML.Mentions {
 		if mention.EntityDB != nil && mention.EntityDB != "" { // Check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
 			continue
@@ -88,8 +88,7 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 			isMacUser := false
 			collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
 			if err != nil {
-				errs = append(errs, err)
-				continue
+				return fmt.Errorf("unable to get tagged user account reference. error : %w", err)
 			}
 			mention.EntityUUID = &collabAccount.ID
 			mention.EntityDB = mention.EntityUUID
@@ -99,8 +98,7 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 
 			sol, err := store.PossibleOperationalSolutionGetByKey(logger, models.OperationalSolutionKey(mention.EntityRaw))
 			if err != nil {
-				errs = append(errs, err)
-				continue
+				return fmt.Errorf("unable to get tagged possible solution reference. error : %w", err)
 			}
 			mention.EntityIntID = &sol.ID
 			mention.EntityDB = mention.EntityIntID
@@ -111,8 +109,7 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 		// Updated the parent Raw content with the new fields
 		newHTML, err := mention.ToHTML()
 		if err != nil {
-			errs = append(errs, err)
-			continue
+			return fmt.Errorf("unable to get transform the HTML mention into a string html representation. error : %w", err)
 		}
 
 		// Update the Tagged HTML Raw content by replacing the tags old value, with the new representation
@@ -121,9 +118,7 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 
 		mention.RawHTML = newHTML
 	}
-	if len(errs) > 0 {
-		return fmt.Errorf("issues encountered getting database ids for tagged entities. %v", errs) // We aren't wrapping these errors because this is an array
-	}
+
 	return nil
 }
 
