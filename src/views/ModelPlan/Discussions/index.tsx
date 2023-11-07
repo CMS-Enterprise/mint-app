@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Accordion,
   Button,
@@ -16,6 +16,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
+import useCacheQuery from 'hooks/useCacheQuery';
 import CreateModelPlanReply from 'queries/CreateModelPlanReply';
 import CreateModelPlanDiscussion from 'queries/Discussions/CreateModelPlanDiscussion';
 import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
@@ -67,7 +68,7 @@ const Discussions = ({
     return new URLSearchParams(location.search);
   }, [location.search]);
 
-  const { data, loading, error, refetch } = useQuery<
+  const { data, loading, error, refetch } = useCacheQuery<
     GetModelPlanDiscussionsType,
     GetModelPlanDiscussionsVariables
   >(GetModelPlanDiscussions, {
@@ -143,7 +144,7 @@ const Discussions = ({
         setInitQuestion(false);
         setDiscussionStatusMessage(
           t('alreadyAnswered', {
-            question: discussionToReply.content
+            question: discussionToReply.content?.rawContent
           })
         );
       }
@@ -261,6 +262,7 @@ const Discussions = ({
                   setDiscussionType={setDiscussionType}
                   setReply={setReply}
                   setIsDiscussionOpen={setIsDiscussionOpen}
+                  setDiscussionStatusMessage={setDiscussionStatusMessage}
                 />
               ),
               expanded: true,
@@ -305,6 +307,26 @@ const Discussions = ({
     );
   };
 
+  const showStatusBanner = (errorOnly?: 'errorOnly') => {
+    if (discussionStatus !== 'error' && errorOnly) {
+      return <></>;
+    }
+    if (discussionStatusMessage && !alertClosed) {
+      return (
+        <Expire delay={45000} callback={setDiscussionStatusMessage}>
+          <Alert
+            type={discussionStatus}
+            className="margin-bottom-4"
+            closeAlert={closeAlert}
+          >
+            {discussionStatusMessage}
+          </Alert>
+        </Expire>
+      );
+    }
+    return <></>;
+  };
+
   const renderDiscussions = () => {
     return (
       <>
@@ -339,17 +361,7 @@ const Discussions = ({
         )}
 
         {/* General error message for mutations that expires after 45 seconds */}
-        {discussionStatusMessage && !alertClosed && (
-          <Expire delay={45000} callback={setDiscussionStatusMessage}>
-            <Alert
-              type={discussionStatus}
-              className="margin-bottom-4"
-              closeAlert={closeAlert}
-            >
-              {discussionStatusMessage}
-            </Alert>
-          </Expire>
-        )}
+        {showStatusBanner()}
         {/* Render error if failed to fetch discussions */}
         {error ? (
           <Alert type="error" className="margin-bottom-4">
@@ -363,27 +375,32 @@ const Discussions = ({
   };
 
   const chooseRenderMethod = () => {
+    if (loading) return <PageLoading />;
     if (readOnly || error || discussionType === 'discussion') {
       return renderDiscussions();
     }
     // If discussionType === "question" or "reply"
     return (
-      <QuestionAndReply
-        renderType={discussionType}
-        handleCreateDiscussion={handleCreateDiscussion}
-        reply={reply}
-        discussionReplyID={discussionReplyID}
-        setDiscussionReplyID={setDiscussionReplyID}
-        queryParams={queryParams}
-        setInitQuestion={setInitQuestion}
-        setDiscussionType={setDiscussionType}
-      />
+      <>
+        {showStatusBanner('errorOnly')}
+        <QuestionAndReply
+          renderType={discussionType}
+          handleCreateDiscussion={handleCreateDiscussion}
+          reply={reply}
+          discussionReplyID={discussionReplyID}
+          setDiscussionReplyID={setDiscussionReplyID}
+          queryParams={queryParams}
+          setDiscussionStatusMessage={setDiscussionStatusMessage}
+          setInitQuestion={setInitQuestion}
+          setDiscussionType={setDiscussionType}
+        />
+      </>
     );
   };
 
   return (
     <>
-      {loading && !discussions ? (
+      {loading ? (
         <PageLoading />
       ) : (
         <Grid desktop={{ col: 12 }}>
@@ -394,12 +411,17 @@ const Discussions = ({
               closeModal={() => setIsDiscussionOpen(false)}
             >
               {discussionType !== 'discussion' && (
-                <QuestionAndReply
-                  renderType={discussionType}
-                  closeModal={() => setIsDiscussionOpen(false)}
-                  handleCreateDiscussion={handleCreateDiscussion}
-                  reply={reply}
-                />
+                <>
+                  {showStatusBanner('errorOnly')}
+                  <QuestionAndReply
+                    renderType={discussionType}
+                    discussionReplyID={discussionReplyID}
+                    setDiscussionStatusMessage={setDiscussionStatusMessage}
+                    closeModal={() => setIsDiscussionOpen(false)}
+                    handleCreateDiscussion={handleCreateDiscussion}
+                    reply={reply}
+                  />
+                </>
               )}
             </DiscussionModalWrapper>
           )}

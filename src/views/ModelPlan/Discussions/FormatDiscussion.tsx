@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import SectionWrapper from 'components/shared/SectionWrapper';
@@ -17,13 +16,15 @@ type FormatDiscussionProps = {
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
+  setDiscussionStatusMessage: (value: string) => void;
 };
 
 const FormatDiscussion = ({
   discussionsContent,
   setDiscussionType,
   setReply,
-  setIsDiscussionOpen
+  setIsDiscussionOpen,
+  setDiscussionStatusMessage
 }: FormatDiscussionProps) => {
   const { t } = useTranslation('discussions');
 
@@ -36,13 +37,7 @@ const FormatDiscussion = ({
     <>
       {discussionsContentList.map((discussion, index) => {
         return (
-          <div
-            key={discussion.id}
-            className={classNames({
-              'margin-top-4': index > 0,
-              'margin-top-2': index === 0
-            })}
-          >
+          <div key={discussion.id} className="margin-top-4">
             <SingleDiscussion
               discussion={discussion}
               index={index}
@@ -50,7 +45,7 @@ const FormatDiscussion = ({
               setDiscussionType={setDiscussionType}
               setReply={setReply}
               setIsDiscussionOpen={setIsDiscussionOpen}
-              isLast={index === discussionsContentList.length - 1}
+              setDiscussionStatusMessage={setDiscussionStatusMessage}
               replies={discussion.replies}
             />
             {/* Divider to separate questions if not the last question */}
