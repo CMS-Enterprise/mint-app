@@ -19,12 +19,13 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { CmsCenter, GetBasicsQuery, ModelCategory } from 'gql/gen/graphql';
 import {
-  UpdateModelPlanAndBasicsMutationVariables,
+  CmsCenter,
+  GetBasicsQuery,
+  ModelCategory,
   useGetBasicsQuery,
   useUpdateModelPlanAndBasicsMutation
-} from 'gql/gen/graphql-types';
+} from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
@@ -49,11 +50,6 @@ import Milestones from './Milestones';
 import Overview from './Overview';
 
 type ModelPlanInfoFormType = Omit<GetBasicsQuery['modelPlan'], 'nameHistory'>;
-
-type UpdateModelPlanAndBasicsInput = UpdateModelPlanAndBasicsMutationVariables['basicsChanges'] &
-  UpdateModelPlanAndBasicsMutationVariables['basicsId'] &
-  UpdateModelPlanAndBasicsMutationVariables['changes'] &
-  UpdateModelPlanAndBasicsMutationVariables['id'];
 
 const BasicsContent = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -112,7 +108,7 @@ const BasicsContent = () => {
   const [update] = useUpdateModelPlanAndBasicsMutation();
 
   const handleFormSubmit = (
-    formikValues: UpdateModelPlanAndBasicsInput,
+    formikValues: ModelPlanInfoFormType,
     redirect?: 'next' | 'back'
   ) => {
     if (!formikValues.modelName) {

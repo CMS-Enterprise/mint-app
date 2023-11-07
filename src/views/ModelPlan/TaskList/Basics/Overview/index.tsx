@@ -12,11 +12,11 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { GetOverviewQuery } from 'gql/gen/graphql';
 import {
+  GetOverviewQuery,
   useGetOverviewQuery,
   useUpdateBasicsMutation
-} from 'gql/gen/graphql-types';
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
