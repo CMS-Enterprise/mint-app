@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
@@ -128,7 +129,7 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 
 // TagCollectionCreate converts an array of mentions, and creates an array in the database for unique tags.
 func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal authentication.Principal,
-	taggedField string, taggedTable string, taggedContentID uuid.UUID, mentions []*models.HTMLMention) ([]*models.Tag, error) {
+	taggedField string, taggedTable string, taggedContentID uuid.UUID, mentions []*models.HTMLMention, tx *sqlx.Tx) ([]*models.Tag, *sqlx.Tx, error) {
 
 	tags := models.TagArrayFromHTMLMentions(taggedField, taggedTable, taggedContentID, mentions)
 
@@ -138,11 +139,11 @@ func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal aut
 		return key
 	})
 
-	retTags, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID) // Note, this will fail if any tag is invalid.
+	retTags, _, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID, tx) // Note, this will fail if any tag is invalid.
 	if err != nil {
-		return nil, err
+		return nil, tx, err
 	}
-	return retTags, nil
+	return retTags, tx, nil
 	//TODO: EASI-3288 send an email to tagged individuals
 
 }

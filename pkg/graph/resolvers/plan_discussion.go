@@ -53,17 +53,23 @@ func CreatePlanDiscussion(
 		// return nil, err
 	}
 
-	discussion, err := store.PlanDiscussionCreate(logger, planDiscussion)
+	discussion, tx, err := store.PlanDiscussionCreate(logger, planDiscussion, nil)
+	defer tx.Rollback() // TODO, verify this, but we don't want to call rollback except in the parent context
 	if err != nil {
 		return nil, err
 	}
 
 	//TODO: should we put this in a transaction? Likely, discussions should be saved even if tags arent'
-	tags, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions)
+	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions, tx)
 	if err != nil {
 		return discussion, err
 	}
 	discussion.Content.Tags = tags
+	err = tx.Commit()
+	if err != nil {
+		return nil, err
+	}
+	commonName := principal.Account().CommonName
 
 	// Send email to MINT Dev Team
 	go func() {
@@ -77,7 +83,7 @@ func CreatePlanDiscussion(
 			addressBook.MINTTeamEmail,
 			discussion,
 			input.ModelPlanID,
-			principal.Account().CommonName,
+			commonName,
 		)
 
 		if sendEmailErr != nil {
@@ -117,7 +123,7 @@ func sendPlanDiscussionCreatedEmail(
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
 		ModelName:         modelPlan.ModelName,
-		ModelAbbreviation: *modelPlan.Abbreviation,
+		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
 		UserName:          createdByUserName,
 	})
 	if err != nil {
@@ -208,16 +214,22 @@ func CreateDiscussionReply(
 		// return nil, err
 	}
 
-	reply, err := store.DiscussionReplyCreate(logger, discussionReply)
+	reply, tx, err := store.DiscussionReplyCreate(logger, discussionReply, nil)
+	defer tx.Rollback() // TODO, verify this, but we don't want to call rollback except in the parent context
 	if err != nil {
 		return reply, err
 	}
 	//TODO: should we put this in a transaction?
-	tags, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions)
+	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx) // TODO: SW Do we need to return tx here?
 	if err != nil {
 		return reply, err
 	}
 	reply.Content.Tags = tags
+	err = tx.Commit()
+	if err != nil {
+		return nil, err
+	}
+
 	return reply, err
 }
 

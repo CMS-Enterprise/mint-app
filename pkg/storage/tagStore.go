@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
@@ -45,12 +46,17 @@ func (s *Store) TagCreate(
 }
 
 // TagCollectionCreate creates an array of tags in the database based on the tag contet provided in the string
-func (s *Store) TagCollectionCreate(logger *zap.Logger, tags []*models.Tag, createdBy uuid.UUID) ([]*models.Tag, error) {
+// the method is expected to be part of a larger transaction and does not handle  committing or rollingback the transactions
+// if the *sqlx.Tx is nil, this function will create one. The returned tx is the same as the one in the parameters.
+func (s *Store) TagCollectionCreate(_ *zap.Logger, tags []*models.Tag, createdBy uuid.UUID, tx *sqlx.Tx) ([]*models.Tag, *sqlx.Tx, error) {
+	if tx == nil {
+		tx = s.db.MustBegin()
+	}
 
 	retTags := []*models.Tag{}
-	stmt, sErr := s.db.PrepareNamed(tagCreateCollectionSQL)
+	stmt, sErr := tx.PrepareNamed(tagCreateCollectionSQL)
 	if sErr != nil {
-		return nil, sErr
+		return nil, tx, sErr
 	}
 	defer stmt.Close()
 	errs := []*error{}
@@ -66,11 +72,11 @@ func (s *Store) TagCollectionCreate(logger *zap.Logger, tags []*models.Tag, crea
 		mapSlice = append(mapSlice, tMap)
 	}
 	if len(errs) > 0 {
-		return nil, fmt.Errorf(" issue creating tags: first error: %w", *errs[0])
+		return nil, tx, fmt.Errorf(" issue creating tags: first error: %w", *errs[0])
 	}
 	jsonTag, err := models.MapArrayToJSONArray(mapSlice)
 	if err != nil {
-		return nil, fmt.Errorf(" error converting tagArray to json: %w", err)
+		return nil, tx, fmt.Errorf(" error converting tagArray to json: %w", err)
 	}
 
 	arg := map[string]interface{}{
@@ -78,9 +84,9 @@ func (s *Store) TagCollectionCreate(logger *zap.Logger, tags []*models.Tag, crea
 	}
 	err = stmt.Select(&retTags, arg)
 	if err != nil {
-		return nil, err
+		return nil, tx, err
 	}
-	return retTags, nil
+	return retTags, tx, nil
 
 }
 

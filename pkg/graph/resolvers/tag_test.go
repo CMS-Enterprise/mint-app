@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -148,10 +149,12 @@ func (suite *ResolverSuite) TestTagCollectionCreate() {
 	tableName := "nonsenseTableName"
 	taggedContentID := uuid.New()
 
-	tags, err := TagCollectionCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, fieldName, tableName, taggedContentID, taggedHTML.Mentions)
+	var tx *sqlx.Tx
+
+	tags, tx2, err := TagCollectionCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, fieldName, tableName, taggedContentID, taggedHTML.Mentions, tx)
+	suite.NotNil(tx2)
 	suite.NoError(err) //ASSERT Tags are created
 
-	// ASSERT that tags are not duplicated
-	suite.Len(tags, 3)
+	suite.Len(tags, 3) // ASSERT that tags are not duplicated
 
 }
