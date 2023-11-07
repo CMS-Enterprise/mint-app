@@ -24,7 +24,7 @@ type MultiSelectOptionProps = {
 const selectedContainsNonCMS = (
   selectedUsers: MultiSelectOptionProps[]
 ): boolean => {
-  return !!selectedUsers.find(user => !user.email?.includes('cms.gov'));
+  return !!selectedUsers.find(user => !user.email?.includes('cms.hhs.gov'));
 };
 
 /**
