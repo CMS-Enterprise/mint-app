@@ -113,6 +113,7 @@ const ModelPlansTable = ({
       'modelName',
       'abbreviation',
       'amsModelID',
+      'demoCode',
       'modelCategory',
       'status',
       'clearanceDate',
