@@ -21,7 +21,7 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
   useEffect(() => {
     if (data) {
       ReactGA.set({
-        userId: data.currentUser.launchDarkly.signedHash
+        userId: data.currentUser.launchDarkly.userKey
       });
 
       (async () => {
