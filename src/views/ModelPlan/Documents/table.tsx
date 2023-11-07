@@ -517,7 +517,7 @@ export const Table = ({
                     }}
                   >
                     <button
-                      className="usa-button usa-button--unstyled"
+                      className="usa-button usa-button--unstyled position-relative"
                       type="button"
                       {...column.getSortByToggleProps()}
                     >

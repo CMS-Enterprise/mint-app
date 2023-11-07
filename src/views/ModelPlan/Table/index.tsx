@@ -543,9 +543,12 @@ const ModelPlansTable = ({
                     }
                   >
                     <button
-                      className={classNames('usa-button usa-button--unstyled', {
-                        'margin-top-1': index === 0
-                      })}
+                      className={classNames(
+                        'usa-button usa-button--unstyled position-relative',
+                        {
+                          'margin-top-1': index === 0
+                        }
+                      )}
                       type="button"
                       {...column.getSortByToggleProps()}
                     >
