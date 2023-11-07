@@ -44,9 +44,6 @@ const CustomMention = Mention.extend({
       ...this.parent?.(),
       'data-id-db': {
         default: ''
-      },
-      email: {
-        default: ''
       }
     };
   },
@@ -93,8 +90,7 @@ const MentionTextArea = ({
           res?.data?.searchOktaUsers?.map(user => {
             return {
               username: user.username,
-              displayName: `${user.displayName} (${user.username})`,
-              email: user.email
+              displayName: `${user.displayName} (${user.username})`
             };
           }) || []
         ).concat(formatedSolutionMentions(query)),
