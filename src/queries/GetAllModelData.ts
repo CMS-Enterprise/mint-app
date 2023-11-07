@@ -365,7 +365,9 @@ export default gql`
       }
       discussions {
         id
-        content
+        content {
+          rawContent
+        }
         createdByUserAccount {
           commonName
         }
@@ -375,7 +377,9 @@ export default gql`
         replies {
           id
           discussionID
-          content
+          content {
+            rawContent
+          }
           createdByUserAccount {
             commonName
           }

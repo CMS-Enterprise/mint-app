@@ -38,13 +38,17 @@ export default gql`
       }
       discussions {
         id
-        content
+        content {
+          rawContent
+        }
         createdBy
         createdDts
         replies {
           id
           discussionID
-          content
+          content {
+            rawContent
+          }
           createdBy
           createdDts
         }

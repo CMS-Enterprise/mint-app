@@ -5,7 +5,9 @@ export default gql`
     createDiscussionReply(input: $input) {
       id
       discussionID
-      content
+      content {
+        rawContent
+      }
       createdBy
       createdDts
     }

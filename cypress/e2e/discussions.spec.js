@@ -20,9 +20,9 @@ describe('Discussion Center', () => {
       .type('Designer')
       .should('have.value', 'Designer');
 
-    cy.get('#discussion-content')
+    cy.get('#mention-editor')
       .type('How to I get to model characteristics?')
-      .should('have.value', 'How to I get to model characteristics?');
+      .should('have.text', 'How to I get to model characteristics?');
 
     cy.contains('button', 'Save discussion').click();
 
@@ -41,11 +41,10 @@ describe('Discussion Center', () => {
 
     cy.contains('button', 'Save reply').should('be.disabled');
 
-    cy.get('#discussion-content')
-      .should('not.be.disabled')
+    cy.get('#mention-editor')
       .type('Model characteristics is located within the task list.')
       .should(
-        'have.value',
+        'have.text',
         'Model characteristics is located within the task list.'
       );
 

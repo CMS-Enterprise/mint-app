@@ -48,11 +48,21 @@ export interface GetModelPlan_modelPlan_crTdls {
   idNumber: string;
 }
 
+export interface GetModelPlan_modelPlan_discussions_content {
+  __typename: "TaggedHTML";
+  rawContent: string;
+}
+
+export interface GetModelPlan_modelPlan_discussions_replies_content {
+  __typename: "TaggedHTML";
+  rawContent: string;
+}
+
 export interface GetModelPlan_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: string | null;
+  content: GetModelPlan_modelPlan_discussions_replies_content | null;
   createdBy: UUID;
   createdDts: Time;
 }
@@ -60,7 +70,7 @@ export interface GetModelPlan_modelPlan_discussions_replies {
 export interface GetModelPlan_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: string | null;
+  content: GetModelPlan_modelPlan_discussions_content | null;
   createdBy: UUID;
   createdDts: Time;
   replies: GetModelPlan_modelPlan_discussions_replies[];

@@ -18,7 +18,9 @@ const discussionResult = {
       {
         __typename: 'PlanDiscussion',
         id: '123',
-        content: 'This is a question.',
+        content: {
+          rawContent: 'This is a question.'
+        },
         createdBy: 'John Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
         replies: []
@@ -26,7 +28,9 @@ const discussionResult = {
       {
         __typename: 'PlanDiscussion',
         id: '456',
-        content: 'This is a second question.',
+        content: {
+          rawContent: 'This is a second question.'
+        },
         createdBy: 'Jane Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
         replies: [
@@ -34,7 +38,9 @@ const discussionResult = {
             __typename: 'DiscussionReply',
             discussionID: '456',
             id: 'abc',
-            content: 'This is an answer.',
+            content: {
+              rawContent: 'This is an answer.'
+            },
             createdBy: 'Jack Doe',
             createdDts: '2022-05-12T15:01:39.190679Z'
           }
