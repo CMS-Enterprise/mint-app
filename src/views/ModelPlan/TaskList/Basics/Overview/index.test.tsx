@@ -2,8 +2,11 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import GetOverview from 'gql/apolloGQL/Basics/GetOverview';
-import { GetOverviewQuery, ModelType } from 'gql/gen/graphql';
+import {
+  GetOverviewDocument,
+  GetOverviewQuery,
+  ModelType
+} from 'gql/gen/graphql';
 
 import Overview from './index';
 
@@ -22,7 +25,7 @@ const overviewMockData: GetOverviewType = {
 const mocks = [
   {
     request: {
-      query: GetOverview,
+      query: GetOverviewDocument,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {

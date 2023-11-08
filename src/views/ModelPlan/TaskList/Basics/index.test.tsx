@@ -2,10 +2,10 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import GetBasics from 'gql/apolloGQL/Basics/GetBasics';
 import {
   CmmiGroup,
   CmsCenter,
+  GetBasicsDocument,
   GetBasicsQuery,
   ModelCategory
 } from 'gql/gen/graphql';
@@ -40,7 +40,7 @@ const basicMockData: GetModelPlanInfoType = {
 const mocks = [
   {
     request: {
-      query: GetBasics,
+      query: GetBasicsDocument,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {

@@ -2,8 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import GetMilestones from 'gql/apolloGQL/Basics/GetMilestones';
-import { GetMilestonesQuery } from 'gql/gen/graphql';
+import { GetMilestonesDocument, GetMilestonesQuery } from 'gql/gen/graphql';
 
 import { TaskStatus } from 'types/graphql-global-types';
 
@@ -38,7 +37,7 @@ const milestonesMockData: GetMilestonesType = {
 const mocks = [
   {
     request: {
-      query: GetMilestones,
+      query: GetMilestonesDocument,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {
