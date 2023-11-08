@@ -61,7 +61,7 @@ type ResolverRoot interface {
 	Query() QueryResolver
 	Subscription() SubscriptionResolver
 	Tag() TagResolver
-	TaggedHTML() TaggedHTMLResolver
+	TaggedContent() TaggedContentResolver
 }
 
 type DirectiveRoot struct {
@@ -910,7 +910,7 @@ type ComplexityRoot struct {
 		TaggedField           func(childComplexity int) int
 	}
 
-	TaggedHTML struct {
+	TaggedContent struct {
 		RawContent func(childComplexity int) int
 		Tags       func(childComplexity int) int
 	}
@@ -954,7 +954,7 @@ type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
 type DiscussionReplyResolver interface {
-	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedHTML, error)
+	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error)
 }
 type ExistingModelLinkResolver interface {
 	ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error)
@@ -1039,7 +1039,7 @@ type PlanBeneficiariesResolver interface {
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
 }
 type PlanDiscussionResolver interface {
-	Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedHTML, error)
+	Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedContent, error)
 
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
 }
@@ -1158,8 +1158,8 @@ type SubscriptionResolver interface {
 type TagResolver interface {
 	Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error)
 }
-type TaggedHTMLResolver interface {
-	RawContent(ctx context.Context, obj *models.TaggedHTML) (string, error)
+type TaggedContentResolver interface {
+	RawContent(ctx context.Context, obj *models.TaggedContent) (string, error)
 }
 
 type executableSchema struct {
@@ -6570,19 +6570,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.TaggedField(childComplexity), true
 
-	case "TaggedHTML.rawContent":
-		if e.complexity.TaggedHTML.RawContent == nil {
+	case "TaggedContent.rawContent":
+		if e.complexity.TaggedContent.RawContent == nil {
 			break
 		}
 
-		return e.complexity.TaggedHTML.RawContent(childComplexity), true
+		return e.complexity.TaggedContent.RawContent(childComplexity), true
 
-	case "TaggedHTML.tags":
-		if e.complexity.TaggedHTML.Tags == nil {
+	case "TaggedContent.tags":
+		if e.complexity.TaggedContent.Tags == nil {
 			break
 		}
 
-		return e.complexity.TaggedHTML.Tags(childComplexity), true
+		return e.complexity.TaggedContent.Tags(childComplexity), true
 
 	case "TaskListSectionLockStatus.isAssessment":
 		if e.complexity.TaskListSectionLockStatus.IsAssessment == nil {
@@ -7295,7 +7295,7 @@ union TaggedEntity =  UserAccount | PossibleOperationalSolution
 """
 TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
 """
-type TaggedHTML {
+type TaggedContent {
   """
   RawContent is HTML. It is sanitized on the backend
   """
@@ -7336,7 +7336,7 @@ PlanDiscussion represents plan discussion
 type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
-	content: TaggedHTML
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   replies: [DiscussionReply!]!
@@ -7368,7 +7368,7 @@ DiscussionReply represents a discussion reply
 type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
-	content: TaggedHTML
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   isAssessment: Boolean!
@@ -11961,9 +11961,9 @@ func (ec *executionContext) _DiscussionReply_content(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.TaggedHTML)
+	res := resTmp.(*models.TaggedContent)
 	fc.Result = res
-	return ec.marshalOTaggedHTML2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, field.Selections, res)
+	return ec.marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11975,11 +11975,11 @@ func (ec *executionContext) fieldContext_DiscussionReply_content(ctx context.Con
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "rawContent":
-				return ec.fieldContext_TaggedHTML_rawContent(ctx, field)
+				return ec.fieldContext_TaggedContent_rawContent(ctx, field)
 			case "tags":
-				return ec.fieldContext_TaggedHTML_tags(ctx, field)
+				return ec.fieldContext_TaggedContent_tags(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type TaggedHTML", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type TaggedContent", field.Name)
 		},
 	}
 	return fc, nil
@@ -27890,9 +27890,9 @@ func (ec *executionContext) _PlanDiscussion_content(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.TaggedHTML)
+	res := resTmp.(*models.TaggedContent)
 	fc.Result = res
-	return ec.marshalOTaggedHTML2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, field.Selections, res)
+	return ec.marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -27904,11 +27904,11 @@ func (ec *executionContext) fieldContext_PlanDiscussion_content(ctx context.Cont
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "rawContent":
-				return ec.fieldContext_TaggedHTML_rawContent(ctx, field)
+				return ec.fieldContext_TaggedContent_rawContent(ctx, field)
 			case "tags":
-				return ec.fieldContext_TaggedHTML_tags(ctx, field)
+				return ec.fieldContext_TaggedContent_tags(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type TaggedHTML", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type TaggedContent", field.Name)
 		},
 	}
 	return fc, nil
@@ -48591,8 +48591,8 @@ func (ec *executionContext) fieldContext_Tag_modifiedDts(ctx context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedHTML_rawContent(ctx context.Context, field graphql.CollectedField, obj *models.TaggedHTML) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TaggedHTML_rawContent(ctx, field)
+func (ec *executionContext) _TaggedContent_rawContent(ctx context.Context, field graphql.CollectedField, obj *models.TaggedContent) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedContent_rawContent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -48605,7 +48605,7 @@ func (ec *executionContext) _TaggedHTML_rawContent(ctx context.Context, field gr
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.TaggedHTML().RawContent(rctx, obj)
+		return ec.resolvers.TaggedContent().RawContent(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -48622,9 +48622,9 @@ func (ec *executionContext) _TaggedHTML_rawContent(ctx context.Context, field gr
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TaggedHTML_rawContent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TaggedContent_rawContent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "TaggedHTML",
+		Object:     "TaggedContent",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -48635,8 +48635,8 @@ func (ec *executionContext) fieldContext_TaggedHTML_rawContent(ctx context.Conte
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedHTML_tags(ctx context.Context, field graphql.CollectedField, obj *models.TaggedHTML) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TaggedHTML_tags(ctx, field)
+func (ec *executionContext) _TaggedContent_tags(ctx context.Context, field graphql.CollectedField, obj *models.TaggedContent) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedContent_tags(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -48666,9 +48666,9 @@ func (ec *executionContext) _TaggedHTML_tags(ctx context.Context, field graphql.
 	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TaggedHTML_tags(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TaggedContent_tags(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "TaggedHTML",
+		Object:     "TaggedContent",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -60468,17 +60468,17 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 	return out
 }
 
-var taggedHTMLImplementors = []string{"TaggedHTML"}
+var taggedContentImplementors = []string{"TaggedContent"}
 
-func (ec *executionContext) _TaggedHTML(ctx context.Context, sel ast.SelectionSet, obj *models.TaggedHTML) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, taggedHTMLImplementors)
+func (ec *executionContext) _TaggedContent(ctx context.Context, sel ast.SelectionSet, obj *models.TaggedContent) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, taggedContentImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("TaggedHTML")
+			out.Values[i] = graphql.MarshalString("TaggedContent")
 		case "rawContent":
 			field := field
 
@@ -60488,7 +60488,7 @@ func (ec *executionContext) _TaggedHTML(ctx context.Context, sel ast.SelectionSe
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._TaggedHTML_rawContent(ctx, field, obj)
+				res = ec._TaggedContent_rawContent(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -60516,7 +60516,7 @@ func (ec *executionContext) _TaggedHTML(ctx context.Context, sel ast.SelectionSe
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "tags":
-			out.Values[i] = ec._TaggedHTML_tags(ctx, field, obj)
+			out.Values[i] = ec._TaggedContent_tags(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -68969,18 +68969,18 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
+func (ec *executionContext) marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx context.Context, sel ast.SelectionSet, v *models.TaggedContent) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._TaggedContent(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalOTaggedEntity2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedEntity(ctx context.Context, sel ast.SelectionSet, v models.TaggedEntity) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._TaggedEntity(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOTaggedHTML2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx context.Context, sel ast.SelectionSet, v *models.TaggedHTML) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._TaggedHTML(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, v interface{}) (models.TaskListSection, error) {

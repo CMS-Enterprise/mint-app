@@ -22,8 +22,8 @@ const mentionTagTemplate = `<span data-type="mention" tag-type="{{.Type}}" class
 	`{{if .EntityDB}}data-id-db="{{.EntityDB}}" {{end}}` +
 	`data-label="{{.DataLabel}}">{{.InnerHTML}}</span>`
 
-// TaggedHTML represents rich text HTML with possible tagged HTML mention
-type TaggedHTML struct {
+// TaggedContent represents rich text HTML with possible tagged HTML mention
+type TaggedContent struct {
 	RawContent html
 	Mentions   []*HTMLMention
 	Tags       []*Tag
@@ -43,11 +43,11 @@ type HTMLMention struct {
 }
 
 // TaggedHTMLInput Is the input type for HTML that could contain tags
-type TaggedHTMLInput TaggedHTML
+type TaggedHTMLInput TaggedContent
 
-// ToTaggedHTML casts the input to TaggedHTML
-func (thi TaggedHTMLInput) ToTaggedHTML() TaggedHTML {
-	return TaggedHTML(thi)
+// ToTaggedContent casts the input to TaggedContent
+func (thi TaggedHTMLInput) ToTaggedContent() TaggedContent {
+	return TaggedContent(thi)
 }
 
 // TODO: can we represent this as the same as the output struct?
@@ -61,7 +61,7 @@ func (thi *TaggedHTMLInput) UnmarshalGQLContext(ctx context.Context, v interface
 
 	// Sanitize the HTML string
 	sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
-	th, err := NewTaggedHTMLFromString(sanitizedHTMLString)
+	th, err := NewTaggedContentFromString(sanitizedHTMLString)
 	if err != nil {
 		return err
 	}
@@ -89,10 +89,10 @@ func (thi TaggedHTMLInput) MarshalGQLContext(ctx context.Context, w io.Writer) e
 	return nil
 }
 
-// NewTaggedHTMLFromString converts a rawString into TaggedHTMl. It will store the input string as the raw content, and then sanitize and parse the input.
-func NewTaggedHTMLFromString(htmlString string) (TaggedHTML, error) {
+// NewTaggedContentFromString converts a rawString into TaggedHTMl. It will store the input string as the raw content, and then sanitize and parse the input.
+func NewTaggedContentFromString(htmlString string) (TaggedContent, error) {
 	sanitized := sanitization.SanitizeHTML(htmlString)
-	th := TaggedHTML{
+	th := TaggedContent{
 		RawContent: html(sanitized),
 	}
 	// mentions, err := htmlMentionsFromString(sanitized)
@@ -265,19 +265,19 @@ func TagArrayFromHTMLMentions(taggedField string, taggedTable string, taggedCont
 }
 
 // Scan is used by sql.scan to read the values from the DB
-func (th *TaggedHTML) Scan(src interface{}) error {
+func (th *TaggedContent) Scan(src interface{}) error {
 
 	switch src := src.(type) {
 	case string:
 		rawContent := string(src)
-		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err
 		}
 		*th = tagHTML
 	case []byte:
 		rawContent := string(src)
-		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err
 		}
@@ -290,7 +290,7 @@ func (th *TaggedHTML) Scan(src interface{}) error {
 }
 
 // Value implements the driver.Valuer interface. This is called when a TaggedString is being written to the database
-func (th TaggedHTML) Value() (driver.Value, error) {
+func (th TaggedContent) Value() (driver.Value, error) {
 	// Return the RawContent field as a value
 	return string(th.RawContent), nil
 }
@@ -301,14 +301,14 @@ func (thi *TaggedHTMLInput) Scan(src interface{}) error {
 	switch src := src.(type) {
 	case string:
 		rawContent := string(src)
-		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err
 		}
 		*thi = TaggedHTMLInput(tagHTML)
 	case []byte:
 		rawContent := string(src)
-		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err
 		}

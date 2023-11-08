@@ -284,7 +284,7 @@ export type DateHistogramAggregationBucket = {
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
   __typename: 'DiscussionReply';
-  content?: Maybe<TaggedHtml>;
+  content?: Maybe<TaggedContent>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1364,7 +1364,7 @@ export type PlanCrTdlCreateInput = {
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
   __typename: 'PlanDiscussion';
-  content?: Maybe<TaggedHtml>;
+  content?: Maybe<TaggedContent>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -2483,16 +2483,16 @@ export enum TagType {
   USER_ACCOUNT = 'USER_ACCOUNT'
 }
 
-/** TaggedEntity is the actual object represented by a tag in the data base. */
-export type TaggedEntity = PossibleOperationalSolution | UserAccount;
-
 /** TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags */
-export type TaggedHtml = {
-  __typename: 'TaggedHTML';
+export type TaggedContent = {
+  __typename: 'TaggedContent';
   /** RawContent is HTML. It is sanitized on the backend */
   rawContent: Scalars['String']['output'];
   tags: Array<Tag>;
 };
+
+/** TaggedEntity is the actual object represented by a tag in the data base. */
+export type TaggedEntity = PossibleOperationalSolution | UserAccount;
 
 export enum TaskListSection {
   BASICS = 'BASICS',

@@ -420,7 +420,7 @@ union TaggedEntity =  UserAccount | PossibleOperationalSolution
 """
 TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
 """
-type TaggedHTML {
+type TaggedContent {
   """
   RawContent is HTML. It is sanitized on the backend
   """
@@ -461,7 +461,7 @@ PlanDiscussion represents plan discussion
 type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
-	content: TaggedHTML
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   replies: [DiscussionReply!]!
@@ -493,7 +493,7 @@ DiscussionReply represents a discussion reply
 type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
-	content: TaggedHTML
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   isAssessment: Boolean!

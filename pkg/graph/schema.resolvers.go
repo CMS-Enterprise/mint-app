@@ -26,9 +26,9 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 }
 
 // Content is the resolver for the content field.
-func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedHTML, error) {
+func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.TaggedHTMLGet(logger, r.store, string(obj.Content.RawContent), "discussion_reply", "content", obj.ID)
+	return resolvers.TaggedContentGet(logger, r.store, string(obj.Content.RawContent), "discussion_reply", "content", obj.ID)
 }
 
 // ExistingModel is the resolver for the existingModel field.
@@ -530,9 +530,9 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 }
 
 // Content is the resolver for the content field.
-func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedHTML, error) {
+func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedContent, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.TaggedHTMLGet(logger, r.store, string(obj.Content.RawContent), "plan_discussion", "content", obj.ID)
+	return resolvers.TaggedContentGet(logger, r.store, string(obj.Content.RawContent), "plan_discussion", "content", obj.ID)
 }
 
 // Replies is the resolver for the replies field.
@@ -962,7 +962,7 @@ func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.Tagge
 }
 
 // RawContent is the resolver for the rawContent field.
-func (r *taggedHTMLResolver) RawContent(ctx context.Context, obj *models.TaggedHTML) (string, error) {
+func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.TaggedContent) (string, error) {
 	return obj.RawContent.String(), nil
 }
 
@@ -1048,8 +1048,8 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 // Tag returns generated.TagResolver implementation.
 func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
 
-// TaggedHTML returns generated.TaggedHTMLResolver implementation.
-func (r *Resolver) TaggedHTML() generated.TaggedHTMLResolver { return &taggedHTMLResolver{r} }
+// TaggedContent returns generated.TaggedContentResolver implementation.
+func (r *Resolver) TaggedContent() generated.TaggedContentResolver { return &taggedContentResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }
@@ -1071,35 +1071,4 @@ type possibleOperationalSolutionResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
-type taggedHTMLResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
-}
-func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.DeletePlanDiscussion(logger, id, principal, r.store)
-}
-func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
-}
-func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
-}
+type taggedContentResolver struct{ *Resolver }

@@ -20,12 +20,12 @@ import (
 func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
 
-	taggedHTMLContent, err := models.NewTaggedHTMLFromString("This is a test comment")
-	taggedHTMLContent.Tags = []*models.Tag{}
+	taggedContent, err := models.NewTaggedContentFromString("This is a test comment")
+	taggedContent.Tags = []*models.Tag{}
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedHTMLContent),
+		Content:             models.TaggedHTMLInput(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -53,12 +53,12 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	plan := suite.createModelPlan("Test Plan")
 
-	taggedHTML, err := models.NewTaggedHTMLFromString("This is a test comment")
-	taggedHTML.Tags = []*models.Tag{}
+	taggedContent, err := models.NewTaggedContentFromString("This is a test comment")
+	taggedContent.Tags = []*models.Tag{}
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedHTML),
+		Content:             models.TaggedHTMLInput(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -89,12 +89,12 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() {
 	plan := suite.createModelPlan("Test Plan")
 	userRole := models.DiscussionRoleCmsSystemServiceTeam
-	taggedHTML, err := models.NewTaggedHTMLFromString("This is a CMS_SYSTEM_SERVICE_TEAM test comment")
+	taggedContent, err := models.NewTaggedContentFromString("This is a CMS_SYSTEM_SERVICE_TEAM test comment")
 	suite.NoError(err)
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedHTML),
+		Content:             models.TaggedHTMLInput(taggedContent),
 		UserRole:            &userRole,
 		UserRoleDescription: nil, // Description not provided for CMS_SYSTEM_SERVICE_TEAM role
 	}
@@ -125,12 +125,12 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 	plan := suite.createModelPlan("Test Plan")
 	userRole := models.DiscussionRoleNoneOfTheAbove
 
-	taggedHTML, err := models.NewTaggedHTMLFromString("This is a NONE_OF_THE_ABOVE test comment")
+	taggedContent, err := models.NewTaggedContentFromString("This is a NONE_OF_THE_ABOVE test comment")
 	suite.NoError(err)
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedHTML),
+		Content:             models.TaggedHTMLInput(taggedContent),
 		UserRole:            &userRole,
 		UserRoleDescription: nil, // Description not provided for NONE_OF_THE_ABOVE role
 	}
@@ -153,12 +153,12 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 
 func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 	plan := suite.createModelPlan("Test Plan")
-	taggedHTML, err := models.NewTaggedHTMLFromString("This is a test comment")
+	taggedContent, err := models.NewTaggedContentFromString("This is a test comment")
 	suite.NoError(err)
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedHTML),
+		Content:             models.TaggedHTMLInput(taggedContent),
 		UserRole:            nil, // Role not provided
 		UserRoleDescription: nil, // Description not provided
 	}
@@ -181,11 +181,11 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	tHTML, err := models.NewTaggedHTMLFromString("This is now updated! Thanks for looking at my test")
+	taggedContent, err := models.NewTaggedContentFromString("This is now updated! Thanks for looking at my test")
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"content": models.TaggedHTMLInput(tHTML),
+		"content": models.TaggedHTMLInput(taggedContent),
 	}
 	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
@@ -224,13 +224,13 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
-	taggedHTML, err := models.NewTaggedHTMLFromString("This is a test reply")
-	taggedHTML.Tags = []*models.Tag{}
+	taggedContent, err := models.NewTaggedContentFromString("This is a test reply")
+	taggedContent.Tags = []*models.Tag{}
 	suite.NoError(err)
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
-		Content:             models.TaggedHTMLInput(taggedHTML),
+		Content:             models.TaggedHTMLInput(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
@@ -247,13 +247,13 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
-	taggedHTML, err := models.NewTaggedHTMLFromString("This is a test reply")
-	taggedHTML.Tags = []*models.Tag{}
+	taggedContent, err := models.NewTaggedContentFromString("This is a test reply")
+	taggedContent.Tags = []*models.Tag{}
 	suite.NoError(err)
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
-		Content:             models.TaggedHTMLInput(taggedHTML),
+		Content:             models.TaggedHTMLInput(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
@@ -275,11 +275,11 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	reply := suite.createDiscussionReply(discussion, "This is a test reply")
 	assert.Nil(suite.T(), reply.ModifiedBy)
 	assert.Nil(suite.T(), reply.ModifiedDts)
-	tHTML, err := models.NewTaggedHTMLFromString("This is now updated! Thanks for looking at my test")
+	taggedContent, err := models.NewTaggedContentFromString("This is now updated! Thanks for looking at my test")
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"content": models.TaggedHTMLInput(tHTML),
+		"content": models.TaggedHTMLInput(taggedContent),
 	}
 
 	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)

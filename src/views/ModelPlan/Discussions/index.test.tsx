@@ -25,7 +25,7 @@ const discussionResult: GetModelPlanDiscussionsType = {
         __typename: 'PlanDiscussion',
         id: '123',
         content: {
-          __typename: 'TaggedHTML',
+          __typename: 'TaggedContent',
           rawContent: 'This is a question.'
         },
         createdBy: 'TIDA',
@@ -43,7 +43,7 @@ const discussionResult: GetModelPlanDiscussionsType = {
         __typename: 'PlanDiscussion',
         id: '456',
         content: {
-          __typename: 'TaggedHTML',
+          __typename: 'TaggedContent',
           rawContent: 'This is a second question.'
         },
         createdBy: 'JFCS',
@@ -61,7 +61,7 @@ const discussionResult: GetModelPlanDiscussionsType = {
             discussionID: '456',
             id: 'abc',
             content: {
-              __typename: 'TaggedHTML',
+              __typename: 'TaggedContent',
               rawContent: 'This is an answer.'
             },
             userRole: DiscussionUserRole.LEADERSHIP,

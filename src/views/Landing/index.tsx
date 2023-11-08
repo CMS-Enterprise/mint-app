@@ -320,7 +320,7 @@ const DiscussionCard = () => {
     {
       id: 'c5960290-81b2-4303-8249-84d334de56b3',
       content: {
-        __typename: 'TaggedHTML',
+        __typename: 'TaggedContent',
         rawContent:
           'When should we submit an onboarding request to use Salesforce?'
       },
@@ -338,7 +338,7 @@ const DiscussionCard = () => {
           id: 'f2ac7d06-de24-4960-83fe-0dd8ed2b526f',
           discussionID: 'c5960290-81b2-4303-8249-84d334de56b3',
           content: {
-            __typename: 'TaggedHTML',
+            __typename: 'TaggedContent',
             rawContent:
               'You should submit an onboarding request as soon as your team has a sense of what direction you want for IT support.'
           },

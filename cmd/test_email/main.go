@@ -93,14 +93,14 @@ func sendPlanDiscussionCreatedTestEmail(
 
 	content := "Test Content for Plan Discussion, check out this tag  " + tag1 + "!  BTW, here is a list of solutions <ul><li>" + tag2 + "</li><li>" + tag3 + "</li></ul>"
 
-	taggedHTML, err := models.NewTaggedHTMLFromString(content)
+	taggedContent, err := models.NewTaggedContentFromString(content)
 	noErr(err)
 
 	planDiscussion := models.NewPlanDiscussion(
 		uuid.Nil,
 		false,
 		uuid.Nil,
-		models.TaggedHTMLInput(taggedHTML),
+		models.TaggedHTMLInput(taggedContent),
 		&discussionUserRole,
 		models.StringPointer("Test User Role Description"),
 	)

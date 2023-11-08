@@ -17,15 +17,15 @@ import (
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
-// TaggedHTMLGet returns the tag content of a parent object
-func TaggedHTMLGet(
+// TaggedContentGet returns the tag content of a parent object
+func TaggedContentGet(
 	logger *zap.Logger,
 	store *storage.Store,
 	rawContent string, // if desired, we could get this from the database as well
 	taggedTable string,
 	taggedField string,
-	taggedContentID uuid.UUID) (*models.TaggedHTML, error) {
-	taggedHTML, err := models.NewTaggedHTMLFromString(rawContent)
+	taggedContentID uuid.UUID) (*models.TaggedContent, error) {
+	taggedHTML, err := models.NewTaggedContentFromString(rawContent)
 	if err != nil {
 		return nil, err
 	}
