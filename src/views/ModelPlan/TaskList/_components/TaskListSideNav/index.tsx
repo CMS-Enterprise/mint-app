@@ -114,7 +114,7 @@ const TaskListSideNav = ({
       <Modal
         isOpen={isExportModalOpen}
         closeModal={() => setIsExportModalOpen(false)}
-        className="padding-0 radius-md"
+        className="padding-0 radius-md share-export-modal__container"
         navigation
         shouldCloseOnOverlayClick
       >
