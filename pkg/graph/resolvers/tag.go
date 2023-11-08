@@ -25,7 +25,7 @@ func TaggedContentGet(
 	taggedTable string,
 	taggedField string,
 	taggedContentID uuid.UUID) (*models.TaggedContent, error) {
-	taggedHTML, err := models.NewTaggedContentFromString(rawContent)
+	taggedContent, err := models.NewTaggedContentFromString(rawContent)
 	if err != nil {
 		return nil, err
 	}
@@ -34,9 +34,9 @@ func TaggedContentGet(
 	if err != nil {
 		return nil, err
 	}
-	taggedHTML.Tags = tags
+	taggedContent.Tags = tags
 
-	return &taggedHTML, nil
+	return &taggedContent, nil
 
 }
 

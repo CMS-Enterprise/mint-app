@@ -36,17 +36,17 @@ func TestHTMLMentionFromString(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Len(t, taggedContent.Mentions, 3)
 
-	taggedHTML1 := taggedContent.Mentions[0]
-	taggedHTML2 := taggedContent.Mentions[1]
-	taggedHTML3 := taggedContent.Mentions[2]
-	assert.EqualValues(t, tag1EUA, taggedHTML1.EntityRaw)
-	assert.EqualValues(t, tag1Label, taggedHTML1.DataLabel)
-	assert.EqualValues(t, tag1Type, taggedHTML1.Type)
-	assert.EqualValues(t, tag2EUA, taggedHTML2.EntityRaw)
-	assert.EqualValues(t, tag2Label, taggedHTML2.DataLabel)
-	assert.EqualValues(t, tag2Type, taggedHTML2.Type)
+	mention1 := taggedContent.Mentions[0]
+	mention2 := taggedContent.Mentions[1]
+	mention3 := taggedContent.Mentions[2]
+	assert.EqualValues(t, tag1EUA, mention1.EntityRaw)
+	assert.EqualValues(t, tag1Label, mention1.DataLabel)
+	assert.EqualValues(t, tag1Type, mention1.Type)
+	assert.EqualValues(t, tag2EUA, mention2.EntityRaw)
+	assert.EqualValues(t, tag2Label, mention2.DataLabel)
+	assert.EqualValues(t, tag2Type, mention2.Type)
 
-	assert.EqualValues(t, tag3ID, taggedHTML3.EntityRaw)
-	assert.EqualValues(t, tag3Label, taggedHTML3.DataLabel)
-	assert.EqualValues(t, tag3Type, taggedHTML3.Type)
+	assert.EqualValues(t, tag3ID, mention3.EntityRaw)
+	assert.EqualValues(t, tag3Label, mention3.DataLabel)
+	assert.EqualValues(t, tag3Type, mention3.Type)
 }

@@ -9,8 +9,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
-func (suite *ResolverSuite) TestTaggedHTMLGet() {
-	plan := suite.createModelPlan("Test Plan for TaggedHTML")
+func (suite *ResolverSuite) TestTaggedContentGet() {
+	plan := suite.createModelPlan("Test Plan for Tagged Content")
 	tag1EUA := "SKZO"
 	tag1Label := "Alexander Stark"
 	tag1Type := models.TagTypeUserAccount
@@ -28,7 +28,7 @@ func (suite *ResolverSuite) TestTaggedHTMLGet() {
 
 func (suite *ResolverSuite) TestTagCollectionGet() {
 	//TODO do we need to test this? It is done by the above test
-	plan := suite.createModelPlan("Test Plan for TaggedHTML")
+	plan := suite.createModelPlan("Test Plan for Tagged Content")
 	tag1EUA := "SKZO"
 	tag1Label := "Alexander Stark"
 	tag1Type := models.TagTypeUserAccount
