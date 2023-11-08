@@ -1,6 +1,6 @@
-import { graphql } from '../../gen/gql';
+import { gql } from '@apollo/client';
 
-const ReadyForReviewUserFragment = graphql(/* GraphQL */ `
+const ReadyForReviewUserFragment = gql(/* GraphQL */ `
   fragment ReadyForReviewUserFragment on UserAccount {
     id
     commonName
