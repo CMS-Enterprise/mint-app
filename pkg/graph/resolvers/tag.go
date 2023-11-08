@@ -86,40 +86,72 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 		// Conditionally set the entity DB by tag type
 		switch tagType {
 		case models.TagTypeUserAccount:
-			isMacUser := false
-			collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
+			err := processUserAccountHTMLMention(ctx, store, mention, getAccountInformation)
 			if err != nil {
-				return fmt.Errorf("unable to get tagged user account reference. error : %w", err)
+				return err
 			}
-			mention.EntityUUID = &collabAccount.ID
-			mention.EntityDB = mention.EntityUUID
 
 		case models.TagTypePossibleSolution:
-			logger := appcontext.ZLogger(ctx)
-
-			sol, err := store.PossibleOperationalSolutionGetByKey(logger, models.OperationalSolutionKey(mention.EntityRaw))
+			err := processPossibleSolutionHTMLMention(ctx, store, mention)
 			if err != nil {
-				return fmt.Errorf("unable to get tagged possible solution reference. error : %w", err)
+				return err
 			}
-			mention.EntityIntID = &sol.ID
-			mention.EntityDB = mention.EntityIntID
-		default:
-			return fmt.Errorf("could not set entity id because the tag type is invalid %s", tagType)
 		}
 
-		// Updated the parent Raw content with the new fields
-		newHTML, err := mention.ToHTML()
+		// Update the raw representation in the Tagged HTML and in the individual mention
+		err := updateMentionAndRawContent(mention, tHTML)
 		if err != nil {
-			return fmt.Errorf("unable to get transform the HTML mention into a string html representation. error : %w", err)
+			return err
 		}
-
-		// Update the Tagged HTML Raw content by replacing the tags old value, with the new representation
-		newTotalRaw := strings.Replace(string(tHTML.RawContent), string(mention.RawHTML), string(newHTML), -1)
-		tHTML.RawContent = models.HTML(newTotalRaw)
-
-		mention.RawHTML = newHTML
 	}
 
+	return nil
+}
+
+// Processes an HTML mention by getting User Account information from the DB for a mention that is of Tag Type UserAccount.
+func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, mention *models.HTMLMention, getAccountInformation userhelpers.GetAccountInfoFunc) error {
+	if mention.Type != models.TagTypeUserAccount {
+		return fmt.Errorf(" invalid operation. attempted to fetch user account information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
+	}
+	isMacUser := false
+	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
+	if err != nil {
+		return fmt.Errorf("unable to get tagged user account reference. error : %w", err)
+	}
+	mention.EntityUUID = &collabAccount.ID
+	mention.EntityDB = mention.EntityUUID
+	return nil
+}
+
+// Processes an HTML mention by getting Possible Solution information from the DB for a mention that is of  Tag Type  TagTypePossibleSolution.
+func processPossibleSolutionHTMLMention(ctx context.Context, store *storage.Store, mention *models.HTMLMention) error {
+	if mention.Type != models.TagTypePossibleSolution {
+		return fmt.Errorf(" invalid operation. attempted to fetch possible solution information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
+	}
+	logger := appcontext.ZLogger(ctx)
+	sol, err := store.PossibleOperationalSolutionGetByKey(logger, models.OperationalSolutionKey(mention.EntityRaw))
+	if err != nil {
+		return err
+	}
+	mention.EntityIntID = &sol.ID
+	mention.EntityDB = mention.EntityIntID
+	return nil
+}
+
+// updateMentionAndRawContent updates the string representation of a mention,
+// it then updates the Raw Content of the tagged HTML itself to replace the old representation of the mention with the new
+func updateMentionAndRawContent(mention *models.HTMLMention, tHTML *models.TaggedHTML) error {
+	// Updated the parent Raw content with the new fields
+	newHTML, err := mention.ToHTML()
+	if err != nil {
+		return fmt.Errorf("unable to transform the HTML mention into a string html representation. error : %w", err)
+	}
+
+	// Update the Tagged HTML Raw content by replacing the tags old value, with the new representation
+	newTotalRaw := strings.Replace(string(tHTML.RawContent), string(mention.RawHTML), string(newHTML), -1)
+	tHTML.RawContent = models.HTML(newTotalRaw)
+
+	mention.RawHTML = newHTML
 	return nil
 }
 

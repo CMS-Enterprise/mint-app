@@ -8,8 +8,7 @@ import (
 
 func TestExtractHTMLSpansRegex(t *testing.T) {
 	htmlMention := `<p>Hey <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type="mention" class="mention" data-id="TEST" data-label="Terry Thompson">@Terry Thompson</span> to let them know?</p>`
-	// htmlMention := `<p>Hey <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type="mention" class="mention" data-id="TEST" data-label="Terry Thompson">@Terry Thompson</span> to let them know?</p>`
-	mentionNodes, err := extractHTMLSpansRegex(htmlMention) //Can we just
+	mentionNodes, err := extractHTMLSpansRegex(htmlMention)
 	assert.NotNil(t, mentionNodes)
 	assert.NoError(t, err)
 
@@ -18,7 +17,6 @@ func TestExtractHTMLSpansRegex(t *testing.T) {
 }
 
 func TestHTMLMentionFromString(t *testing.T) {
-	// htmlMention := `<p>Hey <span data-type="mention" class="mention" data-id="SKZO" data-label="Alexander Stark">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type="mention" class="mention" data-id="TEST" data-label="Terry Thompson">@Terry Thompson</span> to let them know?</p>`
 	tag1EUA := "SKZO"
 	tag1Label := "Alexander Stark"
 	tag1Type := TagTypeUserAccount
