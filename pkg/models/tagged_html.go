@@ -54,7 +54,7 @@ func (th TaggedHTML) ToTaggedContent() TaggedContent {
 func (th *TaggedHTML) UnmarshalGQLContext(_ context.Context, v interface{}) error {
 	rawHTML, ok := v.(string)
 	if !ok {
-		return errors.New("invalid TaggedHTMLInput")
+		return errors.New("invalid TaggedHTML")
 	}
 
 	// Sanitize the HTML string
@@ -68,20 +68,20 @@ func (th *TaggedHTML) UnmarshalGQLContext(_ context.Context, v interface{}) erro
 
 }
 
-// MarshalGQLContext marshals the TaggedHTMLInput type to JSON to return to graphQL
+// MarshalGQLContext marshals the TaggedHTML type to JSON to return to graphQL
 func (th TaggedHTML) MarshalGQLContext(ctx context.Context, w io.Writer) error {
 	logger := appcontext.ZLogger(ctx)
 
-	// Marshal the TaggedHTMLInput value to JSON so that it's properly escaped (wrapped in quotation marks)
+	// Marshal the TaggedHTML value to JSON so that it's properly escaped (wrapped in quotation marks)
 	jsonValue, err := json.Marshal(th.RawContent)
 	if err != nil {
-		logger.Info("invalid TaggedHTMLInput")
-		return fmt.Errorf("failed to marshal TaggedHTMLInputto JSON: %w", err)
+		logger.Info("invalid TaggedHTML")
+		return fmt.Errorf("failed to marshal TaggedHTMLto JSON: %w", err)
 	}
-	// Write the JSON-encoded TaggedHTMLInput value to the writer
+	// Write the JSON-encoded TaggedHTML value to the writer
 	_, err = w.Write(jsonValue)
 	if err != nil {
-		return fmt.Errorf("failed to write TaggedHTMLInput to writer: %w", err)
+		return fmt.Errorf("failed to write TaggedHTML to writer: %w", err)
 	}
 
 	return nil
