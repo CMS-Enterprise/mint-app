@@ -814,3 +814,818 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
   </div>
 </DocumentFragment>
 `;
+
+exports[`Read Only Model Plan Summary -- Participants And Providers > matches snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--participants-and-providers"
+    data-testid="read-only-model-plan--participants-and-providers"
+  >
+    <div
+      class="display-flex flex-justify flex-align-start"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Participants and Providers
+      </h2>
+      <div>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--who-are-the-participants margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Who are the participants?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Medicaid providers
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              States
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              State Medicaid agencies
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul
+              data-testid="other-entry"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                This is the other
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Participant note
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--please-describe-how-states-will-engage-with-your-model margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Please describe how states will engage with your model.
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            State
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-the-participants-in-cmmi-models-now margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Are the participants in CMMI models now?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Parts in model
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--at-what-level-will-the-model-apply margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            At what level will the model apply?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            App level
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-many-participants-do-you-expect margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How many participants do you expect?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                0
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What is your level of confidence on this estimate?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Fairly confident
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Confidence note
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-will-you-recruit-the-participants margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How will you recruit the participants?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Not applicable
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Recruitment note
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-will-you-select-participants margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How will you select participants?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Use an application review and scoring tool
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Another CMS component or process will provide support
+            </li>
+          </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note selection
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-will-you-communicate-with-participants margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How will you communicate with participants?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Manage ongoing communications with participants using an IT tool
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Send mass emails to new participants
+            </li>
+          </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Comm note
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will the participants assume risk?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Yes
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What type of risk will the participant assume?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Capitation
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note risk
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-the-risk-arrangement-change-as-the-model-progresses margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will the risk arrangement change as the model progresses?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              My risk change ntoe
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-the-participants-coordinate-the-work-of-others margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will the participants coordinate the work of others?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Coornidate work note
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-there-be-gainsharing-payments margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will there be gainsharing payments?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Yes
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-you-track-gainsharing-payments margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will you track gainsharing payments?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Yes
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Track note
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-you-collect-participant-ids--if-so--select-which-types margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will you collect participant IDs? If so, select which types.
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              CCNs
+            </li>
+          </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note for particpants
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-frequently-are-providers-added margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How frequently are providers added?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Biannually
+          </p>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note freq
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-will-you-decide-to-add-providers margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            How will you decide to add providers?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Add retrospectively (once an interaction happens this year)
+            </li>
+          </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Add note
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--can-providers-leave-the-model margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Can providers leave the model?
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Not applicable
+            </li>
+          </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note leave
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-the-providers-overlap-with-other-models margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Will the providers overlap with other models?
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            No
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Overlap note
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
