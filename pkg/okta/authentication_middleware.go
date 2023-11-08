@@ -188,6 +188,15 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 		jcAssessment = false
 	}
 
+	// Fetch whether or not we should downgrade the non-CMS job code, and properly downgrade if necessary
+	downgradeNonCMS, err := f.ldClient.BoolVariation(flags.DowngradeNonCMSKey, ldUser, false)
+	if err != nil {
+		return nil, err
+	}
+	if downgradeNonCMS {
+		jcNonCMS = false
+	}
+
 	// oktaBaseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
 	userAccount, err := userhelpers.GetOrCreateUserAccount(
 		ctx,
