@@ -25,8 +25,8 @@ const mentionTagTemplate = `<span data-type="mention" tag-type="{{.Type}}" class
 // TaggedContent represents rich text HTML with possible tagged HTML mention
 type TaggedContent struct {
 	RawContent html
-	Mentions   []*HTMLMention
-	Tags       []*Tag
+	Mentions   []*HTMLMention // These are the parsed content of the HTML, and a representaton of how the data represented in an individual mention HTML tag
+	Tags       []*Tag         // Tag is a representation of a tag record in the database.
 }
 
 // HTMLMention represents Meta data about an entity tagged in text
@@ -42,18 +42,16 @@ type HTMLMention struct {
 	EntityDB    interface{} // This is for marshaliing to the template
 }
 
-// TaggedHTMLInput Is the input type for HTML that could contain tags
-type TaggedHTMLInput TaggedContent
+// TaggedHTML Is the input type for HTML that could contain tags
+type TaggedHTML TaggedContent
 
 // ToTaggedContent casts the input to TaggedContent
-func (thi TaggedHTMLInput) ToTaggedContent() TaggedContent {
-	return TaggedContent(thi)
+func (th TaggedHTML) ToTaggedContent() TaggedContent {
+	return TaggedContent(th)
 }
 
-// TODO: can we represent this as the same as the output struct?
-
-// UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTMLInput type
-func (thi *TaggedHTMLInput) UnmarshalGQLContext(ctx context.Context, v interface{}) error {
+// UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTML type
+func (th *TaggedHTML) UnmarshalGQLContext(_ context.Context, v interface{}) error {
 	rawHTML, ok := v.(string)
 	if !ok {
 		return errors.New("invalid TaggedHTMLInput")
@@ -61,21 +59,21 @@ func (thi *TaggedHTMLInput) UnmarshalGQLContext(ctx context.Context, v interface
 
 	// Sanitize the HTML string
 	sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
-	th, err := NewTaggedContentFromString(sanitizedHTMLString)
+	tc, err := NewTaggedContentFromString(sanitizedHTMLString)
 	if err != nil {
 		return err
 	}
-	*thi = TaggedHTMLInput(th)
+	*th = TaggedHTML(tc)
 	return nil
 
 }
 
 // MarshalGQLContext marshals the TaggedHTMLInput type to JSON to return to graphQL
-func (thi TaggedHTMLInput) MarshalGQLContext(ctx context.Context, w io.Writer) error {
+func (th TaggedHTML) MarshalGQLContext(ctx context.Context, w io.Writer) error {
 	logger := appcontext.ZLogger(ctx)
 
 	// Marshal the TaggedHTMLInput value to JSON so that it's properly escaped (wrapped in quotation marks)
-	jsonValue, err := json.Marshal(thi.RawContent)
+	jsonValue, err := json.Marshal(th.RawContent)
 	if err != nil {
 		logger.Info("invalid TaggedHTMLInput")
 		return fmt.Errorf("failed to marshal TaggedHTMLInputto JSON: %w", err)
@@ -92,22 +90,22 @@ func (thi TaggedHTMLInput) MarshalGQLContext(ctx context.Context, w io.Writer) e
 // NewTaggedContentFromString converts a rawString into TaggedHTMl. It will store the input string as the raw content, and then sanitize and parse the input.
 func NewTaggedContentFromString(htmlString string) (TaggedContent, error) {
 	sanitized := sanitization.SanitizeHTML(htmlString)
-	th := TaggedContent{
+	tc := TaggedContent{
 		RawContent: html(sanitized),
 	}
 	// mentions, err := htmlMentionsFromString(sanitized)
 	mentions, err := htmlMentionsFromStringRegex(sanitized)
 	if mentions != nil { //TODO: SW, you might not need to do a nil or len check, you might be able to just set it
 		if len(mentions) > 0 { // At least some mentions parsed correctly, so attach them to the Tagged HTML
-			th.Mentions = mentions
+			tc.Mentions = mentions
 		}
 	}
 	if err != nil {
-		return th, err //If the Mentions fail to parse, still return the main Tagged HTML
+		return tc, err //If the Mentions fail to parse, still return the main Tagged HTML
 	}
-	th.Mentions = mentions
+	tc.Mentions = mentions
 
-	return th, nil
+	return tc, nil
 
 }
 func htmlMentionsFromStringRegex(htmlString string) ([]*HTMLMention, error) {
@@ -289,14 +287,14 @@ func (th *TaggedContent) Scan(src interface{}) error {
 	return nil
 }
 
-// Value implements the driver.Valuer interface. This is called when a TaggedString is being written to the database
+// Value implements the driver.Valuer interface. This is called when  TaggedContent is being written to the database
 func (th TaggedContent) Value() (driver.Value, error) {
 	// Return the RawContent field as a value
 	return string(th.RawContent), nil
 }
 
 // Scan is used by sql.scan to read the values from the DB
-func (thi *TaggedHTMLInput) Scan(src interface{}) error {
+func (th *TaggedHTML) Scan(src interface{}) error {
 
 	switch src := src.(type) {
 	case string:
@@ -305,14 +303,14 @@ func (thi *TaggedHTMLInput) Scan(src interface{}) error {
 		if err != nil {
 			return err
 		}
-		*thi = TaggedHTMLInput(tagHTML)
+		*th = TaggedHTML(tagHTML)
 	case []byte:
 		rawContent := string(src)
 		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err
 		}
-		*thi = TaggedHTMLInput(tagHTML)
+		*th = TaggedHTML(tagHTML)
 	case nil:
 		return nil
 
@@ -320,8 +318,8 @@ func (thi *TaggedHTMLInput) Scan(src interface{}) error {
 	return nil
 }
 
-// Value implements the driver.Valuer interface. This is called when a TaggedString is being written to the database
-func (thi TaggedHTMLInput) Value() (driver.Value, error) {
+// Value implements the driver.Valuer interface. This is called when a TaggedHTML is being written to the database
+func (th TaggedHTML) Value() (driver.Value, error) {
 	// Return the RawContent field as a value
-	return string(thi.RawContent), nil
+	return string(th.RawContent), nil
 }

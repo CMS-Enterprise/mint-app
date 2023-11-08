@@ -25,7 +25,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -58,7 +58,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -94,7 +94,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() 
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            &userRole,
 		UserRoleDescription: nil, // Description not provided for CMS_SYSTEM_SERVICE_TEAM role
 	}
@@ -130,7 +130,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            &userRole,
 		UserRoleDescription: nil, // Description not provided for NONE_OF_THE_ABOVE role
 	}
@@ -158,7 +158,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            nil, // Role not provided
 		UserRoleDescription: nil, // Description not provided
 	}
@@ -185,7 +185,7 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"content": models.TaggedHTMLInput(taggedContent),
+		"content": models.TaggedHTML(taggedContent),
 	}
 	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
@@ -230,7 +230,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
@@ -253,7 +253,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
@@ -279,7 +279,7 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"content": models.TaggedHTMLInput(taggedContent),
+		"content": models.TaggedHTML(taggedContent),
 	}
 
 	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)

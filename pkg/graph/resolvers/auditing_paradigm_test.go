@@ -22,7 +22,7 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}

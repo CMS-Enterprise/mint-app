@@ -18,8 +18,8 @@ export type Scalars = {
   Any: { input: any; output: any; }
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: { input: any; output: any; }
-  /** TaggedHTMLInput represents an input typ for HTML that could also include  */
-  TaggedHTMLInput: { input: any; output: any; }
+  /** TaggedHTML represents an input type for HTML that could also include tags that reference another entity */
+  TaggedHTML: { input: any; output: any; }
   /** Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z */
   Time: { input: Time; output: Time; }
   /** UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A */
@@ -300,7 +300,7 @@ export type DiscussionReply = {
 
 /** DiscussionReplyCreateInput represents the necessary fields to create a discussion reply */
 export type DiscussionReplyCreateInput = {
-  content: Scalars['TaggedHTMLInput']['input'];
+  content: Scalars['TaggedHTML']['input'];
   discussionID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
@@ -1381,7 +1381,7 @@ export type PlanDiscussion = {
 
 /** PlanDiscussionCreateInput represents the necessary fields to create a plan discussion */
 export type PlanDiscussionCreateInput = {
-  content: Scalars['TaggedHTMLInput']['input'];
+  content: Scalars['TaggedHTML']['input'];
   modelPlanID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;

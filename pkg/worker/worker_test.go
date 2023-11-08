@@ -73,7 +73,7 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         mp.ID,
-		Content:             models.TaggedHTMLInput(taggedContent),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}

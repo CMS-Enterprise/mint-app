@@ -85,7 +85,7 @@ func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 	taggedContent, err := models.NewTaggedContentFromString(htmlMention)
 	suite.NoError(err)
 
-	input := models.TaggedHTMLInput(taggedContent)
+	input := models.TaggedHTML(taggedContent)
 
 	err = UpdateTaggedHTMLMentionsAndRawContent(suite.testConfigs.Context, suite.testConfigs.Store, &input, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
@@ -112,7 +112,7 @@ func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 
 	tHTML, err := models.NewTaggedContentFromString(tag4)
 	suite.NoError(err)
-	input2 := models.TaggedHTMLInput(tHTML)
+	input2 := models.TaggedHTML(tHTML)
 	err = UpdateTaggedHTMLMentionsAndRawContent(suite.testConfigs.Context, suite.testConfigs.Store, &input2, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.Len(input2.Mentions, 1)
@@ -138,7 +138,7 @@ func (suite *ResolverSuite) TestTagCollectionCreate() {
 	taggedContent, err := models.NewTaggedContentFromString(htmlMention)
 	suite.NoError(err)
 
-	input := models.TaggedHTMLInput(taggedContent)
+	input := models.TaggedHTML(taggedContent)
 
 	err = UpdateTaggedHTMLMentionsAndRawContent(suite.testConfigs.Context, suite.testConfigs.Store, &input, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
@@ -151,9 +151,13 @@ func (suite *ResolverSuite) TestTagCollectionCreate() {
 	var tx *sqlx.Tx
 
 	tags, tx2, err := TagCollectionCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, fieldName, tableName, taggedContentID, taggedContent.Mentions, tx)
+	defer tx2.Rollback()
 	suite.NotNil(tx2)
 	suite.NoError(err) //ASSERT Tags are created
 
 	suite.Len(tags, 3) // ASSERT that tags are not duplicated
+
+	err = tx2.Commit() // Commit the transaction for the sake of testing. Normally, this would be handled by whatever parent resolver creates the tags, so we simulate it here
+	suite.NoError(err)
 
 }

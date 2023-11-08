@@ -75,7 +75,7 @@ func TaggedEntityGet(
 
 // UpdateTaggedHTMLMentionsAndRawContent updates the tagged html with the correct entity ids, and updates the RAW HTMl with the new representation of the mentions
 // Both the raw content as well as the the individual mentions are updated as a result of this method
-func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTMLInput, getAccountInformation userhelpers.GetAccountInfoFunc) error {
+func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTML, getAccountInformation userhelpers.GetAccountInfoFunc) error {
 
 	for _, mention := range tHTML.Mentions {
 		if mention.EntityDB != nil && mention.EntityDB != "" { // Check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
@@ -135,11 +135,11 @@ func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal aut
 		return key
 	})
 
-	retTags, _, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID, tx) // Note, this will fail if any tag is invalid.
+	retTags, tx2, err := store.TagCollectionCreate(logger, uniqTags, principal.Account().ID, tx) // Note, this will fail if any tag is invalid.
 	if err != nil {
 		return nil, tx, err
 	}
-	return retTags, tx, nil
+	return retTags, tx2, nil
 	//TODO: EASI-3288 send an email to tagged individuals
 
 }

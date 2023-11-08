@@ -6908,9 +6908,9 @@ Any represents any GraphQL value.
 scalar Any
 
 """
-TaggedHTMLInput represents an input typ for HTML that could also include 
+TaggedHTML represents an input type for HTML that could also include tags that reference another entity
 """
-scalar TaggedHTMLInput
+scalar TaggedHTML
 
 enum SortDirection {
   ASC
@@ -7356,7 +7356,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
-  content: TaggedHTMLInput!
+  content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -7386,7 +7386,7 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 """
 input DiscussionReplyCreateInput {
   discussionID: UUID!
-  content: TaggedHTMLInput!
+  content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -51579,7 +51579,7 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			data, err := ec.unmarshalNTaggedHTMLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx, v)
+			data, err := ec.unmarshalNTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -51785,7 +51785,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			data, err := ec.unmarshalNTaggedHTMLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx, v)
+			data, err := ec.unmarshalNTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -65298,13 +65298,13 @@ func (ec *executionContext) marshalNTagType2githubᚗcomᚋcmsgovᚋmintᚑapp�
 	return res
 }
 
-func (ec *executionContext) unmarshalNTaggedHTMLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx context.Context, v interface{}) (models.TaggedHTMLInput, error) {
-	var res models.TaggedHTMLInput
+func (ec *executionContext) unmarshalNTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx context.Context, v interface{}) (models.TaggedHTML, error) {
+	var res models.TaggedHTML
 	err := res.UnmarshalGQLContext(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNTaggedHTMLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx context.Context, sel ast.SelectionSet, v models.TaggedHTMLInput) graphql.Marshaler {
+func (ec *executionContext) marshalNTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx context.Context, sel ast.SelectionSet, v models.TaggedHTML) graphql.Marshaler {
 	return graphql.WrapContextMarshaler(ctx, v)
 }
 

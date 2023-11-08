@@ -597,7 +597,7 @@ export interface CreateOperationalSolutionSubtaskInput {
  */
 export interface DiscussionReplyCreateInput {
   discussionID: UUID;
-  content: TaggedHTMLInput;
+  content: TaggedHTML;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }
@@ -713,7 +713,7 @@ export interface PlanCrTdlCreateInput {
  */
 export interface PlanDiscussionCreateInput {
   modelPlanID: UUID;
-  content: TaggedHTMLInput;
+  content: TaggedHTML;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }

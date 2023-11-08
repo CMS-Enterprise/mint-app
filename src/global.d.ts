@@ -26,7 +26,7 @@ declare global {
   type Time = string;
   type Upload = File;
   type HTML = string;
-  type TaggedHTMLInput = HTML;
+  type TaggedHTML = HTML;
 
   interface Window {
     Cypress: any;

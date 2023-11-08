@@ -33,9 +33,9 @@ Any represents any GraphQL value.
 scalar Any
 
 """
-TaggedHTMLInput represents an input typ for HTML that could also include 
+TaggedHTML represents an input type for HTML that could also include tags that reference another entity
 """
-scalar TaggedHTMLInput
+scalar TaggedHTML
 
 enum SortDirection {
   ASC
@@ -481,7 +481,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
-  content: TaggedHTMLInput!
+  content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -511,7 +511,7 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 """
 input DiscussionReplyCreateInput {
   discussionID: UUID!
-  content: TaggedHTMLInput!
+  content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
