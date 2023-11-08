@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 
 import { OperationalSolutionKey } from 'types/graphql-global-types';
@@ -23,7 +23,7 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof SolutionCard>;
+} as Meta<typeof SolutionCard>;
 
 const solution: SolutionCardType = {
   __typename: 'OperationalSolution',

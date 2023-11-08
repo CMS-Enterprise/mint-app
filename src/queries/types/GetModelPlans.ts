@@ -46,7 +46,7 @@ export interface GetModelPlans_modelPlanCollection_collaborators {
   id: UUID;
   userID: UUID;
   userAccount: GetModelPlans_modelPlanCollection_collaborators_userAccount;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
 }
 
 export interface GetModelPlans_modelPlanCollection_discussions_replies {

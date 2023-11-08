@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
@@ -9,6 +9,6 @@ export default {
   title: 'Help and Knowledge Solution Details Header',
   component: Header,
   decorators: [Story => <Header solution={helpSolutions[0]} />]
-} as ComponentMeta<typeof Header>;
+} as Meta<typeof Header>;
 
 export const Default = () => <Header solution={helpSolutions[0]} />;

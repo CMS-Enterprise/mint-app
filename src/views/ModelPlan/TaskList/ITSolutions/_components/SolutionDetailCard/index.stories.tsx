@@ -1,7 +1,8 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
+import { MessageProvider } from 'hooks/useMessage';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
   OperationalSolutionKey,
@@ -46,12 +47,14 @@ export default {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
-          <Story />
+          <MessageProvider>
+            <Story />
+          </MessageProvider>
         </Route>
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof SolutionDetailCard>;
+} as Meta<typeof SolutionDetailCard>;
 
 export const Default = () => (
   <SolutionDetailCard

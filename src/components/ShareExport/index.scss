@@ -2,6 +2,9 @@
 
 .share-export-modal {
 
+    max-height: 95vh;
+    overflow: scroll;
+
     .usa-form {
         max-width: none;
     }

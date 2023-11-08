@@ -408,8 +408,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n    id\n    modelPlanID\n    userID\n    teamRoles\n    userAccount \n    {\n        commonName\n        familyName\n        givenName\n        email\n        locale\n    }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"TEST\",\n    \"teamRoles\": [\"MODEL_LEAD\"]\n  }\n}"
+								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n        id\n        modelPlanID\n        userID\n        teamRoles\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"MINT\",\n    \"teamRoles\": [\"MODEL_LEAD\", \"IT_LEAD\"]\n  }\n}"
 							}
 						},
 						"url": {

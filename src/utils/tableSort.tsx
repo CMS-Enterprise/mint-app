@@ -65,7 +65,8 @@ export const currentTableSortDescription = <T extends {}>(headerGroup: {
 
 export const sortColumnValues = (
   rowOneElem: sortColumnProps,
-  rowTwoElem: sortColumnProps
+  rowTwoElem: sortColumnProps,
+  specificValueFirst?: any
 ) => {
   // Checking if passed sort value can be formatted as a date
   const rowOneDateCheck: any =
@@ -127,6 +128,13 @@ export const sortColumnValues = (
   // If both items are strings, enforce capitalization (temporarily) and then compare
   if (typeof rowOne === 'string' && typeof rowTwo === 'string') {
     return rowOne.toUpperCase() > rowTwo.toUpperCase() ? 1 : -1;
+  }
+
+  if (Array.isArray(rowOne) && rowOne.includes(specificValueFirst)) {
+    return 1;
+  }
+  if (Array.isArray(rowTwo) && rowTwo.includes(specificValueFirst)) {
+    return -1;
   }
 
   // Default case if both are number/datetime

@@ -300,7 +300,7 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
               >
                 <button
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled position-relative"
                   style="cursor: pointer;"
                   title="Toggle SortBy"
                   type="button"
@@ -335,7 +335,7 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
               >
                 <button
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled position-relative"
                   style="cursor: pointer;"
                   title="Toggle SortBy"
                   type="button"
@@ -370,7 +370,7 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
               >
                 <button
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled position-relative"
                   style="cursor: pointer;"
                   title="Toggle SortBy"
                   type="button"
@@ -405,7 +405,7 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
               >
                 <button
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled position-relative"
                   style="cursor: pointer;"
                   title="Toggle SortBy"
                   type="button"
@@ -440,7 +440,7 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
               >
                 <button
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled position-relative"
                   style="cursor: pointer;"
                   title="Toggle SortBy"
                   type="button"
@@ -475,7 +475,7 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
               >
                 <button
-                  class="usa-button usa-button--unstyled"
+                  class="usa-button usa-button--unstyled position-relative"
                   style="cursor: pointer;"
                   title="Toggle SortBy"
                   type="button"
@@ -536,23 +536,23 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
               </th>
               <td
                 role="cell"
-                style="padding-left: 0px;"
+                style="padding-left: 0px; white-space: normal;"
               >
                 Concept Paper
               </td>
               <td
                 role="cell"
-                style="padding-left: 0px;"
+                style="padding-left: 0px; white-space: normal;"
               />
               <td
                 role="cell"
-                style="padding-left: 0px;"
+                style="padding-left: 0px; white-space: normal;"
               >
                 02/16/2023
               </td>
               <td
                 role="cell"
-                style="padding-left: 0px;"
+                style="padding-left: 0px; white-space: normal;"
               >
                 All
               </td>
@@ -620,23 +620,23 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
               </th>
               <td
                 role="cell"
-                style="padding-left: 0px;"
+                style="padding-left: 0px; white-space: normal;"
               >
                 ICIP Draft
               </td>
               <td
                 role="cell"
-                style="padding-left: 0px;"
+                style="padding-left: 0px; white-space: normal;"
               />
               <td
                 role="cell"
-                style="padding-left: 0px;"
+                style="padding-left: 0px; white-space: normal;"
               >
                 02/16/2023
               </td>
               <td
                 role="cell"
-                style="padding-left: 0px;"
+                style="padding-left: 0px; white-space: normal;"
               >
                 All
               </td>
@@ -886,7 +886,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
                     >
                       <button
-                        class="usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled position-relative"
                         style="cursor: pointer;"
                         title="Toggle SortBy"
                         type="button"
@@ -921,7 +921,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
                     >
                       <button
-                        class="usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled position-relative"
                         style="cursor: pointer;"
                         title="Toggle SortBy"
                         type="button"
@@ -956,7 +956,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
                     >
                       <button
-                        class="usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled position-relative"
                         style="cursor: pointer;"
                         title="Toggle SortBy"
                         type="button"
@@ -991,7 +991,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
                     >
                       <button
-                        class="usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled position-relative"
                         style="cursor: pointer;"
                         title="Toggle SortBy"
                         type="button"
@@ -1026,7 +1026,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
                     >
                       <button
-                        class="usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled position-relative"
                         style="cursor: pointer;"
                         title="Toggle SortBy"
                         type="button"
@@ -1061,7 +1061,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
                     >
                       <button
-                        class="usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled position-relative"
                         style="cursor: pointer;"
                         title="Toggle SortBy"
                         type="button"
@@ -1104,23 +1104,23 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                     </th>
                     <td
                       role="cell"
-                      style="padding-left: 0px;"
+                      style="padding-left: 0px; white-space: normal;"
                     >
                       Concept Paper
                     </td>
                     <td
                       role="cell"
-                      style="padding-left: 0px;"
+                      style="padding-left: 0px; white-space: normal;"
                     />
                     <td
                       role="cell"
-                      style="padding-left: 0px;"
+                      style="padding-left: 0px; white-space: normal;"
                     >
                       02/16/2023
                     </td>
                     <td
                       role="cell"
-                      style="padding-left: 0px;"
+                      style="padding-left: 0px; white-space: normal;"
                     >
                       All
                     </td>
@@ -1177,23 +1177,23 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                     </th>
                     <td
                       role="cell"
-                      style="padding-left: 0px;"
+                      style="padding-left: 0px; white-space: normal;"
                     >
                       Concept Paper
                     </td>
                     <td
                       role="cell"
-                      style="padding-left: 0px;"
+                      style="padding-left: 0px; white-space: normal;"
                     />
                     <td
                       role="cell"
-                      style="padding-left: 0px;"
+                      style="padding-left: 0px; white-space: normal;"
                     >
                       02/16/2023
                     </td>
                     <td
                       role="cell"
-                      style="padding-left: 0px;"
+                      style="padding-left: 0px; white-space: normal;"
                     >
                       All
                     </td>

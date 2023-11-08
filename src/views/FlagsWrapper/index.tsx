@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga4';
 import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
 import { asyncWithLDProvider } from 'launchdarkly-react-client-sdk';
@@ -19,10 +20,15 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
 
   useEffect(() => {
     if (data) {
+      ReactGA.set({
+        userId: data.currentUser.launchDarkly.userKey
+      });
+
       (async () => {
         const provider = await asyncWithLDProvider({
           clientSideID: import.meta.env.VITE_LD_CLIENT_ID as string,
-          user: {
+          context: {
+            kind: 'user',
             key: data?.currentUser?.launchDarkly.userKey
           },
           options: {

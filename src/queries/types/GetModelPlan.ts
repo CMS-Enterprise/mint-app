@@ -31,7 +31,7 @@ export interface GetModelPlan_modelPlan_collaborators {
   id: UUID;
   userAccount: GetModelPlan_modelPlan_collaborators_userAccount;
   userID: UUID;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
   modelPlanID: UUID;
   createdDts: Time;
 }

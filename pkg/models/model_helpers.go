@@ -49,3 +49,13 @@ func ConvertEnums[EnumType ~string](pqGroups pq.StringArray) []EnumType {
 	}
 	return enumValues
 }
+
+// ConvertEnumsToStringArray converts an enum array to a pq.StringArray
+func ConvertEnumsToStringArray[EnumType ~string](arr []EnumType) pq.StringArray {
+	sa := make(pq.StringArray, len(arr))
+	for i, r := range arr {
+		sa[i] = string(r)
+	}
+
+	return sa
+}

@@ -13,7 +13,7 @@ export const collaborators: TranslationCollaborators = {
     gqlField: 'teamRole',
     goField: 'TeamRole',
     dbField: 'team_role',
-    label: 'Team member role',
+    label: 'Team member role(s)',
     dataType: 'enum',
     formType: 'select',
     options: {
@@ -35,17 +35,23 @@ type NestedTranslation = Record<string, string>;
 export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   csvTitle: 'Collaborator',
   EUAID: 'EUA ID',
+  roles: 'Role(s)',
   teamBreadcrumb: 'Add model team members',
   addATeamMember: 'Add a team member',
   updateATeamMember: 'Edit a team member',
   addTeamMemberButton: 'Add team member',
   updateTeamMember: 'Update team member',
+  manageModelTeam: 'Manage model team',
+  manageModelTeamInfo:
+    'Add and remove model team members and manage their roles.',
   searchTeamInfo: 'Search for a team member to add to your model team.',
   startTyping: 'Start typing the person’s name you want to add',
   teamInfo:
     'Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
   searchMemberInfo:
-    'This team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.',
+    'This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.',
+  lastModelLeadMemberInfo:
+    'If this team member is no longer the Model Lead, you must add a new Model Lead before removing that role for this team member.',
   dontAddTeamMember: 'Don’t add a team member and return to the previous page',
   dontUpdateTeamMember:
     'Don’t edit a team member and return to the previous page',

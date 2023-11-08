@@ -34,7 +34,7 @@ const mockModel: FavoritesType = {
         commonName: 'Test User'
       },
       id: '2134234',
-      teamRole: TeamRole.MODEL_LEAD,
+      teamRoles: [TeamRole.MODEL_LEAD],
       __typename: 'PlanCollaborator'
     }
   ],

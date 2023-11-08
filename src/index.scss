@@ -147,25 +147,6 @@ button:disabled {
 #main-content  {
   outline: none;
   border-top: 0;
-
-  table {
-    tr {
-      p :not(#favorite-table){
-          margin: 0;
-      }
-
-      th {
-        border-bottom: 0.5px solid black;
-        border-top: 0;
-      }
-    }
-    td {
-      border-top: .5px;
-      white-space: unset;
-      border: 0;
-      border-bottom: 0.5px solid #1b1b1b;
-    }
-  }
 }
 
 .usa-summary-box__heading {

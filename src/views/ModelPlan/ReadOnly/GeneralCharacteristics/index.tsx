@@ -140,7 +140,10 @@ const ReadOnlyGeneralCharacteristics = ({
           'isNewModel',
           <ReadOnlySection
             heading={generalCharacteristicsT('isNewModel.label')}
-            copy={generalCharacteristicsT(`isNewModel.options.${isNewModel}`)}
+            copy={generalCharacteristicsT(
+              `isNewModel.options.${isNewModel}`,
+              ''
+            )}
           />
         )}
 
@@ -162,7 +165,8 @@ const ReadOnlyGeneralCharacteristics = ({
           <ReadOnlySection
             heading={generalCharacteristicsT('resemblesExistingModel.label')}
             copy={generalCharacteristicsT(
-              `resemblesExistingModel.options.${resemblesExistingModel}`
+              `resemblesExistingModel.options.${resemblesExistingModel}`,
+              ''
             )}
           />
         )}
@@ -196,7 +200,8 @@ const ReadOnlyGeneralCharacteristics = ({
           <ReadOnlySection
             heading={generalCharacteristicsT('hasComponentsOrTracks.label')}
             copy={generalCharacteristicsT(
-              `hasComponentsOrTracks.options.${hasComponentsOrTracks}`
+              `hasComponentsOrTracks.options.${hasComponentsOrTracks}`,
+              ''
             )}
           />
         )}
@@ -268,7 +273,8 @@ const ReadOnlyGeneralCharacteristics = ({
               <ReadOnlySection
                 heading={generalCharacteristicsT('collectPlanBids.label')}
                 copy={generalCharacteristicsT(
-                  `collectPlanBids.options.${collectPlanBids}`
+                  `collectPlanBids.options.${collectPlanBids}`,
+                  ''
                 )}
                 notes={collectPlanBidsNote}
               />
@@ -283,7 +289,8 @@ const ReadOnlyGeneralCharacteristics = ({
                   'managePartCDEnrollment.label'
                 )}
                 copy={generalCharacteristicsT(
-                  `managePartCDEnrollment.options.${managePartCDEnrollment}`
+                  `managePartCDEnrollment.options.${managePartCDEnrollment}`,
+                  ''
                 )}
                 notes={managePartCDEnrollmentNote}
               />

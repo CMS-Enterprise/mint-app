@@ -22,7 +22,7 @@ export interface GetModelCollaborator_planCollaboratorByID {
   id: UUID;
   userAccount: GetModelCollaborator_planCollaboratorByID_userAccount;
   userID: UUID;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
 }
 
 export interface GetModelCollaborator {

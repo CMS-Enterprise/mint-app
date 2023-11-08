@@ -393,7 +393,7 @@ export interface GetAllModelData_modelPlanCollection_collaborators {
   id: UUID;
   userAccount: GetAllModelData_modelPlanCollection_collaborators_userAccount;
   userID: UUID;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
   modelPlanID: UUID;
   createdDts: Time;
 }

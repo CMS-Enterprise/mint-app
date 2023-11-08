@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { Formik } from 'formik';
 
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -29,7 +29,7 @@ export default {
       </MemoryRouter>
     )
   ]
-} as ComponentMeta<typeof CheckboxCard>;
+} as Meta<typeof CheckboxCard>;
 
 const solution: GetOperationalNeedSolutionsType = {
   __typename: 'OperationalSolution' as const,

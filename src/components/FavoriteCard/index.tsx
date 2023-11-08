@@ -92,8 +92,8 @@ const FavoriteCard = ({
             <p className="margin-bottom-0">{t(`${type}:favorite.modelLead`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
               {collaborators
-                .filter(
-                  collaborator => collaborator.teamRole === TeamRole.MODEL_LEAD
+                .filter(collaborator =>
+                  collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
                 )
                 .map((collaborator, index) =>
                   index === collaborators.length - 1
