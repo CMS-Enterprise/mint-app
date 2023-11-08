@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strings"
 	"time"
@@ -25,6 +26,7 @@ import (
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
 // args[0] date, args[1] modelPlanID
 func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
+	fmt.Println("ANALYZED AUDIT JOB NEW GO")
 	dayToAnalyze, err := time.Parse("2006-01-02", args[0].(string))
 	if err != nil {
 		return err
@@ -39,6 +41,8 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 		return err
 	}
 
+	fmt.Println("MODEL PLAN BY ID", mp)
+
 	audits, err := w.Store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(w.Logger, mp.ID, mp.ID, dayToAnalyze, models.SortDesc)
 	if err != nil {
 		return err
@@ -48,6 +52,8 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("CHANGES", analyzedAuditChange)
 
 	// Don't create if there are no changes
 	if analyzedAuditChange.IsEmpty() {

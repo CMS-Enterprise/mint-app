@@ -28,10 +28,12 @@ const (
 	JobCodeTestAssessment     = "MINT_ASSESSMENT_NONPROD"
 	JobCodeTestMACUser        = "MINT MAC Users"
 	JobCodeTestMINTContractor = "MINT_CTR_FFS_NONPROD"
+	JobCodeTestNonCMSUser     = "MINT_NON_CMS_NONPROD"
 	JobCodeProdUser           = "MINT_USER"
 	JobCodeProdAssessment     = "MINT_ASSESSMENT"
 	JobCodeProdMACUser        = "MINT MAC Users"
 	JobCodeProdMINTContractor = "MINT_CONTRACTOR_FFS"
+	JobCodeProdNonCMSUser     = "MINT_NON_CMS"
 )
 
 // JobCodesConfig contains a set of environment context-sensitive job codes
@@ -40,6 +42,7 @@ type JobCodesConfig struct {
 	assessment     string
 	macUser        string
 	mintContractor string
+	nonCMSUser     string
 }
 
 // NewJobCodesConfig is a constructor to generate a JobCodesConfig
@@ -48,12 +51,14 @@ func NewJobCodesConfig(
 	assessment string,
 	macUser string,
 	mintContractor string,
+	nonCMSUser string,
 ) *JobCodesConfig {
 	return &JobCodesConfig{
 		user:           user,
 		assessment:     assessment,
 		macUser:        macUser,
 		mintContractor: mintContractor,
+		nonCMSUser:     nonCMSUser,
 	}
 }
 
@@ -64,6 +69,7 @@ func NewProductionJobCodesConfig() *JobCodesConfig {
 		JobCodeProdAssessment,
 		JobCodeProdMACUser,
 		JobCodeProdMINTContractor,
+		JobCodeProdNonCMSUser,
 	)
 }
 
@@ -74,6 +80,7 @@ func NewTestJobCodesConfig() *JobCodesConfig {
 		JobCodeTestAssessment,
 		JobCodeTestMACUser,
 		JobCodeTestMINTContractor,
+		JobCodeTestNonCMSUser,
 	)
 }
 
@@ -95,6 +102,11 @@ func (j *JobCodesConfig) GetMACUserJobCode() string {
 // GetMINTContractorJobCode returns this JobCodesConfig's MINT Contractor job code
 func (j *JobCodesConfig) GetMINTContractorJobCode() string {
 	return j.mintContractor
+}
+
+// GetNonCMSJobCode returns this JobCodesConfig's MINT Non-CMS User job code
+func (j *JobCodesConfig) GetMINTNonCMSJobCode() string {
+	return j.nonCMSUser
 }
 
 func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*authentication.EnhancedJwt, error) {
@@ -148,9 +160,10 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 	// Get job codes out of the JWT
 	var jcUser bool
 	jcAssessment := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetAssessmentJobCode())
-	if jcAssessment { //Assessment users automatically are granted the base user permissions
+	jcNonCMS := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMINTNonCMSJobCode())
+	if jcAssessment || jcNonCMS { // Assessment users and non-CMS automatically are granted the base user permissions
 		jcUser = true
-	} else {
+	} else { // otherwise, check for the presence of the base user job code explicitly
 		jcUser = jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetUserJobCode())
 	}
 
@@ -193,6 +206,7 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 		JobCodeUSER:       jcUser,
 		JobCodeASSESSMENT: jcAssessment,
 		JobCodeMAC:        jcMAC,
+		JobCodeNonCMS:     jcNonCMS,
 		UserAccount:       userAccount,
 	}, nil
 }

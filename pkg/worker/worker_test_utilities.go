@@ -121,6 +121,7 @@ func getTestPrincipal(store *storage.Store, userName string) *authentication.App
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
 		JobCodeMAC:        false,
+		JobCodeNonCMS:     false,
 		UserAccount:       userAccount,
 	}
 	return princ

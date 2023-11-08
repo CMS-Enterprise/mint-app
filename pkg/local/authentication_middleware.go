@@ -80,9 +80,10 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
 	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
 	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT_CTR_FFS_NONPROD"))
+	jcNonCMS := swag.ContainsStrings(config.JobCodes, "MINT_NON_CMS_NONPROD")
 
-	// Always set assessment users to have base user permissions
-	if jcAssessment {
+	// Always set assessment users OR non CMS users to have base user permissions
+	if jcAssessment || jcNonCMS {
 		jcUser = true
 	}
 
@@ -91,6 +92,7 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 		JobCodeUSER:       jcUser,
 		JobCodeASSESSMENT: jcAssessment,
 		JobCodeMAC:        jcMAC,
+		JobCodeNonCMS:     jcNonCMS,
 	}
 
 	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))

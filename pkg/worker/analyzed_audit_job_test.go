@@ -2,6 +2,8 @@ package worker
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -276,6 +278,8 @@ func (suite *WorkerSuite) TestAnalyzedAuditJobIntegration() {
 	job := faktory.NewJob("AnalyzedAuditJob", date, mp1.ID)
 	job.Queue = criticalQueue
 
+	fmt.Printf("job %#+v \n", job)
+
 	err = pool.With(func(cl *faktory.Client) error {
 		err2 := cl.Push(job)
 		suite.NoError(err2)
@@ -284,10 +288,16 @@ func (suite *WorkerSuite) TestAnalyzedAuditJobIntegration() {
 		suite.NoError(err2)
 		suite.True(queues[criticalQueue] == 1)
 
+		fmt.Println("queesize", queues)
+
 		// Check jobs arguments equal are corrrect modelPlanId and date
 		job1, err2 := cl.Fetch(criticalQueue)
 
 		suite.NoError(err2)
+		fmt.Println("JOB1", job1)
+		if job1 == nil {
+			return errors.New("AHHHH")
+		}
 		suite.Equal(criticalQueue, job1.Queue)
 		suite.Equal(date, job1.Args[0].(string))
 		suite.Equal(mp1.ID.String(), job1.Args[1].(string))
