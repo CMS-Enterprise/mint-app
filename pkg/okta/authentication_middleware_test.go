@@ -76,6 +76,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleWareFactory(verify func(j
 	// Create dummy LD Client for use in the middleware factory
 	testData := ldtestdata.DataSource()
 	testData.Update(testData.Flag(flags.DowngradeAssessmentTeamKey).BooleanFlag().VariationForAll(false))
+	testData.Update(testData.Flag(flags.DowngradeNonCMSKey).BooleanFlag().VariationForAll(false))
 	ldConfig := ld.Config{
 		DataSource: testData,
 	}
