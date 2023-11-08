@@ -53,7 +53,7 @@ describe('The Model Plan Task List', () => {
         __typename: 'PlanDiscussion',
         id: '123',
         content: {
-          __typename: 'TaggedHTML',
+          __typename: 'TaggedContent',
           rawContent: 'This is a question.'
         },
         createdBy: 'John Doe',

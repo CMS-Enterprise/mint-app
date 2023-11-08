@@ -69,11 +69,11 @@ func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
 }
 
 func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content string) *models.PlanDiscussion {
-	taggedHTML, err := models.NewTaggedHTMLFromString(content)
+	taggedContent, err := models.NewTaggedContentFromString(content)
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         mp.ID,
-		Content:             models.TaggedHTMLInput(taggedHTML),
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -86,6 +86,7 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return pd

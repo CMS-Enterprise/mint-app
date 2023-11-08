@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -27,30 +26,9 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 }
 
 // Content is the resolver for the content field.
-func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedHTML, error) {
-	if obj.Content == "" {
-		return nil, nil
-	}
-	tempHTML, err := models.NewTaggedHTMLFromString(obj.Content)
-	tempUserID := uuid.MustParse("8f01092d-0990-4175-8ec3-8f8c551fde14")
-	tempSolutionID := 9000
-	tempHTML.Tags = []*models.Tag{
-		{
-			TaggedContentID:    obj.ID,
-			TaggedField:        "content",
-			TaggedContentTable: "discussion_reply",
-			TagType:            models.TagTypePossibleSolution,
-			EntityIntID:        &tempSolutionID,
-		},
-		{
-			TaggedField:        "content",
-			TaggedContentTable: "discussion_reply",
-			TaggedContentID:    obj.ID,
-			TagType:            models.TagTypeUserAccount,
-			EntityUUID:         &tempUserID,
-		},
-	}
-	return &tempHTML, err
+func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.TaggedContentGet(logger, r.store, string(obj.Content.RawContent), "discussion_reply", "content", obj.ID)
 }
 
 // ExistingModel is the resolver for the existingModel field.
@@ -311,23 +289,8 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 		&input,
 		principal,
 		r.store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
 	)
-}
-
-// UpdatePlanDiscussion is the resolver for the updatePlanDiscussion field.
-func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
-}
-
-// DeletePlanDiscussion is the resolver for the deletePlanDiscussion field.
-func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.DeletePlanDiscussion(logger, id, principal, r.store)
 }
 
 // CreateDiscussionReply is the resolver for the createDiscussionReply field.
@@ -335,23 +298,7 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreateDiscussionReply(logger, &input, principal, r.store)
-}
-
-// UpdateDiscussionReply is the resolver for the updateDiscussionReply field.
-func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
-}
-
-// DeleteDiscussionReply is the resolver for the deleteDiscussionReply field.
-func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+	return resolvers.CreateDiscussionReply(ctx, logger, &input, principal, r.store, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
@@ -583,30 +530,9 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 }
 
 // Content is the resolver for the content field.
-func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedHTML, error) {
-	if obj.Content == "" {
-		return nil, nil
-	}
-	tempHTML, err := models.NewTaggedHTMLFromString(obj.Content)
-	tempUserID := uuid.MustParse("8f01092d-0990-4175-8ec3-8f8c551fde14")
-	tempSolutionID := 9000
-	tempHTML.Tags = []*models.Tag{
-		{
-			TaggedContentID:    obj.ID,
-			TaggedField:        "content",
-			TaggedContentTable: "plan_discussion",
-			TagType:            models.TagTypePossibleSolution,
-			EntityIntID:        &tempSolutionID,
-		},
-		{
-			TaggedContentID:    obj.ID,
-			TaggedField:        "content",
-			TaggedContentTable: "plan_discussion",
-			TagType:            models.TagTypeUserAccount,
-			EntityUUID:         &tempUserID,
-		},
-	}
-	return &tempHTML, err
+func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedContent, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.TaggedContentGet(logger, r.store, string(obj.Content.RawContent), "plan_discussion", "content", obj.ID)
 }
 
 // Replies is the resolver for the replies field.
@@ -1032,31 +958,12 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 
 // Entity is the resolver for the entity field.
 func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error) {
-	switch obj.TagType {
-	case models.TagTypePossibleSolution:
-		return models.PossibleOperationalSolution{
-			ID:           9000,
-			Name:         "Temp Possible Solution",
-			Key:          "TPS",
-			TreatAsOther: false,
-		}, nil
-	case models.TagTypeUserAccount:
-		return authentication.UserAccount{
-			ID:         uuid.MustParse("8f01092d-0990-4175-8ec3-8f8c551fde14"),
-			Username:   models.StringPointer("TempUser"),
-			Email:      "tempEmail@email.com",
-			CommonName: "Temp User",
-			GivenName:  "Temp",
-			FamilyName: "User",
-		}, nil
-	default:
-		return nil, fmt.Errorf("invalid tag type")
-	}
+	return resolvers.TaggedEntityGet(ctx, r.store, obj.TagType, obj.EntityUUID, obj.EntityIntID)
 }
 
 // RawContent is the resolver for the rawContent field.
-func (r *taggedHTMLResolver) RawContent(ctx context.Context, obj *models.TaggedHTML) (string, error) {
-	return string(obj.RawContent), nil
+func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.TaggedContent) (string, error) {
+	return obj.RawContent.String(), nil
 }
 
 // AuditChange returns generated.AuditChangeResolver implementation.
@@ -1141,8 +1048,8 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 // Tag returns generated.TagResolver implementation.
 func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
 
-// TaggedHTML returns generated.TaggedHTMLResolver implementation.
-func (r *Resolver) TaggedHTML() generated.TaggedHTMLResolver { return &taggedHTMLResolver{r} }
+// TaggedContent returns generated.TaggedContentResolver implementation.
+func (r *Resolver) TaggedContent() generated.TaggedContentResolver { return &taggedContentResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
 type discussionReplyResolver struct{ *Resolver }
@@ -1164,4 +1071,4 @@ type possibleOperationalSolutionResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
-type taggedHTMLResolver struct{ *Resolver }
+type taggedContentResolver struct{ *Resolver }

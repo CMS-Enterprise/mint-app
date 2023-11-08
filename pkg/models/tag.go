@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// TagType represents the posible types of tags you can have in a TaggedString
+// TagType represents the posible types of tags you can have in an HTML Mention
 type TagType string
 
 // Validate checks that a valid value of TagType is returned

@@ -10,7 +10,10 @@ import { DiscussionUserRole } from "./../../../types/graphql-global-types";
 // ====================================================
 
 export interface GetModelPlanDiscussions_modelPlan_discussions_content {
-  __typename: "TaggedHTML";
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
   rawContent: string;
 }
 
@@ -20,7 +23,10 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_createdByUserAcco
 }
 
 export interface GetModelPlanDiscussions_modelPlan_discussions_replies_content {
-  __typename: "TaggedHTML";
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
   rawContent: string;
 }
 

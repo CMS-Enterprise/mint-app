@@ -1,170 +1,164 @@
 package models
 
 import (
+	"bytes"
 	"context"
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
 	"io"
-	"strings"
+	"regexp"
 
 	"github.com/google/uuid"
-	"golang.org/x/net/html"
+	htmlPackage "golang.org/x/net/html"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/sanitization"
 )
 
-// TaggedHTML represents rich text HTML with possible tagged HTML mention
-type TaggedHTML struct {
-	RawContent hTML
-	Mentions   []*HTMLMention
-	Tags       []*Tag // TODO: Verify, this is the actual tag from teh dB
+const mentionTagTemplate = `<span data-type="mention" tag-type="{{.Type}}" class="mention" data-id="{{.EntityRaw}}" ` +
+	`{{if .EntityDB}}data-id-db="{{.EntityDB}}" {{end}}` +
+	`data-label="{{.DataLabel}}">{{.InnerHTML}}</span>`
+
+// TaggedContent represents rich text HTML with possible tagged HTML mention
+type TaggedContent struct {
+	RawContent html
+	Mentions   []*HTMLMention // These are the parsed content of the HTML, and a representaton of how the data represented in an individual mention HTML tag
+	Tags       []*Tag         // Tag is a representation of a tag record in the database.
 }
 
 // HTMLMention represents Meta data about an entity tagged in text
 type HTMLMention struct {
-	RawHTML     html.Node
+	RawHTMLNode htmlPackage.Node
+	RawHTML     html
 	Type        TagType
 	DataLabel   string
 	EntityRaw   string
+	InnerHTML   string
 	EntityUUID  *uuid.UUID
 	EntityIntID *int
+	EntityDB    interface{} // This is for marshaliing to the template
 }
 
-// hTML represents html code. It is sanitized when unmarshaled from graphQL or when converted to hTML to only allow specific tags
-type hTML string
+// TaggedHTML Is the input type for HTML that could contain tags
+type TaggedHTML TaggedContent
 
-// TaggedHTMLInput Is the input type for HTML that could contain tags
-type TaggedHTMLInput TaggedHTML
-
-// ToTaggedHTML casts the input to TaggedHTML
-func (thi TaggedHTMLInput) ToTaggedHTML() TaggedHTML {
-	return TaggedHTML(thi)
+// ToTaggedContent casts the input to TaggedContent
+func (th TaggedHTML) ToTaggedContent() TaggedContent {
+	return TaggedContent(th)
 }
 
-// TODO: can we represent this as the same as the output struct?
-
-// UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTMLInput type
-func (thi *TaggedHTMLInput) UnmarshalGQLContext(ctx context.Context, v interface{}) error {
-	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
-
+// UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTML type
+func (th *TaggedHTML) UnmarshalGQLContext(_ context.Context, v interface{}) error {
 	rawHTML, ok := v.(string)
 	if !ok {
-		logger.Info("invalid TaggedHTMLInput")
-		return errors.New("invalid TaggedHTMLInput")
+		return errors.New("invalid TaggedHTML")
 	}
 
 	// Sanitize the HTML string
-	// sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
-	th, err := NewTaggedHTMLFromString(rawHTML)
+	sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
+	tc, err := NewTaggedContentFromString(sanitizedHTMLString)
 	if err != nil {
 		return err
 	}
-	*thi = TaggedHTMLInput(th)
-	// *thi = TaggedHTMLInput{
-	// 	RawContent: hTML(sanitizedHTMLString),
-	// }
+	*th = TaggedHTML(tc)
 	return nil
 
 }
 
-// MarshalGQLContext marshals the TaggedHTMLInput type to JSON to return to graphQL
-func (thi TaggedHTMLInput) MarshalGQLContext(ctx context.Context, w io.Writer) error {
-	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
+// MarshalGQLContext marshals the TaggedHTML type to JSON to return to graphQL
+func (th TaggedHTML) MarshalGQLContext(ctx context.Context, w io.Writer) error {
+	logger := appcontext.ZLogger(ctx)
 
-	// TODO: SW decide the format this should go back to GQL with
-	// Marshal the TaggedHTMLInput value to JSON so that it's properly escaped (wrapped in quotation marks)
-	jsonValue, err := json.Marshal(thi.RawContent)
+	// Marshal the TaggedHTML value to JSON so that it's properly escaped (wrapped in quotation marks)
+	jsonValue, err := json.Marshal(th.RawContent)
 	if err != nil {
-		logger.Info("invalid TaggedHTMLInput")
-		return fmt.Errorf("failed to marshal TaggedHTMLInputto JSON: %w", err)
+		logger.Info("invalid TaggedHTML")
+		return fmt.Errorf("failed to marshal TaggedHTMLto JSON: %w", err)
 	}
-	// Write the JSON-encoded TaggedHTMLInput value to the writer
+	// Write the JSON-encoded TaggedHTML value to the writer
 	_, err = w.Write(jsonValue)
 	if err != nil {
-		return fmt.Errorf("failed to write TaggedHTMLInput to writer: %w", err)
+		return fmt.Errorf("failed to write TaggedHTML to writer: %w", err)
 	}
 
 	return nil
 }
 
-// NewTaggedHTMLFromString converts a rawString into TaggedHTMl
-func NewTaggedHTMLFromString(htmlString string) (TaggedHTML, error) { // TODO: SW [TaggedHTMLType ~TaggedHTML] Check if we can use a generic here to return input type. (Most likely not)
-	sanitized := htmlString
-	th := TaggedHTML{
-		RawContent: hTML(sanitized),
+// NewTaggedContentFromString converts a rawString into TaggedHTMl. It will store the input string as the raw content, and then sanitize and parse the input.
+func NewTaggedContentFromString(htmlString string) (TaggedContent, error) {
+	sanitized := sanitization.SanitizeHTML(htmlString)
+	tc := TaggedContent{
+		RawContent: html(sanitized),
 	}
-	mentions, err := htmlMentionsFromString(sanitized)
+	// mentions, err := htmlMentionsFromString(sanitized)
+	mentions, err := htmlMentionsFromStringRegex(sanitized)
+	if mentions != nil { //TODO: SW, you might not need to do a nil or len check, you might be able to just set it
+		if len(mentions) > 0 { // At least some mentions parsed correctly, so attach them to the Tagged HTML
+			tc.Mentions = mentions
+		}
+	}
 	if err != nil {
-		return th, err //TODO: SW , should we return nil , err or ok to return partial?
+		return tc, err //If the Mentions fail to parse, still return the main Tagged HTML
 	}
-	th.Mentions = mentions
+	tc.Mentions = mentions
 
-	return th, nil
+	return tc, nil
 
 }
-
-func htmlMentionsFromString(htmlString string) ([]*HTMLMention, error) {
+func htmlMentionsFromStringRegex(htmlString string) ([]*HTMLMention, error) {
 	mentions := []*HTMLMention{}
-	mentionNodes, err := extractHTMLMentions(htmlString)
+	mentionStrings, err := extractHTMLSpansRegex(htmlString)
 	if err != nil {
 		return nil, err
 	}
-	for _, node := range mentionNodes {
-		htmlMention, err := parseHTMLMentionTag(*node)
+	errs := []error{}
+	for _, mentionString := range mentionStrings {
+		htmlMention, err := parseHTMLMentionTagRegEx(mentionString)
 		if err != nil {
-			fmt.Println("error parsing %w", err) //TODO: when implementing actually handle this error
+			errs = append(errs, fmt.Errorf("error parsing html mention %s, %w", mentionString, err))
+
 		}
 		mentions = append(mentions, &htmlMention)
+	}
+	if len(errs) > 1 {
+		return mentions, fmt.Errorf("issues encountered parsing html Mentions . %v", errs) // We aren't wrapping these errors because this is an array
 	}
 	return mentions, nil
 
 }
 
-func extractHTMLMentions(htmlString string) ([]*html.Node, error) {
-	htmlDoc, err := html.Parse(strings.NewReader(htmlString))
+func extractHTMLSpansRegex(htmlString string) ([]string, error) {
+
+	// Define the regex pattern to match the span elements
+	regexPattern := `<span[^>]*>.*?<\/span>`
+
+	// Compile the regex pattern
+	regex, err := regexp.Compile(regexPattern)
 	if err != nil {
-		return nil, err
+
+		return nil, fmt.Errorf("error compiling regex pattern: %w", err)
 	}
-
-	// Find and print all links on the web page
-	var links []*html.Node
-	var link func(*html.Node)
-	link = func(n *html.Node) {
-		if n.Type == html.ElementNode && n.Data == "span" {
-			links = append(links, n)
-			//TODO: SW determine if it is better to parse attributes here?
-		}
-
-		// traverses the HTML from each element
-		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			link(c)
-		}
-	}
-	link(htmlDoc)
-
-	return links, nil
-
+	// Find all matches of the pattern in the html string
+	matches := regex.FindAllString(htmlString, -1)
+	return matches, nil
 }
 
-func parseHTMLMentionTag(mendtionNode html.Node) (HTMLMention, error) {
-	// htmlMention := HTMLMention{}
+func parseHTMLMentionTagRegEx(mentionstring string) (HTMLMention, error) {
 	var entityIDStr string
 	var dataLabel string
-	var entityUUID *uuid.UUID
-	var entityIntID *int
 	var tagType TagType
 	var class string
-	attributes := make(map[string]string)
-	for _, a := range mendtionNode.Attr {
-		attributes[a.Key] = a.Val
-	}
 
-	tagType = TagType(attributes["data-type"])
+	attributes := extractAttributes(mentionstring)
+	innerHTML := extractInnerHTML(mentionstring)
+
+	tagType = TagType(attributes["tag-type"])
 	err := tagType.Validate()
 	if err != nil {
-		return HTMLMention{}, err //TODO: SW should we return a pointer instead?
+		return HTMLMention{}, err
 	}
 
 	dataLabel = attributes["data-label"]
@@ -173,19 +167,59 @@ func parseHTMLMentionTag(mendtionNode html.Node) (HTMLMention, error) {
 	if class != "mention" {
 		return HTMLMention{}, fmt.Errorf("this is not a valid mention provided class is : %s", class)
 	}
+	dataIDDB := attributes["data-id-db"]
+	fmt.Print(dataIDDB)
 
 	return HTMLMention{
-		RawHTML:     mendtionNode,
-		Type:        tagType,
-		EntityRaw:   entityIDStr, //TODO, maybe we need to keep it generic at this point. Perhaps when writing the tag we can get the reference and perhaps update the tag?
-		DataLabel:   dataLabel,
-		EntityUUID:  entityUUID,
-		EntityIntID: entityIntID,
+		RawHTML:   HTML(mentionstring),
+		InnerHTML: innerHTML,
+		Type:      tagType,
+		EntityRaw: entityIDStr, // Store the raw value to set conditionally later
+		DataLabel: dataLabel,
+		EntityDB:  dataIDDB,
 	}, nil
 
 }
 
-// ToTag converts a TagString to a tag
+// Function to extract attributes from a span element using regex
+func extractAttributes(match string) map[string]string {
+	// Define the regex pattern to match attribute name and value
+	attributeRegex := regexp.MustCompile(`(\S+)="([^"]+)"`)
+
+	// Find all matches of the pattern in the input string
+	attributeMatches := attributeRegex.FindAllStringSubmatch(match, -1)
+
+	// Create a map to store the attribute key-value pairs
+	attributes := make(map[string]string)
+
+	// Iterate over the matches and extract the attribute name and value
+	for _, attributeMatch := range attributeMatches {
+		attributeName := attributeMatch[1]
+		attributeValue := attributeMatch[2]
+
+		attributes[attributeName] = attributeValue
+	}
+
+	return attributes
+}
+
+// Function to extract inner html from a span element using regex
+func extractInnerHTML(match string) string {
+	// Define the regex pattern to match the inner html
+	innerHTMLRegex := regexp.MustCompile(`>([^<]*)<`)
+
+	// Find the match of the pattern in the input string
+	innerHTMLMatch := innerHTMLRegex.FindStringSubmatch(match)
+
+	// Return the inner html
+	if len(innerHTMLMatch) > 1 {
+		return innerHTMLMatch[1]
+	}
+
+	return ""
+}
+
+// ToTag converts an HTMLMention to a tag
 func (hm HTMLMention) ToTag(taggedField string, taggedTable string, taggedContentID uuid.UUID) Tag {
 	tag := Tag{
 		TagType:            hm.Type,
@@ -197,6 +231,23 @@ func (hm HTMLMention) ToTag(taggedField string, taggedTable string, taggedConten
 		EntityIntID:        hm.EntityIntID,
 	}
 	return tag
+}
+
+// ToHTML converts an HTMLMention to an HTMLString
+func (hm HTMLMention) ToHTML() (html, error) { //nolint:all // it is desirable that hTML is not exported, so we can enforce sanitization
+	// Create a new template and parse the template string
+	t, err := template.New("webpage").Parse(mentionTagTemplate)
+	if err != nil {
+		return "", err
+	}
+	var buffer bytes.Buffer
+	err = t.Execute(&buffer, &hm)
+	if err != nil {
+		return "", err
+	}
+
+	mentionString := buffer.String()
+	return HTML(mentionString), nil
 }
 
 // TagArrayFromHTMLMentions converts an array of HTMLMention to an array of Tags
@@ -211,23 +262,36 @@ func TagArrayFromHTMLMentions(taggedField string, taggedTable string, taggedCont
 
 }
 
-// // UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTML type
-// func (th *TaggedHTML) UnmarshalGQLContext(ctx context.Context, v interface{}) error {
+// Scan is used by sql.scan to read the values from the DB
+func (th *TaggedContent) Scan(src interface{}) error {
 
-// 	logger := appcontext.ZLogger(ctx) //TODO: SW do we need the logger?
+	switch src := src.(type) {
+	case string:
+		rawContent := string(src)
+		tagHTML, err := NewTaggedContentFromString(rawContent)
+		if err != nil {
+			return err
+		}
+		*th = tagHTML
+	case []byte:
+		rawContent := string(src)
+		tagHTML, err := NewTaggedContentFromString(rawContent)
+		if err != nil {
+			return err
+		}
+		*th = tagHTML
+	case nil:
+		return nil
 
-// 	rawHTML, ok := v.(string)
-// 	if !ok {
-// 		logger.Info("invalid TaggedHTMLInput")
-// 		return errors.New("invalid TaggedHTMLInput")
-// 	}
+	}
+	return nil
+}
 
-// 	// Sanitize the HTML string
-// 	sanitizedHTMLString := sanitization.SanitizeHTML(rawHTML)
-// 	*th = TaggedHTML{RawContent: hTML(sanitizedHTMLString)}
-// 	return nil
-
-// }
+// Value implements the driver.Valuer interface. This is called when  TaggedContent is being written to the database
+func (th TaggedContent) Value() (driver.Value, error) {
+	// Return the RawContent field as a value
+	return string(th.RawContent), nil
+}
 
 // Scan is used by sql.scan to read the values from the DB
 func (th *TaggedHTML) Scan(src interface{}) error {
@@ -235,18 +299,18 @@ func (th *TaggedHTML) Scan(src interface{}) error {
 	switch src := src.(type) {
 	case string:
 		rawContent := string(src)
-		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err
 		}
-		*th = tagHTML
+		*th = TaggedHTML(tagHTML)
 	case []byte:
 		rawContent := string(src)
-		tagHTML, err := NewTaggedHTMLFromString(rawContent)
+		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err
 		}
-		*th = tagHTML
+		*th = TaggedHTML(tagHTML)
 	case nil:
 		return nil
 
@@ -254,39 +318,8 @@ func (th *TaggedHTML) Scan(src interface{}) error {
 	return nil
 }
 
-// Value implements the driver.Valuer interface. This is called when a TaggedString is being written to the database
+// Value implements the driver.Valuer interface. This is called when a TaggedHTML is being written to the database
 func (th TaggedHTML) Value() (driver.Value, error) {
 	// Return the RawContent field as a value
 	return string(th.RawContent), nil
-}
-
-// Scan is used by sql.scan to read the values from the DB
-func (thi *TaggedHTMLInput) Scan(src interface{}) error {
-
-	switch src := src.(type) {
-	case string:
-		rawContent := string(src)
-		tagHTML, err := NewTaggedHTMLFromString(rawContent)
-		if err != nil {
-			return err
-		}
-		*thi = TaggedHTMLInput(tagHTML)
-	case []byte:
-		rawContent := string(src)
-		tagHTML, err := NewTaggedHTMLFromString(rawContent)
-		if err != nil {
-			return err
-		}
-		*thi = TaggedHTMLInput(tagHTML)
-	case nil:
-		return nil
-
-	}
-	return nil
-}
-
-// Value implements the driver.Valuer interface. This is called when a TaggedString is being written to the database
-func (thi TaggedHTMLInput) Value() (driver.Value, error) {
-	// Return the RawContent field as a value
-	return string(thi.RawContent), nil
 }

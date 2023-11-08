@@ -61,7 +61,7 @@ type ResolverRoot interface {
 	Query() QueryResolver
 	Subscription() SubscriptionResolver
 	Tag() TagResolver
-	TaggedHTML() TaggedHTMLResolver
+	TaggedContent() TaggedContentResolver
 }
 
 type DirectiveRoot struct {
@@ -228,11 +228,9 @@ type ComplexityRoot struct {
 		CreatePlanCrTdl                    func(childComplexity int, input model.PlanCrTdlCreateInput) int
 		CreatePlanDiscussion               func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
-		DeleteDiscussionReply              func(childComplexity int, id uuid.UUID) int
 		DeleteOperationalSolutionSubtask   func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator             func(childComplexity int, id uuid.UUID) int
 		DeletePlanCrTdl                    func(childComplexity int, id uuid.UUID) int
-		DeletePlanDiscussion               func(childComplexity int, id uuid.UUID) int
 		DeletePlanDocument                 func(childComplexity int, id uuid.UUID) int
 		DeletePlanFavorite                 func(childComplexity int, modelPlanID uuid.UUID) int
 		LinkNewPlanDocument                func(childComplexity int, input model.PlanDocumentLinkInput) int
@@ -244,7 +242,6 @@ type ComplexityRoot struct {
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		UpdateCustomOperationalNeedByID    func(childComplexity int, id uuid.UUID, customNeedType *string, needed bool) int
-		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateExistingModelLinks           func(childComplexity int, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateOperationalSolution          func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -253,7 +250,6 @@ type ComplexityRoot struct {
 		UpdatePlanBeneficiaries            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
 		UpdatePlanCrTdl                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanDiscussion               func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanGeneralCharacteristics   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanOpsEvalAndLearning       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -914,7 +910,7 @@ type ComplexityRoot struct {
 		TaggedField           func(childComplexity int) int
 	}
 
-	TaggedHTML struct {
+	TaggedContent struct {
 		RawContent func(childComplexity int) int
 		Tags       func(childComplexity int) int
 	}
@@ -958,7 +954,7 @@ type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
 type DiscussionReplyResolver interface {
-	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedHTML, error)
+	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error)
 }
 type ExistingModelLinkResolver interface {
 	ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error)
@@ -999,11 +995,7 @@ type MutationResolver interface {
 	LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error)
 	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
 	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error)
-	UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error)
-	DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error)
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
-	UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error)
-	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
 	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
 	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
 	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
@@ -1047,7 +1039,7 @@ type PlanBeneficiariesResolver interface {
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
 }
 type PlanDiscussionResolver interface {
-	Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedHTML, error)
+	Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedContent, error)
 
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
 }
@@ -1166,8 +1158,8 @@ type SubscriptionResolver interface {
 type TagResolver interface {
 	Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error)
 }
-type TaggedHTMLResolver interface {
-	RawContent(ctx context.Context, obj *models.TaggedHTML) (string, error)
+type TaggedContentResolver interface {
+	RawContent(ctx context.Context, obj *models.TaggedContent) (string, error)
 }
 
 type executableSchema struct {
@@ -2071,18 +2063,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreatePlanDocumentSolutionLinks(childComplexity, args["solutionID"].(uuid.UUID), args["documentIDs"].([]uuid.UUID)), true
 
-	case "Mutation.deleteDiscussionReply":
-		if e.complexity.Mutation.DeleteDiscussionReply == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deleteDiscussionReply_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeleteDiscussionReply(childComplexity, args["id"].(uuid.UUID)), true
-
 	case "Mutation.deleteOperationalSolutionSubtask":
 		if e.complexity.Mutation.DeleteOperationalSolutionSubtask == nil {
 			break
@@ -2118,18 +2098,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeletePlanCrTdl(childComplexity, args["id"].(uuid.UUID)), true
-
-	case "Mutation.deletePlanDiscussion":
-		if e.complexity.Mutation.DeletePlanDiscussion == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deletePlanDiscussion_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeletePlanDiscussion(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.deletePlanDocument":
 		if e.complexity.Mutation.DeletePlanDocument == nil {
@@ -2263,18 +2231,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateCustomOperationalNeedByID(childComplexity, args["id"].(uuid.UUID), args["customNeedType"].(*string), args["needed"].(bool)), true
 
-	case "Mutation.updateDiscussionReply":
-		if e.complexity.Mutation.UpdateDiscussionReply == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updateDiscussionReply_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdateDiscussionReply(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
-
 	case "Mutation.updateExistingModelLinks":
 		if e.complexity.Mutation.UpdateExistingModelLinks == nil {
 			break
@@ -2370,18 +2326,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanCrTdl(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
-
-	case "Mutation.updatePlanDiscussion":
-		if e.complexity.Mutation.UpdatePlanDiscussion == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updatePlanDiscussion_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdatePlanDiscussion(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updatePlanGeneralCharacteristics":
 		if e.complexity.Mutation.UpdatePlanGeneralCharacteristics == nil {
@@ -6626,19 +6570,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.TaggedField(childComplexity), true
 
-	case "TaggedHTML.rawContent":
-		if e.complexity.TaggedHTML.RawContent == nil {
+	case "TaggedContent.rawContent":
+		if e.complexity.TaggedContent.RawContent == nil {
 			break
 		}
 
-		return e.complexity.TaggedHTML.RawContent(childComplexity), true
+		return e.complexity.TaggedContent.RawContent(childComplexity), true
 
-	case "TaggedHTML.tags":
-		if e.complexity.TaggedHTML.Tags == nil {
+	case "TaggedContent.tags":
+		if e.complexity.TaggedContent.Tags == nil {
 			break
 		}
 
-		return e.complexity.TaggedHTML.Tags(childComplexity), true
+		return e.complexity.TaggedContent.Tags(childComplexity), true
 
 	case "TaskListSectionLockStatus.isAssessment":
 		if e.complexity.TaskListSectionLockStatus.IsAssessment == nil {
@@ -6964,9 +6908,9 @@ Any represents any GraphQL value.
 scalar Any
 
 """
-TaggedHTMLInput represents an input typ for HTML that could also include 
+TaggedHTML represents an input type for HTML that could also include tags that reference another entity
 """
-scalar TaggedHTMLInput
+scalar TaggedHTML
 
 enum SortDirection {
   ASC
@@ -7351,8 +7295,11 @@ union TaggedEntity =  UserAccount | PossibleOperationalSolution
 """
 TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
 """
-type TaggedHTML {
-  rawContent: String! #TODO: SW change this to an HTML type?
+type TaggedContent {
+  """
+  RawContent is HTML. It is sanitized on the backend
+  """
+  rawContent: String! 
   tags: [Tag!]!
 }
 
@@ -7389,7 +7336,7 @@ PlanDiscussion represents plan discussion
 type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
-	content: TaggedHTML
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   replies: [DiscussionReply!]!
@@ -7409,21 +7356,11 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
-  content: TaggedHTMLInput!
+  content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
 
-"""
-PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
-  content: TaggedHTMLInput
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
 
 """
 DiscussionReply represents a discussion reply
@@ -7431,7 +7368,7 @@ DiscussionReply represents a discussion reply
 type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
-	content: TaggedHTML
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   isAssessment: Boolean!
@@ -7449,18 +7386,7 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 """
 input DiscussionReplyCreateInput {
   discussionID: UUID!
-  content: TaggedHTMLInput!
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
-
-"""
-DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
-  content: TaggedHTMLInput
+  content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
 }
@@ -8671,20 +8597,8 @@ deletePlanDocument(id: UUID!): Int!
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-deletePlanDiscussion(id: UUID!): PlanDiscussion!
-@hasRole(role: MINT_USER)
-
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
-@hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-deleteDiscussionReply(id: UUID!): DiscussionReply!
-@hasRole(role: MINT_USER)
 
 lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_USER)
@@ -9774,21 +9688,6 @@ func (ec *executionContext) field_Mutation_createPlanDocumentSolutionLinks_args(
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_deleteDiscussionReply_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_deleteOperationalSolutionSubtask_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9820,21 +9719,6 @@ func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx conte
 }
 
 func (ec *executionContext) field_Mutation_deletePlanCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_deletePlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -10086,30 +9970,6 @@ func (ec *executionContext) field_Mutation_updateCustomOperationalNeedByID_args(
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updateDiscussionReply_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	var arg1 map[string]interface{}
-	if tmp, ok := rawArgs["changes"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
-		arg1, err = ec.unmarshalNDiscussionReplyChanges2map(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["changes"] = arg1
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_updateExistingModelLinks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -10294,30 +10154,6 @@ func (ec *executionContext) field_Mutation_updatePlanCrTdl_args(ctx context.Cont
 	if tmp, ok := rawArgs["changes"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
 		arg1, err = ec.unmarshalNPlanCrTdlChanges2map(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["changes"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_updatePlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	var arg1 map[string]interface{}
-	if tmp, ok := rawArgs["changes"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
-		arg1, err = ec.unmarshalNPlanDiscussionChanges2map(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -12125,9 +11961,9 @@ func (ec *executionContext) _DiscussionReply_content(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.TaggedHTML)
+	res := resTmp.(*models.TaggedContent)
 	fc.Result = res
-	return ec.marshalOTaggedHTML2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, field.Selections, res)
+	return ec.marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -12139,11 +11975,11 @@ func (ec *executionContext) fieldContext_DiscussionReply_content(ctx context.Con
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "rawContent":
-				return ec.fieldContext_TaggedHTML_rawContent(ctx, field)
+				return ec.fieldContext_TaggedContent_rawContent(ctx, field)
 			case "tags":
-				return ec.fieldContext_TaggedHTML_tags(ctx, field)
+				return ec.fieldContext_TaggedContent_tags(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type TaggedHTML", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type TaggedContent", field.Name)
 		},
 	}
 	return fc, nil
@@ -18773,220 +18609,6 @@ func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanDiscussion(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanDiscussion(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanDiscussion); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDiscussion`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanDiscussion)
-	fc.Result = res
-	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanDiscussion_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
-			case "content":
-				return ec.fieldContext_PlanDiscussion_content(ctx, field)
-			case "userRole":
-				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
-			case "userRoleDescription":
-				return ec.fieldContext_PlanDiscussion_userRoleDescription(ctx, field)
-			case "replies":
-				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
-			case "isAssessment":
-				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanDiscussion_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanDiscussion_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanDiscussion_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanDiscussion_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanDiscussion_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDiscussion", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deletePlanDiscussion(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanDiscussion(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanDiscussion); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDiscussion`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanDiscussion)
-	fc.Result = res
-	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_deletePlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanDiscussion_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
-			case "content":
-				return ec.fieldContext_PlanDiscussion_content(ctx, field)
-			case "userRole":
-				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
-			case "userRoleDescription":
-				return ec.fieldContext_PlanDiscussion_userRoleDescription(ctx, field)
-			case "replies":
-				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
-			case "isAssessment":
-				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_PlanDiscussion_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanDiscussion_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanDiscussion_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_PlanDiscussion_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanDiscussion_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDiscussion", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createDiscussionReply(ctx, field)
 	if err != nil {
@@ -19086,216 +18708,6 @@ func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx cont
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_createDiscussionReply_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updateDiscussionReply(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateDiscussionReply(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateDiscussionReply(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasAnyRole == nil {
-				return nil, errors.New("directive hasAnyRole is not implemented")
-			}
-			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.DiscussionReply); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.DiscussionReply`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.DiscussionReply)
-	fc.Result = res
-	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updateDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_DiscussionReply_id(ctx, field)
-			case "discussionID":
-				return ec.fieldContext_DiscussionReply_discussionID(ctx, field)
-			case "content":
-				return ec.fieldContext_DiscussionReply_content(ctx, field)
-			case "userRole":
-				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
-			case "userRoleDescription":
-				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
-			case "isAssessment":
-				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_DiscussionReply_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_DiscussionReply_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_DiscussionReply_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_DiscussionReply_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_DiscussionReply_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type DiscussionReply", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateDiscussionReply_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deleteDiscussionReply(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deleteDiscussionReply(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeleteDiscussionReply(rctx, fc.Args["id"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.DiscussionReply); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.DiscussionReply`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.DiscussionReply)
-	fc.Result = res
-	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_DiscussionReply_id(ctx, field)
-			case "discussionID":
-				return ec.fieldContext_DiscussionReply_discussionID(ctx, field)
-			case "content":
-				return ec.fieldContext_DiscussionReply_content(ctx, field)
-			case "userRole":
-				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
-			case "userRoleDescription":
-				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
-			case "isAssessment":
-				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_DiscussionReply_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_DiscussionReply_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_DiscussionReply_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_DiscussionReply_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_DiscussionReply_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type DiscussionReply", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deleteDiscussionReply_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -28478,9 +27890,9 @@ func (ec *executionContext) _PlanDiscussion_content(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.TaggedHTML)
+	res := resTmp.(*models.TaggedContent)
 	fc.Result = res
-	return ec.marshalOTaggedHTML2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, field.Selections, res)
+	return ec.marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -28492,11 +27904,11 @@ func (ec *executionContext) fieldContext_PlanDiscussion_content(ctx context.Cont
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "rawContent":
-				return ec.fieldContext_TaggedHTML_rawContent(ctx, field)
+				return ec.fieldContext_TaggedContent_rawContent(ctx, field)
 			case "tags":
-				return ec.fieldContext_TaggedHTML_tags(ctx, field)
+				return ec.fieldContext_TaggedContent_tags(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type TaggedHTML", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type TaggedContent", field.Name)
 		},
 	}
 	return fc, nil
@@ -49179,8 +48591,8 @@ func (ec *executionContext) fieldContext_Tag_modifiedDts(ctx context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedHTML_rawContent(ctx context.Context, field graphql.CollectedField, obj *models.TaggedHTML) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TaggedHTML_rawContent(ctx, field)
+func (ec *executionContext) _TaggedContent_rawContent(ctx context.Context, field graphql.CollectedField, obj *models.TaggedContent) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedContent_rawContent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -49193,7 +48605,7 @@ func (ec *executionContext) _TaggedHTML_rawContent(ctx context.Context, field gr
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.TaggedHTML().RawContent(rctx, obj)
+		return ec.resolvers.TaggedContent().RawContent(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -49210,9 +48622,9 @@ func (ec *executionContext) _TaggedHTML_rawContent(ctx context.Context, field gr
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TaggedHTML_rawContent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TaggedContent_rawContent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "TaggedHTML",
+		Object:     "TaggedContent",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -49223,8 +48635,8 @@ func (ec *executionContext) fieldContext_TaggedHTML_rawContent(ctx context.Conte
 	return fc, nil
 }
 
-func (ec *executionContext) _TaggedHTML_tags(ctx context.Context, field graphql.CollectedField, obj *models.TaggedHTML) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TaggedHTML_tags(ctx, field)
+func (ec *executionContext) _TaggedContent_tags(ctx context.Context, field graphql.CollectedField, obj *models.TaggedContent) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaggedContent_tags(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -49254,9 +48666,9 @@ func (ec *executionContext) _TaggedHTML_tags(ctx context.Context, field graphql.
 	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TaggedHTML_tags(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TaggedContent_tags(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "TaggedHTML",
+		Object:     "TaggedContent",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -52167,7 +51579,7 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			data, err := ec.unmarshalNTaggedHTMLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx, v)
+			data, err := ec.unmarshalNTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -52373,7 +51785,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			data, err := ec.unmarshalNTaggedHTMLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx, v)
+			data, err := ec.unmarshalNTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -54717,37 +54129,9 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updatePlanDiscussion":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanDiscussion(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanDiscussion":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanDiscussion(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "createDiscussionReply":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createDiscussionReply(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updateDiscussionReply":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateDiscussionReply(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deleteDiscussionReply":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deleteDiscussionReply(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -61084,17 +60468,17 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 	return out
 }
 
-var taggedHTMLImplementors = []string{"TaggedHTML"}
+var taggedContentImplementors = []string{"TaggedContent"}
 
-func (ec *executionContext) _TaggedHTML(ctx context.Context, sel ast.SelectionSet, obj *models.TaggedHTML) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, taggedHTMLImplementors)
+func (ec *executionContext) _TaggedContent(ctx context.Context, sel ast.SelectionSet, obj *models.TaggedContent) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, taggedContentImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("TaggedHTML")
+			out.Values[i] = graphql.MarshalString("TaggedContent")
 		case "rawContent":
 			field := field
 
@@ -61104,7 +60488,7 @@ func (ec *executionContext) _TaggedHTML(ctx context.Context, sel ast.SelectionSe
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._TaggedHTML_rawContent(ctx, field, obj)
+				res = ec._TaggedContent_rawContent(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -61132,7 +60516,7 @@ func (ec *executionContext) _TaggedHTML(ctx context.Context, sel ast.SelectionSe
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "tags":
-			out.Values[i] = ec._TaggedHTML_tags(ctx, field, obj)
+			out.Values[i] = ec._TaggedContent_tags(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -63076,10 +62460,6 @@ func (ec *executionContext) marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋm
 		return graphql.Null
 	}
 	return ec._DiscussionReply(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalNDiscussionReplyChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
-	return v.(map[string]interface{}), nil
 }
 
 func (ec *executionContext) unmarshalNDiscussionReplyCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyCreateInput(ctx context.Context, v interface{}) (model.DiscussionReplyCreateInput, error) {
@@ -65029,10 +64409,6 @@ func (ec *executionContext) marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmi
 	return ec._PlanDiscussion(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNPlanDiscussionChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
-	return v.(map[string]interface{}), nil
-}
-
 func (ec *executionContext) unmarshalNPlanDiscussionCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionCreateInput(ctx context.Context, v interface{}) (model.PlanDiscussionCreateInput, error) {
 	res, err := ec.unmarshalInputPlanDiscussionCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -65922,13 +65298,13 @@ func (ec *executionContext) marshalNTagType2githubᚗcomᚋcmsgovᚋmintᚑapp�
 	return res
 }
 
-func (ec *executionContext) unmarshalNTaggedHTMLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx context.Context, v interface{}) (models.TaggedHTMLInput, error) {
-	var res models.TaggedHTMLInput
+func (ec *executionContext) unmarshalNTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx context.Context, v interface{}) (models.TaggedHTML, error) {
+	var res models.TaggedHTML
 	err := res.UnmarshalGQLContext(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNTaggedHTMLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx context.Context, sel ast.SelectionSet, v models.TaggedHTMLInput) graphql.Marshaler {
+func (ec *executionContext) marshalNTaggedHTML2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx context.Context, sel ast.SelectionSet, v models.TaggedHTML) graphql.Marshaler {
 	return graphql.WrapContextMarshaler(ctx, v)
 }
 
@@ -69593,34 +68969,18 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
+func (ec *executionContext) marshalOTaggedContent2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedContent(ctx context.Context, sel ast.SelectionSet, v *models.TaggedContent) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._TaggedContent(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalOTaggedEntity2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedEntity(ctx context.Context, sel ast.SelectionSet, v models.TaggedEntity) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._TaggedEntity(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOTaggedHTML2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx context.Context, sel ast.SelectionSet, v *models.TaggedHTML) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._TaggedHTML(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalOTaggedHTMLInput2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx context.Context, v interface{}) (*models.TaggedHTMLInput, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var res = new(models.TaggedHTMLInput)
-	err := res.UnmarshalGQLContext(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOTaggedHTMLInput2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTMLInput(ctx context.Context, sel ast.SelectionSet, v *models.TaggedHTMLInput) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return graphql.WrapContextMarshaler(ctx, v)
 }
 
 func (ec *executionContext) unmarshalOTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, v interface{}) (models.TaskListSection, error) {

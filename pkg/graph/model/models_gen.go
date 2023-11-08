@@ -32,7 +32,7 @@ type CurrentUser struct {
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
-	Content             models.TaggedHTMLInput     `json:"content"`
+	Content             models.TaggedHTML          `json:"content"`
 	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
@@ -72,7 +72,7 @@ type PlanCrTdlCreateInput struct {
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
 	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
-	Content             models.TaggedHTMLInput     `json:"content"`
+	Content             models.TaggedHTML          `json:"content"`
 	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }

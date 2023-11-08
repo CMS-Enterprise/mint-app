@@ -2,12 +2,14 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/google/uuid"
 
@@ -17,7 +19,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// CreatePlanDiscussion implements resolver logic to create a plan Discussion object
+// CreatePlanDiscussion implements resolver logic to create a plan Discussion object. It will also save any Mentions to the tag table
 func CreatePlanDiscussion(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -27,12 +29,13 @@ func CreatePlanDiscussion(
 	input *model.PlanDiscussionCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.PlanDiscussion, error) {
 	planDiscussion := models.NewPlanDiscussion(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.ModelPlanID,
-		string(input.Content.RawContent),
+		input.Content,
 		input.UserRole,
 		input.UserRoleDescription,
 	)
@@ -42,10 +45,31 @@ func CreatePlanDiscussion(
 		return nil, err
 	}
 
-	result, err := store.PlanDiscussionCreate(logger, planDiscussion)
+	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &planDiscussion.Content, getAccountInformation)
+
+	if err != nil {
+		return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
+	}
+
+	discussion, tx, err := store.PlanDiscussionCreate(logger, planDiscussion, nil)
+	if tx != nil {
+		defer tx.Rollback()
+	}
+
 	if err != nil {
 		return nil, err
 	}
+
+	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "plan_discussion", discussion.ID, planDiscussion.Content.Mentions, tx)
+	if err != nil {
+		return discussion, err
+	}
+	discussion.Content.Tags = tags
+	err = tx.Commit()
+	if err != nil {
+		return nil, err
+	}
+	commonName := principal.Account().CommonName
 
 	// Send email to MINT Dev Team
 	go func() {
@@ -57,18 +81,19 @@ func CreatePlanDiscussion(
 			emailTemplateService,
 			addressBook,
 			addressBook.MINTTeamEmail,
-			result,
+			discussion,
 			input.ModelPlanID,
+			commonName,
 		)
 
 		if sendEmailErr != nil {
 			logger.Error("error sending plan discussion created email to MINT Team",
-				zap.String("discussionID", result.ID.String()),
+				zap.String("discussionID", discussion.ID.String()),
 				zap.Error(sendEmailErr))
 		}
 	}()
 
-	return result, err
+	return discussion, err
 }
 
 func sendPlanDiscussionCreatedEmail(
@@ -81,6 +106,7 @@ func sendPlanDiscussionCreatedEmail(
 	receiverEmail string,
 	planDiscussion *models.PlanDiscussion,
 	modelPlanID uuid.UUID,
+	createdByUserName string,
 ) error {
 	if emailService == nil || emailTemplateService == nil {
 		return nil
@@ -90,15 +116,16 @@ func sendPlanDiscussionCreatedEmail(
 	if err != nil {
 		return err
 	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
-		DiscussionContent: planDiscussion.Content,
-	})
+	modelPlan, err := ModelPlanGetByIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
+		ModelName:         modelPlan.ModelName,
+		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
+		UserName:          createdByUserName,
+	})
 	if err != nil {
 		return err
 	}
@@ -107,7 +134,7 @@ func sendPlanDiscussionCreatedEmail(
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
 		UserName:          planDiscussion.CreatedByUserAccount(ctx).CommonName,
-		DiscussionContent: planDiscussion.Content,
+		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
 	})
@@ -123,7 +150,9 @@ func sendPlanDiscussionCreatedEmail(
 }
 
 // UpdatePlanDiscussion implements resolver logic to update a plan Discussion object
+// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
+
 	// Get existing discussion
 	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
 	if err != nil {
@@ -140,6 +169,7 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 }
 
 // DeletePlanDiscussion implements resolver logic to Delete a plan Discussion object
+// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
 
 	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
@@ -156,16 +186,18 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(
+	ctx context.Context,
 	logger *zap.Logger,
 	input *model.DiscussionReplyCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.DiscussionReply, error) {
 	discussionReply := models.NewDiscussionReply(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.DiscussionID,
-		string(input.Content.RawContent),
+		input.Content,
 		input.UserRole,
 		input.UserRoleDescription,
 	)
@@ -174,12 +206,34 @@ func CreateDiscussionReply(
 	if err != nil {
 		return nil, err
 	}
+	err = UpdateTaggedHTMLMentionsAndRawContent(ctx, store, &discussionReply.Content, getAccountInformation)
 
-	result, err := store.DiscussionReplyCreate(logger, discussionReply)
-	return result, err
+	if err != nil {
+		return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
+	}
+
+	reply, tx, err := store.DiscussionReplyCreate(logger, discussionReply, nil)
+	if tx != nil {
+		defer tx.Rollback()
+	}
+	if err != nil {
+		return reply, err
+	}
+	tags, _, err := TagCollectionCreate(logger, store, principal, "content", "discussion_reply", reply.ID, discussionReply.Content.Mentions, tx)
+	if err != nil {
+		return reply, err
+	}
+	reply.Content.Tags = tags
+	err = tx.Commit()
+	if err != nil {
+		return nil, err
+	}
+
+	return reply, err
 }
 
 // UpdateDiscussionReply implements resolver logic to update a Discussion reply object
+// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
 	// Get existing reply
 	existingReply, err := store.DiscussionReplyByID(logger, id)
@@ -196,6 +250,7 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 }
 
 // DeleteDiscussionReply implements resolver logic to Delete a Discussion reply object
+// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
 	existingReply, err := store.DiscussionReplyByID(logger, id)
 	if err != nil {

@@ -399,7 +399,10 @@ export interface GetAllModelData_modelPlanCollection_collaborators {
 }
 
 export interface GetAllModelData_modelPlanCollection_discussions_content {
-  __typename: "TaggedHTML";
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
   rawContent: string;
 }
 
@@ -409,7 +412,10 @@ export interface GetAllModelData_modelPlanCollection_discussions_createdByUserAc
 }
 
 export interface GetAllModelData_modelPlanCollection_discussions_replies_content {
-  __typename: "TaggedHTML";
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
   rawContent: string;
 }
 

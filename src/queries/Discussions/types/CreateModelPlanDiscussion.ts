@@ -10,7 +10,10 @@ import { PlanDiscussionCreateInput } from "./../../../types/graphql-global-types
 // ====================================================
 
 export interface CreateModelPlanDiscussion_createPlanDiscussion_content {
-  __typename: "TaggedHTML";
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
   rawContent: string;
 }
 
