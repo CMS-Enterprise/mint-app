@@ -32,6 +32,10 @@ type Principal interface {
 	// is authorized to operate within MINT as a MAC user
 	AllowMAC() bool
 
+	// AllowNonCMSUser says whether this principal
+	// is a NON-CMS user, who should have some limited access
+	AllowNonCMSUser() bool
+
 	Account() *UserAccount
 }
 
@@ -67,6 +71,12 @@ func (*anonymous) AllowMAC() bool {
 	return false
 }
 
+// AllowNonCMSUser says whether this principal
+// is a NON-CMS user, who should have some limited access
+func (*anonymous) AllowNonCMSUser() bool {
+	return false
+}
+
 func (*anonymous) Account() *UserAccount {
 	return nil
 }
@@ -79,6 +89,7 @@ type ApplicationPrincipal struct {
 	JobCodeUSER       bool
 	JobCodeASSESSMENT bool
 	JobCodeMAC        bool
+	JobCodeNonCMS     bool
 	UserAccount       *UserAccount
 }
 
@@ -114,6 +125,12 @@ func (p *ApplicationPrincipal) AllowASSESSMENT() bool {
 // is authorized to operate within MINT as a MAC user
 func (p *ApplicationPrincipal) AllowMAC() bool {
 	return p.JobCodeMAC
+}
+
+// AllowNonCMSUser says whether this principal
+// is authorized to operate within MINT as a MAC user
+func (p *ApplicationPrincipal) AllowNonCMSUser() bool {
+	return p.JobCodeNonCMS
 }
 
 // Account returns the user account of the context of the user who made the request
