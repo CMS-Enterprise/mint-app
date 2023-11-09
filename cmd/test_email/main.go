@@ -20,16 +20,17 @@ func main() {
 	addressBook := initializeAddressBook()
 
 	// Running all test functions
-	sendPlanDiscussionCreatedTestEmail(emailService, templateService, addressBook)
 	sendModelPlanCreatedEmailTest(emailService, templateService)
+	// Discussion emails
+	sendPlanDiscussionCreatedTestEmail(emailService, templateService, addressBook)
+	sendPlanDiscussionTaggedUserTestEmail(emailService, templateService, addressBook)
+	sendPlanDiscussionTaggedSolutionTestEmail(emailService, templateService, addressBook)
+
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, templateService, addressBook)
 	sendFeedbackEmail(emailService, templateService, addressBook)
 	reportAProblemEmail(emailService, templateService, addressBook)
-
-	sendPlanDiscussionTaggedUserTestEmail(emailService, templateService, addressBook)
-	// sendPlanDiscussionTaggedSolutionTestEmail(emailService, templateService, addressBook)
 
 }
 

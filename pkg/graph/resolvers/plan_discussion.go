@@ -6,6 +6,8 @@ import (
 
 	"go.uber.org/zap"
 
+	"github.com/samber/lo"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -150,18 +152,18 @@ func sendPlanDiscussionTagEmails(
 		case models.TagTypePossibleSolution:
 			// TODO can we store references to the tagged entity when we get the entities in the database in the earlier function? Less redundant DB queries this way
 			// soln, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
-			_, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
+			soln, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
 			}
 			// contacts, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *tag.EntityIntID)
-			_, err = PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *tag.EntityIntID)
+			pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *tag.EntityIntID)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
 			}
-			err = sendPlanDiscussionTaggedSolutionEmail()
+			err = sendPlanDiscussionTaggedSolutionEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, createdByUserName, createdByUserRole, soln, pocs)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -227,7 +229,57 @@ func sendPlanDiscussionTaggedUserEmail(
 	}
 	return nil
 }
-func sendPlanDiscussionTaggedSolutionEmail() error {
+func sendPlanDiscussionTaggedSolutionEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	tHTML models.TaggedHTML,
+	discussionID uuid.UUID,
+	modelPlan *models.ModelPlan,
+	createdByUserName string,
+	createdByUserRole string,
+	solution *models.PossibleOperationalSolution,
+	pocs []*models.PossibleOperationalSolutionContact,
+) error {
+
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionTaggedPossibleSolutionTemplateName)
+	if err != nil {
+		return err
+	}
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionTaggedSolutionSubjectContent{
+		SolutionName:      solution.Name,
+		ModelName:         modelPlan.ModelName,
+		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation)})
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionTaggedSolutionBodyContent{
+		ClientAddress:     emailService.GetConfig().GetClientAddress(),
+		DiscussionID:      discussionID.String(),
+		UserName:          createdByUserName,
+		DiscussionContent: tHTML.RawContent.ToTemplate(),
+		ModelID:           modelPlan.ID.String(),
+		ModelName:         modelPlan.ModelName,
+		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
+		Role:              createdByUserRole,
+		SolutionName:      solution.Name})
+	if err != nil {
+		return err
+	}
+	// pocEmailAddress
+	pocEmailAddress := lo.Map(pocs, func(poc *models.PossibleOperationalSolutionContact, _ int) string {
+		return poc.Email
+	})
+
+	err = emailService.Send(addressBook.DefaultSender, pocEmailAddress, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
