@@ -114,11 +114,11 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 		return fmt.Errorf(" invalid operation. attempted to fetch user account information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
 	}
 	isMacUser := false
-	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
+	taggedUserAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
 	if err != nil {
 		return fmt.Errorf("unable to get tagged user account reference. error : %w", err)
 	}
-	mention.EntityUUID = &collabAccount.ID
+	mention.EntityUUID = &taggedUserAccount.ID
 	mention.EntityDB = mention.EntityUUID
 	return nil
 }

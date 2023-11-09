@@ -83,3 +83,31 @@ type DiscussionRoleSelection struct {
 	UserRole            DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string            `json:"userRoleDescription" db:"user_role_description"`
 }
+
+// Humanize converts the enumeration of the Discussion User Role and the description for NONE OF THE ABOVE
+// And converts it to human readable text.
+func (r DiscussionUserRole) Humanize(userRoleDescription string) string {
+	switch r {
+	case DiscussionRoleCmsSystemServiceTeam:
+		return "CMS System/Service Team"
+	case DiscussionRoleItArchitect:
+		return "IT Architect"
+	case DiscussionRoleLeadership:
+		return "Leadership"
+	case DiscussionRoleMedicareAdministrativeContractor:
+		return "Medicare Administrative Contractor"
+	case DiscussionRoleMintTeam:
+		return "MINT Team"
+	case DiscussionRoleModelItLead:
+		return "Model IT Lead"
+	case DiscussionRoleModelTeam:
+		return "Model Team"
+	case DiscussionRoleSharedSystemMaintainer:
+		return "Shared System Maintainer"
+	case DiscussionRoleNoneOfTheAbove:
+		return userRoleDescription
+	default:
+		return string(r)
+	}
+
+}

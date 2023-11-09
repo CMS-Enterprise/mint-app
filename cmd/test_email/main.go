@@ -28,6 +28,9 @@ func main() {
 	sendFeedbackEmail(emailService, templateService, addressBook)
 	reportAProblemEmail(emailService, templateService, addressBook)
 
+	sendPlanDiscussionTaggedUserTestEmail(emailService, templateService, addressBook)
+	// sendPlanDiscussionTaggedSolutionTestEmail(emailService, templateService, addressBook)
+
 }
 
 func noErr(err error) {
@@ -152,6 +155,7 @@ func sendPlanDiscussionCreatedEmail(
 		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
 		ModelID:           modelPlanID.String(),
 		ModelName:         "Test Model Plan Name", // Note: Hardcoded for the test. In real use, it would be dynamic.
+		Role:              planDiscussion.UserRole.Humanize(models.ValueOrEmpty(planDiscussion.UserRoleDescription)),
 	})
 	if err != nil {
 		return err

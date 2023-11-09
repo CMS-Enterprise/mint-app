@@ -1,0 +1,34 @@
+{{template "shared_header.html"}}
+
+
+<h3>New discussion in</h3>
+<p>{{.ModelName}}</p>
+<br/>
+<table>
+  <tr>
+    <td>
+      <div class="container-border">
+        <h2>Discussion</h2>
+        <br/>
+        <p><b>{{.UserName}}</b></p>
+        <br/>
+        <p>{{.DiscussionContent}}</p>
+        <br/>
+        <br/>
+        <p style="font-weight: normal">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?discussionID={{.DiscussionID}}">
+            Respond to this discussion in MINT
+          </a>
+        </p>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<hr/>
+<br/>
+<p>You are receiving this email because you are a part of the
+  <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>
+  email group.
+</p>

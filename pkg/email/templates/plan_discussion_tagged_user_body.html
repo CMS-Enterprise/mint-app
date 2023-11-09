@@ -1,0 +1,47 @@
+{{template "shared_header.html"}}
+
+
+<h3>You were tagged in</h3>
+<p>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </p>
+<br/>
+<table>
+  <tr>
+    <td>
+      <div class="container-border">
+        <h2>Discussion</h2>
+        <br/>
+        <p><b>{{.UserName}}</b></p>
+        <br/>
+        <p class="subtitle"> {{.Role}}</p>
+        <br/>
+        <p>{{.DiscussionContent}}</p>
+        <br/>
+        <br/>
+        <p style="font-weight: normal">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?discussionID={{.DiscussionID}}">
+            Respond to this discussion in MINT
+          </a>
+        </p>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<hr/>
+<br/>
+<p>You are receiving this email because you were tagged in a Discussion.
+</p>
+<br/>
+<div class="access-banner">
+  <p>
+      If you don’t have access to MINT yet, you will need to request access.
+
+      <br/>
+      <br/>
+
+      <a href="{{.ClientAddress}}/how-to-get-access" class="link" style="font-weight: normal">
+      Learn how to get access
+      </a>
+  </p>
+</div>

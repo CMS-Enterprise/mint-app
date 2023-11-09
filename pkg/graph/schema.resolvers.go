@@ -298,7 +298,16 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreateDiscussionReply(ctx, logger, &input, principal, r.store, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
+	return resolvers.CreateDiscussionReply(
+		ctx,
+		logger,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		&input,
+		principal,
+		r.store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.

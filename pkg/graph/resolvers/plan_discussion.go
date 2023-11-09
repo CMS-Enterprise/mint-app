@@ -70,20 +70,24 @@ func CreatePlanDiscussion(
 		return nil, err
 	}
 	commonName := principal.Account().CommonName
+	modelPlan, err := ModelPlanGetByIDLOADER(ctx, input.ModelPlanID)
+	if err != nil {
+		return discussion, err
+	}
 
 	// Send email to MINT Dev Team
 	go func() {
 		sendEmailErr := sendPlanDiscussionCreatedEmail(
 			ctx,
-			store,
 			logger,
 			emailService,
 			emailTemplateService,
 			addressBook,
 			addressBook.MINTTeamEmail,
 			discussion,
-			input.ModelPlanID,
+			modelPlan,
 			commonName,
+			input.UserRole.Humanize(models.ValueOrEmpty(input.UserRoleDescription)),
 		)
 
 		if sendEmailErr != nil {
@@ -93,30 +97,157 @@ func CreatePlanDiscussion(
 		}
 	}()
 
-	return discussion, err
-}
+	// send an email for each tag, which is unique compared to the mention
+	// TODO: make this async
+	err = sendPlanDiscussionTagEmails(
+		ctx,
+		store,
+		logger,
+		emailService,
+		emailTemplateService,
+		addressBook,
+		discussion.Content,
+		discussion.ID,
+		modelPlan,
+		commonName,
+		discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription)))
+	if err != nil {
+		return discussion, nil
+	}
 
-func sendPlanDiscussionCreatedEmail(
+	return discussion, nil
+}
+func sendPlanDiscussionTagEmails(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
+	tHTML models.TaggedHTML,
+	discussionID uuid.UUID,
+	modelPlan *models.ModelPlan,
+	createdByUserName string,
+	createdByUserRole string,
+) error {
+
+	var errs []error
+	for _, tag := range tHTML.Tags {
+
+		switch tag.TagType {
+		case models.TagTypeUserAccount:
+			//TODO
+			taggedUserAccount, err := UserAccountGetByIDLOADER(ctx, *tag.EntityUUID)
+			if err != nil {
+				errs = append(errs, err) //non blocking
+				continue
+			}
+			err = sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
+			if err != nil {
+				errs = append(errs, err) //non blocking
+				continue
+			}
+		case models.TagTypePossibleSolution:
+			// TODO can we store references to the tagged entity when we get the entities in the database in the earlier function? Less redundant DB queries this way
+			// soln, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
+			_, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
+			if err != nil {
+				errs = append(errs, err) //non blocking
+				continue
+			}
+			// contacts, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *tag.EntityIntID)
+			_, err = PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *tag.EntityIntID)
+			if err != nil {
+				errs = append(errs, err) //non blocking
+				continue
+			}
+			err = sendPlanDiscussionTaggedSolutionEmail()
+			if err != nil {
+				errs = append(errs, err) //non blocking
+				continue
+			}
+
+		default:
+
+		}
+	}
+	if len(errs) > 1 {
+		return fmt.Errorf("error sending plan_discussion tag emails. First error: %v", errs[0])
+	}
+
+	return nil
+}
+func sendPlanDiscussionTaggedUserEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	tHTML models.TaggedHTML,
+	discussionID uuid.UUID,
+	modelPlan *models.ModelPlan,
+	taggedUser *authentication.UserAccount,
+	createdByUserName string,
+	createdByUserRole string,
+) error {
+
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionTaggedUserTemplateName)
+	if err != nil {
+		return err
+	}
+	//TODO fill out the email and send it
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionTaggedUserSubjectContent{
+		ModelName:         modelPlan.ModelName,
+		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
+	})
+	if err != nil {
+		return err
+	}
+
+	// TODO: fill out the body, figure out if we need discussion ID etc?
+	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionTaggedUserBodyContent{
+		ClientAddress:     emailService.GetConfig().GetClientAddress(),
+		DiscussionID:      discussionID.String(),
+		UserName:          createdByUserName,
+		DiscussionContent: tHTML.RawContent.ToTemplate(),
+		ModelID:           modelPlan.ID.String(),
+		ModelName:         modelPlan.ModelName,
+		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
+		Role:              createdByUserRole,
+	})
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(addressBook.DefaultSender, []string{taggedUser.Email}, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func sendPlanDiscussionTaggedSolutionEmail() error {
+	return nil
+}
+
+func sendPlanDiscussionCreatedEmail(
+	ctx context.Context,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	receiverEmail string,
 	planDiscussion *models.PlanDiscussion,
-	modelPlanID uuid.UUID,
+	modelPlan *models.ModelPlan,
 	createdByUserName string,
+	createdByUserRole string,
 ) error {
 	if emailService == nil || emailTemplateService == nil {
 		return nil
 	}
 
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionCreatedTemplateName)
-	if err != nil {
-		return err
-	}
-	modelPlan, err := ModelPlanGetByIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return err
 	}
@@ -133,10 +264,11 @@ func sendPlanDiscussionCreatedEmail(
 	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
-		UserName:          planDiscussion.CreatedByUserAccount(ctx).CommonName,
+		UserName:          createdByUserName,
 		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
+		Role:              createdByUserRole, //TODO verify with Natasha
 	})
 	if err != nil {
 		return err
@@ -188,6 +320,9 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 func CreateDiscussionReply(
 	ctx context.Context,
 	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	input *model.DiscussionReplyCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
@@ -227,6 +362,34 @@ func CreateDiscussionReply(
 	err = tx.Commit()
 	if err != nil {
 		return nil, err
+	}
+	// TODO: make this async
+	discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
+	if err != nil {
+		return reply, err
+	}
+	modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
+	if err != nil {
+		return reply, err
+	}
+	commonName := principal.Account().CommonName
+
+	err = sendPlanDiscussionTagEmails(
+		ctx,
+		store,
+		logger,
+		emailService,
+		emailTemplateService,
+		addressBook,
+		reply.Content,
+		reply.DiscussionID,
+		modelPlan,
+		commonName,
+		discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription)),
+	)
+
+	if err != nil {
+		return reply, nil
 	}
 
 	return reply, err
