@@ -10,6 +10,7 @@ import {
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import classNames from 'classnames';
+import { TagType } from 'gql/gen/graphql';
 import { sortBy } from 'lodash';
 
 import Alert from 'components/shared/Alert';
@@ -43,6 +44,9 @@ const CustomMention = Mention.extend({
     return {
       ...this.parent?.(),
       'data-id-db': {
+        default: ''
+      },
+      'tag-type': {
         default: ''
       }
     };
@@ -90,7 +94,8 @@ const MentionTextArea = ({
           res?.data?.searchOktaUsers?.map(user => {
             return {
               username: user.username,
-              displayName: `${user.displayName} (${user.username})`
+              displayName: `${user.displayName} (${user.username})`,
+              tagType: TagType.USER_ACCOUNT
             };
           }) || []
         ).concat(formatedSolutionMentions(query)),

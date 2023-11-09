@@ -1,4 +1,4 @@
-package graph
+package gqlresolvers
 
 import (
 	"context"

@@ -1,5 +1,6 @@
-import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { TagType } from 'gql/gen/graphql';
 
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 // Possible Util to extract only mentions from content
 export const getMentions = (data: any) => {
   const mentions: any = [];
@@ -37,9 +38,9 @@ export const formatedSolutionMentions = (query?: string) => {
   let mappedSolutions = helpSolutions.map(solution => {
     const acronym = solution.acronym ? ` (${solution.acronym})` : '';
     return {
-      username: solution.key,
+      username: solution.enum,
       displayName: `${solution.name}${acronym}`,
-      email: ''
+      tagType: TagType.POSSIBLE_SOLUTION
     };
   });
 

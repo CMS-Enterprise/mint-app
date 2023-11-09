@@ -39,7 +39,8 @@ const MentionList = forwardRef((props: any, ref) => {
     if (item) {
       props.command({
         id: item.username,
-        label: item.displayName
+        label: item.displayName,
+        'tag-type': item.tagType
       });
     }
   };

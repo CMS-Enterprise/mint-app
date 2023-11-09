@@ -19,6 +19,9 @@ import (
 // DowngradeAssessmentTeamKey is the Flag Key in LaunchDarkly for downgrading assessment team users
 const DowngradeAssessmentTeamKey = "downgradeAssessmentTeam"
 
+// DowngradeNonCMSKey is the Flag Key in LaunchDarkly for downgrading users with the NON-CMS job code
+const DowngradeNonCMSKey = "downgradeNonCMS"
+
 // Config has all the parts for creating a new LD Client
 type Config struct {
 	Source         appconfig.FlagSourceOption

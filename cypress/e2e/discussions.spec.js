@@ -41,12 +41,16 @@ describe('Discussion Center', () => {
 
     cy.contains('button', 'Save reply').should('be.disabled');
 
-    cy.get('#mention-editor')
-      .type('Model characteristics is located within the task list.')
-      .should(
-        'have.text',
-        'Model characteristics is located within the task list.'
-      );
+    cy.get('#user-role').should('not.be.disabled');
+
+    cy.get('#mention-editor').type(
+      'Model characteristics is located within the task list.'
+    );
+
+    cy.get('#mention-editor').should(
+      'have.text',
+      'Model characteristics is located within the task list.'
+    );
 
     cy.contains('button', 'Save reply').click();
 

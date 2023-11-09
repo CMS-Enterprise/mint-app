@@ -133,3 +133,57 @@ func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
 	suite.EqualValues(optionalNotes, document.OptionalNotes.String)
 	suite.Nil(document.DeletedAt)
 }
+
+func (suite *ResolverSuite) TestCollaboratorNonCMSCannotSeeRestrictedDocs() {
+	plan := suite.createModelPlan("Plan with Documents")
+
+	reader := bytes.NewReader([]byte("Some test file contents"))
+
+	restrictedDocInput := &model.PlanDocumentInput{
+		ModelPlanID: plan.ID,
+		FileData: graphql.Upload{
+			File:        reader,
+			Filename:    "restricted.docx",
+			Size:        reader.Size(),
+			ContentType: "application/msword",
+		},
+		Restricted:   true,
+		DocumentType: models.DocumentTypeConceptPaper,
+		// OtherTypeDescription is nil
+		// OptionalNotes is nil
+	}
+	_, err := PlanDocumentCreate(suite.testConfigs.Logger, restrictedDocInput, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+
+	unRestrictedDocInput := &model.PlanDocumentInput{
+		ModelPlanID: plan.ID,
+		FileData: graphql.Upload{
+			File:        reader,
+			Filename:    "unrestricted.docx",
+			Size:        reader.Size(),
+			ContentType: "application/msword",
+		},
+		Restricted:   false,
+		DocumentType: models.DocumentTypeConceptPaper,
+		// OtherTypeDescription is nil
+		// OptionalNotes is nil
+	}
+	unRestrictedDoc, err := PlanDocumentCreate(suite.testConfigs.Logger, unRestrictedDocInput, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+
+	// "TEST", by default (from testConfigs defaults) is the creator of the model plan, and is, therefore, already a collaborator
+	// So we don't need to make one!
+
+	// create a principal for "TEST" that DOESN'T have the non-CMS job code -- they SHOULD be able to see both docs
+	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	docs, err := PlanDocumentsReadByModelPlanID(suite.testConfigs.Logger, plan.ID, principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+	suite.Len(docs, 2)
+
+	// modify the principal for "TEST" so that it DOES have the non-CMS job code -- they now SHOULD NOT be able to see both docs (only the non-restricted one)
+	principal.JobCodeNonCMS = true
+	docs, err = PlanDocumentsReadByModelPlanID(suite.testConfigs.Logger, plan.ID, principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+	suite.Len(docs, 1)
+	suite.Equal(docs[0].ID, unRestrictedDoc.ID)
+}
