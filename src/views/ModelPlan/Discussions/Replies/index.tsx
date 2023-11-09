@@ -85,7 +85,7 @@ const Replies = ({
                     <TruncatedText
                       id={`reply-content-${reply.id}`}
                       text={reply.content?.rawContent ?? ''}
-                      charLimit={290}
+                      charLimit={500}
                       className="padding-bottom-3"
                     />
                   </div>
