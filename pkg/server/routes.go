@@ -3,12 +3,13 @@ package server
 import (
 	"context"
 	"errors"
-	"github.com/cmsgov/mint-app/pkg/graph/gqlresolvers"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/cmsgov/mint-app/pkg/graph/gqlresolvers"
 
 	"github.com/opensearch-project/opensearch-go/v2"
 
