@@ -76,6 +76,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleWareFactory(verify func(j
 	// Create dummy LD Client for use in the middleware factory
 	testData := ldtestdata.DataSource()
 	testData.Update(testData.Flag(flags.DowngradeAssessmentTeamKey).BooleanFlag().VariationForAll(false))
+	testData.Update(testData.Flag(flags.DowngradeNonCMSKey).BooleanFlag().VariationForAll(false))
 	ldConfig := ld.Config{
 		DataSource: testData,
 	}
@@ -181,6 +182,27 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 		s.True(princ.JobCodeUSER)
 		s.True(princ.JobCodeASSESSMENT)
 		s.False(princ.JobCodeMAC)
+		s.False(princ.JobCodeNonCMS)
+	})
+
+	s.Run("Non-CMS has base user permissions without needing base user job code", func() {
+		faktory := s.buildMiddleWareFactory(func(jwt string) (*jwtverifier.Jwt, error) {
+			return nil, errors.New("invalid token")
+		})
+		jwt := validJwt()
+		jwt.Claims["mint-groups"] = []interface{}{"MINT_NON_CMS_NONPROD"}
+
+		eJwt := authentication.EnhancedJwt{
+			JWT:       jwt,
+			AuthToken: "Bearer isNotABear",
+		}
+		ctx := appcontext.WithEnhancedJWT(context.Background(), eJwt)
+		princ, err := faktory.newPrincipal(ctx)
+		s.NoError(err)
+		s.True(princ.JobCodeUSER)
+		s.False(princ.JobCodeASSESSMENT)
+		s.False(princ.JobCodeMAC)
+		s.True(princ.JobCodeNonCMS)
 	})
 
 	s.Run("User only have USER assessment permissions", func() {

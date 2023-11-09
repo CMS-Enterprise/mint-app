@@ -89,7 +89,8 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal 
 		return nil, err
 	}
 
-	if !isCollaborator {
+	// Non-collaborators OR anyone with the Non-CMS User job code cannot see restricted documents
+	if !isCollaborator || principal.AllowNonCMSUser() {
 		notRestrictedDocuments, err := store.PlanDocumentsReadByModelPlanIDNotRestricted(logger, id, s3Client)
 
 		if err != nil {
@@ -122,7 +123,8 @@ func PlanDocumentsReadBySolutionID(
 		return nil, err
 	}
 
-	if !isCollaborator {
+	// Non-collaborators OR anyone with the Non-CMS User job code cannot see restricted documents
+	if !isCollaborator || principal.AllowNonCMSUser() {
 		notRestrictedDocuments, err := store.PlanDocumentsReadBySolutionIDNotRestricted(logger, id, s3Client)
 
 		if err != nil {

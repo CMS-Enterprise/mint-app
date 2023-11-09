@@ -17,42 +17,74 @@ func TestPrincipal(t *testing.T) {
 		expectID              string
 		expectAllowUser       bool
 		expectAllowAssessment bool
+		expectAllowNonCMS     bool
 	}{
 		"anonymous is unauthorized": {
 			p:                     ANON,
 			expectID:              anonID,
 			expectAllowUser:       false,
 			expectAllowAssessment: false,
+			expectAllowNonCMS:     false,
 		},
 		"regular eua user": {
 			p: &ApplicationPrincipal{
 				Username:          id,
 				JobCodeUSER:       true,
 				JobCodeASSESSMENT: false,
+				JobCodeNonCMS:     false,
 			},
 			expectID:              id,
 			expectAllowUser:       true,
 			expectAllowAssessment: false,
+			expectAllowNonCMS:     false,
 		},
 		"assessment user": {
 			p: &ApplicationPrincipal{
 				Username:          id,
 				JobCodeUSER:       false,
 				JobCodeASSESSMENT: true,
+				JobCodeNonCMS:     false,
 			},
 			expectID:              id,
 			expectAllowUser:       false,
 			expectAllowAssessment: true,
+			expectAllowNonCMS:     false,
 		},
-		"both users": {
+		"non-cms user only": {
+			p: &ApplicationPrincipal{
+				Username:          id,
+				JobCodeUSER:       false,
+				JobCodeASSESSMENT: false,
+				JobCodeNonCMS:     true,
+			},
+			expectID:              id,
+			expectAllowUser:       false,
+			expectAllowAssessment: false,
+			expectAllowNonCMS:     true,
+		},
+		"both user and assessment": {
 			p: &ApplicationPrincipal{
 				Username:          id,
 				JobCodeUSER:       true,
 				JobCodeASSESSMENT: true,
+				JobCodeNonCMS:     false,
 			},
 			expectID:              id,
 			expectAllowUser:       true,
 			expectAllowAssessment: true,
+			expectAllowNonCMS:     false,
+		},
+		"both user and non-cms": {
+			p: &ApplicationPrincipal{
+				Username:          id,
+				JobCodeUSER:       true,
+				JobCodeASSESSMENT: false,
+				JobCodeNonCMS:     true,
+			},
+			expectID:              id,
+			expectAllowUser:       true,
+			expectAllowAssessment: false,
+			expectAllowNonCMS:     true,
 		},
 	}
 
