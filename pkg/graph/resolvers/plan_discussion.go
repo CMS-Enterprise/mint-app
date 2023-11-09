@@ -385,7 +385,7 @@ func CreateDiscussionReply(
 		reply.DiscussionID,
 		modelPlan,
 		commonName,
-		discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription)),
+		reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
 	)
 
 	if err != nil {
