@@ -75,12 +75,10 @@ func TaggedEntityGet(
 
 // UpdateTaggedHTMLMentionsAndRawContent updates the tagged html with the correct entity ids, and updates the RAW HTMl with the new representation of the mentions
 // Both the raw content as well as the the individual mentions are updated as a result of this method
+// The databaseID will be updated every time regardless of it was set in the html tag.
 func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTML, getAccountInformation userhelpers.GetAccountInfoFunc) error {
 
 	for _, mention := range tHTML.Mentions {
-		if mention.EntityDB != nil && mention.EntityDB != "" { // Check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
-			continue
-		}
 		tagType := mention.Type
 
 		// Conditionally set the entity DB by tag type
