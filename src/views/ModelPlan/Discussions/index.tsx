@@ -123,23 +123,9 @@ const Discussions = ({
     );
 
     if (discussionToReply && !loading) {
-      if (discussionToReply.replies.length === 0) {
-        setReply(discussionToReply);
-      } else {
-        setDiscussionReplyID(null);
-        queryParams.delete('discussionID');
-        history.replace({
-          search: queryParams.toString()
-        });
-        setInitQuestion(false);
-        setDiscussionStatusMessage(
-          t('alreadyAnswered', {
-            question: discussionToReply.content?.rawContent
-          })
-        );
-      }
+      setReply(discussionToReply);
     }
-  }, [discussionReplyID, discussions, loading, queryParams, history, t]);
+  }, [discussionReplyID, discussions, loading]);
 
   // Hook used to conditionally render each discussionType by its setter method
   useEffect(() => {
