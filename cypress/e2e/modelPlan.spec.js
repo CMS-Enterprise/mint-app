@@ -19,7 +19,7 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators\/add/);
     });
 
     cy.get('[data-testid="page-loading"]').should('not.exist');

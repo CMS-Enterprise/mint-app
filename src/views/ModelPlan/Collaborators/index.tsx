@@ -75,8 +75,12 @@ export const CollaboratorsContent = () => {
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
   const history = useHistory();
-  const location = useLocation<{ previousPage: string }>();
-  const { previousPage } = location.state || {};
+
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+
+  const manageOrAdd = params.get('view') || 'manage';
 
   const { message, showMessageOnNextPage } = useMessage();
 
@@ -214,13 +218,11 @@ export const CollaboratorsContent = () => {
 
             <Breadcrumbs
               items={
-                previousPage === 'task-list'
-                  ? breadcrumbsFromTaskList
-                  : breadcrumbs
+                manageOrAdd === 'manage' ? breadcrumbsFromTaskList : breadcrumbs
               }
             />
 
-            {previousPage === 'task-list' ? (
+            {manageOrAdd === 'manage' ? (
               <>
                 <PageHeading className="margin-top-4 margin-bottom-2">
                   {collaboratorsMiscT('manageModelTeam')}
@@ -259,12 +261,7 @@ export const CollaboratorsContent = () => {
             <UswdsReactLink
               className="usa-button margin-bottom-2"
               variant="unstyled"
-              to={{
-                pathname: `/models/${modelID}/collaborators/add-collaborator`,
-                state: {
-                  previousPage: previousPage === 'task-list' ? 'task-list' : ''
-                }
-              }}
+              to={`/models/${modelID}/collaborators/add-collaborator?view=${manageOrAdd}`}
             >
               {collaboratorsMiscT('addTeamMemberButton')}
             </UswdsReactLink>
@@ -288,7 +285,7 @@ export const CollaboratorsContent = () => {
                 />
               ))}
 
-            {previousPage !== 'task-list' && (
+            {manageOrAdd === 'add' && (
               <div className="margin-top-5 display-block">
                 <UswdsReactLink
                   data-testid="button--back"
