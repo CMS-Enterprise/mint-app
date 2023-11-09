@@ -39,7 +39,9 @@ const ContactInfo = ({
       </p>
 
       {collaborators
-        .filter(collaborator => collaborator.teamRole === TeamRole.MODEL_LEAD)
+        .filter(collaborator =>
+          collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
+        )
         .map(collaborator => {
           return (
             <div

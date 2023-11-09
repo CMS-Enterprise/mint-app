@@ -1,5 +1,8 @@
+import { TeamRole } from 'gql/gen/graphql';
 import i18next from 'i18next';
+import { orderBy } from 'lodash';
 
+import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import {
   DocumentType,
@@ -130,12 +133,14 @@ export const mapMultiSelectOptions = (
 // Used to map MultiSelect options from Enums
 export const composeMultiSelectOptions = (
   translationObject: Record<string, string>,
-  sublabels?: Record<string, string>
+  sublabels?: Record<string, string>,
+  disabledValue?: string
 ) =>
   getKeys(translationObject).map(key => ({
     value: key,
     label: translationObject[key],
-    subLabel: sublabels ? sublabels[key] : null
+    subLabel: sublabels ? sublabels[key] : null,
+    isDisabled: key === disabledValue
   }));
 
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
@@ -205,3 +210,28 @@ export const getUserInitials = (user: string) =>
 // Check if a single character is a valid letter
 export const returnValidLetter = (str: string) =>
   str.length === 1 && str.match(/[a-z]/i) ? str : '';
+
+const orderByLastName = (object: any[], order?: boolean | 'asc' | 'desc') =>
+  orderBy(object, item => item.userAccount.commonName.split(' ')[1], [
+    order ?? false
+  ]);
+
+export const collaboratorsOrderedByModelLeads = (
+  collab: GetCollaboratorsType[],
+  order?: boolean | 'asc' | 'desc'
+) => {
+  const modelLeads = orderByLastName(
+    collab.filter(
+      c => c.teamRoles.includes(TeamRole.MODEL_LEAD),
+      order ?? false
+    )
+  );
+  const everyoneElse = orderByLastName(
+    collab.filter(
+      c => !c.teamRoles.includes(TeamRole.MODEL_LEAD),
+      order ?? false
+    )
+  );
+
+  return [...modelLeads, ...everyoneElse];
+};

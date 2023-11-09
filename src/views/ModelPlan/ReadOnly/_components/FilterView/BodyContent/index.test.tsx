@@ -44,7 +44,7 @@ const mockData: GetModelSummaryTypes = {
         username: 'MINT',
         commonName: 'First Collaborator'
       },
-      teamRole: TeamRole.MODEL_LEAD,
+      teamRoles: [TeamRole.MODEL_LEAD],
       __typename: 'PlanCollaborator'
     }
   ],

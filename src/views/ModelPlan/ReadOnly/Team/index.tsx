@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
   Card,
@@ -9,62 +9,48 @@ import {
   Link
 } from '@trussworks/react-uswds';
 
-import SectionWrapper from 'components/shared/SectionWrapper';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as CollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
 import { TeamRole } from 'types/graphql-global-types';
+import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
 
-const TeamGroupings = ({
-  role,
-  collaborators
-}: {
-  role: string;
-  collaborators: CollaboratorsType[];
-}) => {
-  const { t } = useTranslation('generalReadOnly');
+const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
   const { t: collaboratorsT } = useTranslation('collaborators');
 
   return (
-    <SectionWrapper className="team-groupings--section-wrapper padding-bottom-3 border-base-light margin-bottom-4">
-      <h2 className="margin-top-0 margin-bottom-4">
-        {role === TeamRole.MODEL_LEAD
-          ? t('contactInfo.modelLeads')
-          : collaboratorsT(`teamRole.options.${role}`)}
-      </h2>
-      {collaborators
-        .filter(c => c.teamRole === role)
-        .map(collaborator => {
-          return (
-            <Card
-              key={collaborator.id}
-              containerProps={{
-                className: 'radius-md padding-2 margin-bottom-3 margin-x-0'
-              }}
-            >
-              <CardHeader className="padding-0">
-                <h3 className="margin-0">
-                  {collaborator.userAccount.commonName}
-                </h3>
-                <Link
-                  aria-label={collaborator.userAccount.email}
-                  className="margin-0 line-height-body-5"
-                  href={`mailto:${collaborator.userAccount.email}`}
-                  target="_blank"
-                >
-                  {collaborator.userAccount.email}
-                  <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
-                </Link>
-              </CardHeader>
-            </Card>
-          );
-        })}
-    </SectionWrapper>
+    <Card
+      containerProps={{
+        className: 'radius-md padding-2 margin-bottom-3 margin-x-0'
+      }}
+    >
+      <CardHeader className="padding-top-0 padding-x-0 padding-bottom-2 margin-bottom-2 border-bottom-2px border-gray-10">
+        <h3 className="margin-0">{collaborator.userAccount.commonName}</h3>
+        <Link
+          aria-label={collaborator.userAccount.email}
+          className="margin-0 line-height-body-5"
+          href={`mailto:${collaborator.userAccount.email}`}
+          target="_blank"
+        >
+          {collaborator.userAccount.email}
+          <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+        </Link>
+      </CardHeader>
+      <div>
+        <p className="margin-y-0">
+          {collaborator.teamRoles
+            .map((role: TeamRole) => {
+              return collaboratorsT(`teamRole.options.${role}`);
+            })
+            .join(', ')}
+        </p>
+      </div>
+    </Card>
   );
 };
 
@@ -88,7 +74,7 @@ const FilteredViewGroupings = ({
           <em className="text-base">{t('contactInfo.emptyState')}</em>
         )}
         {collaborators
-          .filter(c => c.teamRole === role)
+          .filter(c => c.teamRoles.includes(role))
           .map((collaborator, index) => {
             return (
               // eslint-disable-next-line react/no-array-index-key
@@ -140,46 +126,36 @@ const ReadOnlyTeamInfo = ({
   const collaborators = (data?.modelPlan?.collaborators ??
     []) as CollaboratorsType[];
 
-  const sortModelLeadFirst = [
-    ...Object.keys(TeamRole).filter(c => c === TeamRole.MODEL_LEAD),
-    ...Object.keys(TeamRole).filter(c => c !== TeamRole.MODEL_LEAD)
-  ];
-
   return (
     <div
       className="read-only-model-plan--team-info"
       data-testid="read-only-model-plan--team-info"
     >
+      <h2 className="margin-top-0 margin-bottom-4">
+        <Trans i18nKey="modelSummary:navigation.team" />
+      </h2>
       {isViewingFilteredView ? (
         <>
           <FilteredViewGroupings
             role={TeamRole.MODEL_LEAD}
-            collaborators={collaborators.filter(
-              c => c.teamRole === TeamRole.MODEL_LEAD
+            collaborators={collaborators.filter(c =>
+              c.teamRoles.includes(TeamRole.MODEL_LEAD)
             )}
           />
           {filteredView === 'ipc' && (
             <FilteredViewGroupings
               role={TeamRole.PAYMENT}
-              collaborators={collaborators.filter(
-                c => c.teamRole === TeamRole.PAYMENT
+              collaborators={collaborators.filter(c =>
+                c.teamRoles.includes(TeamRole.PAYMENT)
               )}
             />
           )}
         </>
       ) : (
-        sortModelLeadFirst.map((role, index) => {
-          if (collaborators.filter(c => c.teamRole === role).length !== 0) {
-            return (
-              <TeamGroupings
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                role={role}
-                collaborators={collaborators}
-              />
-            );
-          }
-          return '';
+        collaboratorsOrderedByModelLeads(collaborators).map(collaborator => {
+          return (
+            <MemberCards key={collaborator.id} collaborator={collaborator} />
+          );
         })
       )}
     </div>

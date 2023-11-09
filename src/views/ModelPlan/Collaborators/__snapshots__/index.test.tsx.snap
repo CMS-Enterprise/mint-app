@@ -31,7 +31,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                 class="usa-breadcrumb__list-item"
               >
                 <a
-                  class="usa-breadcrumb__link"
+                  class="usa-link usa-breadcrumb__link"
                   href="/"
                 >
                   <span>
@@ -43,7 +43,9 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                 aria-current="page"
                 class="usa-breadcrumb__list-item usa-current"
               >
-                Add model team members
+                <span>
+                  Add model team members
+                </span>
               </li>
             </ol>
           </nav>
@@ -93,6 +95,13 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
           <div
             class="margin-top-5 display-block"
           >
+            <a
+              class="usa-button usa-button--outline"
+              data-testid="button--back"
+              href="/models/new-plan"
+            >
+              Back
+            </a>
             <a
               class="usa-button usa-button--outline"
               data-testid="continue-to-tasklist"

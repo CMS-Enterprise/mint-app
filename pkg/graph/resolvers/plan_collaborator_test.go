@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/lib/pq"
+
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
@@ -27,7 +29,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
 		UserName:    "CLAB",
-		TeamRole:    models.TeamRoleLeadership,
+		TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
@@ -84,7 +86,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
 	suite.EqualValues(account.ID, collaborator.UserID)
-	suite.EqualValues(models.TeamRoleLeadership, collaborator.TeamRole)
+	suite.EqualValues(pq.StringArray{string(models.TeamRoleLeadership)}, collaborator.TeamRoles)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, collaborator.CreatedBy)
 	suite.Nil(collaborator.ModifiedBy)
 	mockController.Finish()
@@ -92,11 +94,17 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 
 func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	plan := suite.createModelPlan("Plan For Milestones")
-	collaborator := suite.createPlanCollaborator(plan, "CLAB", models.TeamRoleLeadership)
+	collaborator := suite.createPlanCollaborator(plan, "CLAB", []models.TeamRole{models.TeamRoleLeadership})
 	suite.Nil(collaborator.ModifiedBy)
 	suite.Nil(collaborator.ModifiedDts)
 
-	updatedCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, suite.testConfigs.Principal, suite.testConfigs.Store)
+	updatedCollaborator, err := UpdatePlanCollaborator(
+		suite.testConfigs.Logger,
+		collaborator.ID,
+		[]models.TeamRole{models.TeamRoleEvaluation},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 
 	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername("CLAB")
 	suite.NoError(uAccountErr)
@@ -107,7 +115,7 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	suite.NotNil(updatedCollaborator.ModifiedDts)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedCollaborator.ModifiedBy)
 	suite.EqualValues(account.ID, collaborator.UserID)
-	suite.EqualValues(models.TeamRoleEvaluation, updatedCollaborator.TeamRole)
+	suite.EqualValues(pq.StringArray{string(models.TeamRoleEvaluation)}, updatedCollaborator.TeamRoles)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
@@ -117,15 +125,59 @@ func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
 	suite.NoError(err)
 
 	collaborator := collaborators[0]
-	updatedPlanCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, suite.testConfigs.Principal, suite.testConfigs.Store)
+	updatedPlanCollaborator, err := UpdatePlanCollaborator(
+		suite.testConfigs.Logger,
+		collaborator.ID,
+		[]models.TeamRole{models.TeamRoleEvaluation},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.Error(err)
 	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
 	suite.Nil(updatedPlanCollaborator)
 }
 
+func (suite *ResolverSuite) TestUpdateMultipleRolesToModelLeadOnly() {
+	plan := suite.createModelPlan("Multiple Roles Plan")
+	collaborator := suite.createPlanCollaborator(
+		plan,
+		"CLAB",
+		[]models.TeamRole{models.TeamRoleModelLead, models.TeamRoleLearning},
+	)
+
+	updatedCollaborator, err := UpdatePlanCollaborator(
+		suite.testConfigs.Logger,
+		collaborator.ID,
+		[]models.TeamRole{models.TeamRoleModelLead},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+
+	suite.NoError(err)
+	suite.NotNil(updatedCollaborator)
+	suite.EqualValues(pq.StringArray{string(models.TeamRoleModelLead)}, updatedCollaborator.TeamRoles)
+}
+
+func (suite *ResolverSuite) TestAttemptToAddDuplicateRoles() {
+	plan := suite.createModelPlan("Duplicate Roles Plan")
+	collaborator := suite.createPlanCollaborator(plan, "CLAB", []models.TeamRole{models.TeamRoleModelLead})
+
+	updatedCollaborator, err := UpdatePlanCollaborator(
+		suite.testConfigs.Logger,
+		collaborator.ID,
+		[]models.TeamRole{models.TeamRoleModelLead, models.TeamRoleModelLead},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+
+	suite.Error(err)
+	suite.EqualValues("pq: Duplicate roles are not allowed in team_roles", err.Error())
+	suite.Nil(updatedCollaborator)
+}
+
 func (suite *ResolverSuite) TestFetchCollaboratorsByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Milestones")
-	_ = suite.createPlanCollaborator(plan, "SCND", models.TeamRoleLeadership)
+	_ = suite.createPlanCollaborator(plan, "SCND", []models.TeamRole{models.TeamRoleLeadership})
 
 	collaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
@@ -138,7 +190,7 @@ func (suite *ResolverSuite) TestFetchCollaboratorsByModelPlanID() {
 
 func (suite *ResolverSuite) TestFetchCollaboratorByID() {
 	plan := suite.createModelPlan("Plan For Milestones")
-	collaborator := suite.createPlanCollaborator(plan, "SCND", models.TeamRoleLeadership)
+	collaborator := suite.createPlanCollaborator(plan, "SCND", []models.TeamRole{models.TeamRoleLeadership})
 
 	collaboratorByID, err := FetchCollaboratorByID(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -147,7 +199,7 @@ func (suite *ResolverSuite) TestFetchCollaboratorByID() {
 
 func (suite *ResolverSuite) TestDeletePlanCollaborator() {
 	plan := suite.createModelPlan("Plan For Milestones")
-	collaborator := suite.createPlanCollaborator(plan, "SCND", models.TeamRoleLeadership)
+	collaborator := suite.createPlanCollaborator(plan, "SCND", []models.TeamRole{models.TeamRoleLeadership})
 
 	// Delete the 2nd collaborator
 	deletedCollaborator, err := DeletePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -191,14 +243,14 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 
 func (suite *ResolverSuite) TestPlanCollaboratorDataLoader() {
 	plan1 := suite.createModelPlan("Plan For Collab 1")
-	suite.createPlanCollaborator(plan1, "SCND", models.TeamRoleLeadership)
-	suite.createPlanCollaborator(plan1, "BLOB", models.TeamRoleLeadership)
-	suite.createPlanCollaborator(plan1, "MIKE", models.TeamRoleLeadership)
+	suite.createPlanCollaborator(plan1, "SCND", []models.TeamRole{models.TeamRoleLeadership})
+	suite.createPlanCollaborator(plan1, "BLOB", []models.TeamRole{models.TeamRoleLeadership})
+	suite.createPlanCollaborator(plan1, "MIKE", []models.TeamRole{models.TeamRoleLeadership})
 	plan2 := suite.createModelPlan("Plan For Collab 2")
 
-	suite.createPlanCollaborator(plan2, "SCTD", models.TeamRoleLeadership)
-	suite.createPlanCollaborator(plan2, "BLIB", models.TeamRoleLeadership)
-	suite.createPlanCollaborator(plan2, "MUKE", models.TeamRoleLeadership)
+	suite.createPlanCollaborator(plan2, "SCTD", []models.TeamRole{models.TeamRoleLeadership})
+	suite.createPlanCollaborator(plan2, "BLIB", []models.TeamRole{models.TeamRoleLeadership})
+	suite.createPlanCollaborator(plan2, "MUKE", []models.TeamRole{models.TeamRoleLeadership})
 
 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 	g.Go(func() error {

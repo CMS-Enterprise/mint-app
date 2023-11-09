@@ -20,7 +20,7 @@ export interface DeleteModelPlanCollaborator_deletePlanCollaborator_userAccount 
 export interface DeleteModelPlanCollaborator_deletePlanCollaborator {
   __typename: "PlanCollaborator";
   id: UUID;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
   userAccount: DeleteModelPlanCollaborator_deletePlanCollaborator_userAccount;
   userID: UUID;
   modelPlanID: UUID;

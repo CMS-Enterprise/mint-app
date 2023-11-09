@@ -517,7 +517,7 @@ export const Table = ({
                     }}
                   >
                     <button
-                      className="usa-button usa-button--unstyled"
+                      className="usa-button usa-button--unstyled position-relative"
                       type="button"
                       {...column.getSortByToggleProps()}
                     >
@@ -570,7 +570,8 @@ export const Table = ({
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          paddingLeft: '0'
+                          paddingLeft: '0',
+                          whiteSpace: 'normal'
                         }}
                       >
                         {cell.render('Cell')}

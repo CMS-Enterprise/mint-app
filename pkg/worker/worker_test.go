@@ -89,11 +89,17 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 	return pd
 }
 
-func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, userName string, fullName string, teamRole models.TeamRole, emailAddress string) *models.PlanCollaborator {
+func (suite *WorkerSuite) createPlanCollaborator(
+	mp *models.ModelPlan,
+	userName string,
+	fullName string,
+	teamRoles []models.TeamRole,
+	emailAddress string,
+) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
 		UserName:    userName,
-		TeamRole:    teamRole,
+		TeamRoles:   teamRoles,
 	}
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
@@ -192,6 +198,11 @@ func (suite *WorkerSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Ti
 }
 
 // TestWorkerSuite runs the worker test suite
+//
+// Hey friend -- if you're here because you're trying to figure out why your test is failing, you're in the right place.
+// This test suite is a bit of a mess, and it's not easy to figure out what's going on. Here's a tip:
+//   - Ensure FAKTORY_PROCESS_JOBS is set to "false" in your .envrc.local -- this will prevent the Faktory worker from eating up & running jobs
+//     before you can test them (this test suite relies on jobs being in the queue, and checking their state)
 func TestWorkerSuite(t *testing.T) {
 	rs := new(WorkerSuite)
 	rs.testConfigs = GetDefaultTestConfigs()

@@ -9,7 +9,7 @@ func (suite *ResolverSuite) UserAccount() {
 	updaterPrincipal := getTestPrincipal(suite.testConfigs.Store, "BTMN")
 
 	plan := suite.createModelPlan("My Test plan")
-	colab := suite.createPlanCollaborator(plan, "BTMN", models.TeamRoleEvaluation)
+	colab := suite.createPlanCollaborator(plan, "BTMN", []models.TeamRole{models.TeamRoleEvaluation})
 
 	userAccount := colab.UserAccount(suite.testConfigs.Context)
 

@@ -19,6 +19,7 @@ type CollapsableLinkProps = {
   eyeIcon?: boolean;
   iconPosition?: 'left' | 'right';
   startOpen?: boolean;
+  showDescription?: (show: boolean) => void;
   labelPosition?: 'top' | 'bottom';
 };
 
@@ -32,6 +33,7 @@ const CollapsableLink = ({
   eyeIcon,
   iconPosition,
   startOpen = false,
+  showDescription,
   labelPosition = 'top'
 }: CollapsableLinkProps) => {
   // TODO: should this state instead be held in the parent and passed in as prop?
@@ -61,7 +63,10 @@ const CollapsableLink = ({
   const collapseButton: React.ReactNode = (
     <Button
       type="button"
-      onClick={() => setOpen(!isOpen)}
+      onClick={() => {
+        setOpen(!isOpen);
+        if (showDescription) showDescription(!isOpen);
+      }}
       aria-expanded={isOpen}
       aria-controls={id}
       className={className}
