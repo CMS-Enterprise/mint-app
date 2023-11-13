@@ -15,7 +15,7 @@ import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
-import { TeamRole } from 'types/graphql-global-types';
+import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 
 import { StatusMessageType } from '../..';
 
@@ -70,7 +70,7 @@ const TaskListSideNav = ({
           history.push(`/`);
         }
       })
-      .catch(errors => {
+      .catch(() => {
         setModalOpen(false);
       });
   };
@@ -114,7 +114,7 @@ const TaskListSideNav = ({
       <Modal
         isOpen={isExportModalOpen}
         closeModal={() => setIsExportModalOpen(false)}
-        className="padding-0 radius-md"
+        className="padding-0 radius-md share-export-modal__container"
         navigation
         shouldCloseOnOverlayClick
       >
@@ -189,30 +189,26 @@ const TaskListSideNav = ({
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
 
           <div className="margin-bottom-2">
-            <UswdsReactLink to={`/models/${modelID}/collaborators`}>
+            <UswdsReactLink to={`/models/${modelID}/collaborators?view=manage`}>
               {t('sideNav.editTeam')}
             </UswdsReactLink>
           </div>
 
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
-              {[
-                ...collaborators.filter(
-                  collaborator => collaborator.teamRole === TeamRole.MODEL_LEAD
-                ),
-                ...collaborators.filter(
-                  collaborator => collaborator.teamRole !== TeamRole.MODEL_LEAD
-                )
-              ].map((collaborator, index) => {
-                return (
-                  <IconInitial
-                    className="margin-bottom-1"
-                    key={collaborator.userAccount.username}
-                    user={collaborator.userAccount.commonName}
-                    index={index}
-                  />
-                );
-              })}
+              {collaboratorsOrderedByModelLeads(collaborators).map(
+                (collaborator, index) => {
+                  return (
+                    <IconInitial
+                      className="margin-bottom-1"
+                      key={collaborator.userAccount.username}
+                      user={collaborator.userAccount.commonName}
+                      index={index}
+                      teamRoles={collaborator.teamRoles}
+                    />
+                  );
+                }
+              )}
             </ul>
           </div>
         </div>

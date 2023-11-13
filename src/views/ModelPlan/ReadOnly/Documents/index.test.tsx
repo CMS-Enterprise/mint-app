@@ -41,6 +41,8 @@ const mocks = [
               fileSize: 123,
               downloadUrl: null,
               documentType: DocumentType.MARKET_RESEARCH,
+              isLink: false,
+              url: '',
               otherType: null,
               optionalNotes: null,
               createdDts: '2022-05-12T15:01:39.190679Z',

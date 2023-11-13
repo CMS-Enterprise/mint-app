@@ -25,7 +25,7 @@ export default gql`
           email
           username
         }
-        teamRole
+        teamRoles
       }
       crTdls {
         idNumber

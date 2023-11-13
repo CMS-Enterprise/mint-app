@@ -39,7 +39,7 @@ const mockCollaborator: GetModelPlanCollaboratorsType = {
         username: 'ABCD',
         commonName: 'John Doe'
       },
-      teamRole: TeamRole.MODEL_LEAD,
+      teamRoles: [TeamRole.MODEL_LEAD],
       createdDts: '2022-10-22T00:00:00Z'
     }
   ]
@@ -63,7 +63,7 @@ describe('Collaborator/Team Member page w/table', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=add'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -93,7 +93,7 @@ describe('Collaborator/Team Member page w/table', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=add'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>

@@ -18,7 +18,7 @@ export interface CreateModelPlanCollaborator_createPlanCollaborator_userAccount 
 
 export interface CreateModelPlanCollaborator_createPlanCollaborator {
   __typename: "PlanCollaborator";
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
   userAccount: CreateModelPlanCollaborator_createPlanCollaborator_userAccount;
   userID: UUID;
   modelPlanID: UUID;

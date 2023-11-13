@@ -167,7 +167,7 @@ type PlanCollaborator {
   modelPlanID: UUID!
   userID: UUID!
   userAccount: UserAccount!
-  teamRole: TeamRole!
+  teamRoles: [TeamRole!]!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -238,7 +238,7 @@ PlanCollaboratorCreateInput represents the data required to create a collaborato
 input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
   userName: String!
-  teamRole: TeamRole!
+  teamRoles: [TeamRole!]!
 }
 
 """
@@ -1664,7 +1664,7 @@ updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
 createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
-updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
+updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
 deletePlanCollaborator(id: UUID!): PlanCollaborator!

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -184,6 +184,7 @@ export const filteredViewOutput = (value: string) => {
 
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: filterViewT } = useTranslation('filterView');
 
   const {
     modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
@@ -211,13 +212,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   // Used to check if user is assessment for rendering subnav to task list
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
-  const descriptionRef = React.createRef<HTMLElement>();
-
-  const [
-    isDescriptionExpandable,
-    setIsDescriptionExpandable
-  ] = useState<boolean>(false);
-
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
   );
@@ -227,16 +221,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   );
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
-
-  // Enable the description toggle if it overflows
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const { current: el } = descriptionRef;
-    if (!el) return;
-    if (el.scrollHeight > el.offsetHeight) {
-      setIsDescriptionExpandable(true);
-    }
-  });
 
   const { data, loading, error, refetch } = useQuery<GetModelSummaryType>(
     GetModelSummary,
@@ -368,15 +352,13 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         {!isViewingFilteredGroup && (
           <div className="mint-no-print">
             <ModelSummary
-              descriptionRef={descriptionRef}
               goal={basics?.goal ?? ''}
               loading={loading}
               modelName={modelName}
-              isDescriptionExpandable={isDescriptionExpandable}
               characteristics={generalCharacteristics}
               performancePeriodStarts={basics?.performancePeriodStarts}
-              modelLeads={collaborators?.filter(
-                c => c.teamRole === TeamRole.MODEL_LEAD
+              modelLeads={collaborators?.filter(c =>
+                c.teamRoles.includes(TeamRole.MODEL_LEAD)
               )}
               crTdls={crTdls}
             />
@@ -409,7 +391,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         closeModal={() => setIsFilterViewModalOpen(false)}
         shouldCloseOnOverlayClick
         className="radius-md"
-        modalHeading={h('filterView.text')}
+        modalHeading={filterViewT('filterView')}
       >
         <FilterViewModal
           closeModal={() => setIsFilterViewModalOpen(false)}
@@ -420,7 +402,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       <Modal
         isOpen={isExportModalOpen}
         closeModal={() => setIsExportModalOpen(false)}
-        className="padding-0 radius-md"
+        className="padding-0 radius-md share-export-modal__container"
         navigation
         shouldCloseOnOverlayClick
       >

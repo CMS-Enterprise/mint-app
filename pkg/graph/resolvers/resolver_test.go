@@ -100,11 +100,11 @@ func (suite *ResolverSuite) createDiscussionReply(
 	return dr
 }
 
-func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userName string, teamRole models.TeamRole) *models.PlanCollaborator {
+func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userName string, teamRoles []models.TeamRole) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
 		UserName:    userName,
-		TeamRole:    teamRole,
+		TeamRoles:   teamRoles,
 	}
 
 	mockController := gomock.NewController(suite.T())

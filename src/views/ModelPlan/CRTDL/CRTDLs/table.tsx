@@ -328,7 +328,7 @@ const Table = ({
                     }}
                   >
                     <button
-                      className="usa-button usa-button--unstyled"
+                      className="usa-button usa-button--unstyled position-relative"
                       type="button"
                       {...column.getSortByToggleProps()}
                     >
@@ -372,7 +372,8 @@ const Table = ({
                         style={{
                           paddingLeft: '0',
                           borderBottom:
-                            index === page.length - 1 ? 'none' : 'auto'
+                            index === page.length - 1 ? 'none' : 'auto',
+                          whiteSpace: 'normal'
                         }}
                       >
                         {cell.render('Cell')}

@@ -26,7 +26,7 @@ export interface GetFavorites_modelPlanCollection_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
   userAccount: GetFavorites_modelPlanCollection_collaborators_userAccount;
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
 }
 
 export interface GetFavorites_modelPlanCollection_crTdls {

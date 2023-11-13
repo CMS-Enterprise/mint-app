@@ -139,7 +139,7 @@ func (s *Seeder) SeedData() {
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: planWithCollaborators.ID,
 			UserName:    "BTAL",
-			TeamRole:    models.TeamRoleLeadership,
+			TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 		})
 
 	s.existingModelLinkCreate(planWithCollaborators, []int{links[4].ID}, nil)
@@ -193,7 +193,7 @@ func (s *Seeder) SeedData() {
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: sampleModelPlan.ID,
 			UserName:    "BTAL",
-			TeamRole:    models.TeamRoleLeadership,
+			TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 		})
 	s.updatePlanBasics(
 		nil,

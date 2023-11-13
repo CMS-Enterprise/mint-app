@@ -1,17 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Button,
-  Grid,
-  GridContainer
-} from '@trussworks/react-uswds';
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useParams
+} from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
+import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
+import { TeamRole } from 'gql/gen/graphql';
 
+import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
@@ -30,15 +31,17 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
+import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import AddCollaborator from './AddCollaborator';
 import CollaboratorsTable from './table';
 
 // Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
-const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
-  const modelLeads = collaborators.filter(
-    collaborator => collaborator.teamRole === 'MODEL_LEAD'
+export const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
+  const modelLeads = collaborators.filter(collaborator =>
+    collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
   );
   return !(modelLeads.length > 1);
 };
@@ -73,6 +76,12 @@ export const CollaboratorsContent = () => {
 
   const history = useHistory();
 
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+
+  const manageOrAdd = params.get('view') || 'manage';
+
   const { message, showMessageOnNextPage } = useMessage();
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -103,6 +112,8 @@ export const CollaboratorsContent = () => {
     return (data?.modelPlan?.collaborators ?? []) as GetCollaboratorsType[];
   }, [data?.modelPlan?.collaborators]);
 
+  const { modelName } = useContext(ModelInfoContext);
+
   // Setting state of isLastLead to toggle edit/remove links
   useEffect(() => {
     setIsLastLead(isLastModelLead(collaborators));
@@ -121,7 +132,7 @@ export const CollaboratorsContent = () => {
           setModalOpen(false);
           if (collaborator.userAccount.username === euaId) {
             showMessageOnNextPage(
-              <SuccessRemovalMessage modelName={data?.modelPlan?.modelName} />
+              <SuccessRemovalMessage modelName={modelName} />
             );
             history.push('/');
           } else {
@@ -182,6 +193,20 @@ export const CollaboratorsContent = () => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
+  const breadcrumbs = [
+    { text: miscellaneousT('home'), url: '/' },
+    { text: collaboratorsMiscT('teamBreadcrumb') }
+  ];
+
+  const breadcrumbsFromTaskList = [
+    { text: miscellaneousT('home'), url: '/' },
+    {
+      text: miscellaneousT('tasklistBreadcrumb'),
+      url: `/models/${modelID}/task-list/`
+    },
+    { text: collaboratorsMiscT('manageModelTeam') }
+  ];
+
   return (
     <MainContent>
       {RemoveCollaborator()}
@@ -191,24 +216,43 @@ export const CollaboratorsContent = () => {
           <Grid desktop={{ col: 12 }}>
             {message && <Expire delay={45000}>{message}</Expire>}
 
-            <BreadcrumbBar variant="wrap">
-              <Breadcrumb>
-                <BreadcrumbLink asCustom={Link} to="/">
-                  <span>{miscellaneousT('home')}</span>
-                </BreadcrumbLink>
-              </Breadcrumb>
-              <Breadcrumb current>
-                {collaboratorsMiscT('teamBreadcrumb')}
-              </Breadcrumb>
-            </BreadcrumbBar>
+            <Breadcrumbs
+              items={
+                manageOrAdd === 'manage' ? breadcrumbsFromTaskList : breadcrumbs
+              }
+            />
 
-            <PageHeading className="margin-top-4 margin-bottom-2">
-              {collaboratorsMiscT('headingTeamMembers')}
-            </PageHeading>
+            {manageOrAdd === 'manage' ? (
+              <>
+                <PageHeading className="margin-top-4 margin-bottom-2">
+                  {collaboratorsMiscT('manageModelTeam')}
+                </PageHeading>
+                <p
+                  className="margin-top-0 margin-bottom-2 font-body-lg"
+                  data-testid="model-plan-name"
+                >
+                  <Trans i18nKey="draftModelPlan:for" /> {modelName}
+                </p>
 
-            <div className="font-body-lg margin-bottom-6">
-              {collaboratorsMiscT('teamMemberInfo')}
-            </div>
+                <div className="font-body-lg margin-bottom-6">
+                  {collaboratorsMiscT('manageModelTeamInfo')}
+                </div>
+
+                <UswdsReactLink to={`/models/${modelID}/task-list/`}>
+                  <span>&larr; </span> {miscellaneousT('returnToTaskList')}
+                </UswdsReactLink>
+              </>
+            ) : (
+              <>
+                <PageHeading className="margin-top-4 margin-bottom-2">
+                  {collaboratorsMiscT('headingTeamMembers')}
+                </PageHeading>
+
+                <div className="font-body-lg margin-bottom-6">
+                  {collaboratorsMiscT('teamMemberInfo')}
+                </div>
+              </>
+            )}
 
             <h4 className="margin-bottom-1">
               {collaboratorsMiscT('teamMembers')}
@@ -217,7 +261,7 @@ export const CollaboratorsContent = () => {
             <UswdsReactLink
               className="usa-button margin-bottom-2"
               variant="unstyled"
-              to={`/models/${modelID}/collaborators/add-collaborator`}
+              to={`/models/${modelID}/collaborators/add-collaborator?view=${manageOrAdd}`}
             >
               {collaboratorsMiscT('addTeamMemberButton')}
             </UswdsReactLink>
@@ -231,25 +275,38 @@ export const CollaboratorsContent = () => {
                 />
               ) : (
                 <CollaboratorsTable
-                  collaborators={collaborators}
+                  collaborators={collaboratorsOrderedByModelLeads(
+                    collaborators,
+                    'desc'
+                  )}
                   setModalOpen={setModalOpen}
                   setRemoveCollaborator={setRemoveCollaborator}
                   isLastLead={isLastLead}
                 />
               ))}
 
-            <div className="margin-top-5 display-block">
-              <UswdsReactLink
-                data-testid="continue-to-tasklist"
-                className="usa-button usa-button--outline"
-                variant="unstyled"
-                to={`/models/${modelID}/task-list`}
-              >
-                {collaborators.length > 0
-                  ? miscellaneousT('continueToTaskList')
-                  : collaboratorsMiscT('continueWithoutAdding')}
-              </UswdsReactLink>
-            </div>
+            {manageOrAdd === 'add' && (
+              <div className="margin-top-5 display-block">
+                <UswdsReactLink
+                  data-testid="button--back"
+                  className="usa-button usa-button--outline"
+                  variant="unstyled"
+                  to="/models/new-plan"
+                >
+                  {miscellaneousT('back')}
+                </UswdsReactLink>
+                <UswdsReactLink
+                  data-testid="continue-to-tasklist"
+                  className="usa-button usa-button--outline"
+                  variant="unstyled"
+                  to={`/models/${modelID}/task-list`}
+                >
+                  {collaborators.length > 0
+                    ? miscellaneousT('continueToTaskList')
+                    : collaboratorsMiscT('continueWithoutAdding')}
+                </UswdsReactLink>
+              </div>
+            )}
           </Grid>
         </Grid>
       </GridContainer>

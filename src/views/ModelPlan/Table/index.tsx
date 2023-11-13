@@ -20,6 +20,7 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { TeamRole } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -112,6 +113,7 @@ const ModelPlansTable = ({
       'modelName',
       'abbreviation',
       'amsModelID',
+      'demoCode',
       'modelCategory',
       'status',
       'clearanceDate',
@@ -366,7 +368,7 @@ const ModelPlansTable = ({
         Cell: ({ value }: any) => {
           if (value) {
             const leads = value.filter((item: CollaboratorsType) => {
-              return item.teamRole.toLowerCase().includes('model_lead');
+              return item.teamRoles.includes(TeamRole.MODEL_LEAD);
             });
             return (
               <>
@@ -541,9 +543,12 @@ const ModelPlansTable = ({
                     }
                   >
                     <button
-                      className={classNames('usa-button usa-button--unstyled', {
-                        'margin-top-1': index === 0
-                      })}
+                      className={classNames(
+                        'usa-button usa-button--unstyled position-relative',
+                        {
+                          'margin-top-1': index === 0
+                        }
+                      )}
                       type="button"
                       {...column.getSortByToggleProps()}
                     >
@@ -585,7 +590,8 @@ const ModelPlansTable = ({
                         {...cell.getCellProps()}
                         style={{
                           paddingLeft: '0',
-                          borderBottom: 'auto'
+                          borderBottom: 'auto',
+                          whiteSpace: 'normal'
                         }}
                       >
                         {cell.render('Cell')}

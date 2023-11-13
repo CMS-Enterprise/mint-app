@@ -18,7 +18,7 @@ export interface UpdateModelPlanCollaborator_updatePlanCollaborator_userAccount 
 
 export interface UpdateModelPlanCollaborator_updatePlanCollaborator {
   __typename: "PlanCollaborator";
-  teamRole: TeamRole;
+  teamRoles: TeamRole[];
   userAccount: UpdateModelPlanCollaborator_updatePlanCollaborator_userAccount;
   userID: UUID;
   modelPlanID: UUID;
@@ -30,5 +30,5 @@ export interface UpdateModelPlanCollaborator {
 
 export interface UpdateModelPlanCollaboratorVariables {
   id: UUID;
-  newRole: TeamRole;
+  newRole: TeamRole[];
 }

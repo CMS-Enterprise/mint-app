@@ -56,9 +56,9 @@ type PageParams struct {
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
-	ModelPlanID uuid.UUID       `json:"modelPlanID"`
-	UserName    string          `json:"userName"`
-	TeamRole    models.TeamRole `json:"teamRole"`
+	ModelPlanID uuid.UUID         `json:"modelPlanID"`
+	UserName    string            `json:"userName"`
+	TeamRoles   []models.TeamRole `json:"teamRoles"`
 }
 
 type PlanCrTdlCreateInput struct {

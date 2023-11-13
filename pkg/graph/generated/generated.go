@@ -49,6 +49,7 @@ type ResolverRoot interface {
 	OperationalSolution() OperationalSolutionResolver
 	PlanBasics() PlanBasicsResolver
 	PlanBeneficiaries() PlanBeneficiariesResolver
+	PlanCollaborator() PlanCollaboratorResolver
 	PlanDiscussion() PlanDiscussionResolver
 	PlanDocument() PlanDocumentResolver
 	PlanGeneralCharacteristics() PlanGeneralCharacteristicsResolver
@@ -248,7 +249,7 @@ type ComplexityRoot struct {
 		UpdateOperationalSolutionSubtasks  func(childComplexity int, inputs []*model.UpdateOperationalSolutionSubtaskInput) int
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBeneficiaries            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
+		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRoles []models.TeamRole) int
 		UpdatePlanCrTdl                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanDiscussion               func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanGeneralCharacteristics   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -409,7 +410,7 @@ type ComplexityRoot struct {
 		ModifiedBy            func(childComplexity int) int
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
-		TeamRole              func(childComplexity int) int
+		TeamRoles             func(childComplexity int) int
 		UserAccount           func(childComplexity int) int
 		UserID                func(childComplexity int) int
 	}
@@ -961,7 +962,7 @@ type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
-	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRole models.TeamRole) (*models.PlanCollaborator, error)
+	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
@@ -1018,6 +1019,9 @@ type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
+}
+type PlanCollaboratorResolver interface {
+	TeamRoles(ctx context.Context, obj *models.PlanCollaborator) ([]models.TeamRole, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -2324,7 +2328,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdatePlanCollaborator(childComplexity, args["id"].(uuid.UUID), args["newRole"].(models.TeamRole)), true
+		return e.complexity.Mutation.UpdatePlanCollaborator(childComplexity, args["id"].(uuid.UUID), args["newRoles"].([]models.TeamRole)), true
 
 	case "Mutation.updatePlanCrTdl":
 		if e.complexity.Mutation.UpdatePlanCrTdl == nil {
@@ -3339,12 +3343,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanCollaborator.ModifiedDts(childComplexity), true
 
-	case "PlanCollaborator.teamRole":
-		if e.complexity.PlanCollaborator.TeamRole == nil {
+	case "PlanCollaborator.teamRoles":
+		if e.complexity.PlanCollaborator.TeamRoles == nil {
 			break
 		}
 
-		return e.complexity.PlanCollaborator.TeamRole(childComplexity), true
+		return e.complexity.PlanCollaborator.TeamRoles(childComplexity), true
 
 	case "PlanCollaborator.userAccount":
 		if e.complexity.PlanCollaborator.UserAccount == nil {
@@ -6960,7 +6964,7 @@ type PlanCollaborator {
   modelPlanID: UUID!
   userID: UUID!
   userAccount: UserAccount!
-  teamRole: TeamRole!
+  teamRoles: [TeamRole!]!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -7031,7 +7035,7 @@ PlanCollaboratorCreateInput represents the data required to create a collaborato
 input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
   userName: String!
-  teamRole: TeamRole!
+  teamRoles: [TeamRole!]!
 }
 
 """
@@ -8456,7 +8460,7 @@ updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
 createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
-updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
+updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
 @hasRole(role: MINT_USER)
 
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
@@ -10084,15 +10088,15 @@ func (ec *executionContext) field_Mutation_updatePlanCollaborator_args(ctx conte
 		}
 	}
 	args["id"] = arg0
-	var arg1 models.TeamRole
-	if tmp, ok := rawArgs["newRole"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("newRole"))
-		arg1, err = ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, tmp)
+	var arg1 []models.TeamRole
+	if tmp, ok := rawArgs["newRoles"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("newRoles"))
+		arg1, err = ec.unmarshalNTeamRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRoleᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["newRole"] = arg1
+	args["newRoles"] = arg1
 	return args, nil
 }
 
@@ -15711,8 +15715,8 @@ func (ec *executionContext) fieldContext_ModelPlan_collaborators(ctx context.Con
 				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
 			case "userAccount":
 				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRole":
-				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -16884,8 +16888,8 @@ func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
 			case "userAccount":
 				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRole":
-				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -16931,7 +16935,7 @@ func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID), fc.Args["newRole"].(models.TeamRole))
+			return ec.resolvers.Mutation().UpdatePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID), fc.Args["newRoles"].([]models.TeamRole))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -16987,8 +16991,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
 			case "userAccount":
 				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRole":
-				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -17090,8 +17094,8 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
 			case "userAccount":
 				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRole":
-				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -27280,8 +27284,8 @@ func (ec *executionContext) fieldContext_PlanCollaborator_userAccount(ctx contex
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanCollaborator_teamRole(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+func (ec *executionContext) _PlanCollaborator_teamRoles(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -27294,7 +27298,7 @@ func (ec *executionContext) _PlanCollaborator_teamRole(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.TeamRole, nil
+		return ec.resolvers.PlanCollaborator().TeamRoles(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -27306,17 +27310,17 @@ func (ec *executionContext) _PlanCollaborator_teamRole(ctx context.Context, fiel
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.TeamRole)
+	res := resTmp.([]models.TeamRole)
 	fc.Result = res
-	return ec.marshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, field.Selections, res)
+	return ec.marshalNTeamRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRoleᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanCollaborator_teamRole(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanCollaborator_teamRoles(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanCollaborator",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type TeamRole does not have child fields")
 		},
@@ -46413,8 +46417,8 @@ func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.
 				return ec.fieldContext_PlanCollaborator_userID(ctx, field)
 			case "userAccount":
 				return ec.fieldContext_PlanCollaborator_userAccount(ctx, field)
-			case "teamRole":
-				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "teamRoles":
+				return ec.fieldContext_PlanCollaborator_teamRoles(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -51332,7 +51336,7 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "userName", "teamRole"}
+	fieldsInOrder := [...]string{"modelPlanID", "userName", "teamRoles"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -51357,15 +51361,15 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 				return it, err
 			}
 			it.UserName = data
-		case "teamRole":
+		case "teamRoles":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamRole"))
-			data, err := ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamRoles"))
+			data, err := ec.unmarshalNTeamRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRoleᚄ(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.TeamRole = data
+			it.TeamRoles = data
 		}
 	}
 
@@ -55283,11 +55287,42 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "teamRole":
-			out.Values[i] = ec._PlanCollaborator_teamRole(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+		case "teamRoles":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCollaborator_teamRoles(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "createdBy":
 			out.Values[i] = ec._PlanCollaborator_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -64751,6 +64786,67 @@ func (ec *executionContext) marshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑapp�
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNTeamRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRoleᚄ(ctx context.Context, v interface{}) ([]models.TeamRole, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.TeamRole, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNTeamRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRoleᚄ(ctx context.Context, sel ast.SelectionSet, v []models.TeamRole) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNTime2timeᚐTime(ctx context.Context, v interface{}) (time.Time, error) {

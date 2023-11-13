@@ -22,7 +22,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           Add a team member
         </h1>
         <div
-          class="margin-bottom-6 line-height-body-6"
+          class="margin-bottom-4 line-height-body-6"
         >
           Search for a team member to add to your model team. Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.
         </div>
@@ -32,9 +32,10 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           <fieldset
             class="usa-fieldset"
             data-testid="fieldset"
+            disabled=""
           >
             <div
-              class="usa-form-group"
+              class="usa-form-group margin-top-0"
               data-scroll="userAccount.commonName"
             >
               <label
@@ -139,73 +140,98 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group"
-              data-scroll="teamRole"
+              data-scroll="teamRoles"
             >
               <label
                 class="usa-label"
                 data-testid="label"
                 for="collaborator-role"
               >
-                Team member role
+                Team member role(s)
               </label>
-              <select
-                class="usa-select"
-                data-testid="dropdown"
-                id="collaborator-role"
-                name="role"
-              >
-                <option
-                  disabled=""
-                  value=""
+              <div>
+                <div
+                  class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+                  id="collaborator-role"
                 >
-                  -Select-
-                </option>
-                <option
-                  value="EVALUATION"
-                >
-                  Evaluation
-                </option>
-                <option
-                  value="IT_LEAD"
-                >
-                  IT Lead
-                </option>
-                <option
-                  value="LEADERSHIP"
-                >
-                  Leadership
-                </option>
-                <option
-                  value="LEARNING"
-                >
-                  Learning
-                </option>
-                <option
-                  value="MODEL_LEAD"
-                >
-                  Model Lead
-                </option>
-                <option
-                  value="MODEL_TEAM"
-                >
-                  Model Team
-                </option>
-                <option
-                  value="OACT"
-                >
-                  OACT
-                </option>
-                <option
-                  value="PAYMENT"
-                >
-                  Payment
-                </option>
-                <option
-                  value="QUALITY"
-                >
-                  Quality
-                </option>
-              </select>
+                  <span
+                    class="css-1f43avz-a11yText-A11yText"
+                    id="react-select-2-live-region"
+                  />
+                  <span
+                    aria-atomic="false"
+                    aria-live="polite"
+                    aria-relevant="additions text"
+                    class="css-1f43avz-a11yText-A11yText"
+                  />
+                  <div
+                    class=" css-jvusj8-control"
+                  >
+                    <div
+                      class=" css-319lph-ValueContainer"
+                    >
+                      <div
+                        class=" css-14el2xx-placeholder"
+                        id="react-select-2-placeholder"
+                      >
+                        0 selected
+                      </div>
+                      <div
+                        class=" css-6j8wv5-Input"
+                        data-value=""
+                      >
+                        <input
+                          aria-autocomplete="list"
+                          aria-describedby="react-select-2-placeholder"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          autocapitalize="none"
+                          autocomplete="off"
+                          autocorrect="off"
+                          class=""
+                          id="react-select-2-input"
+                          role="combobox"
+                          spellcheck="false"
+                          style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                          tabindex="0"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class=" css-1hb7zxy-IndicatorsContainer"
+                    >
+                      <span
+                        class=" css-1vtyy7d-indicatorSeparator"
+                      />
+                      <div
+                        aria-hidden="true"
+                        class=" css-1232v1p-indicatorContainer"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      name="role"
+                      type="hidden"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
             <div
               class="usa-alert usa-alert--info usa-alert--slim flex margin-y-4"
@@ -221,7 +247,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                     <span
                       class="mandatory-fields-alert__text"
                     >
-                      This team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
+                      This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
                     </span>
                   </span>
                 </p>
@@ -243,7 +269,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
         </form>
         <a
           class="usa-link"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=add"
         >
           <span>
             ← 

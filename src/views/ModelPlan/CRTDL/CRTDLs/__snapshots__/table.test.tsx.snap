@@ -32,7 +32,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
             >
               <button
-                class="usa-button usa-button--unstyled"
+                class="usa-button usa-button--unstyled position-relative"
                 style="cursor: pointer;"
                 title="Toggle SortBy"
                 type="button"
@@ -67,7 +67,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
             >
               <button
-                class="usa-button usa-button--unstyled"
+                class="usa-button usa-button--unstyled position-relative"
                 style="cursor: pointer;"
                 title="Toggle SortBy"
                 type="button"
@@ -102,7 +102,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
             >
               <button
-                class="usa-button usa-button--unstyled"
+                class="usa-button usa-button--unstyled position-relative"
                 style="cursor: pointer;"
                 title="Toggle SortBy"
                 type="button"
@@ -137,7 +137,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
             >
               <button
-                class="usa-button usa-button--unstyled"
+                class="usa-button usa-button--unstyled position-relative"
                 style="cursor: pointer;"
                 title="Toggle SortBy"
                 type="button"
@@ -172,7 +172,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
             >
               <button
-                class="usa-button usa-button--unstyled"
+                class="usa-button usa-button--unstyled position-relative"
                 style="cursor: pointer;"
                 title="Toggle SortBy"
                 type="button"
@@ -215,25 +215,25 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
             </th>
             <td
               role="cell"
-              style="padding-left: 0px;"
+              style="padding-left: 0px; white-space: normal;"
             >
               07/30/2022
             </td>
             <td
               role="cell"
-              style="padding-left: 0px;"
+              style="padding-left: 0px; white-space: normal;"
             >
               My CR
             </td>
             <td
               role="cell"
-              style="padding-left: 0px;"
+              style="padding-left: 0px; white-space: normal;"
             >
               note
             </td>
             <td
               role="cell"
-              style="padding-left: 0px;"
+              style="padding-left: 0px; white-space: normal;"
             >
               <a
                 class="usa-link margin-right-2"
