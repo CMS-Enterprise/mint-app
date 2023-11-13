@@ -268,7 +268,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'enum',
     formType: 'radio',
     options: {
-      CAPITATION: 'Capitalization',
+      CAPITATION: 'Capitation',
       ONE_SIDED: 'One-sided',
       TWO_SIDED: 'Two-sided',
       OTHER: 'Other'
