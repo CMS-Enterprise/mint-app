@@ -113,11 +113,14 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 	}
 	isMacUser := false
 	taggedUserAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
-	if err != nil {
+	if err != nil || taggedUserAccount == nil {
 		return fmt.Errorf("unable to get tagged user account reference. error : %w", err)
 	}
+	if taggedUserAccount == nil {
+		return fmt.Errorf("unable to get tagged user account reference. No user returned for username : %s", mention.EntityRaw)
+	}
 	mention.EntityUUID = &taggedUserAccount.ID
-	mention.EntityDB = mention.EntityUUID
+	mention.EntityDB = taggedUserAccount.ID
 	taggedEntity := models.TaggedEntity(taggedUserAccount)
 	mention.Entity = &taggedEntity
 	return nil
