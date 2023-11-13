@@ -101,22 +101,25 @@ func CreatePlanDiscussion(
 	}()
 
 	// send an email for each tag, which is unique compared to the mention
-	// TODO: make this async
-	err = sendPlanDiscussionTagEmails(
-		ctx,
-		store,
-		logger,
-		emailService,
-		emailTemplateService,
-		addressBook,
-		discussion.Content, //TODO try to send the other content, which includes the mentions (or update the mentions)
-		discussion.ID,
-		modelPlan,
-		commonName,
-		discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription)))
-	if err != nil {
-		return discussion, nil
-	}
+	go func() {
+		err = sendPlanDiscussionTagEmails(
+			ctx,
+			store,
+			logger,
+			emailService,
+			emailTemplateService,
+			addressBook,
+			discussion.Content,
+			discussion.ID,
+			modelPlan,
+			commonName,
+			discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription)))
+		if err != nil {
+			logger.Error("error sending tagged in plan discussion emails to tagged users and teams",
+				zap.String("discussionID", discussion.ID.String()),
+				zap.Error(err))
+		}
+	}()
 
 	return discussion, nil
 }
@@ -432,23 +435,29 @@ func CreateDiscussionReply(
 	}
 	commonName := principal.Account().CommonName
 
-	err = sendPlanDiscussionTagEmails(
-		ctx,
-		store,
-		logger,
-		emailService,
-		emailTemplateService,
-		addressBook,
-		reply.Content,
-		reply.DiscussionID,
-		modelPlan,
-		commonName,
-		reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
-	)
+	go func() {
+		err = sendPlanDiscussionTagEmails(
+			ctx,
+			store,
+			logger,
+			emailService,
+			emailTemplateService,
+			addressBook,
+			reply.Content,
+			reply.DiscussionID,
+			modelPlan,
+			commonName,
+			reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
+		)
 
-	if err != nil {
-		return reply, nil
-	}
+		if err != nil {
+			if err != nil {
+				logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+					zap.String("discussionID", discussion.ID.String()),
+					zap.Error(err))
+			}
+		}
+	}()
 
 	return reply, err
 }
