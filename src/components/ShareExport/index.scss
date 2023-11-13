@@ -2,9 +2,6 @@
 
 .share-export-modal {
 
-    max-height: 95vh;
-    overflow: scroll;
-
     .usa-form {
         max-width: none;
     }
@@ -33,5 +30,11 @@
 
     &__optional-message-textarea {
         height: 90px !important;
+    }
+
+    &__container {
+        max-height: 95vh;
+        max-width: 95%;
+        overflow: auto;
     }
 }
