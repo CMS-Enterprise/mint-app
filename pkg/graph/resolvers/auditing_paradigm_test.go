@@ -34,7 +34,6 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	testPR3 := getTestPrincipal(suite.testConfigs.Store, "TestDR3")
 	testPR4 := getTestPrincipal(suite.testConfigs.Store, "TestDR4")
 
-	//TODO: SW make these use a helper function
 	dr1, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, testPR1, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	dr2, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, testPR2, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))

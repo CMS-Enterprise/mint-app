@@ -108,7 +108,7 @@ func NewTaggedContentFromString(htmlString string) (TaggedContent, error) {
 	}
 	// mentions, err := htmlMentionsFromString(sanitized)
 	mentions, err := htmlMentionsFromStringRegex(sanitized)
-	if mentions != nil { //TODO: SW, you might not need to do a nil or len check, you might be able to just set it
+	if mentions != nil {
 		if len(mentions) > 0 { // At least some mentions parsed correctly, so attach them to the Tagged HTML
 			tc.Mentions = mentions
 		}

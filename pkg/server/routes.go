@@ -168,7 +168,7 @@ func (s *Server) routes(
 	emailServiceConfig.Host = s.Config.GetString(appconfig.EmailHostKey)
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
-	emailServiceConfig.TaggedPOCEmailEnabled = s.Config.GetBool(appconfig.TaggedSolutionPointOfContactEmailEnabled) // TODO: SW verify when this is not set
+	emailServiceConfig.TaggedPOCEmailEnabled = s.Config.GetBool(appconfig.TaggedSolutionPointOfContactEmailEnabled)
 
 	dateChangedRecipientEmails := strings.Split(s.Config.GetString(appconfig.DateChangedRecipientEmailsKey), ",")
 
