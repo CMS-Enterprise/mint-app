@@ -48,8 +48,13 @@ const Collaborators = () => {
   const { teamRole: teamRoleConfig } = usePlanTranslation('collaborators');
 
   const history = useHistory();
-  const location = useLocation<{ previousPage: string }>();
-  const { previousPage } = location.state || {};
+
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+
+  const manageOrAdd = params.get('view') || 'manage';
+
   const { showMessageOnNextPage } = useMessage();
 
   const { modelID, collaboratorId } = useParams<{
@@ -127,12 +132,9 @@ const Collaborators = () => {
                 </Alert>
               </>
             );
-            history.push({
-              pathname: `/models/${modelID}/collaborators`,
-              state: {
-                previousPage: previousPage === 'task-list' ? 'task-list' : ''
-              }
-            });
+            history.push(
+              `/models/${modelID}/collaborators?view=${manageOrAdd}`
+            );
           }
         })
         .catch(errors => {
@@ -169,12 +171,9 @@ const Collaborators = () => {
                 </Alert>
               </>
             );
-            history.push({
-              pathname: `/models/${modelID}/collaborators`,
-              state: {
-                previousPage: previousPage === 'task-list' ? 'task-list' : ''
-              }
-            });
+            history.push(
+              `/models/${modelID}/collaborators?view=${manageOrAdd}`
+            );
           }
         })
         .catch(errors => {
@@ -383,7 +382,9 @@ const Collaborators = () => {
             }}
           </Formik>
 
-          <UswdsReactLink to={`/models/${modelID}/collaborators`}>
+          <UswdsReactLink
+            to={`/models/${modelID}/collaborators?view=${manageOrAdd}`}
+          >
             <span>&larr; </span>{' '}
             {!collaboratorId
               ? collaboratorsMiscT('dontAddTeamMember')

@@ -210,90 +210,94 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           Add an additional note
         </button>
       </div>
-      <legend
-        class="usa-label"
-      >
-        What authority allows CMMI to test the model?
-      </legend>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group"
       >
-        <input
-          class="usa-checkbox__input"
-          id="plan-characteristics-authority-allowance-ACA"
-          name="authorityAllowances"
-          type="checkbox"
-          value="ACA"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="plan-characteristics-authority-allowance-ACA"
+        <legend
+          class="usa-label"
         >
-          3021 (ACA)
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
-          name="authorityAllowances"
-          type="checkbox"
-          value="CONGRESSIONALLY_MANDATED"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+          What authority allows CMMI to test the model?
+        </legend>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Congressionally Mandated Demonstration
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="plan-characteristics-authority-allowance-SSA_PART_B"
-          name="authorityAllowances"
-          type="checkbox"
-          value="SSA_PART_B"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="plan-characteristics-authority-allowance-SSA_PART_B"
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-authority-allowance-ACA"
+            name="authorityAllowances"
+            type="checkbox"
+            value="ACA"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-authority-allowance-ACA"
+          >
+            3021 (ACA)
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Section 1833(e) (Part B services) of the Social Security Act
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="plan-characteristics-authority-allowance-OTHER"
-          name="authorityAllowances"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="plan-characteristics-authority-allowance-OTHER"
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+            name="authorityAllowances"
+            type="checkbox"
+            value="CONGRESSIONALLY_MANDATED"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+          >
+            Congressionally Mandated Demonstration
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-authority-allowance-SSA_PART_B"
+            name="authorityAllowances"
+            type="checkbox"
+            value="SSA_PART_B"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-authority-allowance-SSA_PART_B"
+          >
+            Section 1833(e) (Part B services) of the Social Security Act
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-authority-allowance-OTHER"
+            name="authorityAllowances"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-authority-allowance-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
       </div>
       <div
         class="margin-top-4 margin-bottom-8"
@@ -379,6 +383,9 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           </div>
         </fieldset>
       </div>
+      <div
+        class="usa-form-group"
+      />
       <div
         class="margin-top-4 margin-bottom-8"
       >

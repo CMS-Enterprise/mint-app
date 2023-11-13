@@ -2293,7 +2293,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                       >
-                        Capitalization
+                        Capitation
                       </p>
                     </div>
                   </div>
@@ -8593,7 +8593,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                       >
-                        Capitalization
+                        Capitation
                       </p>
                     </div>
                   </div>

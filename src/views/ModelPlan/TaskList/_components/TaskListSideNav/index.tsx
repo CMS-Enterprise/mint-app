@@ -114,7 +114,7 @@ const TaskListSideNav = ({
       <Modal
         isOpen={isExportModalOpen}
         closeModal={() => setIsExportModalOpen(false)}
-        className="padding-0 radius-md"
+        className="padding-0 radius-md share-export-modal__container"
         navigation
         shouldCloseOnOverlayClick
       >
@@ -189,12 +189,7 @@ const TaskListSideNav = ({
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
 
           <div className="margin-bottom-2">
-            <UswdsReactLink
-              to={{
-                pathname: `/models/${modelID}/collaborators`,
-                state: { previousPage: 'task-list' }
-              }}
-            >
+            <UswdsReactLink to={`/models/${modelID}/collaborators?view=manage`}>
               {t('sideNav.editTeam')}
             </UswdsReactLink>
           </div>
