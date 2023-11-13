@@ -118,6 +118,8 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 	}
 	mention.EntityUUID = &taggedUserAccount.ID
 	mention.EntityDB = mention.EntityUUID
+	taggedEntity := models.TaggedEntity(taggedUserAccount)
+	mention.Entity = &taggedEntity
 	return nil
 }
 
@@ -133,6 +135,8 @@ func processPossibleSolutionHTMLMention(ctx context.Context, store *storage.Stor
 	}
 	mention.EntityIntID = &sol.ID
 	mention.EntityDB = mention.EntityIntID
+	taggedEntity := models.TaggedEntity(sol)
+	mention.Entity = &taggedEntity
 	return nil
 }
 

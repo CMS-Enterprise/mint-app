@@ -39,7 +39,8 @@ type HTMLMention struct {
 	InnerHTML   string
 	EntityUUID  *uuid.UUID
 	EntityIntID *int
-	EntityDB    interface{} // This is for marshaliing to the template
+	EntityDB    interface{}   // This is for marshaliing to the template
+	Entity      *TaggedEntity // this is used to store a reference to the tagged entity
 }
 
 // TaggedHTML Is the input type for HTML that could contain tags

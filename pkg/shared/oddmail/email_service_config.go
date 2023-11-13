@@ -8,4 +8,5 @@ type EmailServiceConfig interface {
 	GetPort() int
 	GetUsername() string
 	GetPassword() string
+	GetSendTaggedPOCEmails() bool
 }

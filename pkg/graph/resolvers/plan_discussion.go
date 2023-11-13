@@ -108,7 +108,7 @@ func CreatePlanDiscussion(
 		emailService,
 		emailTemplateService,
 		addressBook,
-		discussion.Content,
+		discussion.Content, //TODO try to send the other content, which includes the mentions (or update the mentions)
 		discussion.ID,
 		modelPlan,
 		commonName,
@@ -131,8 +131,9 @@ func sendPlanDiscussionTagEmails(
 	modelPlan *models.ModelPlan,
 	createdByUserName string,
 	createdByUserRole string,
+	// sendPOCEmails bool,
 ) error {
-
+	// TODO: update this to use the mentions instead of the tags, because we attached the entity here
 	var errs []error
 	for _, tag := range tHTML.Tags {
 
@@ -150,6 +151,10 @@ func sendPlanDiscussionTagEmails(
 				continue
 			}
 		case models.TagTypePossibleSolution:
+			config := emailService.GetConfig()
+			if !config.GetSendTaggedPOCEmails() { // only send emails if configured to do it
+				continue
+			}
 			// TODO can we store references to the tagged entity when we get the entities in the database in the earlier function? Less redundant DB queries this way
 			// soln, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
 			soln, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
