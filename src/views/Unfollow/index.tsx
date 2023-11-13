@@ -1,16 +1,12 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { useGetBasicsQuery } from 'gql/gen/graphql';
 
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useMessage from 'hooks/useMessage';
-import GetBasics from 'queries/Basics/GetBasics';
-import {
-  GetBasics as GetBasicsType,
-  GetBasicsVariables
-} from 'queries/Basics/types/GetBasics';
 import DeletePlanFavorite from 'queries/Favorite/DeletePlanFavorite';
 import { DeletePlanFavoriteVariables } from 'queries/Favorite/types/DeletePlanFavorite';
 
@@ -27,14 +23,11 @@ const Unfollow = () => {
     DeletePlanFavorite
   );
 
-  const { data, error } = useQuery<GetBasicsType, GetBasicsVariables>(
-    GetBasics,
-    {
-      variables: {
-        id: modelIDToRemove!
-      }
+  const { data, error } = useGetBasicsQuery({
+    variables: {
+      id: modelIDToRemove!
     }
-  );
+  });
 
   const modelName = data?.modelPlan.modelName;
 
