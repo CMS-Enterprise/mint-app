@@ -67,6 +67,7 @@ func CreatePlanDiscussion(
 		return discussion, err
 	}
 	discussion.Content.Tags = tags
+	discussion.Content.Mentions = planDiscussion.Content.Mentions // TODO, do this or send the other metions
 	err = tx.Commit()
 	if err != nil {
 		return nil, err
@@ -131,39 +132,38 @@ func sendPlanDiscussionTagEmails(
 	modelPlan *models.ModelPlan,
 	createdByUserName string,
 	createdByUserRole string,
-	// sendPOCEmails bool,
 ) error {
-	// TODO: update this to use the mentions instead of the tags, because we attached the entity here
-	var errs []error
-	for _, tag := range tHTML.Tags {
 
-		switch tag.TagType {
+	var errs []error
+	for _, mention := range tHTML.UniqueMentions() { // Get only unique mentions so we don't send multiple emails if someone is tagged in the same content twice
+		if mention.Entity == nil {
+			errs = append(errs, fmt.Errorf("entity is not stored for mention on discussion %s, model plan %s, %s", discussionID, modelPlan.ModelName, modelPlan.ID))
+			continue // non blocking
+		}
+		entity := *mention.Entity
+
+		switch mention.Type {
 		case models.TagTypeUserAccount:
-			//TODO
-			taggedUserAccount, err := UserAccountGetByIDLOADER(ctx, *tag.EntityUUID)
-			if err != nil {
-				errs = append(errs, err) //non blocking
-				continue
+			taggedUserAccount, ok := entity.(*authentication.UserAccount)
+			if !ok {
+				errs = append(errs, fmt.Errorf("tagged entity was expectd to be a user account, but was not able to be cast to UserAccount. entity: %v", entity))
 			}
-			err = sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
+			err := sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
 			}
 		case models.TagTypePossibleSolution:
 			config := emailService.GetConfig()
-			if !config.GetSendTaggedPOCEmails() { // only send emails if configured to do it
+			if !config.GetSendTaggedPOCEmails() { // only send emails if configured to do so
 				continue
 			}
-			// TODO can we store references to the tagged entity when we get the entities in the database in the earlier function? Less redundant DB queries this way
-			// soln, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
-			soln, err := PossibleOperationalSolutionGetByID(logger, store, *tag.EntityIntID)
-			if err != nil {
-				errs = append(errs, err) //non blocking
-				continue
+			soln, ok := entity.(*models.PossibleOperationalSolution)
+			if !ok {
+				errs = append(errs, fmt.Errorf("tagged entity was expectd to be a possible solution, but was not able to be cast to PossibleOperationalSolution. entity: %v", entity))
 			}
-			// contacts, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *tag.EntityIntID)
-			pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *tag.EntityIntID)
+
+			pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *mention.EntityIntID)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -416,6 +416,7 @@ func CreateDiscussionReply(
 		return reply, err
 	}
 	reply.Content.Tags = tags
+	reply.Content.Mentions = discussionReply.Content.Mentions
 	err = tx.Commit()
 	if err != nil {
 		return nil, err
