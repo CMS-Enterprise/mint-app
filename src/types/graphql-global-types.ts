@@ -750,6 +750,7 @@ export interface PlanDocumentInput {
 export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
   existingModel?: string | null;
+  existingModelID?: UUID | null;
   resemblesExistingModel?: boolean | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
