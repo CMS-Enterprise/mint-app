@@ -7380,6 +7380,7 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   # Page 1
   isNewModel: Boolean
   existingModel: String
+  existingModelID: UUID
   resemblesExistingModel: Boolean
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
