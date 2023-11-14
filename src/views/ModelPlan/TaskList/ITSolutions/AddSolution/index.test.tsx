@@ -8,6 +8,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
 import { OpSolutionStatus } from 'types/graphql-global-types';
@@ -82,7 +83,8 @@ const mocks = [
         operationalSolution
       }
     }
-  }
+  },
+  ...needQuestionAndAnswerMock
 ];
 
 describe('IT Solutions AddSolution', () => {

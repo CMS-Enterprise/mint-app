@@ -22,6 +22,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
@@ -248,6 +249,10 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   if ((!loading && error) || (!loading && !data?.modelPlan) || cannotStart) {
     return <NotFoundPartial />;
+  }
+
+  if (loading) {
+    return <PageLoading />;
   }
 
   return (

@@ -33,6 +33,11 @@ const MessageProvider = ({ children }: { children: ReactNode }) => {
       setQueuedMessage('');
       setLastPathname(location.pathname);
     }
+    return () => {
+      setMessage('');
+      setQueuedMessage('');
+      setLastPathname(location.pathname);
+    };
   }, [message, queuedMessage, lastPathname, location.pathname]);
 
   return (

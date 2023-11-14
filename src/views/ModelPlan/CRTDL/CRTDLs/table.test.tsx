@@ -23,6 +23,7 @@ const mocks = [
       data: {
         modelPlan: {
           id: modelID,
+          __typename: 'ModelPlan',
           modelName: 'My Plan',
           isCollaborator: true,
           crTdls: [
@@ -108,8 +109,7 @@ describe('Model Plan CR and TDL table', () => {
     await waitFor(() => {
       expect(getByTestId('cr-tdl-table')).toHaveTextContent('My CR');
     });
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

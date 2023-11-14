@@ -32,8 +32,7 @@ describe('New Model Plan page', () => {
         </MockedProvider>
       </MemoryRouter>
     );
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

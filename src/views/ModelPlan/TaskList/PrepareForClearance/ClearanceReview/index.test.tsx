@@ -41,7 +41,13 @@ const clearanceMock = [
         }
       }
     }
-  },
+  }
+];
+
+const clearanceMocks = [
+  ...clearanceMock,
+  ...clearanceMock,
+  ...modelBasicsMocks,
   ...modelBasicsMocks
 ];
 
@@ -53,7 +59,7 @@ describe('ClearanceReview component', () => {
           `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
         ]}
       >
-        <MockedProvider mocks={clearanceMock} addTypename={false}>
+        <MockedProvider mocks={clearanceMocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
             <ClearanceReview modelID={modelID} />
           </Route>
@@ -79,7 +85,7 @@ describe('ClearanceReview component', () => {
           `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
         ]}
       >
-        <MockedProvider mocks={clearanceMock} addTypename={false}>
+        <MockedProvider mocks={clearanceMocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
             <ClearanceReview modelID={modelID} />
           </Route>
@@ -107,7 +113,7 @@ describe('ClearanceReview component', () => {
           `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
         ]}
       >
-        <MockedProvider mocks={clearanceMock} addTypename={false}>
+        <MockedProvider mocks={clearanceMocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
             <ClearanceReview modelID={modelID} />
           </Route>

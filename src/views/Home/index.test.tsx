@@ -8,7 +8,9 @@ import configureMockStore from 'redux-mock-store';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { ASSESSMENT } from 'constants/jobCodes';
+import { modelPlanCollectionMock } from 'data/mock/general';
 import { MessageProvider } from 'hooks/useMessage';
+import { ModelPlanFilter } from 'types/graphql-global-types';
 import Table from 'views/ModelPlan/Table';
 
 import Home from './index';
@@ -42,7 +44,13 @@ describe('The home page', () => {
         await act(async () => {
           component = mount(
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
-              <MockedProvider>
+              <MockedProvider
+                mocks={[
+                  ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+                  ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+                ]}
+                addTypename={false}
+              >
                 <Provider store={store}>
                   <MessageProvider>
                     <Home />
@@ -74,7 +82,13 @@ describe('The home page', () => {
         await act(async () => {
           component = mount(
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
-              <MockedProvider>
+              <MockedProvider
+                mocks={[
+                  ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+                  ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+                ]}
+                addTypename={false}
+              >
                 <Provider store={store}>
                   <MessageProvider>
                     <Home />
