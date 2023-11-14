@@ -28,7 +28,8 @@ const mocks = [
     },
     result: {
       data: {
-        reportAProblem: true
+        reportAProblem: true,
+        sendFeedbackEmail: true
       }
     }
   }
@@ -65,9 +66,7 @@ describe('Send feedback form', () => {
     userEvent.click(submitButton);
 
     // Submit success
-    await waitFor(() => {
-      findByText('Thank you for your feedback');
-    });
+    findByText('Thank you for your feedback');
   });
 
   it('matches snapshot', async () => {

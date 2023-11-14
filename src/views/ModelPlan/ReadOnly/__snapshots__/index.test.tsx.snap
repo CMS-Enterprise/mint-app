@@ -85,7 +85,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
               class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
               tabindex="-1"
             >
-              My Model 
+              Testing Model Summary 
               <span
                 class="font-sans-sm text-normal"
               >
@@ -173,7 +173,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 class="mint-collapsable-link"
               >
                 <button
-                  aria-controls="my-model--description"
+                  aria-controls="testing-model-summary--description"
                   aria-expanded="false"
                   class="usa-button usa-button--unstyled margin-top-3 padding-0"
                   data-testid="collapsable-link"
@@ -538,16 +538,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                         >
                           Model basics
                         </h2>
-                        <div>
-                          <div
-                            class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
-                            data-testid="tasklist-tag"
-                          >
-                            <span>
-                              In progress
-                            </span>
-                          </div>
-                        </div>
+                        <div />
                       </div>
                       <div
                         class="desktop:grid-col-12"
@@ -561,20 +552,15 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                           >
                             Previous model names
                           </p>
-                          <ul
-                            class="margin-y-0 padding-left-3"
+                          <p
+                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                           >
-                            <li
-                              class="font-sans-md line-height-sans-4"
+                            <em
+                              class="text-base"
                             >
-                              First Name
-                            </li>
-                            <li
-                              class="font-sans-md line-height-sans-4"
-                            >
-                              Second Name
-                            </li>
-                          </ul>
+                              No answer entered
+                            </em>
+                          </p>
                         </div>
                       </div>
                       <div
@@ -622,7 +608,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             >
                               Model ID
                             </p>
-                            43532323
+                            <div
+                              class="text-italic text-base"
+                            >
+                              None entered
+                            </div>
                           </div>
                           <div
                             class="desktop:grid-col-6"
@@ -633,7 +623,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             >
                               Demo code(s)
                             </p>
-                            1234
+                            <div
+                              class="text-italic text-base"
+                            >
+                              None entered
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -657,57 +651,15 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               >
                                 Primary model category
                               </p>
-                              <div
+                              <p
                                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                               >
-                                <span
-                                  class="display-flex flex-align-center"
-                                  style="gap: 4px;"
+                                <em
+                                  class="text-base"
                                 >
-                                  State-Based
-                                  <span
-                                    class="usa-tooltip"
-                                    data-testid="tooltipWrapper"
-                                  >
-                                    <div
-                                      aria-describedby="tooltip-550000"
-                                      class="usa-tooltip__trigger mint-no-print"
-                                      data-testid="triggerElement"
-                                      position="right"
-                                      tabindex="0"
-                                      title=""
-                                    >
-                                      <svg
-                                        class="usa-icon text-base-light"
-                                        focusable="false"
-                                        height="1em"
-                                        role="img"
-                                        viewBox="0 0 24 24"
-                                        width="1em"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M0 0h24v24H0z"
-                                          fill="none"
-                                        />
-                                        <path
-                                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                                        />
-                                      </svg>
-                                    </div>
-                                    <span
-                                      aria-hidden="true"
-                                      class="usa-tooltip__body"
-                                      data-testid="tooltipBody"
-                                      id="tooltip-550000"
-                                      role="tooltip"
-                                      title="Models in which a state serves as the main contractual participant"
-                                    >
-                                      Models in which a state serves as the main contractual participant
-                                    </span>
-                                  </span>
-                                </span>
-                              </div>
+                                  No answer entered
+                                </em>
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -727,61 +679,15 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               >
                                 Additional model categories
                               </p>
-                              <ul
-                                class="margin-y-0 padding-left-2"
+                              <p
+                                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                               >
-                                <li
-                                  class="font-sans-md line-height-sans-4"
+                                <em
+                                  class="text-base"
                                 >
-                                  <span
-                                    class="display-flex flex-align-center"
-                                    style="gap: 4px;"
-                                  >
-                                    Accountable Care
-                                    <span
-                                      class="usa-tooltip"
-                                      data-testid="tooltipWrapper"
-                                    >
-                                      <div
-                                        aria-describedby="tooltip-550000"
-                                        class="usa-tooltip__trigger"
-                                        data-testid="triggerElement"
-                                        position="right"
-                                        tabindex="0"
-                                        title=""
-                                      >
-                                        <svg
-                                          class="usa-icon text-base-light"
-                                          focusable="false"
-                                          height="1em"
-                                          role="img"
-                                          viewBox="0 0 24 24"
-                                          width="1em"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M0 0h24v24H0z"
-                                            fill="none"
-                                          />
-                                          <path
-                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                                          />
-                                        </svg>
-                                      </div>
-                                      <span
-                                        aria-hidden="true"
-                                        class="usa-tooltip__body"
-                                        data-testid="tooltipBody"
-                                        id="tooltip-550000"
-                                        role="tooltip"
-                                        title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
-                                      >
-                                        Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
-                                      </span>
-                                    </span>
-                                  </span>
-                                </li>
-                              </ul>
+                                  No answer entered
+                                </em>
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -806,29 +712,15 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               >
                                 CMS component
                               </p>
-                              <ul
-                                class="margin-y-0 padding-left-3"
+                              <p
+                                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                               >
-                                <li
-                                  class="font-sans-md line-height-sans-4"
+                                <em
+                                  class="text-base"
                                 >
-                                  Center for Medicare (CM)
-                                </li>
-                                <li
-                                  class="font-sans-md line-height-sans-4"
-                                >
-                                  Other
-                                </li>
-                                <ul
-                                  data-testid="other-entry"
-                                >
-                                  <li
-                                    class="font-sans-md line-height-sans-4"
-                                  >
-                                    The Center for Awesomeness
-                                  </li>
-                                </ul>
-                              </ul>
+                                  No answer entered
+                                </em>
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -848,20 +740,15 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               >
                                 CMMI Group
                               </p>
-                              <ul
-                                class="margin-y-0 padding-left-3"
+                              <p
+                                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                               >
-                                <li
-                                  class="font-sans-md line-height-sans-4"
+                                <em
+                                  class="text-base"
                                 >
-                                  State and Population Health Group (SPHG)
-                                </li>
-                                <li
-                                  class="font-sans-md line-height-sans-4"
-                                >
-                                  Policy and Programs Group (PPG)
-                                </li>
-                              </ul>
+                                  No answer entered
+                                </em>
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -881,7 +768,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                           <p
                             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                           >
-                            Mandatory
+                            <em
+                              class="text-base"
+                            >
+                              No answer entered
+                            </em>
                           </p>
                         </div>
                       </div>
@@ -900,7 +791,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                           <p
                             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                           >
-                            There is not enough candy
+                            <em
+                              class="text-base"
+                            >
+                              No answer entered
+                            </em>
                           </p>
                         </div>
                       </div>
@@ -919,7 +814,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                           <p
                             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                           >
-                            To get more candy
+                            <em
+                              class="text-base"
+                            >
+                              No answer entered
+                            </em>
                           </p>
                         </div>
                       </div>
@@ -938,26 +837,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                           <p
                             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                           >
-                            The great candy machine
-                          </p>
-                        </div>
-                      </div>
-                      <div
-                        class="desktop:grid-col-12"
-                        data-testid="grid"
-                      >
-                        <div
-                          class="read-only-section read-only-section--notes margin-bottom-3"
-                        >
-                          <p
-                            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                          >
-                            Notes
-                          </p>
-                          <p
-                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                          >
-                            The machine doesn't work yet
+                            <em
+                              class="text-base"
+                            >
+                              No answer entered
+                            </em>
                           </p>
                         </div>
                       </div>
@@ -985,7 +869,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             <p
                               class="margin-y-0 font-body-md line-height-sans-4"
                             >
-                              06/03/2022
+                              <em
+                                class="text-base"
+                              >
+                                No answer entered
+                              </em>
                             </p>
                           </li>
                           <li
@@ -1012,7 +900,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <p
                                   class="margin-y-0 font-body-md line-height-sans-4"
                                 >
-                                  06/03/2022
+                                  <em
+                                    class="text-base"
+                                  >
+                                    No answer entered
+                                  </em>
                                 </p>
                               </div>
                               <div
@@ -1027,7 +919,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <p
                                   class="margin-y-0 font-body-md line-height-sans-4"
                                 >
-                                  06/03/2022
+                                  <em
+                                    class="text-base"
+                                  >
+                                    No answer entered
+                                  </em>
                                 </p>
                               </div>
                             </div>
@@ -1044,7 +940,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             <p
                               class="margin-y-0 font-body-md line-height-sans-4"
                             >
-                              06/03/2022
+                              <em
+                                class="text-base"
+                              >
+                                No answer entered
+                              </em>
                             </p>
                           </li>
                           <li
@@ -1071,7 +971,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <p
                                   class="margin-y-0 font-body-md line-height-sans-4"
                                 >
-                                  06/03/2022
+                                  <em
+                                    class="text-base"
+                                  >
+                                    No answer entered
+                                  </em>
                                 </p>
                               </div>
                               <div
@@ -1086,7 +990,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <p
                                   class="margin-y-0 font-body-md line-height-sans-4"
                                 >
-                                  06/03/2022
+                                  <em
+                                    class="text-base"
+                                  >
+                                    No answer entered
+                                  </em>
                                 </p>
                               </div>
                             </div>
@@ -1115,7 +1023,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <p
                                   class="margin-y-0 font-body-md line-height-sans-4"
                                 >
-                                  06/03/2022
+                                  <em
+                                    class="text-base"
+                                  >
+                                    No answer entered
+                                  </em>
                                 </p>
                               </div>
                               <div
@@ -1130,7 +1042,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <p
                                   class="margin-y-0 font-body-md line-height-sans-4"
                                 >
-                                  06/03/2022
+                                  <em
+                                    class="text-base"
+                                  >
+                                    No answer entered
+                                  </em>
                                 </p>
                               </div>
                             </div>
@@ -1147,29 +1063,14 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             <p
                               class="margin-y-0 font-body-md line-height-sans-4"
                             >
-                              06/03/2022
+                              <em
+                                class="text-base"
+                              >
+                                No answer entered
+                              </em>
                             </p>
                           </li>
                         </ol>
-                        <div
-                          class="desktop:grid-col-12"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="read-only-section read-only-section--notes margin-bottom-3"
-                          >
-                            <p
-                              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                            >
-                              Notes
-                            </p>
-                            <p
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                            >
-                              Theses are my best guess notes
-                            </p>
-                          </div>
-                        </div>
                       </div>
                       <div
                         class="desktop:grid-col-12"
@@ -1186,27 +1087,12 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                           <p
                             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                           >
-                            No
+                            <em
+                              class="text-base"
+                            >
+                              No answer entered
+                            </em>
                           </p>
-                        </div>
-                        <div
-                          class="desktop:grid-col-12"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="read-only-section read-only-section--notes margin-bottom-3"
-                          >
-                            <p
-                              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                            >
-                              Notes
-                            </p>
-                            <p
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                            >
-                              This can't be phased in
-                            </p>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -1224,40 +1110,6 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       >
                         Model lead(s)
                       </p>
-                      <div
-                        class="model-lead__member margin-bottom-3"
-                      >
-                        <h3
-                          class="system-profile__subheader margin-bottom-1"
-                        >
-                          Luke Skywalker
-                        </h3>
-                        <a
-                          aria-label="Send an email"
-                          class="usa-link line-height-body-5"
-                          href="mailto:luke@skywalker.com"
-                          target="_blank"
-                        >
-                          Send an email
-                          <svg
-                            class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M0 0h24v24H0z"
-                              fill="none"
-                            />
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </a>
-                      </div>
                       <a
                         aria-label="More team members"
                         class="usa-link line-height-body-5 display-flex flex-align-center "

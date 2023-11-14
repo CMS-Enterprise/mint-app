@@ -74,36 +74,17 @@ const favoritesModelPlanData: GetFavoritesType[] = [
     id: modelID,
     modelName: 'My plan',
     status: ModelStatus.PLAN_DRAFT,
-    abbreviation: 'MP',
     nameHistory: [],
-    createdBy: '',
-    createdDts: '',
-    modifiedDts: '',
     isFavorite: false,
     isCollaborator: true,
     basics: {
       id: '123',
-      demoCode: '',
-      amsModelID: '',
-      modelCategory: ModelCategory.ACCOUNTABLE_CARE,
-      clearanceStarts: '',
+      goal: '',
       performancePeriodStarts: '',
-      additionalModelCategories: [],
-      applicationsStart: '',
+
       __typename: 'PlanBasics'
     },
-    generalCharacteristics: {
-      id: '456',
-      keyCharacteristics: [],
-      __typename: 'PlanGeneralCharacteristics'
-    },
-    payments: {
-      id: '111',
-      paymentStartDate: '',
-      __typename: 'PlanPayments'
-    },
     collaborators: [],
-    discussions: [],
     crTdls: [],
     __typename: 'ModelPlan'
   }

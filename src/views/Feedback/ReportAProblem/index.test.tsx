@@ -38,7 +38,7 @@ window.scrollTo = vi.fn;
 
 describe('Report a problem form', () => {
   it('submits the "Report a problem" form successfully', async () => {
-    const { findByText, getByRole, getByTestId } = render(
+    const { findByText, getByRole, getByTestId, getByText } = render(
       <MemoryRouter initialEntries={['/report-a-problem']}>
         <Route path="/report-a-problem">
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
@@ -73,9 +73,7 @@ describe('Report a problem form', () => {
     userEvent.click(submitButton);
 
     // Submit success
-    await waitFor(() => {
-      findByText('Thank you for your feedback');
-    });
+    findByText('Thank you for your feedback');
   });
 
   it('matches snapshot', async () => {

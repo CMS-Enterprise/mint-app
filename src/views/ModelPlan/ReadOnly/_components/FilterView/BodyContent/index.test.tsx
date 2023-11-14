@@ -2,7 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -85,7 +89,7 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('Read Only Filtered View Body Content', () => {
   it('renders without crashing', async () => {
-    render(
+    const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           `/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/model-basics?filter-view=cmmi`
@@ -100,6 +104,8 @@ describe('Read Only Filtered View Body Content', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     expect(screen.getByText('Model Team')).toBeInTheDocument();
     expect(screen.getByText('CMMI Cost Estimate')).toBeInTheDocument();

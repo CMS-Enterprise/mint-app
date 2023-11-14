@@ -27,7 +27,7 @@ const mockAuthReducer = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
-const mocks: any = [...summaryMock, ...modelBasicsMocks, ...collaboratorsMocks];
+const mocks: any = [...summaryMock, ...collaboratorsMocks, ...modelBasicsMocks];
 
 describe('Read Only Model Plan Summary', () => {
   // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
