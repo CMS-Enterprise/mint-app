@@ -11,7 +11,12 @@
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["cypress", "simple-import-sort"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": ["cypress", "simple-import-sort", "@typescript-eslint/eslint-plugin", "@typescript-eslint/parser"],
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "jsx-a11y/label-has-associated-control": [
@@ -80,10 +85,15 @@
     "react/jsx-props-no-spreading": "off"
   },
   "settings": {
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
       "node": {
         "paths": ["src"],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
       }
     }
   },
