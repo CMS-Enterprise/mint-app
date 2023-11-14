@@ -10,14 +10,15 @@ import userEvent from '@testing-library/user-event';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
-import { possibleSolutionsMock } from 'data/mock/solutions';
+import {
+  needQuestionAndAnswerMock,
+  possibleSolutionsMock
+} from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import documentMocks from 'views/ModelPlan/Documents/index.test';
-
-import needQuestionAndAnswerMock from '../_components/NeedQuestionAndAnswer/mocks';
 
 import LinkDocuments from '.';
 

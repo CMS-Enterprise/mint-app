@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { modelBasicsMocks } from 'data/mock/readonly';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   PrepareForClearanceStatus,
@@ -14,7 +15,7 @@ import { initialPrepareForClearanceValues } from '../Checklist';
 
 import ClearanceReview from '.';
 
-const modelID = 'd94958a4-2259-4fe9-b94c-f62492c43287';
+const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const basicsID = 'a093a178-5ec6-4a62-94df-f9b9179ee84e';
 
 const clearanceMockData = initialPrepareForClearanceValues;
@@ -40,7 +41,8 @@ const clearanceMock = [
         }
       }
     }
-  }
+  },
+  ...modelBasicsMocks
 ];
 
 describe('ClearanceReview component', () => {

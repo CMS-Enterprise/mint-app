@@ -8,7 +8,12 @@ import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 
 import { ASSESSMENT } from 'constants/jobCodes';
-import { modelID, summaryMock as mocks } from 'data/mock/readonly';
+import {
+  collaboratorsMocks,
+  modelBasicsMocks,
+  modelID,
+  summaryMock
+} from 'data/mock/readonly';
 import { ModelStatus } from 'types/graphql-global-types';
 
 import ReadOnly from './index';
@@ -21,6 +26,8 @@ const mockAuthReducer = {
 
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
+
+const mocks: any = [...summaryMock, ...modelBasicsMocks, ...collaboratorsMocks];
 
 describe('Read Only Model Plan Summary', () => {
   // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
@@ -91,54 +98,52 @@ describe('Read Only Model Plan Summary', () => {
 
     expect(asFragment()).toMatchSnapshot();
   });
+});
 
-  describe('Status Tag updates', () => {
-    it('renders "ICIP complete" tag and alert', async () => {
-      mocks[0].result.data.modelPlan.status = ModelStatus.ICIP_COMPLETE;
-      render(
-        <MemoryRouter
-          initialEntries={[`/models/${modelID}/read-only/model-basics`]}
-        >
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <Provider store={store}>
-              <Route path="/models/:modelID/read-only/:subinfo">
-                <ReadOnly />
-              </Route>
-            </Provider>
-          </MockedProvider>
-        </MemoryRouter>
+describe('Status Tag updates', () => {
+  it('renders "ICIP complete" tag and alert', async () => {
+    mocks[0].result.data.modelPlan.status = ModelStatus.ICIP_COMPLETE;
+    render(
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-only/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId('tag')[1].textContent).toContain(
+        'ICIP complete'
       );
-
-      await waitFor(() => {
-        expect(screen.getAllByTestId('tag')[1].textContent).toContain(
-          'ICIP complete'
-        );
-        expect(screen.getByTestId('alert')).toBeInTheDocument();
-      });
+      expect(screen.getByTestId('alert')).toBeInTheDocument();
     });
+  });
 
-    it('renders "Cleared" tag and does not render alert', async () => {
-      mocks[0].result.data.modelPlan.status = ModelStatus.CLEARED;
-      render(
-        <MemoryRouter
-          initialEntries={[`/models/${modelID}/read-only/model-basics`]}
-        >
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <Provider store={store}>
-              <Route path="/models/:modelID/read-only/:subinfo">
-                <ReadOnly />
-              </Route>
-            </Provider>
-          </MockedProvider>
-        </MemoryRouter>
-      );
+  it('renders "Cleared" tag and does not render alert', async () => {
+    mocks[0].result.data.modelPlan.status = ModelStatus.CLEARED;
+    render(
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-only/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
+    );
 
-      await waitFor(() => {
-        expect(screen.getAllByTestId('tag')[1].textContent).toContain(
-          'Cleared'
-        );
-        expect(screen.queryByTestId('alert')).toBeNull();
-      });
+    await waitFor(() => {
+      expect(screen.getAllByTestId('tag')[1].textContent).toContain('Cleared');
+      expect(screen.queryByTestId('alert')).toBeNull();
     });
   });
 });

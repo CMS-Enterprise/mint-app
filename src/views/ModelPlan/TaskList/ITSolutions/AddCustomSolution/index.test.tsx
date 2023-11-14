@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import allMocks from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
@@ -45,7 +46,8 @@ const returnMockedData = (results: boolean) => {
           }
         }
       }
-    }
+    },
+    ...allMocks
   ];
 };
 

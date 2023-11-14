@@ -3,7 +3,10 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { possibleSolutionsMock } from 'data/mock/solutions';
+import {
+  needQuestionAndAnswerMock,
+  possibleSolutionsMock
+} from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
@@ -11,8 +14,6 @@ import {
   OpSolutionStatus
 } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
-
-import needQuestionAndAnswerMock from '../_components/NeedQuestionAndAnswer/mocks';
 
 import Subtasks from '.';
 

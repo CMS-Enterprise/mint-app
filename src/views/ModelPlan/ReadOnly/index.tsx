@@ -17,6 +17,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import ShareExportModal from 'components/ShareExport';
@@ -273,6 +274,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   }
 
   const subComponent = subComponents[subinfo];
+
+  if (loading) {
+    return <PageLoading />;
+  }
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFound />;
