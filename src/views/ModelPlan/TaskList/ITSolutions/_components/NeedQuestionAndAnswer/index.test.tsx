@@ -16,7 +16,7 @@ const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
 describe('IT Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
-    const { getByText, getByTestId, getByRole } = render(
+    const { getByText, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -38,7 +38,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
 
     await waitFor(() => {
       expect(getByTestId('toggle-need-answer')).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
 
     await waitFor(() => {
       expect(

@@ -200,12 +200,12 @@ const SelectSolutions = () => {
     { text: update ? t('updateSolutions') : t('selectSolution') }
   ];
 
-  if (error) {
-    return <NotFound />;
+  if (!data && loading) {
+    return <PageLoading />;
   }
 
-  if (loading) {
-    return <PageLoading />;
+  if (error) {
+    return <NotFound />;
   }
 
   return (

@@ -17,6 +17,7 @@ import {
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
@@ -65,7 +66,7 @@ const SolutionCard = ({
     solution.key
   );
 
-  const { helpSolutions } = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   const solutionMap = findSolutionByKey(solution.key, helpSolutions);
 
@@ -81,6 +82,10 @@ const SolutionCard = ({
     OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
     OperationalSolutionKey.INTERNAL_STAFF
   ];
+
+  if (loading) {
+    return <PageLoading />;
+  }
 
   return (
     <>

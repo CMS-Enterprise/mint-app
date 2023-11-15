@@ -144,6 +144,7 @@ describe('IT Solutions Add Subtasks', () => {
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
 
     await waitFor(() => {
       expect(getByTestId('add-subtask-form')).toBeInTheDocument();

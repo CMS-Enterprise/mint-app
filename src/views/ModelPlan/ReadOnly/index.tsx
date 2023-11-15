@@ -275,7 +275,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const subComponent = subComponents[subinfo];
 
-  if (loading) {
+  if (!data && loading) {
     return <PageLoading />;
   }
 

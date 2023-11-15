@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IT Solutions Link Documents > matches snapshot 1`] = `
+exports[`IT Solutions Link Documents > renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"

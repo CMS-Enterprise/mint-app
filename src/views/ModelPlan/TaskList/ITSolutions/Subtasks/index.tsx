@@ -250,6 +250,14 @@ const Subtasks = ({
     }
   };
 
+  if (!solutionData && loading) {
+    return <PageLoading />;
+  }
+
+  if (error || (!solutionData && !loading)) {
+    return <NotFound />;
+  }
+
   const renderModal = () => {
     return (
       <Modal
@@ -300,14 +308,6 @@ const Subtasks = ({
     },
     { text: managingSubtasks ? t('manageSubtasks') : t('addSubtask') }
   ];
-
-  if (error || (!solution && !loading)) {
-    return <NotFound />;
-  }
-
-  if (loading) {
-    return <PageLoading />;
-  }
 
   return (
     <>

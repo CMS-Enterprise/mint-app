@@ -157,14 +157,17 @@ const NeedQuestionAndAnswer = ({
 
   // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable
   // Maybe reasearch into this further for better type safety
-  const { data } = useQuery(GetOperationalNeedAnswer, queryVariables);
+  const { data, loading: answerLoading } = useQuery(
+    GetOperationalNeedAnswer,
+    queryVariables
+  );
 
   const answers = useMemo(() => {
     return formatOperationalNeedAnswers(needConfig, data);
   }, [needConfig, data]);
 
-  if (loading) {
-    return <Spinner size="large" center />;
+  if ((!need && loading) || (!data && answerLoading)) {
+    return <Spinner size="large" center testId="needs-spinner" />;
   }
 
   const renderLinks = () => {

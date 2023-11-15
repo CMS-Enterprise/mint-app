@@ -205,15 +205,15 @@ const AddCustomSolution = () => {
     }
   ];
 
+  if (!data && loading) {
+    return <PageLoading />;
+  }
+
   if (
     error ||
     (!customOperationalSolution && !loading && !operationalSolutionID)
   ) {
     return <NotFound />;
-  }
-
-  if (loading) {
-    return <PageLoading />;
   }
 
   return (

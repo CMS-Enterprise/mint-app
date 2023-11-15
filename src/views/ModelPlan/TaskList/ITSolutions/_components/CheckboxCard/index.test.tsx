@@ -1,6 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { act, render, waitFor } from '@testing-library/react';
+import {
+  act,
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import { Formik } from 'formik';
 
 import { possibleSolutionsMock } from 'data/mock/solutions';
@@ -40,7 +45,7 @@ const handleSubmit = vi.fn();
 describe('IT Solutions CheckboxCard', () => {
   it('matches snapshot', async () => {
     await act(async () => {
-      const { asFragment, getByRole, getByText } = render(
+      const { asFragment, getByRole, getByText, getByTestId } = render(
         <MemoryRouter
           initialEntries={[
             '/models/602287ff-d9d5-4203-86eb-e168fbd47242/task-list/it-solutions/f92a8a35-86de-4e03-a81a-bd8bec2e30e3/select-solutions'
@@ -55,6 +60,8 @@ describe('IT Solutions CheckboxCard', () => {
           </Route>
         </MemoryRouter>
       );
+
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
       await waitFor(() => {
         expect(getByText('at.mint@oddball.io')).toBeInTheDocument();

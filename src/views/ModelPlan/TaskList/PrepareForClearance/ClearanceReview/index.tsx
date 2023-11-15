@@ -247,12 +247,12 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     );
   };
 
-  if ((!loading && error) || (!loading && !data?.modelPlan) || cannotStart) {
-    return <NotFoundPartial />;
+  if (!data && loading) {
+    return <PageLoading />;
   }
 
-  if (loading) {
-    return <PageLoading />;
+  if ((!loading && error) || (!loading && !data?.modelPlan) || cannotStart) {
+    return <NotFoundPartial />;
   }
 
   return (

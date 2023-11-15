@@ -7,9 +7,16 @@ type SpinnerProps = {
   className?: string;
   size?: 'small' | 'large' | 'xl';
   center?: boolean;
+  testId?: string;
 } & JSX.IntrinsicElements['span'];
 
-const Spinner = ({ className, size, center, ...props }: SpinnerProps) => {
+const Spinner = ({
+  className,
+  size,
+  center,
+  testId,
+  ...props
+}: SpinnerProps) => {
   const classes = classnames(
     'mint-spinner',
     {
@@ -25,6 +32,7 @@ const Spinner = ({ className, size, center, ...props }: SpinnerProps) => {
       className={classes}
       aria-valuetext="Loading"
       role="progressbar"
+      data-testid={testId || 'spinner'}
       {...props}
     />
   );

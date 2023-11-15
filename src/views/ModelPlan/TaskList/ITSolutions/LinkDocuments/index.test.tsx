@@ -101,8 +101,8 @@ const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
 describe('IT Solutions Link Documents', () => {
-  it('renders correctly', async () => {
-    const { getByTestId, getByRole } = render(
+  it('renders correctly and matches snapshot', async () => {
+    const { getByTestId, getByRole, asFragment } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -144,37 +144,6 @@ describe('IT Solutions Link Documents', () => {
       expect(solutionDocument2).toBeChecked();
       expect(linkButton).not.toHaveAttribute('disabled');
     });
-  });
-
-  it('matches snapshot', async () => {
-    const { asFragment, getByTestId, getByRole } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
-          }
-        ]}
-      >
-        <VerboseMockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
-            <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
-              <MessageProvider>
-                <LinkDocuments />
-              </MessageProvider>
-            </Route>
-          </Provider>
-        </VerboseMockedProvider>
-      </MemoryRouter>
-    );
-
-    // Wait for page to load
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
-
-    // Click checkbox table cell to toggle document selection
-    const solutionDocument1 = getByTestId(
-      'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
-    );
-    userEvent.click(solutionDocument1);
 
     expect(asFragment()).toMatchSnapshot();
   });

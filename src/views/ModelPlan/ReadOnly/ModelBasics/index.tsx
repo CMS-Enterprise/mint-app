@@ -108,7 +108,7 @@ const ReadOnlyModelBasics = ({
     return <em className="text-base">{basicsMiscT('na')}</em>;
   };
 
-  if (loading) {
+  if (!data && loading) {
     return <PageLoading testId="basics-page-loading" />;
   }
 

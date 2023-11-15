@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { Field } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import PageLoading from 'components/PageLoading';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -59,7 +60,7 @@ const CheckboxCard = ({
     solution.key
   );
 
-  const { helpSolutions } = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther
@@ -87,6 +88,10 @@ const CheckboxCard = ({
     (solution.name !== null && solution.isOther);
 
   const solutionParam = solution.key ? `?selectedSolution=${solution.key}` : '';
+
+  if (loading) {
+    return <PageLoading />;
+  }
 
   const renderCTALink = () => {
     if (isDefaultSolutionOptions && solution.isOther) {

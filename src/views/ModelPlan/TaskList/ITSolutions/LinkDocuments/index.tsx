@@ -157,12 +157,12 @@ const LinkDocuments = () => {
     });
   };
 
-  if (error || !solution) {
-    return <NotFound />;
+  if (!data && loading) {
+    return <Spinner size="xl" center />;
   }
 
-  if (loading) {
-    return <Spinner size="xl" center />;
+  if (error || !solution) {
+    return <NotFound />;
   }
 
   const breadcrumbs = [
