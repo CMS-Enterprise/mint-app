@@ -12,7 +12,7 @@ describe('Adding a collaborator page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator?view=add'
         ]}
       >
         <MessageProvider>

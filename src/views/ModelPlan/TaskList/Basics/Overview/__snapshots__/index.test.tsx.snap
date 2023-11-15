@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Documents page > matches snapshot 1`] = `
+exports[`Basics overview page > renders without errors and matches snapshot 1`] = `
 <DocumentFragment>
   <div
     data-testid="model-plan-overview"
@@ -55,7 +55,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
       class="margin-top-0 margin-bottom-1 font-body-lg"
       data-testid="model-plan-name"
     >
-      for 
+      for My excellent plan that I just initiated
     </p>
     <p
       class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -102,7 +102,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
       <fieldset
         class="usa-fieldset"
         data-testid="fieldset"
-        disabled=""
       >
         <div
           class="usa-form-group margin-top-4"
@@ -171,9 +170,12 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
           <textarea
             aria-labelledby="label-ModelType-Problem hint-ModelType-Problem"
             class="usa-textarea"
+            data-testid="ModelType-Problem"
             id="ModelType-Problem"
             name="problem"
-          />
+          >
+            My problem
+          </textarea>
         </div>
         <div
           class="usa-form-group margin-top-4"
@@ -197,7 +199,9 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             class="usa-textarea"
             id="ModelType-Goal"
             name="goal"
-          />
+          >
+            A goal
+          </textarea>
         </div>
         <div
           class="usa-form-group margin-top-4"
@@ -215,36 +219,33 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             class="usa-textarea"
             id="ModelType-testInterventions"
             name="testInterventions"
-          />
+          >
+            Intervention
+          </textarea>
         </div>
         <div
           class="margin-top-4 margin-bottom-8"
         >
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
-            type="button"
+          <div
+            class="usa-form-group"
           >
-            <svg
-              aria-hidden="true"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+            <label
+              class="usa-label"
+              for="ModelType-note"
+              id="label-ModelType-note"
             >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-              />
-            </svg>
-            Add an additional note
-          </button>
+              Notes
+            </label>
+            <textarea
+              aria-labelledby="label-ModelType-note hint-ModelType-note"
+              class="usa-textarea"
+              data-testid="ModelType-note"
+              id="ModelType-note"
+              name="note"
+            >
+              Test note
+            </textarea>
+          </div>
         </div>
         <div
           class="margin-top-6 margin-bottom-3"

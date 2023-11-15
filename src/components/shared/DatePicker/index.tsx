@@ -19,8 +19,8 @@ interface ITSolutionsFormComponentType {
   subLabel?: string;
   placeHolder?: boolean;
   handleOnBlur: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
-  value: string | null;
-  formikValue: string | null;
+  value: string | null | undefined;
+  formikValue: string | null | undefined;
   error: string;
   warning?: boolean;
   half?: boolean;

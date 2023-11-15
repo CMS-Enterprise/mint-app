@@ -1,6 +1,6 @@
-import { graphql } from '../../gen/gql';
+import { gql } from '@apollo/client';
 
-export default graphql(/* GraphQL */ `
+export default gql(/* GraphQL */ `
   query GetPossibleSolutions {
     possibleOperationalSolutions {
       id

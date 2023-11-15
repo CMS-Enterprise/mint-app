@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query GetFunding($id: UUID!) {
+  query GetFundingOLD($id: UUID!) {
     modelPlan(id: $id) {
       id
       modelName

@@ -6,10 +6,10 @@
 import { ModelType } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL query operation: GetBasics
+// GraphQL query operation: GetOverview
 // ====================================================
 
-export interface GetBasics_modelPlan_basics {
+export interface GetOverview_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
   modelType: ModelType | null;
@@ -19,17 +19,17 @@ export interface GetBasics_modelPlan_basics {
   note: string | null;
 }
 
-export interface GetBasics_modelPlan {
+export interface GetOverview_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
-  basics: GetBasics_modelPlan_basics;
+  basics: GetOverview_modelPlan_basics;
 }
 
-export interface GetBasics {
-  modelPlan: GetBasics_modelPlan;
+export interface GetOverview {
+  modelPlan: GetOverview_modelPlan;
 }
 
-export interface GetBasicsVariables {
+export interface GetOverviewVariables {
   id: UUID;
 }

@@ -42,11 +42,11 @@ export default function useCacheQuery<
   TVariables = OperationVariables
 >(
   query: DocumentNode | TypedDocumentNode<TData, TVariables>,
-  options?: QueryHookOptions<TData, TVariables>
-): QueryResult<TData, TVariables> {
+  options?: QueryHookOptions<TData, OperationVariables>
+): QueryResult<TData, OperationVariables> {
   const { cache } = useApolloClient();
 
-  const queryResult = useQuery<TData, TVariables>(query, options);
+  const queryResult = useQuery<TData, OperationVariables>(query, options);
 
   return {
     ...queryResult,

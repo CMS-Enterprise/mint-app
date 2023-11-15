@@ -1,6 +1,5 @@
 // Util functions for status of Model plan and task list sections
-
-import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
+import { TaskStatus, TaskStatusInput } from 'gql/gen/graphql';
 
 // Util function for prepping TaskStatus for mutation input of TaskStatusInput
 const sanitizeStatus = (status: TaskStatus): TaskStatusInput => {

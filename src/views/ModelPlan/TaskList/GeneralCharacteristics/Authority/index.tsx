@@ -296,83 +296,89 @@ const Authority = () => {
                     field="rulemakingRequiredNote"
                   />
 
-                  <FieldArray
-                    name="authorityAllowances"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label">
-                          {generalCharacteristicsT('authorityAllowances.label')}
-                        </legend>
+                  <FieldGroup>
+                    <FieldArray
+                      name="authorityAllowances"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label">
+                            {generalCharacteristicsT(
+                              'authorityAllowances.label'
+                            )}
+                          </legend>
 
-                        <FieldErrorMsg>
-                          {flatErrors.authorityAllowances}
-                        </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors.authorityAllowances}
+                          </FieldErrorMsg>
 
-                        {getKeys(authorityAllowancesConfig.options).map(
-                          type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`plan-characteristics-authority-allowance-${type}`}
-                                  name="authorityAllowances"
-                                  label={
-                                    authorityAllowancesConfig.options[type]
-                                  }
-                                  value={type}
-                                  checked={values.authorityAllowances.includes(
-                                    type
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.authorityAllowances.indexOf(
-                                        e.target.value as AuthorityAllowance
-                                      );
-                                      arrayHelpers.remove(idx);
+                          {getKeys(authorityAllowancesConfig.options).map(
+                            type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`plan-characteristics-authority-allowance-${type}`}
+                                    name="authorityAllowances"
+                                    label={
+                                      authorityAllowancesConfig.options[type]
                                     }
-                                  }}
-                                />
-                                {type === AuthorityAllowance.OTHER &&
-                                  values.authorityAllowances.includes(type) && (
-                                    <FieldGroup
-                                      className="margin-left-4 margin-top-2 margin-bottom-4"
-                                      error={
-                                        !!flatErrors.authorityAllowancesOther
+                                    value={type}
+                                    checked={values.authorityAllowances.includes(
+                                      type
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.authorityAllowances.indexOf(
+                                          e.target.value as AuthorityAllowance
+                                        );
+                                        arrayHelpers.remove(idx);
                                       }
-                                    >
-                                      <Label
-                                        htmlFor="plan-characteristics-authority-allowance-other"
-                                        className="text-normal"
+                                    }}
+                                  />
+                                  {type === AuthorityAllowance.OTHER &&
+                                    values.authorityAllowances.includes(
+                                      type
+                                    ) && (
+                                      <FieldGroup
+                                        className="margin-left-4 margin-top-2 margin-bottom-4"
+                                        error={
+                                          !!flatErrors.authorityAllowancesOther
+                                        }
                                       >
-                                        {generalCharacteristicsT(
-                                          'authorityAllowancesOther.label'
-                                        )}
-                                      </Label>
+                                        <Label
+                                          htmlFor="plan-characteristics-authority-allowance-other"
+                                          className="text-normal"
+                                        >
+                                          {generalCharacteristicsT(
+                                            'authorityAllowancesOther.label'
+                                          )}
+                                        </Label>
 
-                                      <FieldErrorMsg>
-                                        {flatErrors.authorityAllowancesOther}
-                                      </FieldErrorMsg>
+                                        <FieldErrorMsg>
+                                          {flatErrors.authorityAllowancesOther}
+                                        </FieldErrorMsg>
 
-                                      <Field
-                                        as={TextAreaField}
-                                        className="mint-textarea"
-                                        id="plan-characteristics-authority-allowance-other"
-                                        maxLength={5000}
-                                        name="authorityAllowancesOther"
-                                      />
-                                    </FieldGroup>
-                                  )}
-                              </Fragment>
-                            );
-                          }
-                        )}
-                      </>
-                    )}
-                  />
+                                        <Field
+                                          as={TextAreaField}
+                                          className="mint-textarea"
+                                          id="plan-characteristics-authority-allowance-other"
+                                          maxLength={5000}
+                                          name="authorityAllowancesOther"
+                                        />
+                                      </FieldGroup>
+                                    )}
+                                </Fragment>
+                              );
+                            }
+                          )}
+                        </>
+                      )}
+                    />
+                  </FieldGroup>
 
                   <AddNote
                     id="plan-characteristics-authority-allowance-note"
@@ -399,61 +405,63 @@ const Authority = () => {
                     />
                   </FieldGroup>
 
-                  {values.waiversRequired && (
-                    <FieldArray
-                      name="waiversRequiredTypes"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label text-normal">
-                            {generalCharacteristicsT(
-                              'waiversRequiredTypes.label'
-                            )}
-                          </legend>
+                  <FieldGroup>
+                    {values.waiversRequired && (
+                      <FieldArray
+                        name="waiversRequiredTypes"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label text-normal">
+                              {generalCharacteristicsT(
+                                'waiversRequiredTypes.label'
+                              )}
+                            </legend>
 
-                          <FieldErrorMsg>
-                            {flatErrors.waiversRequiredTypes}
-                          </FieldErrorMsg>
+                            <FieldErrorMsg>
+                              {flatErrors.waiversRequiredTypes}
+                            </FieldErrorMsg>
 
-                          {getKeys(waiversRequiredTypesConfig.options).map(
-                            type => {
-                              return (
-                                <Fragment key={type}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`plan-characteristics-waiver-types-${type}`}
-                                    name="waiversRequiredTypes"
-                                    label={
-                                      waiversRequiredTypesConfig.options[type]
-                                    }
-                                    subLabel={
-                                      waiversRequiredTypesConfig
-                                        .optionsLabels?.[type]
-                                    }
-                                    value={type}
-                                    checked={values.waiversRequiredTypes.includes(
-                                      type
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.waiversRequiredTypes.indexOf(
-                                          e.target.value as WaiverType
-                                        );
-                                        arrayHelpers.remove(idx);
+                            {getKeys(waiversRequiredTypesConfig.options).map(
+                              type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      id={`plan-characteristics-waiver-types-${type}`}
+                                      name="waiversRequiredTypes"
+                                      label={
+                                        waiversRequiredTypesConfig.options[type]
                                       }
-                                    }}
-                                  />
-                                </Fragment>
-                              );
-                            }
-                          )}
-                        </>
-                      )}
-                    />
-                  )}
+                                      subLabel={
+                                        waiversRequiredTypesConfig
+                                          .optionsLabels?.[type]
+                                      }
+                                      value={type}
+                                      checked={values.waiversRequiredTypes.includes(
+                                        type
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.waiversRequiredTypes.indexOf(
+                                            e.target.value as WaiverType
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                  </Fragment>
+                                );
+                              }
+                            )}
+                          </>
+                        )}
+                      />
+                    )}
+                  </FieldGroup>
 
                   <AddNote
                     id="plan-characteristics-waivers-required-note"

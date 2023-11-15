@@ -68,7 +68,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
           </h4>
           <a
             class="usa-button margin-bottom-2"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator?view=add"
           >
             Add team member
           </a>

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   query GetMilestones($id: UUID!) {
     modelPlan(id: $id) {
       id
@@ -20,12 +20,11 @@ export default gql`
         phasedIn
         phasedInNote
         readyForReviewByUserAccount {
-          id
-          commonName
+          ...ReadyForReviewUserFragment
         }
         readyForReviewDts
         status
       }
     }
   }
-`;
+`);

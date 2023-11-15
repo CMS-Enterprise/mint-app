@@ -3,10 +3,16 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   schema: 'pkg/graph/schema.graphql',
   documents: ['src/gql/apolloGQL/**/*.ts'],
+  overwrite: true,
   generates: {
-    './src/gql/gen/': {
-      preset: 'client',
+    './src/gql/gen/graphql.ts': {
+      plugins: [
+        'typescript',
+        'typescript-operations',
+        'typescript-react-apollo'
+      ],
       config: {
+        withHooks: true,
         scalars: {
           // old codegen mappings from global.d.ts
           // maintain until we add better scalar mapping with graphql-codegen
