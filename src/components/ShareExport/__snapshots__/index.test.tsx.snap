@@ -21,68 +21,61 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
           <div
             class="usa-summary-box__body"
           >
-            <h3
-              class="usa-summary-box__heading"
-            />
             <div
-              class="usa-summary-box__text"
+              class="grid-container padding-x-6"
+              data-testid="gridContainer"
             >
-              <div
-                class="grid-container padding-x-6"
-                data-testid="gridContainer"
+              <h1
+                aria-live="polite"
+                class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+                tabindex="-1"
               >
-                <h1
-                  aria-live="polite"
-                  class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-                  tabindex="-1"
+                Testing Model Summary 
+                <span
+                  class="font-sans-sm text-normal"
                 >
-                  Testing Model Summary 
-                  <span
-                    class="font-sans-sm text-normal"
-                  >
-                    (TMS)
-                  </span>
-                </h1>
+                  (TMS)
+                </span>
+              </h1>
+              <div
+                class="padding-0"
+                data-testid="task-list-status"
+              >
                 <div
-                  class="padding-0"
-                  data-testid="task-list-status"
+                  class="grid-row"
+                  data-testid="grid"
+                  style="gap: 16px;"
                 >
                   <div
-                    class="grid-row"
+                    class="display-flex flex-align-center"
                     data-testid="grid"
-                    style="gap: 16px;"
+                    style="gap: 10px;"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                      data-testid="grid"
-                      style="gap: 10px;"
+                    <p
+                      class="margin-y-0"
                     >
-                      <p
-                        class="margin-y-0"
-                      >
-                        Status:
-                      </p>
-                      <span
-                        class="mint-tag bg-base text-white margin-right-0"
-                        data-testid="tag"
-                      >
-                        Draft model plan
-                      </span>
-                    </div>
-                    <div
-                      class="display-flex flex-align-center flex-wrap"
-                      data-testid="grid"
+                      Status:
+                    </p>
+                    <span
+                      class="mint-tag bg-base text-white margin-right-0"
+                      data-testid="tag"
                     >
-                      <p
-                        class="margin-y-0 text-normal"
-                      >
-                        Last updated on 08/27/2022
-                      </p>
-                    </div>
-                    <div
-                      class="mint-no-print"
-                    />
+                      Draft model plan
+                    </span>
                   </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="margin-y-0 text-normal"
+                    >
+                      Last updated on 08/27/2022
+                    </p>
+                  </div>
+                  <div
+                    class="mint-no-print"
+                  />
                 </div>
               </div>
             </div>
@@ -112,10 +105,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
                   />
@@ -344,10 +333,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M0 0h24v24H0z"
-                                fill="none"
-                              />
-                              <path
                                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                               />
                             </svg>
@@ -416,10 +401,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
                                 <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
@@ -5788,10 +5769,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
           />
         </svg>
@@ -5908,6 +5885,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
+                aria-controls="share-export-modal-share-filter-group--list"
                 aria-describedby="share-export-modal-share-filter-group--assistiveHint"
                 aria-expanded="false"
                 aria-owns="share-export-modal-share-filter-group--list"
@@ -6259,10 +6237,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"
                   />
@@ -6321,68 +6295,61 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
           <div
             class="usa-summary-box__body"
           >
-            <h3
-              class="usa-summary-box__heading"
-            />
             <div
-              class="usa-summary-box__text"
+              class="grid-container padding-x-6"
+              data-testid="gridContainer"
             >
-              <div
-                class="grid-container padding-x-6"
-                data-testid="gridContainer"
+              <h1
+                aria-live="polite"
+                class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+                tabindex="-1"
               >
-                <h1
-                  aria-live="polite"
-                  class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-                  tabindex="-1"
+                Testing Model Summary 
+                <span
+                  class="font-sans-sm text-normal"
                 >
-                  Testing Model Summary 
-                  <span
-                    class="font-sans-sm text-normal"
-                  >
-                    (TMS)
-                  </span>
-                </h1>
+                  (TMS)
+                </span>
+              </h1>
+              <div
+                class="padding-0"
+                data-testid="task-list-status"
+              >
                 <div
-                  class="padding-0"
-                  data-testid="task-list-status"
+                  class="grid-row"
+                  data-testid="grid"
+                  style="gap: 16px;"
                 >
                   <div
-                    class="grid-row"
+                    class="display-flex flex-align-center"
                     data-testid="grid"
-                    style="gap: 16px;"
+                    style="gap: 10px;"
                   >
-                    <div
-                      class="display-flex flex-align-center"
-                      data-testid="grid"
-                      style="gap: 10px;"
+                    <p
+                      class="margin-y-0"
                     >
-                      <p
-                        class="margin-y-0"
-                      >
-                        Status:
-                      </p>
-                      <span
-                        class="mint-tag bg-base text-white margin-right-0"
-                        data-testid="tag"
-                      >
-                        Draft model plan
-                      </span>
-                    </div>
-                    <div
-                      class="display-flex flex-align-center flex-wrap"
-                      data-testid="grid"
+                      Status:
+                    </p>
+                    <span
+                      class="mint-tag bg-base text-white margin-right-0"
+                      data-testid="tag"
                     >
-                      <p
-                        class="margin-y-0 text-normal"
-                      >
-                        Last updated on 08/27/2022
-                      </p>
-                    </div>
-                    <div
-                      class="mint-no-print"
-                    />
+                      Draft model plan
+                    </span>
                   </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="margin-y-0 text-normal"
+                    >
+                      Last updated on 08/27/2022
+                    </p>
+                  </div>
+                  <div
+                    class="mint-no-print"
+                  />
                 </div>
               </div>
             </div>
@@ -6412,10 +6379,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
                   />
@@ -6644,10 +6607,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M0 0h24v24H0z"
-                                fill="none"
-                              />
-                              <path
                                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                               />
                             </svg>
@@ -6716,10 +6675,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
                                 <path
                                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
                                 />
@@ -12088,10 +12043,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
           />
         </svg>
@@ -12208,6 +12159,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
               <input
                 aria-activedescendant=""
                 aria-autocomplete="list"
+                aria-controls="share-export-modal-share-filter-group--list"
                 aria-describedby="share-export-modal-share-filter-group--assistiveHint"
                 aria-expanded="false"
                 aria-owns="share-export-modal-share-filter-group--list"
@@ -12559,10 +12511,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"
                   />
