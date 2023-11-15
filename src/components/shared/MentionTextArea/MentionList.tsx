@@ -94,6 +94,7 @@ const MentionList = forwardRef((props: any, ref) => {
           <button
             className={`item ${index === selectedIndex ? 'is-selected' : ''}`}
             key={item.username}
+            id={item.username}
             type="button"
             onClick={() => selectItem(index)}
           >
