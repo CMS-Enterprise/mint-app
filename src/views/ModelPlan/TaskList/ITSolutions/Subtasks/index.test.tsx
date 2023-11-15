@@ -1,6 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor, within } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+  within
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {
@@ -69,8 +74,6 @@ const mockData = [
   ...possibleSolutionsMock
 ];
 
-// const
-
 describe('IT Solutions Add Subtasks', () => {
   it('renders correctly', async () => {
     const { getByTestId, getByRole } = render(
@@ -89,10 +92,10 @@ describe('IT Solutions Add Subtasks', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(getByTestId('add-subtask-form')).toBeInTheDocument();
-      expect(getByRole('radio', { name: 'To do' })).toBeChecked();
-    });
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
+    expect(getByTestId('add-subtask-form')).toBeInTheDocument();
+    expect(getByRole('radio', { name: 'To do' })).toBeChecked();
   });
 
   it('add a subtask button works', async () => {
@@ -111,6 +114,8 @@ describe('IT Solutions Add Subtasks', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     const button = getByRole('button', { name: 'Add another subtask' });
     userEvent.click(button);
@@ -138,11 +143,14 @@ describe('IT Solutions Add Subtasks', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
     await waitFor(() => {
       expect(getByTestId('add-subtask-form')).toBeInTheDocument();
       expect(getByRole('radio', { name: 'To do' })).toBeChecked();
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
 
@@ -163,6 +171,8 @@ describe('IT Solutions Manage Subtasks', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     await waitFor(() => {
       expect(getByTestId('manage-subtask-form')).toBeInTheDocument();
@@ -198,11 +208,14 @@ describe('IT Solutions Manage Subtasks', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
     await waitFor(() => {
       expect(getByTestId('manage-subtask-form')).toBeInTheDocument();
       const form = getByTestId('manage-subtask-form');
       expect(within(form).getAllByText('Subtask name')).toHaveLength(2);
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

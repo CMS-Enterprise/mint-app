@@ -89,7 +89,7 @@ const mocks = [
 
 describe('IT Solutions AddSolution', () => {
   it('renders correctly', async () => {
-    const { getByRole, getByTestId } = render(
+    const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -105,7 +105,7 @@ describe('IT Solutions AddSolution', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     await waitFor(() => {
       const combobox = getByTestId('combo-box-select');
@@ -115,7 +115,7 @@ describe('IT Solutions AddSolution', () => {
   });
 
   it('renders other button when OTHER_NEW_PROCESS selected', async () => {
-    const { getByTestId, getByRole } = render(
+    const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -131,7 +131,7 @@ describe('IT Solutions AddSolution', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     await waitFor(() => {
       const combobox = getByTestId('combo-box-select');
@@ -143,7 +143,7 @@ describe('IT Solutions AddSolution', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getByRole } = render(
+    const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -159,7 +159,7 @@ describe('IT Solutions AddSolution', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     expect(asFragment()).toMatchSnapshot();
   });

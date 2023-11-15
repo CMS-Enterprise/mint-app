@@ -1,6 +1,10 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
@@ -12,7 +16,7 @@ const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
 describe('IT Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
-    const { getByText, getByTestId } = render(
+    const { getByText, getByTestId, getByRole } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -33,6 +37,8 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByRole('progressbar'));
 
     await waitFor(() => {
       expect(getByTestId('toggle-need-answer')).toBeInTheDocument();
@@ -65,6 +71,8 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByRole('progressbar'));
 
     await waitFor(() => {
       expect(

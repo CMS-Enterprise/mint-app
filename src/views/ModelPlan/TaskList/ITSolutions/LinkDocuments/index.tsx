@@ -13,6 +13,7 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
@@ -73,7 +74,7 @@ const LinkDocuments = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const { data, error } = useQuery<
+  const { data, loading, error } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
   >(GetOperationalSolution, {
@@ -158,6 +159,10 @@ const LinkDocuments = () => {
 
   if (error || !solution) {
     return <NotFound />;
+  }
+
+  if (loading) {
+    return <Spinner size="xl" center />;
   }
 
   const breadcrumbs = [

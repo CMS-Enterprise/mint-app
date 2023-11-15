@@ -16,6 +16,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -302,6 +303,10 @@ const Subtasks = ({
 
   if (error || (!solution && !loading)) {
     return <NotFound />;
+  }
+
+  if (loading) {
+    return <PageLoading />;
   }
 
   return (

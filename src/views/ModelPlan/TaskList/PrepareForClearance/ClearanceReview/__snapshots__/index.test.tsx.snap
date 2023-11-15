@@ -10,7 +10,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
     tabindex="-1"
   >
     <div
-      class="grid-container"
+      class="grid-container padding-x-0"
       data-testid="gridContainer"
     >
       <div
@@ -80,7 +80,16 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
             >
               Review model basics
             </h2>
-            <div />
+            <div>
+              <div
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                data-testid="tasklist-tag"
+              >
+                <span>
+                  In progress
+                </span>
+              </div>
+            </div>
           </div>
           <p
             class="font-body-lg margin-top-neg-2 margin-bottom-6"
@@ -99,15 +108,20 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               >
                 Previous model names
               </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              <ul
+                class="margin-y-0 padding-left-3"
               >
-                <em
-                  class="text-base"
+                <li
+                  class="font-sans-md line-height-sans-4"
                 >
-                  No answer entered
-                </em>
-              </p>
+                  First Name
+                </li>
+                <li
+                  class="font-sans-md line-height-sans-4"
+                >
+                  Second Name
+                </li>
+              </ul>
             </div>
           </div>
           <div
@@ -155,11 +169,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                 >
                   Model ID
                 </p>
-                <div
-                  class="text-italic text-base"
-                >
-                  None entered
-                </div>
+                43532323
               </div>
               <div
                 class="desktop:grid-col-6"
@@ -170,11 +180,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                 >
                   Demo code(s)
                 </p>
-                <div
-                  class="text-italic text-base"
-                >
-                  None entered
-                </div>
+                1234
               </div>
             </div>
           </div>
@@ -198,15 +204,57 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   >
                     Primary model category
                   </p>
-                  <p
+                  <div
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                   >
-                    <em
-                      class="text-base"
+                    <span
+                      class="display-flex flex-align-center"
+                      style="gap: 4px;"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      State-Based
+                      <span
+                        class="usa-tooltip"
+                        data-testid="tooltipWrapper"
+                      >
+                        <div
+                          aria-describedby="tooltip-550000"
+                          class="usa-tooltip__trigger mint-no-print"
+                          data-testid="triggerElement"
+                          position="right"
+                          tabindex="0"
+                          title=""
+                        >
+                          <svg
+                            class="usa-icon text-base-light"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                            />
+                          </svg>
+                        </div>
+                        <span
+                          aria-hidden="true"
+                          class="usa-tooltip__body"
+                          data-testid="tooltipBody"
+                          id="tooltip-550000"
+                          role="tooltip"
+                          title="Models in which a state serves as the main contractual participant"
+                        >
+                          Models in which a state serves as the main contractual participant
+                        </span>
+                      </span>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -226,15 +274,61 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   >
                     Additional model categories
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-2"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Accountable Care
+                        <span
+                          class="usa-tooltip"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                            title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
+                          >
+                            Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
+                          </span>
+                        </span>
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -259,15 +353,29 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   >
                     CMS component
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      Center for Medicare (CM)
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        The Center for Awesomeness
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -287,15 +395,20 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   >
                     CMMI Group
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    <em
-                      class="text-base"
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      No answer entered
-                    </em>
-                  </p>
+                      State and Population Health Group (SPHG)
+                    </li>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Policy and Programs Group (PPG)
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -315,11 +428,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                Mandatory
               </p>
             </div>
           </div>
@@ -338,11 +447,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                There is not enough candy
               </p>
             </div>
           </div>
@@ -361,11 +466,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                To get more candy
               </p>
             </div>
           </div>
@@ -384,11 +485,26 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                The great candy machine
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--notes margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                The machine doesn't work yet
               </p>
             </div>
           </div>
@@ -416,11 +532,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  06/03/2022
                 </p>
               </li>
               <li
@@ -447,11 +559,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      06/03/2022
                     </p>
                   </div>
                   <div
@@ -466,11 +574,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      06/03/2022
                     </p>
                   </div>
                 </div>
@@ -487,11 +591,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  06/03/2022
                 </p>
               </li>
               <li
@@ -518,11 +618,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      06/03/2022
                     </p>
                   </div>
                   <div
@@ -537,11 +633,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      06/03/2022
                     </p>
                   </div>
                 </div>
@@ -570,11 +662,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      06/03/2022
                     </p>
                   </div>
                   <div
@@ -589,11 +677,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     <p
                       class="margin-y-0 font-body-md line-height-sans-4"
                     >
-                      <em
-                        class="text-base"
-                      >
-                        No answer entered
-                      </em>
+                      06/03/2022
                     </p>
                   </div>
                 </div>
@@ -610,14 +694,29 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                 <p
                   class="margin-y-0 font-body-md line-height-sans-4"
                 >
-                  <em
-                    class="text-base"
-                  >
-                    No answer entered
-                  </em>
+                  06/03/2022
                 </p>
               </li>
             </ol>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--notes margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Notes
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  Theses are my best guess notes
+                </p>
+              </div>
+            </div>
           </div>
           <div
             class="desktop:grid-col-12"
@@ -634,12 +733,27 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
               >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
+                No
               </p>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--notes margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Notes
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  This can't be phased in
+                </p>
+              </div>
             </div>
           </div>
         </div>

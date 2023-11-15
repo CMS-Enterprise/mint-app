@@ -21,7 +21,7 @@ const useModalSolutionState = (
 ): SolutionModalState => {
   const location = useLocation();
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions } = useHelpSolution();
 
   const params = new URLSearchParams(location.search);
   const solutionDetail = params.get('solution');

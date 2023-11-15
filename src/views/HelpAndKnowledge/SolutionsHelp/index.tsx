@@ -77,7 +77,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const page = params.get('page');
   const modal = params.get('solution');
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions } = useHelpSolution();
 
   // Get the solution map details from solution route param
   const { prevPathname, selectedSolution: solution } = useModalSolutionState(

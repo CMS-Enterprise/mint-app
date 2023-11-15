@@ -204,6 +204,10 @@ const SelectSolutions = () => {
     return <NotFound />;
   }
 
+  if (loading) {
+    return <PageLoading />;
+  }
+
   return (
     <>
       <Breadcrumbs
@@ -315,36 +319,31 @@ const SelectSolutions = () => {
                         {t('chooseCommonSolution')}
                       </legend>
 
-                      {loading ? (
-                        <PageLoading />
-                      ) : (
-                        <CardGroup>
-                          {commonSolutions.map(
-                            (solution: GetOperationalNeedSolutionsType) => (
-                              <CheckboxCard
-                                solution={solution}
-                                index={allTheSolutions.findIndex(x =>
-                                  x.id ===
-                                  '00000000-0000-0000-0000-000000000000'
-                                    ? x.name === solution.name
-                                    : x.id === solution.id
-                                )}
-                                // Default Operational Solutions start with an id full of zeroes.
-                                // if solution is default solution, then check name to find index
-                                // otherwise, continue to use id to find index
-                                key={`${
-                                  solution.nameOther
-                                    ?.toLowerCase()
-                                    .replaceAll(' ', '-') ||
-                                  solution.name
-                                    ?.toLowerCase()
-                                    .replaceAll(' ', '-')
-                                }--${solution.id}`}
-                              />
-                            )
-                          )}
-                        </CardGroup>
-                      )}
+                      <CardGroup>
+                        {commonSolutions.map(
+                          (solution: GetOperationalNeedSolutionsType) => (
+                            <CheckboxCard
+                              solution={solution}
+                              index={allTheSolutions.findIndex(x =>
+                                x.id === '00000000-0000-0000-0000-000000000000'
+                                  ? x.name === solution.name
+                                  : x.id === solution.id
+                              )}
+                              // Default Operational Solutions start with an id full of zeroes.
+                              // if solution is default solution, then check name to find index
+                              // otherwise, continue to use id to find index
+                              key={`${
+                                solution.nameOther
+                                  ?.toLowerCase()
+                                  .replaceAll(' ', '-') ||
+                                solution.name
+                                  ?.toLowerCase()
+                                  .replaceAll(' ', '-')
+                              }--${solution.id}`}
+                            />
+                          )
+                        )}
+                      </CardGroup>
 
                       {otherSolutions.length > 0 && (
                         <>

@@ -59,7 +59,7 @@ const CheckboxCard = ({
     solution.key
   );
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions } = useHelpSolution();
 
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther

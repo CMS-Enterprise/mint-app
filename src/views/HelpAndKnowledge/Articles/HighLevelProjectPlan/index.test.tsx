@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 
 import { possibleSolutionsMock } from 'data/mock/solutions';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
@@ -11,7 +11,7 @@ const mocks = [...possibleSolutionsMock];
 
 describe('High Level Project Plan Article', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={['/help-and-knowledge/high-level-project-plan']}
       >
@@ -22,6 +22,9 @@ describe('High Level Project Plan Article', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

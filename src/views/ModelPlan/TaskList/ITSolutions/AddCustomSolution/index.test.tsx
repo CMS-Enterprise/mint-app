@@ -1,10 +1,14 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import allMocks from 'data/mock/solutions';
+import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
@@ -34,7 +38,7 @@ const returnMockedData = (results: boolean) => {
             needed: true,
             pocName: results ? 'John Doe' : '',
             pocEmail: results ? 'j.doe@oddball.io' : '',
-            nameOther: 'My custom solution',
+            nameOther: results ? 'My custom solution' : '',
             isOther: false,
             isCommonSolution: true,
             otherHeader: null,
@@ -47,7 +51,7 @@ const returnMockedData = (results: boolean) => {
         }
       }
     },
-    ...allMocks
+    ...needQuestionAndAnswerMock
   ];
 };
 
@@ -61,7 +65,7 @@ describe('AddCustomSolution', () => {
           }
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution">
+        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
           <MessageProvider>
             <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
               <AddCustomSolution />
@@ -70,6 +74,8 @@ describe('AddCustomSolution', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     const customName = getByTestId('it-solution-custom-name-other');
     userEvent.type(customName, 'My custom solution');
@@ -108,6 +114,8 @@ describe('AddCustomSolution', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
     await waitFor(() => {
       const customName = getByTestId('it-solution-custom-name-other');
       expect(customName).toHaveValue('My custom solution');
@@ -139,9 +147,11 @@ describe('AddCustomSolution', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
     await waitFor(() => {
       const customName = getByTestId('it-solution-custom-name-other');
-      expect(customName).toHaveValue('My custom solution');
+      expect(customName).toHaveValue('');
 
       const customPOC = getByTestId('it-solution-custom-poc-name');
       expect(customPOC).toHaveValue('');
@@ -152,7 +162,7 @@ describe('AddCustomSolution', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -160,7 +170,7 @@ describe('AddCustomSolution', () => {
           }
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution">
+        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
           <MessageProvider>
             <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
               <AddCustomSolution />
@@ -169,6 +179,8 @@ describe('AddCustomSolution', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     expect(asFragment()).toMatchSnapshot();
   });

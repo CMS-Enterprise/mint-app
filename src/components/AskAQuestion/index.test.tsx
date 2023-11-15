@@ -7,7 +7,9 @@ import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
+import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 
 import AskAQuestion from './index';
 
@@ -54,6 +56,20 @@ const mocks = [
     },
     result: {
       data: discussionResult
+    }
+  },
+  {
+    request: {
+      query: GetMostRecentRoleSelection
+    },
+    result: {
+      data: {
+        mostRecentDiscussionRoleSelection: {
+          __typename: 'DiscussionRoleSelection',
+          userRole: DiscussionUserRole.IT_ARCHITECT,
+          userRoleDescription: ''
+        }
+      }
     }
   }
 ];

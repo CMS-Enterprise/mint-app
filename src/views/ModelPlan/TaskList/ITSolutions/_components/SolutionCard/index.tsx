@@ -65,7 +65,7 @@ const SolutionCard = ({
     solution.key
   );
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions } = useHelpSolution();
 
   const solutionMap = findSolutionByKey(solution.key, helpSolutions);
 

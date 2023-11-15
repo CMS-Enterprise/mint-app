@@ -44,6 +44,7 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
@@ -203,6 +204,17 @@ const AddCustomSolution = () => {
         : t('addSolutionDetails')
     }
   ];
+
+  if (
+    error ||
+    (!customOperationalSolution && !loading && !operationalSolutionID)
+  ) {
+    return <NotFound />;
+  }
+
+  if (loading) {
+    return <PageLoading />;
+  }
 
   return (
     <>

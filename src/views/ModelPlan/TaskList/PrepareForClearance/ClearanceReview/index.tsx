@@ -257,7 +257,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   return (
     <MainContent data-testid="clearance-review">
-      <GridContainer>
+      <GridContainer className="padding-x-0">
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap" className="margin-bottom-4">
             <Breadcrumb>

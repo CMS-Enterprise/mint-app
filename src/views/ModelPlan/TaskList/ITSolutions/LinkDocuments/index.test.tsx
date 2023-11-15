@@ -102,7 +102,7 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('IT Solutions Link Documents', () => {
   it('renders correctly', async () => {
-    const { getByTestId } = render(
+    const { getByTestId, getByRole } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -122,12 +122,11 @@ describe('IT Solutions Link Documents', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+
     // Link mutation button disabled if state === original state of selections
     const linkButton = getByTestId('link-documents-button');
     expect(linkButton).toHaveAttribute('disabled');
-
-    // Wait for page to load
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     // Click checkbox table cell to toggle document selection
     const solutionDocument1 = getByTestId(
@@ -148,7 +147,7 @@ describe('IT Solutions Link Documents', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getByTestId } = render(
+    const { asFragment, getByTestId, getByRole } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -169,7 +168,7 @@ describe('IT Solutions Link Documents', () => {
     );
 
     // Wait for page to load
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitForElementToBeRemoved(() => getByRole('progressbar'));
 
     // Click checkbox table cell to toggle document selection
     const solutionDocument1 = getByTestId(

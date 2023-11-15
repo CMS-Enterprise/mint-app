@@ -59,6 +59,7 @@ describe('The home page', () => {
               </MockedProvider>
             </MemoryRouter>
           );
+
           component.update();
           expect(component.find(UswdsReactLink).exists()).toEqual(true);
           expect(component.find(Table).exists()).toBeTruthy();
@@ -97,6 +98,7 @@ describe('The home page', () => {
               </MockedProvider>
             </MemoryRouter>
           );
+
           component.update();
           expect(component.find(UswdsReactLink).exists()).toEqual(true);
           expect(component.find(Table).exists()).toBeTruthy();

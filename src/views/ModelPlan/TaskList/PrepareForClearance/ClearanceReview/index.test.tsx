@@ -3,6 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import Sinon from 'sinon';
 
 import { modelBasicsMocks } from 'data/mock/readonly';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
@@ -46,12 +47,15 @@ const clearanceMock = [
 
 const clearanceMocks = [
   ...clearanceMock,
-  ...clearanceMock,
   ...modelBasicsMocks,
+  ...clearanceMock,
   ...modelBasicsMocks
 ];
 
 describe('ClearanceReview component', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders readonly component', async () => {
     render(
       <MemoryRouter
