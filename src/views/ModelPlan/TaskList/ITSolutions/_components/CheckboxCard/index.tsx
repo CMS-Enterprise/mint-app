@@ -11,8 +11,7 @@ import {
   Card,
   Checkbox,
   Grid,
-  IconArrowForward,
-  IconMailOutline,
+  Icon,
   Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -110,7 +109,7 @@ const CheckboxCard = ({
           solution.isOther
             ? t('addDetails')
             : t('updateTheseDetails')}
-          <IconArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" />
         </Button>
       );
     }
@@ -127,7 +126,7 @@ const CheckboxCard = ({
           }
         >
           {t('updateTheseDetails')}
-          <IconArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" />
         </Button>
       );
     }
@@ -138,7 +137,7 @@ const CheckboxCard = ({
         to={detailRoute}
       >
         {t('aboutSolution')}
-        <IconArrowForward className="margin-left-1" />
+        <Icon.ArrowForward className="margin-left-1" />
       </UswdsReactLink>
     );
   };
@@ -276,7 +275,7 @@ const CheckboxCard = ({
                   target="_blank"
                 >
                   <div>{solution.pocEmail}</div>
-                  <IconMailOutline className="margin-left-05 text-tbottom" />
+                  <Icon.MailOutline className="margin-left-05 text-tbottom" />
                 </Link>
               )}
             </Grid>

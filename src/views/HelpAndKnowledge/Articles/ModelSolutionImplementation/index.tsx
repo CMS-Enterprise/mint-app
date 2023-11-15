@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  IconArrowForward,
+  Icon,
   ProcessList,
   ProcessListHeading,
   ProcessListItem,
@@ -145,7 +145,7 @@ export const ModelSolutionImplementation = () => {
                   >
                     {t('initiateWork.activities.learnMore')}
                   </UswdsReactLink>
-                  <IconArrowForward />
+                  <Icon.ArrowForward />
                 </div>
               </ProcessListItem>
             </ProcessList>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, IconArrowForward } from '@trussworks/react-uswds';
+import { Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -42,7 +42,7 @@ const CategoryFooter = ({
                     {t(`categories.${key}.header`)}&nbsp;
                     {solutionCategories[key as OperationalSolutionCategoryRoute]
                       ?.subHeader && t(`categories.${key}.subHeader`)}
-                    <IconArrowForward className="margin-left-1 top-2px" />
+                    <Icon.ArrowForward className="margin-left-1 top-2px" />
                   </span>
                 </UswdsReactLink>
               </Grid>

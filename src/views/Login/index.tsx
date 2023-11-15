@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
-import { IconArrowForward, Link } from '@trussworks/react-uswds';
+import { Icon, Link } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -92,7 +92,7 @@ const Login = () => {
         </div>
         <UswdsReactLink to="/how-to-get-access">
           {getAccessT('learnHow')}
-          <IconArrowForward className="margin-left-1 text-tbottom" />
+          <Icon.ArrowForward className="margin-left-1 text-tbottom" />
         </UswdsReactLink>
       </Alert>
     </MainContent>

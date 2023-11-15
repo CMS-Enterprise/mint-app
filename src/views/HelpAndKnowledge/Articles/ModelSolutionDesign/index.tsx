@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  IconArrowForward,
+  Icon,
   ProcessList,
   ProcessListHeading,
   ProcessListItem,
@@ -159,7 +159,7 @@ export const ModelSolutionDesign = () => {
                           />
                         ),
                         iconForward: (
-                          <IconArrowForward className="margin-left-1 text-bold" />
+                          <Icon.ArrowForward className="margin-left-1 text-bold" />
                         )
                       }}
                     />

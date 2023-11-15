@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconArrowForward } from '@trussworks/react-uswds';
+import { Icon } from '@trussworks/react-uswds';
 
 type ArticleProps = {
   name: string;
@@ -84,7 +84,7 @@ export const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
       className="display-flex flex-align-center"
     >
       {scrollTo}
-      <IconArrowForward />
+      <Icon.ArrowForward />
     </a>
   );
 };

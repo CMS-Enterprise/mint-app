@@ -7,7 +7,7 @@ import {
   Button,
   Grid,
   GridContainer,
-  IconStarOutline,
+  Icon,
   SummaryBox
 } from '@trussworks/react-uswds';
 
@@ -81,7 +81,7 @@ const ModelPlan = () => {
       <span className="display-flex flex-align-center flex-wrap margin-0 ">
         {t('following.alert.subheadingPartA')}
         <span className="display-flex flex-align-center margin-x-05">
-          (<IconStarOutline size={3} />)
+          (<Icon.StarOutline size={3} />)
         </span>
 
         {t('following.alert.subheadingPartB')}

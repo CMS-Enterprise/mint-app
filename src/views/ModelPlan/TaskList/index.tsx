@@ -17,7 +17,7 @@ import {
   Button,
   Grid,
   GridContainer,
-  IconAnnouncement,
+  Icon,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -406,7 +406,7 @@ const DicussionBanner = ({
         {discussions?.length > 0 ? (
           <>
             <div className="display-flex flex-align-center">
-              <IconAnnouncement className="margin-right-1" />
+              <Icon.Announcement className="margin-right-1" />
               <div>
                 <strong>{discussions.length}</strong>
                 {d('discussionBanner.discussion', {

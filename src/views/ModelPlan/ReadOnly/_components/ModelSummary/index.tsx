@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Grid, IconExpandMore } from '@trussworks/react-uswds';
+import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import i18next from 'i18next';
 
@@ -124,7 +124,7 @@ const ModelSummary = ({
               }}
             >
               {h(descriptionExpanded ? 'description.less' : 'description.more')}
-              <IconExpandMore className="expand-icon margin-left-05 margin-bottom-2px text-tbottom" />
+              <Icon.ExpandMore className="expand-icon margin-left-05 margin-bottom-2px text-tbottom" />
             </Button>
           </div>
         )}

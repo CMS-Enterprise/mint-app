@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
   Grid,
-  IconInfo,
+  Icon,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
@@ -231,7 +231,7 @@ const ReadOnlyModelBasics = ({
                     position="right"
                     className="mint-no-print"
                   >
-                    <IconInfo className="text-base-light" />
+                    <Icon.Info className="text-base-light" />
                   </Tooltip>
                 )}
               </span>
@@ -253,7 +253,7 @@ const ReadOnlyModelBasics = ({
                       label={basicsT(`modelCategory.optionsLabels.${group}`)}
                       position="right"
                     >
-                      <IconInfo className="text-base-light" />
+                      <Icon.Info className="text-base-light" />
                     </Tooltip>
                   </span>
                 </Fragment>

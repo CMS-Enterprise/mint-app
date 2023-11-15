@@ -9,8 +9,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
-  IconInfo,
+  Icon,
   Label,
   Link as TrussLink,
   Radio,
@@ -443,7 +442,7 @@ const BasicsContent = () => {
                                           }
                                           position="right"
                                         >
-                                          <IconInfo className="text-base-light" />
+                                          <Icon.Info className="text-base-light" />
                                         </Tooltip>
                                       )}
                                     </span>
@@ -524,7 +523,7 @@ const BasicsContent = () => {
                                           }
                                           position="right"
                                         >
-                                          <IconInfo className="text-base-light" />
+                                          <Icon.Info className="text-base-light" />
                                         </Tooltip>
                                       </span>
                                     }
@@ -686,7 +685,7 @@ const BasicsContent = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit(values, 'back')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

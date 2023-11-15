@@ -13,8 +13,7 @@ import {
   Alert,
   Button,
   Checkbox,
-  IconFileDownload,
-  IconLaunch,
+  Icon,
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -410,7 +409,7 @@ export const Table = ({
                   >
                     <span className="display-flex flex-align-center">
                       {t('documentTable.view')}
-                      <IconFileDownload />
+                      <Icon.FileDownload />
                     </span>
                   </Button>
                 ) : (
@@ -425,7 +424,7 @@ export const Table = ({
                   >
                     <span className="display-flex flex-align-center">
                       {t('documentTable.visit')}
-                      <IconLaunch />
+                      <Icon.Launch />
                     </span>
                   </Button>
                 )}

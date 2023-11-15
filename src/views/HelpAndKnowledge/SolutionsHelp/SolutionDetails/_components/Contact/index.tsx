@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { IconArrowForward, IconLaunch, Link } from '@trussworks/react-uswds';
+import { Icon, Link } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import {
@@ -63,7 +63,7 @@ export const Contact = ({ contact }: { contact?: SolutionContactType }) => {
       >
         {h('contactInfo.sendAnEmail')}
 
-        <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
+        <Icon.Launch className="margin-left-05 margin-bottom-2px text-tbottom" />
       </Link>
 
       {!isOnPointsOfContact && (
@@ -76,7 +76,7 @@ export const Contact = ({ contact }: { contact?: SolutionContactType }) => {
           className="display-flex flex-align-center"
         >
           {t('moreContacts')}
-          <IconArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" />
         </UswdsReactLink>
       )}
     </div>

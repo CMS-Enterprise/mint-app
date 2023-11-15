@@ -10,7 +10,7 @@ import {
   Dropdown,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
@@ -171,7 +171,7 @@ const Status = () => {
                         history.push(`/models/${modelID}/task-list/`)
                       }
                     >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
+                      <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                       {modelPlanMiscT('return')}
                     </Button>
