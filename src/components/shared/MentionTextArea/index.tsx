@@ -28,6 +28,12 @@ Attrs of selected mention are accessed through node prop */
 const MentionComponent = ({ node }: { node: any }) => {
   const { label } = node.attrs;
 
+  // Label may return null if the text was truncated by <TruncatedText />
+  // In this case don't render the mention, and shift the line up by the height of the non-rendered label
+  if (!label) {
+    return <div className="margin-top-neg-4" />;
+  }
+
   return (
     <NodeViewWrapper className="react-component display-inline">
       <span className="tiptap mention">{`@${label}`}</span>
