@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"go.uber.org/zap"
 
@@ -164,17 +165,36 @@ func sendPlanDiscussionTagEmails(
 			}
 
 			config := emailService.GetConfig()
-			if !config.GetSendTaggedPOCEmails() { // only send emails if configured to do so
-				logger.Info(" configuration to send tagged solution point of contacts is disabled. The email would have been sent to contacts for %s", zap.String("solution name", soln.Name))
-				continue
-			}
 
 			pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *mention.EntityIntID)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
 			}
-			err = sendPlanDiscussionTaggedSolutionEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, createdByUserName, createdByUserRole, soln, pocs)
+			var pocEmailAddress []string
+
+			// pocEmailAddress
+			if config.GetSendTaggedPOCEmails() { //send to the pocs
+				pocEmailAddress = lo.Map(pocs, func(poc *models.PossibleOperationalSolutionContact, _ int) string {
+					return poc.Email
+				})
+			} else {
+				devEmailusername, devEmailDomain, emailValid := strings.Cut(addressBook.DevTeamEmail, "@")
+				if !emailValid {
+					if err != nil {
+						errs = append(errs, fmt.Errorf("dev team email format is invalid, unable to send mock solution POC emails. Expected email to only have @ symbol, email :%s", addressBook.DevTeamEmail))
+						continue //non blocking
+					}
+				}
+				pocEmailAddress = lo.Map(pocs, func(poc *models.PossibleOperationalSolutionContact, _ int) string {
+					// this takes advantage of the fact that you can append extra information after the + sign to send to an email address with extra info.
+					noSpaceName := strings.ReplaceAll(poc.Name, " ", "")
+					return devEmailusername + "+" + noSpaceName + "@" + devEmailDomain
+				})
+
+			}
+
+			err = sendPlanDiscussionTaggedSolutionEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, createdByUserName, createdByUserRole, soln, pocEmailAddress)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -250,7 +270,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 	createdByUserName string,
 	createdByUserRole string,
 	solution *models.PossibleOperationalSolution,
-	pocs []*models.PossibleOperationalSolutionContact,
+	pocEmailAddress []string,
 ) error {
 
 	if emailService == nil || emailTemplateService == nil {
@@ -282,10 +302,6 @@ func sendPlanDiscussionTaggedSolutionEmail(
 	if err != nil {
 		return err
 	}
-	// pocEmailAddress
-	pocEmailAddress := lo.Map(pocs, func(poc *models.PossibleOperationalSolutionContact, _ int) string {
-		return poc.Email
-	})
 
 	err = emailService.Send(addressBook.DefaultSender, pocEmailAddress, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
