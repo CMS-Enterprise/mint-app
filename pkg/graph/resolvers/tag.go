@@ -75,12 +75,10 @@ func TaggedEntityGet(
 
 // UpdateTaggedHTMLMentionsAndRawContent updates the tagged html with the correct entity ids, and updates the RAW HTMl with the new representation of the mentions
 // Both the raw content as well as the the individual mentions are updated as a result of this method
+// The databaseID will be updated every time regardless of it was set in the html tag.
 func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.Store, tHTML *models.TaggedHTML, getAccountInformation userhelpers.GetAccountInfoFunc) error {
 
 	for _, mention := range tHTML.Mentions {
-		if mention.EntityDB != nil && mention.EntityDB != "" { // Check if the id is set, if not do logic to get the entity record created in the db / return the entity needed
-			continue
-		}
 		tagType := mention.Type
 
 		// Conditionally set the entity DB by tag type
@@ -114,12 +112,17 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 		return fmt.Errorf(" invalid operation. attempted to fetch user account information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
 	}
 	isMacUser := false
-	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
-	if err != nil {
+	taggedUserAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
+	if err != nil || taggedUserAccount == nil {
 		return fmt.Errorf("unable to get tagged user account reference. error : %w", err)
 	}
-	mention.EntityUUID = &collabAccount.ID
-	mention.EntityDB = mention.EntityUUID
+	if taggedUserAccount == nil {
+		return fmt.Errorf("unable to get tagged user account reference. No user returned for username : %s", mention.EntityRaw)
+	}
+	mention.EntityUUID = &taggedUserAccount.ID
+	mention.EntityDB = taggedUserAccount.ID
+	taggedEntity := models.TaggedEntity(taggedUserAccount)
+	mention.Entity = &taggedEntity
 	return nil
 }
 
@@ -135,6 +138,8 @@ func processPossibleSolutionHTMLMention(ctx context.Context, store *storage.Stor
 	}
 	mention.EntityIntID = &sol.ID
 	mention.EntityDB = mention.EntityIntID
+	taggedEntity := models.TaggedEntity(sol)
+	mention.Entity = &taggedEntity
 	return nil
 }
 

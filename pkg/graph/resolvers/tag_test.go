@@ -104,20 +104,25 @@ func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 	suite.NoError(err)
 	suite.EqualValues(tag3Sol.ID, *taggedContent.Mentions[2].EntityIntID)
 
-	// if the data-id-db tag is set, the content won't be updated
+	// if the data-id-db tag is set, the content will still be updated with the correct id in the database, regardless of what was provided
 	tag4EUA := "SKZO"
+	tag4User, err := UserAccountGetByUsername(suite.testConfigs.Logger, suite.testConfigs.Store, tag4EUA)
+	suite.NoError(err)
 	tag4Label := "Alexander Stark"
 	tag4Type := models.TagTypeUserAccount
+
+	// data-id-db is not correct, but the function will update it
 	tag4 := `<span data-type="mention" tag-type="` + string(tag4Type) + `" class="mention" data-id="` + tag4EUA + `" data-id-db="` + tag4Label + `" data-label="` + tag4Label + `">@` + tag4Label + `</span>`
 
 	tHTML, err := models.NewTaggedContentFromString(tag4)
+	tag4Expected := `<span data-type="mention" tag-type="` + string(tag4Type) + `" class="mention" data-id="` + tag4EUA + `" data-id-db="` + tag4User.ID.String() + `" data-label="` + tag4Label + `">@` + tag4Label + `</span>`
 	suite.NoError(err)
 	input2 := models.TaggedHTML(tHTML)
 	err = UpdateTaggedHTMLMentionsAndRawContent(suite.testConfigs.Context, suite.testConfigs.Store, &input2, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.Len(input2.Mentions, 1)
-	suite.EqualValues(input2.Mentions[0].EntityDB, tag4Label)
-	suite.EqualValues(string(input2.RawContent), tag4)
+	suite.EqualValues(input2.Mentions[0].EntityDB, tag4User.ID)
+	suite.EqualValues(string(input2.RawContent), tag4Expected)
 }
 
 func (suite *ResolverSuite) TestTagCollectionCreate() {

@@ -12,6 +12,7 @@ import (
 	"regexp"
 
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 	htmlPackage "golang.org/x/net/html"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
@@ -39,11 +40,23 @@ type HTMLMention struct {
 	InnerHTML   string
 	EntityUUID  *uuid.UUID
 	EntityIntID *int
-	EntityDB    interface{} // This is for marshaliing to the template
+	EntityDB    interface{}   // This is for marshaling to the template
+	Entity      *TaggedEntity // this is used to store a reference to the tagged entity
 }
 
 // TaggedHTML Is the input type for HTML that could contain tags
 type TaggedHTML TaggedContent
+
+// UniqueMentions returns a slices that are unique
+func (th TaggedHTML) UniqueMentions() []*HTMLMention {
+	uniqueMentions := lo.UniqBy(th.Mentions, func(mention *HTMLMention) string {
+
+		key := fmt.Sprint(mention.Type, mention.EntityRaw) //The entity raw, and tag type will be unique.
+		return key
+	})
+
+	return uniqueMentions
+}
 
 // ToTaggedContent casts the input to TaggedContent
 func (th TaggedHTML) ToTaggedContent() TaggedContent {
@@ -95,7 +108,7 @@ func NewTaggedContentFromString(htmlString string) (TaggedContent, error) {
 	}
 	// mentions, err := htmlMentionsFromString(sanitized)
 	mentions, err := htmlMentionsFromStringRegex(sanitized)
-	if mentions != nil { //TODO: SW, you might not need to do a nil or len check, you might be able to just set it
+	if mentions != nil {
 		if len(mentions) > 0 { // At least some mentions parsed correctly, so attach them to the Tagged HTML
 			tc.Mentions = mentions
 		}

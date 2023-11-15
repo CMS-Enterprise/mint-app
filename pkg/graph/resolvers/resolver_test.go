@@ -99,6 +99,9 @@ func (suite *ResolverSuite) createDiscussionReply(
 	dr, err := CreateDiscussionReply(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
