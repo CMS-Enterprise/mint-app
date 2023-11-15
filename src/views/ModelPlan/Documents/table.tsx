@@ -254,7 +254,7 @@ export const Table = ({
 
         {((fileToRemove.numLinkedSolutions > 0 && !handleDocumentUnlink) ||
           (fileToRemove.numLinkedSolutions > 1 && handleDocumentUnlink)) && (
-          <Alert type="warning">
+          <Alert type="warning" headingLevel="h4">
             {handleDocumentUnlink
               ? t('removeDocumentModal.linkDocsWarning2', {
                   numLinkedSolutions: fileToRemove.numLinkedSolutions - 1,

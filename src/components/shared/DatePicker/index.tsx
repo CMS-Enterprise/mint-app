@@ -92,7 +92,7 @@ export const MINTDatePicker = ({
       </FieldGroup>
 
       {warning && isDateInPast(formikValue) && (
-        <Alert type="warning" className="margin-top-4">
+        <Alert type="warning" className="margin-top-4" headingLevel="h4">
           {h('dateWarning')}
         </Alert>
       )}
