@@ -59,7 +59,7 @@ export const PhasesInvolved = () => {
             >
               <ProcessList>
                 {stepsConfig.map(step => (
-                  <ProcessListItem>
+                  <ProcessListItem key={step.heading}>
                     <ProcessListHeading type="h3">
                       {step.heading}
                     </ProcessListHeading>
