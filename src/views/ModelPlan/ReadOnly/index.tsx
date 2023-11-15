@@ -283,7 +283,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const Summary = (
     <SummaryBox
-      heading=""
       className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
       data-testid="read-only-model-summary"
     >

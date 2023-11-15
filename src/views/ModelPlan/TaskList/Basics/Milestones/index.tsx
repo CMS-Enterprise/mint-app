@@ -337,7 +337,11 @@ const Milestones = () => {
 
                           {(isDateInPast(values.clearanceEnds) ||
                             isDateInPast(values.clearanceStarts)) && (
-                            <Alert type="warning" className="margin-top-4">
+                            <Alert
+                              type="warning"
+                              className="margin-top-4"
+                              headingLevel="h4"
+                            >
                               {miscellaneousT('dateWarning')}
                             </Alert>
                           )}
@@ -406,7 +410,11 @@ const Milestones = () => {
 
                         {(isDateInPast(values.applicationsStart) ||
                           isDateInPast(values.applicationsEnd)) && (
-                          <Alert type="warning" className="margin-top-4">
+                          <Alert
+                            type="warning"
+                            className="margin-top-4"
+                            headingLevel="h4"
+                          >
                             {miscellaneousT('dateWarning')}
                           </Alert>
                         )}
@@ -461,7 +469,11 @@ const Milestones = () => {
 
                         {(isDateInPast(values.performancePeriodStarts) ||
                           isDateInPast(values.performancePeriodEnds)) && (
-                          <Alert type="warning" className="margin-top-4">
+                          <Alert
+                            type="warning"
+                            className="margin-top-4"
+                            headingLevel="h4"
+                          >
                             {miscellaneousT('dateWarning')}
                           </Alert>
                         )}

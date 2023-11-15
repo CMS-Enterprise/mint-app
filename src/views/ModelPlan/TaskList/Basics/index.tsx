@@ -698,7 +698,6 @@ const BasicsContent = () => {
                   <Grid desktop={{ col: 6 }}>
                     {filteredNameHistory && filteredNameHistory.length > 0 && (
                       <SummaryBox
-                        heading=""
                         className="margin-top-6"
                         data-testid="summary-box--previous-name"
                       >

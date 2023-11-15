@@ -7,10 +7,10 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Dropdown,
   Fieldset,
   Icon,
-  Label
+  Label,
+  Select
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -271,7 +271,7 @@ const DataSharing = () => {
                     </FieldErrorMsg>
 
                     <Field
-                      as={Dropdown}
+                      as={Select}
                       id="ops-eval-and-learning-data-sharing-starts"
                       name="dataSharingStarts"
                       value={values.dataSharingStarts || ''}
@@ -404,7 +404,7 @@ const DataSharing = () => {
                     </FieldErrorMsg>
 
                     <Field
-                      as={Dropdown}
+                      as={Select}
                       id="ops-eval-and-learning-data-collection-starts"
                       name="dataCollectionStarts"
                       value={values.dataCollectionStarts || ''}
@@ -535,7 +535,7 @@ const DataSharing = () => {
                     </FieldErrorMsg>
 
                     <Field
-                      as={Dropdown}
+                      as={Select}
                       id="ops-eval-and-learning-data-reporting-starts"
                       name="qualityReportingStarts"
                       value={values.qualityReportingStarts || ''}
