@@ -157,13 +157,16 @@ func sendPlanDiscussionTagEmails(
 				continue
 			}
 		case models.TagTypePossibleSolution:
-			config := emailService.GetConfig()
-			if !config.GetSendTaggedPOCEmails() { // only send emails if configured to do so
-				continue
-			}
+
 			soln, ok := entity.(*models.PossibleOperationalSolution)
 			if !ok {
 				errs = append(errs, fmt.Errorf("tagged entity was expectd to be a possible solution, but was not able to be cast to PossibleOperationalSolution. entity: %v", entity))
+			}
+
+			config := emailService.GetConfig()
+			if !config.GetSendTaggedPOCEmails() { // only send emails if configured to do so
+				logger.Info(" configuration to send tagged solution point of contacts is disabled. The email would have been sent to contacts for %s", zap.String("solution name", soln.Name))
+				continue
 			}
 
 			pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *mention.EntityIntID)
