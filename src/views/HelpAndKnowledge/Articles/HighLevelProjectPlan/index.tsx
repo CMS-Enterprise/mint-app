@@ -4,7 +4,6 @@ import {
   Accordion,
   Grid,
   GridContainer,
-  // HeadingLevel,
   Icon,
   Link
 } from '@trussworks/react-uswds';
@@ -23,15 +22,6 @@ import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import Table from './table';
-
-// interface AccordionItemProps {
-//   title: React.ReactNode | string;
-//   content: React.ReactNode;
-//   expanded: boolean;
-//   id: string;
-//   className?: string;
-//   headingLevel: HeadingLevel;
-// }
 
 const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
