@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  IconArrowForward,
+  Icon,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
@@ -78,7 +78,7 @@ export const PhasesInvolved = () => {
                       <UswdsReactLink to={step.link} className="margin-right-1">
                         {step.linkText}
                       </UswdsReactLink>
-                      <IconArrowForward />
+                      <Icon.ArrowForward />
                     </div>
                   </ProcessListItem>
                 ))}
