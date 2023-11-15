@@ -7,7 +7,7 @@ import {
   FooterNav,
   Grid,
   GridContainer,
-  IconLightbulbOutline
+  Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -85,7 +85,7 @@ const Footer = () => {
                     mobile={{ col: 2 }}
                     className="mint-footer__lightbulb"
                   >
-                    <IconLightbulbOutline className="lightbulb right-0" />
+                    <Icon.LightbulbOutline className="lightbulb right-0" />
                   </Grid>
                 )}
               </Grid>
@@ -142,7 +142,7 @@ const Footer = () => {
                 className="mint-footer__lightbulb"
               >
                 {!isTablet && (
-                  <IconLightbulbOutline className="margin-top-05 lightbulb" />
+                  <Icon.LightbulbOutline className="margin-top-05 lightbulb" />
                 )}
               </Grid>
             </GridContainer>

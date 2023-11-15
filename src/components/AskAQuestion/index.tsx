@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconAnnouncement } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 
 import Discussions from 'views/ModelPlan/Discussions';
 import DiscussionModalWrapper from 'views/ModelPlan/Discussions/DiscussionModalWrapper';
@@ -44,7 +44,7 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
         )}
 
         <div className="display-flex" data-testid="ask-a-question">
-          <IconAnnouncement className="text-primary margin-right-1" />
+          <Icon.Announcement className="text-primary margin-right-1" />
 
           <Button
             type="button"
