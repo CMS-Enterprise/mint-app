@@ -6,10 +6,10 @@
 import { ModelCategory, CMSCenter, CMMIGroup } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL query operation: GetModelPlanInfo
+// GraphQL query operation: GetBasics
 // ====================================================
 
-export interface GetModelPlanInfo_modelPlan_basics {
+export interface GetBasics_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
   demoCode: string | null;
@@ -21,19 +21,19 @@ export interface GetModelPlanInfo_modelPlan_basics {
   cmmiGroups: CMMIGroup[];
 }
 
-export interface GetModelPlanInfo_modelPlan {
+export interface GetBasics_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   abbreviation: string | null;
   nameHistory: string[];
-  basics: GetModelPlanInfo_modelPlan_basics;
+  basics: GetBasics_modelPlan_basics;
 }
 
-export interface GetModelPlanInfo {
-  modelPlan: GetModelPlanInfo_modelPlan;
+export interface GetBasics {
+  modelPlan: GetBasics_modelPlan;
 }
 
-export interface GetModelPlanInfoVariables {
+export interface GetBasicsVariables {
   id: UUID;
 }

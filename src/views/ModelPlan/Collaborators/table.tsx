@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 import { TeamRole } from 'gql/gen/graphql';
@@ -33,6 +33,12 @@ const CollaboratorsTable = ({
 
   const { t: collaboratorsT } = useTranslation('collaborators');
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
+
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+
+  const manageOrAdd = params.get('view') || 'manage';
 
   const columns: any = useMemo(() => {
     return [
@@ -73,7 +79,7 @@ const CollaboratorsTable = ({
             <>
               <UswdsReactLink
                 className="margin-right-2"
-                to={`/models/${modelID}/collaborators/add-collaborator/${row.original.id}`}
+                to={`/models/${modelID}/collaborators/add-collaborator/${row.original.id}?view=${manageOrAdd}`}
                 aria-label={`${collaboratorsMiscT('table.edit')} ${
                   row.original.userAccount.commonName
                 }`}
@@ -111,7 +117,8 @@ const CollaboratorsTable = ({
     setModalOpen,
     setRemoveCollaborator,
     collaborators.length,
-    isLastLead
+    isLastLead,
+    manageOrAdd
   ]);
 
   const {

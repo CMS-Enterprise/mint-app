@@ -1,8 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import GetFunding from 'gql/apolloGQL/Payments/GetFunding';
-import { GetFundingQuery, TrustFundType } from 'gql/gen/graphql';
+import {
+  GetFundingDocument,
+  GetFundingQuery,
+  TrustFundType
+} from 'gql/gen/graphql';
 import Sinon from 'sinon';
 
 import {
@@ -39,7 +42,7 @@ const mockData: FundingType = {
 const paymentMock = [
   {
     request: {
-      query: GetFunding,
+      query: GetFundingDocument,
       variables: { id: modelPlanID }
     },
     result: {

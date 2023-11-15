@@ -2293,7 +2293,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                       >
-                        Capitalization
+                        Capitation
                       </p>
                     </div>
                   </div>
@@ -3458,12 +3458,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--will-you-capture-participant-information margin-bottom-3"
+                  class="read-only-section read-only-section--will-you-collect-participant-information margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Will you capture participant information?
+                    Will you collect participant information?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -8593,7 +8593,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <p
                         class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
                       >
-                        Capitalization
+                        Capitation
                       </p>
                     </div>
                   </div>
@@ -9758,12 +9758,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--will-you-capture-participant-information margin-bottom-3"
+                  class="read-only-section read-only-section--will-you-collect-participant-information margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    Will you capture participant information?
+                    Will you collect participant information?
                   </p>
                   <p
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
