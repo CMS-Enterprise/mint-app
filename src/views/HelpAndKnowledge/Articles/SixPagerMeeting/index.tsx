@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { Grid, GridContainer, SummaryBox } from '@trussworks/react-uswds';
+import {
+  Grid,
+  GridContainer,
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
+} from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -107,34 +113,38 @@ const SixPagerMeeting = () => {
               {sixPageMeetingT('description')}
             </p>
 
-            <SummaryBox
-              heading={sixPageMeetingT('summaryBox.title')}
-              className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
-            >
-              <ul className="margin-y-0">
-                {/* eslint-disable jsx-a11y/anchor-is-valid */}
-                <li className="margin-top-05 margin-bottom-1">
-                  <ScrollLink
-                    scrollTo={sixPageMeetingT('summaryBox.listItem.create')}
-                  />
-                </li>
-                <li className="margin-bottom-1">
-                  <ScrollLink
-                    scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
-                  />
-                </li>
-                <li className="margin-bottom-1">
-                  <ScrollLink
-                    scrollTo={sixPageMeetingT('summaryBox.listItem.determine')}
-                  />
-                </li>
-                <li>
-                  <ScrollLink
-                    scrollTo={sixPageMeetingT('summaryBox.listItem.review')}
-                  />
-                </li>
-                {/* eslint-enable jsx-a11y/anchor-is-valid */}
-              </ul>
+            <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2">
+              <SummaryBoxHeading headingLevel="h3">
+                {sixPageMeetingT('summaryBox.title')}
+              </SummaryBoxHeading>
+              <SummaryBoxContent>
+                <ul className="margin-y-0">
+                  {/* eslint-disable jsx-a11y/anchor-is-valid */}
+                  <li className="margin-top-05 margin-bottom-1">
+                    <ScrollLink
+                      scrollTo={sixPageMeetingT('summaryBox.listItem.create')}
+                    />
+                  </li>
+                  <li className="margin-bottom-1">
+                    <ScrollLink
+                      scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
+                    />
+                  </li>
+                  <li className="margin-bottom-1">
+                    <ScrollLink
+                      scrollTo={sixPageMeetingT(
+                        'summaryBox.listItem.determine'
+                      )}
+                    />
+                  </li>
+                  <li>
+                    <ScrollLink
+                      scrollTo={sixPageMeetingT('summaryBox.listItem.review')}
+                    />
+                  </li>
+                  {/* eslint-enable jsx-a11y/anchor-is-valid */}
+                </ul>
+              </SummaryBoxContent>
             </SummaryBox>
 
             <div
@@ -151,13 +161,15 @@ const SixPagerMeeting = () => {
               </p>
             </div>
 
-            <SummaryBox
-              heading={sixPageMeetingT('startSummaryBox.title')}
-              className="margin-bottom-6"
-            >
-              <UswdsReactLink to="/models/steps-overview">
-                {sixPageMeetingT('startSummaryBox.body')}
-              </UswdsReactLink>
+            <SummaryBox className="margin-bottom-6">
+              <SummaryBoxHeading headingLevel="h3">
+                {sixPageMeetingT('startSummaryBox.title')}
+              </SummaryBoxHeading>
+              <SummaryBoxContent>
+                <UswdsReactLink to="/models/steps-overview">
+                  {sixPageMeetingT('startSummaryBox.body')}
+                </UswdsReactLink>
+              </SummaryBoxContent>
             </SummaryBox>
 
             <div
@@ -173,35 +185,43 @@ const SixPagerMeeting = () => {
                 {sixPageMeetingT('conceptPaper.introParagraph')}
               </p>
 
-              <SummaryBox
-                heading={sixPageMeetingT('crossCuttingGroupsSummaryBox.title')}
-                className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-bottom-3"
-              >
-                <ul className="margin-y-0">
-                  <li>
-                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.one')}
-                  </li>
-                  <li>
-                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.two')}
-                  </li>
-                  <li>
-                    <UswdsReactLink
-                      className="usa-button usa-button--unstyled"
-                      to={ldgRoute}
-                    >
-                      {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.ldg')}
-                    </UswdsReactLink>
-                    {sixPageMeetingT(
-                      'crossCuttingGroupsSummaryBox.item.learning'
-                    )}
-                  </li>
-                  <li>
-                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.four')}
-                  </li>
-                  <li>
-                    {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.five')}
-                  </li>
-                </ul>
+              <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-bottom-3">
+                <SummaryBoxHeading headingLevel="h3">
+                  {sixPageMeetingT('crossCuttingGroupsSummaryBox.title')}
+                </SummaryBoxHeading>
+                <SummaryBoxContent>
+                  <ul className="margin-y-0">
+                    <li>
+                      {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.one')}
+                    </li>
+                    <li>
+                      {sixPageMeetingT('crossCuttingGroupsSummaryBox.item.two')}
+                    </li>
+                    <li>
+                      <UswdsReactLink
+                        className="usa-button usa-button--unstyled"
+                        to={ldgRoute}
+                      >
+                        {sixPageMeetingT(
+                          'crossCuttingGroupsSummaryBox.item.ldg'
+                        )}
+                      </UswdsReactLink>
+                      {sixPageMeetingT(
+                        'crossCuttingGroupsSummaryBox.item.learning'
+                      )}
+                    </li>
+                    <li>
+                      {sixPageMeetingT(
+                        'crossCuttingGroupsSummaryBox.item.four'
+                      )}
+                    </li>
+                    <li>
+                      {sixPageMeetingT(
+                        'crossCuttingGroupsSummaryBox.item.five'
+                      )}
+                    </li>
+                  </ul>
+                </SummaryBoxContent>
               </SummaryBox>
 
               <div className="margin-bottom-3">
@@ -305,26 +325,28 @@ const SixPagerMeeting = () => {
                 </ul>
               </div>
 
-              <SummaryBox
-                heading={sixPageMeetingT('tipsSummaryBox.heading')}
-                className="margin-bottom-3"
-              >
-                <ul className="margin-top-1 margin-bottom-0">
-                  <li>
-                    {sixPageMeetingT('tipsSummaryBox.items.view')}
+              <SummaryBox className="margin-bottom-3">
+                <SummaryBoxHeading headingLevel="h3">
+                  {sixPageMeetingT('tipsSummaryBox.heading')}
+                </SummaryBoxHeading>
+                <SummaryBoxContent>
+                  <ul className="margin-top-1 margin-bottom-0">
+                    <li>
+                      {sixPageMeetingT('tipsSummaryBox.items.view')}
 
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D">
-                      {sixPageMeetingT('tipsSummaryBox.items.one')}
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    {sixPageMeetingT('tipsSummaryBox.items.view')}
-                    <ExternalLink href="https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity">
-                      {sixPageMeetingT('tipsSummaryBox.items.two')}
-                    </ExternalLink>
-                  </li>
-                  <li>{sixPageMeetingT('tipsSummaryBox.items.three')}</li>
-                </ul>
+                      <ExternalLink href="https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D">
+                        {sixPageMeetingT('tipsSummaryBox.items.one')}
+                      </ExternalLink>
+                    </li>
+                    <li>
+                      {sixPageMeetingT('tipsSummaryBox.items.view')}
+                      <ExternalLink href="https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity">
+                        {sixPageMeetingT('tipsSummaryBox.items.two')}
+                      </ExternalLink>
+                    </li>
+                    <li>{sixPageMeetingT('tipsSummaryBox.items.three')}</li>
+                  </ul>
+                </SummaryBoxContent>
               </SummaryBox>
 
               <div className="margin-bottom-3">
@@ -370,46 +392,48 @@ const SixPagerMeeting = () => {
               </div>
             </div>
 
-            <SummaryBox
-              heading={sixPageMeetingT(
-                'conceptPaper.exampleSummaryBox.heading'
-              )}
-              className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0"
-            >
-              <p className="margin-y-1">
-                {sixPageMeetingT('conceptPaper.exampleSummaryBox.paragraph')}
-              </p>
-              <ul className="margin-top-0">
-                <li>
-                  <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
-                    {sixPageMeetingT(
-                      'conceptPaper.exampleSummaryBox.items.one'
-                    )}
-                  </ExternalLink>
-                </li>
-                <li>
-                  <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/AHEAD%206-page%20concept_Clean.docx?d=wbdf205743dac4ebaa2a99ea37af6b5a7">
-                    {sixPageMeetingT(
-                      'conceptPaper.exampleSummaryBox.items.two'
-                    )}
-                  </ExternalLink>
-                </li>
-                <li>
-                  <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20OncT)%206-pager_10252021_clean.docx?d=w1e0f202072d14d8fb64366aff294e415">
-                    {sixPageMeetingT(
-                      'conceptPaper.exampleSummaryBox.items.three'
-                    )}
-                  </ExternalLink>
-                </li>
-              </ul>
-              <span className="margin-y-0">
-                {sixPageMeetingT('conceptPaper.exampleSummaryBox.footer.copy')}
-                <ExternalLink href="https://share.cms.gov/center/CMMI/SR/ModelDev/Forms/AllItems.aspx">
+            <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0">
+              <SummaryBoxHeading headingLevel="h3">
+                {sixPageMeetingT('conceptPaper.exampleSummaryBox.heading')}
+              </SummaryBoxHeading>
+              <SummaryBoxContent>
+                <p className="margin-y-1">
+                  {sixPageMeetingT('conceptPaper.exampleSummaryBox.paragraph')}
+                </p>
+                <ul className="margin-top-0">
+                  <li>
+                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
+                      {sixPageMeetingT(
+                        'conceptPaper.exampleSummaryBox.items.one'
+                      )}
+                    </ExternalLink>
+                  </li>
+                  <li>
+                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/AHEAD%206-page%20concept_Clean.docx?d=wbdf205743dac4ebaa2a99ea37af6b5a7">
+                      {sixPageMeetingT(
+                        'conceptPaper.exampleSummaryBox.items.two'
+                      )}
+                    </ExternalLink>
+                  </li>
+                  <li>
+                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20OncT)%206-pager_10252021_clean.docx?d=w1e0f202072d14d8fb64366aff294e415">
+                      {sixPageMeetingT(
+                        'conceptPaper.exampleSummaryBox.items.three'
+                      )}
+                    </ExternalLink>
+                  </li>
+                </ul>
+                <span className="margin-y-0">
                   {sixPageMeetingT(
-                    'conceptPaper.exampleSummaryBox.footer.link'
+                    'conceptPaper.exampleSummaryBox.footer.copy'
                   )}
-                </ExternalLink>
-              </span>
+                  <ExternalLink href="https://share.cms.gov/center/CMMI/SR/ModelDev/Forms/AllItems.aspx">
+                    {sixPageMeetingT(
+                      'conceptPaper.exampleSummaryBox.footer.link'
+                    )}
+                  </ExternalLink>
+                </span>
+              </SummaryBoxContent>
             </SummaryBox>
 
             <div
@@ -483,14 +507,19 @@ const SixPagerMeeting = () => {
               ))}
             </div>
 
-            <SummaryBox heading={sixPageMeetingT('footerSummaryBox.title')}>
-              <Trans i18nKey="sixPageMeeting:footerSummaryBox.body">
-                indexZero
-                <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
-                  email
-                </ExternalLink>
-                indexTwo
-              </Trans>
+            <SummaryBox>
+              <SummaryBoxHeading headingLevel="h3">
+                {sixPageMeetingT('footerSummaryBox.title')}
+              </SummaryBoxHeading>
+              <SummaryBoxContent>
+                <Trans i18nKey="sixPageMeeting:footerSummaryBox.body">
+                  indexZero
+                  <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
+                    email
+                  </ExternalLink>
+                  indexTwo
+                </Trans>
+              </SummaryBoxContent>
             </SummaryBox>
           </Grid>
         </GridContainer>

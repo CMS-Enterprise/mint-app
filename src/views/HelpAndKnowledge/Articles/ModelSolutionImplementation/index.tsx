@@ -7,7 +7,9 @@ import {
   ProcessList,
   ProcessListHeading,
   ProcessListItem,
-  SummaryBox
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
 } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -65,23 +67,25 @@ export const ModelSolutionImplementation = () => {
               {t('description')}
             </p>
 
-            <SummaryBox
-              heading=""
-              className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
-            >
-              <h3 className="margin-top-0 margin-bottom-1">
+            <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2">
+              <SummaryBoxHeading
+                headingLevel="h3"
+                className="margin-top-0 margin-bottom-1"
+              >
                 {t('summaryBox.copy')}
-              </h3>
+              </SummaryBoxHeading>
 
-              <ol className="padding-left-5 margin-y-0">
-                {summaryBoxConfig.map((item, index) => (
-                  <li key={item} className="margin-bottom-1">
-                    <div className="margin-left-1 display-flex flex-align-center">
-                      <ScrollLink scrollTo={item} />
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <SummaryBoxContent>
+                <ol className="padding-left-5 margin-y-0">
+                  {summaryBoxConfig.map((item, index) => (
+                    <li key={item} className="margin-bottom-1">
+                      <div className="margin-left-1 display-flex flex-align-center">
+                        <ScrollLink scrollTo={item} />
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </SummaryBoxContent>
             </SummaryBox>
 
             {/* INITIATE WORK */}
