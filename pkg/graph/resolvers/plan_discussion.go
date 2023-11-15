@@ -79,6 +79,8 @@ func CreatePlanDiscussion(
 		return discussion, err
 	}
 
+	userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
+
 	// Send email to MINT Dev Team
 	go func() {
 		sendEmailErr := sendPlanDiscussionCreatedEmail(
@@ -91,7 +93,7 @@ func CreatePlanDiscussion(
 			discussion,
 			modelPlan,
 			commonName,
-			input.UserRole.Humanize(models.ValueOrEmpty(input.UserRoleDescription)),
+			userRole,
 		)
 
 		if sendEmailErr != nil {
@@ -114,7 +116,8 @@ func CreatePlanDiscussion(
 			discussion.ID,
 			modelPlan,
 			commonName,
-			discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription)))
+			userRole,
+		)
 		if err != nil {
 			logger.Error("error sending tagged in plan discussion emails to tagged users and teams",
 				zap.String("discussionID", discussion.ID.String()),
@@ -230,7 +233,7 @@ func sendPlanDiscussionTaggedUserEmail(
 	if err != nil {
 		return err
 	}
-	//TODO fill out the email and send it
+
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionTaggedUserSubjectContent{
 		ModelName:         modelPlan.ModelName,
 		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
@@ -239,7 +242,6 @@ func sendPlanDiscussionTaggedUserEmail(
 		return err
 	}
 
-	// TODO: fill out the body, figure out if we need discussion ID etc?
 	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionTaggedUserBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
@@ -347,7 +349,7 @@ func sendPlanDiscussionCreatedEmail(
 		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
-		Role:              createdByUserRole, //TODO verify with Natasha
+		Role:              createdByUserRole,
 	})
 	if err != nil {
 		return err
