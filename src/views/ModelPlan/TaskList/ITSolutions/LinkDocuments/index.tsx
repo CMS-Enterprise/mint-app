@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Grid, IconArrowBack } from '@trussworks/react-uswds';
+import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import { isEqual } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -242,7 +242,7 @@ const LinkDocuments = () => {
         </Button>
 
         <UswdsReactLink className="display-flex" to={solutionDetailsURL}>
-          <IconArrowBack className="margin-right-1" aria-hidden />
+          <Icon.ArrowBack className="margin-right-1" aria-hidden />
           {t('dontConnect')}
         </UswdsReactLink>
       </Grid>

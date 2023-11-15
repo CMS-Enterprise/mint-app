@@ -12,7 +12,7 @@ import {
   CardGroup,
   Fieldset,
   Grid,
-  IconArrowBack
+  Icon
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 import { partition } from 'lodash';
@@ -408,7 +408,10 @@ const SelectSolutions = () => {
                           )
                         }
                       >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        <Icon.ArrowBack
+                          className="margin-right-1"
+                          aria-hidden
+                        />
                         {update ? t('dontUpdate') : t('dontAdd')}
                       </Button>
                     </Fieldset>

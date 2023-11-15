@@ -16,7 +16,7 @@ import {
   ComboBox,
   Fieldset,
   Grid,
-  IconArrowBack,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
@@ -415,7 +415,7 @@ const AddSolution = () => {
                               );
                             }}
                           >
-                            <IconArrowBack
+                            <Icon.ArrowBack
                               className="margin-right-1"
                               aria-hidden
                             />

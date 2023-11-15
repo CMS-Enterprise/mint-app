@@ -10,7 +10,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label,
   SummaryBox
 } from '@trussworks/react-uswds';
@@ -440,7 +440,7 @@ export const ParticipantsAndProvidersContent = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('back')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />
