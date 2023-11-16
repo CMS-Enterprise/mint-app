@@ -47,7 +47,7 @@ describe('IT Solutions SolutionCard', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
     await waitFor(() => {
       expect(
@@ -73,7 +73,7 @@ describe('IT Solutions SolutionCard', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
     await waitFor(() => {
       expect(getByTestId('custom-solution-card')).toBeInTheDocument();
@@ -95,9 +95,13 @@ describe('IT Solutions SolutionCard', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
     await waitFor(() => {
+      expect(
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
+      ).toBeInTheDocument();
+      expect(getByText('Alicia Thomas')).toBeInTheDocument();
       expect(getByText('at.mint@oddball.io')).toBeInTheDocument();
     });
 

@@ -17,8 +17,8 @@ import {
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
+import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -62,9 +62,12 @@ const SolutionCard = ({
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('generalReadOnly');
 
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.key
-  );
+  const {
+    prevPathname,
+    selectedSolution,
+    renderModal,
+    loading: modalLoading
+  } = useModalSolutionState(solution.key);
 
   const { helpSolutions, loading } = useHelpSolution();
 
@@ -83,8 +86,8 @@ const SolutionCard = ({
     OperationalSolutionKey.INTERNAL_STAFF
   ];
 
-  if (loading) {
-    return <PageLoading />;
+  if (loading || modalLoading) {
+    return <Spinner size="large" center />;
   }
 
   return (

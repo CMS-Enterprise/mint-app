@@ -619,27 +619,12 @@ exports[`IT Solutions Manage Subtasks > matches snapshot 1`] = `
                 >
                   Solution
                 </p>
-                <div
-                  class="margin-y-10"
-                  data-testid="page-loading"
-                >
-                  <div
-                    class="text-center"
-                  >
-                    <span
-                      aria-busy="true"
-                      aria-valuetext="Loading the page"
-                      class="mint-spinner mint-spinner--xl"
-                      data-testid="spinner"
-                      role="progressbar"
-                    />
-                  </div>
-                  <h1
-                    class="margin-top-6 text-center"
-                  >
-                    Loading the page
-                  </h1>
-                </div>
+                <span
+                  aria-valuetext="Loading"
+                  class="mint-spinner mint-spinner--large center"
+                  data-testid="spinner"
+                  role="progressbar"
+                />
               </div>
             </div>
           </div>

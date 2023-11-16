@@ -47,6 +47,8 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
-    globalSetup: './src/global-setup.js'
+    globalSetup: './src/global-setup.js',
+    cache: false,
+    clearMocks: true
   }
 });
