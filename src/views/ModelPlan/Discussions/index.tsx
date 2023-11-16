@@ -123,6 +123,8 @@ const Discussions = ({
     );
 
     if (discussionToReply && !loading) {
+      setIsDiscussionOpen(true);
+      setDiscussionType('reply');
       setReply(discussionToReply);
     }
   }, [discussionReplyID, discussions, loading]);

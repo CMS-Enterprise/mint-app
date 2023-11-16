@@ -13,14 +13,20 @@ import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';
 
 const Replies = ({
-  originalDiscussion: { replies }
+  originalDiscussion: { replies },
+  discussionReplyID
 }: {
   originalDiscussion: DiscussionType;
+  discussionReplyID?: string | null | undefined;
 }) => {
   const { t: discussionsT } = useTranslation('discussions');
 
-  const [areRepliesShowing, setAreRepliesShowing] = useState(true);
-  const [isAccordionExpanded, setIsAccordionExpanded] = useState(false);
+  const [areRepliesShowing, setAreRepliesShowing] = useState<boolean>(true);
+
+  // If opening from email, auto-expand all replies
+  const [isAccordionExpanded, setIsAccordionExpanded] = useState<boolean>(
+    !!discussionReplyID
+  );
 
   const hasReplies = replies.length > 0;
   const repliesList = isAccordionExpanded ? replies : replies.slice(0, 4);
