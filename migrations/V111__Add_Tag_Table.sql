@@ -24,4 +24,14 @@ ALTER TABLE tag
 ADD CONSTRAINT entity_uuid_or_intid_required CHECK ( (entity_uuid IS NOT NULL AND entity_intid IS NULL) OR (entity_uuid IS NULL AND entity_intid IS NOT NULL));
 
 
-COMMENT ON CONSTRAINT entity_uuid_or_intid_required ON tag IS 'Ensures that either entity_uuid or entity_intid is set, but not both (or neither)'
+COMMENT ON CONSTRAINT entity_uuid_or_intid_required ON tag IS 'Ensures that either entity_uuid or entity_intid is set, but not both (or neither)';
+
+ALTER TABLE tag
+ADD CONSTRAINT unique_tag_per_field_and_entity_int UNIQUE(tagged_content_id, tagged_field, entity_intid);
+
+ALTER TABLE tag
+ADD CONSTRAINT unique_tag_per_field_and_entity_uuid UNIQUE (tagged_content_id, tagged_field, entity_uuid);
+
+COMMENT ON CONSTRAINT unique_tag_per_field_and_entity_int ON tag IS 'Ensures that an entity can only have one tag per field and record. If mentioned in the field multiple times, there should just be one tag entry in the database';
+
+COMMENT ON CONSTRAINT unique_tag_per_field_and_entity_uuid ON tag IS 'Ensures that an entity can only have one tag per field and record. If mentioned in the field multiple times, there should just be one tag entry in the database';
