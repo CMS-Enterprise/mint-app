@@ -18,4 +18,5 @@ SELECT
     disc.modified_by,
     disc.modified_dts
 FROM QUERIED_IDS AS qIDs
-INNER JOIN plan_discussion AS disc ON disc.model_plan_id = qIDs.model_plan_id;
+INNER JOIN plan_discussion AS disc ON disc.model_plan_id = qIDs.model_plan_id
+ORDER BY disc.created_dts DESC;
