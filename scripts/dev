@@ -360,6 +360,7 @@ namespace :db do
   desc "Deletes all rows from all tables"
   task :clean do
     tableList = "
+    tag,
     analyzed_audit,
     nda_agreement,
     discussion_reply,

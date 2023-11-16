@@ -16,3 +16,8 @@ func PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.Logger, need
 func PossibleOperationalSolutionCollectionGetAll(logger *zap.Logger, store *storage.Store) ([]*models.PossibleOperationalSolution, error) {
 	return store.PossibleOperationalSolutionCollectionGetAll(logger)
 }
+
+// PossibleOperationalSolutionGetByID returns a possible operational Solutions according to it's id
+func PossibleOperationalSolutionGetByID(logger *zap.Logger, store *storage.Store, id int) (*models.PossibleOperationalSolution, error) {
+	return store.PossibleOperationalSolutionGetByID(logger, id)
+}

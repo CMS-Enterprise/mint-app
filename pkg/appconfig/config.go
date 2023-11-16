@@ -236,6 +236,9 @@ const OpenSearchHostKey = "OPENSEARCH_HOST"
 // FlagSourceOption represents an environment
 type FlagSourceOption string
 
+// TaggedSolutionPointOfContactEmailEnabled is the key to detemermine whether points of contacts should receive an email if they are tagged or not.
+const TaggedSolutionPointOfContactEmailEnabled = "TAG_POC_EMAILS_ENABLED"
+
 const (
 	// FlagSourceLocal is LOCAL
 	FlagSourceLocal FlagSourceOption = "LOCAL"

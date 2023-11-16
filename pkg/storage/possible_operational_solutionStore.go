@@ -1,10 +1,15 @@
 package storage
 
 import (
+	"database/sql"
+	"errors"
+	"fmt"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 
 	_ "embed"
@@ -18,6 +23,12 @@ var possibleOperationalSolutionCollectionGelAllSQL string
 
 //go:embed SQL/possible_operational_solution/collection_get_by_operational_need_id.sql
 var possibleOperationalSolutionCollectionByOperationalNeedIDSQL string
+
+//go:embed SQL/possible_operational_solution/get_by_id.sql
+var possibleOperationalSolutionGetByIDSQL string
+
+//go:embed SQL/possible_operational_solution/get_by_key.sql
+var possibleOperationalSolutionGetByKeySQL string
 
 // PossibleOperationalSolutionCollectionGetByNeedType returns possible
 // operational solutions for a given operational need
@@ -95,4 +106,79 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByOperationalNeedID(
 
 	return posSols, nil
 
+}
+
+// PossibleOperationalSolutionGetByID returns a possible solution associated to a specific id
+func (s *Store) PossibleOperationalSolutionGetByID(logger *zap.Logger, id int) (*models.PossibleOperationalSolution, error) {
+
+	opSol := models.PossibleOperationalSolution{}
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionGetByIDSQL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{"id": id}
+
+	err = stmt.Get(&opSol, arg)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			logger.Warn("no possible solution was found for the given ID : %s",
+				zap.Int("id", id))
+			return nil, fmt.Errorf("no possible solution plan found for the given id: %w", err)
+		}
+
+		logger.Error(
+			"failed to fetch possible operational solution",
+			zap.Error(err),
+			zap.Int("id", id),
+		)
+
+		return nil, &apperrors.QueryError{
+			Err:       fmt.Errorf("failed to fetch the possible operational solution: %w", err),
+			Model:     opSol,
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return &opSol, nil
+}
+
+// PossibleOperationalSolutionGetByKey returns a possible solution associated to a specific id
+func (s *Store) PossibleOperationalSolutionGetByKey(logger *zap.Logger, solKey models.OperationalSolutionKey) (*models.PossibleOperationalSolution, error) {
+	//TODO: restructure as data-loaders
+
+	opSol := models.PossibleOperationalSolution{}
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionGetByKeySQL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{"sol_key": solKey}
+
+	err = stmt.Get(&opSol, arg)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			logger.Warn("no possible solution was found for the given key : %s",
+				zap.Any("sol_key", solKey))
+			return nil, fmt.Errorf("no possible solution plan found for the given id: %w", err)
+		}
+
+		logger.Error(
+			"failed to fetch possible operational solution",
+			zap.Error(err),
+			zap.Any("sol_key", solKey),
+		)
+
+		return nil, &apperrors.QueryError{
+			Err:       fmt.Errorf("failed to fetch the possible operational solution: %w", err),
+			Model:     opSol,
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return &opSol, nil
 }

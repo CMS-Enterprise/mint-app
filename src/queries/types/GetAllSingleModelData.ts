@@ -398,9 +398,25 @@ export interface GetAllSingleModelData_modelPlan_collaborators {
   createdDts: Time;
 }
 
+export interface GetAllSingleModelData_modelPlan_discussions_content {
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
+  rawContent: string;
+}
+
 export interface GetAllSingleModelData_modelPlan_discussions_createdByUserAccount {
   __typename: "UserAccount";
   commonName: string;
+}
+
+export interface GetAllSingleModelData_modelPlan_discussions_replies_content {
+  __typename: "TaggedContent";
+  /**
+   * RawContent is HTML. It is sanitized on the backend
+   */
+  rawContent: string;
 }
 
 export interface GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount {
@@ -412,7 +428,7 @@ export interface GetAllSingleModelData_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
-  content: string | null;
+  content: GetAllSingleModelData_modelPlan_discussions_replies_content | null;
   createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_replies_createdByUserAccount;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
@@ -422,7 +438,7 @@ export interface GetAllSingleModelData_modelPlan_discussions_replies {
 export interface GetAllSingleModelData_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
-  content: string | null;
+  content: GetAllSingleModelData_modelPlan_discussions_content | null;
   createdByUserAccount: GetAllSingleModelData_modelPlan_discussions_createdByUserAccount;
   userRole: DiscussionUserRole | null;
   userRoleDescription: string | null;
