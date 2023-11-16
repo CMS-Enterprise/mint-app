@@ -126,6 +126,7 @@ services:
       - FAKTORY_CONNECTIONS
       - OPENSEARCH_HOST
       - LOCAL_AUTH_ENABLED
+      - TAG_POC_EMAILS_ENABLED
 
     depends_on:
       db_migrate:

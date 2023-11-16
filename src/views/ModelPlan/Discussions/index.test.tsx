@@ -24,7 +24,10 @@ const discussionResult: GetModelPlanDiscussionsType = {
       {
         __typename: 'PlanDiscussion',
         id: '123',
-        content: 'This is a question.',
+        content: {
+          __typename: 'TaggedContent',
+          rawContent: 'This is a question.'
+        },
         createdBy: 'TIDA',
         createdDts: '2022-05-12T15:01:39.190679Z',
         userRole: DiscussionUserRole.CMS_SYSTEM_SERVICE_TEAM,
@@ -39,7 +42,10 @@ const discussionResult: GetModelPlanDiscussionsType = {
       {
         __typename: 'PlanDiscussion',
         id: '456',
-        content: 'This is a second question.',
+        content: {
+          __typename: 'TaggedContent',
+          rawContent: 'This is a second question.'
+        },
         createdBy: 'JFCS',
         createdDts: '2022-05-12T15:01:39.190679Z',
         userRole: DiscussionUserRole.NONE_OF_THE_ABOVE,
@@ -54,7 +60,10 @@ const discussionResult: GetModelPlanDiscussionsType = {
             __typename: 'DiscussionReply',
             discussionID: '456',
             id: 'abc',
-            content: 'This is an answer.',
+            content: {
+              __typename: 'TaggedContent',
+              rawContent: 'This is an answer.'
+            },
             userRole: DiscussionUserRole.LEADERSHIP,
             userRoleDescription: '',
             isAssessment: false,
@@ -163,9 +172,15 @@ describe('Discussion Component', () => {
     );
 
     await waitFor(async () => {
-      screen.getByRole('button', { name: /Reply/ }).click();
+      userEvent.click(screen.getAllByRole('button', { name: /Reply/ })[0]);
+    });
 
-      expect(getByText(/This is a question./i)).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(
+        getByText(
+          /This will display with your name to help others identify you./i
+        )
+      ).toBeInTheDocument();
     });
 
     const roleSelect = screen.getByRole('combobox', {
@@ -174,15 +189,9 @@ describe('Discussion Component', () => {
 
     userEvent.selectOptions(roleSelect, [DiscussionUserRole.MINT_TEAM]);
 
-    expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
-
-    const feedbackField = screen.getByRole('textbox', {
-      name: /Type your reply/i
+    await waitFor(async () => {
+      expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
     });
-
-    userEvent.type(feedbackField, 'Test feedback');
-
-    expect(feedbackField).toHaveValue('Test feedback');
   });
 
   it('renders the reply form from email generated url param', async () => {

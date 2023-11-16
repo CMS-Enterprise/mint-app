@@ -19,6 +19,8 @@ export type Scalars = {
   Any: { input: any; output: any; }
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: { input: any; output: any; }
+  /** TaggedHTML represents an input type for HTML that could also include tags that reference another entity */
+  TaggedHTML: { input: any; output: any; }
   /** Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z */
   Time: { input: Time; output: Time; }
   /** UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A */
@@ -283,7 +285,7 @@ export type DateHistogramAggregationBucket = {
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
   __typename: 'DiscussionReply';
-  content?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<TaggedContent>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -297,20 +299,9 @@ export type DiscussionReply = {
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
-/**
- * DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https://gqlgen.com/reference/changesets/
- */
-export type DiscussionReplyChanges = {
-  content?: InputMaybe<Scalars['String']['input']>;
-  userRole?: InputMaybe<DiscussionUserRole>;
-  userRoleDescription?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** DiscussionReplyCreateInput represents the necessary fields to create a discussion reply */
 export type DiscussionReplyCreateInput = {
-  content: Scalars['String']['input'];
+  content: Scalars['TaggedHTML']['input'];
   discussionID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
@@ -628,11 +619,9 @@ export type Mutation = {
   createPlanCrTdl: PlanCrTdl;
   createPlanDiscussion: PlanDiscussion;
   createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
-  deleteDiscussionReply: DiscussionReply;
   deleteOperationalSolutionSubtask: Scalars['Int']['output'];
   deletePlanCollaborator: PlanCollaborator;
   deletePlanCrTdl: PlanCrTdl;
-  deletePlanDiscussion: PlanDiscussion;
   deletePlanDocument: Scalars['Int']['output'];
   deletePlanFavorite: PlanFavorite;
   linkNewPlanDocument: PlanDocument;
@@ -645,7 +634,6 @@ export type Mutation = {
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
-  updateDiscussionReply: DiscussionReply;
   updateExistingModelLinks: Array<ExistingModelLink>;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
@@ -654,7 +642,6 @@ export type Mutation = {
   updatePlanBeneficiaries: PlanBeneficiaries;
   updatePlanCollaborator: PlanCollaborator;
   updatePlanCrTdl: PlanCrTdl;
-  updatePlanDiscussion: PlanDiscussion;
   updatePlanGeneralCharacteristics: PlanGeneralCharacteristics;
   updatePlanOpsEvalAndLearning: PlanOpsEvalAndLearning;
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
@@ -736,12 +723,6 @@ export type MutationCreatePlanDocumentSolutionLinksArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationDeleteDiscussionReplyArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
 export type MutationDeleteOperationalSolutionSubtaskArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -755,12 +736,6 @@ export type MutationDeletePlanCollaboratorArgs = {
 
 /** Mutations definition for the schema */
 export type MutationDeletePlanCrTdlArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationDeletePlanDiscussionArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -840,13 +815,6 @@ export type MutationUpdateCustomOperationalNeedByIdArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationUpdateDiscussionReplyArgs = {
-  changes: DiscussionReplyChanges;
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
 export type MutationUpdateExistingModelLinksArgs = {
   currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
@@ -898,13 +866,6 @@ export type MutationUpdatePlanCollaboratorArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdatePlanCrTdlArgs = {
   changes: PlanCrTdlChanges;
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationUpdatePlanDiscussionArgs = {
-  changes: PlanDiscussionChanges;
   id: Scalars['UUID']['input'];
 };
 
@@ -1404,7 +1365,7 @@ export type PlanCrTdlCreateInput = {
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
   __typename: 'PlanDiscussion';
-  content?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<TaggedContent>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1419,20 +1380,9 @@ export type PlanDiscussion = {
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
-/**
- * PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https://gqlgen.com/reference/changesets/
- */
-export type PlanDiscussionChanges = {
-  content?: InputMaybe<Scalars['String']['input']>;
-  userRole?: InputMaybe<DiscussionUserRole>;
-  userRoleDescription?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** PlanDiscussionCreateInput represents the necessary fields to create a plan discussion */
 export type PlanDiscussionCreateInput = {
-  content: Scalars['String']['input'];
+  content: Scalars['TaggedHTML']['input'];
   modelPlanID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
@@ -2509,6 +2459,41 @@ export type SubscriptionOnLockTaskListSectionContextArgs = {
 export type SubscriptionOnTaskListSectionLocksChangedArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
+
+/** Tag represents an entity tagged in the database */
+export type Tag = {
+  __typename: 'Tag';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  entity?: Maybe<TaggedEntity>;
+  entityIntID?: Maybe<Scalars['Int']['output']>;
+  entityUUID?: Maybe<Scalars['UUID']['output']>;
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  tagType: TagType;
+  taggedContentID: Scalars['UUID']['output'];
+  taggedContentTable: Scalars['String']['output'];
+  taggedField: Scalars['String']['output'];
+};
+
+export enum TagType {
+  POSSIBLE_SOLUTION = 'POSSIBLE_SOLUTION',
+  USER_ACCOUNT = 'USER_ACCOUNT'
+}
+
+/** TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags */
+export type TaggedContent = {
+  __typename: 'TaggedContent';
+  /** RawContent is HTML. It is sanitized on the backend */
+  rawContent: Scalars['String']['output'];
+  tags: Array<Tag>;
+};
+
+/** TaggedEntity is the actual object represented by a tag in the data base. */
+export type TaggedEntity = PossibleOperationalSolution | UserAccount;
 
 export enum TaskListSection {
   BASICS = 'BASICS',

@@ -51,7 +51,7 @@ const DiscussionModalWrapper = ({
           </button>
           <h4 className="margin-0">{t('modalHeading')}</h4>
         </div>
-        <GridContainer className="padding-y-8">{children}</GridContainer>
+        <GridContainer className="padding-y-6">{children}</GridContainer>
       </div>
     </ReactModal>
   );

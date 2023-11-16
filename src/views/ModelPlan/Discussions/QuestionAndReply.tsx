@@ -7,7 +7,6 @@ import {
   Fieldset,
   Label,
   Select,
-  Textarea,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -17,6 +16,7 @@ import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MentionTextArea from 'components/shared/MentionTextArea';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import {
@@ -41,6 +41,7 @@ type QuestionAndReplyProps = {
   reply?: DiscussionType | ReplyType | null;
   setDiscussionReplyID?: (value: string | null | undefined) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
+  setDiscussionStatusMessage: (value: string) => void;
   setInitQuestion?: (value: boolean) => void;
 };
 
@@ -53,6 +54,7 @@ const QuestionAndReply = ({
   reply,
   setDiscussionReplyID,
   setDiscussionType,
+  setDiscussionStatusMessage,
   setInitQuestion
 }: QuestionAndReplyProps) => {
   const { t } = useTranslation('discussions');
@@ -74,7 +76,10 @@ const QuestionAndReply = ({
 
   return (
     <>
-      <PageHeading headingLevel="h1" className="margin-y-0 line-height-sans-2">
+      <PageHeading
+        headingLevel="h1"
+        className="margin-top-0 margin-bottom-3 line-height-sans-2"
+      >
         {renderType === 'question'
           ? t('discussionPanelHeading')
           : t('discussionPanelReply')}
@@ -101,7 +106,11 @@ const QuestionAndReply = ({
             <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
-              <p className="margin-y-0">{reply.content}</p>
+              <MentionTextArea
+                id={`mention-${discussionReplyID}`}
+                editable={false}
+                initialContent={reply.content?.rawContent}
+              />
             </div>
           </div>
 
@@ -109,10 +118,11 @@ const QuestionAndReply = ({
 
           <PageHeading
             headingLevel="h2"
-            className="margin-top-0 margin-bottom-1 line-height-sans-2"
+            className="margin-top-4 margin-bottom-1 line-height-sans-2"
           >
             {t('reply')}
           </PageHeading>
+
           <p className="margin-top-0 margin-bottom-3">
             <Trans
               i18nKey={t('allFieldsRequired')}
@@ -239,26 +249,34 @@ const QuestionAndReply = ({
                     scrollElement="content"
                     error={!!flatErrors.content}
                   >
-                    <Label htmlFor="discussion-content" className="text-normal">
+                    <Label
+                      htmlFor="discussion-content"
+                      className="text-normal margin-bottom-1"
+                    >
                       {renderType === 'question'
                         ? t('typeQuestion')
                         : t('typeReply')}
                       <RequiredAsterisk />
                     </Label>
+
+                    <p className="margin-top-0 text-base">{t('tagHint')}</p>
+
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
-                    <Field
-                      className="height-card"
-                      as={Textarea}
-                      error={!!flatErrors.content}
-                      id="discussion-content"
-                      name="content"
+
+                    <MentionTextArea
+                      id="mention-editor"
+                      setFieldValue={setFieldValue}
+                      editable
+                      disabled={loading}
                     />
                   </FieldGroup>
+
                   <div className="margin-y-5 display-block">
                     <Button
                       className="usa-button usa-button--outline margin-bottom-1"
                       type="button"
                       onClick={() => {
+                        setDiscussionStatusMessage('');
                         if (closeModal) {
                           closeModal();
                         }

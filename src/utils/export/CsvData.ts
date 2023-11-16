@@ -367,7 +367,7 @@ const csvFields = [
   // Discussions
   {
     label: i18next.t<string>('discussions:discussionCSV.content'),
-    value: 'discussions.content'
+    value: 'discussions.content.rawContent'
   },
   {
     label: i18next.t<string>('discussions:discussionCSV.createdBy'),
@@ -389,7 +389,7 @@ const csvFields = [
   // Discussion Replies
   {
     label: i18next.t<string>('discussions:replyCSV.content'),
-    value: 'discussions.replies.content'
+    value: 'discussions.replies.content.rawContent'
   },
   {
     label: i18next.t<string>('discussions:replyCSV.createdBy'),

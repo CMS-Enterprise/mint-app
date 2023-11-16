@@ -25,6 +25,12 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
+// Content is the resolver for the content field.
+func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.TaggedContentGet(logger, r.store, string(obj.Content.RawContent), "discussion_reply", "content", obj.ID)
+}
+
 // ExistingModel is the resolver for the existingModel field.
 func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
 	if obj.ExistingModelID == nil { //Don't do a DB call if nil
@@ -283,23 +289,8 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 		&input,
 		principal,
 		r.store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
 	)
-}
-
-// UpdatePlanDiscussion is the resolver for the updatePlanDiscussion field.
-func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
-}
-
-// DeletePlanDiscussion is the resolver for the deletePlanDiscussion field.
-func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.DeletePlanDiscussion(logger, id, principal, r.store)
 }
 
 // CreateDiscussionReply is the resolver for the createDiscussionReply field.
@@ -307,23 +298,16 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreateDiscussionReply(logger, &input, principal, r.store)
-}
-
-// UpdateDiscussionReply is the resolver for the updateDiscussionReply field.
-func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
-}
-
-// DeleteDiscussionReply is the resolver for the deleteDiscussionReply field.
-func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+	return resolvers.CreateDiscussionReply(
+		ctx,
+		logger,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		&input,
+		principal,
+		r.store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
@@ -557,6 +541,12 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 // TeamRoles is the resolver for the teamRoles field.
 func (r *planCollaboratorResolver) TeamRoles(ctx context.Context, obj *models.PlanCollaborator) ([]models.TeamRole, error) {
 	return models.ConvertEnums[models.TeamRole](obj.TeamRoles), nil
+}
+
+// Content is the resolver for the content field.
+func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDiscussion) (*models.TaggedContent, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.TaggedContentGet(logger, r.store, string(obj.Content.RawContent), "plan_discussion", "content", obj.ID)
 }
 
 // Replies is the resolver for the replies field.
@@ -980,8 +970,23 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
+// Entity is the resolver for the entity field.
+func (r *tagResolver) Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error) {
+	return resolvers.TaggedEntityGet(ctx, r.store, obj.TagType, obj.EntityUUID, obj.EntityIntID)
+}
+
+// RawContent is the resolver for the rawContent field.
+func (r *taggedContentResolver) RawContent(ctx context.Context, obj *models.TaggedContent) (string, error) {
+	return obj.RawContent.String(), nil
+}
+
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
+
+// DiscussionReply returns generated.DiscussionReplyResolver implementation.
+func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
+	return &discussionReplyResolver{r}
+}
 
 // ExistingModelLink returns generated.ExistingModelLinkResolver implementation.
 func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
@@ -1059,7 +1064,14 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 // Subscription returns generated.SubscriptionResolver implementation.
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
+// Tag returns generated.TagResolver implementation.
+func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
+
+// TaggedContent returns generated.TaggedContentResolver implementation.
+func (r *Resolver) TaggedContent() generated.TaggedContentResolver { return &taggedContentResolver{r} }
+
 type auditChangeResolver struct{ *Resolver }
+type discussionReplyResolver struct{ *Resolver }
 type existingModelLinkResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
@@ -1078,3 +1090,5 @@ type possibleOperationalNeedResolver struct{ *Resolver }
 type possibleOperationalSolutionResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
+type tagResolver struct{ *Resolver }
+type taggedContentResolver struct{ *Resolver }
