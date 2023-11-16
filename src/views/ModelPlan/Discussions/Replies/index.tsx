@@ -101,8 +101,8 @@ const Replies = ({
                 onClick={() => setIsAccordionExpanded(!isAccordionExpanded)}
               >
                 {isAccordionExpanded
-                  ? discussionsT('viewFewerQuestions')
-                  : discussionsT('viewMoreQuestions')}
+                  ? discussionsT('viewFewerReplies')
+                  : discussionsT('viewMoreReplies')}
               </Button>
             </SectionWrapper>
           )}
