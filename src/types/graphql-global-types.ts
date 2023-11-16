@@ -749,8 +749,8 @@ export interface PlanDocumentInput {
  */
 export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
-  existingModel?: string | null;
-  existingModelID?: UUID | null;
+  existingModelPlanID?: UUID | null;
+  existingModelExternalID?: number | null;
   resemblesExistingModel?: boolean | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
