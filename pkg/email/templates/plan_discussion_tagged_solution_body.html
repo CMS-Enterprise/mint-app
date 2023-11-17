@@ -1,0 +1,31 @@
+{{template "shared_header.html"}}
+
+
+<h3>{{.SolutionName}} was tagged in</h3>
+<p>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </p>
+<br/>
+<table>
+  <tr>
+    <td>
+      <div class="container-border">
+        <h2>Discussion</h2>
+        <br/>
+        <p><b>{{.UserName}}</b></p>
+        <p class="subtitle"> {{.Role}}</p>
+        <p>{{.DiscussionContent}}</p>
+        <p style="font-weight: normal">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?discussionID={{.DiscussionID}}">
+            Respond to this discussion in MINT
+          </a>
+        </p>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<hr/>
+<br/>
+<p>You are receiving this email because you were identified as a point of contact for {{.SolutionName}}. If you are no longer a point of contact, please contact
+  <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>
+</p>

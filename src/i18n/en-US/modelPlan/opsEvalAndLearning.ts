@@ -199,7 +199,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'captureParticipantInfo',
     goField: 'CaptureParticipantInfo',
     dbField: 'capture_participant_info',
-    label: 'Will you capture participant information?',
+    label: 'Will you collect participant information?',
     sublabel:
       'This means the participant record for a model would be included in the ACO-OS Entity File.',
     dataType: 'boolean',

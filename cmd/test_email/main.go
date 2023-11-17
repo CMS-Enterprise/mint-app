@@ -20,8 +20,12 @@ func main() {
 	addressBook := initializeAddressBook()
 
 	// Running all test functions
-	sendPlanDiscussionCreatedTestEmail(emailService, templateService, addressBook)
 	sendModelPlanCreatedEmailTest(emailService, templateService)
+	// Discussion emails
+	sendPlanDiscussionCreatedTestEmail(emailService, templateService, addressBook)
+	sendPlanDiscussionTaggedUserTestEmail(emailService, templateService, addressBook)
+	sendPlanDiscussionTaggedSolutionTestEmail(emailService, templateService, addressBook)
+
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, templateService, addressBook)
@@ -76,17 +80,36 @@ func sendPlanDiscussionCreatedTestEmail(
 	addressBook email.AddressBook,
 ) {
 	discussionUserRole := models.DiscussionRoleMintTeam
+	tag1EUA := "SKZO"
+	tag1Label := "Alexander Stark"
+	tag1Type := models.TagTypeUserAccount
+	tag1 := `<span data-type="mention" tag-type="` + string(tag1Type) + `" class="mention" data-id="` + tag1EUA + `" data-label="` + tag1Label + `">@` + tag1Label + `</span>`
+
+	tag2ID := "HIGLAS"
+	tag2Label := "Healthcare Integrated General Ledger Accounting System (HIGLAS)"
+	tag2Type := models.TagTypePossibleSolution
+	tag2 := `<span data-type="mention" tag-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2ID + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
+
+	tag3ID := "CONNECT"
+	tag3Label := "Salesforce CONNECT"
+	tag3Type := models.TagTypePossibleSolution
+	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
+
+	content := "Test Content for Plan Discussion, check out this tag  " + tag1 + "!  BTW, here is a list of solutions <ul><li>" + tag2 + "</li><li>" + tag3 + "</li></ul>"
+
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	noErr(err)
 
 	planDiscussion := models.NewPlanDiscussion(
 		uuid.Nil,
 		false,
 		uuid.Nil,
-		"Test Content for Plan Discussion",
+		models.TaggedHTML(taggedContent),
 		&discussionUserRole,
 		models.StringPointer("Test User Role Description"),
 	)
 
-	err := sendPlanDiscussionCreatedEmail(
+	err = sendPlanDiscussionCreatedEmail(
 		emailService,
 		templateService,
 		addressBook,
@@ -113,9 +136,14 @@ func sendPlanDiscussionCreatedEmail(
 	if err != nil {
 		return err
 	}
+	createdByUserName := "Test User"
+	modelName := "Test Model Plan Name"
+	modelAbbreviation := "TMPN"
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
-		DiscussionContent: planDiscussion.Content,
+		UserName:          createdByUserName,
+		ModelName:         modelName,
+		ModelAbbreviation: modelAbbreviation,
 	})
 	if err != nil {
 		return err
@@ -124,10 +152,11 @@ func sendPlanDiscussionCreatedEmail(
 	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
-		UserName:          "Test User", // Note: Hardcoded for the test. In real use, it would be dynamic.
-		DiscussionContent: planDiscussion.Content,
+		UserName:          createdByUserName, // Note: Hardcoded for the test. In real use, it would be dynamic.
+		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
 		ModelID:           modelPlanID.String(),
 		ModelName:         "Test Model Plan Name", // Note: Hardcoded for the test. In real use, it would be dynamic.
+		Role:              planDiscussion.UserRole.Humanize(models.ValueOrEmpty(planDiscussion.UserRoleDescription)),
 	})
 	if err != nil {
 		return err

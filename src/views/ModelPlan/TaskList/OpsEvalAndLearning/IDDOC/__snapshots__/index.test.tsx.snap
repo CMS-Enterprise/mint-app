@@ -197,7 +197,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           data-testid="label"
           for="ops-eval-and-learning-capture-participant-info"
         >
-          Will you capture participant information?
+          Will you collect participant information?
         </label>
         <p
           class="text-base margin-bottom-1 margin-top-1"

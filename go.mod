@@ -37,17 +37,19 @@ require (
 	github.com/aquasecurity/esquery v0.2.0
 	github.com/contribsys/faktory v1.8.0
 	github.com/iancoleman/strcase v0.3.0
+	golang.org/x/net v0.17.0
 )
 
 require (
+	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/elastic/go-elasticsearch/v7 v7.6.0 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-jose/go-jose/v3 v3.0.0 // indirect
+	github.com/gorilla/css v1.0.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.3 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
 )
 
 require (
@@ -88,6 +90,7 @@ require (
 	github.com/lestrrat-go/option v1.0.1 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/microcosm-cc/bluemonday v1.0.25
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect

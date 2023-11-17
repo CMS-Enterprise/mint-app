@@ -52,6 +52,24 @@ var planDiscussionCreatedSubjectTemplate string
 //go:embed templates/plan_discussion_created_body.html
 var planDiscussionCreatedBodyTemplate string
 
+// PlanDiscussionTaggedPossibleSolutionTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionTaggedPossibleSolutionTemplateName string = "plan_discussion_tagged_solution"
+
+//go:embed templates/plan_discussion_tagged_solution_subject.html
+var planDiscussionTaggedPossibleSolutionSubjectTemplate string
+
+//go:embed templates/plan_discussion_tagged_solution_body.html
+var planDiscussionTaggedPossibleSolutionBodyTemplate string
+
+// PlanDiscussionTaggedUserTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionTaggedUserTemplateName string = "plan_discussion_tagged_user"
+
+//go:embed templates/plan_discussion_tagged_user_subject.html
+var planDiscussionTaggedUserSubjectTemplate string
+
+//go:embed templates/plan_discussion_tagged_user_body.html
+var planDiscussionTaggedUserBodyTemplate string
+
 // ModelPlanDateChangedTemplateName is the template name definition for the corresponding email template
 const ModelPlanDateChangedTemplateName string = "model_plan_date_changed"
 
@@ -143,6 +161,16 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(PlanDiscussionCreatedTemplateName, planDiscussionCreatedSubjectTemplate, planDiscussionCreatedBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(PlanDiscussionTaggedUserTemplateName, planDiscussionTaggedUserSubjectTemplate, planDiscussionTaggedUserBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(PlanDiscussionTaggedPossibleSolutionTemplateName, planDiscussionTaggedPossibleSolutionSubjectTemplate, planDiscussionTaggedPossibleSolutionBodyTemplate)
 	if err != nil {
 		return err
 	}

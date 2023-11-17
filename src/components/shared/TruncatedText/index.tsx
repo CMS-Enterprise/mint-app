@@ -11,6 +11,7 @@ import {
 // it is over the character limit the text will be truncated and a
 // button to expand / unexpand the text will be provided if the user
 // desires to see the entire text
+import MentionTextArea from 'components/shared/MentionTextArea';
 
 type TruncatedTextProps = {
   id: string;
@@ -29,37 +30,36 @@ const TruncatedText = ({
 
   const [isOpen, setOpen] = useState(true);
 
-  // If text is shorter then specified character limit, just
-  // return the whole text
-  if (text.length < charLimit) {
-    return (
-      <div className={className}>
-        <span>{text}</span>
-      </div>
-    );
-  }
+  const needsTruncation: boolean = text.length > charLimit;
 
-  // Text is longer then specified character limit, truncate text
-  // and provide button to allow users to expand / unexpand out
-  // text if desired
-  const startOfText: string = text.substring(0, charLimit);
+  // If text is under character limit, return full text
+  // Otherwise truncate text to character limit
+  const startOfText: string = needsTruncation
+    ? `${text.substring(0, charLimit)} ...`
+    : text;
 
   return (
     <div className={className}>
       <span className="display-block" id={id}>
-        {isOpen ? `${startOfText}... ` : `${text} `}
+        <MentionTextArea
+          id={`mention-${id}`}
+          editable={false}
+          initialContent={isOpen ? startOfText : text}
+        />
       </span>
-      <Button
-        type="button"
-        onClick={() => setOpen(!isOpen)}
-        aria-expanded={isOpen}
-        aria-controls={id}
-        unstyled
-        className="display-flex flex-align-center margin-top-1"
-      >
-        {isOpen ? generalT('readMore') : generalT('readLess')}
-        {isOpen ? <IconExpandMore /> : <IconExpandLess />}
-      </Button>
+      {needsTruncation && (
+        <Button
+          type="button"
+          onClick={() => setOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-controls={id}
+          unstyled
+          className="display-flex flex-align-center margin-top-1"
+        >
+          {isOpen ? generalT('readMore') : generalT('readLess')}
+          {isOpen ? <IconExpandMore /> : <IconExpandLess />}
+        </Button>
+      )}
     </div>
   );
 };
