@@ -1,6 +1,10 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 
 import {
   needQuestionAndAnswerMock,
@@ -43,7 +47,7 @@ const mocks = [...possibleSolutionsMock, ...needQuestionAndAnswerMock];
 
 describe('SolutionDetailsCard', () => {
   it('matches snapshot', async () => {
-    const { asFragment, getByText } = render(
+    const { asFragment, getByText, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
@@ -64,6 +68,8 @@ describe('SolutionDetailsCard', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
+
     await waitFor(() => {
       expect(
         getByText('Obtain an application support contractor')
@@ -75,7 +81,7 @@ describe('SolutionDetailsCard', () => {
   });
 
   it('isUpdatingStatus variant', async () => {
-    const { asFragment, getByText } = render(
+    const { asFragment, getByText, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
@@ -96,6 +102,8 @@ describe('SolutionDetailsCard', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
 
     await waitFor(() => {
       expect(() => getByText('Must start by')).toThrow();
