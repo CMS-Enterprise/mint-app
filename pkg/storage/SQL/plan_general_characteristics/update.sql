@@ -1,8 +1,8 @@
 UPDATE plan_general_characteristics
 SET
     is_new_model = :is_new_model,
-    existing_model_plan_id = :existing_model_plan_id,
-    existing_model_external_id = :existing_model_external_id,
+    current_model_plan_id = :current_model_plan_id,
+    existing_model_id = :existing_model_id,
     resembles_existing_model = :resembles_existing_model,
     resembles_existing_model_how = :resembles_existing_model_how,
     resembles_existing_model_note = :resembles_existing_model_note,
@@ -62,8 +62,8 @@ RETURNING
 id,
 model_plan_id,
 is_new_model,
-existing_model_plan_id,
-existing_model_external_id,
+current_model_plan_id,
+existing_model_id,
 resembles_existing_model,
 resembles_existing_model_how,
 resembles_existing_model_note,

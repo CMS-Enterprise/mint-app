@@ -6,7 +6,6 @@ package gqlresolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -601,9 +600,22 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
-// ExistingModelID is the resolver for the existingModelID field.
-func (r *planGeneralCharacteristicsResolver) ExistingModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: ExistingModelID - existingModelID"))
+// CurrentModelPlan is the resolver for the currentModelPlan field.
+func (r *planGeneralCharacteristicsResolver) CurrentModelPlan(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ModelPlan, error) {
+	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
+}
+
+// ExistingModelPlan is the resolver for the existingModelPlan field.
+func (r *planGeneralCharacteristicsResolver) ExistingModelPlan(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModel, error) {
+	if obj.ExistingModelID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
@@ -1084,16 +1096,3 @@ type possibleOperationalNeedResolver struct{ *Resolver }
 type possibleOperationalSolutionResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planGeneralCharacteristicsResolver) ExistingModelPlanID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: ExistingModelPlanID - existingModelPlanId"))
-}
-func (r *planGeneralCharacteristicsResolver) ExistingModelExternalID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*int, error) {
-	panic(fmt.Errorf("not implemented: ExistingModelExternalID - existingModelExternalId"))
-}

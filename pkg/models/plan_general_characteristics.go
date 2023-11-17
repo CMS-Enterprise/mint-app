@@ -12,8 +12,8 @@ type PlanGeneralCharacteristics struct {
 	// Page 1
 	IsNewModel                  *bool      `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
 	ExistingModel               *string    `json:"existingModel" db:"existing_model"`
-	ExistingModelPlanID         *uuid.UUID `json:"existingModelPlanID" db:"existing_model_plan_id"`
-	ExistingModelExternalID     *int       `json:"existingModelExternalID" db:"existing_model_external_id"`
+	CurrentModelPlanID          *uuid.UUID `json:"currentModelPlanID" db:"current_model_plan_id"`
+	ExistingModelID             *int       `json:"existingModelID" db:"existing_model_id"`
 	ResemblesExistingModel      *bool      `json:"resemblesExistingModel" db:"resembles_existing_model" statusWeight:"1"`
 	ResemblesExistingModelHow   *string    `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
 	ResemblesExistingModelNote  *string    `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`

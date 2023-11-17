@@ -495,13 +495,14 @@ PlanGeneralCharacteristics represents a plan general characteristics object
 type PlanGeneralCharacteristics {
   id: UUID!
   modelPlanID: UUID!
-  existingModelPlanID: UUID
-  existingModelExternalID: Int
 
   # Page 1
   isNewModel: Boolean
   existingModel: String
-  existingModelID: UUID
+  currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
+  existingModelID: Int
+  existingModelPlan: ExistingModel
   resemblesExistingModel: Boolean
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
@@ -584,8 +585,8 @@ https://gqlgen.com/reference/changesets/
 input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   isNewModel: Boolean
-  existingModelPlanID: UUID
-  existingModelExternalID: Int
+  currentModelPlanID: UUID
+  existingModelID: Int
   resemblesExistingModel: Boolean
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
