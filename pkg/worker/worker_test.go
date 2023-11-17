@@ -69,9 +69,11 @@ func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
 }
 
 func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content string) *models.PlanDiscussion {
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         mp.ID,
-		Content:             content,
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -84,6 +86,7 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return pd
@@ -92,9 +95,9 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 func (suite *WorkerSuite) createPlanCollaborator(
 	mp *models.ModelPlan,
 	userName string,
-	fullName string,
+	_ string,
 	teamRoles []models.TeamRole,
-	emailAddress string,
+	_ string,
 ) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,

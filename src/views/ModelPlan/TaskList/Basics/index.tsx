@@ -1,7 +1,6 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -20,6 +19,13 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import {
+  CmsCenter,
+  GetBasicsQuery,
+  ModelCategory,
+  useGetBasicsQuery,
+  useUpdateModelPlanAndBasicsMutation
+} from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
@@ -35,15 +41,6 @@ import TextAreaField from 'components/shared/TextAreaField';
 import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
-import {
-  GetModelPlanInfo as GetModelPlanInfoType,
-  GetModelPlanInfo_modelPlan as ModelFormType,
-  GetModelPlanInfoVariables
-} from 'queries/Basics/types/GetModelPlanInfo';
-import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
-import UpdateModelPlanAndBasics from 'queries/UpdateModelPlanAndBasics';
-import { CMSCenter, ModelCategory } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
@@ -52,7 +49,7 @@ import { NotFoundPartial } from 'views/NotFound';
 import Milestones from './Milestones';
 import Overview from './Overview';
 
-type ModelPlanInfoFormType = Omit<ModelFormType, 'nameHistory'>;
+type ModelPlanInfoFormType = Omit<GetBasicsQuery['modelPlan'], 'nameHistory'>;
 
 const BasicsContent = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -76,24 +73,23 @@ const BasicsContent = () => {
   const history = useHistory();
 
   const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(
-    formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.CMMI)
+    formikRef?.current?.values.basics.cmsCenters.includes(CmsCenter.CMMI)
   );
 
   const [showOther, setShowOther] = useState(
-    formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.OTHER)
+    formikRef?.current?.values.basics.cmsCenters.includes(CmsCenter.OTHER)
   );
 
-  const { data, loading, error } = useQuery<
-    GetModelPlanInfoType,
-    GetModelPlanInfoVariables
-  >(GetModelPlanInfo, {
+  const { data, loading, error } = useGetBasicsQuery({
     variables: {
       id: modelID
     }
   });
 
-  const { id, modelName, abbreviation, basics, nameHistory } =
-    data?.modelPlan || {};
+  const { nameHistory } = data?.modelPlan || {};
+
+  const { id, modelName, abbreviation, basics } = (data?.modelPlan ||
+    {}) as ModelPlanInfoFormType;
 
   const filteredNameHistory = nameHistory?.filter(
     previousName => previousName !== modelName
@@ -109,9 +105,7 @@ const BasicsContent = () => {
     cmsOther
   } = basics || {};
 
-  const [update] = useMutation<UpdateModelPlanAndBasicsVariables>(
-    UpdateModelPlanAndBasics
-  );
+  const [update] = useUpdateModelPlanAndBasicsMutation();
 
   const handleFormSubmit = (
     formikValues: ModelPlanInfoFormType,
@@ -121,12 +115,14 @@ const BasicsContent = () => {
       formikRef?.current?.setFieldError('modelName', 'Enter the Model name');
       return;
     }
+
     const {
       id: updateId,
       modelName: updateModelName,
       abbreviation: updateAbbreviation,
       basics: updateBasics
     } = formikValues;
+
     update({
       variables: {
         id: updateId,
@@ -583,19 +579,19 @@ const BasicsContent = () => {
                                               arrayHelpers.push(e.target.value);
                                             } else {
                                               const idx = values.basics.cmsCenters.indexOf(
-                                                e.target.value as CMSCenter
+                                                e.target.value as CmsCenter
                                               );
                                               arrayHelpers.remove(idx);
                                             }
                                             if (
-                                              e.target.value === CMSCenter.CMMI
+                                              e.target.value === CmsCenter.CMMI
                                             ) {
                                               setAreCmmiGroupsShown(
                                                 !areCmmiGroupsShown
                                               );
                                             }
                                             if (
-                                              e.target.value === CMSCenter.OTHER
+                                              e.target.value === CmsCenter.OTHER
                                             ) {
                                               setShowOther(!showOther);
                                             }
@@ -606,7 +602,7 @@ const BasicsContent = () => {
                                   )}
 
                                   {values.basics.cmsCenters.includes(
-                                    CMSCenter.OTHER
+                                    CmsCenter.OTHER
                                   ) && (
                                     <FieldGroup
                                       className="margin-top-4"
@@ -660,7 +656,7 @@ const BasicsContent = () => {
                                   as={CheckboxField}
                                   disabled={
                                     !values.basics.cmsCenters.includes(
-                                      CMSCenter.CMMI
+                                      CmsCenter.CMMI
                                     )
                                   }
                                   id={`new-plan-cmmiGroup-${group}`}

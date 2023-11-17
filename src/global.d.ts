@@ -25,6 +25,8 @@ declare global {
   type UUID = string;
   type Time = string;
   type Upload = File;
+  type HTML = string;
+  type TaggedHTML = HTML;
 
   interface Window {
     Cypress: any;

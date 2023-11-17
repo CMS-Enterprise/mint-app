@@ -3,15 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.6.9",
+    "@apollo/client": "^3.8.6",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@cypress/code-coverage": "^3.10.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.1.0",
     "@json2csv/formatters": "^7.0.3",
     "@json2csv/plainjs": "^7.0.3",
     "@json2csv/transforms": "^7.0.3",
     "@okta/okta-auth-js": "^6.1.0",
     "@okta/okta-react": "^6.4.2",
     "@okta/okta-signin-widget": "^7.9.1",
+    "@tiptap/core": "^2.1.11",
+    "@tiptap/extension-character-count": "^2.1.11",
+    "@tiptap/extension-document": "^2.1.11",
+    "@tiptap/extension-mention": "^2.1.11",
+    "@tiptap/extension-paragraph": "^2.1.11",
+    "@tiptap/extension-text": "^2.1.11",
+    "@tiptap/pm": "^2.1.11",
+    "@tiptap/react": "^2.1.11",
+    "@tiptap/starter-kit": "^2.1.11",
+    "@tiptap/suggestion": "^2.1.11",
     "@trussworks/react-uswds": "^2.8.0",
     "@types/apollo-upload-client": "^17.0.1",
     "@types/enzyme": "^3.10.3",
@@ -75,6 +86,7 @@
     "sass": "^1.57.1",
     "storybook": "^7.5.1",
     "subscriptions-transport-ws": "^0.11.0",
+    "tippy.js": "^6.3.7",
     "typescript": "^4.5.2",
     "wait-on": "^5.2.1",
     "yup": "^1.2.0"
@@ -93,7 +105,8 @@
     "cypress:run": "DEBUG=cypress:server:util:process_profiler cypress run",
     "generate": "graphql-codegen && apollo client:codegen --passthroughCustomScalars --localSchemaFile=pkg/graph/schema.graphql --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
     "storybook": "storybook dev -p 6006 -s public",
-    "build-storybook": "storybook build -s public"
+    "build-storybook": "storybook build -s public",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "nyc": {
     "reporter": [
@@ -121,8 +134,8 @@
     "@babel/core": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
     "@cypress/webpack-preprocessor": "^6.0.0",
-    "@graphql-codegen/cli": "^5.0.0",
-    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "4.1.0",
     "@storybook/addon-actions": "^7.5.1",
     "@storybook/addon-controls": "^7.5.1",
     "@storybook/addon-essentials": "^7.5.1",
@@ -175,7 +188,8 @@
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.34.1",
-    "webpack": "^5.88.2"
+    "webpack": "^5.88.2",
+    "@graphql-codegen/introspection": "4.0.0"
   },
   "resolutions": {
     "prismjs": "1.24.0",

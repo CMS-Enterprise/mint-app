@@ -6,19 +6,19 @@
 import { PlanBasicsChanges } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL mutation operation: UpdatePlanBasics
+// GraphQL mutation operation: UpdateBasics
 // ====================================================
 
-export interface UpdatePlanBasics_updatePlanBasics {
+export interface UpdateBasics_updatePlanBasics {
   __typename: "PlanBasics";
   id: UUID;
 }
 
-export interface UpdatePlanBasics {
-  updatePlanBasics: UpdatePlanBasics_updatePlanBasics;
+export interface UpdateBasics {
+  updatePlanBasics: UpdateBasics_updatePlanBasics;
 }
 
-export interface UpdatePlanBasicsVariables {
+export interface UpdateBasicsVariables {
   id: UUID;
   changes: PlanBasicsChanges;
 }

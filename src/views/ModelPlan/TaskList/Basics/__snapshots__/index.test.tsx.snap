@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Model Plan Task List Basics page > disables and clears checkbox when user selects corresponding radio button 1`] = `
+exports[`Model Plan Basics page > disables and clears checkbox when user selects corresponding radio button 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
@@ -1499,7 +1499,7 @@ exports[`Model Plan Task List Basics page > disables and clears checkbox when us
 </DocumentFragment>
 `;
 
-exports[`Model Plan Task List Basics page > matches snapshot 1`] = `
+exports[`Model Plan Basics page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"

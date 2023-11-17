@@ -15,7 +15,7 @@ type ReadyForReviewType = {
   status: TaskStatus;
   setFieldValue: (field: string, value: any) => void;
   readyForReviewBy: string | null | undefined;
-  readyForReviewDts: string | null;
+  readyForReviewDts: string | null | undefined;
 };
 
 const ReadyForReview = ({

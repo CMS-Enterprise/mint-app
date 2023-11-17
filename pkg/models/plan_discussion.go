@@ -8,7 +8,7 @@ import (
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
-	Content             string              `json:"content" db:"content"`
+	Content             TaggedHTML          `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
 	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
@@ -19,7 +19,7 @@ func NewPlanDiscussion(
 	principal uuid.UUID,
 	isAssessment bool,
 	modelPlanID uuid.UUID,
-	content string,
+	content TaggedHTML,
 	userRole *DiscussionUserRole,
 	userRoleDescription *string,
 ) *PlanDiscussion {
@@ -37,7 +37,7 @@ func NewPlanDiscussion(
 type DiscussionReply struct {
 	baseStruct
 	discussionRelation
-	Content             string              `json:"content" db:"content"`
+	Content             TaggedHTML          `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
 	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
@@ -48,7 +48,7 @@ func NewDiscussionReply(
 	principal uuid.UUID,
 	isAssessment bool,
 	discussionID uuid.UUID,
-	content string,
+	content TaggedHTML,
 	userRole *DiscussionUserRole,
 	userRoleDescription *string,
 ) *DiscussionReply {
@@ -82,4 +82,32 @@ const (
 type DiscussionRoleSelection struct {
 	UserRole            DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string            `json:"userRoleDescription" db:"user_role_description"`
+}
+
+// Humanize converts the enumeration of the Discussion User Role and the description for NONE OF THE ABOVE
+// And converts it to human readable text.
+func (r DiscussionUserRole) Humanize(userRoleDescription string) string {
+	switch r {
+	case DiscussionRoleCmsSystemServiceTeam:
+		return "CMS System/Service Team"
+	case DiscussionRoleItArchitect:
+		return "IT Architect"
+	case DiscussionRoleLeadership:
+		return "Leadership"
+	case DiscussionRoleMedicareAdministrativeContractor:
+		return "Medicare Administrative Contractor"
+	case DiscussionRoleMintTeam:
+		return "MINT Team"
+	case DiscussionRoleModelItLead:
+		return "Model IT Lead"
+	case DiscussionRoleModelTeam:
+		return "Model Team"
+	case DiscussionRoleSharedSystemMaintainer:
+		return "Shared System Maintainer"
+	case DiscussionRoleNoneOfTheAbove:
+		return userRoleDescription
+	default:
+		return string(r)
+	}
+
 }

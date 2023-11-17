@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,6 +12,11 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetOverviewQuery,
+  useGetOverviewQuery,
+  useUpdateBasicsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -24,21 +28,12 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetBasics from 'queries/Basics/GetBasics';
-import {
-  GetBasics as GetBasicsType,
-  GetBasics_modelPlan_basics as BasicsFormType,
-  GetBasicsVariables
-} from 'queries/Basics/types/GetBasics';
-import {
-  UpdatePlanBasics as UpdatebasicsType,
-  UpdatePlanBasicsVariables
-} from 'queries/Basics/types/UpdatePlanBasics';
-import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
+
+type BasicsFormType = GetOverviewQuery['modelPlan']['basics'];
 
 const Overview = () => {
   const { t: basicsT } = useTranslation('basics');
@@ -52,23 +47,18 @@ const Overview = () => {
   const formikRef = useRef<FormikProps<BasicsFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetBasicsType, GetBasicsVariables>(
-    GetBasics,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetOverviewQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const { modelName } = data?.modelPlan || {};
 
-  const { id, modelType, problem, goal, testInterventions, note } =
-    data?.modelPlan?.basics || ({} as BasicsFormType);
+  const { id, modelType, problem, goal, testInterventions, note } = (data
+    ?.modelPlan?.basics || {}) as BasicsFormType;
 
-  const [update] = useMutation<UpdatebasicsType, UpdatePlanBasicsVariables>(
-    UpdatePlanBasics
-  );
+  const [update] = useUpdateBasicsMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
@@ -232,6 +222,7 @@ const Overview = () => {
                       as={TextAreaField}
                       error={flatErrors.problem}
                       id="ModelType-Problem"
+                      data-testid="ModelType-Problem"
                       name="problem"
                       label={basicsT('problem.label')}
                     />
@@ -272,7 +263,7 @@ const Overview = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => handleFormSubmit('task-list')}
+                      onClick={() => handleFormSubmit('back')}
                     >
                       {miscellaneousT('back')}
                     </Button>

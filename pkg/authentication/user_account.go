@@ -38,3 +38,6 @@ type GetUserAccountFromDBFunc func(ctx context.Context, id uuid.UUID) (*UserAcco
 // func WithUserAccountService(ctx context.Context, accountFunction GetUserAccountFromDBFunc) context.Context {
 // 	return context.WithValue(ctx, userAccountServiceKey, accountFunction)
 // }
+
+// IsTaggedEntity is a method to satisfy the IsTaggedEntity interface for UserAccount.
+func (UserAccount) IsTaggedEntity() {}

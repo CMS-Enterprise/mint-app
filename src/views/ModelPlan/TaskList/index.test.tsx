@@ -52,7 +52,10 @@ describe('The Model Plan Task List', () => {
       {
         __typename: 'PlanDiscussion',
         id: '123',
-        content: 'This is a question.',
+        content: {
+          __typename: 'TaggedContent',
+          rawContent: 'This is a question.'
+        },
         createdBy: 'John Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
         replies: []
@@ -60,7 +63,10 @@ describe('The Model Plan Task List', () => {
       {
         __typename: 'PlanDiscussion',
         id: '456',
-        content: 'This is a second question.',
+        content: {
+          __typename: 'TaggedHTML',
+          rawContent: 'This is a second question.'
+        },
         createdBy: 'Jane Doe',
         createdDts: '2022-05-12T15:01:39.190679Z',
         replies: [
@@ -68,7 +74,10 @@ describe('The Model Plan Task List', () => {
             __typename: 'DiscussionReply',
             discussionID: '456',
             id: 'abc',
-            content: 'This is an answer.',
+            content: {
+              __typename: 'TaggedHTML',
+              rawContent: 'This is an answer.'
+            },
             createdBy: 'Jack Doe',
             createdDts: '2022-05-12T15:01:39.190679Z'
           }

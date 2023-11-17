@@ -203,6 +203,12 @@ export enum DocumentType {
   POLICY_PAPER = "POLICY_PAPER",
 }
 
+export enum EaseOfUse {
+  AGREE = "AGREE",
+  DISAGREE = "DISAGREE",
+  UNSURE = "UNSURE",
+}
+
 export enum EvaluationApproachType {
   COMPARISON_MATCH = "COMPARISON_MATCH",
   CONTROL_INTERVENTION = "CONTROL_INTERVENTION",
@@ -251,6 +257,16 @@ export enum KeyCharacteristic {
   SHARED_SAVINGS = "SHARED_SAVINGS",
 }
 
+export enum MintUses {
+  CONTRIBUTE_DISCUSSIONS = "CONTRIBUTE_DISCUSSIONS",
+  EDIT_MODEL = "EDIT_MODEL",
+  OTHER = "OTHER",
+  SHARE_MODEL = "SHARE_MODEL",
+  TRACK_SOLUTIONS = "TRACK_SOLUTIONS",
+  VIEW_HELP = "VIEW_HELP",
+  VIEW_MODEL = "VIEW_MODEL",
+}
+
 export enum ModelCategory {
   ACCOUNTABLE_CARE = "ACCOUNTABLE_CARE",
   DISEASE_SPECIFIC_AND_EPISODIC = "DISEASE_SPECIFIC_AND_EPISODIC",
@@ -296,6 +312,18 @@ export enum ModelType {
   MANDATORY = "MANDATORY",
   TBD = "TBD",
   VOLUNTARY = "VOLUNTARY",
+}
+
+export enum ModelViewFilter {
+  CBOSC = "CBOSC",
+  CCW = "CCW",
+  CMMI = "CMMI",
+  DFSDM = "DFSDM",
+  IDDOC = "IDDOC",
+  IPC = "IPC",
+  MDM = "MDM",
+  OACT = "OACT",
+  PBG = "PBG",
 }
 
 export enum MonitoringFileType {
@@ -515,6 +543,29 @@ export enum RecruitmentType {
   OTHER = "OTHER",
 }
 
+export enum ReportAProblemSection {
+  HELP_CENTER = "HELP_CENTER",
+  IT_SOLUTIONS = "IT_SOLUTIONS",
+  OTHER = "OTHER",
+  READ_VIEW = "READ_VIEW",
+  TASK_LIST = "TASK_LIST",
+}
+
+export enum ReportAProblemSeverity {
+  DELAYED_TASK = "DELAYED_TASK",
+  MINOR = "MINOR",
+  OTHER = "OTHER",
+  PREVENTED_TASK = "PREVENTED_TASK",
+}
+
+export enum SatisfactionLevel {
+  DISSATISFIED = "DISSATISFIED",
+  NEUTRAL = "NEUTRAL",
+  SATISFIED = "SATISFIED",
+  VERY_DISSATISFIED = "VERY_DISSATISFIED",
+  VERY_SATISFIED = "VERY_SATISFIED",
+}
+
 export enum SelectionMethodType {
   HISTORICAL = "HISTORICAL",
   NA = "NA",
@@ -597,7 +648,7 @@ export interface CreateOperationalSolutionSubtaskInput {
  */
 export interface DiscussionReplyCreateInput {
   discussionID: UUID;
-  content: string;
+  content: TaggedHTML;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }
@@ -709,22 +760,11 @@ export interface PlanCrTdlCreateInput {
 }
 
 /**
- * PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https: // gqlgen.com/reference/changesets/
- */
-export interface PlanDiscussionChanges {
-  content?: string | null;
-  userRole?: DiscussionUserRole | null;
-  userRoleDescription?: string | null;
-}
-
-/**
  * PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
  */
 export interface PlanDiscussionCreateInput {
   modelPlanID: UUID;
-  content: string;
+  content: TaggedHTML;
   userRole?: DiscussionUserRole | null;
   userRoleDescription?: string | null;
 }
@@ -735,6 +775,19 @@ export interface PlanDiscussionCreateInput {
 export interface PlanDocumentInput {
   modelPlanID: UUID;
   fileData: Upload;
+  documentType: DocumentType;
+  restricted: boolean;
+  otherTypeDescription?: string | null;
+  optionalNotes?: string | null;
+}
+
+/**
+ * PlanDocumentLinkInput
+ */
+export interface PlanDocumentLinkInput {
+  modelPlanID: UUID;
+  url: string;
+  name: string;
   documentType: DocumentType;
   restricted: boolean;
   otherTypeDescription?: string | null;
@@ -1021,6 +1074,32 @@ export interface PlanPaymentsChanges {
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
+}
+
+export interface ReportAProblemInput {
+  isAnonymousSubmission: boolean;
+  allowContact?: boolean | null;
+  section?: ReportAProblemSection | null;
+  sectionOther?: string | null;
+  whatDoing?: string | null;
+  whatWentWrong?: string | null;
+  severity?: ReportAProblemSeverity | null;
+  severityOther?: string | null;
+}
+
+/**
+ * The inputs to the user feedback form
+ */
+export interface SendFeedbackEmailInput {
+  isAnonymousSubmission: boolean;
+  allowContact?: boolean | null;
+  cmsRole?: string | null;
+  mintUsedFor?: MintUses[] | null;
+  mintUsedForOther?: string | null;
+  systemEasyToUse?: EaseOfUse | null;
+  systemEasyToUseOther?: string | null;
+  howSatisfied?: SatisfactionLevel | null;
+  howCanWeImprove?: string | null;
 }
 
 export interface UpdateOperationalSolutionSubtaskChangesInput {

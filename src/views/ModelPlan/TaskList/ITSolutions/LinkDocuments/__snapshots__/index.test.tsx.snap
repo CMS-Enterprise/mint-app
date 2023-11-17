@@ -622,7 +622,7 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 role="cell"
                 style="padding-left: 0px; white-space: normal;"
               >
-                ICIP Draft
+                Concept Paper
               </td>
               <td
                 role="cell"
@@ -644,7 +644,34 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                 role="cell"
                 style="padding-left: 0px; padding-right: 0px;"
               >
-                Virus scan in progress...
+                <button
+                  class="usa-button usa-button--unstyled margin-right-2"
+                  data-testid="button"
+                  type="button"
+                >
+                  <span
+                    class="display-flex flex-align-center"
+                  >
+                    View
+                    <svg
+                      class="usa-icon"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                      />
+                    </svg>
+                  </span>
+                </button>
               </td>
             </tr>
           </tbody>

@@ -60,9 +60,11 @@ func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
 }
 
 func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content string) *models.PlanDiscussion {
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         mp.ID,
-		Content:             content,
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
 	}
@@ -75,6 +77,7 @@ func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content s
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return pd
@@ -84,17 +87,25 @@ func (suite *ResolverSuite) createDiscussionReply(
 	pd *models.PlanDiscussion,
 	content string,
 ) *models.DiscussionReply {
+
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	suite.NoError(err)
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        pd.ID,
-		Content:             content,
+		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 	dr, err := CreateDiscussionReply(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return dr

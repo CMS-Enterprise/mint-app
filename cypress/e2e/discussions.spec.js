@@ -20,9 +20,9 @@ describe('Discussion Center', () => {
       .type('Designer')
       .should('have.value', 'Designer');
 
-    cy.get('#discussion-content')
+    cy.get('#mention-editor')
       .type('How to I get to model characteristics?')
-      .should('have.value', 'How to I get to model characteristics?');
+      .should('have.text', 'How to I get to model characteristics?');
 
     cy.contains('button', 'Save discussion').click();
 
@@ -41,13 +41,16 @@ describe('Discussion Center', () => {
 
     cy.contains('button', 'Save reply').should('be.disabled');
 
-    cy.get('#discussion-content')
-      .should('not.be.disabled')
-      .type('Model characteristics is located within the task list.')
-      .should(
-        'have.value',
-        'Model characteristics is located within the task list.'
-      );
+    cy.get('#user-role').should('not.be.disabled');
+
+    cy.get('#mention-editor').type(
+      'Model characteristics is located within the task list.'
+    );
+
+    cy.get('#mention-editor').should(
+      'have.text',
+      'Model characteristics is located within the task list.'
+    );
 
     cy.contains('button', 'Save reply').click();
 
@@ -56,6 +59,28 @@ describe('Discussion Center', () => {
     cy.contains(
       '.usa-alert__body',
       'There are no new discussion topics. Start a discussion and it will appear here.'
+    );
+
+    cy.contains('button', 'Start a discussion').click();
+
+    // Test discussion tagging/mention dropdown, selection, and readonly render
+    cy.get('#user-role').should('not.be.disabled');
+
+    cy.get('#mention-editor').type('@');
+
+    cy.get('#INNOVATION').contains('4innovation (4i)');
+
+    cy.get('#mention-editor').type('{downArrow}{enter}');
+
+    cy.get('#mention-editor').should(
+      'have.text',
+      '@Accountable Care Organization - Operational System (ACO-OS) '
+    );
+
+    cy.contains('button', 'Save discussion').click();
+
+    cy.get('#mention-editor').contains(
+      '@Accountable Care Organization - Operational System (ACO-OS) '
     );
 
     cy.get('[data-testid="close-discussions"]').click();
