@@ -21,6 +21,7 @@ const getClientRect = (props: any) => {
 };
 
 const suggestion = {
+  allowSpaces: true,
   render: () => {
     let reactRenderer: any;
     let spinner: any;
