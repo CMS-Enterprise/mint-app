@@ -250,11 +250,11 @@ const Subtasks = ({
     }
   };
 
-  if (!solutionData && loading) {
+  if (!solution && loading) {
     return <PageLoading />;
   }
 
-  if (error || (!solutionData && !loading)) {
+  if (error) {
     return <NotFound />;
   }
 
@@ -443,6 +443,7 @@ const Subtasks = ({
                                             as={TextInput}
                                             error={!!flatErrors.name}
                                             id={`subtask-name--${index}`}
+                                            data-testid={`subtask-name--${index}`}
                                             maxLength={50}
                                             name={`subtasks[${index}].name`}
                                           />

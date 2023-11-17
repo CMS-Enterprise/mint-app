@@ -61,7 +61,7 @@ describe('IT Solutions CheckboxCard', () => {
         </MemoryRouter>
       );
 
-      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+      await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
       await waitFor(() => {
         expect(getByText('at.mint@oddball.io')).toBeInTheDocument();
