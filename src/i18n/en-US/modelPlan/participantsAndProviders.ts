@@ -11,6 +11,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'enum',
     formType: 'multiSelect',
     options: {
+      ACCOUNTABLE_CARE_ORGANIZATION: 'Accountable Care Organization (ACO)',
       COMMERCIAL_PAYERS: 'Commercial payers',
       COMMUNITY_BASED_ORGANIZATIONS: 'Community-based organizations (CBO)',
       CONVENER: 'Convener',
