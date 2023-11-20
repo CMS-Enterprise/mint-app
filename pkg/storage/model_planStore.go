@@ -68,6 +68,47 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 	return planSlice, nil
 }
 
+// ModelPlanCreate creates a model plan using a transaction
+func (s *Store) ModelPlanCreateTransaction(t *Transaction, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+	if plan.ID == uuid.Nil {
+		plan.ID = uuid.New()
+	}
+
+	stmt, err := t.tx.PrepareNamed(modelPlanCreateSQL)
+	if err != nil {
+		t.errors = append(t.errors, err)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to create model plan with error %s", err),
+			zap.String("user", plan.CreatedBy.String()),
+		)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	retPlan := models.ModelPlan{}
+
+	plan.ModifiedBy = nil
+	plan.ModifiedDts = nil
+
+	err = stmt.Get(&retPlan, plan)
+	if err != nil {
+		t.errors = append(t.errors, err)
+		logger.Error(
+			fmt.Sprintf("Failed to create model plan with error %s", err),
+			zap.String("user", plan.CreatedBy.String()),
+		)
+		return nil, err
+
+	}
+
+	return &retPlan, nil
+}
+
 // ModelPlanCreate creates a model plan
 func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 

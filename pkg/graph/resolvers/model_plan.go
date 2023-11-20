@@ -41,12 +41,31 @@ func ModelPlanCreate(
 	if err != nil {
 		return nil, err
 	}
+	tx := storage.NewTransaction(store)
 
-	// Create the model plan itself
-	createdPlan, err := store.ModelPlanCreate(logger, plan)
+	tx.Next(func(t *storage.Transaction) error {
+		planInternal, errInternal := store.ModelPlanCreateTransaction(tx, logger, plan)
+		tx.SetResult("plan", planInternal)
+		if errInternal != nil {
+			return errInternal
+		}
+		return nil
+
+	}).Next(func(t *storage.Transaction) error {
+		return nil //TODO
+	}).Commit()
+
+	createdPlanInterface, err := tx.GetResult("plan")
 	if err != nil {
-		return nil, err
+		return nil, err //TODO wrap all the transactions, and determine if this is useful
 	}
+	createdPlan := createdPlanInterface.(*models.ModelPlan)
+
+	// // Create the model plan itself
+	// createdPlan, err := store.ModelPlanCreate(logger, plan)
+	// if err != nil {
+	// 	return nil, err
+	// }
 	userAccount := principal.Account()
 
 	// Create an initial collaborator for the plan

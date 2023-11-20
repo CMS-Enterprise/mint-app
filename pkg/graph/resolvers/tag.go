@@ -177,6 +177,5 @@ func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal aut
 		return nil, tx, err
 	}
 	return retTags, tx2, nil
-	//TODO: EASI-3288 send an email to tagged individuals
 
 }
