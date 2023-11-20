@@ -18,6 +18,7 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -61,11 +62,14 @@ const SolutionCard = ({
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('generalReadOnly');
 
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.key
-  );
+  const {
+    prevPathname,
+    selectedSolution,
+    renderModal,
+    loading: modalLoading
+  } = useModalSolutionState(solution.key);
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   const solutionMap = findSolutionByKey(solution.key, helpSolutions);
 
@@ -81,6 +85,10 @@ const SolutionCard = ({
     OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
     OperationalSolutionKey.INTERNAL_STAFF
   ];
+
+  if (loading || modalLoading) {
+    return <Spinner size="large" center />;
+  }
 
   return (
     <>

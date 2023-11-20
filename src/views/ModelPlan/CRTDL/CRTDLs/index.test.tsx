@@ -7,6 +7,7 @@ import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
+import GetCRDTLs from 'queries/CRTDL/GetCRDTLs';
 import GetModelPlanBase from 'queries/GetModelPlanBase';
 import { TaskStatus } from 'types/graphql-global-types';
 
@@ -28,6 +29,33 @@ const mocks = [
           modelName: 'My Plan',
           modifiedDts: '',
           status: TaskStatus.IN_PROGRESS
+        }
+      }
+    }
+  },
+  {
+    request: {
+      query: GetCRDTLs,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: 'My Plan',
+          isCollaborator: true,
+          crTdls: [
+            {
+              __typename: 'PlanCrTdl',
+              id: '123',
+              modelPlanID: modelID,
+              title: 'My CR',
+              idNumber: 'CR123',
+              dateInitiated: '2022-07-30T05:00:00Z',
+              note: 'note'
+            }
+          ]
         }
       }
     }
@@ -60,11 +88,9 @@ describe('Model Plan CR and TDL page', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('model-plan-name')).toHaveTextContent('My Plan');
+      expect(getByTestId('cr-tdl-table')).toHaveTextContent('My CR');
     });
 
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    expect(asFragment()).toMatchSnapshot();
   });
 });

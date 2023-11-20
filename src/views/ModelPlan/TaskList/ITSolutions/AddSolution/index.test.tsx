@@ -2,12 +2,14 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
+  act,
   render,
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
 import { OpSolutionStatus } from 'types/graphql-global-types';
@@ -82,83 +84,90 @@ const mocks = [
         operationalSolution
       }
     }
-  }
+  },
+  ...needQuestionAndAnswerMock
 ];
 
-describe('IT Solutions AddSolution', () => {
-  it('renders correctly', async () => {
-    const { getByRole, getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
-          }
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <AddSolution />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
-    );
+describe('IT Solutions AddSolution', async () => {
+  await act(async () => {
+    it('renders correctly', async () => {
+      const { getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            {
+              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+            }
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
+            <MockedProvider mocks={mocks} addTypename={false}>
+              <AddSolution />
+            </MockedProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-    await waitFor(() => {
-      const combobox = getByTestId('combo-box-select');
-      userEvent.selectOptions(combobox, ['HPMS']);
-      expect(combobox).toHaveValue('HPMS');
+      await waitFor(() => {
+        const combobox = getByTestId('combo-box-select');
+        userEvent.selectOptions(combobox, ['HPMS']);
+        expect(combobox).toHaveValue('HPMS');
+      });
     });
   });
 
   it('renders other button when OTHER_NEW_PROCESS selected', async () => {
-    const { getByTestId, getByRole } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
-          }
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <AddSolution />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            {
+              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+            }
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
+            <MockedProvider mocks={mocks} addTypename={false}>
+              <AddSolution />
+            </MockedProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-    await waitFor(() => {
-      const combobox = getByTestId('combo-box-select');
-      userEvent.selectOptions(combobox, ['OTHER_NEW_PROCESS']);
-      expect(combobox).toHaveValue('OTHER_NEW_PROCESS');
+      await waitFor(() => {
+        const combobox = getByTestId('combo-box-select');
+        userEvent.selectOptions(combobox, ['OTHER_NEW_PROCESS']);
+        expect(combobox).toHaveValue('OTHER_NEW_PROCESS');
 
-      expect(getByTestId('add-solution-details-button')).toBeInTheDocument();
+        expect(getByTestId('add-solution-details-button')).toBeInTheDocument();
+      });
     });
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getByRole } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
-          }
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <AddSolution />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { asFragment, getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            {
+              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+            }
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
+            <MockedProvider mocks={mocks} addTypename={false}>
+              <AddSolution />
+            </MockedProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitForElementToBeRemoved(() => getByRole('progressbar'));
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-    expect(asFragment()).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });
