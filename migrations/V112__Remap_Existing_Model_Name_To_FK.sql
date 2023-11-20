@@ -5,13 +5,13 @@ ALTER TABLE plan_general_characteristics
 
 -- Adding foreign key constraints
 ALTER TABLE plan_general_characteristics
-  ADD CONSTRAINT fk_existing_model_plan
+  ADD CONSTRAINT fk_current_model_plan_id
     FOREIGN KEY (current_model_plan_id)
       REFERENCES model_plan(id)
       ON DELETE SET NULL;
 
 ALTER TABLE plan_general_characteristics
-  ADD CONSTRAINT fk_existing_model_external
+  ADD CONSTRAINT fk_existing_model_id
     FOREIGN KEY (existing_model_id)
       REFERENCES public.existing_model(id)
       ON DELETE SET NULL;
