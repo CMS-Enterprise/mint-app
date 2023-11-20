@@ -715,6 +715,7 @@ export interface PlanBeneficiariesChanges {
   beneficiaries?: BeneficiariesType[] | null;
   beneficiariesOther?: string | null;
   beneficiariesNote?: string | null;
+  diseaseSpecificGroup?: string | null;
   treatDualElligibleDifferent?: TriStateAnswer | null;
   treatDualElligibleDifferentHow?: string | null;
   treatDualElligibleDifferentNote?: string | null;

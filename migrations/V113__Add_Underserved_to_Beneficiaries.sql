@@ -1,2 +1,5 @@
--- Add BCDA to the ENUM type
+-- Add UNDERSERVED to the BENEFICIARIES_TYPE ENUM type
 ALTER TYPE BENEFICIARIES_TYPE ADD VALUE 'UNDERSERVED';
+
+ALTER TABLE plan_beneficiaries
+  ADD COLUMN disease_specific_group zero_string;
