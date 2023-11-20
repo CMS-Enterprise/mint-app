@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { Field } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -55,11 +56,14 @@ const CheckboxCard = ({
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.key
-  );
+  const {
+    prevPathname,
+    selectedSolution,
+    renderModal,
+    loading: modalLoading
+  } = useModalSolutionState(solution.key);
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther
@@ -87,6 +91,10 @@ const CheckboxCard = ({
     (solution.name !== null && solution.isOther);
 
   const solutionParam = solution.key ? `?selectedSolution=${solution.key}` : '';
+
+  if (loading || modalLoading) {
+    return <Spinner />;
+  }
 
   const renderCTALink = () => {
     if (isDefaultSolutionOptions && solution.isOther) {

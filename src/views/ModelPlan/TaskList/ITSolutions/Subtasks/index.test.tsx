@@ -1,9 +1,18 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor, within } from '@testing-library/react';
+import {
+  act,
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+  within
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { possibleSolutionsMock } from 'data/mock/solutions';
+import {
+  needQuestionAndAnswerMock,
+  possibleSolutionsMock
+} from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
@@ -11,8 +20,6 @@ import {
   OpSolutionStatus
 } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
-
-import needQuestionAndAnswerMock from '../_components/NeedQuestionAndAnswer/mocks';
 
 import Subtasks from '.';
 
@@ -68,78 +75,88 @@ const mockData = [
   ...possibleSolutionsMock
 ];
 
-// const
-
 describe('IT Solutions Add Subtasks', () => {
   it('renders correctly', async () => {
-    const { getByTestId, getByRole } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
-          <MessageProvider>
-            <VerboseMockedProvider mocks={mockData} addTypename={false}>
-              <Subtasks />
-            </VerboseMockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId, getByRole } = render(
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+            <MessageProvider>
+              <VerboseMockedProvider mocks={mockData} addTypename={false}>
+                <Subtasks />
+              </VerboseMockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitFor(() => {
+      await waitForElementToBeRemoved(() => getByTestId('spinner'));
+      await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
+
       expect(getByTestId('add-subtask-form')).toBeInTheDocument();
       expect(getByRole('radio', { name: 'To do' })).toBeChecked();
     });
   });
 
   it('add a subtask button works', async () => {
-    const { getByTestId, getByRole, queryAllByRole } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
-          <MessageProvider>
-            <VerboseMockedProvider mocks={mockData} addTypename={false}>
-              <Subtasks />
-            </VerboseMockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId, getByRole, queryAllByRole } = render(
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+            <MessageProvider>
+              <VerboseMockedProvider mocks={mockData} addTypename={false}>
+                <Subtasks />
+              </VerboseMockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    const button = getByRole('button', { name: 'Add another subtask' });
-    userEvent.click(button);
+      await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
-    await waitFor(() => {
-      expect(getByTestId('add-subtask-form')).toBeInTheDocument();
-      expect(queryAllByRole('radio', { name: 'To do' }).length).toBe(2);
+      const button = getByRole('button', { name: 'Add another subtask' });
+      userEvent.click(button);
+
+      await waitFor(() => {
+        expect(getByTestId('add-subtask-form')).toBeInTheDocument();
+        expect(queryAllByRole('radio', { name: 'To do' }).length).toBe(2);
+      });
     });
   });
 
   it('matches snapshot', async () => {
-    const { getByTestId, getByRole, asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
-          <MessageProvider>
-            <VerboseMockedProvider mocks={mockData} addTypename={false}>
-              <Subtasks />
-            </VerboseMockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId, getByRole, asFragment } = render(
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+            <MessageProvider>
+              <VerboseMockedProvider mocks={mockData} addTypename={false}>
+                <Subtasks />
+              </VerboseMockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitFor(() => {
-      expect(getByTestId('add-subtask-form')).toBeInTheDocument();
-      expect(getByRole('radio', { name: 'To do' })).toBeChecked();
+      await waitForElementToBeRemoved(() => getByTestId('spinner'));
+
+      await waitFor(() => {
+        expect(getByTestId('add-subtask-form')).toBeInTheDocument();
+        expect(getByRole('radio', { name: 'To do' })).toBeChecked();
+      });
+
       expect(asFragment()).toMatchSnapshot();
     });
   });
@@ -147,60 +164,69 @@ describe('IT Solutions Add Subtasks', () => {
 
 describe('IT Solutions Manage Subtasks', () => {
   it('renders correctly', async () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
-          <MessageProvider>
-            <VerboseMockedProvider mocks={mockData} addTypename={false}>
-              <Subtasks managingSubtasks />
-            </VerboseMockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+            <MessageProvider>
+              <VerboseMockedProvider mocks={mockData} addTypename={false}>
+                <Subtasks managingSubtasks />
+              </VerboseMockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitFor(() => {
-      expect(getByTestId('manage-subtask-form')).toBeInTheDocument();
-      const form = getByTestId('manage-subtask-form');
-      expect(within(form).getAllByText('Subtask name')).toHaveLength(2);
-      expect(
-        within(getByTestId('manage-subtasks--0')).getByRole('radio', {
-          name: 'To do'
-        })
-      ).toBeChecked();
-      expect(
-        within(getByTestId('manage-subtasks--1')).getByRole('radio', {
-          name: 'In progress'
-        })
-      ).not.toBeChecked();
+      await waitForElementToBeRemoved(() => getByTestId('spinner'));
+
+      await waitFor(() => {
+        expect(getByTestId('manage-subtask-form')).toBeInTheDocument();
+        const form = getByTestId('manage-subtask-form');
+        expect(within(form).getAllByText('Subtask name')).toHaveLength(2);
+        expect(
+          within(getByTestId('manage-subtasks--0')).getByRole('radio', {
+            name: 'To do'
+          })
+        ).toBeChecked();
+        expect(
+          within(getByTestId('manage-subtasks--1')).getByRole('radio', {
+            name: 'In progress'
+          })
+        ).not.toBeChecked();
+      });
     });
   });
 
   it('matches snapshot', async () => {
-    const { getByTestId, asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
-          <MessageProvider>
-            <VerboseMockedProvider mocks={mockData} addTypename={false}>
-              <Subtasks managingSubtasks />
-            </VerboseMockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId, asFragment } = render(
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+            <MessageProvider>
+              <VerboseMockedProvider mocks={mockData} addTypename={false}>
+                <Subtasks managingSubtasks />
+              </VerboseMockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitFor(() => {
-      expect(getByTestId('manage-subtask-form')).toBeInTheDocument();
-      const form = getByTestId('manage-subtask-form');
-      expect(within(form).getAllByText('Subtask name')).toHaveLength(2);
+      await waitForElementToBeRemoved(() => getByTestId('spinner'));
+
+      await waitFor(() => {
+        expect(getByTestId('manage-subtask-form')).toBeInTheDocument();
+        const form = getByTestId('manage-subtask-form');
+        expect(within(form).getAllByText('Subtask name')).toHaveLength(2);
+      });
+
       expect(asFragment()).toMatchSnapshot();
     });
   });

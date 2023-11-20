@@ -41,16 +41,15 @@ import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharac
 import UpdateExistingModelLinks from 'queries/GeneralCharacteristics/UpdateExistingModelLinks';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import GetExistingModelPlans from 'queries/GetExistingModelPlans';
-import GetDraftModelPlans from 'queries/GetModelPlans';
+import GetModelPlansBase from 'queries/GetModelPlansBase';
 import {
   GetExistingModelPlans as ExistingModelPlanType,
   GetExistingModelPlans_existingModelCollection as GetExistingModelPlansExistingModelCollectionType
 } from 'queries/types/GetExistingModelPlans';
 import {
-  GetModelPlans as GetDraftModelPlansType,
-  GetModelPlans_modelPlanCollection as GetModelPlansModelPlanCollectionType,
-  GetModelPlansVariables
-} from 'queries/types/GetModelPlans';
+  GetModelPlansBase as GetModelPlansBaseType,
+  GetModelPlansBase_modelPlanCollection as GetModelPlansBaseCollectionType
+} from 'queries/types/GetModelPlansBase';
 import { ModelPlanFilter } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -87,21 +86,18 @@ export const CharacteristicsContent = () => {
   const formikRef = useRef<
     FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
   >(null);
+
   const history = useHistory();
 
   const {
     data: modelData,
     error: modelError,
     loading: modelLoading
-  } = useQuery<GetDraftModelPlansType, GetModelPlansVariables>(
-    GetDraftModelPlans,
-    {
-      variables: {
-        filter: ModelPlanFilter.INCLUDE_ALL,
-        isMAC: false
-      }
+  } = useQuery<GetModelPlansBaseType>(GetModelPlansBase, {
+    variables: {
+      filter: ModelPlanFilter.INCLUDE_ALL
     }
-  );
+  });
 
   const {
     data: existingModelData,
@@ -111,10 +107,23 @@ export const CharacteristicsContent = () => {
 
   // Combined MINT models with existing models from DB.  Sorts them alphabetically and returns options for MultiSelect
   const modelPlanOptions = useMemo(() => {
-    const combinedModels = [
-      ...(modelData?.modelPlanCollection || []),
-      ...(existingModelData?.existingModelCollection || [])
-    ].sort((a, b) => ((a.modelName || '') > (b.modelName || '') ? 1 : -1));
+    // Test suite fails on error - ((intermediate value) || []) is not iterable
+    // Needs to assert that these values are iterable, fallback to [] does not appease
+    const modelPlans =
+      modelData?.modelPlanCollection &&
+      Array.isArray(modelData?.modelPlanCollection)
+        ? modelData?.modelPlanCollection
+        : [];
+
+    const existingPlans =
+      existingModelData?.existingModelCollection &&
+      Array.isArray(existingModelData?.existingModelCollection)
+        ? existingModelData?.existingModelCollection
+        : [];
+
+    const combinedModels = [...modelPlans, ...existingPlans].sort((a, b) =>
+      (a.modelName || '') > (b.modelName || '') ? 1 : -1
+    );
     return combinedModels.map(model => {
       return {
         label: model!.modelName!,
@@ -628,7 +637,7 @@ type SeparateLinksType = {
 // Separates all selected existingModelLinks values into a type of either draftModelPlans or existingModelPlans
 export const separateLinksByType = (
   existingLinks: (string | number)[],
-  draftModelPlans: GetModelPlansModelPlanCollectionType[],
+  draftModelPlans: GetModelPlansBaseCollectionType[],
   existingModelPlans: GetExistingModelPlansExistingModelCollectionType[]
 ): SeparateLinksType => {
   const existingModelIDs = [...existingLinks].filter(linkID =>
