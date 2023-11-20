@@ -12,8 +12,8 @@ import { isEqual } from 'lodash';
 import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
-import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
@@ -158,7 +158,7 @@ const LinkDocuments = () => {
   };
 
   if (!data && loading) {
-    return <Spinner size="xl" center />;
+    return <PageLoading />;
   }
 
   if (error || !solution) {
