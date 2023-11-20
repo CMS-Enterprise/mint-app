@@ -66,6 +66,7 @@ export enum BeneficiariesType {
   MEDICARE_PART_D = "MEDICARE_PART_D",
   NA = "NA",
   OTHER = "OTHER",
+  UNDERSERVED = "UNDERSERVED",
 }
 
 export enum CMMIGroup {

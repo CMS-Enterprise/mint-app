@@ -105,7 +105,8 @@ export enum BeneficiariesType {
   MEDICARE_FFS = 'MEDICARE_FFS',
   MEDICARE_PART_D = 'MEDICARE_PART_D',
   NA = 'NA',
-  OTHER = 'OTHER'
+  OTHER = 'OTHER',
+  UNDERSERVED = 'UNDERSERVED'
 }
 
 export enum CmmiGroup {
