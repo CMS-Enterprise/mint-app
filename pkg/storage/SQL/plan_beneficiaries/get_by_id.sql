@@ -4,6 +4,7 @@ SELECT
     beneficiaries,
     beneficiaries_other,
     beneficiaries_note,
+    disease_specific_group,
     treat_dual_elligible_different,
     treat_dual_elligible_different_how,
     treat_dual_elligible_different_note,
