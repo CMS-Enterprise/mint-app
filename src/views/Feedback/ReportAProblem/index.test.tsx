@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CreateReportAProblem from 'gql/apolloGQL/Feedback/CreateReportAProblem';
 import { ReportAProblemSection, ReportAProblemSeverity } from 'gql/gen/graphql';
@@ -38,7 +38,7 @@ window.scrollTo = vi.fn;
 
 describe('Report a problem form', () => {
   it('submits the "Report a problem" form successfully', async () => {
-    const { findByText, getByRole, getByTestId, getByText } = render(
+    const { findByText, getByRole, getByTestId } = render(
       <MemoryRouter initialEntries={['/report-a-problem']}>
         <Route path="/report-a-problem">
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
