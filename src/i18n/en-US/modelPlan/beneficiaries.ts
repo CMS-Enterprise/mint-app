@@ -11,9 +11,10 @@ export const beneficiaries: TranslationBeneficiaries = {
     formType: 'multiSelect',
     multiSelectLabel: 'Selected groups',
     options: {
-      DISEASE_SPECIFIC: 'Disease-specific',
+      DISEASE_SPECIFIC:
+        'Disease-specific (based on a diagnosis, procedure code, condition, etc.)',
       DUALLY_ELIGIBLE: 'Dually-eligible beneficiaries',
-      MEDICAID: 'Medicaid',
+      MEDICAID: `Medicaid/Children's Health Insurance Program (CHIP)`,
       MEDICARE_ADVANTAGE: 'Medicare Advantage',
       MEDICARE_FFS: 'Medicare FFS beneficiaries',
       MEDICARE_PART_D: 'Medicare Part D',
