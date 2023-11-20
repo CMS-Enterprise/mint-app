@@ -104,8 +104,6 @@ describe('Model Plan Documents page', () => {
       expect(screen.getByText('My MINT document')).toBeInTheDocument();
     });
 
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+    expect(asFragment()).toMatchSnapshot();
   });
 });

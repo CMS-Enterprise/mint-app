@@ -12,6 +12,11 @@ import {
 
 import useCacheQuery from './useCacheQuery';
 
+type UseHelpSolutionType = {
+  helpSolutions: HelpSolutionType[];
+  loading: boolean;
+};
+
 export const mapContactsToSolutions = (
   solutions: HelpSolutionBaseType[],
   contactSolutions: GetPossibleSolutionsQuery['possibleOperationalSolutions']
@@ -30,8 +35,8 @@ export const mapContactsToSolutions = (
   });
 };
 
-const useHelpSolution = (): HelpSolutionType[] => {
-  const { data } = useCacheQuery(GetPossibleSolutions);
+const useHelpSolution = (): UseHelpSolutionType => {
+  const { data, loading } = useCacheQuery(GetPossibleSolutions);
 
   const helpSolutionsWithContacts = useMemo(() => {
     return mapContactsToSolutions(
@@ -40,7 +45,7 @@ const useHelpSolution = (): HelpSolutionType[] => {
     );
   }, [data?.possibleOperationalSolutions]);
 
-  return helpSolutionsWithContacts;
+  return { helpSolutions: helpSolutionsWithContacts, loading };
 };
 
 export default useHelpSolution;

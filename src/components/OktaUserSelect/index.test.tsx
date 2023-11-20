@@ -21,7 +21,8 @@ describe('OktaUserSelect', () => {
         searchOktaUsers: [
           {
             displayName: 'Adeline Aarons',
-            username: 'ABCD'
+            username: 'ABCD',
+            email: 'adeline.aarons@local.fake'
           }
         ]
       }
