@@ -11,3 +11,4 @@ SELECT
     modified_dts
 FROM discussion_reply
 WHERE id = :id
+ORDER BY created_dts ASC

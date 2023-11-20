@@ -114,7 +114,10 @@ const QuestionAndReply = ({
             </div>
           </div>
 
-          <Replies originalDiscussion={reply as DiscussionType} />
+          <Replies
+            originalDiscussion={reply as DiscussionType}
+            discussionReplyID={discussionReplyID}
+          />
 
           <PageHeading
             headingLevel="h2"

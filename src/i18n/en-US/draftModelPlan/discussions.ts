@@ -55,6 +55,8 @@ const discussions = {
   assessment: 'MINT Team',
   viewMoreQuestions: 'View more questions',
   viewFewerQuestions: 'View fewer questions',
+  viewMoreReplies: 'View more replies',
+  viewFewerReplies: 'View fewer replies',
   alreadyAnswered:
     '“{{-question}}” has already been answered. You can view it in the answered questions below.',
   role: 'Your role',

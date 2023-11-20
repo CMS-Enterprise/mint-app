@@ -18,4 +18,5 @@ SELECT
     discR.modified_by,
     discR.modified_dts
 FROM QUERIED_IDS AS qIDs
-INNER JOIN discussion_reply AS discR ON discR.discussion_id = qIDs.discussion_id;
+INNER JOIN discussion_reply AS discR ON discR.discussion_id = qIDs.discussion_id
+ORDER BY discR.created_dts ASC;
