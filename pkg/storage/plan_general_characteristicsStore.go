@@ -49,6 +49,32 @@ func (s *Store) PlanGeneralCharacteristicsCreate(
 	return gc, nil
 }
 
+// PlanGeneralCharacteristicsCreate creates a new plan basics
+func (s *Store) PlanGeneralCharacteristicsCreateTransaction(
+	t *Transaction,
+	logger *zap.Logger,
+	gc *models.PlanGeneralCharacteristics,
+) (*models.PlanGeneralCharacteristics, error) {
+
+	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
+
+	stmt, err := t.tx.PrepareNamed(planGeneralCharacteristicsCreateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
+	}
+	defer stmt.Close()
+
+	gc.ModifiedBy = nil
+	gc.ModifiedDts = nil
+
+	err = stmt.Get(gc, gc)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
+	}
+
+	return gc, nil
+}
+
 // PlanGeneralCharacteristicsUpdate updates the plan general characteristics for a given id
 func (s *Store) PlanGeneralCharacteristicsUpdate(
 	logger *zap.Logger,

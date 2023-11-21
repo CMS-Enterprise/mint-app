@@ -52,6 +52,32 @@ func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
 }
 
 // PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object
+func (s *Store) PlanParticipantsAndProvidersCreateTransaction(
+	t *Transaction,
+	logger *zap.Logger,
+	gc *models.PlanParticipantsAndProviders,
+) (*models.PlanParticipantsAndProviders, error) {
+
+	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
+
+	stmt, err := t.tx.PrepareNamed(planParticipantsAndProvidersCreateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
+	}
+	defer stmt.Close()
+
+	gc.ModifiedBy = nil
+	gc.ModifiedDts = nil
+
+	err = stmt.Get(gc, gc)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
+	}
+
+	return gc, nil
+}
+
+// PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object
 func (s *Store) PlanParticipantsAndProvidersCreate(
 	logger *zap.Logger,
 	gc *models.PlanParticipantsAndProviders,

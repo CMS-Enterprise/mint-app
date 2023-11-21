@@ -51,6 +51,32 @@ func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
 }
 
 // PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
+func (s *Store) PlanOpsEvalAndLearningCreateTransaction(
+	t *Transaction,
+	logger *zap.Logger,
+	oel *models.PlanOpsEvalAndLearning,
+) (*models.PlanOpsEvalAndLearning, error) {
+
+	oel.ID = utilityUUID.ValueOrNewUUID(oel.ID)
+
+	stmt, err := t.tx.PrepareNamed(planOpsEvalAndLearningCreateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, oel)
+	}
+	defer stmt.Close()
+
+	oel.ModifiedBy = nil
+	oel.ModifiedDts = nil
+
+	err = stmt.Get(oel, oel)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, oel)
+	}
+
+	return oel, nil
+}
+
+// PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
 func (s *Store) PlanOpsEvalAndLearningCreate(
 	logger *zap.Logger,
 	oel *models.PlanOpsEvalAndLearning,

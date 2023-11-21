@@ -41,6 +41,49 @@ type GetOktaAccountInfoFunc func(ctx context.Context, username string) (*OktaAcc
 type GetUserInfoFunc func(ctx context.Context, username string) (*models.UserInfo, error)
 
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
+func GetOrCreateUserAccountTransaction(ctx context.Context, t *storage.Transaction, store *storage.Store, username string, hasLoggedIn bool, //TODO, do we need to do this?
+	isMacUser bool, getAccountInformation GetAccountInfoFunc) (*authentication.UserAccount, error) {
+	userAccount, accErr := store.UserAccountGetByUsername(username)
+	if accErr != nil {
+		return nil, errors.New("failed to get user information from the database")
+	}
+	if userAccount != nil && userAccount.HasLoggedIn {
+		return userAccount, nil
+	}
+	accountInfo, err := getAccountInformation(ctx, username)
+	if err != nil {
+		return nil, err
+	}
+
+	if userAccount == nil {
+		userAccount = &authentication.UserAccount{}
+	}
+	userAccount.Username = &username
+	userAccount.IsEUAID = !isMacUser
+	userAccount.CommonName = accountInfo.Name
+	userAccount.Locale = accountInfo.Locale
+	userAccount.Email = accountInfo.Email
+	userAccount.GivenName = accountInfo.GivenName
+	userAccount.FamilyName = accountInfo.FamilyName
+	userAccount.ZoneInfo = accountInfo.ZoneInfo
+	userAccount.HasLoggedIn = hasLoggedIn
+
+	if userAccount.ID == uuid.Nil {
+		newAccount, newErr := store.UserAccountInsertByUsername(userAccount)
+		if newErr != nil {
+			return nil, newErr
+		}
+		return newAccount, nil
+	}
+
+	updatedAccount, updateErr := store.UserAccountUpdateByUserName(userAccount)
+	if updateErr != nil {
+		return nil, updateErr
+	}
+	return updatedAccount, nil
+}
+
+// GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
 func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username string, hasLoggedIn bool,
 	isMacUser bool, getAccountInformation GetAccountInfoFunc) (*authentication.UserAccount, error) {
 	userAccount, accErr := store.UserAccountGetByUsername(username)

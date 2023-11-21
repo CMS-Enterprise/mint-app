@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"fmt"
+
 	"github.com/jmoiron/sqlx"
 )
 
@@ -38,20 +40,34 @@ func (t *Transaction) SetResult(resultKey string, result interface{}) {
 
 // Next takes a function
 func (t *Transaction) Next(tFunc func(t *Transaction) error) *Transaction {
+	if t.Errored() { // Skip further execution if something errored earlier on
+		return t
+	}
 	err := tFunc(t)
 	if err != nil {
 		t.errors = append(t.errors, err)
 	}
-	// TODO: SW take a chain functon and define how the results get stored in the interface
+	// TODO: SW take a chain function and define how the results get stored in the interface
 
 	return t
 
 }
 
+func (t *Transaction) Errored() bool {
+	return len(t.errors) >= 1
+}
+
+func (t *Transaction) Errors() error {
+	if len(t.errors) < 1 {
+		return nil
+	}
+	return fmt.Errorf("issue with making database transaction  %v", t.errors[0]) //TODO how to format more than one error
+}
+
 // Commit will attempt to commit a transaction.
 // If there is an error, it will attempt to rollback the tx
 // Any errors encountered during the attempts will be appeneded to the errors list
-func (t *Transaction) Commit() *Transaction {
+func (t *Transaction) Commit() *Transaction { //TODO: SW first check if there are errors, if there are, it should be rolled back
 	err := t.tx.Commit()
 	if err != nil {
 		t.errors = append(t.errors, err)

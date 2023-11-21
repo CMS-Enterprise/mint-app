@@ -46,6 +46,28 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) 
 	return basics, nil
 }
 
+// PlanBasicsCreate creates a new plan basics
+func (s *Store) PlanBasicsCreateTransaction(t *Transaction, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
+
+	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
+
+	stmt, err := t.tx.PrepareNamed(planBasicsCreateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
+	}
+	defer stmt.Close()
+
+	basics.ModifiedBy = nil
+	basics.ModifiedDts = nil
+
+	err = stmt.Get(basics, basics)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
+	}
+
+	return basics, nil
+}
+
 // PlanBasicsUpdate updates the plan basics for a given id
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 
