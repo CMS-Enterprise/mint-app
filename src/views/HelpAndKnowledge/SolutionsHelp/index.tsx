@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
 import {
   OperationalSolutionCategories,
@@ -77,7 +78,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const page = params.get('page');
   const modal = params.get('solution');
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   // Get the solution map details from solution route param
   const { prevPathname, selectedSolution: solution } = useModalSolutionState(
@@ -124,6 +125,10 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     solution?.route || null,
     helpSolutions
   );
+
+  if (loading) {
+    return <PageLoading />;
+  }
 
   return (
     <div className={classNames(className)}>

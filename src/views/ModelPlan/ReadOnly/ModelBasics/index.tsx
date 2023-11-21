@@ -11,6 +11,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -106,6 +107,10 @@ const ReadOnlyModelBasics = ({
 
     return <em className="text-base">{basicsMiscT('na')}</em>;
   };
+
+  if (!data && loading) {
+    return <PageLoading testId="basics-page-loading" />;
+  }
 
   return (
     <div

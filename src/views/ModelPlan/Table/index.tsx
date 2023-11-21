@@ -442,7 +442,7 @@ const ModelPlansTable = ({
     return null;
   }
 
-  if (loading) {
+  if (!data && loading) {
     return <PageLoading />;
   }
 

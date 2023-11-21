@@ -168,7 +168,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Start typing the name of the model
           </p>
           <div
-            class="usa-combo-box disabled"
+            class="usa-combo-box"
             data-enhanced="true"
             data-testid="combo-box"
           >
@@ -190,7 +190,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               autocomplete="off"
               class="usa-combo-box__input"
               data-testid="combo-box-input"
-              disabled=""
               id="plan-characteristics-existing-model"
               name="existingModel"
               role="combobox"
@@ -205,7 +204,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 aria-label="Clear the select contents"
                 class="usa-combo-box__clear-input"
                 data-testid="combo-box-clear-button"
-                disabled=""
                 hidden=""
                 type="button"
               >
@@ -225,7 +223,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 aria-label="Toggle the dropdown list"
                 class="usa-combo-box__toggle-list"
                 data-testid="combo-box-toggle"
-                disabled=""
                 tabindex="-1"
                 type="button"
               >

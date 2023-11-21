@@ -14,6 +14,7 @@ type SolutionModalState = {
   prevPathname: string;
   selectedSolution: HelpSolutionType | undefined;
   renderModal: boolean;
+  loading: boolean;
 };
 
 const useModalSolutionState = (
@@ -21,7 +22,7 @@ const useModalSolutionState = (
 ): SolutionModalState => {
   const location = useLocation();
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   const params = new URLSearchParams(location.search);
   const solutionDetail = params.get('solution');
@@ -37,7 +38,7 @@ const useModalSolutionState = (
 
   const renderModal = selectedSolution?.enum === solutionKey;
 
-  return { prevPathname, selectedSolution, renderModal };
+  return { prevPathname, selectedSolution, renderModal, loading };
 };
 
 export default useModalSolutionState;

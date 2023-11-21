@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CreateSendFeedback from 'gql/apolloGQL/Feedback/CreateSendFeedback';
 import { EaseOfUse, MintUses, SatisfactionLevel } from 'gql/gen/graphql';
@@ -28,7 +28,8 @@ const mocks = [
     },
     result: {
       data: {
-        reportAProblem: true
+        reportAProblem: true,
+        sendFeedbackEmail: true
       }
     }
   }
@@ -65,9 +66,7 @@ describe('Send feedback form', () => {
     userEvent.click(submitButton);
 
     // Submit success
-    await waitFor(() => {
-      findByText('Thank you for your feedback');
-    });
+    findByText('Thank you for your feedback');
   });
 
   it('matches snapshot', async () => {

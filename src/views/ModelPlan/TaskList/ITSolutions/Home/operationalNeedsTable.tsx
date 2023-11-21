@@ -313,7 +313,7 @@ const OperationalNeedsTable = ({
     usePagination
   );
 
-  if (loading) {
+  if (!data && loading) {
     return <PageLoading />;
   }
 

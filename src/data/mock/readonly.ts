@@ -666,7 +666,7 @@ export const collaboratorsMocks = [
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
-          modelName: 'My Model',
+          modelName: 'Testing Model Summary',
           collaborators: collaboratorsData
         }
       }

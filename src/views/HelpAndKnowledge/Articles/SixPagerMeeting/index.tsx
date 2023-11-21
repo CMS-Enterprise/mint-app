@@ -12,6 +12,7 @@ import {
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import ExternalLink from 'components/shared/ExternalLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
@@ -29,9 +30,12 @@ const SixPagerMeeting = () => {
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    OperationalSolutionKey.LDG
-  );
+  const {
+    prevPathname,
+    selectedSolution,
+    renderModal,
+    loading
+  } = useModalSolutionState(OperationalSolutionKey.LDG);
 
   const ldgRoute = `${initLocation}${location.search}${
     location.search ? '&' : '?'
@@ -87,6 +91,10 @@ const SixPagerMeeting = () => {
     'reviewMeeting.subheading.outcomes.paragraph',
     { returnObjects: true }
   );
+
+  if (loading) {
+    return <PageLoading />;
+  }
 
   return (
     <>

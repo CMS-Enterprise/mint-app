@@ -6,15 +6,24 @@ import './index.scss';
 type SpinnerProps = {
   className?: string;
   size?: 'small' | 'large' | 'xl';
+  center?: boolean;
+  testId?: string;
 } & JSX.IntrinsicElements['span'];
 
-const Spinner = ({ className, size, ...props }: SpinnerProps) => {
+const Spinner = ({
+  className,
+  size,
+  center,
+  testId,
+  ...props
+}: SpinnerProps) => {
   const classes = classnames(
     'mint-spinner',
     {
       'mint-spinner--small': size === 'small',
       'mint-spinner--large': size === 'large',
-      'mint-spinner--xl': size === 'xl'
+      'mint-spinner--xl': size === 'xl',
+      center
     },
     className
   );
@@ -23,6 +32,7 @@ const Spinner = ({ className, size, ...props }: SpinnerProps) => {
       className={classes}
       aria-valuetext="Loading"
       role="progressbar"
+      data-testid={testId || 'spinner'}
       {...props}
     />
   );

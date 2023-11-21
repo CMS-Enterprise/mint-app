@@ -3,7 +3,9 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import Sinon from 'sinon';
 
+import { modelBasicsMocks } from 'data/mock/readonly';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   PrepareForClearanceStatus,
@@ -14,7 +16,7 @@ import { initialPrepareForClearanceValues } from '../Checklist';
 
 import ClearanceReview from '.';
 
-const modelID = 'd94958a4-2259-4fe9-b94c-f62492c43287';
+const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const basicsID = 'a093a178-5ec6-4a62-94df-f9b9179ee84e';
 
 const clearanceMockData = initialPrepareForClearanceValues;
@@ -43,7 +45,17 @@ const clearanceMock = [
   }
 ];
 
+const clearanceMocks = [
+  ...clearanceMock,
+  ...modelBasicsMocks,
+  ...clearanceMock,
+  ...modelBasicsMocks
+];
+
 describe('ClearanceReview component', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders readonly component', async () => {
     render(
       <MemoryRouter
@@ -51,7 +63,7 @@ describe('ClearanceReview component', () => {
           `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
         ]}
       >
-        <MockedProvider mocks={clearanceMock} addTypename={false}>
+        <MockedProvider mocks={clearanceMocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
             <ClearanceReview modelID={modelID} />
           </Route>
@@ -77,7 +89,7 @@ describe('ClearanceReview component', () => {
           `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
         ]}
       >
-        <MockedProvider mocks={clearanceMock} addTypename={false}>
+        <MockedProvider mocks={clearanceMocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
             <ClearanceReview modelID={modelID} />
           </Route>
@@ -105,7 +117,7 @@ describe('ClearanceReview component', () => {
           `/models/${modelID}/task-list/prepare-for-clearance/basics/${basicsID}`
         ]}
       >
-        <MockedProvider mocks={clearanceMock} addTypename={false}>
+        <MockedProvider mocks={clearanceMocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
             <ClearanceReview modelID={modelID} />
           </Route>

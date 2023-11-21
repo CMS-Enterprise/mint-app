@@ -12,6 +12,7 @@ import { isEqual } from 'lodash';
 import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
@@ -73,7 +74,7 @@ const LinkDocuments = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const { data, error } = useQuery<
+  const { data, loading, error } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
   >(GetOperationalSolution, {
@@ -155,6 +156,10 @@ const LinkDocuments = () => {
         });
     });
   };
+
+  if (!data && loading) {
+    return <PageLoading />;
+  }
 
   if (error || !solution) {
     return <NotFound />;
