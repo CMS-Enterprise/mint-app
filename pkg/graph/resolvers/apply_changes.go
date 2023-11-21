@@ -63,6 +63,10 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 
 			// If the destination is a uuid and we need to parse it from a string
 			if b == reflect.TypeOf(uuid.UUID{}) && a == reflect.TypeOf("") {
+				if v == nil || v == "" {
+					return nil, nil
+				}
+
 				return models.UnmarshalUUID(v)
 			}
 
