@@ -1517,6 +1517,7 @@ const (
 	ParticipantsTypeCommunityBasedOrganizations            ParticipantsType = "COMMUNITY_BASED_ORGANIZATIONS"
 	ParticipantsTypeNonProfitOrganizations                 ParticipantsType = "NON_PROFIT_ORGANIZATIONS"
 	ParticipantsTypeCommercialPayers                       ParticipantsType = "COMMERCIAL_PAYERS"
+	ParticipantsTypeAccountableCareOrganization            ParticipantsType = "ACCOUNTABLE_CARE_ORGANIZATION"
 	ParticipantsTypeOther                                  ParticipantsType = "OTHER"
 )
 
@@ -1534,12 +1535,13 @@ var AllParticipantsType = []ParticipantsType{
 	ParticipantsTypeCommunityBasedOrganizations,
 	ParticipantsTypeNonProfitOrganizations,
 	ParticipantsTypeCommercialPayers,
+	ParticipantsTypeAccountableCareOrganization,
 	ParticipantsTypeOther,
 }
 
 func (e ParticipantsType) IsValid() bool {
 	switch e {
-	case ParticipantsTypeMedicareProviders, ParticipantsTypeEntities, ParticipantsTypeConvener, ParticipantsTypeMedicareAdvantagePlans, ParticipantsTypeStandalonePartDPlans, ParticipantsTypeMedicareAdvantagePrescriptionDrugPlans, ParticipantsTypeStateMedicaidAgencies, ParticipantsTypeMedicaidManagedCareOrganizations, ParticipantsTypeMedicaidProviders, ParticipantsTypeStates, ParticipantsTypeCommunityBasedOrganizations, ParticipantsTypeNonProfitOrganizations, ParticipantsTypeCommercialPayers, ParticipantsTypeOther:
+	case ParticipantsTypeMedicareProviders, ParticipantsTypeEntities, ParticipantsTypeConvener, ParticipantsTypeMedicareAdvantagePlans, ParticipantsTypeStandalonePartDPlans, ParticipantsTypeMedicareAdvantagePrescriptionDrugPlans, ParticipantsTypeStateMedicaidAgencies, ParticipantsTypeMedicaidManagedCareOrganizations, ParticipantsTypeMedicaidProviders, ParticipantsTypeStates, ParticipantsTypeCommunityBasedOrganizations, ParticipantsTypeNonProfitOrganizations, ParticipantsTypeCommercialPayers, ParticipantsTypeAccountableCareOrganization, ParticipantsTypeOther:
 		return true
 	}
 	return false
