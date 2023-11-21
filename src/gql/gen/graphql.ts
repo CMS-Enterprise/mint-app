@@ -1566,6 +1566,7 @@ export type PlanGeneralCharacteristicsChanges = {
   communityPartnersInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
   communityPartnersInvolvedNote?: InputMaybe<Scalars['String']['input']>;
   currentModelPlanID?: InputMaybe<Scalars['UUID']['input']>;
+  existingModel?: InputMaybe<Scalars['String']['input']>;
   existingModelID?: InputMaybe<Scalars['Int']['input']>;
   geographiesTargeted?: InputMaybe<Scalars['Boolean']['input']>;
   geographiesTargetedAppliedTo?: InputMaybe<Array<GeographyApplication>>;

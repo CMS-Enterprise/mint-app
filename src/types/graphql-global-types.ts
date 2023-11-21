@@ -802,6 +802,7 @@ export interface PlanDocumentLinkInput {
  */
 export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
+  existingModel?: string | null;
   currentModelPlanID?: UUID | null;
   existingModelID?: number | null;
   resemblesExistingModel?: boolean | null;
