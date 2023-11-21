@@ -105,7 +105,8 @@ export enum BeneficiariesType {
   MEDICARE_FFS = 'MEDICARE_FFS',
   MEDICARE_PART_D = 'MEDICARE_PART_D',
   NA = 'NA',
-  OTHER = 'OTHER'
+  OTHER = 'OTHER',
+  UNDERSERVED = 'UNDERSERVED'
 }
 
 export enum CmmiGroup {
@@ -1261,6 +1262,7 @@ export type PlanBeneficiaries = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  diseaseSpecificGroup?: Maybe<Scalars['String']['output']>;
   estimateConfidence?: Maybe<ConfidenceType>;
   excludeCertainCharacteristics?: Maybe<TriStateAnswer>;
   excludeCertainCharacteristicsCriteria?: Maybe<Scalars['String']['output']>;
@@ -1297,6 +1299,7 @@ export type PlanBeneficiariesChanges = {
   beneficiarySelectionNote?: InputMaybe<Scalars['String']['input']>;
   beneficiarySelectionOther?: InputMaybe<Scalars['String']['input']>;
   confidenceNote?: InputMaybe<Scalars['String']['input']>;
+  diseaseSpecificGroup?: InputMaybe<Scalars['String']['input']>;
   estimateConfidence?: InputMaybe<ConfidenceType>;
   excludeCertainCharacteristics?: InputMaybe<TriStateAnswer>;
   excludeCertainCharacteristicsCriteria?: InputMaybe<Scalars['String']['input']>;

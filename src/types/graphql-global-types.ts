@@ -66,6 +66,7 @@ export enum BeneficiariesType {
   MEDICARE_PART_D = "MEDICARE_PART_D",
   NA = "NA",
   OTHER = "OTHER",
+  UNDERSERVED = "UNDERSERVED",
 }
 
 export enum CMMIGroup {
@@ -715,6 +716,7 @@ export interface PlanBeneficiariesChanges {
   beneficiaries?: BeneficiariesType[] | null;
   beneficiariesOther?: string | null;
   beneficiariesNote?: string | null;
+  diseaseSpecificGroup?: string | null;
   treatDualElligibleDifferent?: TriStateAnswer | null;
   treatDualElligibleDifferentHow?: string | null;
   treatDualElligibleDifferentNote?: string | null;

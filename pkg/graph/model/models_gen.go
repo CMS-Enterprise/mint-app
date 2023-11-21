@@ -382,6 +382,7 @@ const (
 	BeneficiariesTypeMedicaid          BeneficiariesType = "MEDICAID"
 	BeneficiariesTypeDuallyEligible    BeneficiariesType = "DUALLY_ELIGIBLE"
 	BeneficiariesTypeDiseaseSpecific   BeneficiariesType = "DISEASE_SPECIFIC"
+	BeneficiariesTypeUnderserved       BeneficiariesType = "UNDERSERVED"
 	BeneficiariesTypeOther             BeneficiariesType = "OTHER"
 	BeneficiariesTypeNa                BeneficiariesType = "NA"
 )
@@ -393,13 +394,14 @@ var AllBeneficiariesType = []BeneficiariesType{
 	BeneficiariesTypeMedicaid,
 	BeneficiariesTypeDuallyEligible,
 	BeneficiariesTypeDiseaseSpecific,
+	BeneficiariesTypeUnderserved,
 	BeneficiariesTypeOther,
 	BeneficiariesTypeNa,
 }
 
 func (e BeneficiariesType) IsValid() bool {
 	switch e {
-	case BeneficiariesTypeMedicareFfs, BeneficiariesTypeMedicareAdvantage, BeneficiariesTypeMedicarePartD, BeneficiariesTypeMedicaid, BeneficiariesTypeDuallyEligible, BeneficiariesTypeDiseaseSpecific, BeneficiariesTypeOther, BeneficiariesTypeNa:
+	case BeneficiariesTypeMedicareFfs, BeneficiariesTypeMedicareAdvantage, BeneficiariesTypeMedicarePartD, BeneficiariesTypeMedicaid, BeneficiariesTypeDuallyEligible, BeneficiariesTypeDiseaseSpecific, BeneficiariesTypeUnderserved, BeneficiariesTypeOther, BeneficiariesTypeNa:
 		return true
 	}
 	return false

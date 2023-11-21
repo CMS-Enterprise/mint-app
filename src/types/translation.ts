@@ -263,6 +263,7 @@ export type TranslationParticipantsAndProviders = {
 // Beneficiaries
 export type TranslationBeneficiaries = {
   beneficiaries: TranslationFieldPropertiesWithOptions<BeneficiariesType>;
+  diseaseSpecificGroup: TranslationFieldProperties;
   beneficiariesOther: TranslationFieldProperties;
   beneficiariesNote: TranslationFieldProperties;
   treatDualElligibleDifferent: TranslationFieldPropertiesWithOptions<TriStateAnswer>;

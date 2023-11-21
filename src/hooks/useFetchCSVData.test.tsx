@@ -94,6 +94,7 @@ describe('fetch csv utils', () => {
     const returnData = [
       'nameHistory',
       'beneficiaries.beneficiaries',
+      'beneficiaries.diseaseSpecificGroup',
       'beneficiaries.beneficiariesOther',
       'beneficiaries.beneficiariesNote',
       'beneficiaries.numberPeopleImpacted',

@@ -8,6 +8,7 @@ export default gql`
       beneficiaries {
         id
         beneficiaries
+        diseaseSpecificGroup
         beneficiariesOther
         beneficiariesNote
         treatDualElligibleDifferent
