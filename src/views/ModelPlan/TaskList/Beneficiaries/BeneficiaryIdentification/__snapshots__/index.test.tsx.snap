@@ -255,12 +255,12 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                     >
                       <span
                         class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
-                        data-testid="multiselect-tag--Medicaid"
+                        data-testid="multiselect-tag--Medicaid/Children's Health Insurance Program (CHIP)"
                         id="selected-MEDICAID"
                       >
-                        Medicaid 
+                        Medicaid/Children's Health Insurance Program (CHIP) 
                         <svg
-                          aria-label="Remove Medicaid"
+                          aria-label="Remove Medicaid/Children's Health Insurance Program (CHIP)"
                           class="usa-icon margin-left-05"
                           focusable="false"
                           height="1em"

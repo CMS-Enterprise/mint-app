@@ -43,6 +43,7 @@ const ReadOnlyBeneficiaries = ({
 
   const {
     beneficiaries,
+    diseaseSpecificGroup,
     beneficiariesOther,
     beneficiariesNote,
     treatDualElligibleDifferent,
@@ -108,6 +109,17 @@ const ReadOnlyBeneficiaries = ({
             notes={beneficiariesNote}
           />
         )}
+
+        {diseaseSpecificGroup &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'diseaseSpecificGroup',
+            <ReadOnlySection
+              heading={beneficiariesT('diseaseSpecificGroup.label')}
+              copy={diseaseSpecificGroup}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,

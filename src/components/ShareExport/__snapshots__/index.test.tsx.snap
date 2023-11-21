@@ -2724,7 +2724,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Disease-specific
+                      Disease-specific (based on a diagnosis, procedure code, condition, etc.)
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
@@ -2751,6 +2751,25 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Note beneficiary
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--please-describe-the-disease-specific-groups-this-model-will-impact margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Please describe the disease-specific groups this model will impact.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Other disease group
+                  </p>
                 </div>
               </div>
               <div
@@ -9024,7 +9043,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Disease-specific
+                      Disease-specific (based on a diagnosis, procedure code, condition, etc.)
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
@@ -9051,6 +9070,25 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       Note beneficiary
                     </p>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--please-describe-the-disease-specific-groups-this-model-will-impact margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Please describe the disease-specific groups this model will impact.
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    Other disease group
+                  </p>
                 </div>
               </div>
               <div

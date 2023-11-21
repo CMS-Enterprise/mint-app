@@ -295,6 +295,7 @@ const beneficiaryData: AllBeneficiariesTypes = {
     BeneficiariesType.DISEASE_SPECIFIC,
     BeneficiariesType.DUALLY_ELIGIBLE
   ],
+  diseaseSpecificGroup: 'Other disease group',
   beneficiariesOther: 'Other beneficiary',
   beneficiariesNote: 'Note beneficiary',
   treatDualElligibleDifferent: TriStateAnswer.YES,

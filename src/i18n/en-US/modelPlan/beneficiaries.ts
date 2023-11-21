@@ -18,6 +18,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       MEDICARE_ADVANTAGE: 'Medicare Advantage',
       MEDICARE_FFS: 'Medicare FFS beneficiaries',
       MEDICARE_PART_D: 'Medicare Part D',
+      UNDERSERVED: 'Underserved',
       NA: 'Not applicable',
       OTHER: 'Other'
     },
@@ -29,9 +30,20 @@ export const beneficiaries: TranslationBeneficiaries = {
       MEDICARE_ADVANTAGE: '',
       MEDICARE_FFS: '',
       MEDICARE_PART_D: '',
+      UNDERSERVED: '',
       NA: '',
       OTHER: ''
     },
+    filterGroups: ['mdm']
+  },
+  diseaseSpecificGroup: {
+    gqlField: 'diseaseSpecificGroup',
+    goField: 'DiseaseSpecificGroup',
+    dbField: 'disease_specific_group',
+    label:
+      'Please describe the disease-specific groups this model will impact.',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['mdm']
   },
   beneficiariesOther: {

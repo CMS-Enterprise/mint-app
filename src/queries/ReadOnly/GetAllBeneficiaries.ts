@@ -8,6 +8,7 @@ export default gql`
         id
         modelPlanID
         beneficiaries
+        diseaseSpecificGroup
         beneficiariesOther
         beneficiariesNote
         treatDualElligibleDifferent
