@@ -256,12 +256,12 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                     >
                       <span
                         class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
-                        data-testid="multiselect-tag--Medicare providers"
+                        data-testid="multiselect-tag--Medicare providers/suppliers"
                         id="selected-MEDICARE_PROVIDERS"
                       >
-                        Medicare providers 
+                        Medicare providers/suppliers 
                         <svg
-                          aria-label="Remove Medicare providers"
+                          aria-label="Remove Medicare providers/suppliers"
                           class="usa-icon margin-left-05"
                           focusable="false"
                           height="1em"
@@ -346,7 +346,7 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                   data-testid="label"
                   for="participants-and-providers-medicare-type"
                 >
-                  Which type of medicare providers?
+                  Which type of Medicare providers/suppliers?
                 </label>
                 <textarea
                   aria-labelledby="label-participants-and-providers-medicare-type hint-participants-and-providers-medicare-type"

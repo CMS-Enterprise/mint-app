@@ -76,6 +76,7 @@ const BeneficiaryIdentification = () => {
   const {
     id,
     beneficiaries,
+    diseaseSpecificGroup,
     beneficiariesOther,
     beneficiariesNote,
     treatDualElligibleDifferent,
@@ -123,6 +124,7 @@ const BeneficiaryIdentification = () => {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
     beneficiaries: beneficiaries ?? '',
+    diseaseSpecificGroup: diseaseSpecificGroup ?? '',
     beneficiariesOther: beneficiariesOther ?? '',
     beneficiariesNote: beneficiariesNote ?? '',
     treatDualElligibleDifferent: treatDualElligibleDifferent ?? null,
@@ -254,6 +256,34 @@ const BeneficiaryIdentification = () => {
                             }}
                             initialValues={initialValues.beneficiaries}
                           />
+
+                          {(values?.beneficiaries || []).includes(
+                            BeneficiariesType.DISEASE_SPECIFIC
+                          ) && (
+                            <FieldGroup
+                              scrollElement="diseaseSpecificGroup"
+                              error={!!flatErrors.diseaseSpecificGroup}
+                            >
+                              <Label
+                                htmlFor="beneficiaries-disease-specific-group"
+                                className="text-normal"
+                              >
+                                {beneficiariesT('diseaseSpecificGroup.label')}
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors.diseaseSpecificGroup}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextField}
+                                error={flatErrors.diseaseSpecificGroup}
+                                id="beneficiaries-disease-specific-group"
+                                data-testid="beneficiaries-disease-specific-group"
+                                name="diseaseSpecificGroup"
+                              />
+                            </FieldGroup>
+                          )}
 
                           {(values?.beneficiaries || []).includes(
                             BeneficiariesType.OTHER

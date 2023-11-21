@@ -11,12 +11,14 @@ export const beneficiaries: TranslationBeneficiaries = {
     formType: 'multiSelect',
     multiSelectLabel: 'Selected groups',
     options: {
-      DISEASE_SPECIFIC: 'Disease-specific',
+      DISEASE_SPECIFIC:
+        'Disease-specific (based on a diagnosis, procedure code, condition, etc.)',
       DUALLY_ELIGIBLE: 'Dually-eligible beneficiaries',
-      MEDICAID: 'Medicaid',
+      MEDICAID: `Medicaid/Children's Health Insurance Program (CHIP)`,
       MEDICARE_ADVANTAGE: 'Medicare Advantage',
       MEDICARE_FFS: 'Medicare FFS beneficiaries',
       MEDICARE_PART_D: 'Medicare Part D',
+      UNDERSERVED: 'Underserved',
       NA: 'Not applicable',
       OTHER: 'Other'
     },
@@ -28,9 +30,20 @@ export const beneficiaries: TranslationBeneficiaries = {
       MEDICARE_ADVANTAGE: '',
       MEDICARE_FFS: '',
       MEDICARE_PART_D: '',
+      UNDERSERVED: '',
       NA: '',
       OTHER: ''
     },
+    filterGroups: ['mdm']
+  },
+  diseaseSpecificGroup: {
+    gqlField: 'diseaseSpecificGroup',
+    goField: 'DiseaseSpecificGroup',
+    dbField: 'disease_specific_group',
+    label:
+      'Please describe the disease-specific groups this model will impact.',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['mdm']
   },
   beneficiariesOther: {
