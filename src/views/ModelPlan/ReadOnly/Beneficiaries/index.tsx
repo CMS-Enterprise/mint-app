@@ -4,7 +4,11 @@ import { useQuery } from '@apollo/client';
 
 import GetAllBeneficiaries from 'queries/ReadOnly/GetAllBeneficiaries';
 import { GetAllBeneficiaries as AllBeneficiariesTypes } from 'queries/ReadOnly/types/GetAllBeneficiaries';
-import { FrequencyType, TriStateAnswer } from 'types/graphql-global-types';
+import {
+  BeneficiariesType,
+  FrequencyType,
+  TriStateAnswer
+} from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -110,7 +114,7 @@ const ReadOnlyBeneficiaries = ({
           />
         )}
 
-        {diseaseSpecificGroup &&
+        {beneficiaries?.includes(BeneficiariesType.DISEASE_SPECIFIC) &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
