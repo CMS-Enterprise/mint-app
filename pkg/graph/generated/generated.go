@@ -7339,7 +7339,7 @@ type TaggedContent {
   """
   RawContent is HTML. It is sanitized on the backend
   """
-  rawContent: String! 
+  rawContent: String!
   tags: [Tag!]!
 }
 
