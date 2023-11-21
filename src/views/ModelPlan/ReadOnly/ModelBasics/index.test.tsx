@@ -45,6 +45,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       ).toBeInTheDocument();
     });
   });
+
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter

@@ -1,10 +1,14 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 
+import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
-import needQuestionAndAnswerMock from './mocks';
 import NeedQuestionAndAnswer from '.';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
@@ -33,6 +37,8 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
 
     await waitFor(() => {
       expect(getByTestId('toggle-need-answer')).toBeInTheDocument();
@@ -65,6 +71,8 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
 
     await waitFor(() => {
       expect(

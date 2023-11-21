@@ -11,6 +11,7 @@ import {
 import ExcelFile from 'assets/files/highLevelProjectPlan.xlsx';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import ExternalLink from 'components/shared/ExternalLink';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
@@ -34,7 +35,7 @@ const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
   const { t: generalT } = useTranslation('general');
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   const { prevPathname, selectedSolution: solution } = useModalSolutionState(
     null
@@ -80,6 +81,10 @@ const HighLevelProjectPlan = () => {
   }));
 
   const accordionItems: AccordionItemProps[] = [...accordionItemsMap];
+
+  if (loading) {
+    return <PageLoading />;
+  }
 
   return (
     <>

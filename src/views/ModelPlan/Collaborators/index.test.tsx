@@ -2,7 +2,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -45,20 +50,21 @@ const mockCollaborator: GetModelPlanCollaboratorsType = {
   ]
 };
 
-describe('Collaborator/Team Member page w/table', () => {
-  const mocks = [
-    {
-      request: {
-        query: GetModelPlanCollaborators,
-        variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
-      },
-      result: {
-        data: {
-          modelPlan: mockCollaborator
-        }
+const mocks = [
+  {
+    request: {
+      query: GetModelPlanCollaborators,
+      variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
+    },
+    result: {
+      data: {
+        modelPlan: mockCollaborator
       }
     }
-  ];
+  }
+];
+
+describe('Collaborator/Team Member page w/table', () => {
   it('displays a table with collaborator', async () => {
     render(
       <MemoryRouter
@@ -107,8 +113,9 @@ describe('Collaborator/Team Member page w/table', () => {
         </MockedProvider>
       </MemoryRouter>
     );
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+
+    await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

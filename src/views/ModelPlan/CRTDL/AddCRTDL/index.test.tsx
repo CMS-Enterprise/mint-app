@@ -81,8 +81,7 @@ describe('Model Plan Add CR and TDL page', () => {
     await waitFor(() => {
       expect(getByTestId('cr-tdl-id-number')).toHaveValue('CR123');
     });
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -23,12 +23,12 @@ import { Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import Spinner from 'components/Spinner';
 import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
@@ -197,6 +197,10 @@ const AddSolution = () => {
     }
   };
 
+  if (!data && loading) {
+    return <PageLoading />;
+  }
+
   if (error) {
     return <NotFound />;
   }
@@ -320,36 +324,32 @@ const AddSolution = () => {
 
                             <FieldErrorMsg>{flatErrors.key}</FieldErrorMsg>
 
-                            {loading ? (
-                              <Spinner />
-                            ) : (
-                              <ComboBox
-                                data-test-id="plan-characteristics-existing-model"
-                                id="it-solutions-key"
-                                name="key"
-                                inputProps={{
-                                  id: 'it-solutions-key',
-                                  name: 'key',
-                                  'aria-describedby': 'it-solutions-key'
-                                }}
-                                options={solutionOptions}
-                                defaultValue={
-                                  solutionOptions.find(
-                                    solution => solution.value === values.key
-                                  )?.label
+                            <ComboBox
+                              data-test-id="plan-characteristics-existing-model"
+                              id="it-solutions-key"
+                              name="key"
+                              inputProps={{
+                                id: 'it-solutions-key',
+                                name: 'key',
+                                'aria-describedby': 'it-solutions-key'
+                              }}
+                              options={solutionOptions}
+                              defaultValue={
+                                solutionOptions.find(
+                                  solution => solution.value === values.key
+                                )?.label
+                              }
+                              onChange={solutionKey => {
+                                const foundSolution = solutionOptions.find(
+                                  solution => solution.value === solutionKey
+                                );
+                                if (foundSolution) {
+                                  setFieldValue('key', foundSolution.value);
+                                } else {
+                                  setFieldValue('key', '');
                                 }
-                                onChange={solutionKey => {
-                                  const foundSolution = solutionOptions.find(
-                                    solution => solution.value === solutionKey
-                                  );
-                                  if (foundSolution) {
-                                    setFieldValue('key', foundSolution.value);
-                                  } else {
-                                    setFieldValue('key', '');
-                                  }
-                                }}
-                              />
-                            )}
+                              }}
+                            />
 
                             {treatAsOtherSolutions.includes(
                               values.key as OperationalSolutionKey

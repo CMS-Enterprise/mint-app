@@ -91,7 +91,7 @@ const PlanDocumentsTable = ({
   const hasEditAccess: boolean =
     !isHelpArticle && (isCollaborator || isAssessment(groups, flags));
 
-  if (loading) {
+  if (!data && loading) {
     return <PageLoading />;
   }
 

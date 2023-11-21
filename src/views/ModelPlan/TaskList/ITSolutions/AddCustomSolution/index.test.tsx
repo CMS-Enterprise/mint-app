@@ -1,9 +1,15 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import {
+  act,
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
@@ -33,7 +39,7 @@ const returnMockedData = (results: boolean) => {
             needed: true,
             pocName: results ? 'John Doe' : '',
             pocEmail: results ? 'j.doe@oddball.io' : '',
-            nameOther: 'My custom solution',
+            nameOther: results ? 'My custom solution' : '',
             isOther: false,
             isCommonSolution: true,
             otherHeader: null,
@@ -45,129 +51,158 @@ const returnMockedData = (results: boolean) => {
           }
         }
       }
-    }
+    },
+    ...needQuestionAndAnswerMock
   ];
 };
 
 describe('AddCustomSolution', () => {
   it('renders all input text correctly', async () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
-          }
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution">
-          <MessageProvider>
-            <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
-              <AddCustomSolution />
-            </MockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            {
+              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+            }
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
+            <MessageProvider>
+              <MockedProvider
+                mocks={returnMockedData(false)}
+                addTypename={false}
+              >
+                <AddCustomSolution />
+              </MockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    const customName = getByTestId('it-solution-custom-name-other');
-    userEvent.type(customName, 'My custom solution');
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-    const customPOC = getByTestId('it-solution-custom-poc-name');
-    userEvent.type(customPOC, 'John Doe');
+      const customName = getByTestId('it-solution-custom-name-other');
+      userEvent.type(customName, 'My custom solution');
 
-    const customEmail = getByTestId('it-solution-custom-poc-email');
-    userEvent.type(customEmail, 'j.doe@oddball.io');
+      const customPOC = getByTestId('it-solution-custom-poc-name');
+      userEvent.type(customPOC, 'John Doe');
 
-    await waitFor(() => {
-      expect(customName).toHaveValue('My custom solution');
+      const customEmail = getByTestId('it-solution-custom-poc-email');
+      userEvent.type(customEmail, 'j.doe@oddball.io');
 
-      expect(customPOC).toHaveValue('John Doe');
+      await waitFor(() => {
+        expect(customName).toHaveValue('My custom solution');
 
-      expect(customEmail).toHaveValue('j.doe@oddball.io');
+        expect(customPOC).toHaveValue('John Doe');
+
+        expect(customEmail).toHaveValue('j.doe@oddball.io');
+      });
     });
   });
 
   it('renders existing custom solution data', async () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
-          }
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
-          <MessageProvider>
-            <MockedProvider mocks={returnMockedData(true)} addTypename={false}>
-              <AddCustomSolution />
-            </MockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            {
+              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+            }
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
+            <MessageProvider>
+              <MockedProvider
+                mocks={returnMockedData(true)}
+                addTypename={false}
+              >
+                <AddCustomSolution />
+              </MockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitFor(() => {
-      const customName = getByTestId('it-solution-custom-name-other');
-      expect(customName).toHaveValue('My custom solution');
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-      const customPOC = getByTestId('it-solution-custom-poc-name');
-      expect(customPOC).toHaveValue('John Doe');
+      await waitFor(() => {
+        const customName = getByTestId('it-solution-custom-name-other');
+        expect(customName).toHaveValue('My custom solution');
 
-      const customEmail = getByTestId('it-solution-custom-poc-email');
-      expect(customEmail).toHaveValue('j.doe@oddball.io');
+        const customPOC = getByTestId('it-solution-custom-poc-name');
+        expect(customPOC).toHaveValue('John Doe');
+
+        const customEmail = getByTestId('it-solution-custom-poc-email');
+        expect(customEmail).toHaveValue('j.doe@oddball.io');
+      });
     });
   });
 
   it('renders existing custom solution data with removed poc and email', async () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
-          }
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
-          <MessageProvider>
-            <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
-              <AddCustomSolution />
-            </MockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            {
+              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+            }
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
+            <MessageProvider>
+              <MockedProvider
+                mocks={returnMockedData(false)}
+                addTypename={false}
+              >
+                <AddCustomSolution />
+              </MockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    await waitFor(() => {
-      const customName = getByTestId('it-solution-custom-name-other');
-      expect(customName).toHaveValue('My custom solution');
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-      const customPOC = getByTestId('it-solution-custom-poc-name');
-      expect(customPOC).toHaveValue('');
+      await waitFor(() => {
+        const customName = getByTestId('it-solution-custom-name-other');
+        expect(customName).toHaveValue('');
 
-      const customEmail = getByTestId('it-solution-custom-poc-email');
-      expect(customEmail).toHaveValue('');
+        const customPOC = getByTestId('it-solution-custom-poc-name');
+        expect(customPOC).toHaveValue('');
+
+        const customEmail = getByTestId('it-solution-custom-poc-email');
+        expect(customEmail).toHaveValue('');
+      });
     });
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
-          }
-        ]}
-      >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution">
-          <MessageProvider>
-            <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
-              <AddCustomSolution />
-            </MockedProvider>
-          </MessageProvider>
-        </Route>
-      </MemoryRouter>
-    );
+    await act(async () => {
+      const { asFragment, getByTestId } = render(
+        <MemoryRouter
+          initialEntries={[
+            {
+              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+            }
+          ]}
+        >
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
+            <MessageProvider>
+              <MockedProvider
+                mocks={returnMockedData(false)}
+                addTypename={false}
+              >
+                <AddCustomSolution />
+              </MockedProvider>
+            </MessageProvider>
+          </Route>
+        </MemoryRouter>
+      );
 
-    expect(asFragment()).toMatchSnapshot();
+      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });

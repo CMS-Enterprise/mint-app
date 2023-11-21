@@ -5,6 +5,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
 import { GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsType } from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
+import GetExistingModelPlans from 'queries/GetExistingModelPlans';
+import GetModelPlansBase from 'queries/GetModelPlansBase';
+import { ModelPlanFilter } from 'types/graphql-global-types';
 
 import { CharacteristicsContent, separateLinksByType } from './index';
 
@@ -34,6 +37,33 @@ const generalCharacteristicsMock = [
           modelName: 'My excellent plan that I just initiated',
           existingModelLinks: [],
           generalCharacteristics: generalCharacteristicsMockData
+        }
+      }
+    }
+  },
+  {
+    request: {
+      query: GetModelPlansBase,
+      variables: { filter: ModelPlanFilter.INCLUDE_ALL }
+    },
+    result: {
+      data: {
+        modelPlanCollection: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          modelName: 'My excellent plan that I just initiated'
+        }
+      }
+    }
+  },
+  {
+    request: {
+      query: GetExistingModelPlans
+    },
+    result: {
+      data: {
+        existingModelCollection: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d29056',
+          modelName: 'My excellent plan that I just initiated 2'
         }
       }
     }
@@ -69,7 +99,7 @@ describe('Model Plan Characteristics', () => {
     });
   });
 
-  it('separates model plans by eixsing/current type', () => {
+  it('separates model plans by existing/current type', () => {
     const currentModelPlanIDs: any = [
       { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     ];
