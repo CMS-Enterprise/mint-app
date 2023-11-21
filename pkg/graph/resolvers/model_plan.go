@@ -47,6 +47,7 @@ func ModelPlanCreate(
 	// defer tx.Commit() // Commit or rollback function //TODO: SW, this could be just called in the chain at the end or defered immediately.
 
 	// TODO: Do we want to instead define these variables out of this scope instead of assigning to the result map?
+	var createdPlan *models.ModelPlan
 	tx.Next(func(t *storage.Transaction) error {
 		planInternal, errInternal := store.ModelPlanCreateTransaction(tx, logger, plan)
 
@@ -54,15 +55,16 @@ func ModelPlanCreate(
 			return errInternal
 		}
 		tx.SetResult("plan", planInternal)
+		createdPlan = planInternal
 		return nil
 
 	})
 
-	createdPlanInterface, err := tx.GetResult("plan")
-	if err != nil {
-		return nil, err //TODO wrap all the transactions, and determine if this is useful
-	}
-	createdPlan := createdPlanInterface.(*models.ModelPlan)
+	// createdPlanInterface, err := tx.GetResult("plan")
+	// if err != nil {
+	// 	return nil, err //TODO wrap all the transactions, and determine if this is useful
+	// }
+	// createdPlan := createdPlanInterface.(*models.ModelPlan)
 
 	// // Create an initial collaborator for the plan
 	// _, _, err = CreatePlanCollaborator(
