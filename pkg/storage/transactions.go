@@ -67,19 +67,41 @@ func (t *Transaction) Errors() error {
 // Commit will attempt to commit a transaction.
 // If there is an error, it will attempt to rollback the tx
 // Any errors encountered during the attempts will be appeneded to the errors list
-func (t *Transaction) Commit() *Transaction { //TODO: SW first check if there are errors, if there are, it should be rolled back
+func (t *Transaction) Commit() error { //TODO: SW first check if there are errors, if there are, it should be rolled back
+	if t.Errored() {
+		return t.Errors()
+	}
 	err := t.tx.Commit()
 	if err != nil {
 		t.errors = append(t.errors, err)
 		rollbackErr := t.tx.Rollback()
 		if rollbackErr != nil {
 			t.errors = append(t.errors, rollbackErr)
-			return t
+			return rollbackErr
 		}
 		t.properties.rolledBack = true
-		return t
+		return err
 	}
 	t.properties.commited = true
 
-	return t
+	return nil
+}
+
+type TransactionFunc[T any] func(*Transaction) (*T, error)
+
+func WithTransaction[T any](s *Store, txFunc TransactionFunc[T]) (*T, error) {
+	tx := NewTransaction(s)
+
+	result, errFunc := txFunc(tx)
+	if errFunc != nil {
+		tx.errors = append(tx.errors, errFunc)
+	}
+
+	err := tx.Commit()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }

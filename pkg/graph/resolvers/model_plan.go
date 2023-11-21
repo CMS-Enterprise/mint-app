@@ -43,136 +43,107 @@ func ModelPlanCreate(
 	}
 
 	userAccount := principal.Account()
-	tx := storage.NewTransaction(store)
-	// defer tx.Commit() // Commit or rollback function //TODO: SW, this could be just called in the chain at the end or defered immediately.
+	newPlan, err := storage.WithTransaction[models.ModelPlan](store, func(tx *storage.Transaction) (*models.ModelPlan, error) {
+		var createdPlan *models.ModelPlan
+		tx.Next(func(t *storage.Transaction) error {
+			planInternal, errInternal := store.ModelPlanCreateTransaction(tx, logger, plan)
 
-	// TODO: Do we want to instead define these variables out of this scope instead of assigning to the result map?
-	var createdPlan *models.ModelPlan
-	tx.Next(func(t *storage.Transaction) error {
-		planInternal, errInternal := store.ModelPlanCreateTransaction(tx, logger, plan)
+			if errInternal != nil {
+				return errInternal
+			}
+			// tx.SetResult("plan", planInternal)
+			createdPlan = planInternal
+			return nil
 
-		if errInternal != nil {
-			return errInternal
-		}
-		tx.SetResult("plan", planInternal)
-		createdPlan = planInternal
-		return nil
+		})
 
+		baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID) // TODO: SW all store methods need to be transactions
+
+		tx.
+			Next(func(t *storage.Transaction) error { // Create a default plan basics object
+
+				basics := models.NewPlanBasics(baseTaskListUser)
+				_, err = store.PlanBasicsCreateTransaction(t, logger, basics)
+				if err != nil {
+					return err
+				}
+				return nil
+			}).
+			Next(func(t *storage.Transaction) error { // Create a default plan general characteristics object
+				generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
+
+				_, err = store.PlanGeneralCharacteristicsCreateTransaction(t, logger, generalCharacteristics)
+				if err != nil {
+					return err
+				}
+				return nil
+			}).
+			Next(func(t *storage.Transaction) error {
+				// Create a default Plan Beneficiares object
+				beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
+
+				_, err = store.PlanBeneficiariesCreateTransaction(t, logger, beneficiaries)
+				if err != nil {
+					return err
+				}
+				return nil
+			}).
+			Next(func(t *storage.Transaction) error {
+				//Create a default Plan Participants and Providers object
+				participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
+
+				_, err = store.PlanParticipantsAndProvidersCreateTransaction(t, logger, participantsAndProviders)
+				if err != nil {
+					return err
+				}
+				return nil
+			}).
+			Next(func(t *storage.Transaction) error {
+
+				//Create default Plan OpsEvalAndLearning object
+				opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
+
+				_, err = store.PlanOpsEvalAndLearningCreateTransaction(t, logger, opsEvalAndLearning)
+				if err != nil {
+					return err
+				}
+				return nil
+			}).
+			// Next(func(t *storage.Transaction) error {
+			// 	//Create default Plan OpsEvalAndLearning object
+			// 	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
+
+			// 	_, err = store.PlanOpsEvalAndLearningCreateTransaction(t, logger, opsEvalAndLearning)
+			// 	if err != nil {
+			// 		return err
+			// 	}
+			// 	return nil
+
+			// }).
+			Next(func(t *storage.Transaction) error {
+				//Create default PlanPayments object
+				planPayments := models.NewPlanPayments(baseTaskListUser)
+
+				_, err = store.PlanPaymentsCreateTransaction(t, logger, planPayments)
+				if err != nil {
+					return err
+				}
+				return nil
+			}).
+			Next(func(t *storage.Transaction) error {
+				//Create default Operational Needs
+				_, err = store.OperationalNeedInsertAllPossibleTransaction(t, logger, createdPlan.ID, principal.Account().ID)
+				if err != nil {
+					return err
+				}
+				return nil
+			})
+		return createdPlan, tx.Errors()
 	})
-
-	// createdPlanInterface, err := tx.GetResult("plan")
-	// if err != nil {
-	// 	return nil, err //TODO wrap all the transactions, and determine if this is useful
-	// }
-	// createdPlan := createdPlanInterface.(*models.ModelPlan)
-
-	// // Create an initial collaborator for the plan
-	// _, _, err = CreatePlanCollaborator(
-	// 	ctx,
-	// 	logger,
-	// 	nil,
-	// 	nil,
-	// 	email.AddressBook{},
-	// 	&model.PlanCollaboratorCreateInput{
-	// 		ModelPlanID: createdPlan.ID,
-	// 		UserName:    *userAccount.Username,
-	// 		TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
-	// 	},
-	// 	principal,
-	// 	store,
-	// 	false,
-	// 	getAccountInformation,
-	// )
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID) // TODO: SW all store methods need to be transactions
-
-	tx.
-		Next(func(t *storage.Transaction) error { // Create a default plan basics object
-
-			basics := models.NewPlanBasics(baseTaskListUser)
-			_, err = store.PlanBasicsCreateTransaction(t, logger, basics)
-			if err != nil {
-				return err
-			}
-			return nil
-		}).
-		Next(func(t *storage.Transaction) error { // Create a default plan general characteristics object
-			generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
-
-			_, err = store.PlanGeneralCharacteristicsCreateTransaction(t, logger, generalCharacteristics)
-			if err != nil {
-				return err
-			}
-			return nil
-		}).
-		Next(func(t *storage.Transaction) error {
-			// Create a default Plan Beneficiares object
-			beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
-
-			_, err = store.PlanBeneficiariesCreateTransaction(t, logger, beneficiaries)
-			if err != nil {
-				return err
-			}
-			return nil
-		}).
-		Next(func(t *storage.Transaction) error {
-			//Create a default Plan Participants and Providers object
-			participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
-
-			_, err = store.PlanParticipantsAndProvidersCreateTransaction(t, logger, participantsAndProviders)
-			if err != nil {
-				return err
-			}
-			return nil
-		}).
-		Next(func(t *storage.Transaction) error {
-
-			//Create default Plan OpsEvalAndLearning object
-			opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
-
-			_, err = store.PlanOpsEvalAndLearningCreateTransaction(t, logger, opsEvalAndLearning)
-			if err != nil {
-				return err
-			}
-			return nil
-		}).
-		// Next(func(t *storage.Transaction) error {
-		// 	//Create default Plan OpsEvalAndLearning object
-		// 	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
-
-		// 	_, err = store.PlanOpsEvalAndLearningCreateTransaction(t, logger, opsEvalAndLearning)
-		// 	if err != nil {
-		// 		return err
-		// 	}
-		// 	return nil
-
-		// }).
-		Next(func(t *storage.Transaction) error {
-			//Create default PlanPayments object
-			planPayments := models.NewPlanPayments(baseTaskListUser)
-
-			_, err = store.PlanPaymentsCreateTransaction(t, logger, planPayments)
-			if err != nil {
-				return err
-			}
-			return nil
-		}).
-		Next(func(t *storage.Transaction) error {
-			//Create default Operational Needs
-			_, err = store.OperationalNeedInsertAllPossibleTransaction(t, logger, createdPlan.ID, principal.Account().ID)
-			if err != nil {
-				return err
-			}
-			return nil
-		}).
-		Commit() // Commit or rollback function
-
-	if tx.Errored() {
-		return nil, tx.Errors()
+	if err != nil {
+		return nil, err
 	}
+
 	// Create an initial collaborator for the plan
 	_, _, err = CreatePlanCollaborator(
 		ctx,
@@ -181,7 +152,7 @@ func ModelPlanCreate(
 		nil,
 		email.AddressBook{},
 		&model.PlanCollaboratorCreateInput{
-			ModelPlanID: createdPlan.ID,
+			ModelPlanID: newPlan.ID,
 			UserName:    *userAccount.Username,
 			TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
 		},
@@ -202,18 +173,18 @@ func ModelPlanCreate(
 				emailTemplateService,
 				addressBook,
 				addressBook.MINTTeamEmail,
-				createdPlan,
+				newPlan,
 			)
 			if sendEmailErr != nil {
 				logger.Error("failed to send model plan created email to dev team", zap.String(
 					"createdPlanID",
-					createdPlan.ID.String(),
+					newPlan.ID.String(),
 				), zap.Error(sendEmailErr))
 			}
 		}()
 	}
 
-	return createdPlan, err
+	return newPlan, err
 }
 
 func sendModelPlanCreatedEmail(
