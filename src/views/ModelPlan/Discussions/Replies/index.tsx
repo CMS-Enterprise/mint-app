@@ -1,10 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  IconExpandLess,
-  IconExpandMore
-} from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
 import TruncatedText from 'components/shared/TruncatedText';
@@ -59,12 +55,12 @@ const Replies = ({
             {areRepliesShowing ? (
               <div className="display-flex flex-align-center">
                 {discussionsT('hideReplies')}
-                <IconExpandLess className="margin-left-1" />
+                <Icon.ExpandLess className="margin-left-1" />
               </div>
             ) : (
               <div className="display-flex flex-align-center">
                 {discussionsT('showReplies')}
-                <IconExpandMore className="margin-left-1" />
+                <Icon.ExpandMore className="margin-left-1" />
               </div>
             )}
           </Button>

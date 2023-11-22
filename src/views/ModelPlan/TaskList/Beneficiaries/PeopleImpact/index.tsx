@@ -10,7 +10,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label,
   Radio,
   RangeInput,
@@ -409,7 +409,7 @@ const PeopleImpact = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('task-list')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

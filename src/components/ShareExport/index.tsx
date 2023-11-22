@@ -9,8 +9,7 @@ import {
   ComboBoxRef,
   Form,
   GridContainer,
-  IconClose,
-  IconLink,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -315,7 +314,7 @@ const ShareExportModal = ({
               );
             }}
           >
-            <IconLink className="margin-right-1" />
+            <Icon.Link className="margin-right-1" />
             {filteredGroup && filteredGroup !== 'all'
               ? generalReadOnlyT('modal.copyLinkFilteredReadView')
               : generalReadOnlyT('modal.copyLinkReadView')}
@@ -456,7 +455,7 @@ const ShareExportModal = ({
           aria-label="Close Modal"
           onClick={closeModal}
         >
-          <IconClose size={4} />
+          <Icon.Close size={4} />
         </button>
       </nav>
 

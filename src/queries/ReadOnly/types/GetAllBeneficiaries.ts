@@ -14,6 +14,7 @@ export interface GetAllBeneficiaries_modelPlan_beneficiaries {
   id: UUID;
   modelPlanID: UUID;
   beneficiaries: BeneficiariesType[];
+  diseaseSpecificGroup: string | null;
   beneficiariesOther: string | null;
   beneficiariesNote: string | null;
   treatDualElligibleDifferent: TriStateAnswer | null;

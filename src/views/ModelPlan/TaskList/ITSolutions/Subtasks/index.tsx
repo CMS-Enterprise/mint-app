@@ -6,7 +6,7 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
+  Icon,
   Label,
   Radio,
   TextInput
@@ -567,7 +567,10 @@ const Subtasks = ({
                               )
                         }
                       >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        <Icon.ArrowBack
+                          className="margin-right-1"
+                          aria-hidden
+                        />
                         {fromManageSubtasks
                           ? t('returnToPreviousPage')
                           : t('returnToDetails')}

@@ -8,7 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconArrowBack,
+  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -394,7 +394,7 @@ const IDDOC = () => {
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('task-list')}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                     {miscellaneousT('saveAndReturn')}
                   </Button>

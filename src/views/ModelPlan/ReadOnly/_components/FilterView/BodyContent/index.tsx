@@ -87,7 +87,7 @@ const BodyContent = ({
         );
       })}
 
-      <Alert type="info" noIcon>
+      <Alert type="info" noIcon headingLevel="h4">
         <span className="margin-y-0 font-body-sm text-bold display-block">
           {t('alert.bodyContentHeading')}
         </span>

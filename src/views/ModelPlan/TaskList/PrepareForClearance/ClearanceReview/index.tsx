@@ -15,7 +15,7 @@ import {
   Button,
   Grid,
   GridContainer,
-  IconArrowForward
+  Icon
 } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -340,7 +340,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                   routeMap[section]
                 ]?.heading?.toLowerCase()
               })}
-              <IconArrowForward className="margin-left-1" aria-hidden />
+              <Icon.ArrowForward className="margin-left-1" aria-hidden />
             </Button>
           )}
         </Grid>

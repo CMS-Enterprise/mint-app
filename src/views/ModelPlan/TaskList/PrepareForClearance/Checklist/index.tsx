@@ -14,8 +14,7 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
-  IconArrowForward
+  Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -336,7 +335,7 @@ const PrepareForClearanceCheckList = ({
                                   ].heading.toLowerCase()
                                 })}
 
-                                <IconArrowForward
+                                <Icon.ArrowForward
                                   className="margin-left-1"
                                   aria-hidden
                                 />
@@ -362,7 +361,7 @@ const PrepareForClearanceCheckList = ({
                     className="usa-button usa-button--unstyled display-flex"
                     onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {t('dontUpdate')}
                   </Button>
                 </Fieldset>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconStar } from '@trussworks/react-uswds';
+import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import './index.scss';
@@ -20,7 +20,7 @@ const AssessmentIcon = ({
 }: AssessmentIconProps) => {
   return (
     <div className="assessment-container width-4 height-4 display-flex flex-justify-center bg-primary margin-right-1">
-      <IconStar
+      <Icon.Star
         size={size}
         role={role}
         focusable={focusable}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconFileDownload } from '@trussworks/react-uswds';
+import { Icon } from '@trussworks/react-uswds';
 
 import useFetchCSVData from 'hooks/useFetchCSVData';
 
@@ -24,7 +24,7 @@ export const CsvExportLink = ({
           modelPlanID ? fetchSingleData(modelPlanID) : fetchAllData()
         }
       >
-        {!modelPlanID && <IconFileDownload className="margin-right-1" />}
+        {!modelPlanID && <Icon.FileDownload className="margin-right-1" />}
         <span>
           {modelPlanID ? t('downloadSingleCSV') : t('downloadAllCSV')}
         </span>

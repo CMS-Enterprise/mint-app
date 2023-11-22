@@ -377,6 +377,7 @@ type ComplexityRoot struct {
 		CreatedBy                             func(childComplexity int) int
 		CreatedByUserAccount                  func(childComplexity int) int
 		CreatedDts                            func(childComplexity int) int
+		DiseaseSpecificGroup                  func(childComplexity int) int
 		EstimateConfidence                    func(childComplexity int) int
 		ExcludeCertainCharacteristics         func(childComplexity int) int
 		ExcludeCertainCharacteristicsCriteria func(childComplexity int) int
@@ -3126,6 +3127,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBeneficiaries.CreatedDts(childComplexity), true
+
+	case "PlanBeneficiaries.diseaseSpecificGroup":
+		if e.complexity.PlanBeneficiaries.DiseaseSpecificGroup == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.DiseaseSpecificGroup(childComplexity), true
 
 	case "PlanBeneficiaries.estimateConfidence":
 		if e.complexity.PlanBeneficiaries.EstimateConfidence == nil {
@@ -7602,6 +7610,7 @@ type PlanBeneficiaries {
   beneficiaries: [BeneficiariesType!]!
   beneficiariesOther: String
   beneficiariesNote: String
+  diseaseSpecificGroup: String
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
@@ -7645,6 +7654,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiaries: [BeneficiariesType!]
   beneficiariesOther: String
   beneficiariesNote: String
+  diseaseSpecificGroup: String
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
@@ -8893,6 +8903,7 @@ enum BeneficiariesType {
   MEDICAID
   DUALLY_ELIGIBLE
   DISEASE_SPECIFIC
+  UNDERSERVED
   OTHER
   NA
 }
@@ -8943,6 +8954,7 @@ enum ParticipantsType {
   COMMUNITY_BASED_ORGANIZATIONS
   NON_PROFIT_ORGANIZATIONS
   COMMERCIAL_PAYERS
+  ACCOUNTABLE_CARE_ORGANIZATION
   OTHER
 }
 
@@ -15411,6 +15423,8 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 				return ec.fieldContext_PlanBeneficiaries_beneficiariesOther(ctx, field)
 			case "beneficiariesNote":
 				return ec.fieldContext_PlanBeneficiaries_beneficiariesNote(ctx, field)
+			case "diseaseSpecificGroup":
+				return ec.fieldContext_PlanBeneficiaries_diseaseSpecificGroup(ctx, field)
 			case "treatDualElligibleDifferent":
 				return ec.fieldContext_PlanBeneficiaries_treatDualElligibleDifferent(ctx, field)
 			case "treatDualElligibleDifferentHow":
@@ -17649,6 +17663,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 				return ec.fieldContext_PlanBeneficiaries_beneficiariesOther(ctx, field)
 			case "beneficiariesNote":
 				return ec.fieldContext_PlanBeneficiaries_beneficiariesNote(ctx, field)
+			case "diseaseSpecificGroup":
+				return ec.fieldContext_PlanBeneficiaries_diseaseSpecificGroup(ctx, field)
 			case "treatDualElligibleDifferent":
 				return ec.fieldContext_PlanBeneficiaries_treatDualElligibleDifferent(ctx, field)
 			case "treatDualElligibleDifferentHow":
@@ -25356,6 +25372,47 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiariesNote(ctx context.Con
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiariesNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_diseaseSpecificGroup(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_diseaseSpecificGroup(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DiseaseSpecificGroup, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_diseaseSpecificGroup(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
@@ -55641,6 +55698,8 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 			out.Values[i] = ec._PlanBeneficiaries_beneficiariesOther(ctx, field, obj)
 		case "beneficiariesNote":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiariesNote(ctx, field, obj)
+		case "diseaseSpecificGroup":
+			out.Values[i] = ec._PlanBeneficiaries_diseaseSpecificGroup(ctx, field, obj)
 		case "treatDualElligibleDifferent":
 			out.Values[i] = ec._PlanBeneficiaries_treatDualElligibleDifferent(ctx, field, obj)
 		case "treatDualElligibleDifferentHow":

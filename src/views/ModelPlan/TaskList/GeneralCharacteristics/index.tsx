@@ -11,7 +11,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -563,7 +563,7 @@ export const CharacteristicsContent = () => {
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('back')}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                     {miscellaneousT('saveAndReturn')}
                   </Button>

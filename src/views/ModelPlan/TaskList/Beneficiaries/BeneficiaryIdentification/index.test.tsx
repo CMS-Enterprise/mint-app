@@ -13,6 +13,7 @@ const mockData: GetBeneficiaryIdentificationType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
   beneficiaries: [BeneficiariesType.MEDICAID, BeneficiariesType.OTHER],
+  diseaseSpecificGroup: 'Other disease group',
   beneficiariesOther: 'other',
   beneficiariesNote: 'note',
   treatDualElligibleDifferent: TriStateAnswer.YES,

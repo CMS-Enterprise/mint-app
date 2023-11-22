@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconAdd } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, useField } from 'formik';
 
@@ -48,7 +48,7 @@ const AddNote = ({ field: fieldName, id, className }: AddNoteType) => {
           className="usa-button usa-button--unstyled"
           onClick={() => setOpen(true)}
         >
-          <IconAdd className="margin-right-1" aria-hidden />
+          <Icon.Add className="margin-right-1" aria-hidden />
           {t('additionalNote')}
         </Button>
       )}

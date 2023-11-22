@@ -6,7 +6,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  IconClose
+  Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -46,7 +46,7 @@ export default function HelpBreadcrumb({
     >
       {newTab || newTabOnly ? (
         <>
-          <IconClose className="margin-right-05 text-tbottom" />
+          <Icon.Close className="margin-right-05 text-tbottom" />
           {t('close')}
         </>
       ) : (
