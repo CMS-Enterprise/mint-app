@@ -2,16 +2,18 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import {
+  GetExistingModelPlansDocument,
+  GetGeneralCharacteristicsDocument,
+  GetGeneralCharacteristicsQuery,
+  GetModelPlansBaseDocument
+} from 'gql/gen/graphql';
 
-import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
-import { GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsType } from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
-import GetExistingModelPlans from 'queries/GetExistingModelPlans';
-import GetModelPlansBase from 'queries/GetModelPlansBase';
 import { ModelPlanFilter } from 'types/graphql-global-types';
 
 import { CharacteristicsContent, separateLinksByType } from './index';
 
-const generalCharacteristicsMockData: GetGeneralCharacteristicsType = {
+const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'] = {
   __typename: 'PlanGeneralCharacteristics',
   id: '123',
   isNewModel: false,
@@ -27,7 +29,7 @@ const generalCharacteristicsMockData: GetGeneralCharacteristicsType = {
 const generalCharacteristicsMock = [
   {
     request: {
-      query: GetGeneralCharacteristics,
+      query: GetGeneralCharacteristicsDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
@@ -43,7 +45,7 @@ const generalCharacteristicsMock = [
   },
   {
     request: {
-      query: GetModelPlansBase,
+      query: GetModelPlansBaseDocument,
       variables: { filter: ModelPlanFilter.INCLUDE_ALL }
     },
     result: {
@@ -57,7 +59,7 @@ const generalCharacteristicsMock = [
   },
   {
     request: {
-      query: GetExistingModelPlans
+      query: GetExistingModelPlansDocument
     },
     result: {
       data: {
