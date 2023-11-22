@@ -199,11 +199,15 @@ export const CharacteristicsContent = () => {
     // Checking if the existing model is a MINT model plan or an import/existing model plan
     if (typeof genCharUpdates.existingModel === 'number') {
       genCharUpdates.existingModelID = genCharUpdates.existingModel;
-      delete genCharUpdates.existingModel;
     } else if (typeof genCharUpdates.existingModel === 'string') {
       genCharUpdates.currentModelPlanID = genCharUpdates.existingModel;
-      delete genCharUpdates.existingModel;
+    } else if (genCharUpdates.existingModel === null) {
+      genCharUpdates.existingModelID = null;
+      genCharUpdates.currentModelPlanID = null;
     }
+
+    // As existingModel is only a FE value/not persisted on BE, we want to remove it from the payload
+    delete genCharUpdates.existingModel;
 
     await Promise.allSettled([
       update({
