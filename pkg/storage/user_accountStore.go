@@ -49,6 +49,29 @@ func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserA
 	return user, nil
 }
 
+// UserAccountGetByIDTransaction gets a User account from the database by its internal id.
+// The transaction object does not commit or rollback in the scope of this function
+func (s *Store) UserAccountGetByIDTransaction(t *Transaction, id uuid.UUID) (*authentication.UserAccount, error) {
+	user := &authentication.UserAccount{}
+
+	stmt, err := t.tx.PrepareNamed(userAccountGetByID)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"id": id,
+	}
+
+	err = stmt.Get(user, arg)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
 // UserAccountGetByID gets a User account from the database by its internal id.
 func (s *Store) UserAccountGetByID(id uuid.UUID) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
@@ -95,6 +118,29 @@ func (s *Store) UserAccountGetByIDLOADER(
 	}
 
 	return userSlice, nil
+}
+
+// UserAccountInsertByUsernameTransaction creates a new user account for a given EUAID
+// The transaction object does not commit or rollback in the scope of this function
+func (s *Store) UserAccountInsertByUsernameTransaction(t *Transaction, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
+
+	user := &authentication.UserAccount{}
+	if userAccount.ID == uuid.Nil {
+		userAccount.ID = uuid.New()
+	}
+
+	stmt, err := t.tx.PrepareNamed(userAccountInsertByUsername)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	err = stmt.Get(user, userAccount)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }
 
 // UserAccountInsertByUsername creates a new user account for a given EUAID

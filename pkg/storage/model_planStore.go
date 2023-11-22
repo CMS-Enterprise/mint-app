@@ -174,6 +174,44 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	return plan, nil
 }
 
+// ModelPlanGetByIDTransaction returns a model plan for a given ID
+// The transaction object does not commit or rollback in the scope of this function
+func (s *Store) ModelPlanGetByIDTransaction(t *Transaction, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
+
+	plan := models.ModelPlan{}
+	stmt, err := t.tx.PrepareNamed(modelPlanGetByIDSQL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{"id": id}
+
+	err = stmt.Get(&plan, arg)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			logger.Warn("No model plan found for the given modelPlanID",
+				zap.String("modelPlanID", id.String()))
+			return nil, fmt.Errorf("no model plan found for the given modelPlanID: %w", err)
+		}
+
+		logger.Error(
+			"failed to fetch model plan",
+			zap.Error(err),
+			zap.String("id", id.String()),
+		)
+
+		return nil, &apperrors.QueryError{
+			Err:       fmt.Errorf("failed to fetch the model plan: %w", err),
+			Model:     plan,
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return &plan, nil
+}
+
 // ModelPlanGetByID returns a model plan for a given ID
 func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 

@@ -21,9 +21,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// ModelPlanCreate implements resolver logic to create a model plan
-// TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
-// so that we can roll back if there is an error with any of these calls.
+// ModelPlanCreate implements resolver logic to create a model plan, and send relevant notifications about it's creation
+// It also creates a record for all the task list items at the same time.
+// It utilizes transactions to ensure that the data can be rolled back if there is an error at any point along the way.
 func ModelPlanCreate(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -109,17 +109,6 @@ func ModelPlanCreate(
 				}
 				return nil
 			}).
-			// Next(func(t *storage.Transaction) error {
-			// 	//Create default Plan OpsEvalAndLearning object
-			// 	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
-
-			// 	_, err = store.PlanOpsEvalAndLearningCreateTransaction(t, logger, opsEvalAndLearning)
-			// 	if err != nil {
-			// 		return err
-			// 	}
-			// 	return nil
-
-			// }).
 			Next(func(t *storage.Transaction) error {
 				//Create default PlanPayments object
 				planPayments := models.NewPlanPayments(baseTaskListUser)
@@ -137,6 +126,30 @@ func ModelPlanCreate(
 					return err
 				}
 				return nil
+			}).
+			Next(func(t *storage.Transaction) error {
+				// Create an initial collaborator for the plan
+				_, _, err = CreatePlanCollaboratorTransaction(
+					ctx,
+					t,
+					store,
+					logger,
+					nil,
+					nil,
+					email.AddressBook{},
+					&model.PlanCollaboratorCreateInput{
+						ModelPlanID: createdPlan.ID,
+						UserName:    *userAccount.Username,
+						TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
+					},
+					principal,
+					false,
+					getAccountInformation,
+				)
+				if err != nil {
+					return err
+				}
+				return nil
 			})
 		return createdPlan, tx.Errors()
 	})
@@ -144,26 +157,26 @@ func ModelPlanCreate(
 		return nil, err
 	}
 
-	// Create an initial collaborator for the plan
-	_, _, err = CreatePlanCollaborator(
-		ctx,
-		logger,
-		nil,
-		nil,
-		email.AddressBook{},
-		&model.PlanCollaboratorCreateInput{
-			ModelPlanID: newPlan.ID,
-			UserName:    *userAccount.Username,
-			TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
-		},
-		principal,
-		store,
-		false,
-		getAccountInformation,
-	)
-	if err != nil {
-		return nil, err
-	}
+	// // Create an initial collaborator for the plan
+	// _, _, err = CreatePlanCollaborator(
+	// 	ctx,
+	// 	logger,
+	// 	nil,
+	// 	nil,
+	// 	email.AddressBook{},
+	// 	&model.PlanCollaboratorCreateInput{
+	// 		ModelPlanID: newPlan.ID,
+	// 		UserName:    *userAccount.Username,
+	// 		TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
+	// 	},
+	// 	principal,
+	// 	store,
+	// 	false,
+	// 	getAccountInformation,
+	// )
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	if emailService != nil && emailTemplateService != nil {
 		go func() {
