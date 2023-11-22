@@ -31,10 +31,6 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
               d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
             />
           </svg>
@@ -71,34 +67,27 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
           <div
             class="usa-summary-box__body"
           >
-            <h3
-              class="usa-summary-box__heading"
-            />
-            <div
-              class="usa-summary-box__text"
+            <p
+              class="margin-top-0 margin-bottom-1"
             >
-              <p
-                class="margin-top-0 margin-bottom-1"
-              >
-                Examples of using an existing solution include:
-              </p>
-              <ol
-                class="padding-left-3 margin-y-0"
-              >
-                <li>
-                  Using Salesforce to create a Request for Application website
-                </li>
-                <li>
-                  Creating a model-specific application in the Reusable Framework
-                </li>
-                <li>
-                  Adjusting claims payments in the Fee-for-Service systems
-                </li>
-                <li>
-                  Modifying the Health Plan Management System to capture information from Accountable Care Organizations (ACOs)
-                </li>
-              </ol>
-            </div>
+              Examples of using an existing solution include:
+            </p>
+            <ol
+              class="padding-left-3 margin-y-0"
+            >
+              <li>
+                Using Salesforce to create a Request for Application website
+              </li>
+              <li>
+                Creating a model-specific application in the Reusable Framework
+              </li>
+              <li>
+                Adjusting claims payments in the Fee-for-Service systems
+              </li>
+              <li>
+                Modifying the Health Plan Management System to capture information from Accountable Care Organizations (ACOs)
+              </li>
+            </ol>
           </div>
         </div>
         <h2

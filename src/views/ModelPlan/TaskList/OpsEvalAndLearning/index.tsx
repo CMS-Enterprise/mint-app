@@ -10,7 +10,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -644,7 +644,7 @@ export const OpsEvalAndLearningContent = () => {
                     className="usa-button usa-button--unstyled"
                     onClick={() => handleFormSubmit('back')}
                   >
-                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>

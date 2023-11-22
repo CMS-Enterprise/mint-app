@@ -9,8 +9,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
-  IconInfo,
+  Icon,
   Label,
   Link as TrussLink,
   Radio,
@@ -443,7 +442,7 @@ const BasicsContent = () => {
                                           }
                                           position="right"
                                         >
-                                          <IconInfo className="text-base-light" />
+                                          <Icon.Info className="text-base-light" />
                                         </Tooltip>
                                       )}
                                     </span>
@@ -524,7 +523,7 @@ const BasicsContent = () => {
                                           }
                                           position="right"
                                         >
-                                          <IconInfo className="text-base-light" />
+                                          <Icon.Info className="text-base-light" />
                                         </Tooltip>
                                       </span>
                                     }
@@ -686,7 +685,7 @@ const BasicsContent = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit(values, 'back')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />
@@ -699,7 +698,6 @@ const BasicsContent = () => {
                   <Grid desktop={{ col: 6 }}>
                     {filteredNameHistory && filteredNameHistory.length > 0 && (
                       <SummaryBox
-                        heading=""
                         className="margin-top-6"
                         data-testid="summary-box--previous-name"
                       >

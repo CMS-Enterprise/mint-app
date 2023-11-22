@@ -23,7 +23,7 @@
     "@tiptap/react": "^2.1.11",
     "@tiptap/starter-kit": "^2.1.11",
     "@tiptap/suggestion": "^2.1.11",
-    "@trussworks/react-uswds": "^2.8.0",
+    "@trussworks/react-uswds": "^6.0.0",
     "@types/apollo-upload-client": "^17.0.1",
     "@types/enzyme": "^3.10.3",
     "@types/jest": "26.0.23",

@@ -5,7 +5,7 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  IconMailOutline,
+  Icon,
   Link
 } from '@trussworks/react-uswds';
 
@@ -39,7 +39,7 @@ const PointOfContactCard = ({
           target="_blank"
         >
           {pointOfContact.email}
-          <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+          <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
         </Link>
       </CardBody>
       {pointOfContact.role && (

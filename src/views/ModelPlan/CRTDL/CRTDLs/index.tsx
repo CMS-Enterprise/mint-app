@@ -8,7 +8,7 @@ import {
   BreadcrumbLink,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Link as TrussLink
 } from '@trussworks/react-uswds';
 
@@ -108,7 +108,7 @@ export const CRTDLs = () => {
             to={`/models/${modelID}/task-list`}
             className="display-inline-flex flex-align-center margin-y-3"
           >
-            <IconArrowBack className="margin-right-1" aria-hidden />
+            <Icon.ArrowBack className="margin-right-1" aria-hidden />
             {h('returnToTaskList')}
           </UswdsReactLink>
 

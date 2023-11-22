@@ -9,8 +9,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
-  IconInfo,
+  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -206,7 +205,7 @@ const FundingSource = () => {
               position="right"
               className="margin-left-05 height-105"
             >
-              <IconInfo className="text-base-light" />
+              <Icon.Info className="text-base-light" />
             </Tooltip>
           </div>
         );
@@ -571,7 +570,7 @@ const FundingSource = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('back')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

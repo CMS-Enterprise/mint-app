@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import { IconArrowForward, IconLaunch, Link } from '@trussworks/react-uswds';
+import { Icon, Link } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
@@ -58,7 +58,7 @@ const ContactInfo = ({
                 target="_blank"
               >
                 {h('contactInfo.sendAnEmail')}
-                <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
+                <Icon.Launch className="margin-left-05 margin-bottom-2px text-tbottom" />
               </Link>
             </div>
           );
@@ -71,7 +71,7 @@ const ContactInfo = ({
           to={`/models/${modelID}/read-only/team`}
         >
           {h('contactInfo.moreTeamMembers')}
-          <IconArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" />
         </UswdsReactLink>
       )}
     </div>

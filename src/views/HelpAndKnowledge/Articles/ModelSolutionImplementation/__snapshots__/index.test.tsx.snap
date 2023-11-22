@@ -31,10 +31,6 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
               d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
             />
           </svg>
@@ -72,16 +68,13 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             class="usa-summary-box__body"
           >
             <h3
-              class="usa-summary-box__heading"
-            />
+              class="usa-summary-box__heading margin-top-0 margin-bottom-1"
+            >
+              Activities involved
+            </h3>
             <div
               class="usa-summary-box__text"
             >
-              <h3
-                class="margin-top-0 margin-bottom-1"
-              >
-                Activities involved
-              </h3>
               <ol
                 class="padding-left-5 margin-y-0"
               >
@@ -105,10 +98,6 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                         width="1em"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
                         <path
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
@@ -136,10 +125,6 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                         width="1em"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
                         <path
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
@@ -251,10 +236,6 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                 width="1em"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
                 <path
                   d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                 />
