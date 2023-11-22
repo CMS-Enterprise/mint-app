@@ -12,6 +12,7 @@ type PlanBeneficiaries struct {
 	Beneficiaries                         pq.StringArray  `json:"beneficiaries" db:"beneficiaries"`
 	BeneficiariesOther                    *string         `json:"beneficiariesOther" db:"beneficiaries_other"`
 	BeneficiariesNote                     *string         `json:"beneficiariesNote" db:"beneficiaries_note"`
+	DiseaseSpecificGroup                  *string         `json:"diseaseSpecificGroup" db:"disease_specific_group"`
 	TreatDualElligibleDifferent           *TriStateAnswer `json:"treatDualElligibleDifferent" db:"treat_dual_elligible_different" statusWeight:"1"`
 	TreatDualElligibleDifferentHow        *string         `json:"treatDualElligibleDifferentHow" db:"treat_dual_elligible_different_how"`
 	TreatDualElligibleDifferentNote       *string         `json:"treatDualElligibleDifferentNote" db:"treat_dual_elligible_different_note"`

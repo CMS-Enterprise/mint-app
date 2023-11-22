@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  IconInfo,
-  SummaryBox
+  Icon,
+  SummaryBox,
+  SummaryBoxContent
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -27,38 +28,37 @@ const NDABanner = ({ collapsable, landing, className }: NDABannerType) => {
   );
 
   return (
-    <SummaryBox
-      heading=""
-      className={classNames('padding-1 border-0', className)}
-    >
-      <MainContent>
-        <GridContainer className={classNames({ 'padding-0': landing })}>
-          <Grid desktop={{ col: 12 }}>
-            <div className="display-flex padding-top-2">
-              <IconInfo size={4} className="minw-4" />
-              <div className="margin-left-105">
-                {HeadingLevel}
+    <SummaryBox className={classNames('padding-1 border-0', className)}>
+      <SummaryBoxContent>
+        <MainContent>
+          <GridContainer className={classNames({ 'padding-0': landing })}>
+            <Grid desktop={{ col: 12 }}>
+              <div className="display-flex padding-top-2">
+                <Icon.Info size={4} className="minw-4" />
+                <div className="margin-left-105">
+                  {HeadingLevel}
 
-                {collapsable ? (
-                  <CollapsableLink
-                    id="pre-decisional-collapse"
-                    label={t('readMore')}
-                    closeLabel={t('readLess')}
-                    labelPosition="bottom"
-                    styleLeftBar={false}
-                    iconPosition="left"
-                    className="margin-bottom-2"
-                  >
-                    <p className="padding-0 margin-0">{t('body')}</p>
-                  </CollapsableLink>
-                ) : (
-                  <p>{t('body')}</p>
-                )}
+                  {collapsable ? (
+                    <CollapsableLink
+                      id="pre-decisional-collapse"
+                      label={t('readMore')}
+                      closeLabel={t('readLess')}
+                      labelPosition="bottom"
+                      styleLeftBar={false}
+                      iconPosition="left"
+                      className="margin-bottom-2"
+                    >
+                      <p className="padding-0 margin-0">{t('body')}</p>
+                    </CollapsableLink>
+                  ) : (
+                    <p>{t('body')}</p>
+                  )}
+                </div>
               </div>
-            </div>
-          </Grid>
-        </GridContainer>
-      </MainContent>
+            </Grid>
+          </GridContainer>
+        </MainContent>
+      </SummaryBoxContent>
     </SummaryBox>
   );
 };

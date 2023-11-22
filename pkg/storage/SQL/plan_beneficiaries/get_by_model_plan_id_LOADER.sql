@@ -12,6 +12,7 @@ SELECT
     benes.beneficiaries,
     benes.beneficiaries_other,
     benes.beneficiaries_note,
+    benes.disease_specific_group,
     benes.treat_dual_elligible_different,
     benes.treat_dual_elligible_different_how,
     benes.treat_dual_elligible_different_note,

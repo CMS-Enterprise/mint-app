@@ -10,9 +10,11 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label,
-  SummaryBox
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -440,7 +442,7 @@ export const ParticipantsAndProvidersContent = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('back')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />
@@ -451,21 +453,23 @@ export const ParticipantsAndProvidersContent = () => {
                   </Grid>
 
                   <Grid desktop={{ col: 6 }}>
-                    <SummaryBox
-                      heading={participantsAndProvidersMiscT(
-                        'participantsDifferenceHeading'
-                      )}
-                      className="margin-top-6 "
-                    >
-                      <ul>
-                        <li>
-                          <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo" />
-                        </li>
+                    <SummaryBox className="margin-top-6 ">
+                      <SummaryBoxHeading headingLevel="h3">
+                        {participantsAndProvidersMiscT(
+                          'participantsDifferenceHeading'
+                        )}
+                      </SummaryBoxHeading>
+                      <SummaryBoxContent>
+                        <ul>
+                          <li>
+                            <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo" />
+                          </li>
 
-                        <li>
-                          <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo2" />
-                        </li>
-                      </ul>
+                          <li>
+                            <Trans i18nKey="participantsAndProvidersMisc:participantsDifferenceInfo2" />
+                          </li>
+                        </ul>
+                      </SummaryBoxContent>
                     </SummaryBox>
                   </Grid>
                 </Grid>

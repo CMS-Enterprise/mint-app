@@ -6,7 +6,7 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
+  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -436,7 +436,7 @@ const AddCustomSolution = () => {
                                 history.goBack();
                               }}
                             >
-                              <IconArrowBack
+                              <Icon.ArrowBack
                                 className="margin-right-1"
                                 aria-hidden
                               />

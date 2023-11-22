@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { IconWarning, Tooltip } from '@trussworks/react-uswds';
+import { Icon, Tooltip } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import './index.scss';
@@ -27,7 +27,7 @@ export const DatePickerWarning = ({
   return (
     <div className={classes}>
       <Tooltip label={label} asCustom={CustomDiv}>
-        <IconWarning size={3} className="text-warning-dark" />
+        <Icon.Warning size={3} className="text-warning-dark" />
       </Tooltip>
     </div>
   );

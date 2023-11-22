@@ -76,10 +76,6 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
           d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
         />
       </svg>
@@ -334,9 +330,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                       class="usa-date-picker__button"
                       data-testid="date-picker-button"
                       type="button"
-                    >
-                       
-                    </button>
+                    />
                     <div
                       aria-modal="true"
                       class="usa-date-picker__calendar"
@@ -389,38 +383,31 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 <div
                   class="usa-summary-box__body"
                 >
-                  <h3
-                    class="usa-summary-box__heading"
-                  />
-                  <div
-                    class="usa-summary-box__text"
+                  <p
+                    class="margin-0"
                   >
+                    Model Plan status
+                  </p>
+                  <div
+                    class="mint-checkbox usa-checkbox"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      data-testid="payment-status"
+                      id="payment-status"
+                      name="status"
+                      type="checkbox"
+                      value="IN_PROGRESS"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="payment-status"
+                    >
+                      This section of the Model Plan (Payment) is ready for review.
+                    </label>
                     <p
-                      class="margin-0"
-                    >
-                      Model Plan status
-                    </p>
-                    <div
-                      class="mint-checkbox usa-checkbox"
-                    >
-                      <input
-                        class="usa-checkbox__input"
-                        data-testid="payment-status"
-                        id="payment-status"
-                        name="status"
-                        type="checkbox"
-                        value="IN_PROGRESS"
-                      />
-                      <label
-                        class="usa-checkbox__label"
-                        for="payment-status"
-                      >
-                        This section of the Model Plan (Payment) is ready for review.
-                      </label>
-                      <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                      />
-                    </div>
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
                   </div>
                 </div>
               </div>
@@ -458,10 +445,6 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 width="1em"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
                 <path
                   d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                 />

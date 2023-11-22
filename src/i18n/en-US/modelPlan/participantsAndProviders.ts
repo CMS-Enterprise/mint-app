@@ -11,17 +11,18 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: 'enum',
     formType: 'multiSelect',
     options: {
+      ACCOUNTABLE_CARE_ORGANIZATION: 'Accountable Care Organization (ACO)',
       COMMERCIAL_PAYERS: 'Commercial payers',
-      COMMUNITY_BASED_ORGANIZATIONS: 'Community-based organizations',
+      COMMUNITY_BASED_ORGANIZATIONS: 'Community-based organizations (CBO)',
       CONVENER: 'Convener',
-      ENTITIES: 'Entities (e.g., ACO, Direct Contracting Entity)',
+      ENTITIES: 'Legal Entities',
       MEDICAID_MANAGED_CARE_ORGANIZATIONS:
         'Medicaid Managed Care organizations',
       MEDICAID_PROVIDERS: 'Medicaid providers',
       MEDICARE_ADVANTAGE_PLANS: 'Medicare Advantage plans',
       MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS:
         'Medicare Advantage Prescription Drug (MAPD) plans',
-      MEDICARE_PROVIDERS: 'Medicare providers',
+      MEDICARE_PROVIDERS: 'Medicare providers/suppliers',
       NON_PROFIT_ORGANIZATIONS: 'Non-profit organizations',
       STANDALONE_PART_D_PLANS: 'Standalone Part D plans',
       STATES: 'States',
@@ -34,7 +35,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     gqlField: 'medicareProviderType',
     goField: 'MedicareProviderType',
     dbField: 'medicare_provider_type',
-    label: 'Which type of medicare providers?',
+    label: 'Which type of Medicare providers/suppliers?',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cbosc', 'cmmi', 'ipc', 'iddoc', 'pbg']

@@ -4,9 +4,10 @@ import {
   Accordion,
   Grid,
   GridContainer,
-  IconFileDownload,
+  Icon,
   Link
 } from '@trussworks/react-uswds';
+import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 
 import ExcelFile from 'assets/files/highLevelProjectPlan.xlsx';
 import MainContent from 'components/MainContent';
@@ -22,14 +23,6 @@ import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import Table from './table';
-
-interface AccordionItemProps {
-  title: React.ReactNode | string;
-  content: React.ReactNode;
-  expanded: boolean;
-  id: string;
-  className?: string;
-}
 
 const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
@@ -51,34 +44,37 @@ const HighLevelProjectPlan = () => {
     returnObjects: true
   });
 
-  const accordionItemsMap = accordionTitles.map((item, index) => ({
-    title: item,
-    content: (
-      <>
-        {item === 'CMMI Internal Clearance Process' && (
-          <ExternalLink href={highLevelT('accordionItems.copy.cmmi.href')}>
-            {highLevelT('accordionItems.copy.cmmi.copy')}
-          </ExternalLink>
-        )}
-        {item === 'Clearance of Documents' && (
-          <>
-            <p className="margin-top-0 margin-bottom-1">
-              {highLevelT('accordionItems.copy.documents.copy')}
-            </p>
-            <ExternalLink
-              href={highLevelT('accordionItems.copy.documents.link.href')}
-            >
-              {highLevelT('accordionItems.copy.documents.link.copy')}
+  const accordionItemsMap: AccordionItemProps[] = accordionTitles.map(
+    (item, index) => ({
+      title: item,
+      content: (
+        <>
+          {item === 'CMMI Internal Clearance Process' && (
+            <ExternalLink href={highLevelT('accordionItems.copy.cmmi.href')}>
+              {highLevelT('accordionItems.copy.cmmi.copy')}
             </ExternalLink>
-          </>
-        )}
-        {item === 'Legal' && <p>{highLevelT('accordionItems.copy.legal')}</p>}
-        <Table content={`${item.toLowerCase().replace(/\s+/g, '-')}`} />
-      </>
-    ),
-    expanded: index === 0,
-    id: `${item.toLowerCase().replace(/\s+/g, '-')}`
-  }));
+          )}
+          {item === 'Clearance of Documents' && (
+            <>
+              <p className="margin-top-0 margin-bottom-1">
+                {highLevelT('accordionItems.copy.documents.copy')}
+              </p>
+              <ExternalLink
+                href={highLevelT('accordionItems.copy.documents.link.href')}
+              >
+                {highLevelT('accordionItems.copy.documents.link.copy')}
+              </ExternalLink>
+            </>
+          )}
+          {item === 'Legal' && <p>{highLevelT('accordionItems.copy.legal')}</p>}
+          <Table content={`${item.toLowerCase().replace(/\s+/g, '-')}`} />
+        </>
+      ),
+      expanded: index === 0,
+      headingLevel: 'h4',
+      id: `${item.toLowerCase().replace(/\s+/g, '-')}`
+    })
+  );
 
   const accordionItems: AccordionItemProps[] = [...accordionItemsMap];
 
@@ -118,7 +114,7 @@ const HighLevelProjectPlan = () => {
               rel="noopener noreferrer"
               className="display-flex flex-align-center width-fit-content margin-bottom-3"
             >
-              <IconFileDownload className="margin-right-1" />
+              <Icon.FileDownload className="margin-right-1" />
               <span>{highLevelT('downloadExcel')}</span>
             </Link>
 

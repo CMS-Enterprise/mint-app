@@ -13,6 +13,7 @@ export interface GetBeneficiaryIdentification_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
   beneficiaries: BeneficiariesType[];
+  diseaseSpecificGroup: string | null;
   beneficiariesOther: string | null;
   beneficiariesNote: string | null;
   treatDualElligibleDifferent: TriStateAnswer | null;

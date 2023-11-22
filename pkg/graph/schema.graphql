@@ -685,6 +685,7 @@ type PlanBeneficiaries {
   beneficiaries: [BeneficiariesType!]!
   beneficiariesOther: String
   beneficiariesNote: String
+  diseaseSpecificGroup: String
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
@@ -728,6 +729,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiaries: [BeneficiariesType!]
   beneficiariesOther: String
   beneficiariesNote: String
+  diseaseSpecificGroup: String
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
@@ -1976,6 +1978,7 @@ enum BeneficiariesType {
   MEDICAID
   DUALLY_ELIGIBLE
   DISEASE_SPECIFIC
+  UNDERSERVED
   OTHER
   NA
 }
@@ -2026,6 +2029,7 @@ enum ParticipantsType {
   COMMUNITY_BASED_ORGANIZATIONS
   NON_PROFIT_ORGANIZATIONS
   COMMERCIAL_PAYERS
+  ACCOUNTABLE_CARE_ORGANIZATION
   OTHER
 }
 

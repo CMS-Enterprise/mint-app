@@ -8,7 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconArrowBack,
+  Icon,
   Label,
   ProcessList,
   ProcessListHeading,
@@ -337,7 +337,11 @@ const Milestones = () => {
 
                           {(isDateInPast(values.clearanceEnds) ||
                             isDateInPast(values.clearanceStarts)) && (
-                            <Alert type="warning" className="margin-top-4">
+                            <Alert
+                              type="warning"
+                              className="margin-top-4"
+                              headingLevel="h4"
+                            >
                               {miscellaneousT('dateWarning')}
                             </Alert>
                           )}
@@ -406,7 +410,11 @@ const Milestones = () => {
 
                         {(isDateInPast(values.applicationsStart) ||
                           isDateInPast(values.applicationsEnd)) && (
-                          <Alert type="warning" className="margin-top-4">
+                          <Alert
+                            type="warning"
+                            className="margin-top-4"
+                            headingLevel="h4"
+                          >
                             {miscellaneousT('dateWarning')}
                           </Alert>
                         )}
@@ -461,7 +469,11 @@ const Milestones = () => {
 
                         {(isDateInPast(values.performancePeriodStarts) ||
                           isDateInPast(values.performancePeriodEnds)) && (
-                          <Alert type="warning" className="margin-top-4">
+                          <Alert
+                            type="warning"
+                            className="margin-top-4"
+                            headingLevel="h4"
+                          >
                             {miscellaneousT('dateWarning')}
                           </Alert>
                         )}
@@ -570,7 +582,7 @@ const Milestones = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() => handleFormSubmit('task-list')}
                     >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
+                      <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
                       {miscellaneousT('saveAndReturn')}
                     </Button>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, IconExpandLess, IconExpandMore } from '@trussworks/react-uswds';
+import { Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 type ImplementationStatusType = {
@@ -49,9 +49,9 @@ const ImplementationStatuses = ({
         )}
       >
         {infoToggle ? (
-          <IconExpandMore className="margin-right-05" />
+          <Icon.ExpandMore className="margin-right-05" />
         ) : (
-          <IconExpandLess className="margin-right-05 needs-question__rotate" />
+          <Icon.ExpandLess className="margin-right-05 needs-question__rotate" />
         )}
         {t('summaryBox.implementationStatuses')}
       </button>

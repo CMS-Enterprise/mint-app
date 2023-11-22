@@ -1,13 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import {
-  Card,
-  CardHeader,
-  Grid,
-  IconMailOutline,
-  Link
-} from '@trussworks/react-uswds';
+import { Card, CardHeader, Grid, Icon, Link } from '@trussworks/react-uswds';
 
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
@@ -38,7 +32,7 @@ const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
           target="_blank"
         >
           {collaborator.userAccount.email}
-          <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+          <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
         </Link>
       </CardHeader>
       <div>
@@ -90,7 +84,7 @@ const FilteredViewGroupings = ({
                     target="_blank"
                   >
                     {collaborator.userAccount.email}
-                    <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+                    <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
                   </Link>
                 </Grid>
               </React.Fragment>
