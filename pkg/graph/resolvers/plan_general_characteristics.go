@@ -57,3 +57,29 @@ func PlanGeneralCharacteristicsGetByModelPlanIDLOADER(ctx context.Context, model
 
 	return result.(*models.PlanGeneralCharacteristics), nil
 }
+
+func PlanGeneralCharacteristicsGetExistingModelName(ctx context.Context, planGeneralCharacteristics *models.PlanGeneralCharacteristics) (*string, error) {
+	if planGeneralCharacteristics.ExistingModelID == nil && planGeneralCharacteristics.CurrentModelPlanID == nil {
+		return nil, nil
+	}
+
+	if planGeneralCharacteristics.ExistingModelID != nil {
+		existingModel, err := ExistingModelGetByIDLOADER(ctx, *planGeneralCharacteristics.ExistingModelID)
+		if err != nil {
+			return nil, err
+		}
+
+		return models.StringPointer(existingModel.ModelName), nil
+	}
+
+	if planGeneralCharacteristics.CurrentModelPlanID != nil {
+		currentModel, err := ModelPlanGetByIDLOADER(ctx, *planGeneralCharacteristics.CurrentModelPlanID)
+		if err != nil {
+			return nil, err
+		}
+
+		return models.StringPointer(currentModel.ModelName), nil
+	}
+
+	return nil, nil
+}

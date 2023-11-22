@@ -590,6 +590,11 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
+// ExistingModel is the resolver for the existingModel field.
+func (r *planGeneralCharacteristicsResolver) ExistingModel(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*string, error) {
+	return resolvers.PlanGeneralCharacteristicsGetExistingModelName(ctx, obj)
+}
+
 // CurrentModelPlan is the resolver for the currentModelPlan field.
 func (r *planGeneralCharacteristicsResolver) CurrentModelPlan(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ModelPlan, error) {
 	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
