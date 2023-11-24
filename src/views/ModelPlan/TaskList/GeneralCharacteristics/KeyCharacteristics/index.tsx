@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,6 +12,13 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  AlternativePaymentModelType,
+  GetKeyCharacteristicsQuery,
+  KeyCharacteristic,
+  useGetKeyCharacteristicsQuery,
+  useUpdatePlanGeneralCharacteristicsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,23 +35,13 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
-import {
-  GetKeyCharacteristics as GetKeyCharacteristicsType,
-  GetKeyCharacteristics_modelPlan_generalCharacteristics as KeyCharacteristicsFormType,
-  GetKeyCharacteristicsVariables
-} from 'queries/GeneralCharacteristics/types/GetKeyCharacteristics';
-import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
-import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
-import {
-  AlternativePaymentModelType,
-  KeyCharacteristic
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+type KeyCharacteristicsFormType = GetKeyCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 
 const KeyCharacteristics = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -69,10 +65,7 @@ const KeyCharacteristics = () => {
   const formikRef = useRef<FormikProps<KeyCharacteristicsFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetKeyCharacteristicsType,
-    GetKeyCharacteristicsVariables
-  >(GetKeyCharacteristics, {
+  const { data, loading, error } = useGetKeyCharacteristicsQuery({
     variables: {
       id: modelID
     }
@@ -104,9 +97,7 @@ const KeyCharacteristics = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
-    UpdatePlanGeneralCharacteristics
-  );
+  const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
   const handleFormSubmit = (
     redirect?: 'next' | 'back' | 'task-list' | string

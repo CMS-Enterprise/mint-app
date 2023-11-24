@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -20,9 +19,12 @@ import {
   GetExistingModelPlansQuery,
   GetGeneralCharacteristicsQuery,
   GetModelPlansBaseQuery,
+  ModelPlanFilter,
   useGetExistingModelPlansQuery,
   useGetGeneralCharacteristicsQuery,
-  useGetModelPlansBaseQuery
+  useGetModelPlansBaseQuery,
+  useUpdateExistingModelLinksMutation,
+  useUpdatePlanGeneralCharacteristicsMutation
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
@@ -38,11 +40,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { UpdateExistingModelLinksVariables } from 'queries/GeneralCharacteristics/types/UpdateExistingModelLinks';
-import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
-import UpdateExistingModelLinks from 'queries/GeneralCharacteristics/UpdateExistingModelLinks';
-import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
-import { ModelPlanFilter } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -155,13 +152,9 @@ export const CharacteristicsContent = () => {
     );
   }, [data?.modelPlan?.existingModelLinks]);
 
-  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
-    UpdatePlanGeneralCharacteristics
-  );
+  const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
-  const [updateExistingLinks] = useMutation<UpdateExistingModelLinksVariables>(
-    UpdateExistingModelLinks
-  );
+  const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
 
   const handleFormSubmit = async (redirect?: 'next' | 'back') => {
     const { existingModelLinks: existingLinksInitial, ...initialValues } =

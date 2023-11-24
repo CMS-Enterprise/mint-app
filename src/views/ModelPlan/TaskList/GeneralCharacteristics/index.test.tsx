@@ -6,10 +6,9 @@ import {
   GetExistingModelPlansDocument,
   GetGeneralCharacteristicsDocument,
   GetGeneralCharacteristicsQuery,
-  GetModelPlansBaseDocument
+  GetModelPlansBaseDocument,
+  ModelPlanFilter
 } from 'gql/gen/graphql';
-
-import { ModelPlanFilter } from 'types/graphql-global-types';
 
 import { CharacteristicsContent, separateLinksByType } from './index';
 

@@ -2669,6 +2669,30 @@ export type GetGeneralCharacteristicsQueryVariables = Exact<{
 
 export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null } } };
 
+export type GetKeyCharacteristicsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetKeyCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
+export type UpdateExistingModelLinksMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']> | Scalars['UUID']['input']>;
+}>;
+
+
+export type UpdateExistingModelLinksMutation = { __typename: 'Mutation', updateExistingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, existingModel?: { __typename: 'ExistingModel', id?: number | null, modelName?: string | null } | null }> };
+
+export type UpdatePlanGeneralCharacteristicsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanGeneralCharacteristicsChanges;
+}>;
+
+
+export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation', updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID } };
+
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3110,6 +3134,142 @@ export type GetGeneralCharacteristicsQueryHookResult = ReturnType<typeof useGetG
 export type GetGeneralCharacteristicsLazyQueryHookResult = ReturnType<typeof useGetGeneralCharacteristicsLazyQuery>;
 export type GetGeneralCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useGetGeneralCharacteristicsSuspenseQuery>;
 export type GetGeneralCharacteristicsQueryResult = Apollo.QueryResult<GetGeneralCharacteristicsQuery, GetGeneralCharacteristicsQueryVariables>;
+export const GetKeyCharacteristicsDocument = gql`
+    query GetKeyCharacteristics($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    generalCharacteristics {
+      id
+      alternativePaymentModelTypes
+      alternativePaymentModelNote
+      keyCharacteristics
+      keyCharacteristicsNote
+      keyCharacteristicsOther
+      collectPlanBids
+      collectPlanBidsNote
+      managePartCDEnrollment
+      managePartCDEnrollmentNote
+      planContractUpdated
+      planContractUpdatedNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetKeyCharacteristicsQuery__
+ *
+ * To run a query within a React component, call `useGetKeyCharacteristicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetKeyCharacteristicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetKeyCharacteristicsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetKeyCharacteristicsQuery(baseOptions: Apollo.QueryHookOptions<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>(GetKeyCharacteristicsDocument, options);
+      }
+export function useGetKeyCharacteristicsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>(GetKeyCharacteristicsDocument, options);
+        }
+export function useGetKeyCharacteristicsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>(GetKeyCharacteristicsDocument, options);
+        }
+export type GetKeyCharacteristicsQueryHookResult = ReturnType<typeof useGetKeyCharacteristicsQuery>;
+export type GetKeyCharacteristicsLazyQueryHookResult = ReturnType<typeof useGetKeyCharacteristicsLazyQuery>;
+export type GetKeyCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useGetKeyCharacteristicsSuspenseQuery>;
+export type GetKeyCharacteristicsQueryResult = Apollo.QueryResult<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>;
+export const UpdateExistingModelLinksDocument = gql`
+    mutation UpdateExistingModelLinks($modelPlanID: UUID!, $existingModelIDs: [Int!], $currentModelPlanIDs: [UUID!]) {
+  updateExistingModelLinks(
+    modelPlanID: $modelPlanID
+    existingModelIDs: $existingModelIDs
+    currentModelPlanIDs: $currentModelPlanIDs
+  ) {
+    id
+    existingModelID
+    existingModel {
+      id
+      modelName
+    }
+  }
+}
+    `;
+export type UpdateExistingModelLinksMutationFn = Apollo.MutationFunction<UpdateExistingModelLinksMutation, UpdateExistingModelLinksMutationVariables>;
+
+/**
+ * __useUpdateExistingModelLinksMutation__
+ *
+ * To run a mutation, you first call `useUpdateExistingModelLinksMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateExistingModelLinksMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateExistingModelLinksMutation, { data, loading, error }] = useUpdateExistingModelLinksMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      existingModelIDs: // value for 'existingModelIDs'
+ *      currentModelPlanIDs: // value for 'currentModelPlanIDs'
+ *   },
+ * });
+ */
+export function useUpdateExistingModelLinksMutation(baseOptions?: Apollo.MutationHookOptions<UpdateExistingModelLinksMutation, UpdateExistingModelLinksMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateExistingModelLinksMutation, UpdateExistingModelLinksMutationVariables>(UpdateExistingModelLinksDocument, options);
+      }
+export type UpdateExistingModelLinksMutationHookResult = ReturnType<typeof useUpdateExistingModelLinksMutation>;
+export type UpdateExistingModelLinksMutationResult = Apollo.MutationResult<UpdateExistingModelLinksMutation>;
+export type UpdateExistingModelLinksMutationOptions = Apollo.BaseMutationOptions<UpdateExistingModelLinksMutation, UpdateExistingModelLinksMutationVariables>;
+export const UpdatePlanGeneralCharacteristicsDocument = gql`
+    mutation UpdatePlanGeneralCharacteristics($id: UUID!, $changes: PlanGeneralCharacteristicsChanges!) {
+  updatePlanGeneralCharacteristics(id: $id, changes: $changes) {
+    id
+  }
+}
+    `;
+export type UpdatePlanGeneralCharacteristicsMutationFn = Apollo.MutationFunction<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
+
+/**
+ * __useUpdatePlanGeneralCharacteristicsMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlanGeneralCharacteristicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlanGeneralCharacteristicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlanGeneralCharacteristicsMutation, { data, loading, error }] = useUpdatePlanGeneralCharacteristicsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdatePlanGeneralCharacteristicsMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>(UpdatePlanGeneralCharacteristicsDocument, options);
+      }
+export type UpdatePlanGeneralCharacteristicsMutationHookResult = ReturnType<typeof useUpdatePlanGeneralCharacteristicsMutation>;
+export type UpdatePlanGeneralCharacteristicsMutationResult = Apollo.MutationResult<UpdatePlanGeneralCharacteristicsMutation>;
+export type UpdatePlanGeneralCharacteristicsMutationOptions = Apollo.BaseMutationOptions<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {
