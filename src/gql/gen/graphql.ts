@@ -2669,6 +2669,13 @@ export type GetGeneralCharacteristicsQueryVariables = Exact<{
 
 export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null } } };
 
+export type GetInvolvementsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetInvolvementsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null } } };
+
 export type GetKeyCharacteristicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3134,6 +3141,59 @@ export type GetGeneralCharacteristicsQueryHookResult = ReturnType<typeof useGetG
 export type GetGeneralCharacteristicsLazyQueryHookResult = ReturnType<typeof useGetGeneralCharacteristicsLazyQuery>;
 export type GetGeneralCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useGetGeneralCharacteristicsSuspenseQuery>;
 export type GetGeneralCharacteristicsQueryResult = Apollo.QueryResult<GetGeneralCharacteristicsQuery, GetGeneralCharacteristicsQueryVariables>;
+export const GetInvolvementsDocument = gql`
+    query GetInvolvements($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    generalCharacteristics {
+      id
+      careCoordinationInvolved
+      careCoordinationInvolvedDescription
+      careCoordinationInvolvedNote
+      additionalServicesInvolved
+      additionalServicesInvolvedDescription
+      additionalServicesInvolvedNote
+      communityPartnersInvolved
+      communityPartnersInvolvedDescription
+      communityPartnersInvolvedNote
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetInvolvementsQuery__
+ *
+ * To run a query within a React component, call `useGetInvolvementsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetInvolvementsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetInvolvementsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetInvolvementsQuery(baseOptions: Apollo.QueryHookOptions<GetInvolvementsQuery, GetInvolvementsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetInvolvementsQuery, GetInvolvementsQueryVariables>(GetInvolvementsDocument, options);
+      }
+export function useGetInvolvementsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetInvolvementsQuery, GetInvolvementsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetInvolvementsQuery, GetInvolvementsQueryVariables>(GetInvolvementsDocument, options);
+        }
+export function useGetInvolvementsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetInvolvementsQuery, GetInvolvementsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetInvolvementsQuery, GetInvolvementsQueryVariables>(GetInvolvementsDocument, options);
+        }
+export type GetInvolvementsQueryHookResult = ReturnType<typeof useGetInvolvementsQuery>;
+export type GetInvolvementsLazyQueryHookResult = ReturnType<typeof useGetInvolvementsLazyQuery>;
+export type GetInvolvementsSuspenseQueryHookResult = ReturnType<typeof useGetInvolvementsSuspenseQuery>;
+export type GetInvolvementsQueryResult = Apollo.QueryResult<GetInvolvementsQuery, GetInvolvementsQueryVariables>;
 export const GetKeyCharacteristicsDocument = gql`
     query GetKeyCharacteristics($id: UUID!) {
   modelPlan(id: $id) {

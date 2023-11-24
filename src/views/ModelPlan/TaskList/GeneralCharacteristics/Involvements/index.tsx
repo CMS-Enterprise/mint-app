@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,7 +11,11 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanGeneralCharacteristicsMutation } from 'gql/gen/graphql';
+import {
+  GetInvolvementsQuery,
+  useGetInvolvementsQuery,
+  useUpdatePlanGeneralCharacteristicsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -25,16 +28,12 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetInvolvements from 'queries/GeneralCharacteristics/GetInvolvements';
-import {
-  GetInvolvements as GetInvolvementsType,
-  GetInvolvements_modelPlan_generalCharacteristics as InvolvementsFormType,
-  GetInvolvementsVariables
-} from 'queries/GeneralCharacteristics/types/GetInvolvements';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
+
+type InvolvementsFormType = GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
 
 const Involvements = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -56,10 +55,7 @@ const Involvements = () => {
   const formikRef = useRef<FormikProps<InvolvementsFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetInvolvementsType,
-    GetInvolvementsVariables
-  >(GetInvolvements, {
+  const { data, loading, error } = useGetInvolvementsQuery({
     variables: {
       id: modelID
     }
