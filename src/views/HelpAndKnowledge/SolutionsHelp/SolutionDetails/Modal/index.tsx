@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
+import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -129,7 +129,7 @@ const SolutionDetailsModal = ({
               aria-label="Close Modal"
               onClick={closeModal}
             >
-              <IconClose size={4} className="text-base" />
+              <Icon.Close size={4} className="text-base" />
             </button>
             <h4 className="margin-0">{t('operationalSolutions')}</h4>
           </div>

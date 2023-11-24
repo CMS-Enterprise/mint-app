@@ -10,7 +10,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
@@ -397,7 +397,7 @@ const AnticipateDependencies = () => {
                           className="usa-button usa-button--unstyled"
                           onClick={() => handleFormSubmit('task-list')}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

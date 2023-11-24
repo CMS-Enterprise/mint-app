@@ -1,12 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import {
-  Card,
-  CardGroup,
-  Grid,
-  IconArrowForward
-} from '@trussworks/react-uswds';
+import { Card, CardGroup, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -106,7 +101,7 @@ const SolutionHelpCard = ({
               }solution=${solution.route}&section=about`}
             >
               {t('aboutSolution')}
-              <IconArrowForward className="margin-left-1" />
+              <Icon.ArrowForward className="margin-left-1" />
             </UswdsReactLink>
           </div>
         </div>

@@ -3,7 +3,11 @@ Wrapper for Truss' <Alert> component to allow for manually closing the component
 */
 
 import React, { useEffect, useState } from 'react';
-import { Alert as TrussAlert, Button } from '@trussworks/react-uswds';
+import {
+  Alert as TrussAlert,
+  Button,
+  HeadingLevel
+} from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
 import './index.scss';
@@ -18,6 +22,7 @@ type AlertProps = {
   noIcon?: boolean;
   inline?: boolean;
   isClosable?: boolean;
+  headingLevel?: HeadingLevel;
   closeAlert?: (closed: any) => void;
 } & JSX.IntrinsicElements['div'];
 
@@ -30,6 +35,7 @@ export const Alert = ({
   noIcon,
   className,
   inline,
+  headingLevel = 'h4',
   // Default to closable button if type = success or error
   isClosable = type === 'success' || type === 'error',
   closeAlert,
@@ -62,6 +68,7 @@ export const Alert = ({
           noIcon={noIcon}
           className={classes}
           {...props}
+          headingLevel={headingLevel}
         >
           <span>{children}</span>
           {isClosable && (

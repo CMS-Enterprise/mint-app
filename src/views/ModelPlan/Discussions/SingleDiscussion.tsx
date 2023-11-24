@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconAnnouncement } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
@@ -65,7 +65,7 @@ const SingleDiscussion = ({
           className="display-flex flex-align-center"
           style={{ gap: '0.5rem' }}
         >
-          <IconAnnouncement className="text-primary" />
+          <Icon.Announcement className="text-primary" />
           <Button
             type="button"
             unstyled

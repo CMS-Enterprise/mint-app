@@ -1,11 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  IconArrowForward
-} from '@trussworks/react-uswds';
+import { Card, CardBody, CardHeader, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -46,7 +41,7 @@ const CategoryCard = ({ className, category, route }: CategoryCardProps) => {
           aria-label={`${t('learnMore')} about ${category}`}
         >
           {t('learnMore')}
-          <IconArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" />
         </UswdsReactLink>
       </CardBody>
     </Card>
