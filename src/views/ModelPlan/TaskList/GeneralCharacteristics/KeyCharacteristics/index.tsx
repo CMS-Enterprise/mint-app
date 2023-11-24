@@ -86,9 +86,8 @@ const KeyCharacteristics = () => {
     managePartCDEnrollmentNote,
     planContractUpdated,
     planContractUpdatedNote
-  } =
-    data?.modelPlan?.generalCharacteristics ||
-    ({} as KeyCharacteristicsFormType);
+  } = (data?.modelPlan?.generalCharacteristics ||
+    {}) as KeyCharacteristicsFormType;
 
   const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
     need => need.modifiedDts

@@ -86,9 +86,8 @@ const TargetsAndOptions = () => {
     agreementTypesOther,
     multiplePatricipationAgreementsNeeded,
     multiplePatricipationAgreementsNeededNote
-  } =
-    data?.modelPlan?.generalCharacteristics ||
-    ({} as TargetsAndOptionsFormType);
+  } = (data?.modelPlan?.generalCharacteristics ||
+    {}) as TargetsAndOptionsFormType;
 
   const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
     need => need.modifiedDts

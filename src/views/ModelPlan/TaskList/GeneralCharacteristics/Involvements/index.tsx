@@ -74,7 +74,7 @@ const Involvements = () => {
     communityPartnersInvolved,
     communityPartnersInvolvedDescription,
     communityPartnersInvolvedNote
-  } = data?.modelPlan?.generalCharacteristics || ({} as InvolvementsFormType);
+  } = (data?.modelPlan?.generalCharacteristics || {}) as InvolvementsFormType;
 
   const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 

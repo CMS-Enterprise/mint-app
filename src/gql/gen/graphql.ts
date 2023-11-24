@@ -2662,6 +2662,13 @@ export type CreatSendFeedbackMutation = { __typename: 'Mutation', sendFeedbackEm
 
 export type ReadyForReviewUserFragmentFragment = { __typename: 'UserAccount', id: UUID, commonName: string };
 
+export type GetAuthorityQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAuthorityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
+
 export type GetGeneralCharacteristicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3091,6 +3098,65 @@ export function useCreatSendFeedbackMutation(baseOptions?: Apollo.MutationHookOp
 export type CreatSendFeedbackMutationHookResult = ReturnType<typeof useCreatSendFeedbackMutation>;
 export type CreatSendFeedbackMutationResult = Apollo.MutationResult<CreatSendFeedbackMutation>;
 export type CreatSendFeedbackMutationOptions = Apollo.BaseMutationOptions<CreatSendFeedbackMutation, CreatSendFeedbackMutationVariables>;
+export const GetAuthorityDocument = gql`
+    query GetAuthority($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    generalCharacteristics {
+      id
+      rulemakingRequired
+      rulemakingRequiredDescription
+      rulemakingRequiredNote
+      authorityAllowances
+      authorityAllowancesOther
+      authorityAllowancesNote
+      waiversRequired
+      waiversRequiredTypes
+      waiversRequiredNote
+      readyForReviewByUserAccount {
+        id
+        commonName
+      }
+      readyForReviewDts
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAuthorityQuery__
+ *
+ * To run a query within a React component, call `useGetAuthorityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAuthorityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAuthorityQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAuthorityQuery(baseOptions: Apollo.QueryHookOptions<GetAuthorityQuery, GetAuthorityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAuthorityQuery, GetAuthorityQueryVariables>(GetAuthorityDocument, options);
+      }
+export function useGetAuthorityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAuthorityQuery, GetAuthorityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAuthorityQuery, GetAuthorityQueryVariables>(GetAuthorityDocument, options);
+        }
+export function useGetAuthoritySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAuthorityQuery, GetAuthorityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAuthorityQuery, GetAuthorityQueryVariables>(GetAuthorityDocument, options);
+        }
+export type GetAuthorityQueryHookResult = ReturnType<typeof useGetAuthorityQuery>;
+export type GetAuthorityLazyQueryHookResult = ReturnType<typeof useGetAuthorityLazyQuery>;
+export type GetAuthoritySuspenseQueryHookResult = ReturnType<typeof useGetAuthoritySuspenseQuery>;
+export type GetAuthorityQueryResult = Apollo.QueryResult<GetAuthorityQuery, GetAuthorityQueryVariables>;
 export const GetGeneralCharacteristicsDocument = gql`
     query GetGeneralCharacteristics($id: UUID!) {
   modelPlan(id: $id) {

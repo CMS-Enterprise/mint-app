@@ -4,6 +4,7 @@
 */
 import {
   AgreementType,
+  AuthorityAllowance,
   CmmiGroup,
   CmsCenter,
   GeographyApplication,
@@ -11,7 +12,8 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelType,
-  TaskStatus
+  TaskStatus,
+  WaiverType
 } from 'gql/gen/graphql';
 
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
@@ -20,7 +22,6 @@ import {
   AgencyOrStateHelpType,
   AlternativePaymentModelType,
   AnticipatedPaymentFrequencyType,
-  AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
   CcmInvolvmentType,
@@ -55,8 +56,7 @@ import {
   StakeholdersType,
   TeamRole,
   TriStateAnswer,
-  TrustFundType,
-  WaiverType
+  TrustFundType
 } from './graphql-global-types';
 
 // Util used to preserve type defintions when mapping over keys of object
