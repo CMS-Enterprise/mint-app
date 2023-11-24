@@ -2683,6 +2683,13 @@ export type GetKeyCharacteristicsQueryVariables = Exact<{
 
 export type GetKeyCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
+export type GetTargetsAndOptionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+
 export type UpdateExistingModelLinksMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
@@ -3252,6 +3259,66 @@ export type GetKeyCharacteristicsQueryHookResult = ReturnType<typeof useGetKeyCh
 export type GetKeyCharacteristicsLazyQueryHookResult = ReturnType<typeof useGetKeyCharacteristicsLazyQuery>;
 export type GetKeyCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useGetKeyCharacteristicsSuspenseQuery>;
 export type GetKeyCharacteristicsQueryResult = Apollo.QueryResult<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>;
+export const GetTargetsAndOptionsDocument = gql`
+    query GetTargetsAndOptions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    generalCharacteristics {
+      id
+      geographiesTargeted
+      geographiesTargetedTypes
+      geographiesTargetedTypesOther
+      geographiesTargetedAppliedTo
+      geographiesTargetedAppliedToOther
+      geographiesTargetedNote
+      participationOptions
+      participationOptionsNote
+      agreementTypes
+      agreementTypesOther
+      multiplePatricipationAgreementsNeeded
+      multiplePatricipationAgreementsNeededNote
+    }
+    operationalNeeds {
+      id
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTargetsAndOptionsQuery__
+ *
+ * To run a query within a React component, call `useGetTargetsAndOptionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTargetsAndOptionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTargetsAndOptionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTargetsAndOptionsQuery(baseOptions: Apollo.QueryHookOptions<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>(GetTargetsAndOptionsDocument, options);
+      }
+export function useGetTargetsAndOptionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>(GetTargetsAndOptionsDocument, options);
+        }
+export function useGetTargetsAndOptionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>(GetTargetsAndOptionsDocument, options);
+        }
+export type GetTargetsAndOptionsQueryHookResult = ReturnType<typeof useGetTargetsAndOptionsQuery>;
+export type GetTargetsAndOptionsLazyQueryHookResult = ReturnType<typeof useGetTargetsAndOptionsLazyQuery>;
+export type GetTargetsAndOptionsSuspenseQueryHookResult = ReturnType<typeof useGetTargetsAndOptionsSuspenseQuery>;
+export type GetTargetsAndOptionsQueryResult = Apollo.QueryResult<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>;
 export const UpdateExistingModelLinksDocument = gql`
     mutation UpdateExistingModelLinks($modelPlanID: UUID!, $existingModelIDs: [Int!], $currentModelPlanIDs: [UUID!]) {
   updateExistingModelLinks(

@@ -3,8 +3,12 @@
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
 import {
+  AgreementType,
   CmmiGroup,
   CmsCenter,
+  GeographyApplication,
+  GeographyType,
+  KeyCharacteristic,
   ModelCategory,
   ModelType,
   TaskStatus
@@ -14,7 +18,6 @@ import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/Bod
 
 import {
   AgencyOrStateHelpType,
-  AgreementType,
   AlternativePaymentModelType,
   AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
@@ -33,9 +36,6 @@ import {
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
-  GeographyApplication,
-  GeographyType,
-  KeyCharacteristic,
   ModelLearningSystemType,
   ModelStatus,
   MonitoringFileType,

@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,7 +11,14 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanGeneralCharacteristicsMutation } from 'gql/gen/graphql';
+import {
+  AgreementType,
+  GeographyApplication,
+  GeographyType,
+  GetTargetsAndOptionsQuery,
+  useGetTargetsAndOptionsQuery,
+  useUpdatePlanGeneralCharacteristicsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -28,21 +34,12 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetTargetsAndOptions from 'queries/GeneralCharacteristics/GetTargetsAndOptions';
-import {
-  GetTargetsAndOptions as GetTargetsAndOptionsType,
-  GetTargetsAndOptions_modelPlan_generalCharacteristics as TargetsAndOptionsFormType,
-  GetTargetsAndOptionsVariables
-} from 'queries/GeneralCharacteristics/types/GetTargetsAndOptions';
-import {
-  AgreementType,
-  GeographyApplication,
-  GeographyType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
+
+type TargetsAndOptionsFormType = GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
 
 const TargetsAndOptions = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -67,10 +64,7 @@ const TargetsAndOptions = () => {
   const formikRef = useRef<FormikProps<TargetsAndOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetTargetsAndOptionsType,
-    GetTargetsAndOptionsVariables
-  >(GetTargetsAndOptions, {
+  const { data, loading, error } = useGetTargetsAndOptionsQuery({
     variables: {
       id: modelID
     }
