@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -36,7 +37,7 @@ func ModelPlanCreate(
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.ModelPlan, error) {
 
-	newPlan, err := storage.WithTransaction[models.ModelPlan](store, func(tx *storage.Transaction) (*models.ModelPlan, error) {
+	newPlan, err := storage.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
 
 		err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
@@ -129,7 +130,7 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		return createdPlan, tx.Errors()
+		return createdPlan, nil
 	})
 	if err != nil {
 		return nil, err

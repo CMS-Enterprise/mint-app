@@ -51,10 +51,10 @@ func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserA
 
 // UserAccountGetByIDTransaction gets a User account from the database by its internal id.
 // The transaction object does not commit or rollback in the scope of this function
-func (s *Store) UserAccountGetByIDTransaction(t *Transaction, id uuid.UUID) (*authentication.UserAccount, error) {
+func (s *Store) UserAccountGetByIDTransaction(np NamedPreparer, id uuid.UUID) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	stmt, err := t.tx.PrepareNamed(userAccountGetByID)
+	stmt, err := np.PrepareNamed(userAccountGetByID)
 	if err != nil {
 		return nil, err
 	}
