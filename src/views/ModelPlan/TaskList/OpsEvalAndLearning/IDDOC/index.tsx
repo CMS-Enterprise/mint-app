@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,7 +12,11 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
+import {
+  GetIddocQuery,
+  useGetIddocQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -27,12 +30,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetIDDOC from 'queries/OpsEvalAndLearning/GetIDDOC';
-import {
-  GetIDDOC as GetIDDOCType,
-  GetIDDOC_modelPlan_opsEvalAndLearning as IDDOCFormType,
-  GetIDDOCVariables
-} from 'queries/OpsEvalAndLearning/types/GetIDDOC';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -44,6 +41,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type IDDOCFormType = GetIddocQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOC = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -63,14 +62,11 @@ const IDDOC = () => {
   const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetIDDOCType, GetIDDOCVariables>(
-    GetIDDOC,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetIddocQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -85,7 +81,7 @@ const IDDOC = () => {
     icdOwner,
     draftIcdDueDate,
     icdNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as IDDOCFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
