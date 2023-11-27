@@ -2,15 +2,16 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
-import { GetCCWAndQuality_modelPlan_opsEvalAndLearning as GetCCWAndQualityType } from 'queries/OpsEvalAndLearning/types/GetCCWAndQuality';
 import {
   CcmInvolvmentType,
-  DataForMonitoringType
-} from 'types/graphql-global-types';
+  DataForMonitoringType,
+  GetCcwAndQualityDocument,
+  GetCcwAndQualityQuery
+} from 'gql/gen/graphql';
 
 import CCWAndQuality from '.';
+
+type GetCCWAndQualityType = GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
 
 const ccwAndQualityMockData: GetCCWAndQualityType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -36,7 +37,7 @@ const ccwAndQualityMockData: GetCCWAndQualityType = {
 const ccwAndQualityMock = [
   {
     request: {
-      query: GetCCWAndQuality,
+      query: GetCcwAndQualityDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
