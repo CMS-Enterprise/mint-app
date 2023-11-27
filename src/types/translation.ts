@@ -9,8 +9,10 @@ import {
   ModelType,
   ParticipantCommunicationType,
   ParticipantRiskType,
+  ParticipantSelectionType,
   ParticipantsIdType,
   ParticipantsType,
+  RecruitmentType,
   TaskStatus
 } from 'gql/gen/graphql';
 
@@ -45,12 +47,10 @@ import {
   MonitoringFileType,
   NonClaimsBasedPayType,
   OverlapType,
-  ParticipantSelectionType,
   PayRecipient,
   PayType,
   ProviderAddType,
   ProviderLeaveType,
-  RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
   TeamRole,
