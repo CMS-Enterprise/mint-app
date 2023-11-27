@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -17,6 +17,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useUpdateModelPlanBeneficiariesMutation } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -35,8 +36,6 @@ import {
   GetPeopleImpacted_modelPlan_beneficiaries as PeopleImpactedFormType,
   GetPeopleImpactedVariables
 } from 'queries/Beneficiaries/types/GetPeopleImpacted';
-import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
-import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import { SelectionMethodType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -82,9 +81,7 @@ const PeopleImpact = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
-    UpdateModelPlanBeneficiaries
-  );
+  const [update] = useUpdateModelPlanBeneficiariesMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
