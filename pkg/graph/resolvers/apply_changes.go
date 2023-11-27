@@ -5,7 +5,10 @@ import (
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
+	"github.com/google/uuid"
 	"github.com/mitchellh/mapstructure"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // sanitizeChanges performs some pre-processing of the changes map for "known" cases that we'd like to handle.
@@ -56,6 +59,15 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 			if b == reflect.TypeOf(time.Time{}) && a == reflect.TypeOf("") {
 				t, err := time.Parse(time.RFC3339Nano, v.(string))
 				return t, err
+			}
+
+			// If the destination is a uuid and we need to parse it from a string
+			if b == reflect.TypeOf(uuid.UUID{}) && a == reflect.TypeOf("") {
+				if v == nil || v == "" {
+					return nil, nil
+				}
+
+				return models.UnmarshalUUID(v)
 			}
 
 			// If the desination implements graphql.Unmarshaler

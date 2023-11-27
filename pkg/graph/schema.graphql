@@ -424,7 +424,7 @@ type TaggedContent {
   """
   RawContent is HTML. It is sanitized on the backend
   """
-  rawContent: String! 
+  rawContent: String!
   tags: [Tag!]!
 }
 
@@ -526,6 +526,10 @@ type PlanGeneralCharacteristics {
   # Page 1
   isNewModel: Boolean
   existingModel: String
+  currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
+  existingModelID: Int
+  existingModelPlan: ExistingModel
   resemblesExistingModel: Boolean
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
@@ -609,6 +613,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   # Page 1
   isNewModel: Boolean
   existingModel: String
+  currentModelPlanID: UUID
+  existingModelID: Int
   resemblesExistingModel: Boolean
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String

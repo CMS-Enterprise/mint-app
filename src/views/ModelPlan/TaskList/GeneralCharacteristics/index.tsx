@@ -53,8 +53,12 @@ import TargetsAndOptions from './TargetsAndOptions';
 type GeneralCharacteristicsFormType = GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 
 interface GetGeneralCharacteristicsFormTypeWithLinks
-  extends GeneralCharacteristicsFormType {
+  extends Omit<
+    GeneralCharacteristicsFormType,
+    'currentModelPlanID' | 'existingModelID'
+  > {
   existingModelLinks: (string | number)[];
+  existingModel: string | number | null;
 }
 
 export const CharacteristicsContent = () => {
@@ -132,15 +136,19 @@ export const CharacteristicsContent = () => {
   const {
     id,
     isNewModel,
-    existingModel,
+    currentModelPlanID,
+    existingModelID,
     resemblesExistingModel,
     resemblesExistingModelHow,
     resemblesExistingModelNote,
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote
-  } = (data?.modelPlan?.generalCharacteristics ||
-    {}) as GetGeneralCharacteristicsFormTypeWithLinks;
+  } =
+    data?.modelPlan?.generalCharacteristics ||
+    ({} as GeneralCharacteristicsFormType);
+
+  const existingModel = currentModelPlanID || existingModelID;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -157,11 +165,12 @@ export const CharacteristicsContent = () => {
   const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
 
   const handleFormSubmit = async (redirect?: 'next' | 'back') => {
+    const formValues = formikRef?.current?.values!;
+
     const { existingModelLinks: existingLinksInitial, ...initialValues } =
       formikRef?.current?.initialValues || {};
 
-    const { existingModelLinks: existingLinks, ...values } =
-      formikRef?.current?.values || {};
+    const { existingModelLinks: existingLinks, ...values } = formValues || {};
 
     const linksToUpdate = separateLinksByType(
       existingLinks || [],
@@ -169,11 +178,26 @@ export const CharacteristicsContent = () => {
       existingModelData?.existingModelCollection || []
     );
 
+    const genCharUpdates = dirtyInput(initialValues, values);
+
+    // Checking if the existing model is a MINT model plan or an import/existing model plan
+    if (typeof genCharUpdates.existingModel === 'number') {
+      genCharUpdates.existingModelID = genCharUpdates.existingModel;
+    } else if (typeof genCharUpdates.existingModel === 'string') {
+      genCharUpdates.currentModelPlanID = genCharUpdates.existingModel;
+    } else if (genCharUpdates.existingModel === null) {
+      genCharUpdates.existingModelID = null;
+      genCharUpdates.currentModelPlanID = null;
+    }
+
+    // As existingModel is only a FE value/not persisted on BE, we want to remove it from the payload
+    delete genCharUpdates.existingModel;
+
     await Promise.allSettled([
       update({
         variables: {
           id,
-          changes: dirtyInput(initialValues, values)
+          changes: genCharUpdates
         }
       }),
       updateExistingLinks({
@@ -184,6 +208,15 @@ export const CharacteristicsContent = () => {
       })
     ])
       .then(response => {
+        const anyError = response.find(res => res.status === 'rejected');
+
+        if (anyError) {
+          formikRef?.current?.setErrors({
+            existingModelLinks: miscellaneousT('apolloFailField')
+          });
+          return;
+        }
+
         if (redirect === 'next') {
           history.push(
             `/models/${modelID}/task-list/characteristics/key-characteristics`
@@ -341,37 +374,40 @@ export const CharacteristicsContent = () => {
                           {flatErrors.existingModel}
                         </FieldErrorMsg>
 
-                        <ComboBox
-                          disabled={!!modelError || !!existingModelError}
-                          data-test-id="plan-characteristics-existing-model"
-                          id="plan-characteristics-existing-model"
-                          name="existingModel"
-                          className={classNames({
-                            disabled: !!modelError || !!existingModelError
-                          })}
-                          inputProps={{
-                            id: 'plan-characteristics-existing-model',
-                            name: 'existingModel',
-                            'aria-describedby':
-                              'plan-characteristics-existing-model'
-                          }}
-                          options={modelPlanOptions}
-                          defaultValue={
-                            modelPlanOptions.find(
-                              modelPlan => modelPlan.label === existingModel
-                            )?.value || ''
-                          }
-                          onChange={modelPlanID => {
-                            const model = modelPlanOptions.find(
-                              modelPlan => modelPlan.value === modelPlanID
-                            );
-                            if (model) {
-                              setFieldValue('existingModel', model.label);
-                            } else {
-                              setFieldValue('existingModel', '');
+                        {!loading && (
+                          <Field
+                            as={ComboBox}
+                            disabled={!!modelError || !!existingModelError}
+                            data-test-id="plan-characteristics-existing-model"
+                            id="plan-characteristics-existing-model"
+                            name="existingModel"
+                            className={classNames({
+                              disabled: !!modelError || !!existingModelError
+                            })}
+                            inputProps={{
+                              id: 'plan-characteristics-existing-model',
+                              name: 'existingModel',
+                              'aria-describedby':
+                                'plan-characteristics-existing-model'
+                            }}
+                            options={modelPlanOptions}
+                            defaultValue={
+                              modelPlanOptions.find(
+                                modelPlan => modelPlan.value === existingModel
+                              )?.value || undefined
                             }
-                          }}
-                        />
+                            onChange={(modelPlanID: string | number) => {
+                              const model = modelPlanOptions.find(
+                                modelPlan => modelPlan.value === modelPlanID
+                              );
+                              if (model) {
+                                setFieldValue('existingModel', model.value);
+                              } else {
+                                setFieldValue('existingModel', null);
+                              }
+                            }}
+                          />
+                        )}
                       </FieldGroup>
                     )}
                   </FieldGroup>

@@ -32,7 +32,8 @@ export const miscellaneous: Record<string, string> = {
   modelPlanCopy:
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
-  validDate: 'Please use a valid date format.'
+  validDate: 'Please use a valid date format.',
+  apolloFailField: 'Failed to save field value/s'
 };
 
 export default miscellaneous;

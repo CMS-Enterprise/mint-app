@@ -1495,7 +1495,11 @@ export type PlanGeneralCharacteristics = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  currentModelPlan?: Maybe<ModelPlan>;
+  currentModelPlanID?: Maybe<Scalars['UUID']['output']>;
   existingModel?: Maybe<Scalars['String']['output']>;
+  existingModelID?: Maybe<Scalars['Int']['output']>;
+  existingModelPlan?: Maybe<ExistingModel>;
   geographiesTargeted?: Maybe<Scalars['Boolean']['output']>;
   geographiesTargetedAppliedTo: Array<GeographyApplication>;
   geographiesTargetedAppliedToOther?: Maybe<Scalars['String']['output']>;
@@ -1565,7 +1569,9 @@ export type PlanGeneralCharacteristicsChanges = {
   communityPartnersInvolved?: InputMaybe<Scalars['Boolean']['input']>;
   communityPartnersInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
   communityPartnersInvolvedNote?: InputMaybe<Scalars['String']['input']>;
+  currentModelPlanID?: InputMaybe<Scalars['UUID']['input']>;
   existingModel?: InputMaybe<Scalars['String']['input']>;
+  existingModelID?: InputMaybe<Scalars['Int']['input']>;
   geographiesTargeted?: InputMaybe<Scalars['Boolean']['input']>;
   geographiesTargetedAppliedTo?: InputMaybe<Array<GeographyApplication>>;
   geographiesTargetedAppliedToOther?: InputMaybe<Scalars['String']['input']>;
@@ -2674,7 +2680,7 @@ export type GetGeneralCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null } } };
+export type GetGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null } } };
 
 export type GetInvolvementsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3170,7 +3176,8 @@ export const GetGeneralCharacteristicsDocument = gql`
     generalCharacteristics {
       id
       isNewModel
-      existingModel
+      currentModelPlanID
+      existingModelID
       resemblesExistingModel
       resemblesExistingModelHow
       resemblesExistingModelNote
