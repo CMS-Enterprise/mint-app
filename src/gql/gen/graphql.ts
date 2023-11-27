@@ -2737,6 +2737,21 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
+export type GetOpsEvalAndLearningQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
+export type UpdatePlanOpsEvalAndLearningMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanOpsEvalAndLearningChanges;
+}>;
+
+
+export type UpdatePlanOpsEvalAndLearningMutation = { __typename: 'Mutation', updatePlanOpsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID } };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3591,6 +3606,103 @@ export type GetNdaQueryHookResult = ReturnType<typeof useGetNdaQuery>;
 export type GetNdaLazyQueryHookResult = ReturnType<typeof useGetNdaLazyQuery>;
 export type GetNdaSuspenseQueryHookResult = ReturnType<typeof useGetNdaSuspenseQuery>;
 export type GetNdaQueryResult = Apollo.QueryResult<GetNdaQuery, GetNdaQueryVariables>;
+export const GetOpsEvalAndLearningDocument = gql`
+    query GetOpsEvalAndLearning($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    opsEvalAndLearning {
+      id
+      ccmInvolvment
+      dataNeededForMonitoring
+      agencyOrStateHelp
+      agencyOrStateHelpOther
+      agencyOrStateHelpNote
+      stakeholders
+      stakeholdersOther
+      stakeholdersNote
+      helpdeskUse
+      helpdeskUseNote
+      contractorSupport
+      contractorSupportOther
+      contractorSupportHow
+      contractorSupportNote
+      iddocSupport
+      iddocSupportNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOpsEvalAndLearningQuery__
+ *
+ * To run a query within a React component, call `useGetOpsEvalAndLearningQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOpsEvalAndLearningQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOpsEvalAndLearningQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetOpsEvalAndLearningQuery(baseOptions: Apollo.QueryHookOptions<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>(GetOpsEvalAndLearningDocument, options);
+      }
+export function useGetOpsEvalAndLearningLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>(GetOpsEvalAndLearningDocument, options);
+        }
+export function useGetOpsEvalAndLearningSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>(GetOpsEvalAndLearningDocument, options);
+        }
+export type GetOpsEvalAndLearningQueryHookResult = ReturnType<typeof useGetOpsEvalAndLearningQuery>;
+export type GetOpsEvalAndLearningLazyQueryHookResult = ReturnType<typeof useGetOpsEvalAndLearningLazyQuery>;
+export type GetOpsEvalAndLearningSuspenseQueryHookResult = ReturnType<typeof useGetOpsEvalAndLearningSuspenseQuery>;
+export type GetOpsEvalAndLearningQueryResult = Apollo.QueryResult<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>;
+export const UpdatePlanOpsEvalAndLearningDocument = gql`
+    mutation UpdatePlanOpsEvalAndLearning($id: UUID!, $changes: PlanOpsEvalAndLearningChanges!) {
+  updatePlanOpsEvalAndLearning(id: $id, changes: $changes) {
+    id
+  }
+}
+    `;
+export type UpdatePlanOpsEvalAndLearningMutationFn = Apollo.MutationFunction<UpdatePlanOpsEvalAndLearningMutation, UpdatePlanOpsEvalAndLearningMutationVariables>;
+
+/**
+ * __useUpdatePlanOpsEvalAndLearningMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlanOpsEvalAndLearningMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlanOpsEvalAndLearningMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlanOpsEvalAndLearningMutation, { data, loading, error }] = useUpdatePlanOpsEvalAndLearningMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdatePlanOpsEvalAndLearningMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlanOpsEvalAndLearningMutation, UpdatePlanOpsEvalAndLearningMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlanOpsEvalAndLearningMutation, UpdatePlanOpsEvalAndLearningMutationVariables>(UpdatePlanOpsEvalAndLearningDocument, options);
+      }
+export type UpdatePlanOpsEvalAndLearningMutationHookResult = ReturnType<typeof useUpdatePlanOpsEvalAndLearningMutation>;
+export type UpdatePlanOpsEvalAndLearningMutationResult = Apollo.MutationResult<UpdatePlanOpsEvalAndLearningMutation>;
+export type UpdatePlanOpsEvalAndLearningMutationOptions = Apollo.BaseMutationOptions<UpdatePlanOpsEvalAndLearningMutation, UpdatePlanOpsEvalAndLearningMutationVariables>;
 export const GetFundingDocument = gql`
     query GetFunding($id: UUID!) {
   modelPlan(id: $id) {

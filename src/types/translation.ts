@@ -3,15 +3,20 @@
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
 import {
+  AgencyOrStateHelpType,
   AgreementType,
   AuthorityAllowance,
+  CcmInvolvmentType,
   CmmiGroup,
   CmsCenter,
+  ContractorSupportType,
+  DataForMonitoringType,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  StakeholdersType,
   TaskStatus,
   WaiverType
 } from 'gql/gen/graphql';
@@ -19,17 +24,13 @@ import {
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 import {
-  AgencyOrStateHelpType,
   AlternativePaymentModelType,
   AnticipatedPaymentFrequencyType,
   BenchmarkForPerformanceType,
   BeneficiariesType,
-  CcmInvolvmentType,
   ClaimsBasedPayType,
   ComplexityCalculationLevelType,
   ConfidenceType,
-  ContractorSupportType,
-  DataForMonitoringType,
   DataFrequencyType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
@@ -53,7 +54,6 @@ import {
   ProviderLeaveType,
   RecruitmentType,
   SelectionMethodType,
-  StakeholdersType,
   TeamRole,
   TriStateAnswer,
   TrustFundType

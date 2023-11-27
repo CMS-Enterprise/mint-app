@@ -1,7 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,6 +12,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -33,8 +34,6 @@ import {
   GetLearning_modelPlan_opsEvalAndLearning as GetLearningFormType,
   GetLearningVariables
 } from 'queries/OpsEvalAndLearning/types/GetLearning';
-import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
-import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { ModelLearningSystemType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -105,9 +104,7 @@ const Learning = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
-    UpdatePlanOpsEvalAndLearning
-  );
+  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
 
   const handleFormSubmit = (
     redirect?: 'back' | 'task-list' | 'next' | string

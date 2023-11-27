@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,6 +13,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -31,8 +32,6 @@ import {
   GetDataSharing_modelPlan_opsEvalAndLearning as GetDataSharingFormType,
   GetDataSharingVariables
 } from 'queries/OpsEvalAndLearning/types/GetDataSharing';
-import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
-import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { DataFrequencyType, DataStartsType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -99,9 +98,7 @@ const DataSharing = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
-    UpdatePlanOpsEvalAndLearning
-  );
+  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   mutation UpdatePlanOpsEvalAndLearning(
     $id: UUID!
     $changes: PlanOpsEvalAndLearningChanges!
@@ -9,4 +9,4 @@ export default gql`
       id
     }
   }
-`;
+`);
