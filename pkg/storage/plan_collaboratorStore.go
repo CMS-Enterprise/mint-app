@@ -55,9 +55,8 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 	return collabSlice, nil
 }
 
-// PlanCollaboratorCreateTransaction creates a new plan collaborator
-// The transaction object does not commit or rollback in the scope of this function
-func (s *Store) PlanCollaboratorCreateTransaction(
+// PlanCollaboratorCreate creates a new plan collaborator
+func (s *Store) PlanCollaboratorCreate(
 	np NamedPreparer,
 	_ *zap.Logger,
 	collaborator *models.PlanCollaborator,
@@ -66,31 +65,6 @@ func (s *Store) PlanCollaboratorCreateTransaction(
 	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
 	stmt, err := np.PrepareNamed(planCollaboratorCreateSQL)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	collaborator.ModifiedBy = nil
-	collaborator.ModifiedDts = nil
-
-	err = stmt.Get(collaborator, collaborator)
-	if err != nil {
-		return nil, err
-	}
-
-	return collaborator, nil
-}
-
-// PlanCollaboratorCreate creates a new plan collaborator
-func (s *Store) PlanCollaboratorCreate(
-	_ *zap.Logger,
-	collaborator *models.PlanCollaborator,
-) (*models.PlanCollaborator, error) {
-
-	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
-
-	stmt, err := s.db.PrepareNamed(planCollaboratorCreateSQL)
 	if err != nil {
 		return nil, err
 	}

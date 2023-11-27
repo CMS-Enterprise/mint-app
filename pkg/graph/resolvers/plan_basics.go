@@ -36,7 +36,7 @@ func UpdatePlanBasics(
 		return nil, err
 	}
 
-	modelPlan, err := store.ModelPlanGetByID(logger, existing.ModelPlanID)
+	modelPlan, err := store.ModelPlanGetByID(store, logger, existing.ModelPlanID)
 	if err != nil {
 		return nil, err
 	}

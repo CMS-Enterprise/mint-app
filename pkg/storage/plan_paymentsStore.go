@@ -53,30 +53,6 @@ func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
 
 // PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller
 func (s *Store) PlanPaymentsCreate(
-	logger *zap.Logger,
-	payments *models.PlanPayments) (*models.PlanPayments, error) {
-
-	payments.ID = utilityUUID.ValueOrNewUUID(payments.ID)
-
-	stmt, err := s.db.PrepareNamed(planPaymentsCreateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
-	}
-	defer stmt.Close()
-
-	payments.ModifiedBy = nil
-	payments.ModifiedDts = nil
-
-	err = stmt.Get(payments, payments)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
-	}
-
-	return payments, nil
-}
-
-// PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller
-func (s *Store) PlanPaymentsCreateTransaction(
 	np NamedPreparer,
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {

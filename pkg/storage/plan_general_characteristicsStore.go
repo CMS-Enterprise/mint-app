@@ -26,31 +26,6 @@ var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics
 func (s *Store) PlanGeneralCharacteristicsCreate(
-	logger *zap.Logger,
-	gc *models.PlanGeneralCharacteristics,
-) (*models.PlanGeneralCharacteristics, error) {
-
-	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
-
-	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsCreateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
-	}
-	defer stmt.Close()
-
-	gc.ModifiedBy = nil
-	gc.ModifiedDts = nil
-
-	err = stmt.Get(gc, gc)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
-	}
-
-	return gc, nil
-}
-
-// PlanGeneralCharacteristicsCreate creates a new plan basics
-func (s *Store) PlanGeneralCharacteristicsCreateTransaction(
 	np NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanGeneralCharacteristics,

@@ -25,29 +25,7 @@ var planBasicsGetByIDSQL string
 var planBasicsGetByModelPlanIDLoaderSQL string
 
 // PlanBasicsCreate creates a new plan basics
-func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
-
-	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
-
-	stmt, err := s.db.PrepareNamed(planBasicsCreateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
-	}
-	defer stmt.Close()
-
-	basics.ModifiedBy = nil
-	basics.ModifiedDts = nil
-
-	err = stmt.Get(basics, basics)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
-	}
-
-	return basics, nil
-}
-
-// PlanBasicsCreate creates a new plan basics
-func (s *Store) PlanBasicsCreateTransaction(np NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
+func (s *Store) PlanBasicsCreate(np NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
 	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
 

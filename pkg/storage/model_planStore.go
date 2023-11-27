@@ -69,7 +69,7 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 }
 
 // ModelPlanCreate creates a model plan using a transaction
-func (s *Store) ModelPlanCreateTransaction(np NamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanCreate(np NamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
@@ -93,40 +93,6 @@ func (s *Store) ModelPlanCreateTransaction(np NamedPreparer, logger *zap.Logger,
 	err = stmt.Get(&retPlan, plan)
 	if err != nil {
 		// t.errors = append(t.errors, err) // TODO: SW should we just return the error? It gets appended in the parent transaction
-		logger.Error(
-			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.CreatedBy.String()),
-		)
-		return nil, err
-
-	}
-
-	return &retPlan, nil
-}
-
-// ModelPlanCreate creates a model plan
-func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
-
-	if plan.ID == uuid.Nil {
-		plan.ID = uuid.New()
-	}
-	stmt, err := s.db.PrepareNamed(modelPlanCreateSQL)
-	if err != nil {
-		logger.Error(
-			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.CreatedBy.String()),
-		)
-		return nil, err
-	}
-	defer stmt.Close()
-
-	retPlan := models.ModelPlan{}
-
-	plan.ModifiedBy = nil
-	plan.ModifiedDts = nil
-
-	err = stmt.Get(&retPlan, plan)
-	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
 			zap.String("user", plan.CreatedBy.String()),
@@ -169,49 +135,11 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	return plan, nil
 }
 
-// ModelPlanGetByIDTransaction returns a model plan for a given ID
-// The transaction object does not commit or rollback in the scope of this function
-func (s *Store) ModelPlanGetByIDTransaction(np NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
+// ModelPlanGetByID returns a model plan for a given ID
+func (s *Store) ModelPlanGetByID(np NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
 	stmt, err := np.PrepareNamed(modelPlanGetByIDSQL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{"id": id}
-
-	err = stmt.Get(&plan, arg)
-
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			logger.Warn("No model plan found for the given modelPlanID",
-				zap.String("modelPlanID", id.String()))
-			return nil, fmt.Errorf("no model plan found for the given modelPlanID: %w", err)
-		}
-
-		logger.Error(
-			"failed to fetch model plan",
-			zap.Error(err),
-			zap.String("id", id.String()),
-		)
-
-		return nil, &apperrors.QueryError{
-			Err:       fmt.Errorf("failed to fetch the model plan: %w", err),
-			Model:     plan,
-			Operation: apperrors.QueryFetch,
-		}
-	}
-
-	return &plan, nil
-}
-
-// ModelPlanGetByID returns a model plan for a given ID
-func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
-
-	plan := models.ModelPlan{}
-	stmt, err := s.db.PrepareNamed(modelPlanGetByIDSQL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
 	}

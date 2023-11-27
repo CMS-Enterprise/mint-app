@@ -46,7 +46,7 @@ func ModelPlanCreate(
 	newPlan, err := storage.WithTransaction[models.ModelPlan](store, func(tx *storage.Transaction) (*models.ModelPlan, error) {
 		var createdPlan *models.ModelPlan
 		tx.Next(func(t *storage.Transaction) error {
-			planInternal, errInternal := store.ModelPlanCreateTransaction(t, logger, plan)
+			planInternal, errInternal := store.ModelPlanCreate(t, logger, plan)
 
 			if errInternal != nil {
 				return errInternal
@@ -63,7 +63,7 @@ func ModelPlanCreate(
 			Next(func(t *storage.Transaction) error { // Create a default plan basics object
 
 				basics := models.NewPlanBasics(baseTaskListUser)
-				_, err = store.PlanBasicsCreateTransaction(t, logger, basics)
+				_, err = store.PlanBasicsCreate(t, logger, basics)
 				if err != nil {
 					return err
 				}
@@ -72,7 +72,7 @@ func ModelPlanCreate(
 			Next(func(t *storage.Transaction) error { // Create a default plan general characteristics object
 				generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
 
-				_, err = store.PlanGeneralCharacteristicsCreateTransaction(t, logger, generalCharacteristics)
+				_, err = store.PlanGeneralCharacteristicsCreate(t, logger, generalCharacteristics)
 				if err != nil {
 					return err
 				}
@@ -82,7 +82,7 @@ func ModelPlanCreate(
 				// Create a default Plan Beneficiares object
 				beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
 
-				_, err = store.PlanBeneficiariesCreateTransaction(t, logger, beneficiaries)
+				_, err = store.PlanBeneficiariesCreate(t, logger, beneficiaries)
 				if err != nil {
 					return err
 				}
@@ -92,7 +92,7 @@ func ModelPlanCreate(
 				//Create a default Plan Participants and Providers object
 				participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
 
-				_, err = store.PlanParticipantsAndProvidersCreateTransaction(t, logger, participantsAndProviders)
+				_, err = store.PlanParticipantsAndProvidersCreate(t, logger, participantsAndProviders)
 				if err != nil {
 					return err
 				}
@@ -103,7 +103,7 @@ func ModelPlanCreate(
 				//Create default Plan OpsEvalAndLearning object
 				opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
 
-				_, err = store.PlanOpsEvalAndLearningCreateTransaction(t, logger, opsEvalAndLearning)
+				_, err = store.PlanOpsEvalAndLearningCreate(t, logger, opsEvalAndLearning)
 				if err != nil {
 					return err
 				}
@@ -113,7 +113,7 @@ func ModelPlanCreate(
 				//Create default PlanPayments object
 				planPayments := models.NewPlanPayments(baseTaskListUser)
 
-				_, err = store.PlanPaymentsCreateTransaction(t, logger, planPayments)
+				_, err = store.PlanPaymentsCreate(t, logger, planPayments)
 				if err != nil {
 					return err
 				}
@@ -121,7 +121,7 @@ func ModelPlanCreate(
 			}).
 			Next(func(t *storage.Transaction) error {
 				//Create default Operational Needs
-				_, err = store.OperationalNeedInsertAllPossibleTransaction(t, logger, createdPlan.ID, principal.Account().ID)
+				_, err = store.OperationalNeedInsertAllPossible(t, logger, createdPlan.ID, principal.Account().ID)
 				if err != nil {
 					return err
 				}
@@ -129,7 +129,7 @@ func ModelPlanCreate(
 			}).
 			Next(func(t *storage.Transaction) error {
 				// Create an initial collaborator for the plan
-				_, _, err = CreatePlanCollaboratorTransaction(
+				_, _, err = CreatePlanCollaborator(
 					ctx,
 					t,
 					store,
@@ -156,27 +156,6 @@ func ModelPlanCreate(
 	if err != nil {
 		return nil, err
 	}
-
-	// // Create an initial collaborator for the plan
-	// _, _, err = CreatePlanCollaborator(
-	// 	ctx,
-	// 	logger,
-	// 	nil,
-	// 	nil,
-	// 	email.AddressBook{},
-	// 	&model.PlanCollaboratorCreateInput{
-	// 		ModelPlanID: newPlan.ID,
-	// 		UserName:    *userAccount.Username,
-	// 		TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
-	// 	},
-	// 	principal,
-	// 	store,
-	// 	false,
-	// 	getAccountInformation,
-	// )
-	// if err != nil {
-	// 	return nil, err
-	// }
 
 	if emailService != nil && emailTemplateService != nil {
 		go func() {
@@ -240,7 +219,7 @@ func sendModelPlanCreatedEmail(
 // ModelPlanUpdate implements resolver logic to update a model plan
 func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.ModelPlan, error) {
 	// Get existing plan
-	existingPlan, err := store.ModelPlanGetByID(logger, id)
+	existingPlan, err := store.ModelPlanGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +239,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 
 // ModelPlanGetByID implements resolver logic to get a model plan by its ID
 func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.ModelPlan, error) {
-	plan, err := store.ModelPlanGetByID(logger, id)
+	plan, err := store.ModelPlanGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -350,7 +329,7 @@ func ModelPlanShare(
 	optionalMessage *string,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (bool, error) {
-	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
+	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		return false, err
 	}
@@ -365,6 +344,7 @@ func ModelPlanShare(
 	for i, username := range usernames {
 		collabAccount, err := userhelpers.GetOrCreateUserAccount(
 			ctx,
+			store,
 			store,
 			username,
 			false,

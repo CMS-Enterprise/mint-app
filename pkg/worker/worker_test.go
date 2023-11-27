@@ -107,13 +107,14 @@ func (suite *WorkerSuite) createPlanCollaborator(
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
 		context.Background(),
+		suite.testConfigs.Store,
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		nil,
 		nil,
 		email.AddressBook{},
 		collaboratorInput,
 		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)

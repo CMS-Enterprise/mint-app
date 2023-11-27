@@ -176,13 +176,14 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 
 	planCollaborator, _, err := resolvers.CreatePlanCollaborator(
 		ctx,
+		r.store,
+		r.store,
 		logger,
 		r.emailService,
 		r.emailTemplateService,
 		r.addressBook,
 		&input,
 		principal,
-		r.store,
 		true,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
 	)
@@ -348,7 +349,7 @@ func (r *mutationResolver) AgreeToNda(ctx context.Context, agree bool) (*model.N
 func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanFavoriteCreate(logger, principal, principal.Account().ID, r.store, modelPlanID)
+	return resolvers.PlanFavoriteCreate(r.store, logger, principal, principal.Account().ID, r.store, modelPlanID)
 }
 
 // DeletePlanFavorite is the resolver for the deletePlanFavorite field.

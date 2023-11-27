@@ -112,13 +112,14 @@ func (s *Seeder) addPlanCollaborator(
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
 		context.Background(),
+		s.Config.Store,
+		s.Config.Store,
 		s.Config.Logger,
 		emailService,
 		emailTemplateService,
 		email.AddressBook{},
 		input,
 		princ,
-		s.Config.Store,
 		true,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
 	)
@@ -256,7 +257,7 @@ func (s *Seeder) addPlanDocumentSolutionLinks(
 
 func (s *Seeder) getTestPrincipalByUsername(userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,

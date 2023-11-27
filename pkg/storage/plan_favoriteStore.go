@@ -26,45 +26,14 @@ var planFavoriteGetCollectionByUserIDSQL string
 //go:embed SQL/plan_favorite/get_unique_user_id.sql
 var planFavoriteGetUniqueUserIDsSQL string
 
-// PlanFavoriteCreateTransaction creates and returns a plan favorite object
-// The transaction object does not commit or rollback in the scope of this function
-func (s *Store) PlanFavoriteCreateTransaction(np NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
+// PlanFavoriteCreate creates and returns a plan favorite object
+func (s *Store) PlanFavoriteCreate(np NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()
 	}
 
 	stmt, err := np.PrepareNamed(planFavoriteCreateSQL) // TODO: Look to refactor this SQL to make it clearer
-	if err != nil {
-		logger.Error(
-			fmt.Sprintf("Failed to create plan favorite with error %s", err),
-			zap.String("user", favorite.CreatedBy.String()),
-		)
-		return nil, err
-	}
-	defer stmt.Close()
-
-	retFavorite := models.PlanFavorite{}
-	err = stmt.Get(&retFavorite, favorite)
-	if err != nil {
-		logger.Error(
-			fmt.Sprintf("Failed to create plan favorite with error %s", err),
-			zap.String("user", favorite.CreatedBy.String()),
-		)
-		return nil, err
-	}
-
-	return &retFavorite, nil
-}
-
-// PlanFavoriteCreate creates and returns a plan favorite object
-func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
-
-	if favorite.ID == uuid.Nil {
-		favorite.ID = uuid.New()
-	}
-
-	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL) // TODO: Look to refactor this SQL to make it clearer
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create plan favorite with error %s", err),

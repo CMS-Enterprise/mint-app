@@ -244,7 +244,7 @@ func (s *Store) OperationalNeedUpdateByID(
 }
 
 // OperationalNeedInsertAllPossible will insert all possible operational need in the DB for a specific model pland
-func (s *Store) OperationalNeedInsertAllPossibleTransaction(
+func (s *Store) OperationalNeedInsertAllPossible(
 	np NamedPreparer,
 	_ *zap.Logger,
 	modelPlanID uuid.UUID,
@@ -253,34 +253,6 @@ func (s *Store) OperationalNeedInsertAllPossibleTransaction(
 
 	var needs []*models.OperationalNeed
 	stmt, err := np.PrepareNamed(operationalNeedInsertAllPossibleSQL)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-
-		"model_plan_id": modelPlanID,
-		"created_by":    createdBy,
-	}
-
-	err = stmt.Select(&needs, arg)
-	if err != nil {
-		return nil, err
-	}
-
-	return needs, err
-}
-
-// OperationalNeedInsertAllPossible will insert all possible operational need in the DB for a specific model pland
-func (s *Store) OperationalNeedInsertAllPossible(
-	_ *zap.Logger,
-	modelPlanID uuid.UUID,
-	createdBy uuid.UUID,
-) ([]*models.OperationalNeed, error) {
-
-	var needs []*models.OperationalNeed
-	stmt, err := s.db.PrepareNamed(operationalNeedInsertAllPossibleSQL)
 	if err != nil {
 		return nil, err
 	}

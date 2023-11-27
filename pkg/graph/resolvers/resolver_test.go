@@ -157,13 +157,14 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 
 	collaborator, _, err := CreatePlanCollaborator(
 		context.Background(),
+		suite.testConfigs.Store,
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
 		addressBook,
 		collaboratorInput,
 		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)

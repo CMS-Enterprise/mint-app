@@ -34,7 +34,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 		return err
 	}
 
-	mp, err := w.Store.ModelPlanGetByID(w.Logger, modelPlanID)
+	mp, err := w.Store.ModelPlanGetByID(w.Store, w.Logger, modelPlanID)
 	if err != nil {
 		return err
 	}

@@ -95,7 +95,7 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 		JobCodeNonCMS:     jcNonCMS,
 	}
 
-	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 	if err != nil {
 		return nil, err
 	}

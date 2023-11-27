@@ -51,7 +51,7 @@ func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
 }
 
 // PlanBeneficiariesCreate creates a new plan benficiaries object
-func (s *Store) PlanBeneficiariesCreateTransaction(
+func (s *Store) PlanBeneficiariesCreate(
 	np NamedPreparer,
 	logger *zap.Logger,
 	b *models.PlanBeneficiaries,
@@ -60,30 +60,6 @@ func (s *Store) PlanBeneficiariesCreateTransaction(
 	b.ID = utilityUUID.ValueOrNewUUID(b.ID)
 
 	stmt, err := np.PrepareNamed(planBeneficiariesCreateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, b)
-	}
-	defer stmt.Close()
-
-	b.ModifiedBy = nil
-	b.ModifiedDts = nil
-	err = stmt.Get(b, b)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, b)
-	}
-
-	return b, nil
-}
-
-// PlanBeneficiariesCreate creates a new plan benficiaries object
-func (s *Store) PlanBeneficiariesCreate(
-	logger *zap.Logger,
-	b *models.PlanBeneficiaries,
-) (*models.PlanBeneficiaries, error) {
-
-	b.ID = utilityUUID.ValueOrNewUUID(b.ID)
-
-	stmt, err := s.db.PrepareNamed(planBeneficiariesCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, b)
 	}
