@@ -295,6 +295,7 @@ const beneficiaryData: AllBeneficiariesTypes = {
     BeneficiariesType.DISEASE_SPECIFIC,
     BeneficiariesType.DUALLY_ELIGIBLE
   ],
+  diseaseSpecificGroup: 'Other disease group',
   beneficiariesOther: 'Other beneficiary',
   beneficiariesNote: 'Note beneficiary',
   treatDualElligibleDifferent: TriStateAnswer.YES,
@@ -666,7 +667,7 @@ export const collaboratorsMocks = [
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
-          modelName: 'My Model',
+          modelName: 'Testing Model Summary',
           collaborators: collaboratorsData
         }
       }

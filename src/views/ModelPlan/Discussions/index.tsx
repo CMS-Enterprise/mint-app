@@ -2,12 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import {
-  Accordion,
-  Button,
-  Grid,
-  IconAnnouncement
-} from '@trussworks/react-uswds';
+import { Accordion, Button, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import PageHeading from 'components/PageHeading';
@@ -316,7 +311,7 @@ const Discussions = ({
         </PageHeading>
 
         <div className="display-flex margin-bottom-4">
-          <IconAnnouncement className="text-primary margin-right-1" />
+          <Icon.Announcement className="text-primary margin-right-1" />
           <Button
             type="button"
             unstyled

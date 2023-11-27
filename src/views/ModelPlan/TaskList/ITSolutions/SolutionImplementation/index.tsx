@@ -7,7 +7,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Fieldset, Grid, IconArrowBack } from '@trussworks/react-uswds';
+import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -418,7 +418,7 @@ const SolutionImplementation = () => {
                           className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
                           onClick={() => handleCancelClick(values)}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

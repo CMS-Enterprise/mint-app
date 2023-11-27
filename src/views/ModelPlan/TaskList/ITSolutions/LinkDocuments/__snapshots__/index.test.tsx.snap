@@ -101,163 +101,12 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
           class="tablet:grid-col-8"
           data-testid="grid"
         >
-          <div
-            class="grid-container padding-3 bg-base-lightest maxw-none"
-            data-testid="gridContainer"
-          >
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <p
-                  class="text-bold margin-y-1"
-                >
-                  Operational need
-                </p>
-                <p
-                  class="margin-top-0 font-body-sm"
-                >
-                  Obtain an application support contractor
-                </p>
-              </div>
-              <div
-                class="desktop:grid-col-12"
-                data-testid="grid"
-              >
-                <button
-                  class="usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-1"
-                  data-testid="toggle-need-answer"
-                  type="button"
-                >
-                  <svg
-                    class="usa-icon margin-right-05 needs-question__rotate"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
-                    />
-                  </svg>
-                  Why is this a part of my operational needs?
-                </button>
-                <div>
-                  <p
-                    class="text-bold margin-top-4"
-                  >
-                    Solution
-                  </p>
-                  <ul
-                    class="usa-card-group flex-column flex-no-wrap"
-                    data-testid="CardGroup"
-                  >
-                    <li
-                      class="usa-card solution-card"
-                      data-testid="Card"
-                    >
-                      <div
-                        class="usa-card__container"
-                      >
-                        <div
-                          class="padding-3"
-                        >
-                          <h3
-                            class="margin-top-0 solutions-checkbox__header margin-bottom-2"
-                          >
-                            My custom solution
-                          </h3>
-                          <div
-                            class="tablet:grid-col-6"
-                            data-testid="grid"
-                          >
-                            <p
-                              class="text-bold margin-bottom-0"
-                            >
-                              Point of contact
-                            </p>
-                            <p
-                              class="margin-y-0"
-                            >
-                              John Doe
-                            </p>
-                            <a
-                              aria-label="Send an email"
-                              class="usa-link line-height-body-5 display-flex flex-align-center"
-                              href="mailto:j.doe@oddball.io"
-                              target="_blank"
-                            >
-                              <div>
-                                j.doe@oddball.io
-                              </div>
-                              <svg
-                                class="usa-icon margin-left-05 text-tbottom"
-                                focusable="false"
-                                height="1em"
-                                role="img"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
-                                />
-                              </svg>
-                            </a>
-                          </div>
-                          <div
-                            class="mint-divider margin-top-2"
-                          />
-                          <div
-                            class="display-flex margin-top-2"
-                            data-testid="custom-solution-card"
-                          >
-                            <a
-                              class="usa-link margin-right-2 display-flex flex-align-center"
-                              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/add-custom-solution/081cb879-bd6f-4ead-b9cb-3a299de76390?selectedSolution=OTHER_NEW_PROCESS"
-                            >
-                              Update these details
-                              <svg
-                                class="usa-icon margin-left-1"
-                                focusable="false"
-                                height="1em"
-                                role="img"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                                />
-                              </svg>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+          <span
+            aria-valuetext="Loading"
+            class="mint-spinner mint-spinner--large center"
+            data-testid="needs-spinner"
+            role="progressbar"
+          />
         </div>
       </div>
     </div>
@@ -277,9 +126,10 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
       <div
         class="usa-table-container--scrollable"
         data-testid="scrollable-table-container"
+        tabindex="0"
       >
         <table
-          class="usa-table usa-table--borderless src-components-Table-Table-module__fullwidth--fOyj6"
+          class="usa-table usa-table--borderless width-full"
           data-testid="table"
         >
           <caption
@@ -317,10 +167,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
                       d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                     />
                   </svg>
@@ -351,10 +197,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
                     <path
                       d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                     />
@@ -387,10 +229,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
                       d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                     />
                   </svg>
@@ -421,10 +259,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
                     <path
                       d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                     />
@@ -457,10 +291,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
                       d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                     />
                   </svg>
@@ -491,10 +321,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
                     <path
                       d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                     />
@@ -579,10 +405,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
                         d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
                       />
                     </svg>
@@ -663,10 +485,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
                         d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
                       />
                     </svg>
@@ -711,10 +529,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
           d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
         />
       </svg>
@@ -749,10 +563,6 @@ exports[`IT Solutions Link Documents > matches snapshot 1`] = `
             width="1em"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
             <path
               d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
             />
@@ -860,10 +670,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
               d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
             />
           </svg>
@@ -890,9 +696,10 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             <div
               class="usa-table-container--scrollable"
               data-testid="scrollable-table-container"
+              tabindex="0"
             >
               <table
-                class="usa-table usa-table--borderless src-components-Table-Table-module__fullwidth--fOyj6"
+                class="usa-table usa-table--borderless width-full"
                 data-testid="table"
               >
                 <caption
@@ -930,10 +737,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
-                          <path
                             d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                           />
                         </svg>
@@ -964,10 +767,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                           width="1em"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
                           <path
                             d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                           />
@@ -1000,10 +799,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
-                          <path
                             d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                           />
                         </svg>
@@ -1034,10 +829,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                           width="1em"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
                           <path
                             d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                           />
@@ -1070,10 +861,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
-                          <path
                             d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                           />
                         </svg>
@@ -1104,10 +891,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                           width="1em"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
                           <path
                             d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                           />
@@ -1173,10 +956,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                             width="1em"
                             xmlns="http://www.w3.org/2000/svg"
                           >
-                            <path
-                              d="M0 0h24v24H0z"
-                              fill="none"
-                            />
                             <path
                               d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
                             />
@@ -1246,10 +1025,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                             width="1em"
                             xmlns="http://www.w3.org/2000/svg"
                           >
-                            <path
-                              d="M0 0h24v24H0z"
-                              fill="none"
-                            />
                             <path
                               d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
                             />

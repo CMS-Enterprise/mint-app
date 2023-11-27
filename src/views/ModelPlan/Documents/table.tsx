@@ -13,8 +13,7 @@ import {
   Alert,
   Button,
   Checkbox,
-  IconFileDownload,
-  IconLaunch,
+  Icon,
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -91,7 +90,7 @@ const PlanDocumentsTable = ({
   const hasEditAccess: boolean =
     !isHelpArticle && (isCollaborator || isAssessment(groups, flags));
 
-  if (loading) {
+  if (!data && loading) {
     return <PageLoading />;
   }
 
@@ -255,7 +254,7 @@ export const Table = ({
 
         {((fileToRemove.numLinkedSolutions > 0 && !handleDocumentUnlink) ||
           (fileToRemove.numLinkedSolutions > 1 && handleDocumentUnlink)) && (
-          <Alert type="warning">
+          <Alert type="warning" headingLevel="h4">
             {handleDocumentUnlink
               ? t('removeDocumentModal.linkDocsWarning2', {
                   numLinkedSolutions: fileToRemove.numLinkedSolutions - 1,
@@ -410,7 +409,7 @@ export const Table = ({
                   >
                     <span className="display-flex flex-align-center">
                       {t('documentTable.view')}
-                      <IconFileDownload />
+                      <Icon.FileDownload />
                     </span>
                   </Button>
                 ) : (
@@ -425,7 +424,7 @@ export const Table = ({
                   >
                     <span className="display-flex flex-align-center">
                       {t('documentTable.visit')}
-                      <IconLaunch />
+                      <Icon.Launch />
                     </span>
                   </Button>
                 )}

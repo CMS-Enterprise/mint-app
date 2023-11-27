@@ -15,7 +15,6 @@ export const HelpAndKnowledgeHome = () => {
   return (
     <MainContent>
       <SummaryBox
-        heading=""
         className="padding-y-6 border-0 bg-primary-lighter padding-x-0"
         data-testid="help-and-knowledge-summary"
       >

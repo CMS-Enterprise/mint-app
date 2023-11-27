@@ -38,9 +38,9 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     cy.clickOutside();
 
-    cy.get('[data-testid="multiselect-tag--Medicare providers"]')
+    cy.get('[data-testid="multiselect-tag--Medicare providers/suppliers"]')
       .first()
-      .contains('Medicare providers');
+      .contains('Medicare providers/suppliers');
 
     cy.get('#participants-and-providers-medicare-type')
       .type('Oncology Providers')

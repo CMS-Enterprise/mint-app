@@ -7,7 +7,7 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
+  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -94,7 +94,12 @@ const AddOrUpdateOperationalNeed = () => {
         .then(response => {
           if (!response?.errors) {
             showMessageOnNextPage(
-              <Alert type="success" slim className="margin-y-4">
+              <Alert
+                type="success"
+                slim
+                className="margin-y-4"
+                headingLevel="h4"
+              >
                 <span className="mandatory-fields-alert__text">
                   {t('successMessage.operationalNeedUpdate')}
                 </span>
@@ -118,7 +123,12 @@ const AddOrUpdateOperationalNeed = () => {
           if (!response?.errors) {
             if (redirect === 'it-tracker') {
               showMessageOnNextPage(
-                <Alert type="success" slim className="margin-y-4">
+                <Alert
+                  type="success"
+                  slim
+                  className="margin-y-4"
+                  headingLevel="h4"
+                >
                   <span className="mandatory-fields-alert__text">
                     {t('successMessage.onlyOperationalNeed', {
                       operationalNeedName:
@@ -185,7 +195,7 @@ const AddOrUpdateOperationalNeed = () => {
           </p>
 
           <Grid tablet={{ col: 8 }}>
-            <Alert slim type="info">
+            <Alert slim type="info" headingLevel="h4">
               {t('noDuplicates')}
             </Alert>
 
@@ -292,7 +302,7 @@ const AddOrUpdateOperationalNeed = () => {
                             );
                           }}
                         >
-                          <IconArrowBack
+                          <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />

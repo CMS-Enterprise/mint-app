@@ -12,13 +12,7 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import {
-  Button,
-  IconComment,
-  IconStar,
-  IconStarOutline,
-  Table as UswdsTable
-} from '@trussworks/react-uswds';
+import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TeamRole } from 'gql/gen/graphql';
 import i18next from 'i18next';
@@ -139,7 +133,7 @@ const ModelPlansTable = ({
     const columnOptions: Record<string, Column> = {
       isFavorite: {
         id: 'isFavorite',
-        Header: <IconStarOutline size={3} />,
+        Header: <Icon.StarOutline size={3} />,
         accessor: 'isFavorite',
         disableGlobalFilter: true,
         Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
@@ -155,7 +149,7 @@ const ModelPlansTable = ({
               aria-label={`Click to unfavorite ${row.original.modelName} model plan`}
               aria-checked="true"
             >
-              <IconStar data-cy="favorited" size={3} />
+              <Icon.Star data-cy="favorited" size={3} />
             </button>
           ) : (
             <button
@@ -167,7 +161,7 @@ const ModelPlansTable = ({
               aria-label={`Click to favorite ${row.original.modelName} model plan`}
               aria-checked="false"
             >
-              <IconStarOutline
+              <Icon.StarOutline
                 data-cy="unfavorited"
                 size={3}
                 className="text-gray-30"
@@ -298,7 +292,7 @@ const ModelPlansTable = ({
               {formattedUpdatedDate}
               {discussions.length > 0 && (
                 <div className="display-flex flex-align-center text-bold">
-                  <IconComment className="text-primary margin-right-05" />{' '}
+                  <Icon.Comment className="text-primary margin-right-05" />{' '}
                   {discussions.length}{' '}
                   {i18next.t('discussions:discussionBanner.discussion', {
                     count: discussions.length
@@ -448,7 +442,7 @@ const ModelPlansTable = ({
     return null;
   }
 
-  if (loading) {
+  if (!data && loading) {
     return <PageLoading />;
   }
 

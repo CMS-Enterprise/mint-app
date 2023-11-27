@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Button,
-  Dropdown,
   Fieldset,
   Label,
+  Select,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -202,7 +202,7 @@ const QuestionAndReply = ({
                     <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
 
                     <Field
-                      as={Dropdown}
+                      as={Select}
                       id="user-role"
                       name="userRole"
                       disabled={loading}

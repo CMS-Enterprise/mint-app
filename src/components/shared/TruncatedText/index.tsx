@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  IconExpandLess,
-  IconExpandMore
-} from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 
 // This component takes free form text and a character limit and
 // will return the whole text until it reaches the character limit, once
@@ -57,7 +53,7 @@ const TruncatedText = ({
           className="display-flex flex-align-center margin-top-1"
         >
           {isOpen ? generalT('readMore') : generalT('readLess')}
-          {isOpen ? <IconExpandMore /> : <IconExpandLess />}
+          {isOpen ? <Icon.ExpandMore /> : <Icon.ExpandLess />}
         </Button>
       )}
     </div>

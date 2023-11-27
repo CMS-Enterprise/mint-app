@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CreateReportAProblem from 'gql/apolloGQL/Feedback/CreateReportAProblem';
 import { ReportAProblemSection, ReportAProblemSeverity } from 'gql/gen/graphql';
@@ -73,9 +73,7 @@ describe('Report a problem form', () => {
     userEvent.click(submitButton);
 
     // Submit success
-    await waitFor(() => {
-      findByText('Thank you for your feedback');
-    });
+    findByText('Thank you for your feedback');
   });
 
   it('matches snapshot', async () => {

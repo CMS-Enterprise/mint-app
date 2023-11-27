@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   query GetGeneralCharacteristics($id: UUID!) {
     modelPlan(id: $id) {
       id
@@ -13,7 +13,8 @@ export default gql`
       generalCharacteristics {
         id
         isNewModel
-        existingModel
+        currentModelPlanID
+        existingModelID
         resemblesExistingModel
         resemblesExistingModelHow
         resemblesExistingModelNote
@@ -23,4 +24,4 @@ export default gql`
       }
     }
   }
-`;
+`);

@@ -424,7 +424,7 @@ type TaggedContent {
   """
   RawContent is HTML. It is sanitized on the backend
   """
-  rawContent: String! 
+  rawContent: String!
   tags: [Tag!]!
 }
 
@@ -526,6 +526,10 @@ type PlanGeneralCharacteristics {
   # Page 1
   isNewModel: Boolean
   existingModel: String
+  currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
+  existingModelID: Int
+  existingModelPlan: ExistingModel
   resemblesExistingModel: Boolean
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
@@ -609,6 +613,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   # Page 1
   isNewModel: Boolean
   existingModel: String
+  currentModelPlanID: UUID
+  existingModelID: Int
   resemblesExistingModel: Boolean
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
@@ -679,6 +685,7 @@ type PlanBeneficiaries {
   beneficiaries: [BeneficiariesType!]!
   beneficiariesOther: String
   beneficiariesNote: String
+  diseaseSpecificGroup: String
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
@@ -722,6 +729,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiaries: [BeneficiariesType!]
   beneficiariesOther: String
   beneficiariesNote: String
+  diseaseSpecificGroup: String
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
@@ -1970,6 +1978,7 @@ enum BeneficiariesType {
   MEDICAID
   DUALLY_ELIGIBLE
   DISEASE_SPECIFIC
+  UNDERSERVED
   OTHER
   NA
 }
@@ -2020,6 +2029,7 @@ enum ParticipantsType {
   COMMUNITY_BASED_ORGANIZATIONS
   NON_PROFIT_ORGANIZATIONS
   COMMERCIAL_PAYERS
+  ACCOUNTABLE_CARE_ORGANIZATION
   OTHER
 }
 

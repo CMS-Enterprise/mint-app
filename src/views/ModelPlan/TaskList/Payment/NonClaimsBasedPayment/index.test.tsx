@@ -44,7 +44,8 @@ const paymentsMock = [
           payments: mockData,
           operationalNeeds: [
             {
-              modifiedDts: ''
+              modifiedDts: null,
+              __typename: 'OperationalNeed'
             }
           ]
         }
@@ -71,8 +72,8 @@ describe('Model Plan -- NonClaimsBasedPayment', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('payment-non-claims-based-payment-form')
-      ).toBeInTheDocument();
+        screen.getByTestId('payment-nonclaims-payments-other')
+      ).toHaveValue('Lorem Ipsum');
     });
   });
 
@@ -93,9 +94,10 @@ describe('Model Plan -- NonClaimsBasedPayment', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('payment-non-claims-based-payment-form')
-      ).toBeInTheDocument();
+        screen.getByTestId('payment-nonclaims-payments-other')
+      ).toHaveValue('Lorem Ipsum');
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

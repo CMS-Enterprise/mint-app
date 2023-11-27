@@ -591,6 +591,29 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
+// ExistingModel is the resolver for the existingModel field.
+func (r *planGeneralCharacteristicsResolver) ExistingModel(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*string, error) {
+	return resolvers.PlanGeneralCharacteristicsGetExistingModelName(ctx, obj)
+}
+
+// CurrentModelPlan is the resolver for the currentModelPlan field.
+func (r *planGeneralCharacteristicsResolver) CurrentModelPlan(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ModelPlan, error) {
+	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
+}
+
+// ExistingModelPlan is the resolver for the existingModelPlan field.
+func (r *planGeneralCharacteristicsResolver) ExistingModelPlan(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModel, error) {
+	if obj.ExistingModelID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
+}
+
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
 func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
 	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)

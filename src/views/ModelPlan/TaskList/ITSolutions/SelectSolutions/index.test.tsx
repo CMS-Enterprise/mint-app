@@ -1,11 +1,19 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { possibleSolutionsMock } from 'data/mock/solutions';
+import {
+  needQuestionAndAnswerMock,
+  possibleSolutionsMock
+} from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
+import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
@@ -62,6 +70,27 @@ const mocks = [
       }
     }
   },
+  {
+    request: {
+      query: CreateOperationalSolution,
+      variables: {
+        operationalNeedID,
+        solutionType: 'RMADA',
+        changes: { needed: true }
+      }
+    },
+    result: {
+      data: {
+        createOperationalSolution: {
+          id: operationalNeedID,
+          nameOther: null,
+          needed: true,
+          key: OperationalSolutionKey.RMADA
+        }
+      }
+    }
+  },
+  ...needQuestionAndAnswerMock,
   ...possibleSolutionsMock
 ];
 
@@ -138,7 +167,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getByText } = render(
+    const { asFragment, getByText, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -155,6 +184,8 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     await waitFor(() => {
       expect(getByText('at.mint@oddball.io')).toBeInTheDocument();

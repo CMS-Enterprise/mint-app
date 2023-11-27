@@ -66,6 +66,7 @@ export enum BeneficiariesType {
   MEDICARE_PART_D = "MEDICARE_PART_D",
   NA = "NA",
   OTHER = "OTHER",
+  UNDERSERVED = "UNDERSERVED",
 }
 
 export enum CMMIGroup {
@@ -479,6 +480,7 @@ export enum ParticipantsIDType {
 }
 
 export enum ParticipantsType {
+  ACCOUNTABLE_CARE_ORGANIZATION = "ACCOUNTABLE_CARE_ORGANIZATION",
   COMMERCIAL_PAYERS = "COMMERCIAL_PAYERS",
   COMMUNITY_BASED_ORGANIZATIONS = "COMMUNITY_BASED_ORGANIZATIONS",
   CONVENER = "CONVENER",
@@ -714,6 +716,7 @@ export interface PlanBeneficiariesChanges {
   beneficiaries?: BeneficiariesType[] | null;
   beneficiariesOther?: string | null;
   beneficiariesNote?: string | null;
+  diseaseSpecificGroup?: string | null;
   treatDualElligibleDifferent?: TriStateAnswer | null;
   treatDualElligibleDifferentHow?: string | null;
   treatDualElligibleDifferentNote?: string | null;
@@ -803,6 +806,8 @@ export interface PlanDocumentLinkInput {
 export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
   existingModel?: string | null;
+  currentModelPlanID?: UUID | null;
+  existingModelID?: number | null;
   resemblesExistingModel?: boolean | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;

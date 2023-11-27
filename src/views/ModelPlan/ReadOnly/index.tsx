@@ -3,12 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import {
-  Grid,
-  GridContainer,
-  IconArrowBack,
-  SummaryBox
-} from '@trussworks/react-uswds';
+import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -17,6 +12,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import ShareExportModal from 'components/ShareExport';
@@ -274,6 +270,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const subComponent = subComponents[subinfo];
 
+  if (!data && loading) {
+    return <PageLoading />;
+  }
+
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFound />;
   }
@@ -288,7 +288,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const Summary = (
     <SummaryBox
-      heading=""
       className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
       data-testid="read-only-model-summary"
     >
@@ -316,7 +315,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 to="/models"
                 className="display-flex flex-align-center margin-bottom-3"
               >
-                <IconArrowBack className="text-primary margin-right-1" />
+                <Icon.ArrowBack className="text-primary margin-right-1" />
                 {h('back')}
               </UswdsReactLink>
 

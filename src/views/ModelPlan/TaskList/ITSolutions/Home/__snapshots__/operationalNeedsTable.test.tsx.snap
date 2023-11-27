@@ -45,10 +45,6 @@ exports[`IT Solutions Home > matches snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
               d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
             />
           </svg>
@@ -71,9 +67,10 @@ exports[`IT Solutions Home > matches snapshot 1`] = `
     <div
       class="usa-table-container--scrollable"
       data-testid="scrollable-table-container"
+      tabindex="0"
     >
       <table
-        class="usa-table usa-table--borderless src-components-Table-Table-module__fullwidth--fOyj6"
+        class="usa-table usa-table--borderless width-full"
         data-testid="table"
       >
         <thead>
@@ -106,10 +103,6 @@ exports[`IT Solutions Home > matches snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
                     d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
                   />
                 </svg>
@@ -140,10 +133,6 @@ exports[`IT Solutions Home > matches snapshot 1`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                   />
@@ -176,10 +165,6 @@ exports[`IT Solutions Home > matches snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
                     d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                   />
                 </svg>
@@ -208,10 +193,6 @@ exports[`IT Solutions Home > matches snapshot 1`] = `
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
                   <path
                     d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
                   />

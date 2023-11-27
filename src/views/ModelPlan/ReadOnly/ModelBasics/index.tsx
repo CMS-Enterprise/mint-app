@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
   Grid,
-  IconInfo,
+  Icon,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
@@ -11,6 +11,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -106,6 +107,10 @@ const ReadOnlyModelBasics = ({
 
     return <em className="text-base">{basicsMiscT('na')}</em>;
   };
+
+  if (!data && loading) {
+    return <PageLoading testId="basics-page-loading" />;
+  }
 
   return (
     <div
@@ -231,7 +236,7 @@ const ReadOnlyModelBasics = ({
                     position="right"
                     className="mint-no-print"
                   >
-                    <IconInfo className="text-base-light" />
+                    <Icon.Info className="text-base-light" />
                   </Tooltip>
                 )}
               </span>
@@ -253,7 +258,7 @@ const ReadOnlyModelBasics = ({
                       label={basicsT(`modelCategory.optionsLabels.${group}`)}
                       position="right"
                     >
-                      <IconInfo className="text-base-light" />
+                      <Icon.Info className="text-base-light" />
                     </Tooltip>
                   </span>
                 </Fragment>

@@ -55,45 +55,36 @@ exports[`The Model Plan Steps Overview static page > matches the snapshot 1`] = 
         <div
           className="usa-summary-box__body"
         >
-          <h3
-            className="usa-summary-box__heading"
+          <p
+            className="margin-top-0 margin-bottom-1"
           >
-            
-          </h3>
-          <div
-            className="usa-summary-box__text"
+            Use this service to:
+          </p>
+          <ul
+            className="padding-left-3 margin-y-0"
           >
-            <p
-              className="margin-top-0 margin-bottom-1"
+            <li>
+              start a new Model Plan to analyze the operational and implementation needs of the model
+            </li>
+            <li>
+              upload and access documents related to your model request, like concept documents or policy papers
+            </li>
+            <li>
+              track the IT solutions the model will use and track its status through implementation
+            </li>
+          </ul>
+          <p
+            className="margin-y-1"
+          >
+            If you have any questions, you can reach the MINT Team at: 
+            <a
+              className="usa-link"
+              href="mailto:MINTTeam@cms.hhs.gov"
             >
-              Use this service to:
-            </p>
-            <ul
-              className="padding-left-3 margin-y-0"
-            >
-              <li>
-                start a new Model Plan to analyze the operational and implementation needs of the model
-              </li>
-              <li>
-                upload and access documents related to your model request, like concept documents or policy papers
-              </li>
-              <li>
-                track the IT solutions the model will use and track its status through implementation
-              </li>
-            </ul>
-            <p
-              className="margin-y-1"
-            >
-              If you have any questions, you can reach the MINT Team at: 
-              <a
-                className="usa-link"
-                href="mailto:MINTTeam@cms.hhs.gov"
-              >
-                MINTTeam@cms.hhs.gov
-              </a>
-              .
-            </p>
-          </div>
+              MINTTeam@cms.hhs.gov
+            </a>
+            .
+          </p>
         </div>
       </div>
       <h2

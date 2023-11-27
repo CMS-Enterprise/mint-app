@@ -6,7 +6,9 @@ import {
   ProcessList,
   ProcessListHeading,
   ProcessListItem,
-  SummaryBox
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
 } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -57,17 +59,14 @@ export const UtilizingSolutions = () => {
               {t('description')}
             </p>
 
-            <SummaryBox
-              heading=""
-              className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
-            >
+            <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2">
               <p className="margin-top-0 margin-bottom-1">
                 {t('summaryBox.copy')}
               </p>
 
               <ol className="padding-left-3 margin-y-0">
                 {summaryBoxConfig.map(item => (
-                  <li>{item}</li>
+                  <li key={item}>{item}</li>
                 ))}
               </ol>
             </SummaryBox>
@@ -86,7 +85,10 @@ export const UtilizingSolutions = () => {
 
             <ProcessList>
               {timingConfig.map((item, index) => (
-                <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4 padding-left-2">
+                <ProcessListItem
+                  className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4 padding-left-2"
+                  key={item.description}
+                >
                   <ProcessListHeading
                     type="h5"
                     className="font-body-sm text-normal"
@@ -103,22 +105,24 @@ export const UtilizingSolutions = () => {
               ))}
             </ProcessList>
 
-            <SummaryBox
-              heading={t('helpBox.heading')}
-              className="margin-bottom-6 margin-top-neg-4"
-            >
-              <Trans
-                i18nKey="utilizingSolutions:helpBox.description"
-                components={{
-                  link1: (
-                    // @ts-ignore
-                    <UswdsReactLink
-                      to="/help-and-knowledge/operational-solutions?page=1"
-                      className="margin-top-2 display-inline-block"
-                    />
-                  )
-                }}
-              />
+            <SummaryBox className="margin-bottom-6 margin-top-neg-4">
+              <SummaryBoxHeading headingLevel="h3">
+                {t('helpBox.heading')}
+              </SummaryBoxHeading>
+              <SummaryBoxContent>
+                <Trans
+                  i18nKey="utilizingSolutions:helpBox.description"
+                  components={{
+                    link1: (
+                      // @ts-ignore
+                      <UswdsReactLink
+                        to="/help-and-knowledge/operational-solutions?page=1"
+                        className="margin-top-2 display-inline-block"
+                      />
+                    )
+                  }}
+                />
+              </SummaryBoxContent>
             </SummaryBox>
 
             <h2 className="margin-top-6 margin-bottom-2">
@@ -135,7 +139,10 @@ export const UtilizingSolutions = () => {
 
             <ProcessList>
               {activityConfig.map((item, index) => (
-                <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4 padding-left-2">
+                <ProcessListItem
+                  className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-4 padding-left-2"
+                  key={item.heading}
+                >
                   <ProcessListHeading type="h5" className="font-body-sm">
                     {item.heading}
                     <p className="text-normal margin-bottom-0 margin-top-105">
@@ -151,11 +158,13 @@ export const UtilizingSolutions = () => {
               ))}
             </ProcessList>
 
-            <SummaryBox
-              heading={t('helpBox2.heading')}
-              className="margin-bottom-6 margin-top-neg-4"
-            >
-              <p className="margin-bottom-0">{t('helpBox2.description')}</p>
+            <SummaryBox className="margin-bottom-6 margin-top-neg-4">
+              <SummaryBoxHeading headingLevel="h3">
+                {t('helpBox2.heading')}
+              </SummaryBoxHeading>
+              <SummaryBoxContent>
+                <p className="margin-bottom-0">{t('helpBox2.description')}</p>
+              </SummaryBoxContent>
             </SummaryBox>
           </Grid>
         </GridContainer>

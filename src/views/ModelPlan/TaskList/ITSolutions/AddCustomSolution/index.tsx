@@ -6,7 +6,7 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
+  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -44,6 +44,7 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
@@ -203,6 +204,17 @@ const AddCustomSolution = () => {
         : t('addSolutionDetails')
     }
   ];
+
+  if (!data && loading) {
+    return <PageLoading />;
+  }
+
+  if (
+    error ||
+    (!customOperationalSolution && !loading && !operationalSolutionID)
+  ) {
+    return <NotFound />;
+  }
 
   return (
     <>
@@ -424,7 +436,7 @@ const AddCustomSolution = () => {
                                 history.goBack();
                               }}
                             >
-                              <IconArrowBack
+                              <Icon.ArrowBack
                                 className="margin-right-1"
                                 aria-hidden
                               />

@@ -32,7 +32,6 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           <fieldset
             class="usa-fieldset"
             data-testid="fieldset"
-            disabled=""
           >
             <div
               class="usa-form-group margin-top-0"

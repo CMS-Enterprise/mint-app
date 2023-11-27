@@ -1,6 +1,10 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 
 import { possibleSolutionsMock } from 'data/mock/solutions';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
@@ -29,7 +33,7 @@ const mocks = [...possibleSolutionsMock];
 
 describe('IT Solutions SolutionCard', () => {
   it('renders default card correctly', async () => {
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
@@ -42,6 +46,8 @@ describe('IT Solutions SolutionCard', () => {
         </Route>
       </MemoryRouter>
     );
+
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
 
     await waitFor(() => {
       expect(
@@ -67,13 +73,15 @@ describe('IT Solutions SolutionCard', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
+
     await waitFor(() => {
       expect(getByTestId('custom-solution-card')).toBeInTheDocument();
     });
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getByText } = render(
+    const { asFragment, getByText, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
@@ -87,7 +95,13 @@ describe('IT Solutions SolutionCard', () => {
       </MemoryRouter>
     );
 
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
+
     await waitFor(() => {
+      expect(
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
+      ).toBeInTheDocument();
+      expect(getByText('Alicia Thomas')).toBeInTheDocument();
       expect(getByText('at.mint@oddball.io')).toBeInTheDocument();
     });
 

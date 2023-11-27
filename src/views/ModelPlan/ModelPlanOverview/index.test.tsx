@@ -5,7 +5,12 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 
+import {
+  favoritesPlanCollectionMock,
+  modelPlanCollectionMock
+} from 'data/mock/general';
 import { MessageProvider } from 'hooks/useMessage';
+import { ModelPlanFilter } from 'types/graphql-global-types';
 
 import ModelPlan from './index';
 
@@ -21,7 +26,12 @@ describe('Read Only Model Plan Overivew', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter initialEntries={['/models']}>
-        <MockedProvider>
+        <MockedProvider
+          mocks={[
+            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, true),
+            ...favoritesPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, true)
+          ]}
+        >
           <Route path="/models">
             <Provider store={store}>
               <MessageProvider>

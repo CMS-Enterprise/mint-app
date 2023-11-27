@@ -14,6 +14,18 @@ import (
 
 // UpdatePlanGeneralCharacteristics implements resolver logic to update a plan general characteristics object
 func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanGeneralCharacteristics, error) {
+	// Ensure that if we are updating the currentModelPlanID to a non-empty non-null value, that we are setting the
+	// existingModelID to null and vice-versa.
+	if _, ok := changes["currentModelPlanID"]; ok {
+		if changes["currentModelPlanID"] != nil && changes["currentModelPlanID"] != "" {
+			changes["existingModelID"] = nil
+		}
+	} else if _, ok := changes["existingModelID"]; ok {
+		if changes["existingModelID"] != nil {
+			changes["currentModelPlanID"] = nil
+		}
+	}
+
 	// Get existing plan general characteristics
 	existing, err := store.PlanGeneralCharacteristicsGetByID(logger, id)
 	if err != nil {
@@ -44,4 +56,30 @@ func PlanGeneralCharacteristicsGetByModelPlanIDLOADER(ctx context.Context, model
 	}
 
 	return result.(*models.PlanGeneralCharacteristics), nil
+}
+
+func PlanGeneralCharacteristicsGetExistingModelName(ctx context.Context, planGeneralCharacteristics *models.PlanGeneralCharacteristics) (*string, error) {
+	if planGeneralCharacteristics.ExistingModelID == nil && planGeneralCharacteristics.CurrentModelPlanID == nil {
+		return nil, nil
+	}
+
+	if planGeneralCharacteristics.ExistingModelID != nil {
+		existingModel, err := ExistingModelGetByIDLOADER(ctx, *planGeneralCharacteristics.ExistingModelID)
+		if err != nil {
+			return nil, err
+		}
+
+		return models.StringPointer(existingModel.ModelName), nil
+	}
+
+	if planGeneralCharacteristics.CurrentModelPlanID != nil {
+		currentModel, err := ModelPlanGetByIDLOADER(ctx, *planGeneralCharacteristics.CurrentModelPlanID)
+		if err != nil {
+			return nil, err
+		}
+
+		return models.StringPointer(currentModel.ModelName), nil
+	}
+
+	return nil, nil
 }

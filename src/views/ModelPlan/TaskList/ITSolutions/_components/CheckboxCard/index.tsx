@@ -11,14 +11,14 @@ import {
   Card,
   Checkbox,
   Grid,
-  IconArrowForward,
-  IconMailOutline,
+  Icon,
   Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
@@ -55,11 +55,14 @@ const CheckboxCard = ({
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.key
-  );
+  const {
+    prevPathname,
+    selectedSolution,
+    renderModal,
+    loading: modalLoading
+  } = useModalSolutionState(solution.key);
 
-  const helpSolutions = useHelpSolution();
+  const { helpSolutions, loading } = useHelpSolution();
 
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther
@@ -88,6 +91,10 @@ const CheckboxCard = ({
 
   const solutionParam = solution.key ? `?selectedSolution=${solution.key}` : '';
 
+  if (loading || modalLoading) {
+    return <Spinner />;
+  }
+
   const renderCTALink = () => {
     if (isDefaultSolutionOptions && solution.isOther) {
       return (
@@ -110,7 +117,7 @@ const CheckboxCard = ({
           solution.isOther
             ? t('addDetails')
             : t('updateTheseDetails')}
-          <IconArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" />
         </Button>
       );
     }
@@ -127,7 +134,7 @@ const CheckboxCard = ({
           }
         >
           {t('updateTheseDetails')}
-          <IconArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" />
         </Button>
       );
     }
@@ -138,7 +145,7 @@ const CheckboxCard = ({
         to={detailRoute}
       >
         {t('aboutSolution')}
-        <IconArrowForward className="margin-left-1" />
+        <Icon.ArrowForward className="margin-left-1" />
       </UswdsReactLink>
     );
   };
@@ -276,7 +283,7 @@ const CheckboxCard = ({
                   target="_blank"
                 >
                   <div>{solution.pocEmail}</div>
-                  <IconMailOutline className="margin-left-05 text-tbottom" />
+                  <Icon.MailOutline className="margin-left-05 text-tbottom" />
                 </Link>
               )}
             </Grid>

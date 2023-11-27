@@ -62,10 +62,7 @@ const ITSolutionsHome = () => {
         {h('for')} {modelName}
       </p>
 
-      <SummaryBox
-        heading=""
-        className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-bottom-2"
-      >
+      <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-bottom-2">
         <p className="margin-top-0 margin-bottom-1">
           {t('summaryBox.useTracker')}
         </p>

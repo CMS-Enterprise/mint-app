@@ -2,12 +2,15 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetTargetsAndOptions from 'queries/GeneralCharacteristics/GetTargetsAndOptions';
-import { GetTargetsAndOptions_modelPlan_generalCharacteristics as GetTargetsAndOptionsType } from 'queries/GeneralCharacteristics/types/GetTargetsAndOptions';
-import { GeographyType } from 'types/graphql-global-types';
+import {
+  GeographyType,
+  GetTargetsAndOptionsDocument,
+  GetTargetsAndOptionsQuery
+} from 'gql/gen/graphql';
 
 import TargetsAndOptions from './index';
+
+type GetTargetsAndOptionsType = GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
 
 const targetsAndOptionsMockData: GetTargetsAndOptionsType = {
   __typename: 'PlanGeneralCharacteristics',
@@ -29,7 +32,7 @@ const targetsAndOptionsMockData: GetTargetsAndOptionsType = {
 const targetsAndOptionsMock = [
   {
     request: {
-      query: GetTargetsAndOptions,
+      query: GetTargetsAndOptionsDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
