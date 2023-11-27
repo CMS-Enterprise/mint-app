@@ -87,7 +87,7 @@ const CCWAndQuality = () => {
     developNewQualityMeasuresNote,
     qualityPerformanceImpactsPayment,
     qualityPerformanceImpactsPaymentNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as GetCCWAndQualityFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetCCWAndQualityFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 

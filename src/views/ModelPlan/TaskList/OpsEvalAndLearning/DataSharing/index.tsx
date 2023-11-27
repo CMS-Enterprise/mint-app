@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,7 +12,13 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
+import {
+  DataFrequencyType,
+  DataStartsType,
+  GetDataSharingQuery,
+  useGetDataSharingQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,13 +31,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetDataSharing from 'queries/OpsEvalAndLearning/GetDataSharing';
-import {
-  GetDataSharing as GetDataSharingType,
-  GetDataSharing_modelPlan_opsEvalAndLearning as GetDataSharingFormType,
-  GetDataSharingVariables
-} from 'queries/OpsEvalAndLearning/types/GetDataSharing';
-import { DataFrequencyType, DataStartsType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -45,6 +43,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type GetDataSharingFormType = GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
 
 const DataSharing = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -67,10 +67,7 @@ const DataSharing = () => {
   const formikRef = useRef<FormikProps<GetDataSharingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetDataSharingType,
-    GetDataSharingVariables
-  >(GetDataSharing, {
+  const { data, loading, error } = useGetDataSharingQuery({
     variables: {
       id: modelID
     }
@@ -94,7 +91,7 @@ const DataSharing = () => {
     qualityReportingStarts,
     qualityReportingStartsOther,
     qualityReportingStartsNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as GetDataSharingFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetDataSharingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
