@@ -7,6 +7,8 @@ import {
   CmsCenter,
   ModelCategory,
   ModelType,
+  ParticipantCommunicationType,
+  ParticipantRiskType,
   ParticipantsType,
   TaskStatus
 } from 'gql/gen/graphql';
@@ -42,8 +44,6 @@ import {
   MonitoringFileType,
   NonClaimsBasedPayType,
   OverlapType,
-  ParticipantCommunicationType,
-  ParticipantRiskType,
   ParticipantSelectionType,
   ParticipantsIDType,
   PayRecipient,

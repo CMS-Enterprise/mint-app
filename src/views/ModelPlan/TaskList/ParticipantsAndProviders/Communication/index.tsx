@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,7 +12,13 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanParticipantsAndProvidersMutation } from 'gql/gen/graphql';
+import {
+  GetCommunicationQuery,
+  ParticipantCommunicationType,
+  ParticipantRiskType,
+  useGetCommunicationQuery,
+  useUpdatePlanParticipantsAndProvidersMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,20 +34,12 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
-import {
-  GetCommunication as GetCommunicationType,
-  GetCommunication_modelPlan_participantsAndProviders as CommunicationFormType,
-  GetCommunicationVariables
-} from 'queries/ParticipantsAndProviders/types/GetCommunication';
-import {
-  ParticipantCommunicationType,
-  ParticipantRiskType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
+
+type CommunicationFormType = GetCommunicationQuery['modelPlan']['participantsAndProviders'];
 
 export const Communication = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -65,10 +62,7 @@ export const Communication = () => {
   const formikRef = useRef<FormikProps<CommunicationFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetCommunicationType,
-    GetCommunicationVariables
-  >(GetCommunication, {
+  const { data, loading, error } = useGetCommunicationQuery({
     variables: {
       id: modelID
     }
@@ -85,8 +79,8 @@ export const Communication = () => {
     riskNote,
     willRiskChange,
     willRiskChangeNote
-  } =
-    data?.modelPlan?.participantsAndProviders || ({} as CommunicationFormType);
+  } = (data?.modelPlan?.participantsAndProviders ||
+    {}) as CommunicationFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 

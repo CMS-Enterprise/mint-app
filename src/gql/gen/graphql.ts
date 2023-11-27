@@ -2662,6 +2662,13 @@ export type CreatSendFeedbackMutation = { __typename: 'Mutation', sendFeedbackEm
 
 export type ReadyForReviewUserFragmentFragment = { __typename: 'UserAccount', id: UUID, commonName: string };
 
+export type GetCommunicationQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, participantAssumeRisk?: boolean | null, riskType?: ParticipantRiskType | null, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
 export type GetParticipantsAndProvidersQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3049,6 +3056,62 @@ export function useCreatSendFeedbackMutation(baseOptions?: Apollo.MutationHookOp
 export type CreatSendFeedbackMutationHookResult = ReturnType<typeof useCreatSendFeedbackMutation>;
 export type CreatSendFeedbackMutationResult = Apollo.MutationResult<CreatSendFeedbackMutation>;
 export type CreatSendFeedbackMutationOptions = Apollo.BaseMutationOptions<CreatSendFeedbackMutation, CreatSendFeedbackMutationVariables>;
+export const GetCommunicationDocument = gql`
+    query GetCommunication($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    participantsAndProviders {
+      id
+      communicationMethod
+      communicationMethodOther
+      communicationNote
+      participantAssumeRisk
+      riskType
+      riskOther
+      riskNote
+      willRiskChange
+      willRiskChangeNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCommunicationQuery__
+ *
+ * To run a query within a React component, call `useGetCommunicationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommunicationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommunicationQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCommunicationQuery(baseOptions: Apollo.QueryHookOptions<GetCommunicationQuery, GetCommunicationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommunicationQuery, GetCommunicationQueryVariables>(GetCommunicationDocument, options);
+      }
+export function useGetCommunicationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommunicationQuery, GetCommunicationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommunicationQuery, GetCommunicationQueryVariables>(GetCommunicationDocument, options);
+        }
+export function useGetCommunicationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCommunicationQuery, GetCommunicationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCommunicationQuery, GetCommunicationQueryVariables>(GetCommunicationDocument, options);
+        }
+export type GetCommunicationQueryHookResult = ReturnType<typeof useGetCommunicationQuery>;
+export type GetCommunicationLazyQueryHookResult = ReturnType<typeof useGetCommunicationLazyQuery>;
+export type GetCommunicationSuspenseQueryHookResult = ReturnType<typeof useGetCommunicationSuspenseQuery>;
+export type GetCommunicationQueryResult = Apollo.QueryResult<GetCommunicationQuery, GetCommunicationQueryVariables>;
 export const GetParticipantsAndProvidersDocument = gql`
     query GetParticipantsAndProviders($id: UUID!) {
   modelPlan(id: $id) {

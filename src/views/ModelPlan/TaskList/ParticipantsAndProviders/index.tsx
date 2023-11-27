@@ -86,9 +86,8 @@ export const ParticipantsAndProvidersContent = () => {
     participantsCurrentlyInModels,
     participantsCurrentlyInModelsNote,
     modelApplicationLevel
-  } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as ParticipantsAndProvidersFormType);
+  } = (data?.modelPlan?.participantsAndProviders ||
+    {}) as ParticipantsAndProvidersFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
