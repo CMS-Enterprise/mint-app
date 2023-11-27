@@ -2,9 +2,11 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetIddocDocument, GetIddocQuery } from 'gql/gen/graphql';
-
-import { CcmInvolvmentType } from 'types/graphql-global-types';
+import {
+  CcmInvolvmentType,
+  GetIddocDocument,
+  GetIddocQuery
+} from 'gql/gen/graphql';
 
 import IDDOC from './index';
 

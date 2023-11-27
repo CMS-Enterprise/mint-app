@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -14,7 +13,11 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
+import {
+  GetIddocMonitoringQuery,
+  useGetIddocMonitoringQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,12 +29,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetIDDOCMonitoring from 'queries/OpsEvalAndLearning/GetIDDOCMonitoring';
-import {
-  GetIDDOCMonitoring as GetIDDOCMonitoringType,
-  GetIDDOCMonitoring_modelPlan_opsEvalAndLearning as IDDOCMonitoringFormType,
-  GetIDDOCMonitoringVariables
-} from 'queries/OpsEvalAndLearning/types/GetIDDOCMonitoring';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -43,6 +40,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type IDDOCMonitoringFormType = GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCMonitoring = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -65,10 +64,7 @@ const IDDOCMonitoring = () => {
   const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetIDDOCMonitoringType,
-    GetIDDOCMonitoringVariables
-  >(GetIDDOCMonitoring, {
+  const { data, loading, error } = useGetIddocMonitoringQuery({
     variables: {
       id: modelID
     }
@@ -86,7 +82,7 @@ const IDDOCMonitoring = () => {
     produceBenefitEnhancementFiles,
     fileNamingConventions,
     dataMonitoringNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as IDDOCMonitoringFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCMonitoringFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
