@@ -8,6 +8,7 @@ import {
   FrequencyType,
   ModelCategory,
   ModelType,
+  SelectionMethodType,
   TaskStatus
 } from 'gql/gen/graphql';
 
@@ -51,7 +52,6 @@ import {
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
-  SelectionMethodType,
   StakeholdersType,
   TeamRole,
   TriStateAnswer,

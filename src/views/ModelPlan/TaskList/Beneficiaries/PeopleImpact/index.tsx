@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -17,7 +16,12 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useUpdateModelPlanBeneficiariesMutation } from 'gql/gen/graphql';
+import {
+  GetPeopleImpactedQuery,
+  SelectionMethodType,
+  useGetPeopleImpactedQuery,
+  useUpdateModelPlanBeneficiariesMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -30,18 +34,13 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import getPeopleImpacted from 'queries/Beneficiaries/getPeopleImpacted';
-import {
-  GetPeopleImpacted as PeopleImpactedType,
-  GetPeopleImpacted_modelPlan_beneficiaries as PeopleImpactedFormType,
-  GetPeopleImpactedVariables
-} from 'queries/Beneficiaries/types/GetPeopleImpacted';
-import { SelectionMethodType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+type PeopleImpactedFormType = GetPeopleImpactedQuery['modelPlan']['beneficiaries'];
 
 const PeopleImpact = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
@@ -60,10 +59,7 @@ const PeopleImpact = () => {
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    PeopleImpactedType,
-    GetPeopleImpactedVariables
-  >(getPeopleImpacted, {
+  const { data, loading, error } = useGetPeopleImpactedQuery({
     variables: {
       id: modelID
     }
@@ -77,7 +73,7 @@ const PeopleImpact = () => {
     beneficiarySelectionMethod,
     beneficiarySelectionNote,
     beneficiarySelectionOther
-  } = data?.modelPlan?.beneficiaries || ({} as PeopleImpactedFormType);
+  } = (data?.modelPlan?.beneficiaries || {}) as PeopleImpactedFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 

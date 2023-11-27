@@ -2659,6 +2659,13 @@ export type GetFrequencyQueryVariables = Exact<{
 
 export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
+export type GetPeopleImpactedQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetPeopleImpactedQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType> } } };
+
 export type UpdateModelPlanBeneficiariesMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
   changes: PlanBeneficiariesChanges;
@@ -3081,6 +3088,56 @@ export type GetFrequencyQueryHookResult = ReturnType<typeof useGetFrequencyQuery
 export type GetFrequencyLazyQueryHookResult = ReturnType<typeof useGetFrequencyLazyQuery>;
 export type GetFrequencySuspenseQueryHookResult = ReturnType<typeof useGetFrequencySuspenseQuery>;
 export type GetFrequencyQueryResult = Apollo.QueryResult<GetFrequencyQuery, GetFrequencyQueryVariables>;
+export const GetPeopleImpactedDocument = gql`
+    query GetPeopleImpacted($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    beneficiaries {
+      id
+      numberPeopleImpacted
+      estimateConfidence
+      confidenceNote
+      beneficiarySelectionNote
+      beneficiarySelectionOther
+      beneficiarySelectionMethod
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPeopleImpactedQuery__
+ *
+ * To run a query within a React component, call `useGetPeopleImpactedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPeopleImpactedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPeopleImpactedQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPeopleImpactedQuery(baseOptions: Apollo.QueryHookOptions<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>(GetPeopleImpactedDocument, options);
+      }
+export function useGetPeopleImpactedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>(GetPeopleImpactedDocument, options);
+        }
+export function useGetPeopleImpactedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>(GetPeopleImpactedDocument, options);
+        }
+export type GetPeopleImpactedQueryHookResult = ReturnType<typeof useGetPeopleImpactedQuery>;
+export type GetPeopleImpactedLazyQueryHookResult = ReturnType<typeof useGetPeopleImpactedLazyQuery>;
+export type GetPeopleImpactedSuspenseQueryHookResult = ReturnType<typeof useGetPeopleImpactedSuspenseQuery>;
+export type GetPeopleImpactedQueryResult = Apollo.QueryResult<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>;
 export const UpdateModelPlanBeneficiariesDocument = gql`
     mutation UpdateModelPlanBeneficiaries($id: UUID!, $changes: PlanBeneficiariesChanges!) {
   updatePlanBeneficiaries(id: $id, changes: $changes) {
