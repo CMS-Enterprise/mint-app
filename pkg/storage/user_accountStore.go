@@ -122,14 +122,14 @@ func (s *Store) UserAccountGetByIDLOADER(
 
 // UserAccountInsertByUsernameTransaction creates a new user account for a given EUAID
 // The transaction object does not commit or rollback in the scope of this function
-func (s *Store) UserAccountInsertByUsernameTransaction(t *Transaction, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
+func (s *Store) UserAccountInsertByUsernameTransaction(np INamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
 
 	user := &authentication.UserAccount{}
 	if userAccount.ID == uuid.Nil {
 		userAccount.ID = uuid.New()
 	}
 
-	stmt, err := t.tx.PrepareNamed(userAccountInsertByUsername)
+	stmt, err := np.PrepareNamed(userAccountInsertByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -180,6 +180,32 @@ func (s *Store) UserAccountUpdateByUserName(userAccount *authentication.UserAcco
 	}
 
 	stmt, err := s.db.PrepareNamed(userAccountUpdateByUsername)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	err = stmt.Get(user, userAccount)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+// UserAccountUpdateByUserNameTransaction updates an existing user account for a given username
+// method is part of a transaction
+func (s *Store) UserAccountUpdateByUserNameTransaction(np INamedPreparer, userAccount *authentication.UserAccount) (
+	*authentication.UserAccount,
+	error,
+) {
+
+	user := &authentication.UserAccount{}
+	if userAccount.ID == uuid.Nil {
+		userAccount.ID = uuid.New()
+	}
+
+	stmt, err := np.PrepareNamed(userAccountUpdateByUsername)
 	if err != nil {
 		return nil, err
 	}

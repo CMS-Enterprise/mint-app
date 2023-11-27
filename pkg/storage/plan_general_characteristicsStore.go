@@ -51,14 +51,14 @@ func (s *Store) PlanGeneralCharacteristicsCreate(
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics
 func (s *Store) PlanGeneralCharacteristicsCreateTransaction(
-	t *Transaction,
+	np INamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanGeneralCharacteristics,
 ) (*models.PlanGeneralCharacteristics, error) {
 
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
 
-	stmt, err := t.tx.PrepareNamed(planGeneralCharacteristicsCreateSQL)
+	stmt, err := np.PrepareNamed(planGeneralCharacteristicsCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}

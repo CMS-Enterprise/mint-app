@@ -24,7 +24,7 @@ func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, sto
 }
 
 // PlanFavoriteCreateTransaction creates a new plan favorite record in the database
-func PlanFavoriteCreateTransaction(t *storage.Transaction, logger *zap.Logger, principal authentication.Principal, userAccountID uuid.UUID, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+func PlanFavoriteCreateTransaction(np storage.INamedPreparer, logger *zap.Logger, principal authentication.Principal, userAccountID uuid.UUID, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 
 	favorite := models.NewPlanFavorite(principal.Account().ID, userAccountID, modelPlanID)
 
@@ -33,7 +33,7 @@ func PlanFavoriteCreateTransaction(t *storage.Transaction, logger *zap.Logger, p
 		return nil, err
 	}
 
-	return store.PlanFavoriteCreateTransaction(t, logger, favorite)
+	return store.PlanFavoriteCreateTransaction(np, logger, favorite)
 
 }
 

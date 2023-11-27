@@ -58,14 +58,14 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 // PlanCollaboratorCreateTransaction creates a new plan collaborator
 // The transaction object does not commit or rollback in the scope of this function
 func (s *Store) PlanCollaboratorCreateTransaction(
-	t *Transaction,
+	np INamedPreparer,
 	_ *zap.Logger,
 	collaborator *models.PlanCollaborator,
 ) (*models.PlanCollaborator, error) {
 
 	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
-	stmt, err := t.tx.PrepareNamed(planCollaboratorCreateSQL)
+	stmt, err := np.PrepareNamed(planCollaboratorCreateSQL)
 	if err != nil {
 		return nil, err
 	}

@@ -26,7 +26,7 @@ import (
 // The transaction object does not commit or rollback in the scope of this function
 func CreatePlanCollaboratorTransaction(
 	ctx context.Context,
-	t *storage.Transaction,
+	np storage.INamedPreparer,
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
@@ -39,7 +39,7 @@ func CreatePlanCollaboratorTransaction(
 	//TODO make these clustered with store methods?
 
 	isMacUser := false
-	collabAccount, err := userhelpers.GetOrCreateUserAccountTransaction(ctx, t, store, input.UserName, false, isMacUser, getAccountInformation)
+	collabAccount, err := userhelpers.GetOrCreateUserAccountTransaction(ctx, np, store, input.UserName, false, isMacUser, getAccountInformation)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -50,17 +50,17 @@ func CreatePlanCollaboratorTransaction(
 		return nil, nil, err
 	}
 
-	modelPlan, err := store.ModelPlanGetByIDTransaction(t, logger, input.ModelPlanID)
+	modelPlan, err := store.ModelPlanGetByIDTransaction(np, logger, input.ModelPlanID)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	retCollaborator, err := store.PlanCollaboratorCreateTransaction(t, logger, collaborator)
+	retCollaborator, err := store.PlanCollaboratorCreateTransaction(np, logger, collaborator)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	planFavorite, err := PlanFavoriteCreateTransaction(t, logger, principal, collabAccount.ID, store, modelPlan.ID)
+	planFavorite, err := PlanFavoriteCreateTransaction(np, logger, principal, collabAccount.ID, store, modelPlan.ID)
 	if err != nil {
 		return retCollaborator, nil, err
 	}

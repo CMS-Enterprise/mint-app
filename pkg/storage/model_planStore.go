@@ -171,10 +171,10 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 
 // ModelPlanGetByIDTransaction returns a model plan for a given ID
 // The transaction object does not commit or rollback in the scope of this function
-func (s *Store) ModelPlanGetByIDTransaction(t *Transaction, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanGetByIDTransaction(np INamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
-	stmt, err := t.tx.PrepareNamed(modelPlanGetByIDSQL)
+	stmt, err := np.PrepareNamed(modelPlanGetByIDSQL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
 	}

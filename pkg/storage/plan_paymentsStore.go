@@ -77,13 +77,13 @@ func (s *Store) PlanPaymentsCreate(
 
 // PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller
 func (s *Store) PlanPaymentsCreateTransaction(
-	t *Transaction,
+	np INamedPreparer,
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
 
 	payments.ID = utilityUUID.ValueOrNewUUID(payments.ID)
 
-	stmt, err := t.tx.PrepareNamed(planPaymentsCreateSQL)
+	stmt, err := np.PrepareNamed(planPaymentsCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
 	}

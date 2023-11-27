@@ -53,14 +53,14 @@ func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
 
 // PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object
 func (s *Store) PlanParticipantsAndProvidersCreateTransaction(
-	t *Transaction,
+	np INamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanParticipantsAndProviders,
 ) (*models.PlanParticipantsAndProviders, error) {
 
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
 
-	stmt, err := t.tx.PrepareNamed(planParticipantsAndProvidersCreateSQL)
+	stmt, err := np.PrepareNamed(planParticipantsAndProvidersCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
