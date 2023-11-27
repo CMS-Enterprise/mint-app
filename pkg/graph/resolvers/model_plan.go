@@ -46,7 +46,7 @@ func ModelPlanCreate(
 	newPlan, err := storage.WithTransaction[models.ModelPlan](store, func(tx *storage.Transaction) (*models.ModelPlan, error) {
 		var createdPlan *models.ModelPlan
 		tx.Next(func(t *storage.Transaction) error {
-			planInternal, errInternal := store.ModelPlanCreateTransaction(tx, logger, plan)
+			planInternal, errInternal := store.ModelPlanCreateTransaction(t, logger, plan)
 
 			if errInternal != nil {
 				return errInternal

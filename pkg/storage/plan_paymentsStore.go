@@ -77,7 +77,7 @@ func (s *Store) PlanPaymentsCreate(
 
 // PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller
 func (s *Store) PlanPaymentsCreateTransaction(
-	np INamedPreparer,
+	np NamedPreparer,
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
 

@@ -47,7 +47,7 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) 
 }
 
 // PlanBasicsCreate creates a new plan basics
-func (s *Store) PlanBasicsCreateTransaction(np INamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
+func (s *Store) PlanBasicsCreateTransaction(np NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
 	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
 

@@ -52,7 +52,7 @@ func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
 
 // PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
 func (s *Store) PlanOpsEvalAndLearningCreateTransaction(
-	np INamedPreparer,
+	np NamedPreparer,
 	logger *zap.Logger,
 	oel *models.PlanOpsEvalAndLearning,
 ) (*models.PlanOpsEvalAndLearning, error) {

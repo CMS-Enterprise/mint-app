@@ -69,7 +69,7 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 }
 
 // ModelPlanCreate creates a model plan using a transaction
-func (s *Store) ModelPlanCreateTransaction(np INamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanCreateTransaction(np NamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
@@ -171,7 +171,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 
 // ModelPlanGetByIDTransaction returns a model plan for a given ID
 // The transaction object does not commit or rollback in the scope of this function
-func (s *Store) ModelPlanGetByIDTransaction(np INamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanGetByIDTransaction(np NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
 	stmt, err := np.PrepareNamed(modelPlanGetByIDSQL)

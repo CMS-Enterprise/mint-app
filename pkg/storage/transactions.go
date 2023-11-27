@@ -18,14 +18,18 @@ type TransactionProperties struct {
 	rolledBack bool
 }
 
-func NewTransaction(store *Store) *Transaction {
+func newTransaction(store *Store) (*Transaction, error) {
+	tx, err := store.db.Beginx()
+	if err != nil {
+		return nil, err
+	}
 	return &Transaction{
 		store:      store,
-		tx:         store.db.MustBegin(),
+		tx:         tx,
 		results:    map[string]interface{}{},
 		properties: TransactionProperties{},
 		errors:     []error{},
-	}
+	}, nil
 
 }
 
@@ -73,7 +77,7 @@ func (t *Transaction) Errors() error {
 // If there is an error, it will attempt to rollback the tx
 // Any errors encountered during the attempts will be appeneded to the errors list
 func (t *Transaction) Commit() error { //TODO: SW first check if there are errors, if there are, it should be rolled back
-	if t.Errored() {
+	if t.Errored() { //ROLLBACK!
 		return t.Errors()
 	}
 	err := t.tx.Commit()
@@ -95,14 +99,18 @@ func (t *Transaction) Commit() error { //TODO: SW first check if there are error
 type TransactionFunc[T any] func(*Transaction) (*T, error)
 
 func WithTransaction[T any](s *Store, txFunc TransactionFunc[T]) (*T, error) {
-	tx := NewTransaction(s)
+	tx, err := newTransaction(s)
+	if err != nil {
+		return nil, fmt.Errorf("error creating transaction %w", err)
+	}
 
 	result, errFunc := txFunc(tx)
 	if errFunc != nil {
 		tx.errors = append(tx.errors, errFunc)
 	}
+	//TODO check if there is an error or not and then commit
 
-	err := tx.Commit()
+	err = tx.Commit()
 
 	if err != nil {
 		return nil, err

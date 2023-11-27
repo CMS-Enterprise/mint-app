@@ -58,7 +58,7 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 // PlanCollaboratorCreateTransaction creates a new plan collaborator
 // The transaction object does not commit or rollback in the scope of this function
 func (s *Store) PlanCollaboratorCreateTransaction(
-	np INamedPreparer,
+	np NamedPreparer,
 	_ *zap.Logger,
 	collaborator *models.PlanCollaborator,
 ) (*models.PlanCollaborator, error) {

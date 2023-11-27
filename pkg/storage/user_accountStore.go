@@ -122,7 +122,7 @@ func (s *Store) UserAccountGetByIDLOADER(
 
 // UserAccountInsertByUsernameTransaction creates a new user account for a given EUAID
 // The transaction object does not commit or rollback in the scope of this function
-func (s *Store) UserAccountInsertByUsernameTransaction(np INamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
+func (s *Store) UserAccountInsertByUsernameTransaction(np NamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
 
 	user := &authentication.UserAccount{}
 	if userAccount.ID == uuid.Nil {
@@ -195,7 +195,7 @@ func (s *Store) UserAccountUpdateByUserName(userAccount *authentication.UserAcco
 
 // UserAccountUpdateByUserNameTransaction updates an existing user account for a given username
 // method is part of a transaction
-func (s *Store) UserAccountUpdateByUserNameTransaction(np INamedPreparer, userAccount *authentication.UserAccount) (
+func (s *Store) UserAccountUpdateByUserNameTransaction(np NamedPreparer, userAccount *authentication.UserAccount) (
 	*authentication.UserAccount,
 	error,
 ) {

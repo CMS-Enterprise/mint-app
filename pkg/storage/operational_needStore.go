@@ -245,7 +245,7 @@ func (s *Store) OperationalNeedUpdateByID(
 
 // OperationalNeedInsertAllPossible will insert all possible operational need in the DB for a specific model pland
 func (s *Store) OperationalNeedInsertAllPossibleTransaction(
-	np INamedPreparer,
+	np NamedPreparer,
 	_ *zap.Logger,
 	modelPlanID uuid.UUID,
 	createdBy uuid.UUID,

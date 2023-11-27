@@ -52,7 +52,7 @@ func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
 
 // PlanBeneficiariesCreate creates a new plan benficiaries object
 func (s *Store) PlanBeneficiariesCreateTransaction(
-	np INamedPreparer,
+	np NamedPreparer,
 	logger *zap.Logger,
 	b *models.PlanBeneficiaries,
 ) (*models.PlanBeneficiaries, error) {

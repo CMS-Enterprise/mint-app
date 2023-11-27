@@ -41,7 +41,7 @@ type GetOktaAccountInfoFunc func(ctx context.Context, username string) (*OktaAcc
 type GetUserInfoFunc func(ctx context.Context, username string) (*models.UserInfo, error)
 
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
-func GetOrCreateUserAccountTransaction(ctx context.Context, np storage.INamedPreparer, store *storage.Store, username string, hasLoggedIn bool,
+func GetOrCreateUserAccountTransaction(ctx context.Context, np storage.NamedPreparer, store *storage.Store, username string, hasLoggedIn bool,
 	isMacUser bool, getAccountInformation GetAccountInfoFunc) (*authentication.UserAccount, error) {
 	userAccount, accErr := store.UserAccountGetByUsername(username)
 	if accErr != nil {

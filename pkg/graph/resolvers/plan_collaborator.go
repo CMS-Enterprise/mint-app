@@ -26,7 +26,7 @@ import (
 // The transaction object does not commit or rollback in the scope of this function
 func CreatePlanCollaboratorTransaction(
 	ctx context.Context,
-	np storage.INamedPreparer,
+	np storage.NamedPreparer,
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,

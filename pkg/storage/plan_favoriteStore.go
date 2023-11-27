@@ -28,7 +28,7 @@ var planFavoriteGetUniqueUserIDsSQL string
 
 // PlanFavoriteCreateTransaction creates and returns a plan favorite object
 // The transaction object does not commit or rollback in the scope of this function
-func (s *Store) PlanFavoriteCreateTransaction(np INamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteCreateTransaction(np NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()

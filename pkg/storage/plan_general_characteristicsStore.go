@@ -51,7 +51,7 @@ func (s *Store) PlanGeneralCharacteristicsCreate(
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics
 func (s *Store) PlanGeneralCharacteristicsCreateTransaction(
-	np INamedPreparer,
+	np NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanGeneralCharacteristics,
 ) (*models.PlanGeneralCharacteristics, error) {
