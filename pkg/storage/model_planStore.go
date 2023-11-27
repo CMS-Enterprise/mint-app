@@ -69,23 +69,18 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 }
 
 // ModelPlanCreate creates a model plan using a transaction
-func (s *Store) ModelPlanCreateTransaction(t *Transaction, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanCreateTransaction(np INamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
 
-	stmt, err := t.tx.PrepareNamed(modelPlanCreateSQL)
-	if err != nil {
-		t.errors = append(t.errors, err) // TODO: SW should we just return the error? It gets appended in the parent transaction
-		return nil, err
-	}
-	defer stmt.Close()
-
+	stmt, err := np.PrepareNamed(modelPlanCreateSQL)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
 			zap.String("user", plan.CreatedBy.String()),
 		)
+		// t.errors = append(t.errors, err) // TODO: SW should we just return the error? It gets appended in the parent transaction
 		return nil, err
 	}
 	defer stmt.Close()
@@ -97,7 +92,7 @@ func (s *Store) ModelPlanCreateTransaction(t *Transaction, logger *zap.Logger, p
 
 	err = stmt.Get(&retPlan, plan)
 	if err != nil {
-		t.errors = append(t.errors, err) // TODO: SW should we just return the error? It gets appended in the parent transaction
+		// t.errors = append(t.errors, err) // TODO: SW should we just return the error? It gets appended in the parent transaction
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
 			zap.String("user", plan.CreatedBy.String()),

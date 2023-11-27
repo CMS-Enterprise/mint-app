@@ -29,6 +29,11 @@ func NewTransaction(store *Store) *Transaction {
 
 }
 
+// PrepareNamed implements the INamedPreparer interface
+func (t *Transaction) PrepareNamed(query string) (*sqlx.NamedStmt, error) {
+	return t.tx.PrepareNamed(query)
+}
+
 func (t *Transaction) GetResult(resultKey string) (interface{}, error) {
 
 	return t.results[resultKey], nil // TODO: SW make this error if result isn't present
