@@ -1,7 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -15,6 +15,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useUpdatePlanParticipantsAndProvidersMutation } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -35,8 +36,6 @@ import {
   GetParticipantOptions_modelPlan_participantsAndProviders as ParticipantOptionsFormType,
   GetParticipantOptionsVariables
 } from 'queries/ParticipantsAndProviders/types/GetParticipantOptions';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   ParticipantSelectionType,
   RecruitmentType
@@ -100,9 +99,7 @@ export const ParticipantOptions = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (
     redirect?: 'next' | 'back' | 'task-list' | string

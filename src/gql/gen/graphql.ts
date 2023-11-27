@@ -2662,6 +2662,21 @@ export type CreatSendFeedbackMutation = { __typename: 'Mutation', sendFeedbackEm
 
 export type ReadyForReviewUserFragmentFragment = { __typename: 'UserAccount', id: UUID, commonName: string };
 
+export type GetParticipantsAndProvidersQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null } } };
+
+export type UpdatePlanParticipantsAndProvidersMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanParticipantsAndProvidersChanges;
+}>;
+
+
+export type UpdatePlanParticipantsAndProvidersMutation = { __typename: 'Mutation', updatePlanParticipantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID } };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3034,6 +3049,92 @@ export function useCreatSendFeedbackMutation(baseOptions?: Apollo.MutationHookOp
 export type CreatSendFeedbackMutationHookResult = ReturnType<typeof useCreatSendFeedbackMutation>;
 export type CreatSendFeedbackMutationResult = Apollo.MutationResult<CreatSendFeedbackMutation>;
 export type CreatSendFeedbackMutationOptions = Apollo.BaseMutationOptions<CreatSendFeedbackMutation, CreatSendFeedbackMutationVariables>;
+export const GetParticipantsAndProvidersDocument = gql`
+    query GetParticipantsAndProviders($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    participantsAndProviders {
+      id
+      participants
+      medicareProviderType
+      statesEngagement
+      participantsOther
+      participantsNote
+      participantsCurrentlyInModels
+      participantsCurrentlyInModelsNote
+      modelApplicationLevel
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetParticipantsAndProvidersQuery__
+ *
+ * To run a query within a React component, call `useGetParticipantsAndProvidersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetParticipantsAndProvidersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetParticipantsAndProvidersQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetParticipantsAndProvidersQuery(baseOptions: Apollo.QueryHookOptions<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>(GetParticipantsAndProvidersDocument, options);
+      }
+export function useGetParticipantsAndProvidersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>(GetParticipantsAndProvidersDocument, options);
+        }
+export function useGetParticipantsAndProvidersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>(GetParticipantsAndProvidersDocument, options);
+        }
+export type GetParticipantsAndProvidersQueryHookResult = ReturnType<typeof useGetParticipantsAndProvidersQuery>;
+export type GetParticipantsAndProvidersLazyQueryHookResult = ReturnType<typeof useGetParticipantsAndProvidersLazyQuery>;
+export type GetParticipantsAndProvidersSuspenseQueryHookResult = ReturnType<typeof useGetParticipantsAndProvidersSuspenseQuery>;
+export type GetParticipantsAndProvidersQueryResult = Apollo.QueryResult<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>;
+export const UpdatePlanParticipantsAndProvidersDocument = gql`
+    mutation UpdatePlanParticipantsAndProviders($id: UUID!, $changes: PlanParticipantsAndProvidersChanges!) {
+  updatePlanParticipantsAndProviders(id: $id, changes: $changes) {
+    id
+  }
+}
+    `;
+export type UpdatePlanParticipantsAndProvidersMutationFn = Apollo.MutationFunction<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>;
+
+/**
+ * __useUpdatePlanParticipantsAndProvidersMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlanParticipantsAndProvidersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlanParticipantsAndProvidersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlanParticipantsAndProvidersMutation, { data, loading, error }] = useUpdatePlanParticipantsAndProvidersMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdatePlanParticipantsAndProvidersMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>(UpdatePlanParticipantsAndProvidersDocument, options);
+      }
+export type UpdatePlanParticipantsAndProvidersMutationHookResult = ReturnType<typeof useUpdatePlanParticipantsAndProvidersMutation>;
+export type UpdatePlanParticipantsAndProvidersMutationResult = Apollo.MutationResult<UpdatePlanParticipantsAndProvidersMutation>;
+export type UpdatePlanParticipantsAndProvidersMutationOptions = Apollo.BaseMutationOptions<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>;
 export const GetFundingDocument = gql`
     query GetFunding($id: UUID!) {
   modelPlan(id: $id) {

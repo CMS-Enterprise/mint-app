@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -17,6 +16,12 @@ import {
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetParticipantsAndProvidersQuery,
+  ParticipantsType,
+  useGetParticipantsAndProvidersQuery,
+  useUpdatePlanParticipantsAndProvidersMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -31,15 +36,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetParticipantsAndProviders from 'queries/ParticipantsAndProviders/GetParticipantsAndProviders';
-import {
-  GetParticipantsAndProviders as GetParticipantsAndProvidersType,
-  GetParticipantsAndProviders_modelPlan_participantsAndProviders as ParticipantsAndProvidersFormType,
-  GetParticipantsAndProvidersVariables
-} from 'queries/ParticipantsAndProviders/types/GetParticipantsAndProviders';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
-import { ParticipantsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
@@ -51,6 +47,8 @@ import ParticipantOptions from './ParticipantOptions';
 import ProviderOptions from './ProviderOptions';
 
 import './index.scss';
+
+type ParticipantsAndProvidersFormType = GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
 
 export const ParticipantsAndProvidersContent = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -72,10 +70,7 @@ export const ParticipantsAndProvidersContent = () => {
 
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetParticipantsAndProvidersType,
-    GetParticipantsAndProvidersVariables
-  >(GetParticipantsAndProviders, {
+  const { data, loading, error } = useGetParticipantsAndProvidersQuery({
     variables: {
       id: modelID
     }
@@ -97,9 +92,7 @@ export const ParticipantsAndProvidersContent = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back') => {
     update({

@@ -1,7 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,6 +12,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { useUpdatePlanParticipantsAndProvidersMutation } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -33,8 +34,6 @@ import {
   GetCoordination_modelPlan_participantsAndProviders as CoordinationFormType,
   GetCoordinationVariables
 } from 'queries/ParticipantsAndProviders/types/GetCoordination';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import { ParticipantsIDType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -92,9 +91,7 @@ export const Coordination = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (redirect?: string) => {
     update({

@@ -7,6 +7,7 @@ import {
   CmsCenter,
   ModelCategory,
   ModelType,
+  ParticipantsType,
   TaskStatus
 } from 'gql/gen/graphql';
 
@@ -45,7 +46,6 @@ import {
   ParticipantRiskType,
   ParticipantSelectionType,
   ParticipantsIDType,
-  ParticipantsType,
   PayRecipient,
   PayType,
   ProviderAddType,

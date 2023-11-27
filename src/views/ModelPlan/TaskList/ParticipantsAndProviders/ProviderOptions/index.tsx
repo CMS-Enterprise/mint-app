@@ -1,7 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,6 +13,7 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { useUpdatePlanParticipantsAndProvidersMutation } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -35,8 +36,6 @@ import {
   GetProviderOptions_modelPlan_participantsAndProviders as ProviderOptionsFormType,
   GetProviderOptionsVariables
 } from 'queries/ParticipantsAndProviders/types/GetProviderOptions';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   FrequencyType,
   OverlapType,
@@ -116,9 +115,7 @@ export const ProviderOptions = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (
     redirect?: 'back' | 'task-list' | 'next' | string
