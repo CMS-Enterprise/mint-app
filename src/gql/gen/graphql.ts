@@ -2652,6 +2652,13 @@ export type GetBeneficiaryIdentificationQueryVariables = Exact<{
 
 export type GetBeneficiaryIdentificationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, diseaseSpecificGroup?: string | null, beneficiariesOther?: string | null, beneficiariesNote?: string | null, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null } } };
 
+export type GetFrequencyQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+
 export type UpdateModelPlanBeneficiariesMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
   changes: PlanBeneficiariesChanges;
@@ -3014,6 +3021,66 @@ export type GetBeneficiaryIdentificationQueryHookResult = ReturnType<typeof useG
 export type GetBeneficiaryIdentificationLazyQueryHookResult = ReturnType<typeof useGetBeneficiaryIdentificationLazyQuery>;
 export type GetBeneficiaryIdentificationSuspenseQueryHookResult = ReturnType<typeof useGetBeneficiaryIdentificationSuspenseQuery>;
 export type GetBeneficiaryIdentificationQueryResult = Apollo.QueryResult<GetBeneficiaryIdentificationQuery, GetBeneficiaryIdentificationQueryVariables>;
+export const GetFrequencyDocument = gql`
+    query GetFrequency($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    beneficiaries {
+      id
+      beneficiarySelectionFrequency
+      beneficiarySelectionFrequencyNote
+      beneficiarySelectionFrequencyOther
+      beneficiaryOverlap
+      beneficiaryOverlapNote
+      precedenceRules
+      readyForReviewByUserAccount {
+        id
+        commonName
+      }
+      readyForReviewDts
+      status
+    }
+    operationalNeeds {
+      id
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFrequencyQuery__
+ *
+ * To run a query within a React component, call `useGetFrequencyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFrequencyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFrequencyQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetFrequencyQuery(baseOptions: Apollo.QueryHookOptions<GetFrequencyQuery, GetFrequencyQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFrequencyQuery, GetFrequencyQueryVariables>(GetFrequencyDocument, options);
+      }
+export function useGetFrequencyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFrequencyQuery, GetFrequencyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFrequencyQuery, GetFrequencyQueryVariables>(GetFrequencyDocument, options);
+        }
+export function useGetFrequencySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetFrequencyQuery, GetFrequencyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetFrequencyQuery, GetFrequencyQueryVariables>(GetFrequencyDocument, options);
+        }
+export type GetFrequencyQueryHookResult = ReturnType<typeof useGetFrequencyQuery>;
+export type GetFrequencyLazyQueryHookResult = ReturnType<typeof useGetFrequencyLazyQuery>;
+export type GetFrequencySuspenseQueryHookResult = ReturnType<typeof useGetFrequencySuspenseQuery>;
+export type GetFrequencyQueryResult = Apollo.QueryResult<GetFrequencyQuery, GetFrequencyQueryVariables>;
 export const UpdateModelPlanBeneficiariesDocument = gql`
     mutation UpdateModelPlanBeneficiaries($id: UUID!, $changes: PlanBeneficiariesChanges!) {
   updatePlanBeneficiaries(id: $id, changes: $changes) {

@@ -5,6 +5,7 @@
 import {
   CmmiGroup,
   CmsCenter,
+  FrequencyType,
   ModelCategory,
   ModelType,
   TaskStatus
@@ -31,7 +32,6 @@ import {
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
-  FrequencyType,
   FundingSource,
   GeographyApplication,
   GeographyType,
