@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,7 +12,15 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
+import {
+  CcmInvolvmentType,
+  DataForMonitoringType,
+  DataToSendParticipantsType,
+  EvaluationApproachType,
+  GetEvaluationQuery,
+  useGetEvaluationQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -30,18 +37,6 @@ import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
-import {
-  GetEvaluation as GetEvaluationType,
-  GetEvaluation_modelPlan_opsEvalAndLearning as EvaluationFormType,
-  GetEvaluationVariables
-} from 'queries/OpsEvalAndLearning/types/GetEvaluation';
-import {
-  CcmInvolvmentType,
-  DataForMonitoringType,
-  DataToSendParticipantsType,
-  EvaluationApproachType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -54,6 +49,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type EvaluationFormType = GetEvaluationQuery['modelPlan']['opsEvalAndLearning'];
 
 const Evaluation = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -76,10 +73,7 @@ const Evaluation = () => {
   const formikRef = useRef<FormikProps<EvaluationFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetEvaluationType,
-    GetEvaluationVariables
-  >(GetEvaluation, {
+  const { data, loading, error } = useGetEvaluationQuery({
     variables: {
       id: modelID
     }
@@ -102,7 +96,7 @@ const Evaluation = () => {
     dataToSendParticicipantsNote,
     shareCclfData,
     shareCclfDataNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as EvaluationFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as EvaluationFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 

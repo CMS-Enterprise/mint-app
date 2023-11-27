@@ -2751,6 +2751,13 @@ export type GetDataSharingQueryVariables = Exact<{
 
 export type GetDataSharingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<DataFrequencyType>, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<DataFrequencyType>, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null } } };
 
+export type GetEvaluationQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetEvaluationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
 export type GetOpsEvalAndLearningQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3742,6 +3749,70 @@ export type GetDataSharingQueryHookResult = ReturnType<typeof useGetDataSharingQ
 export type GetDataSharingLazyQueryHookResult = ReturnType<typeof useGetDataSharingLazyQuery>;
 export type GetDataSharingSuspenseQueryHookResult = ReturnType<typeof useGetDataSharingSuspenseQuery>;
 export type GetDataSharingQueryResult = Apollo.QueryResult<GetDataSharingQuery, GetDataSharingQueryVariables>;
+export const GetEvaluationDocument = gql`
+    query GetEvaluation($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    opsEvalAndLearning {
+      id
+      ccmInvolvment
+      dataNeededForMonitoring
+      iddocSupport
+      evaluationApproaches
+      evaluationApproachOther
+      evalutaionApproachNote
+      ccmInvolvment
+      ccmInvolvmentOther
+      ccmInvolvmentNote
+      dataNeededForMonitoring
+      dataNeededForMonitoringOther
+      dataNeededForMonitoringNote
+      dataToSendParticicipants
+      dataToSendParticicipantsOther
+      dataToSendParticicipantsNote
+      shareCclfData
+      shareCclfDataNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetEvaluationQuery__
+ *
+ * To run a query within a React component, call `useGetEvaluationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEvaluationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEvaluationQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEvaluationQuery(baseOptions: Apollo.QueryHookOptions<GetEvaluationQuery, GetEvaluationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEvaluationQuery, GetEvaluationQueryVariables>(GetEvaluationDocument, options);
+      }
+export function useGetEvaluationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEvaluationQuery, GetEvaluationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEvaluationQuery, GetEvaluationQueryVariables>(GetEvaluationDocument, options);
+        }
+export function useGetEvaluationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetEvaluationQuery, GetEvaluationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetEvaluationQuery, GetEvaluationQueryVariables>(GetEvaluationDocument, options);
+        }
+export type GetEvaluationQueryHookResult = ReturnType<typeof useGetEvaluationQuery>;
+export type GetEvaluationLazyQueryHookResult = ReturnType<typeof useGetEvaluationLazyQuery>;
+export type GetEvaluationSuspenseQueryHookResult = ReturnType<typeof useGetEvaluationSuspenseQuery>;
+export type GetEvaluationQueryResult = Apollo.QueryResult<GetEvaluationQuery, GetEvaluationQueryVariables>;
 export const GetOpsEvalAndLearningDocument = gql`
     query GetOpsEvalAndLearning($id: UUID!) {
   modelPlan(id: $id) {
