@@ -9,6 +9,7 @@ import {
   ModelType,
   ParticipantCommunicationType,
   ParticipantRiskType,
+  ParticipantsIdType,
   ParticipantsType,
   TaskStatus
 } from 'gql/gen/graphql';
@@ -45,7 +46,6 @@ import {
   NonClaimsBasedPayType,
   OverlapType,
   ParticipantSelectionType,
-  ParticipantsIDType,
   PayRecipient,
   PayType,
   ProviderAddType,
@@ -241,7 +241,7 @@ export type TranslationParticipantsAndProviders = {
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsNote: TranslationFieldProperties;
-  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
+  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options

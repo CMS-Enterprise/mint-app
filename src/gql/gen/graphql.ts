@@ -2669,6 +2669,13 @@ export type GetCommunicationQueryVariables = Exact<{
 
 export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, participantAssumeRisk?: boolean | null, riskType?: ParticipantRiskType | null, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
+export type GetCoordinationQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCoordinationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+
 export type GetParticipantsAndProvidersQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3112,6 +3119,62 @@ export type GetCommunicationQueryHookResult = ReturnType<typeof useGetCommunicat
 export type GetCommunicationLazyQueryHookResult = ReturnType<typeof useGetCommunicationLazyQuery>;
 export type GetCommunicationSuspenseQueryHookResult = ReturnType<typeof useGetCommunicationSuspenseQuery>;
 export type GetCommunicationQueryResult = Apollo.QueryResult<GetCommunicationQuery, GetCommunicationQueryVariables>;
+export const GetCoordinationDocument = gql`
+    query GetCoordination($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    participantsAndProviders {
+      id
+      coordinateWork
+      coordinateWorkNote
+      gainsharePayments
+      gainsharePaymentsTrack
+      gainsharePaymentsNote
+      participantsIds
+      participantsIdsOther
+      participantsIDSNote
+    }
+    operationalNeeds {
+      id
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCoordinationQuery__
+ *
+ * To run a query within a React component, call `useGetCoordinationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCoordinationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCoordinationQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCoordinationQuery(baseOptions: Apollo.QueryHookOptions<GetCoordinationQuery, GetCoordinationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCoordinationQuery, GetCoordinationQueryVariables>(GetCoordinationDocument, options);
+      }
+export function useGetCoordinationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCoordinationQuery, GetCoordinationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCoordinationQuery, GetCoordinationQueryVariables>(GetCoordinationDocument, options);
+        }
+export function useGetCoordinationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCoordinationQuery, GetCoordinationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCoordinationQuery, GetCoordinationQueryVariables>(GetCoordinationDocument, options);
+        }
+export type GetCoordinationQueryHookResult = ReturnType<typeof useGetCoordinationQuery>;
+export type GetCoordinationLazyQueryHookResult = ReturnType<typeof useGetCoordinationLazyQuery>;
+export type GetCoordinationSuspenseQueryHookResult = ReturnType<typeof useGetCoordinationSuspenseQuery>;
+export type GetCoordinationQueryResult = Apollo.QueryResult<GetCoordinationQuery, GetCoordinationQueryVariables>;
 export const GetParticipantsAndProvidersDocument = gql`
     query GetParticipantsAndProviders($id: UUID!) {
   modelPlan(id: $id) {
