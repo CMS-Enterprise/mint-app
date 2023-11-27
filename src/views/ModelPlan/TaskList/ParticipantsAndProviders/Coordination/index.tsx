@@ -227,7 +227,7 @@ export const Coordination = () => {
                   <FieldGroup
                     scrollElement="coordinateWork"
                     error={!!flatErrors.coordinateWork}
-                    className="margin-y-4 margin-bottom-8"
+                    className="margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-coordniate-work">
                       {participantsAndProvidersT('coordinateWork.label')}
