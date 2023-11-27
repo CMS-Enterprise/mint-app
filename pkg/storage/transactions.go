@@ -7,7 +7,6 @@ import (
 )
 
 type Transaction struct {
-	store      *Store // TODO: SW
 	tx         *sqlx.Tx
 	properties TransactionProperties
 	results    map[string]interface{}
@@ -24,7 +23,6 @@ func newTransaction(store *Store) (*Transaction, error) {
 		return nil, err
 	}
 	return &Transaction{
-		store:      store,
 		tx:         tx,
 		results:    map[string]interface{}{},
 		properties: TransactionProperties{},
@@ -45,21 +43,6 @@ func (t *Transaction) GetResult(resultKey string) (interface{}, error) {
 
 func (t *Transaction) SetResult(resultKey string, result interface{}) {
 	t.results[resultKey] = result
-}
-
-// Next takes a function
-func (t *Transaction) Next(tFunc func(t *Transaction) error) *Transaction {
-	if t.Errored() { // Skip further execution if something errored earlier on
-		return t
-	}
-	err := tFunc(t)
-	if err != nil {
-		t.errors = append(t.errors, err)
-	}
-	// TODO: SW take a chain function and define how the results get stored in the interface
-
-	return t
-
 }
 
 func (t *Transaction) Errored() bool {
