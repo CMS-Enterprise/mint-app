@@ -3,23 +3,27 @@
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
 import {
+  AgreementType,
+  AuthorityAllowance,
   CmmiGroup,
   CmsCenter,
   FrequencyType,
+  GeographyApplication,
+  GeographyType,
+  KeyCharacteristic,
   ModelCategory,
   ModelType,
   SelectionMethodType,
-  TaskStatus
+  TaskStatus,
+  WaiverType
 } from 'gql/gen/graphql';
 
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 import {
   AgencyOrStateHelpType,
-  AgreementType,
   AlternativePaymentModelType,
   AnticipatedPaymentFrequencyType,
-  AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
   CcmInvolvmentType,
@@ -34,9 +38,6 @@ import {
   DataToSendParticipantsType,
   EvaluationApproachType,
   FundingSource,
-  GeographyApplication,
-  GeographyType,
-  KeyCharacteristic,
   ModelLearningSystemType,
   ModelStatus,
   MonitoringFileType,
@@ -55,8 +56,7 @@ import {
   StakeholdersType,
   TeamRole,
   TriStateAnswer,
-  TrustFundType,
-  WaiverType
+  TrustFundType
 } from './graphql-global-types';
 
 // Util used to preserve type defintions when mapping over keys of object
