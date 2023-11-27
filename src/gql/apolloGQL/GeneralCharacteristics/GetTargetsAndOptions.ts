@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export default gql`
+export default gql(/* GraphQL */ `
   query GetTargetsAndOptions($id: UUID!) {
     modelPlan(id: $id) {
       id
@@ -26,4 +26,4 @@ export default gql`
       }
     }
   }
-`;
+`);
