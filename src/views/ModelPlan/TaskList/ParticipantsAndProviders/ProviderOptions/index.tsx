@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,7 +12,15 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanParticipantsAndProvidersMutation } from 'gql/gen/graphql';
+import {
+  FrequencyType,
+  GetProviderOptionsQuery,
+  OverlapType,
+  ProviderAddType,
+  ProviderLeaveType,
+  useGetProviderOptionsQuery,
+  useUpdatePlanParticipantsAndProvidersMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -30,24 +37,14 @@ import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
-import {
-  GetProviderOptions as GetProviderOptionsType,
-  GetProviderOptions_modelPlan_participantsAndProviders as ProviderOptionsFormType,
-  GetProviderOptionsVariables
-} from 'queries/ParticipantsAndProviders/types/GetProviderOptions';
-import {
-  FrequencyType,
-  OverlapType,
-  ProviderAddType,
-  ProviderLeaveType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
+
+type ProviderOptionsFormType = GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
 
 export const ProviderOptions = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -76,14 +73,10 @@ export const ProviderOptions = () => {
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetProviderOptionsType,
-    GetProviderOptionsVariables
-  >(GetProviderOptions, {
+  const { data, loading, error } = useGetProviderOptionsQuery({
     variables: {
       id: modelID
-    },
-    fetchPolicy: 'network-only'
+    }
   });
 
   const {
@@ -103,9 +96,8 @@ export const ProviderOptions = () => {
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as ProviderOptionsFormType);
+  } = (data?.modelPlan?.participantsAndProviders ||
+    {}) as ProviderOptionsFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
