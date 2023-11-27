@@ -1495,7 +1495,11 @@ export type PlanGeneralCharacteristics = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  currentModelPlan?: Maybe<ModelPlan>;
+  currentModelPlanID?: Maybe<Scalars['UUID']['output']>;
   existingModel?: Maybe<Scalars['String']['output']>;
+  existingModelID?: Maybe<Scalars['Int']['output']>;
+  existingModelPlan?: Maybe<ExistingModel>;
   geographiesTargeted?: Maybe<Scalars['Boolean']['output']>;
   geographiesTargetedAppliedTo: Array<GeographyApplication>;
   geographiesTargetedAppliedToOther?: Maybe<Scalars['String']['output']>;
@@ -1565,7 +1569,9 @@ export type PlanGeneralCharacteristicsChanges = {
   communityPartnersInvolved?: InputMaybe<Scalars['Boolean']['input']>;
   communityPartnersInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
   communityPartnersInvolvedNote?: InputMaybe<Scalars['String']['input']>;
+  currentModelPlanID?: InputMaybe<Scalars['UUID']['input']>;
   existingModel?: InputMaybe<Scalars['String']['input']>;
+  existingModelID?: InputMaybe<Scalars['Int']['input']>;
   geographiesTargeted?: InputMaybe<Scalars['Boolean']['input']>;
   geographiesTargetedAppliedTo?: InputMaybe<Array<GeographyApplication>>;
   geographiesTargetedAppliedToOther?: InputMaybe<Scalars['String']['input']>;

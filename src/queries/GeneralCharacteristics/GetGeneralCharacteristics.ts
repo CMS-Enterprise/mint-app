@@ -13,7 +13,8 @@ export default gql`
       generalCharacteristics {
         id
         isNewModel
-        existingModel
+        currentModelPlanID
+        existingModelID
         resemblesExistingModel
         resemblesExistingModelHow
         resemblesExistingModelNote
