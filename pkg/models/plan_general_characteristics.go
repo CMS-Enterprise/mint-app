@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -9,14 +10,15 @@ type PlanGeneralCharacteristics struct {
 	baseTaskListSection
 
 	// Page 1
-	IsNewModel                  *bool   `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
-	ExistingModel               *string `json:"existingModel" db:"existing_model"`
-	ResemblesExistingModel      *bool   `json:"resemblesExistingModel" db:"resembles_existing_model" statusWeight:"1"`
-	ResemblesExistingModelHow   *string `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
-	ResemblesExistingModelNote  *string `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`
-	HasComponentsOrTracks       *bool   `json:"hasComponentsOrTracks" db:"has_components_or_tracks" statusWeight:"1"`
-	HasComponentsOrTracksDiffer *string `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
-	HasComponentsOrTracksNote   *string `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
+	IsNewModel                  *bool      `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
+	CurrentModelPlanID          *uuid.UUID `json:"currentModelPlanID" db:"current_model_plan_id"`
+	ExistingModelID             *int       `json:"existingModelID" db:"existing_model_id"`
+	ResemblesExistingModel      *bool      `json:"resemblesExistingModel" db:"resembles_existing_model" statusWeight:"1"`
+	ResemblesExistingModelHow   *string    `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
+	ResemblesExistingModelNote  *string    `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`
+	HasComponentsOrTracks       *bool      `json:"hasComponentsOrTracks" db:"has_components_or_tracks" statusWeight:"1"`
+	HasComponentsOrTracksDiffer *string    `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
+	HasComponentsOrTracksNote   *string    `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
 
 	// Page 2
 	AlternativePaymentModelTypes pq.StringArray `json:"alternativePaymentModelTypes" db:"alternative_payment_model_types"`
