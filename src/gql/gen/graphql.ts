@@ -2887,6 +2887,13 @@ export type GetAnticipateDependenciesQueryVariables = Exact<{
 
 export type GetAnticipateDependenciesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null } } };
 
+export type GetBeneficiaryCostSharingQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetBeneficiaryCostSharingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null } } };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -4883,6 +4890,57 @@ export type GetAnticipateDependenciesQueryHookResult = ReturnType<typeof useGetA
 export type GetAnticipateDependenciesLazyQueryHookResult = ReturnType<typeof useGetAnticipateDependenciesLazyQuery>;
 export type GetAnticipateDependenciesSuspenseQueryHookResult = ReturnType<typeof useGetAnticipateDependenciesSuspenseQuery>;
 export type GetAnticipateDependenciesQueryResult = Apollo.QueryResult<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>;
+export const GetBeneficiaryCostSharingDocument = gql`
+    query GetBeneficiaryCostSharing($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      beneficiaryCostSharingLevelAndHandling
+      waiveBeneficiaryCostSharingForAnyServices
+      waiveBeneficiaryCostSharingServiceSpecification
+      waiverOnlyAppliesPartOfPayment
+      waiveBeneficiaryCostSharingNote
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBeneficiaryCostSharingQuery__
+ *
+ * To run a query within a React component, call `useGetBeneficiaryCostSharingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBeneficiaryCostSharingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBeneficiaryCostSharingQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetBeneficiaryCostSharingQuery(baseOptions: Apollo.QueryHookOptions<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>(GetBeneficiaryCostSharingDocument, options);
+      }
+export function useGetBeneficiaryCostSharingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>(GetBeneficiaryCostSharingDocument, options);
+        }
+export function useGetBeneficiaryCostSharingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>(GetBeneficiaryCostSharingDocument, options);
+        }
+export type GetBeneficiaryCostSharingQueryHookResult = ReturnType<typeof useGetBeneficiaryCostSharingQuery>;
+export type GetBeneficiaryCostSharingLazyQueryHookResult = ReturnType<typeof useGetBeneficiaryCostSharingLazyQuery>;
+export type GetBeneficiaryCostSharingSuspenseQueryHookResult = ReturnType<typeof useGetBeneficiaryCostSharingSuspenseQuery>;
+export type GetBeneficiaryCostSharingQueryResult = Apollo.QueryResult<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>;
 export const GetFundingDocument = gql`
     query GetFunding($id: UUID!) {
   modelPlan(id: $id) {
