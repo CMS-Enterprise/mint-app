@@ -32,6 +32,7 @@ import {
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
+  SelectionMethodType,
   StakeholdersType,
   TaskStatus,
   WaiverType
@@ -53,7 +54,6 @@ import {
   NonClaimsBasedPayType,
   PayRecipient,
   PayType,
-  SelectionMethodType,
   TeamRole,
   TriStateAnswer,
   TrustFundType
