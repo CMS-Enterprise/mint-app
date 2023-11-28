@@ -2915,6 +2915,13 @@ export type GetFundingQueryVariables = Exact<{
 
 export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
+export type GetNonClaimsBasedPaymentQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetNonClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
 export type UpdatePaymentsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
   changes: PlanPaymentsChanges;
@@ -5129,6 +5136,65 @@ export type GetFundingQueryHookResult = ReturnType<typeof useGetFundingQuery>;
 export type GetFundingLazyQueryHookResult = ReturnType<typeof useGetFundingLazyQuery>;
 export type GetFundingSuspenseQueryHookResult = ReturnType<typeof useGetFundingSuspenseQuery>;
 export type GetFundingQueryResult = Apollo.QueryResult<GetFundingQuery, GetFundingQueryVariables>;
+export const GetNonClaimsBasedPaymentDocument = gql`
+    query GetNonClaimsBasedPayment($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      nonClaimsPayments
+      nonClaimsPaymentsNote
+      nonClaimsPaymentOther
+      paymentCalculationOwner
+      numberPaymentsPerPayCycle
+      numberPaymentsPerPayCycleNote
+      sharedSystemsInvolvedAdditionalClaimPayment
+      sharedSystemsInvolvedAdditionalClaimPaymentNote
+      planningToUseInnovationPaymentContractor
+      planningToUseInnovationPaymentContractorNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNonClaimsBasedPaymentQuery__
+ *
+ * To run a query within a React component, call `useGetNonClaimsBasedPaymentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNonClaimsBasedPaymentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNonClaimsBasedPaymentQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetNonClaimsBasedPaymentQuery(baseOptions: Apollo.QueryHookOptions<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>(GetNonClaimsBasedPaymentDocument, options);
+      }
+export function useGetNonClaimsBasedPaymentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>(GetNonClaimsBasedPaymentDocument, options);
+        }
+export function useGetNonClaimsBasedPaymentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>(GetNonClaimsBasedPaymentDocument, options);
+        }
+export type GetNonClaimsBasedPaymentQueryHookResult = ReturnType<typeof useGetNonClaimsBasedPaymentQuery>;
+export type GetNonClaimsBasedPaymentLazyQueryHookResult = ReturnType<typeof useGetNonClaimsBasedPaymentLazyQuery>;
+export type GetNonClaimsBasedPaymentSuspenseQueryHookResult = ReturnType<typeof useGetNonClaimsBasedPaymentSuspenseQuery>;
+export type GetNonClaimsBasedPaymentQueryResult = Apollo.QueryResult<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>;
 export const UpdatePaymentsDocument = gql`
     mutation UpdatePayments($id: UUID!, $changes: PlanPaymentsChanges!) {
   updatePlanPayments(id: $id, changes: $changes) {
