@@ -447,7 +447,6 @@ export const payments: TranslationPayments = {
         'Capitation/Population Based - Partial',
       CARE_COORDINATION_MANAGEMENT_FEE: 'Care Coordination/Management Fee',
       GLOBAL_BUDGET: 'Global Budget',
-      GRANTS: 'Grants',
       INCENTIVE_PAYMENT: 'Incentive Payment',
       MAPD_SHARED_SAVINGS:
         'Medicare Advantage Prescription Drug (MAPD) Shared Savings',
