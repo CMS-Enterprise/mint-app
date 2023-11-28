@@ -2,12 +2,13 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { GetLearningDocument, GetLearningQuery } from 'gql/gen/graphql';
 
-import GetLearning from 'queries/OpsEvalAndLearning/GetLearning';
-import { GetLearning_modelPlan_opsEvalAndLearning as GetLearningType } from 'queries/OpsEvalAndLearning/types/GetLearning';
 import { CcmInvolvmentType, TaskStatus } from 'types/graphql-global-types';
 
 import Learning from '.';
+
+type GetLearningType = GetLearningQuery['modelPlan']['opsEvalAndLearning'];
 
 const learningMockData: GetLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -31,7 +32,7 @@ const learningMockData: GetLearningType = {
 const learningMock = [
   {
     request: {
-      query: GetLearning,
+      query: GetLearningDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
