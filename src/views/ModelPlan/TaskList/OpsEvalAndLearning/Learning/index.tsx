@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,7 +11,12 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
+import {
+  GetLearningQuery,
+  ModelLearningSystemType,
+  useGetLearningQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -28,13 +32,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetLearning from 'queries/OpsEvalAndLearning/GetLearning';
-import {
-  GetLearning as GetLearningType,
-  GetLearning_modelPlan_opsEvalAndLearning as GetLearningFormType,
-  GetLearningVariables
-} from 'queries/OpsEvalAndLearning/types/GetLearning';
-import { ModelLearningSystemType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -47,6 +44,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type GetLearningFormType = GetLearningQuery['modelPlan']['opsEvalAndLearning'];
 
 const Learning = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -71,14 +70,10 @@ const Learning = () => {
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetLearningType,
-    GetLearningVariables
-  >(GetLearning, {
+  const { data, loading, error } = useGetLearningQuery({
     variables: {
       id: modelID
-    },
-    fetchPolicy: 'network-only'
+    }
   });
 
   const {
@@ -93,7 +88,7 @@ const Learning = () => {
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as GetLearningFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetLearningFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 

@@ -2779,6 +2779,13 @@ export type GetIddocTestingQueryVariables = Exact<{
 
 export type GetIddocTestingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null } } };
 
+export type GetLearningQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+
 export type GetOpsEvalAndLearningQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3998,6 +4005,67 @@ export type GetIddocTestingQueryHookResult = ReturnType<typeof useGetIddocTestin
 export type GetIddocTestingLazyQueryHookResult = ReturnType<typeof useGetIddocTestingLazyQuery>;
 export type GetIddocTestingSuspenseQueryHookResult = ReturnType<typeof useGetIddocTestingSuspenseQuery>;
 export type GetIddocTestingQueryResult = Apollo.QueryResult<GetIddocTestingQuery, GetIddocTestingQueryVariables>;
+export const GetLearningDocument = gql`
+    query GetLearning($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    opsEvalAndLearning {
+      id
+      ccmInvolvment
+      dataNeededForMonitoring
+      iddocSupport
+      modelLearningSystems
+      modelLearningSystemsOther
+      modelLearningSystemsNote
+      anticipatedChallenges
+      readyForReviewByUserAccount {
+        id
+        commonName
+      }
+      readyForReviewDts
+      status
+    }
+    operationalNeeds {
+      id
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLearningQuery__
+ *
+ * To run a query within a React component, call `useGetLearningQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLearningQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLearningQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetLearningQuery(baseOptions: Apollo.QueryHookOptions<GetLearningQuery, GetLearningQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLearningQuery, GetLearningQueryVariables>(GetLearningDocument, options);
+      }
+export function useGetLearningLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLearningQuery, GetLearningQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLearningQuery, GetLearningQueryVariables>(GetLearningDocument, options);
+        }
+export function useGetLearningSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetLearningQuery, GetLearningQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetLearningQuery, GetLearningQueryVariables>(GetLearningDocument, options);
+        }
+export type GetLearningQueryHookResult = ReturnType<typeof useGetLearningQuery>;
+export type GetLearningLazyQueryHookResult = ReturnType<typeof useGetLearningLazyQuery>;
+export type GetLearningSuspenseQueryHookResult = ReturnType<typeof useGetLearningSuspenseQuery>;
+export type GetLearningQueryResult = Apollo.QueryResult<GetLearningQuery, GetLearningQueryVariables>;
 export const GetOpsEvalAndLearningDocument = gql`
     query GetOpsEvalAndLearning($id: UUID!) {
   modelPlan(id: $id) {
