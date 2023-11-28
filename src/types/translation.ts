@@ -13,6 +13,15 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  OverlapType,
+  ParticipantCommunicationType,
+  ParticipantRiskType,
+  ParticipantSelectionType,
+  ParticipantsIdType,
+  ParticipantsType,
+  ProviderAddType,
+  ProviderLeaveType,
+  RecruitmentType,
   SelectionMethodType,
   TaskStatus,
   WaiverType
@@ -42,17 +51,8 @@ import {
   ModelStatus,
   MonitoringFileType,
   NonClaimsBasedPayType,
-  OverlapType,
-  ParticipantCommunicationType,
-  ParticipantRiskType,
-  ParticipantSelectionType,
-  ParticipantsIDType,
-  ParticipantsType,
   PayRecipient,
   PayType,
-  ProviderAddType,
-  ProviderLeaveType,
-  RecruitmentType,
   StakeholdersType,
   TeamRole,
   TriStateAnswer,
@@ -241,7 +241,7 @@ export type TranslationParticipantsAndProviders = {
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsNote: TranslationFieldProperties;
-  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
+  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options

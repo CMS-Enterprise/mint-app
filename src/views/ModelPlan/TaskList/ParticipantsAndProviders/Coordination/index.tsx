@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,6 +11,12 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import {
+  GetCoordinationQuery,
+  ParticipantsIdType,
+  useGetCoordinationQuery,
+  useUpdatePlanParticipantsAndProvidersMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -27,19 +32,12 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetCoordination from 'queries/ParticipantsAndProviders/GetCoordination';
-import {
-  GetCoordination as GetCoordinationType,
-  GetCoordination_modelPlan_participantsAndProviders as CoordinationFormType,
-  GetCoordinationVariables
-} from 'queries/ParticipantsAndProviders/types/GetCoordination';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
-import { ParticipantsIDType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
+
+type CoordinationFormType = GetCoordinationQuery['modelPlan']['participantsAndProviders'];
 
 export const Coordination = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -62,10 +60,7 @@ export const Coordination = () => {
   const formikRef = useRef<FormikProps<CoordinationFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetCoordinationType,
-    GetCoordinationVariables
-  >(GetCoordination, {
+  const { data, loading, error } = useGetCoordinationQuery({
     variables: {
       id: modelID
     }
@@ -81,7 +76,7 @@ export const Coordination = () => {
     participantsIds,
     participantsIdsOther,
     participantsIDSNote
-  } = data?.modelPlan?.participantsAndProviders || ({} as CoordinationFormType);
+  } = (data?.modelPlan?.participantsAndProviders || {}) as CoordinationFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -92,9 +87,7 @@ export const Coordination = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (redirect?: string) => {
     update({
@@ -227,7 +220,7 @@ export const Coordination = () => {
                   <FieldGroup
                     scrollElement="coordinateWork"
                     error={!!flatErrors.coordinateWork}
-                    className="margin-y-4 margin-bottom-8"
+                    className="margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-coordniate-work">
                       {participantsAndProvidersT('coordinateWork.label')}
@@ -356,14 +349,14 @@ export const Coordination = () => {
                                       arrayHelpers.push(e.target.value);
                                     } else {
                                       const idx = values.participantsIds.indexOf(
-                                        e.target.value as ParticipantsIDType
+                                        e.target.value as ParticipantsIdType
                                       );
                                       arrayHelpers.remove(idx);
                                     }
                                   }}
                                 />
 
-                                {type === ParticipantsIDType.OTHER &&
+                                {type === ParticipantsIdType.OTHER &&
                                   values.participantsIds.includes(type) && (
                                     <div className="margin-left-4">
                                       <Label
