@@ -13,6 +13,10 @@ CREATE TYPE PP_NON_CLAIM_BASED_PAYMENT_TYPE AS ENUM (
   'OTHER'
   );
 
+UPDATE plan_payments
+SET non_claims_payments = array_remove(non_claims_payments, 'GRANTS')
+WHERE 'GRANTS' = ANY (non_claims_payments);
+
 ALTER TABLE plan_payments
   ALTER COLUMN non_claims_payments TYPE PP_NON_CLAIM_BASED_PAYMENT_TYPE[]
     USING non_claims_payments::text[]::PP_NON_CLAIM_BASED_PAYMENT_TYPE[];
