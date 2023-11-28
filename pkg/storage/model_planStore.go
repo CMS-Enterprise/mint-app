@@ -80,7 +80,6 @@ func (s *Store) ModelPlanCreate(np NamedPreparer, logger *zap.Logger, plan *mode
 			fmt.Sprintf("Failed to create model plan with error %s", err),
 			zap.String("user", plan.CreatedBy.String()),
 		)
-		// t.errors = append(t.errors, err) // TODO: SW should we just return the error? It gets appended in the parent transaction
 		return nil, err
 	}
 	defer stmt.Close()
@@ -92,7 +91,6 @@ func (s *Store) ModelPlanCreate(np NamedPreparer, logger *zap.Logger, plan *mode
 
 	err = stmt.Get(&retPlan, plan)
 	if err != nil {
-		// t.errors = append(t.errors, err) // TODO: SW should we just return the error? It gets appended in the parent transaction
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
 			zap.String("user", plan.CreatedBy.String()),
