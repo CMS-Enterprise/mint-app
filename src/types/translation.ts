@@ -15,6 +15,7 @@ import {
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
+  FrequencyType,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
@@ -22,6 +23,15 @@ import {
   ModelLearningSystemType,
   ModelType,
   MonitoringFileType,
+  OverlapType,
+  ParticipantCommunicationType,
+  ParticipantRiskType,
+  ParticipantSelectionType,
+  ParticipantsIdType,
+  ParticipantsType,
+  ProviderAddType,
+  ProviderLeaveType,
+  RecruitmentType,
   StakeholdersType,
   TaskStatus,
   WaiverType
@@ -38,21 +48,11 @@ import {
   ComplexityCalculationLevelType,
   ConfidenceType,
   DataFullTimeOrIncrementalType,
-  FrequencyType,
   FundingSource,
   ModelStatus,
   NonClaimsBasedPayType,
-  OverlapType,
-  ParticipantCommunicationType,
-  ParticipantRiskType,
-  ParticipantSelectionType,
-  ParticipantsIDType,
-  ParticipantsType,
   PayRecipient,
   PayType,
-  ProviderAddType,
-  ProviderLeaveType,
-  RecruitmentType,
   SelectionMethodType,
   TeamRole,
   TriStateAnswer,
@@ -241,7 +241,7 @@ export type TranslationParticipantsAndProviders = {
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsNote: TranslationFieldProperties;
-  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
+  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options

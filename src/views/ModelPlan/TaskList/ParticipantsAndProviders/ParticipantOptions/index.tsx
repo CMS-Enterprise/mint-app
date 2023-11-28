@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -15,6 +14,13 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetParticipantOptionsQuery,
+  ParticipantSelectionType,
+  RecruitmentType,
+  useGetParticipantOptionsQuery,
+  useUpdatePlanParticipantsAndProvidersMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,23 +35,13 @@ import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetParticipantOptions from 'queries/ParticipantsAndProviders/GetParticipantOptions';
-import {
-  GetParticipantOptions as GetParticipantOptionsType,
-  GetParticipantOptions_modelPlan_participantsAndProviders as ParticipantOptionsFormType,
-  GetParticipantOptionsVariables
-} from 'queries/ParticipantsAndProviders/types/GetParticipantOptions';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
-import {
-  ParticipantSelectionType,
-  RecruitmentType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+type ParticipantOptionsFormType = GetParticipantOptionsQuery['modelPlan']['participantsAndProviders'];
 
 export const ParticipantOptions = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -67,10 +63,7 @@ export const ParticipantOptions = () => {
   const formikRef = useRef<FormikProps<ParticipantOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetParticipantOptionsType,
-    GetParticipantOptionsVariables
-  >(GetParticipantOptions, {
+  const { data, loading, error } = useGetParticipantOptionsQuery({
     variables: {
       id: modelID
     }
@@ -87,9 +80,8 @@ export const ParticipantOptions = () => {
     selectionMethod,
     selectionOther,
     selectionNote
-  } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as ParticipantOptionsFormType);
+  } = (data?.modelPlan?.participantsAndProviders ||
+    {}) as ParticipantOptionsFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -100,9 +92,7 @@ export const ParticipantOptions = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (
     redirect?: 'next' | 'back' | 'task-list' | string

@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,6 +12,15 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import {
+  FrequencyType,
+  GetProviderOptionsQuery,
+  OverlapType,
+  ProviderAddType,
+  ProviderLeaveType,
+  useGetProviderOptionsQuery,
+  useUpdatePlanParticipantsAndProvidersMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,26 +37,14 @@ import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
-import {
-  GetProviderOptions as GetProviderOptionsType,
-  GetProviderOptions_modelPlan_participantsAndProviders as ProviderOptionsFormType,
-  GetProviderOptionsVariables
-} from 'queries/ParticipantsAndProviders/types/GetProviderOptions';
-import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
-import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
-import {
-  FrequencyType,
-  OverlapType,
-  ProviderAddType,
-  ProviderLeaveType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
+
+type ProviderOptionsFormType = GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
 
 export const ProviderOptions = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -77,14 +73,10 @@ export const ProviderOptions = () => {
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetProviderOptionsType,
-    GetProviderOptionsVariables
-  >(GetProviderOptions, {
+  const { data, loading, error } = useGetProviderOptionsQuery({
     variables: {
       id: modelID
-    },
-    fetchPolicy: 'network-only'
+    }
   });
 
   const {
@@ -104,9 +96,8 @@ export const ProviderOptions = () => {
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as ProviderOptionsFormType);
+  } = (data?.modelPlan?.participantsAndProviders ||
+    {}) as ProviderOptionsFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -116,9 +107,7 @@ export const ProviderOptions = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
-    UpdatePlanParticipantsAndProviders
-  );
+  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
 
   const handleFormSubmit = (
     redirect?: 'back' | 'task-list' | 'next' | string
@@ -262,7 +251,7 @@ export const ProviderOptions = () => {
                   <FieldGroup
                     scrollElement="providerAdditionFrequency"
                     error={!!flatErrors.providerAdditionFrequency}
-                    className="margin-y-4 margin-bottom-8"
+                    className="margin-bottom-8"
                   >
                     <Label htmlFor="participants-and-providers-additional-frequency">
                       {participantsAndProvidersT(
@@ -340,7 +329,7 @@ export const ProviderOptions = () => {
                       {participantsAndProvidersT('providerAddMethod.label')}
                     </Label>
 
-                    <p className="text-base margin-0 line-height-body-3">
+                    <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
                       {participantsAndProvidersT('providerAddMethod.sublabel')}
                     </p>
 
@@ -402,91 +391,99 @@ export const ProviderOptions = () => {
                     />
                   </FieldGroup>
 
-                  <FieldArray
-                    name="providerLeaveMethod"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label">
-                          {participantsAndProvidersT(
-                            'providerLeaveMethod.label'
-                          )}
-                        </legend>
+                  <FieldGroup
+                    scrollElement="providerLeaveMethod"
+                    error={!!flatErrors.providerLeaveMethod}
+                    className="margin-top-4"
+                  >
+                    <FieldArray
+                      name="providerLeaveMethod"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label">
+                            {participantsAndProvidersT(
+                              'providerLeaveMethod.label'
+                            )}
+                          </legend>
 
-                        <p className="text-base margin-0 line-height-body-3">
-                          {participantsAndProvidersT(
-                            'providerLeaveMethod.sublabel'
-                          )}
-                        </p>
+                          <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
+                            {participantsAndProvidersT(
+                              'providerLeaveMethod.sublabel'
+                            )}
+                          </p>
 
-                        <FieldErrorMsg>
-                          {flatErrors.providerLeaveMethod}
-                        </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors.providerLeaveMethod}
+                          </FieldErrorMsg>
 
-                        {getKeys(providerLeaveMethodConfig.options).map(
-                          type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`participants-and-providers-leave-method-${type}`}
-                                  name="providerLeaveMethod"
-                                  label={
-                                    providerLeaveMethodConfig.options[type]
-                                  }
-                                  value={type}
-                                  checked={values?.providerLeaveMethod.includes(
-                                    type
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.providerLeaveMethod.indexOf(
-                                        e.target.value as ProviderLeaveType
-                                      );
-                                      arrayHelpers.remove(idx);
+                          {getKeys(providerLeaveMethodConfig.options).map(
+                            type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`participants-and-providers-leave-method-${type}`}
+                                    name="providerLeaveMethod"
+                                    label={
+                                      providerLeaveMethodConfig.options[type]
                                     }
-                                  }}
-                                />
+                                    value={type}
+                                    checked={values?.providerLeaveMethod.includes(
+                                      type
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.providerLeaveMethod.indexOf(
+                                          e.target.value as ProviderLeaveType
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
 
-                                {type === ProviderLeaveType.OTHER &&
-                                  values.providerLeaveMethod.includes(type) && (
-                                    <div className="margin-left-4 margin-top-neg-3">
-                                      <Label
-                                        htmlFor="participants-and-providers-leave-method-other"
-                                        className="text-normal"
-                                      >
-                                        {participantsAndProvidersT(
-                                          'providerLeaveMethodOther.label'
-                                        )}
-                                      </Label>
+                                  {type === ProviderLeaveType.OTHER &&
+                                    values.providerLeaveMethod.includes(
+                                      type
+                                    ) && (
+                                      <div className="margin-left-4 margin-top-neg-3">
+                                        <Label
+                                          htmlFor="participants-and-providers-leave-method-other"
+                                          className="text-normal"
+                                        >
+                                          {participantsAndProvidersT(
+                                            'providerLeaveMethodOther.label'
+                                          )}
+                                        </Label>
 
-                                      <FieldErrorMsg>
-                                        {flatErrors.providerLeaveMethodOther}
-                                      </FieldErrorMsg>
+                                        <FieldErrorMsg>
+                                          {flatErrors.providerLeaveMethodOther}
+                                        </FieldErrorMsg>
 
-                                      <Field
-                                        as={TextAreaField}
-                                        className="maxw-none mint-textarea"
-                                        id="participants-and-providers-leave-method-other"
-                                        maxLength={5000}
-                                        name="providerLeaveMethodOther"
-                                      />
-                                    </div>
-                                  )}
-                              </Fragment>
-                            );
-                          }
-                        )}
-                        <AddNote
-                          id="participants-and-providers-leave-method-note"
-                          field="providerLeaveMethodNote"
-                        />
-                      </>
-                    )}
-                  />
+                                        <Field
+                                          as={TextAreaField}
+                                          className="maxw-none mint-textarea"
+                                          id="participants-and-providers-leave-method-other"
+                                          maxLength={5000}
+                                          name="providerLeaveMethodOther"
+                                        />
+                                      </div>
+                                    )}
+                                </Fragment>
+                              );
+                            }
+                          )}
+                          <AddNote
+                            id="participants-and-providers-leave-method-note"
+                            field="providerLeaveMethodNote"
+                          />
+                        </>
+                      )}
+                    />
+                  </FieldGroup>
 
                   <FieldGroup
                     scrollElement="providerOverlap"

@@ -2808,6 +2808,49 @@ export type UpdatePlanOpsEvalAndLearningMutationVariables = Exact<{
 
 export type UpdatePlanOpsEvalAndLearningMutation = { __typename: 'Mutation', updatePlanOpsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID } };
 
+export type GetCommunicationQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, participantAssumeRisk?: boolean | null, riskType?: ParticipantRiskType | null, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
+export type GetCoordinationQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCoordinationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+
+export type GetParticipantOptionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetParticipantOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
+export type GetParticipantsAndProvidersQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null } } };
+
+export type GetProviderOptionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetProviderOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, providerAdditionFrequency?: FrequencyType | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+
+export type UpdatePlanParticipantsAndProvidersMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanParticipantsAndProvidersChanges;
+}>;
+
+
+export type UpdatePlanParticipantsAndProvidersMutation = { __typename: 'Mutation', updatePlanParticipantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID } };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -4234,6 +4277,326 @@ export function useUpdatePlanOpsEvalAndLearningMutation(baseOptions?: Apollo.Mut
 export type UpdatePlanOpsEvalAndLearningMutationHookResult = ReturnType<typeof useUpdatePlanOpsEvalAndLearningMutation>;
 export type UpdatePlanOpsEvalAndLearningMutationResult = Apollo.MutationResult<UpdatePlanOpsEvalAndLearningMutation>;
 export type UpdatePlanOpsEvalAndLearningMutationOptions = Apollo.BaseMutationOptions<UpdatePlanOpsEvalAndLearningMutation, UpdatePlanOpsEvalAndLearningMutationVariables>;
+export const GetCommunicationDocument = gql`
+    query GetCommunication($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    participantsAndProviders {
+      id
+      communicationMethod
+      communicationMethodOther
+      communicationNote
+      participantAssumeRisk
+      riskType
+      riskOther
+      riskNote
+      willRiskChange
+      willRiskChangeNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCommunicationQuery__
+ *
+ * To run a query within a React component, call `useGetCommunicationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommunicationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommunicationQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCommunicationQuery(baseOptions: Apollo.QueryHookOptions<GetCommunicationQuery, GetCommunicationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommunicationQuery, GetCommunicationQueryVariables>(GetCommunicationDocument, options);
+      }
+export function useGetCommunicationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommunicationQuery, GetCommunicationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommunicationQuery, GetCommunicationQueryVariables>(GetCommunicationDocument, options);
+        }
+export function useGetCommunicationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCommunicationQuery, GetCommunicationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCommunicationQuery, GetCommunicationQueryVariables>(GetCommunicationDocument, options);
+        }
+export type GetCommunicationQueryHookResult = ReturnType<typeof useGetCommunicationQuery>;
+export type GetCommunicationLazyQueryHookResult = ReturnType<typeof useGetCommunicationLazyQuery>;
+export type GetCommunicationSuspenseQueryHookResult = ReturnType<typeof useGetCommunicationSuspenseQuery>;
+export type GetCommunicationQueryResult = Apollo.QueryResult<GetCommunicationQuery, GetCommunicationQueryVariables>;
+export const GetCoordinationDocument = gql`
+    query GetCoordination($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    participantsAndProviders {
+      id
+      coordinateWork
+      coordinateWorkNote
+      gainsharePayments
+      gainsharePaymentsTrack
+      gainsharePaymentsNote
+      participantsIds
+      participantsIdsOther
+      participantsIDSNote
+    }
+    operationalNeeds {
+      id
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCoordinationQuery__
+ *
+ * To run a query within a React component, call `useGetCoordinationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCoordinationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCoordinationQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCoordinationQuery(baseOptions: Apollo.QueryHookOptions<GetCoordinationQuery, GetCoordinationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCoordinationQuery, GetCoordinationQueryVariables>(GetCoordinationDocument, options);
+      }
+export function useGetCoordinationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCoordinationQuery, GetCoordinationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCoordinationQuery, GetCoordinationQueryVariables>(GetCoordinationDocument, options);
+        }
+export function useGetCoordinationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCoordinationQuery, GetCoordinationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCoordinationQuery, GetCoordinationQueryVariables>(GetCoordinationDocument, options);
+        }
+export type GetCoordinationQueryHookResult = ReturnType<typeof useGetCoordinationQuery>;
+export type GetCoordinationLazyQueryHookResult = ReturnType<typeof useGetCoordinationLazyQuery>;
+export type GetCoordinationSuspenseQueryHookResult = ReturnType<typeof useGetCoordinationSuspenseQuery>;
+export type GetCoordinationQueryResult = Apollo.QueryResult<GetCoordinationQuery, GetCoordinationQueryVariables>;
+export const GetParticipantOptionsDocument = gql`
+    query GetParticipantOptions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    participantsAndProviders {
+      id
+      expectedNumberOfParticipants
+      estimateConfidence
+      confidenceNote
+      recruitmentMethod
+      recruitmentOther
+      recruitmentNote
+      selectionMethod
+      selectionOther
+      selectionNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetParticipantOptionsQuery__
+ *
+ * To run a query within a React component, call `useGetParticipantOptionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetParticipantOptionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetParticipantOptionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetParticipantOptionsQuery(baseOptions: Apollo.QueryHookOptions<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>(GetParticipantOptionsDocument, options);
+      }
+export function useGetParticipantOptionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>(GetParticipantOptionsDocument, options);
+        }
+export function useGetParticipantOptionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>(GetParticipantOptionsDocument, options);
+        }
+export type GetParticipantOptionsQueryHookResult = ReturnType<typeof useGetParticipantOptionsQuery>;
+export type GetParticipantOptionsLazyQueryHookResult = ReturnType<typeof useGetParticipantOptionsLazyQuery>;
+export type GetParticipantOptionsSuspenseQueryHookResult = ReturnType<typeof useGetParticipantOptionsSuspenseQuery>;
+export type GetParticipantOptionsQueryResult = Apollo.QueryResult<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>;
+export const GetParticipantsAndProvidersDocument = gql`
+    query GetParticipantsAndProviders($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    participantsAndProviders {
+      id
+      participants
+      medicareProviderType
+      statesEngagement
+      participantsOther
+      participantsNote
+      participantsCurrentlyInModels
+      participantsCurrentlyInModelsNote
+      modelApplicationLevel
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetParticipantsAndProvidersQuery__
+ *
+ * To run a query within a React component, call `useGetParticipantsAndProvidersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetParticipantsAndProvidersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetParticipantsAndProvidersQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetParticipantsAndProvidersQuery(baseOptions: Apollo.QueryHookOptions<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>(GetParticipantsAndProvidersDocument, options);
+      }
+export function useGetParticipantsAndProvidersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>(GetParticipantsAndProvidersDocument, options);
+        }
+export function useGetParticipantsAndProvidersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>(GetParticipantsAndProvidersDocument, options);
+        }
+export type GetParticipantsAndProvidersQueryHookResult = ReturnType<typeof useGetParticipantsAndProvidersQuery>;
+export type GetParticipantsAndProvidersLazyQueryHookResult = ReturnType<typeof useGetParticipantsAndProvidersLazyQuery>;
+export type GetParticipantsAndProvidersSuspenseQueryHookResult = ReturnType<typeof useGetParticipantsAndProvidersSuspenseQuery>;
+export type GetParticipantsAndProvidersQueryResult = Apollo.QueryResult<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>;
+export const GetProviderOptionsDocument = gql`
+    query GetProviderOptions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    participantsAndProviders {
+      id
+      providerAdditionFrequency
+      providerAdditionFrequencyOther
+      providerAdditionFrequencyNote
+      providerAddMethod
+      providerAddMethodOther
+      providerAddMethodNote
+      providerLeaveMethod
+      providerLeaveMethodOther
+      providerLeaveMethodNote
+      providerOverlap
+      providerOverlapHierarchy
+      providerOverlapNote
+      readyForReviewByUserAccount {
+        id
+        commonName
+      }
+      readyForReviewDts
+      status
+    }
+    operationalNeeds {
+      id
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProviderOptionsQuery__
+ *
+ * To run a query within a React component, call `useGetProviderOptionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProviderOptionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProviderOptionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetProviderOptionsQuery(baseOptions: Apollo.QueryHookOptions<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>(GetProviderOptionsDocument, options);
+      }
+export function useGetProviderOptionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>(GetProviderOptionsDocument, options);
+        }
+export function useGetProviderOptionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>(GetProviderOptionsDocument, options);
+        }
+export type GetProviderOptionsQueryHookResult = ReturnType<typeof useGetProviderOptionsQuery>;
+export type GetProviderOptionsLazyQueryHookResult = ReturnType<typeof useGetProviderOptionsLazyQuery>;
+export type GetProviderOptionsSuspenseQueryHookResult = ReturnType<typeof useGetProviderOptionsSuspenseQuery>;
+export type GetProviderOptionsQueryResult = Apollo.QueryResult<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>;
+export const UpdatePlanParticipantsAndProvidersDocument = gql`
+    mutation UpdatePlanParticipantsAndProviders($id: UUID!, $changes: PlanParticipantsAndProvidersChanges!) {
+  updatePlanParticipantsAndProviders(id: $id, changes: $changes) {
+    id
+  }
+}
+    `;
+export type UpdatePlanParticipantsAndProvidersMutationFn = Apollo.MutationFunction<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>;
+
+/**
+ * __useUpdatePlanParticipantsAndProvidersMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlanParticipantsAndProvidersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlanParticipantsAndProvidersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlanParticipantsAndProvidersMutation, { data, loading, error }] = useUpdatePlanParticipantsAndProvidersMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdatePlanParticipantsAndProvidersMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>(UpdatePlanParticipantsAndProvidersDocument, options);
+      }
+export type UpdatePlanParticipantsAndProvidersMutationHookResult = ReturnType<typeof useUpdatePlanParticipantsAndProvidersMutation>;
+export type UpdatePlanParticipantsAndProvidersMutationResult = Apollo.MutationResult<UpdatePlanParticipantsAndProvidersMutation>;
+export type UpdatePlanParticipantsAndProvidersMutationOptions = Apollo.BaseMutationOptions<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>;
 export const GetFundingDocument = gql`
     query GetFunding($id: UUID!) {
   modelPlan(id: $id) {
