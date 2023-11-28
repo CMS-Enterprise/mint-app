@@ -5,6 +5,7 @@
 import {
   AgencyOrStateHelpType,
   AgreementType,
+  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   CcmInvolvmentType,
   ClaimsBasedPayType,
@@ -44,7 +45,6 @@ import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/Bod
 
 import {
   AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   BenchmarkForPerformanceType,
   BeneficiariesType,
   ComplexityCalculationLevelType,

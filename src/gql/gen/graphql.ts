@@ -2901,6 +2901,13 @@ export type GetClaimsBasedPaymentQueryVariables = Exact<{
 
 export type GetClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
+export type GetComplexityQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetComplexityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<AnticipatedPaymentFrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null } } };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -5007,6 +5014,60 @@ export type GetClaimsBasedPaymentQueryHookResult = ReturnType<typeof useGetClaim
 export type GetClaimsBasedPaymentLazyQueryHookResult = ReturnType<typeof useGetClaimsBasedPaymentLazyQuery>;
 export type GetClaimsBasedPaymentSuspenseQueryHookResult = ReturnType<typeof useGetClaimsBasedPaymentSuspenseQuery>;
 export type GetClaimsBasedPaymentQueryResult = Apollo.QueryResult<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>;
+export const GetComplexityDocument = gql`
+    query GetComplexity($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      expectedCalculationComplexityLevel
+      expectedCalculationComplexityLevelNote
+      canParticipantsSelectBetweenPaymentMechanisms
+      canParticipantsSelectBetweenPaymentMechanismsHow
+      canParticipantsSelectBetweenPaymentMechanismsNote
+      anticipatedPaymentFrequency
+      anticipatedPaymentFrequencyOther
+      anticipatedPaymentFrequencyNote
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetComplexityQuery__
+ *
+ * To run a query within a React component, call `useGetComplexityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetComplexityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetComplexityQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetComplexityQuery(baseOptions: Apollo.QueryHookOptions<GetComplexityQuery, GetComplexityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetComplexityQuery, GetComplexityQueryVariables>(GetComplexityDocument, options);
+      }
+export function useGetComplexityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetComplexityQuery, GetComplexityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetComplexityQuery, GetComplexityQueryVariables>(GetComplexityDocument, options);
+        }
+export function useGetComplexitySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetComplexityQuery, GetComplexityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetComplexityQuery, GetComplexityQueryVariables>(GetComplexityDocument, options);
+        }
+export type GetComplexityQueryHookResult = ReturnType<typeof useGetComplexityQuery>;
+export type GetComplexityLazyQueryHookResult = ReturnType<typeof useGetComplexityLazyQuery>;
+export type GetComplexitySuspenseQueryHookResult = ReturnType<typeof useGetComplexitySuspenseQuery>;
+export type GetComplexityQueryResult = Apollo.QueryResult<GetComplexityQuery, GetComplexityQueryVariables>;
 export const GetFundingDocument = gql`
     query GetFunding($id: UUID!) {
   modelPlan(id: $id) {
