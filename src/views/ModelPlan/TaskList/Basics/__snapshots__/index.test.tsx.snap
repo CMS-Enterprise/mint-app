@@ -362,7 +362,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                             class="display-flex flex-align-center"
                             style="gap: 4px;"
                           >
-                            Disease-Specific & Episodic
+                            Disease-Specific & Episode-Based
                             <span
                               class="usa-tooltip"
                               data-testid="tooltipWrapper"
@@ -517,9 +517,9 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars"
+                                title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                               >
-                                Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars
+                                Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
                               </span>
                             </span>
                           </span>
@@ -545,7 +545,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                             class="display-flex flex-align-center"
                             style="gap: 4px;"
                           >
-                            State-Based
+                            State & Community-Based
                             <span
                               class="usa-tooltip"
                               data-testid="tooltipWrapper"
@@ -578,9 +578,9 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models in which a state serves as the main contractual participant"
+                                title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                               >
-                                Models in which a state serves as the main contractual participant
+                                Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                               </span>
                             </span>
                           </span>
@@ -639,9 +639,9 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A"
+                                title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                               >
-                                Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A
+                                Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
                               </span>
                             </span>
                           </span>
@@ -771,7 +771,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                           class="display-flex flex-align-center"
                           style="gap: 4px;"
                         >
-                          Disease-Specific & Episodic
+                          Disease-Specific & Episode-Based
                           <span
                             class="usa-tooltip"
                             data-testid="tooltipWrapper"
@@ -930,9 +930,9 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars"
+                              title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                             >
-                              Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars
+                              Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
                             </span>
                           </span>
                         </span>
@@ -960,7 +960,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                           class="display-flex flex-align-center"
                           style="gap: 4px;"
                         >
-                          State-Based
+                          State & Community-Based
                           <span
                             class="usa-tooltip"
                             data-testid="tooltipWrapper"
@@ -993,9 +993,9 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models in which a state serves as the main contractual participant"
+                              title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                             >
-                              Models in which a state serves as the main contractual participant
+                              Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                             </span>
                           </span>
                         </span>
@@ -1056,9 +1056,9 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A"
+                              title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                             >
-                              Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A
+                              Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
                             </span>
                           </span>
                         </span>
@@ -1798,7 +1798,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             class="display-flex flex-align-center"
                             style="gap: 4px;"
                           >
-                            Disease-Specific & Episodic
+                            Disease-Specific & Episode-Based
                             <span
                               class="usa-tooltip"
                               data-testid="tooltipWrapper"
@@ -1953,9 +1953,9 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars"
+                                title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                               >
-                                Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars
+                                Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
                               </span>
                             </span>
                           </span>
@@ -1981,7 +1981,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             class="display-flex flex-align-center"
                             style="gap: 4px;"
                           >
-                            State-Based
+                            State & Community-Based
                             <span
                               class="usa-tooltip"
                               data-testid="tooltipWrapper"
@@ -2014,9 +2014,9 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models in which a state serves as the main contractual participant"
+                                title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                               >
-                                Models in which a state serves as the main contractual participant
+                                Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                               </span>
                             </span>
                           </span>
@@ -2075,9 +2075,9 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                                 data-testid="tooltipBody"
                                 id="tooltip-550000"
                                 role="tooltip"
-                                title="Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A"
+                                title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                               >
-                                Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A
+                                Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
                               </span>
                             </span>
                           </span>
@@ -2206,7 +2206,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           class="display-flex flex-align-center"
                           style="gap: 4px;"
                         >
-                          Disease-Specific & Episodic
+                          Disease-Specific & Episode-Based
                           <span
                             class="usa-tooltip"
                             data-testid="tooltipWrapper"
@@ -2365,9 +2365,9 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars"
+                              title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                             >
-                              Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars
+                              Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.
                             </span>
                           </span>
                         </span>
@@ -2396,7 +2396,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           class="display-flex flex-align-center"
                           style="gap: 4px;"
                         >
-                          State-Based
+                          State & Community-Based
                           <span
                             class="usa-tooltip"
                             data-testid="tooltipWrapper"
@@ -2429,9 +2429,9 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models in which a state serves as the main contractual participant"
+                              title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                             >
-                              Models in which a state serves as the main contractual participant
+                              Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                             </span>
                           </span>
                         </span>
@@ -2492,9 +2492,9 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               data-testid="tooltipBody"
                               id="tooltip-550000"
                               role="tooltip"
-                              title="Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A"
+                              title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                             >
-                              Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A
+                              Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.
                             </span>
                           </span>
                         </span>
