@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -14,7 +13,13 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePaymentsMutation } from 'gql/gen/graphql';
+import {
+  ClaimsBasedPayType,
+  GetClaimsBasedPaymentQuery,
+  PayType,
+  useGetClaimsBasedPaymentQuery,
+  useUpdatePaymentsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -31,13 +36,6 @@ import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
-import {
-  GetClaimsBasedPayment as GetClaimsBasedPaymentType,
-  GetClaimsBasedPayment_modelPlan_payments as ClaimsBasedPaymentFormType,
-  GetClaimsBasedPaymentVariables
-} from 'queries/Payments/types/GetClaimsBasedPayment';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -45,6 +43,8 @@ import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
+
+type ClaimsBasedPaymentFormType = GetClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const ClaimsBasedPayment = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -65,10 +65,7 @@ const ClaimsBasedPayment = () => {
   const formikRef = useRef<FormikProps<ClaimsBasedPaymentFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetClaimsBasedPaymentType,
-    GetClaimsBasedPaymentVariables
-  >(GetClaimsBasedPayment, {
+  const { data, loading, error } = useGetClaimsBasedPaymentQuery({
     variables: {
       id: modelID
     }
@@ -91,7 +88,7 @@ const ClaimsBasedPayment = () => {
     affectsMedicareSecondaryPayerClaimsHow,
     affectsMedicareSecondaryPayerClaimsNote,
     payModelDifferentiation
-  } = data?.modelPlan?.payments || ({} as ClaimsBasedPaymentFormType);
+  } = (data?.modelPlan?.payments || {}) as ClaimsBasedPaymentFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 

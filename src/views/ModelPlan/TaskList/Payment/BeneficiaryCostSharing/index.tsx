@@ -73,7 +73,7 @@ const BeneficiaryCostSharing = () => {
     waiveBeneficiaryCostSharingServiceSpecification,
     waiverOnlyAppliesPartOfPayment,
     waiveBeneficiaryCostSharingNote
-  } = data?.modelPlan?.payments || ({} as BeneficiaryCostSharingFormType);
+  } = (data?.modelPlan?.payments || {}) as BeneficiaryCostSharingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 

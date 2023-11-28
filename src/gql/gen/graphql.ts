@@ -2894,6 +2894,13 @@ export type GetBeneficiaryCostSharingQueryVariables = Exact<{
 
 export type GetBeneficiaryCostSharingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null } } };
 
+export type GetClaimsBasedPaymentQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -4941,6 +4948,65 @@ export type GetBeneficiaryCostSharingQueryHookResult = ReturnType<typeof useGetB
 export type GetBeneficiaryCostSharingLazyQueryHookResult = ReturnType<typeof useGetBeneficiaryCostSharingLazyQuery>;
 export type GetBeneficiaryCostSharingSuspenseQueryHookResult = ReturnType<typeof useGetBeneficiaryCostSharingSuspenseQuery>;
 export type GetBeneficiaryCostSharingQueryResult = Apollo.QueryResult<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>;
+export const GetClaimsBasedPaymentDocument = gql`
+    query GetClaimsBasedPayment($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      payClaimsNote
+      payClaimsOther
+      shouldAnyProvidersExcludedFFSSystems
+      shouldAnyProviderExcludedFFSSystemsNote
+      changesMedicarePhysicianFeeSchedule
+      changesMedicarePhysicianFeeScheduleNote
+      affectsMedicareSecondaryPayerClaims
+      affectsMedicareSecondaryPayerClaimsHow
+      affectsMedicareSecondaryPayerClaimsNote
+      payModelDifferentiation
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetClaimsBasedPaymentQuery__
+ *
+ * To run a query within a React component, call `useGetClaimsBasedPaymentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetClaimsBasedPaymentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetClaimsBasedPaymentQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetClaimsBasedPaymentQuery(baseOptions: Apollo.QueryHookOptions<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>(GetClaimsBasedPaymentDocument, options);
+      }
+export function useGetClaimsBasedPaymentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>(GetClaimsBasedPaymentDocument, options);
+        }
+export function useGetClaimsBasedPaymentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>(GetClaimsBasedPaymentDocument, options);
+        }
+export type GetClaimsBasedPaymentQueryHookResult = ReturnType<typeof useGetClaimsBasedPaymentQuery>;
+export type GetClaimsBasedPaymentLazyQueryHookResult = ReturnType<typeof useGetClaimsBasedPaymentLazyQuery>;
+export type GetClaimsBasedPaymentSuspenseQueryHookResult = ReturnType<typeof useGetClaimsBasedPaymentSuspenseQuery>;
+export type GetClaimsBasedPaymentQueryResult = Apollo.QueryResult<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>;
 export const GetFundingDocument = gql`
     query GetFunding($id: UUID!) {
   modelPlan(id: $id) {
