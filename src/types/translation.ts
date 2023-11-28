@@ -5,24 +5,32 @@
 import {
   AgencyOrStateHelpType,
   AgreementType,
+  AlternativePaymentModelType,
   AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
+  BenchmarkForPerformanceType,
+  BeneficiariesType,
   CcmInvolvmentType,
   ClaimsBasedPayType,
   CmmiGroup,
   CmsCenter,
+  ComplexityCalculationLevelType,
+  ConfidenceType,
   ContractorSupportType,
   DataForMonitoringType,
   DataFrequencyType,
+  DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
+  FundingSource,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
+  ModelStatus,
   ModelType,
   MonitoringFileType,
   NonClaimsBasedPayType,
@@ -32,6 +40,7 @@ import {
   ParticipantSelectionType,
   ParticipantsIdType,
   ParticipantsType,
+  PayRecipient,
   PayType,
   ProviderAddType,
   ProviderLeaveType,
@@ -39,25 +48,13 @@ import {
   SelectionMethodType,
   StakeholdersType,
   TaskStatus,
+  TeamRole,
+  TriStateAnswer,
+  TrustFundType,
   WaiverType
 } from 'gql/gen/graphql';
 
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-
-import {
-  AlternativePaymentModelType,
-  BenchmarkForPerformanceType,
-  BeneficiariesType,
-  ComplexityCalculationLevelType,
-  ConfidenceType,
-  DataFullTimeOrIncrementalType,
-  FundingSource,
-  ModelStatus,
-  PayRecipient,
-  TeamRole,
-  TriStateAnswer,
-  TrustFundType
-} from './graphql-global-types';
 
 // Util used to preserve type defintions when mapping over keys of object
 // https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
