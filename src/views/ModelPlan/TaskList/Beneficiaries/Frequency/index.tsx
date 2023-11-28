@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -15,6 +14,12 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  FrequencyType,
+  GetFrequencyQuery,
+  useGetFrequencyQuery,
+  useUpdateModelPlanBeneficiariesMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,20 +34,19 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import getFrequency from 'queries/Beneficiaries/getFrequency';
-import {
-  GetFrequency as BeneficiaryFrequencyType,
-  GetFrequency_modelPlan_beneficiaries as FrequencyFormType,
-  GetFrequencyVariables
-} from 'queries/Beneficiaries/types/GetFrequency';
-import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
-import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
-import { FrequencyType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
+
+type FrequencyFormType = GetFrequencyQuery['modelPlan']['beneficiaries'];
+
+// Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+type InitialValueType = Omit<
+  FrequencyFormType,
+  'readyForReviewByUserAccount' | 'readyForReviewDts'
+>;
 
 const Frequency = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
@@ -58,19 +62,10 @@ const Frequency = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
-  type InitialValueType = Omit<
-    FrequencyFormType,
-    'readyForReviewByUserAccount' | 'readyForReviewDts'
-  >;
-
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    BeneficiaryFrequencyType,
-    GetFrequencyVariables
-  >(getFrequency, {
+  const { data, loading, error } = useGetFrequencyQuery({
     variables: {
       id: modelID
     },
@@ -88,7 +83,7 @@ const Frequency = () => {
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } = data?.modelPlan?.beneficiaries || ({} as FrequencyFormType);
+  } = (data?.modelPlan?.beneficiaries || {}) as FrequencyFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -98,9 +93,7 @@ const Frequency = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
-    UpdateModelPlanBeneficiaries
-  );
+  const [update] = useUpdateModelPlanBeneficiariesMutation();
 
   const handleFormSubmit = (
     redirect?: 'back' | 'task-list' | 'next' | string

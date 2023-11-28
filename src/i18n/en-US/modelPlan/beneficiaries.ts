@@ -174,8 +174,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     multiSelectLabel: 'Selected methods',
     options: {
       HISTORICAL: 'Historical claims',
-      PROSPECTIVE: 'Assign/capture - prospective',
-      RETROSPECTIVE: 'Assign/capture - retrospective',
+      PROSPECTIVE: 'Prospective selection',
+      RETROSPECTIVE: 'Retrospective selection',
       VOLUNTARY: 'Voluntary alignment',
       PROVIDER_SIGN_UP: 'Beneficiary will sign up through their provider',
       OTHER: 'Other',
