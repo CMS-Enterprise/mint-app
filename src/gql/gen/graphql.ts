@@ -2793,6 +2793,13 @@ export type GetOpsEvalAndLearningQueryVariables = Exact<{
 
 export type GetOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
+export type GetPerformanceQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetPerformanceQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
 export type UpdatePlanOpsEvalAndLearningMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
   changes: PlanOpsEvalAndLearningChanges;
@@ -4129,6 +4136,70 @@ export type GetOpsEvalAndLearningQueryHookResult = ReturnType<typeof useGetOpsEv
 export type GetOpsEvalAndLearningLazyQueryHookResult = ReturnType<typeof useGetOpsEvalAndLearningLazyQuery>;
 export type GetOpsEvalAndLearningSuspenseQueryHookResult = ReturnType<typeof useGetOpsEvalAndLearningSuspenseQuery>;
 export type GetOpsEvalAndLearningQueryResult = Apollo.QueryResult<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>;
+export const GetPerformanceDocument = gql`
+    query GetPerformance($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    opsEvalAndLearning {
+      id
+      ccmInvolvment
+      dataNeededForMonitoring
+      iddocSupport
+      benchmarkForPerformance
+      benchmarkForPerformanceNote
+      computePerformanceScores
+      computePerformanceScoresNote
+      riskAdjustPerformance
+      riskAdjustFeedback
+      riskAdjustPayments
+      riskAdjustOther
+      riskAdjustNote
+      appealPerformance
+      appealFeedback
+      appealPayments
+      appealOther
+      appealNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPerformanceQuery__
+ *
+ * To run a query within a React component, call `useGetPerformanceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPerformanceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPerformanceQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPerformanceQuery(baseOptions: Apollo.QueryHookOptions<GetPerformanceQuery, GetPerformanceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPerformanceQuery, GetPerformanceQueryVariables>(GetPerformanceDocument, options);
+      }
+export function useGetPerformanceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPerformanceQuery, GetPerformanceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPerformanceQuery, GetPerformanceQueryVariables>(GetPerformanceDocument, options);
+        }
+export function useGetPerformanceSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPerformanceQuery, GetPerformanceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPerformanceQuery, GetPerformanceQueryVariables>(GetPerformanceDocument, options);
+        }
+export type GetPerformanceQueryHookResult = ReturnType<typeof useGetPerformanceQuery>;
+export type GetPerformanceLazyQueryHookResult = ReturnType<typeof useGetPerformanceLazyQuery>;
+export type GetPerformanceSuspenseQueryHookResult = ReturnType<typeof useGetPerformanceSuspenseQuery>;
+export type GetPerformanceQueryResult = Apollo.QueryResult<GetPerformanceQuery, GetPerformanceQueryVariables>;
 export const UpdatePlanOpsEvalAndLearningDocument = gql`
     mutation UpdatePlanOpsEvalAndLearning($id: UUID!, $changes: PlanOpsEvalAndLearningChanges!) {
   updatePlanOpsEvalAndLearning(id: $id, changes: $changes) {

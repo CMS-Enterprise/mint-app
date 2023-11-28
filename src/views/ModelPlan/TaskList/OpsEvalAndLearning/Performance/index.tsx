@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,7 +12,11 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
+import {
+  GetPerformanceQuery,
+  useGetPerformanceQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -28,12 +31,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetPerformance from 'queries/OpsEvalAndLearning/GetPerformance';
-import {
-  GetPerformance as GetPerformanceType,
-  GetPerformance_modelPlan_opsEvalAndLearning as PerformanceFormType,
-  GetPerformanceVariables
-} from 'queries/OpsEvalAndLearning/types/GetPerformance';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -45,6 +42,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type PerformanceFormType = GetPerformanceQuery['modelPlan']['opsEvalAndLearning'];
 
 const Performance = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -73,10 +72,7 @@ const Performance = () => {
 
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetPerformanceType,
-    GetPerformanceVariables
-  >(GetPerformance, {
+  const { data, loading, error } = useGetPerformanceQuery({
     variables: {
       id: modelID
     }
@@ -101,7 +97,7 @@ const Performance = () => {
     appealPayments,
     appealOther,
     appealNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as PerformanceFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as PerformanceFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
