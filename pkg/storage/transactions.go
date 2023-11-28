@@ -23,7 +23,7 @@ func WithTransaction[T any](s *Store, txFunc TransactionFunc[T]) (*T, error) {
 		if rollbackErr != nil {
 			return nil, fmt.Errorf("issue rolling back transaction: %w", rollbackErr)
 		}
-		return nil, rollbackErr
+		return nil, errFunc
 
 	}
 
