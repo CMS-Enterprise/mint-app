@@ -2,12 +2,15 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetIDDOCTesting from 'queries/OpsEvalAndLearning/GetIDDOCTesting';
-import { GetIDDOCTesting_modelPlan_opsEvalAndLearning as GetIDDOCTestingType } from 'queries/OpsEvalAndLearning/types/GetIDDOCTesting';
-import { CcmInvolvmentType } from 'types/graphql-global-types';
+import {
+  CcmInvolvmentType,
+  GetIddocTestingDocument,
+  GetIddocTestingQuery
+} from 'gql/gen/graphql';
 
 import IDDOCTesting from './index';
+
+type GetIDDOCTestingType = GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
 
 const iddocTestingMockData: GetIDDOCTestingType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -28,7 +31,7 @@ const iddocTestingMockData: GetIDDOCTestingType = {
 const iddocTestingMock = [
   {
     request: {
-      query: GetIDDOCTesting,
+      query: GetIddocTestingDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

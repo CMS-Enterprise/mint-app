@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -16,6 +15,17 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  GetExistingModelPlansQuery,
+  GetGeneralCharacteristicsQuery,
+  GetModelPlansBaseQuery,
+  ModelPlanFilter,
+  useGetExistingModelPlansQuery,
+  useGetGeneralCharacteristicsQuery,
+  useGetModelPlansBaseQuery,
+  useUpdateExistingModelLinksMutation,
+  useUpdatePlanGeneralCharacteristicsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -30,27 +40,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
-import {
-  GetGeneralCharacteristics as GetGeneralCharacteristicsType,
-  GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsFormType,
-  GetGeneralCharacteristicsVariables
-} from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
-import { UpdateExistingModelLinksVariables } from 'queries/GeneralCharacteristics/types/UpdateExistingModelLinks';
-import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
-import UpdateExistingModelLinks from 'queries/GeneralCharacteristics/UpdateExistingModelLinks';
-import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
-import GetExistingModelPlans from 'queries/GetExistingModelPlans';
-import GetModelPlansBase from 'queries/GetModelPlansBase';
-import {
-  GetExistingModelPlans as ExistingModelPlanType,
-  GetExistingModelPlans_existingModelCollection as GetExistingModelPlansExistingModelCollectionType
-} from 'queries/types/GetExistingModelPlans';
-import {
-  GetModelPlansBase as GetModelPlansBaseType,
-  GetModelPlansBase_modelPlanCollection as GetModelPlansBaseCollectionType
-} from 'queries/types/GetModelPlansBase';
-import { ModelPlanFilter } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -61,9 +50,11 @@ import Involvements from './Involvements';
 import KeyCharacteristics from './KeyCharacteristics';
 import TargetsAndOptions from './TargetsAndOptions';
 
+type GeneralCharacteristicsFormType = GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+
 interface GetGeneralCharacteristicsFormTypeWithLinks
   extends Omit<
-    GetGeneralCharacteristicsFormType,
+    GeneralCharacteristicsFormType,
     'currentModelPlanID' | 'existingModelID'
   > {
   existingModelLinks: (string | number)[];
@@ -97,7 +88,7 @@ export const CharacteristicsContent = () => {
     data: modelData,
     error: modelError,
     loading: modelLoading
-  } = useQuery<GetModelPlansBaseType>(GetModelPlansBase, {
+  } = useGetModelPlansBaseQuery({
     variables: {
       filter: ModelPlanFilter.INCLUDE_ALL
     }
@@ -107,7 +98,7 @@ export const CharacteristicsContent = () => {
     data: existingModelData,
     error: existingModelError,
     loading: existingModelLoading
-  } = useQuery<ExistingModelPlanType>(GetExistingModelPlans);
+  } = useGetExistingModelPlansQuery();
 
   // Combined MINT models with existing models from DB.  Sorts them alphabetically and returns options for MultiSelect
   const modelPlanOptions = useMemo(() => {
@@ -136,10 +127,7 @@ export const CharacteristicsContent = () => {
     });
   }, [modelData, existingModelData]);
 
-  const { data, loading, error } = useQuery<
-    GetGeneralCharacteristicsType,
-    GetGeneralCharacteristicsVariables
-  >(GetGeneralCharacteristics, {
+  const { data, loading, error } = useGetGeneralCharacteristicsQuery({
     variables: {
       id: modelID
     }
@@ -158,7 +146,7 @@ export const CharacteristicsContent = () => {
     hasComponentsOrTracksNote
   } =
     data?.modelPlan?.generalCharacteristics ||
-    ({} as GetGeneralCharacteristicsFormType);
+    ({} as GeneralCharacteristicsFormType);
 
   const existingModel = currentModelPlanID || existingModelID;
 
@@ -172,13 +160,9 @@ export const CharacteristicsContent = () => {
     );
   }, [data?.modelPlan?.existingModelLinks]);
 
-  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
-    UpdatePlanGeneralCharacteristics
-  );
+  const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
-  const [updateExistingLinks] = useMutation<UpdateExistingModelLinksVariables>(
-    UpdateExistingModelLinks
-  );
+  const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
 
   const handleFormSubmit = async (redirect?: 'next' | 'back') => {
     const formValues = formikRef?.current?.values!;
@@ -672,8 +656,8 @@ type SeparateLinksType = {
 // Separates all selected existingModelLinks values into a type of either draftModelPlans or existingModelPlans
 export const separateLinksByType = (
   existingLinks: (string | number)[],
-  draftModelPlans: GetModelPlansBaseCollectionType[],
-  existingModelPlans: GetExistingModelPlansExistingModelCollectionType[]
+  draftModelPlans: GetModelPlansBaseQuery['modelPlanCollection'],
+  existingModelPlans: GetExistingModelPlansQuery['existingModelCollection']
 ): SeparateLinksType => {
   const existingModelIDs = [...existingLinks].filter(linkID =>
     existingModelPlans.find(modelPlan => modelPlan.id === linkID)

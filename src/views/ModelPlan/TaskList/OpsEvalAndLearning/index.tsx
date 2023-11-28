@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -15,6 +14,16 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import {
+  AgencyOrStateHelpType,
+  CcmInvolvmentType,
+  ContractorSupportType,
+  DataForMonitoringType,
+  GetOpsEvalAndLearningQuery,
+  StakeholdersType,
+  useGetOpsEvalAndLearningQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -32,21 +41,6 @@ import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetOpsEvalAndLearning from 'queries/OpsEvalAndLearning/GetOpsEvalAndLearning';
-import {
-  GetOpsEvalAndLearning as GetOpsEvalAndLearningType,
-  GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
-  GetOpsEvalAndLearningVariables
-} from 'queries/OpsEvalAndLearning/types/GetOpsEvalAndLearning';
-import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
-import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import {
-  AgencyOrStateHelpType,
-  CcmInvolvmentType,
-  ContractorSupportType,
-  DataForMonitoringType,
-  StakeholdersType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -61,9 +55,12 @@ import IDDOCMonitoring from './IDDOCMonitoring';
 import IDDOCTesting from './IDDOCTesting';
 import Learning from './Learning';
 import Performance from './Performance';
+
+type OpsEvalAndLearningFormType = GetOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
+
 // Used to render the total pages based on certain answers populated within this task list item
 export const renderTotalPages = (
-  iddoc: boolean | null,
+  iddoc: boolean | null | undefined,
   qualityOrCCW?: boolean | null
 ) => {
   let totalPages = 5;
@@ -75,7 +72,7 @@ export const renderTotalPages = (
 // Used to render the current page based on certain answers populated within this task list item
 export const renderCurrentPage = (
   currentPage: number,
-  iddoc: boolean | null,
+  iddoc: boolean | null | undefined,
   qualityOrCCW?: boolean | null
 ) => {
   let adjustedCurrentPage = currentPage;
@@ -130,10 +127,7 @@ export const OpsEvalAndLearningContent = () => {
 
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetOpsEvalAndLearningType,
-    GetOpsEvalAndLearningVariables
-  >(GetOpsEvalAndLearning, {
+  const { data, loading, error } = useGetOpsEvalAndLearningQuery({
     variables: {
       id: modelID
     }
@@ -157,7 +151,7 @@ export const OpsEvalAndLearningContent = () => {
     contractorSupportNote,
     iddocSupport,
     iddocSupportNote
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearningFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as OpsEvalAndLearningFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -168,9 +162,7 @@ export const OpsEvalAndLearningContent = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
-    UpdatePlanOpsEvalAndLearning
-  );
+  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | string) => {
     update({

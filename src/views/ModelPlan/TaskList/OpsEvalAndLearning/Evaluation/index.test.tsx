@@ -2,15 +2,16 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
-import { GetEvaluation_modelPlan_opsEvalAndLearning as GetEvaluationType } from 'queries/OpsEvalAndLearning/types/GetEvaluation';
 import {
   CcmInvolvmentType,
-  EvaluationApproachType
-} from 'types/graphql-global-types';
+  EvaluationApproachType,
+  GetEvaluationDocument,
+  GetEvaluationQuery
+} from 'gql/gen/graphql';
 
 import Evaluation from '.';
+
+type GetEvaluationType = GetEvaluationQuery['modelPlan']['opsEvalAndLearning'];
 
 const evaluationMockData: GetEvaluationType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -35,7 +36,7 @@ const evaluationMockData: GetEvaluationType = {
 const evaluationMock = [
   {
     request: {
-      query: GetEvaluation,
+      query: GetEvaluationDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

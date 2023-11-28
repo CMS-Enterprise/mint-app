@@ -2,11 +2,11 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetInvolvements from 'queries/GeneralCharacteristics/GetInvolvements';
-import { GetInvolvements_modelPlan_generalCharacteristics as GetInvolvementsType } from 'queries/GeneralCharacteristics/types/GetInvolvements';
+import { GetInvolvementsDocument, GetInvolvementsQuery } from 'gql/gen/graphql';
 
 import Involvements from './index';
+
+type GetInvolvementsType = GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
 
 const involvementsMockData: GetInvolvementsType = {
   __typename: 'PlanGeneralCharacteristics',
@@ -25,7 +25,7 @@ const involvementsMockData: GetInvolvementsType = {
 const involvementsMock = [
   {
     request: {
-      query: GetInvolvements,
+      query: GetInvolvementsDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

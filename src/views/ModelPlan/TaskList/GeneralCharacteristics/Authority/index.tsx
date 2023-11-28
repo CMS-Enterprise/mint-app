@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,6 +11,13 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import {
+  AuthorityAllowance,
+  GetAuthorityQuery,
+  useGetAuthorityQuery,
+  useUpdatePlanGeneralCharacteristicsMutation,
+  WaiverType
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,20 +32,19 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetAuthority from 'queries/GeneralCharacteristics/GetAuthority';
-import {
-  GetAuthority as GetAuthorityType,
-  GetAuthority_modelPlan_generalCharacteristics as AuthorityFormType,
-  GetAuthorityVariables
-} from 'queries/GeneralCharacteristics/types/GetAuthority';
-import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
-import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
-import { AuthorityAllowance, WaiverType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
+
+type AuthorityFormType = GetAuthorityQuery['modelPlan']['generalCharacteristics'];
+
+// Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+type InitialValueType = Omit<
+  AuthorityFormType,
+  'readyForReviewByUserAccount' | 'readyForReviewDts'
+>;
 
 const Authority = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -59,19 +64,10 @@ const Authority = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
-  type InitialValueType = Omit<
-    AuthorityFormType,
-    'readyForReviewByUserAccount' | 'readyForReviewDts'
-  >;
-
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetAuthorityType,
-    GetAuthorityVariables
-  >(GetAuthority, {
+  const { data, loading, error } = useGetAuthorityQuery({
     variables: {
       id: modelID
     },
@@ -94,11 +90,9 @@ const Authority = () => {
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
-  } = data?.modelPlan?.generalCharacteristics || ({} as AuthorityFormType);
+  } = (data?.modelPlan?.generalCharacteristics || {}) as AuthorityFormType;
 
-  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
-    UpdatePlanGeneralCharacteristics
-  );
+  const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
   const handleFormSubmit = (redirect?: 'back' | 'task-list' | 'next') => {
     const dirtyInputs = dirtyInput(

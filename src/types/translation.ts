@@ -3,60 +3,60 @@
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
 import {
-  CmmiGroup,
-  CmsCenter,
-  ModelCategory,
-  ModelType,
-  TaskStatus
-} from 'gql/gen/graphql';
-
-import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-
-import {
   AgencyOrStateHelpType,
   AgreementType,
-  AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
-  BenchmarkForPerformanceType,
-  BeneficiariesType,
   CcmInvolvmentType,
-  ClaimsBasedPayType,
-  ComplexityCalculationLevelType,
-  ConfidenceType,
+  CmmiGroup,
+  CmsCenter,
   ContractorSupportType,
   DataForMonitoringType,
   DataFrequencyType,
-  DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
-  FundingSource,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
+  ModelCategory,
   ModelLearningSystemType,
-  ModelStatus,
+  ModelType,
   MonitoringFileType,
-  NonClaimsBasedPayType,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRiskType,
   ParticipantSelectionType,
-  ParticipantsIDType,
+  ParticipantsIdType,
   ParticipantsType,
-  PayRecipient,
-  PayType,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  TaskStatus,
+  WaiverType
+} from 'gql/gen/graphql';
+
+import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+
+import {
+  AlternativePaymentModelType,
+  AnticipatedPaymentFrequencyType,
+  BenchmarkForPerformanceType,
+  BeneficiariesType,
+  ClaimsBasedPayType,
+  ComplexityCalculationLevelType,
+  ConfidenceType,
+  DataFullTimeOrIncrementalType,
+  FundingSource,
+  ModelStatus,
+  NonClaimsBasedPayType,
+  PayRecipient,
+  PayType,
   TeamRole,
   TriStateAnswer,
-  TrustFundType,
-  WaiverType
+  TrustFundType
 } from './graphql-global-types';
 
 // Util used to preserve type defintions when mapping over keys of object
@@ -241,7 +241,7 @@ export type TranslationParticipantsAndProviders = {
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsNote: TranslationFieldProperties;
-  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
+  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
