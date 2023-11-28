@@ -2880,6 +2880,13 @@ export type UpdatePlanParticipantsAndProvidersMutationVariables = Exact<{
 
 export type UpdatePlanParticipantsAndProvidersMutation = { __typename: 'Mutation', updatePlanParticipantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID } };
 
+export type GetAnticipateDependenciesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAnticipateDependenciesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null } } };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -4824,6 +4831,58 @@ export function useUpdatePlanParticipantsAndProvidersMutation(baseOptions?: Apol
 export type UpdatePlanParticipantsAndProvidersMutationHookResult = ReturnType<typeof useUpdatePlanParticipantsAndProvidersMutation>;
 export type UpdatePlanParticipantsAndProvidersMutationResult = Apollo.MutationResult<UpdatePlanParticipantsAndProvidersMutation>;
 export type UpdatePlanParticipantsAndProvidersMutationOptions = Apollo.BaseMutationOptions<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>;
+export const GetAnticipateDependenciesDocument = gql`
+    query GetAnticipateDependencies($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      creatingDependenciesBetweenServices
+      creatingDependenciesBetweenServicesNote
+      needsClaimsDataCollection
+      needsClaimsDataCollectionNote
+      providingThirdPartyFile
+      isContractorAwareTestDataRequirements
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAnticipateDependenciesQuery__
+ *
+ * To run a query within a React component, call `useGetAnticipateDependenciesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnticipateDependenciesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAnticipateDependenciesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAnticipateDependenciesQuery(baseOptions: Apollo.QueryHookOptions<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>(GetAnticipateDependenciesDocument, options);
+      }
+export function useGetAnticipateDependenciesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>(GetAnticipateDependenciesDocument, options);
+        }
+export function useGetAnticipateDependenciesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>(GetAnticipateDependenciesDocument, options);
+        }
+export type GetAnticipateDependenciesQueryHookResult = ReturnType<typeof useGetAnticipateDependenciesQuery>;
+export type GetAnticipateDependenciesLazyQueryHookResult = ReturnType<typeof useGetAnticipateDependenciesLazyQuery>;
+export type GetAnticipateDependenciesSuspenseQueryHookResult = ReturnType<typeof useGetAnticipateDependenciesSuspenseQuery>;
+export type GetAnticipateDependenciesQueryResult = Apollo.QueryResult<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>;
 export const GetFundingDocument = gql`
     query GetFunding($id: UUID!) {
   modelPlan(id: $id) {

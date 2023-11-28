@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -14,6 +14,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import { useUpdatePaymentsMutation } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import AddNote from 'components/AddNote';
@@ -36,8 +37,6 @@ import {
   GetRecover_modelPlan_payments as RecoverFormType,
   GetRecoverVariables
 } from 'queries/Payments/types/GetRecover';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -108,7 +107,7 @@ const Recover = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (
     redirect?: 'back' | 'task-list' | 'next' | string

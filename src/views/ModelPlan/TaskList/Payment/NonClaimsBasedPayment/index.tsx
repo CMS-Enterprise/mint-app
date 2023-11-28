@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -14,6 +14,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useUpdatePaymentsMutation } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -35,8 +36,6 @@ import {
   GetNonClaimsBasedPayment_modelPlan_payments as NonClaimsBasedPaymentFormType,
   GetNonClaimsBasedPaymentVariables
 } from 'queries/Payments/types/GetNonClaimsBasedPayment';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   ClaimsBasedPayType,
   NonClaimsBasedPayType,
@@ -102,7 +101,7 @@ const NonClaimsBasedPayment = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (
     redirect?: 'next' | 'back' | 'task-list' | string

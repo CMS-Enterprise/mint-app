@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -16,6 +16,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useUpdatePaymentsMutation } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -34,8 +35,6 @@ import {
   GetComplexity_modelPlan_payments as ComplexityFormType,
   GetComplexityVariables
 } from 'queries/Payments/types/GetComplexity';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   AnticipatedPaymentFrequencyType,
   ClaimsBasedPayType,
@@ -92,7 +91,7 @@ const Complexity = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
