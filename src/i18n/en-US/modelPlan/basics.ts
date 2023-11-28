@@ -10,10 +10,10 @@ export const basics: TranslationBasics = {
     formType: 'radio',
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
-      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episodic',
+      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
       HEALTH_PLAN: 'Health Plan',
       PRESCRIPTION_DRUG: 'Prescription Drug',
-      STATE_BASED: 'State-Based',
+      STATE_BASED: 'State & Community-Based',
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
@@ -24,11 +24,11 @@ export const basics: TranslationBasics = {
         'Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode',
       HEALTH_PLAN: 'Models comprising Medicare Advantage plans',
       PRESCRIPTION_DRUG:
-        'Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars',
+        'Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.',
       STATE_BASED:
-        'Models in which a state serves as the main contractual participant',
+        'Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.',
       STATUTORY:
-        'Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A',
+        'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
     }
   },
@@ -43,10 +43,10 @@ export const basics: TranslationBasics = {
     formType: 'checkbox',
     options: {
       ACCOUNTABLE_CARE: 'Accountable Care',
-      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episodic',
+      DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
       HEALTH_PLAN: 'Health Plan',
       PRESCRIPTION_DRUG: 'Prescription Drug',
-      STATE_BASED: 'State-Based',
+      STATE_BASED: 'State & Community-Based',
       STATUTORY: 'Statutory',
       TO_BE_DETERMINED: 'To be determined'
     },
@@ -57,11 +57,11 @@ export const basics: TranslationBasics = {
         'Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode',
       HEALTH_PLAN: 'Models comprising Medicare Advantage plans',
       PRESCRIPTION_DRUG:
-        'Models which seek to mitigate the total cost of care by improving access to and the affordability of prescription drugs covered under Part B or Part D, including gene cell therapy, accelerated approvals and biosimilars',
+        'Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid.',
       STATE_BASED:
-        'Models in which a state serves as the main contractual participant',
+        'Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.',
       STATUTORY:
-        'Models and demonstrations requiring testing as determined by Congress under Social Security Act 1115A',
+        'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: 'To be determined'
     }
   },
