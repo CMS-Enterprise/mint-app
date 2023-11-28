@@ -46,7 +46,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		[]models.TeamRole{models.TeamRoleModelLead},
 		"test@email.com",
 	)
-	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(modelLead.UserID)
+	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, modelLead.UserID)
 
 	suite.NoError(err)
 	collaborator := suite.createPlanCollaborator(
@@ -56,7 +56,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		[]models.TeamRole{models.TeamRoleModelTeam},
 		"test@email.com",
 	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
 
 	suite.NoError(err)
 

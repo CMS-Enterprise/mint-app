@@ -6,7 +6,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// TransactionFunc defines the functiontion signature needed to represent passing a transaction and returning a generic type
+// TransactionFunc defines the function signature needed to represent passing a transaction and returning a generic type
 type TransactionFunc[T any] func(*sqlx.Tx) (*T, error)
 
 // WithTransaction is a wrapper function which handles creating, comitting or rollingback a transaction

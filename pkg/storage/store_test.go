@@ -101,7 +101,7 @@ func getTestPrincipal(store *Store, userName string) (*authentication.Applicatio
 		HasLoggedIn: true,
 	}
 
-	newAccount, newErr := store.UserAccountInsertByUsernameTransaction(store, userAccount)
+	newAccount, newErr := store.UserAccountInsertByUsername(store, userAccount)
 	if newErr != nil {
 		return nil, newErr
 	}

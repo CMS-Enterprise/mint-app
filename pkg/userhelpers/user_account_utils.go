@@ -69,14 +69,14 @@ func GetOrCreateUserAccount(ctx context.Context, np storage.NamedPreparer, store
 	userAccount.HasLoggedIn = hasLoggedIn
 
 	if userAccount.ID == uuid.Nil {
-		newAccount, newErr := store.UserAccountInsertByUsernameTransaction(np, userAccount)
+		newAccount, newErr := store.UserAccountInsertByUsername(np, userAccount)
 		if newErr != nil {
 			return nil, newErr
 		}
 		return newAccount, nil
 	}
 
-	updatedAccount, updateErr := store.UserAccountUpdateByUserNameTransaction(np, userAccount)
+	updatedAccount, updateErr := store.UserAccountUpdateByUserName(np, userAccount)
 	if updateErr != nil {
 		return nil, updateErr
 	}
