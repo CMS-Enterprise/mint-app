@@ -7,11 +7,21 @@ import {
   AuthorityAllowance,
   CmmiGroup,
   CmsCenter,
+  FrequencyType,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  OverlapType,
+  ParticipantCommunicationType,
+  ParticipantRiskType,
+  ParticipantSelectionType,
+  ParticipantsIdType,
+  ParticipantsType,
+  ProviderAddType,
+  ProviderLeaveType,
+  RecruitmentType,
   TaskStatus,
   WaiverType
 } from 'gql/gen/graphql';
@@ -35,23 +45,13 @@ import {
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
-  FrequencyType,
   FundingSource,
   ModelLearningSystemType,
   ModelStatus,
   MonitoringFileType,
   NonClaimsBasedPayType,
-  OverlapType,
-  ParticipantCommunicationType,
-  ParticipantRiskType,
-  ParticipantSelectionType,
-  ParticipantsIDType,
-  ParticipantsType,
   PayRecipient,
   PayType,
-  ProviderAddType,
-  ProviderLeaveType,
-  RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
   TeamRole,
@@ -241,7 +241,7 @@ export type TranslationParticipantsAndProviders = {
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsNote: TranslationFieldProperties;
-  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
+  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
