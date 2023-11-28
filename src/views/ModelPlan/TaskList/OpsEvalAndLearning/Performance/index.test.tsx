@@ -2,12 +2,15 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetPerformance from 'queries/OpsEvalAndLearning/GetPerformance';
-import { GetPerformance_modelPlan_opsEvalAndLearning as GetPerformanceType } from 'queries/OpsEvalAndLearning/types/GetPerformance';
-import { CcmInvolvmentType } from 'types/graphql-global-types';
+import {
+  CcmInvolvmentType,
+  GetPerformanceDocument,
+  GetPerformanceQuery
+} from 'gql/gen/graphql';
 
 import Performance from '.';
+
+type GetPerformanceType = GetPerformanceQuery['modelPlan']['opsEvalAndLearning'];
 
 const performanceMockData: GetPerformanceType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -34,7 +37,7 @@ const performanceMockData: GetPerformanceType = {
 const performanceMock = [
   {
     request: {
-      query: GetPerformance,
+      query: GetPerformanceDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
