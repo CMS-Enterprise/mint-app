@@ -20,6 +20,7 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelType,
+  MonitoringFileType,
   StakeholdersType,
   TaskStatus,
   WaiverType
@@ -40,7 +41,6 @@ import {
   FundingSource,
   ModelLearningSystemType,
   ModelStatus,
-  MonitoringFileType,
   NonClaimsBasedPayType,
   OverlapType,
   ParticipantCommunicationType,

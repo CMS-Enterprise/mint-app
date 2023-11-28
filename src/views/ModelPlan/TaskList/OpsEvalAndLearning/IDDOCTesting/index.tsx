@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -13,7 +12,12 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { useUpdatePlanOpsEvalAndLearningMutation } from 'gql/gen/graphql';
+import {
+  GetIddocTestingQuery,
+  MonitoringFileType,
+  useGetIddocTestingQuery,
+  useUpdatePlanOpsEvalAndLearningMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -27,13 +31,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetIDDOCTesting from 'queries/OpsEvalAndLearning/GetIDDOCTesting';
-import {
-  GetIDDOCTesting as GetIDDOCTestingType,
-  GetIDDOCTesting_modelPlan_opsEvalAndLearning as IDDOCTestingFormType,
-  GetIDDOCTestingVariables
-} from 'queries/OpsEvalAndLearning/types/GetIDDOCTesting';
-import { MonitoringFileType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -45,6 +42,8 @@ import {
   renderCurrentPage,
   renderTotalPages
 } from '..';
+
+type IDDOCTestingFormType = GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCTesting = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -63,10 +62,7 @@ const IDDOCTesting = () => {
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetIDDOCTestingType,
-    GetIDDOCTestingVariables
-  >(GetIDDOCTesting, {
+  const { data, loading, error } = useGetIddocTestingQuery({
     variables: {
       id: modelID
     }
@@ -85,7 +81,7 @@ const IDDOCTesting = () => {
     dataMonitoringFileOther,
     dataResponseType,
     dataResponseFileFrequency
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as IDDOCTestingFormType);
+  } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCTestingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 

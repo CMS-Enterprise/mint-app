@@ -2772,6 +2772,13 @@ export type GetIddocMonitoringQueryVariables = Exact<{
 
 export type GetIddocMonitoringQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null } } };
 
+export type GetIddocTestingQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetIddocTestingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null } } };
+
 export type GetOpsEvalAndLearningQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -3936,6 +3943,61 @@ export type GetIddocMonitoringQueryHookResult = ReturnType<typeof useGetIddocMon
 export type GetIddocMonitoringLazyQueryHookResult = ReturnType<typeof useGetIddocMonitoringLazyQuery>;
 export type GetIddocMonitoringSuspenseQueryHookResult = ReturnType<typeof useGetIddocMonitoringSuspenseQuery>;
 export type GetIddocMonitoringQueryResult = Apollo.QueryResult<GetIddocMonitoringQuery, GetIddocMonitoringQueryVariables>;
+export const GetIddocTestingDocument = gql`
+    query GetIDDOCTesting($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    opsEvalAndLearning {
+      id
+      ccmInvolvment
+      dataNeededForMonitoring
+      iddocSupport
+      uatNeeds
+      stcNeeds
+      testingTimelines
+      testingNote
+      dataMonitoringFileTypes
+      dataMonitoringFileOther
+      dataResponseType
+      dataResponseFileFrequency
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetIddocTestingQuery__
+ *
+ * To run a query within a React component, call `useGetIddocTestingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIddocTestingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIddocTestingQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetIddocTestingQuery(baseOptions: Apollo.QueryHookOptions<GetIddocTestingQuery, GetIddocTestingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIddocTestingQuery, GetIddocTestingQueryVariables>(GetIddocTestingDocument, options);
+      }
+export function useGetIddocTestingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIddocTestingQuery, GetIddocTestingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIddocTestingQuery, GetIddocTestingQueryVariables>(GetIddocTestingDocument, options);
+        }
+export function useGetIddocTestingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetIddocTestingQuery, GetIddocTestingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIddocTestingQuery, GetIddocTestingQueryVariables>(GetIddocTestingDocument, options);
+        }
+export type GetIddocTestingQueryHookResult = ReturnType<typeof useGetIddocTestingQuery>;
+export type GetIddocTestingLazyQueryHookResult = ReturnType<typeof useGetIddocTestingLazyQuery>;
+export type GetIddocTestingSuspenseQueryHookResult = ReturnType<typeof useGetIddocTestingSuspenseQuery>;
+export type GetIddocTestingQueryResult = Apollo.QueryResult<GetIddocTestingQuery, GetIddocTestingQueryVariables>;
 export const GetOpsEvalAndLearningDocument = gql`
     query GetOpsEvalAndLearning($id: UUID!) {
   modelPlan(id: $id) {
