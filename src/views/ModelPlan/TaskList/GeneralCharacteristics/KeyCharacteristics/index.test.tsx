@@ -2,12 +2,15 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
-import { GetKeyCharacteristics_modelPlan_generalCharacteristics as GetKeyCharacteristicsType } from 'queries/GeneralCharacteristics/types/GetKeyCharacteristics';
-import { KeyCharacteristic } from 'types/graphql-global-types';
+import {
+  GetKeyCharacteristicsDocument,
+  GetKeyCharacteristicsQuery,
+  KeyCharacteristic
+} from 'gql/gen/graphql';
 
 import KeyCharacteristics from './index';
+
+type GetKeyCharacteristicsType = GetKeyCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 
 const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
@@ -28,7 +31,7 @@ const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
 const keyCharacteristicsMock = [
   {
     request: {
-      query: GetKeyCharacteristics,
+      query: GetKeyCharacteristicsDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

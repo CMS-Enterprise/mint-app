@@ -3,21 +3,35 @@
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
 import {
+  AgreementType,
+  AuthorityAllowance,
   CmmiGroup,
   CmsCenter,
+  FrequencyType,
+  GeographyApplication,
+  GeographyType,
+  KeyCharacteristic,
   ModelCategory,
   ModelType,
-  TaskStatus
+  OverlapType,
+  ParticipantCommunicationType,
+  ParticipantRiskType,
+  ParticipantSelectionType,
+  ParticipantsIdType,
+  ParticipantsType,
+  ProviderAddType,
+  ProviderLeaveType,
+  RecruitmentType,
+  TaskStatus,
+  WaiverType
 } from 'gql/gen/graphql';
 
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 
 import {
   AgencyOrStateHelpType,
-  AgreementType,
   AlternativePaymentModelType,
   AnticipatedPaymentFrequencyType,
-  AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
   CcmInvolvmentType,
@@ -31,32 +45,18 @@ import {
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
-  FrequencyType,
   FundingSource,
-  GeographyApplication,
-  GeographyType,
-  KeyCharacteristic,
   ModelLearningSystemType,
   ModelStatus,
   MonitoringFileType,
   NonClaimsBasedPayType,
-  OverlapType,
-  ParticipantCommunicationType,
-  ParticipantRiskType,
-  ParticipantSelectionType,
-  ParticipantsIDType,
-  ParticipantsType,
   PayRecipient,
   PayType,
-  ProviderAddType,
-  ProviderLeaveType,
-  RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
   TeamRole,
   TriStateAnswer,
-  TrustFundType,
-  WaiverType
+  TrustFundType
 } from './graphql-global-types';
 
 // Util used to preserve type defintions when mapping over keys of object
@@ -241,7 +241,7 @@ export type TranslationParticipantsAndProviders = {
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsNote: TranslationFieldProperties;
-  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIDType>;
+  participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options

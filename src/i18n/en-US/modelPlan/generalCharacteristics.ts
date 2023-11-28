@@ -481,7 +481,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      ACA: '3021 (ACA)',
+      ACA: '3021 Affordable Care Act (ACA)',
       CONGRESSIONALLY_MANDATED: 'Congressionally Mandated Demonstration',
       SSA_PART_B:
         'Section 1833(e) (Part B services) of the Social Security Act',

@@ -98,7 +98,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       data-testid="fieldset"
     >
       <div
-        class="usa-form-group margin-y-4 margin-bottom-8"
+        class="usa-form-group margin-bottom-8"
         data-scroll="providerAdditionFrequency"
       >
         <label
@@ -260,7 +260,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
           How will you decide to add providers? Select all that apply.
         </label>
         <p
-          class="text-base margin-0 line-height-body-3"
+          class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
         >
           Please include details on decision points, timing, and implications of adding them to the model in an additional note.
         </p>
@@ -460,160 +460,165 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
           </button>
         </div>
       </div>
-      <legend
-        class="usa-label"
-      >
-        Can providers leave the model? Select all that apply.
-      </legend>
-      <p
-        class="text-base margin-0 line-height-body-3"
-      >
-        Please include details on decision points, timing, and implications of leaving the model in an additional note.
-      </p>
       <div
-        class="mint-checkbox usa-checkbox"
+        class="usa-form-group margin-top-4"
+        data-scroll="providerLeaveMethod"
       >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="VARIES_BY_TYPE_OF_PROVIDER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+        <legend
+          class="usa-label"
         >
-          It varies by type of provider
-        </label>
+          Can providers leave the model? Select all that apply.
+        </legend>
         <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="NOT_ALLOWED_TO_LEAVE"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
+          class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
         >
-          They are not allowed to leave
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="AFTER_A_CERTAIN_WITH_IMPLICATIONS"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+          Please include details on decision points, timing, and implications of leaving the model in an additional note.
+        </p>
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          They can leave after a certain date but there are implications
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="VOLUNTARILY_WITHOUT_IMPLICATIONS"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
-        >
-          They can leave voluntarily at any time without implications
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-OTHER"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="OTHER"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-OTHER"
-        >
-          Other
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="mint-checkbox usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="participants-and-providers-leave-method-NOT_APPLICABLE"
-          name="providerLeaveMethod"
-          type="checkbox"
-          value="NOT_APPLICABLE"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="participants-and-providers-leave-method-NOT_APPLICABLE"
-        >
-          Not applicable
-        </label>
-        <p
-          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-        />
-      </div>
-      <div
-        class="margin-top-4 margin-bottom-8"
-      >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="VARIES_BY_TYPE_OF_PROVIDER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
           >
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
+            It varies by type of provider
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="NOT_ALLOWED_TO_LEAVE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
+          >
+            They are not allowed to leave
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+          >
+            They can leave after a certain date but there are implications
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="VOLUNTARILY_WITHOUT_IMPLICATIONS"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
+          >
+            They can leave voluntarily at any time without implications
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-OTHER"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-leave-method-NOT_APPLICABLE"
+            name="providerLeaveMethod"
+            type="checkbox"
+            value="NOT_APPLICABLE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-leave-method-NOT_APPLICABLE"
+          >
+            Not applicable
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-top-4 margin-bottom-8"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"

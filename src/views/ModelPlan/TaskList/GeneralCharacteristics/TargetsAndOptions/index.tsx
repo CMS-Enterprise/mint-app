@@ -1,7 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,6 +11,14 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import {
+  AgreementType,
+  GeographyApplication,
+  GeographyType,
+  GetTargetsAndOptionsQuery,
+  useGetTargetsAndOptionsQuery,
+  useUpdatePlanGeneralCharacteristicsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -27,23 +34,12 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import GetTargetsAndOptions from 'queries/GeneralCharacteristics/GetTargetsAndOptions';
-import {
-  GetTargetsAndOptions as GetTargetsAndOptionsType,
-  GetTargetsAndOptions_modelPlan_generalCharacteristics as TargetsAndOptionsFormType,
-  GetTargetsAndOptionsVariables
-} from 'queries/GeneralCharacteristics/types/GetTargetsAndOptions';
-import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
-import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
-import {
-  AgreementType,
-  GeographyApplication,
-  GeographyType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
+
+type TargetsAndOptionsFormType = GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
 
 const TargetsAndOptions = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -68,10 +64,7 @@ const TargetsAndOptions = () => {
   const formikRef = useRef<FormikProps<TargetsAndOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetTargetsAndOptionsType,
-    GetTargetsAndOptionsVariables
-  >(GetTargetsAndOptions, {
+  const { data, loading, error } = useGetTargetsAndOptionsQuery({
     variables: {
       id: modelID
     }
@@ -93,9 +86,8 @@ const TargetsAndOptions = () => {
     agreementTypesOther,
     multiplePatricipationAgreementsNeeded,
     multiplePatricipationAgreementsNeededNote
-  } =
-    data?.modelPlan?.generalCharacteristics ||
-    ({} as TargetsAndOptionsFormType);
+  } = (data?.modelPlan?.generalCharacteristics ||
+    {}) as TargetsAndOptionsFormType;
 
   const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
     need => need.modifiedDts
@@ -104,9 +96,7 @@ const TargetsAndOptions = () => {
   // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
-    UpdatePlanGeneralCharacteristics
-  );
+  const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
   const handleFormSubmit = (redirect?: string) => {
     update({

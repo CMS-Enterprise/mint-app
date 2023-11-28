@@ -2,12 +2,15 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetParticipantsAndProviders from 'queries/ParticipantsAndProviders/GetParticipantsAndProviders';
-import { GetParticipantsAndProviders_modelPlan_participantsAndProviders as GetParticipantsAndProvidersType } from 'queries/ParticipantsAndProviders/types/GetParticipantsAndProviders';
-import { ParticipantsType } from 'types/graphql-global-types';
+import {
+  GetParticipantsAndProvidersDocument,
+  GetParticipantsAndProvidersQuery,
+  ParticipantsType
+} from 'gql/gen/graphql';
 
 import { ParticipantsAndProvidersContent } from './index';
+
+type GetParticipantsAndProvidersType = GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
 
 const participantsAndProvidersMockData: GetParticipantsAndProvidersType = {
   __typename: 'PlanParticipantsAndProviders',
@@ -30,7 +33,7 @@ const participantsAndProvidersMockData: GetParticipantsAndProvidersType = {
 const participantsAndProvidersMock = [
   {
     request: {
-      query: GetParticipantsAndProviders,
+      query: GetParticipantsAndProvidersDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
