@@ -2,15 +2,16 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import getPeopleImpacted from 'queries/Beneficiaries/getPeopleImpacted';
-import { GetPeopleImpacted_modelPlan_beneficiaries as PeopleImpactType } from 'queries/Beneficiaries/types/GetPeopleImpacted';
 import {
   ConfidenceType,
+  GetPeopleImpactedDocument,
+  GetPeopleImpactedQuery,
   SelectionMethodType
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import PeopleImpact from './index';
+
+type PeopleImpactType = GetPeopleImpactedQuery['modelPlan']['beneficiaries'];
 
 const mockData: PeopleImpactType = {
   __typename: 'PlanBeneficiaries',
@@ -29,7 +30,7 @@ const mockData: PeopleImpactType = {
 const beneficiaryMock = [
   {
     request: {
-      query: getPeopleImpacted,
+      query: GetPeopleImpactedDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

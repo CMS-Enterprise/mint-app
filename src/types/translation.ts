@@ -22,6 +22,7 @@ import {
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
+  SelectionMethodType,
   TaskStatus,
   WaiverType
 } from 'gql/gen/graphql';
@@ -52,7 +53,6 @@ import {
   NonClaimsBasedPayType,
   PayRecipient,
   PayType,
-  SelectionMethodType,
   StakeholdersType,
   TeamRole,
   TriStateAnswer,

@@ -2,17 +2,18 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import getFrequency from 'queries/Beneficiaries/getFrequency';
-import { GetFrequency_modelPlan_beneficiaries as BeneficiaryFrequencyType } from 'queries/Beneficiaries/types/GetFrequency';
 import {
   FrequencyType,
+  GetFrequencyDocument,
+  GetFrequencyQuery,
   OperationalNeedKey,
   OverlapType,
   TaskStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import Frequency from './index';
+
+type BeneficiaryFrequencyType = GetFrequencyQuery['modelPlan']['beneficiaries'];
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -38,7 +39,7 @@ const mockData: BeneficiaryFrequencyType = {
 const beneficiaryMock = [
   {
     request: {
-      query: getFrequency,
+      query: GetFrequencyDocument,
       variables: { id: modelID }
     },
     result: {

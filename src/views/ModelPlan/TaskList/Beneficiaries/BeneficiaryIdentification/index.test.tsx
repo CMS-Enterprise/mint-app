@@ -2,12 +2,16 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetBeneficiaryIdentification from 'queries/Beneficiaries/getBeneficiaryIndentification';
-import { GetBeneficiaryIdentification_modelPlan_beneficiaries as GetBeneficiaryIdentificationType } from 'queries/Beneficiaries/types/GetBeneficiaryIdentification';
-import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
+import {
+  BeneficiariesType,
+  GetBeneficiaryIdentificationDocument,
+  GetBeneficiaryIdentificationQuery,
+  TriStateAnswer
+} from 'gql/gen/graphql';
 
 import BeneficiaryIdentification from './index';
+
+type GetBeneficiaryIdentificationType = GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
 
 const mockData: GetBeneficiaryIdentificationType = {
   __typename: 'PlanBeneficiaries',
@@ -27,7 +31,7 @@ const mockData: GetBeneficiaryIdentificationType = {
 const beneficiaryMock = [
   {
     request: {
-      query: GetBeneficiaryIdentification,
+      query: GetBeneficiaryIdentificationDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
