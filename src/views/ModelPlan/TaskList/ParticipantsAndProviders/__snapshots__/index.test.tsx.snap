@@ -110,7 +110,7 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
             data-testid="fieldset"
           >
             <div
-              class="usa-form-group margin-top-4"
+              class="usa-form-group"
               data-scroll="participants"
             >
               <label

@@ -230,7 +230,6 @@ export const ParticipantsAndProvidersContent = () => {
                         <FieldGroup
                           scrollElement="participants"
                           error={!!flatErrors.participants}
-                          className="margin-top-4"
                         >
                           <Label
                             htmlFor="participants-and-providers-participants"

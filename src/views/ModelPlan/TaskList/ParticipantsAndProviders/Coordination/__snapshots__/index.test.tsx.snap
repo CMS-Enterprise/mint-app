@@ -98,7 +98,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
       data-testid="fieldset"
     >
       <div
-        class="usa-form-group margin-y-4 margin-bottom-8"
+        class="usa-form-group margin-bottom-8"
         data-scroll="coordinateWork"
       >
         <label
