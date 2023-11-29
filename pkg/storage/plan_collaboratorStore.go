@@ -57,13 +57,14 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(
+	np NamedPreparer,
 	_ *zap.Logger,
 	collaborator *models.PlanCollaborator,
 ) (*models.PlanCollaborator, error) {
 
 	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
-	stmt, err := s.db.PrepareNamed(planCollaboratorCreateSQL)
+	stmt, err := np.PrepareNamed(planCollaboratorCreateSQL)
 	if err != nil {
 		return nil, err
 	}

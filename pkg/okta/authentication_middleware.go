@@ -201,6 +201,7 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 	userAccount, err := userhelpers.GetOrCreateUserAccount(
 		ctx,
 		f.Store,
+		f.Store,
 		euaID,
 		true,
 		jcMAC,
