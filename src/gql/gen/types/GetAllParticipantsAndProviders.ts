@@ -6,10 +6,10 @@
 import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL query operation: GetAllParticipants
+// GraphQL query operation: GetAllParticipantsAndProviders
 // ====================================================
 
-export interface GetAllParticipants_modelPlan_participantsAndProviders {
+export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
   participants: ParticipantsType[];
@@ -61,16 +61,16 @@ export interface GetAllParticipants_modelPlan_participantsAndProviders {
   status: TaskStatus;
 }
 
-export interface GetAllParticipants_modelPlan {
+export interface GetAllParticipantsAndProviders_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
-  participantsAndProviders: GetAllParticipants_modelPlan_participantsAndProviders;
+  participantsAndProviders: GetAllParticipantsAndProviders_modelPlan_participantsAndProviders;
 }
 
-export interface GetAllParticipants {
-  modelPlan: GetAllParticipants_modelPlan;
+export interface GetAllParticipantsAndProviders {
+  modelPlan: GetAllParticipantsAndProviders_modelPlan;
 }
 
-export interface GetAllParticipantsVariables {
+export interface GetAllParticipantsAndProvidersVariables {
   id: UUID;
 }

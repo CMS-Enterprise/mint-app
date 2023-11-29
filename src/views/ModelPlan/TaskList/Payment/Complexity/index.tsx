@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -16,6 +15,14 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  AnticipatedPaymentFrequencyType,
+  ClaimsBasedPayType,
+  GetComplexityQuery,
+  PayType,
+  useGetComplexityQuery,
+  useUpdatePaymentsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -28,19 +35,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetComplexity from 'queries/Payments/GetComplexity';
-import {
-  GetComplexity as GetComplexityType,
-  GetComplexity_modelPlan_payments as ComplexityFormType,
-  GetComplexityVariables
-} from 'queries/Payments/types/GetComplexity';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
-import {
-  AnticipatedPaymentFrequencyType,
-  ClaimsBasedPayType,
-  PayType
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -48,6 +42,8 @@ import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
+
+type ComplexityFormType = GetComplexityQuery['modelPlan']['payments'];
 
 const Complexity = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -67,10 +63,7 @@ const Complexity = () => {
   const formikRef = useRef<FormikProps<ComplexityFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetComplexityType,
-    GetComplexityVariables
-  >(GetComplexity, {
+  const { data, loading, error } = useGetComplexityQuery({
     variables: {
       id: modelID
     }
@@ -88,11 +81,11 @@ const Complexity = () => {
     anticipatedPaymentFrequency,
     anticipatedPaymentFrequencyOther,
     anticipatedPaymentFrequencyNote
-  } = data?.modelPlan?.payments || ({} as ComplexityFormType);
+  } = (data?.modelPlan?.payments || {}) as ComplexityFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(

@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -14,6 +13,13 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  ClaimsBasedPayType,
+  GetBeneficiaryCostSharingQuery,
+  PayType,
+  useGetBeneficiaryCostSharingQuery,
+  useUpdatePaymentsMutation
+} from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,21 +32,14 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import GetBeneficiaryCostSharing from 'queries/Payments/GetBeneficiaryCostSharing';
-import {
-  GetBeneficiaryCostSharing as GetBeneficiaryCostSharingType,
-  GetBeneficiaryCostSharing_modelPlan_payments as BeneficiaryCostSharingFormType,
-  GetBeneficiaryCostSharingVariables
-} from 'queries/Payments/types/GetBeneficiaryCostSharing';
-import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
-import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
+
+type BeneficiaryCostSharingFormType = GetBeneficiaryCostSharingQuery['modelPlan']['payments'];
 
 const BeneficiaryCostSharing = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -59,10 +58,7 @@ const BeneficiaryCostSharing = () => {
   const formikRef = useRef<FormikProps<BeneficiaryCostSharingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<
-    GetBeneficiaryCostSharingType,
-    GetBeneficiaryCostSharingVariables
-  >(GetBeneficiaryCostSharing, {
+  const { data, loading, error } = useGetBeneficiaryCostSharingQuery({
     variables: {
       id: modelID
     }
@@ -77,11 +73,11 @@ const BeneficiaryCostSharing = () => {
     waiveBeneficiaryCostSharingServiceSpecification,
     waiverOnlyAppliesPartOfPayment,
     waiveBeneficiaryCostSharingNote
-  } = data?.modelPlan?.payments || ({} as BeneficiaryCostSharingFormType);
+  } = (data?.modelPlan?.payments || {}) as BeneficiaryCostSharingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [update] = useUpdatePaymentsMutation();
 
   const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
