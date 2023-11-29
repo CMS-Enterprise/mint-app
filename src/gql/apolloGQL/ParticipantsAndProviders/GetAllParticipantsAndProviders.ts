@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export default gql`
-  query GetAllParticipants($id: UUID!) {
+export default gql(/* GraphQL */ `
+  query GetAllParticipantsAndProviders($id: UUID!) {
     modelPlan(id: $id) {
       id
       participantsAndProviders {
@@ -56,4 +56,4 @@ export default gql`
       }
     }
   }
-`;
+`);

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
+import {
+  DataStartsType,
+  useGetAllOpsEvalAndLearningQuery
+} from 'gql/gen/graphql';
 
-import GettAllOpsEvalAndLearning from 'queries/ReadOnly/GettAllOpsEvalAndLearning';
-import { GetAllOpsEvalAndLearning as AllOpsEvalAndLeardningTypes } from 'queries/ReadOnly/types/GetAllOpsEvalAndLearning';
-import { DataStartsType } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import {
@@ -35,14 +35,11 @@ const ReadOnlyOpsEvalAndLearning = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<AllOpsEvalAndLeardningTypes>(
-    GettAllOpsEvalAndLearning,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetAllOpsEvalAndLearningQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;

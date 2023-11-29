@@ -1,21 +1,3 @@
-import { TrustFundType } from 'gql/gen/graphql';
-
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
-import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
-import GetAllBeneficiaries from 'queries/ReadOnly/GetAllBeneficiaries';
-import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
-import GetAllParticipants from 'queries/ReadOnly/GetAllParticipants';
-import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
-import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
-import GetAllOpsEvalAndLearning from 'queries/ReadOnly/GettAllOpsEvalAndLearning';
-import { GetAllBasics_modelPlan_basics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
-import { GetAllBeneficiaries_modelPlan_beneficiaries as AllBeneficiariesTypes } from 'queries/ReadOnly/types/GetAllBeneficiaries';
-import { GetAllGeneralCharacteristics_modelPlan_generalCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
-import { GetAllOpsEvalAndLearning_modelPlan_opsEvalAndLearning as AllOpsEvalAndLearningTypes } from 'queries/ReadOnly/types/GetAllOpsEvalAndLearning';
-import { GetAllParticipants_modelPlan_participantsAndProviders as GetAllParticipantsTypes } from 'queries/ReadOnly/types/GetAllParticipants';
-import { GetAllPayments_modelPlan_payments as PaymentTypes } from 'queries/ReadOnly/types/GetAllPayments';
-import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 import {
   AgencyOrStateHelpType,
   AgreementType,
@@ -26,8 +8,8 @@ import {
   BeneficiariesType,
   CcmInvolvmentType,
   ClaimsBasedPayType,
-  CMMIGroup,
-  CMSCenter,
+  CmmiGroup,
+  CmsCenter,
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
@@ -41,6 +23,18 @@ import {
   FundingSource,
   GeographyApplication,
   GeographyType,
+  GetAllBasicsDocument,
+  GetAllBasicsQuery,
+  GetAllBeneficiariesDocument,
+  GetAllBeneficiariesQuery,
+  GetAllGeneralCharacteristicsDocument,
+  GetAllGeneralCharacteristicsQuery,
+  GetAllOpsEvalAndLearningDocument,
+  GetAllOpsEvalAndLearningQuery,
+  GetAllParticipantsAndProvidersDocument,
+  GetAllParticipantsAndProvidersQuery,
+  GetAllPaymentsDocument,
+  GetAllPaymentsQuery,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -52,7 +46,7 @@ import {
   ParticipantCommunicationType,
   ParticipantRiskType,
   ParticipantSelectionType,
-  ParticipantsIDType,
+  ParticipantsIdType,
   ParticipantsType,
   PayRecipient,
   PayType,
@@ -64,10 +58,23 @@ import {
   TaskStatus,
   TeamRole,
   TriStateAnswer,
+  TrustFundType,
   WaiverType
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
+
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
+import { GetModelCollaborators_modelPlan_collaborators as GetModelCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
+import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
+
+type GetAllBasicsTypes = GetAllBasicsQuery['modelPlan']['basics'];
+type GetAllGeneralCharacteristicsTypes = GetAllGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+type GetAllParticipantsTypes = GetAllParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
+type AllBeneficiariesTypes = GetAllBeneficiariesQuery['modelPlan']['beneficiaries'];
+type AllOpsEvalAndLearningTypes = GetAllOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
+type PaymentTypes = GetAllPaymentsQuery['modelPlan']['payments'];
 
 const modelBasicsData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
@@ -76,11 +83,11 @@ const modelBasicsData: GetAllBasicsTypes = {
   amsModelID: '43532323',
   modelCategory: ModelCategory.STATE_BASED,
   additionalModelCategories: [ModelCategory.ACCOUNTABLE_CARE],
-  cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
+  cmsCenters: [CmsCenter.CENTER_FOR_MEDICARE, CmsCenter.OTHER],
   cmsOther: 'The Center for Awesomeness',
   cmmiGroups: [
-    CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,
-    CMMIGroup.POLICY_AND_PROGRAMS_GROUP
+    CmmiGroup.STATE_AND_POPULATION_HEALTH_GROUP,
+    CmmiGroup.POLICY_AND_PROGRAMS_GROUP
   ],
   modelType: ModelType.MANDATORY,
   problem: 'There is not enough candy',
@@ -105,7 +112,7 @@ const modelBasicsData: GetAllBasicsTypes = {
 export const modelBasicsMocks = [
   {
     request: {
-      query: GetAllBasics,
+      query: GetAllBasicsDocument,
       variables: { id: modelID }
     },
     result: {
@@ -190,7 +197,7 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
 export const generalCharacteristicMocks = [
   {
     request: {
-      query: GetAllGeneralCharacteristics,
+      query: GetAllGeneralCharacteristicsDocument,
       variables: { id: modelID }
     },
     result: {
@@ -251,7 +258,7 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   gainsharePayments: true,
   gainsharePaymentsTrack: true,
   gainsharePaymentsNote: 'Track note',
-  participantsIds: [ParticipantsIDType.CCNS],
+  participantsIds: [ParticipantsIdType.CCNS],
   participantsIdsOther: 'PArt ids other',
   participantsIDSNote: 'Note for particpants',
   providerAdditionFrequency: FrequencyType.BIANNUALLY,
@@ -272,7 +279,7 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
 export const participantsAndProvidersMocks = [
   {
     request: {
-      query: GetAllParticipants,
+      query: GetAllParticipantsAndProvidersDocument,
       variables: { id: modelID }
     },
     result: {
@@ -322,7 +329,7 @@ const beneficiaryData: AllBeneficiariesTypes = {
 export const benficiaryMocks = [
   {
     request: {
-      query: GetAllBeneficiaries,
+      query: GetAllBeneficiariesDocument,
       variables: { id: modelID }
     },
     result: {
@@ -468,7 +475,7 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
 export const opsEvalAndLearningMocks = [
   {
     request: {
-      query: GetAllOpsEvalAndLearning,
+      query: GetAllOpsEvalAndLearningDocument,
       variables: { id: modelID }
     },
     result: {
@@ -551,7 +558,7 @@ const paymentsData: PaymentTypes = {
 export const paymentsMocks = [
   {
     request: {
-      query: GetAllPayments,
+      query: GetAllPaymentsDocument,
       variables: { id: modelID }
     },
     result: {
