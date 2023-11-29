@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
-
-import GetAllBeneficiaries from 'queries/ReadOnly/GetAllBeneficiaries';
-import { GetAllBeneficiaries as AllBeneficiariesTypes } from 'queries/ReadOnly/types/GetAllBeneficiaries';
 import {
   BeneficiariesType,
   FrequencyType,
-  TriStateAnswer
-} from 'types/graphql-global-types';
+  TriStateAnswer,
+  useGetAllBeneficiariesQuery
+} from 'gql/gen/graphql';
+
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -32,14 +30,11 @@ const ReadOnlyBeneficiaries = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<AllBeneficiariesTypes>(
-    GetAllBeneficiaries,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetAllBeneficiariesQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
