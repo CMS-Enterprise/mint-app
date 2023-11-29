@@ -87,8 +87,6 @@ const (
 	NonClaimsBasedPaymentTypeCareCoordinationManagementFee NonClaimsBasedPaymentType = "CARE_COORDINATION_MANAGEMENT_FEE"
 	// NonClaimsBasedPaymentTypeGlobalBudget indicates global budget
 	NonClaimsBasedPaymentTypeGlobalBudget NonClaimsBasedPaymentType = "GLOBAL_BUDGET"
-	// NonClaimsBasedPaymentTypeGrants indicates grants
-	NonClaimsBasedPaymentTypeGrants NonClaimsBasedPaymentType = "GRANTS"
 	// NonClaimsBasedPaymentTypeIncentivePayment indicates incentive payment
 	NonClaimsBasedPaymentTypeIncentivePayment NonClaimsBasedPaymentType = "INCENTIVE_PAYMENT"
 	// NonClaimsBasedPaymentTypeMAPDSharedSavings indicates MAPD shared savings

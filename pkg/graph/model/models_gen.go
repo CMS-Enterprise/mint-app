@@ -1308,7 +1308,6 @@ const (
 	NonClaimsBasedPayTypeCapitationPopulationBasedPartial NonClaimsBasedPayType = "CAPITATION_POPULATION_BASED_PARTIAL"
 	NonClaimsBasedPayTypeCareCoordinationManagementFee    NonClaimsBasedPayType = "CARE_COORDINATION_MANAGEMENT_FEE"
 	NonClaimsBasedPayTypeGlobalBudget                     NonClaimsBasedPayType = "GLOBAL_BUDGET"
-	NonClaimsBasedPayTypeGrants                           NonClaimsBasedPayType = "GRANTS"
 	NonClaimsBasedPayTypeIncentivePayment                 NonClaimsBasedPayType = "INCENTIVE_PAYMENT"
 	NonClaimsBasedPayTypeMapdSharedSavings                NonClaimsBasedPayType = "MAPD_SHARED_SAVINGS"
 	NonClaimsBasedPayTypeSharedSavings                    NonClaimsBasedPayType = "SHARED_SAVINGS"
@@ -1322,7 +1321,6 @@ var AllNonClaimsBasedPayType = []NonClaimsBasedPayType{
 	NonClaimsBasedPayTypeCapitationPopulationBasedPartial,
 	NonClaimsBasedPayTypeCareCoordinationManagementFee,
 	NonClaimsBasedPayTypeGlobalBudget,
-	NonClaimsBasedPayTypeGrants,
 	NonClaimsBasedPayTypeIncentivePayment,
 	NonClaimsBasedPayTypeMapdSharedSavings,
 	NonClaimsBasedPayTypeSharedSavings,
@@ -1331,7 +1329,7 @@ var AllNonClaimsBasedPayType = []NonClaimsBasedPayType{
 
 func (e NonClaimsBasedPayType) IsValid() bool {
 	switch e {
-	case NonClaimsBasedPayTypeAdvancedPayment, NonClaimsBasedPayTypeBundledEpisodeOfCare, NonClaimsBasedPayTypeCapitationPopulationBasedFull, NonClaimsBasedPayTypeCapitationPopulationBasedPartial, NonClaimsBasedPayTypeCareCoordinationManagementFee, NonClaimsBasedPayTypeGlobalBudget, NonClaimsBasedPayTypeGrants, NonClaimsBasedPayTypeIncentivePayment, NonClaimsBasedPayTypeMapdSharedSavings, NonClaimsBasedPayTypeSharedSavings, NonClaimsBasedPayTypeOther:
+	case NonClaimsBasedPayTypeAdvancedPayment, NonClaimsBasedPayTypeBundledEpisodeOfCare, NonClaimsBasedPayTypeCapitationPopulationBasedFull, NonClaimsBasedPayTypeCapitationPopulationBasedPartial, NonClaimsBasedPayTypeCareCoordinationManagementFee, NonClaimsBasedPayTypeGlobalBudget, NonClaimsBasedPayTypeIncentivePayment, NonClaimsBasedPayTypeMapdSharedSavings, NonClaimsBasedPayTypeSharedSavings, NonClaimsBasedPayTypeOther:
 		return true
 	}
 	return false
