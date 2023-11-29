@@ -180,6 +180,8 @@ export const payments: TranslationPayments = {
     options: {
       ADJUSTMENTS_TO_FFS_PAYMENTS: 'Adjustments to FFS payments',
       CARE_MANAGEMENT_HOME_VISITS: 'Payments for care management home visits',
+      PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS:
+        'Payments for post-discharge home visits',
       REDUCTIONS_TO_BENEFICIARY_COST_SHARING:
         'Reductions to beneficiary cost-sharing',
       SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS:
