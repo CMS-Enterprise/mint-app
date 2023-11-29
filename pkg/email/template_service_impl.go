@@ -118,6 +118,15 @@ var sendFeedbackBodyTemplate string
 //go:embed templates/send_feedback_subject.html
 var sendFeedbackSubjectTemplate string
 
+// SolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
+const SolutionSelectedTemplateName string = "solution_selected"
+
+//go:embed templates/solution_selected_body.html
+var solutionSelectedBodyTemplate string
+
+//go:embed templates/solution_selected_subject.html
+var solutionSelectedSubjectTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
@@ -191,6 +200,11 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(SendFeedbackTemplateName, sendFeedbackSubjectTemplate, sendFeedbackBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(SolutionSelectedTemplateName, solutionSelectedSubjectTemplate, solutionSelectedBodyTemplate)
 	if err != nil {
 		return err
 	}

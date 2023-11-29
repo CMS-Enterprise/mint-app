@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -24,9 +25,9 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	changes := map[string]interface{}{
 		"nameOther": "AnotherSolution",
 	}
-	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 	changes["nameOther"] = "AnotherSolution Again"
-	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 
 	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
@@ -37,7 +38,7 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	suite.Len(opSols, 3) //We now have the possible need that is not needed
 
 	//INSERt the possible and return only needed types, verify it still returns 3
-	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solType, nil, suite.testConfigs.Principal)
 
 	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
@@ -46,9 +47,9 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	//2. Get possible solutions for a custom type
 	need, _ = OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, "Testing custom need types", true, suite.testConfigs.Principal, suite.testConfigs.Store)
 	changes["nameOther"] = "Yet AnotherSolution Again"
-	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 	changes["nameOther"] = "Yet AnotherSolution Again"
-	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 
 	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
@@ -130,12 +131,12 @@ func (suite *ResolverSuite) TestOperationalSolutionIsCommonLogic() {
 	changes := map[string]interface{}{}
 	changes["needed"] = false
 
-	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solTypeCommon, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solTypeCommon, changes, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.NotNil(sol)
 	suite.True(*sol.IsCommonSolution)
 
-	sol2, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solTypeUnCommon, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol2, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solTypeUnCommon, changes, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.NotNil(sol2)
 	suite.False(*sol2.IsCommonSolution)
@@ -154,7 +155,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	changes["needed"] = false
 	defStatus := models.OpSNotStarted
 
-	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solType, changes, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.NotNil(sol)
 
@@ -221,7 +222,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	changes["nameOther"] = solTypeCustom
 	defStatus := models.OpSNotStarted
 
-	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.NotNil(sol)
 
@@ -289,7 +290,7 @@ func (suite *ResolverSuite) TestOperationalSolutionCustomUpdateByID() {
 	changes := map[string]interface{}{}
 	changes["nameOther"] = solTypeCustom
 
-	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.NotNil(sol)
 	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Account().ID)
@@ -322,7 +323,7 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByID() {
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
 	suite.NoError(err)
 
-	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solType, nil, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.NotNil(sol)
 	solGet, err := OperationalSolutionGetByID(suite.testConfigs.Logger, sol.ID, suite.testConfigs.Store)
