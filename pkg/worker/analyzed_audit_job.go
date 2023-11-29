@@ -34,7 +34,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 		return err
 	}
 
-	mp, err := w.Store.ModelPlanGetByID(w.Logger, modelPlanID)
+	mp, err := w.Store.ModelPlanGetByID(w.Store, w.Logger, modelPlanID)
 	if err != nil {
 		return err
 	}
@@ -259,7 +259,7 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 				return models.AnalyzedModelLeadInfo{}, false
 			}
 
-			account, _ := store.UserAccountGetByID(id) //TODO should we handle the error? I think null is ok if can't get the account
+			account, _ := store.UserAccountGetByID(store, id) //TODO should we handle the error? I think null is ok if can't get the account
 
 			return models.AnalyzedModelLeadInfo{
 				ID:         id,

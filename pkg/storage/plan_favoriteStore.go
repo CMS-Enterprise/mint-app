@@ -27,13 +27,13 @@ var planFavoriteGetCollectionByUserIDSQL string
 var planFavoriteGetUniqueUserIDsSQL string
 
 // PlanFavoriteCreate creates and returns a plan favorite object
-func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteCreate(np NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()
 	}
 
-	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL) // TODO: Look to refactor this SQL to make it clearer
+	stmt, err := np.PrepareNamed(planFavoriteCreateSQL) // TODO: Look to refactor this SQL to make it clearer
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create plan favorite with error %s", err),

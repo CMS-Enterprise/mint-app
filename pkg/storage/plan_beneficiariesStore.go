@@ -52,13 +52,14 @@ func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
 
 // PlanBeneficiariesCreate creates a new plan benficiaries object
 func (s *Store) PlanBeneficiariesCreate(
+	np NamedPreparer,
 	logger *zap.Logger,
 	b *models.PlanBeneficiaries,
 ) (*models.PlanBeneficiaries, error) {
 
 	b.ID = utilityUUID.ValueOrNewUUID(b.ID)
 
-	stmt, err := s.db.PrepareNamed(planBeneficiariesCreateSQL)
+	stmt, err := np.PrepareNamed(planBeneficiariesCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, b)
 	}

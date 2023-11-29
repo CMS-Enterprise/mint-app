@@ -2,16 +2,17 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import GetNonClaimsBasedPayment from 'queries/Payments/GetNonClaimsBasedPayment';
-import { GetNonClaimsBasedPayment_modelPlan_payments as GetNonClaimsBasedPaymentType } from 'queries/Payments/types/GetNonClaimsBasedPayment';
 import {
   ClaimsBasedPayType,
+  GetNonClaimsBasedPaymentDocument,
+  GetNonClaimsBasedPaymentQuery,
   NonClaimsBasedPayType,
   PayType
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import NonClaimsBasedPayment from './index';
+
+type GetNonClaimsBasedPaymentType = GetNonClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const mockData: GetNonClaimsBasedPaymentType = {
   __typename: 'PlanPayments',
@@ -33,7 +34,7 @@ const mockData: GetNonClaimsBasedPaymentType = {
 const paymentsMock = [
   {
     request: {
-      query: GetNonClaimsBasedPayment,
+      query: GetNonClaimsBasedPaymentDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

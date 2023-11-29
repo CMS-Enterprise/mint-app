@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -21,9 +22,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// ModelPlanCreate implements resolver logic to create a model plan
-// TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
-// so that we can roll back if there is an error with any of these calls.
+// ModelPlanCreate implements resolver logic to create a model plan, and send relevant notifications about it's creation
+// It also creates a record for all the task list items at the same time.
+// It utilizes transactions to ensure that the data can be rolled back if there is an error at any point along the way.
 func ModelPlanCreate(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -35,91 +36,102 @@ func ModelPlanCreate(
 	principal authentication.Principal,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.ModelPlan, error) {
-	plan := models.NewModelPlan(principal.Account().ID, modelName)
 
-	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
-	if err != nil {
-		return nil, err
-	}
+	newPlan, err := storage.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+		plan := models.NewModelPlan(principal.Account().ID, modelName)
 
-	// Create the model plan itself
-	createdPlan, err := store.ModelPlanCreate(logger, plan)
-	if err != nil {
-		return nil, err
-	}
-	userAccount := principal.Account()
+		err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
+		if err != nil {
+			return nil, err
+		}
 
-	// Create an initial collaborator for the plan
-	_, _, err = CreatePlanCollaborator(
-		ctx,
-		logger,
-		nil,
-		nil,
-		email.AddressBook{},
-		&model.PlanCollaboratorCreateInput{
-			ModelPlanID: plan.ID,
-			UserName:    *userAccount.Username,
-			TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
-		},
-		principal,
-		store,
-		false,
-		getAccountInformation,
-	)
-	if err != nil {
-		return nil, err
-	}
+		userAccount := principal.Account()
 
-	baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
+		createdPlan, err := store.ModelPlanCreate(tx, logger, plan)
 
-	// Create a default plan basics object
-	basics := models.NewPlanBasics(baseTaskListUser)
+		if err != nil {
+			return nil, err
+		}
 
-	_, err = store.PlanBasicsCreate(logger, basics)
-	if err != nil {
-		return nil, err
-	}
+		baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
-	// Create a default plan general characteristics object
-	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
+		// Create a default plan basics object
 
-	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
-	if err != nil {
-		return nil, err
-	}
-	// Create a default Plan Beneficiares object
-	beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
+		basics := models.NewPlanBasics(baseTaskListUser)
+		_, err = store.PlanBasicsCreate(tx, logger, basics)
+		if err != nil {
+			return nil, err
+		}
 
-	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
-	if err != nil {
-		return nil, err
-	}
-	//Create a default Plan Participants and Providers object
-	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
+		// Create a default plan general characteristics object
+		generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
 
-	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
-	if err != nil {
-		return nil, err
-	}
+		_, err = store.PlanGeneralCharacteristicsCreate(tx, logger, generalCharacteristics)
+		if err != nil {
+			return nil, err
+		}
+		// Create a default Plan Beneficiares object
+		beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
 
-	//Create default Plan OpsEvalAndLearning object
-	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
+		_, err = store.PlanBeneficiariesCreate(tx, logger, beneficiaries)
+		if err != nil {
+			return nil, err
+		}
 
-	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
-	if err != nil {
-		return nil, err
-	}
+		//Create a default Plan Participants and Providers object
+		participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
 
-	//Create default PlanPayments object
-	planPayments := models.NewPlanPayments(baseTaskListUser)
+		_, err = store.PlanParticipantsAndProvidersCreate(tx, logger, participantsAndProviders)
+		if err != nil {
+			return nil, err
+		}
 
-	_, err = store.PlanPaymentsCreate(logger, planPayments)
-	if err != nil {
-		return nil, err
-	}
+		//Create default Plan OpsEvalAndLearning object
+		opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
 
-	//Create default Operational Needs
-	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.Account().ID)
+		_, err = store.PlanOpsEvalAndLearningCreate(tx, logger, opsEvalAndLearning)
+		if err != nil {
+			return nil, err
+		}
+
+		//Create default PlanPayments object
+		planPayments := models.NewPlanPayments(baseTaskListUser)
+
+		_, err = store.PlanPaymentsCreate(tx, logger, planPayments)
+		if err != nil {
+			return nil, err
+		}
+
+		//Create default Operational Needs
+		_, err = store.OperationalNeedInsertAllPossible(tx, logger, createdPlan.ID, principal.Account().ID)
+		if err != nil {
+			return nil, err
+		}
+
+		// Create an initial collaborator for the plan
+		_, _, err = CreatePlanCollaborator(
+			ctx,
+			tx,
+			store,
+			logger,
+			nil,
+			nil,
+			email.AddressBook{},
+			&model.PlanCollaboratorCreateInput{
+				ModelPlanID: createdPlan.ID,
+				UserName:    *userAccount.Username,
+				TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
+			},
+			principal,
+			false,
+			getAccountInformation,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		return createdPlan, nil
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -132,18 +144,18 @@ func ModelPlanCreate(
 				emailTemplateService,
 				addressBook,
 				addressBook.MINTTeamEmail,
-				createdPlan,
+				newPlan,
 			)
 			if sendEmailErr != nil {
 				logger.Error("failed to send model plan created email to dev team", zap.String(
 					"createdPlanID",
-					createdPlan.ID.String(),
+					newPlan.ID.String(),
 				), zap.Error(sendEmailErr))
 			}
 		}()
 	}
 
-	return createdPlan, err
+	return newPlan, err
 }
 
 func sendModelPlanCreatedEmail(
@@ -186,7 +198,7 @@ func sendModelPlanCreatedEmail(
 // ModelPlanUpdate implements resolver logic to update a model plan
 func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.ModelPlan, error) {
 	// Get existing plan
-	existingPlan, err := store.ModelPlanGetByID(logger, id)
+	existingPlan, err := store.ModelPlanGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +218,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 
 // ModelPlanGetByID implements resolver logic to get a model plan by its ID
 func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.ModelPlan, error) {
-	plan, err := store.ModelPlanGetByID(logger, id)
+	plan, err := store.ModelPlanGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +308,7 @@ func ModelPlanShare(
 	optionalMessage *string,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (bool, error) {
-	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
+	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		return false, err
 	}
@@ -311,6 +323,7 @@ func ModelPlanShare(
 	for i, username := range usernames {
 		collabAccount, err := userhelpers.GetOrCreateUserAccount(
 			ctx,
+			store,
 			store,
 			username,
 			false,
