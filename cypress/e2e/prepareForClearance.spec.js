@@ -9,7 +9,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
       aliasQuery(req, 'GetModelPlan');
       aliasQuery(req, 'GetClearanceStatuses');
       aliasQuery(req, 'GetAllBasics');
-      aliasQuery(req, 'GetAllParticipants');
+      aliasQuery(req, 'GetAllParticipantsAndProviders');
       aliasQuery(req, 'GetAllOpsEvalAndLearning');
     });
   });
@@ -105,7 +105,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
 
     cy.get('[data-testid="clearance-participantsAndProviders"]').click();
 
-    cy.wait(['@GetClearanceStatuses', '@GetAllParticipants'])
+    cy.wait(['@GetClearanceStatuses', '@GetAllParticipantsAndProviders'])
       .then(verifyStatus)
       .wait(500);
 

@@ -1,15 +1,13 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
-
-import GetAllParticipants from 'queries/ReadOnly/GetAllParticipants';
-import { GetAllParticipants as GetAllParticipantsTypes } from 'queries/ReadOnly/types/GetAllParticipants';
 import {
   FrequencyType,
   OverlapType,
   ParticipantsType,
-  RecruitmentType
-} from 'types/graphql-global-types';
+  RecruitmentType,
+  useGetAllParticipantsAndProvidersQuery
+} from 'gql/gen/graphql';
+
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -36,14 +34,11 @@ const ReadOnlyParticipantsAndProviders = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<GetAllParticipantsTypes>(
-    GetAllParticipants,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetAllParticipantsAndProvidersQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
