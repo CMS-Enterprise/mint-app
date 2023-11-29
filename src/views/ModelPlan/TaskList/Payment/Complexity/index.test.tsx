@@ -2,9 +2,8 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { GetComplexityDocument, GetComplexityQuery } from 'gql/gen/graphql';
 
-import GetComplexity from 'queries/Payments/GetComplexity';
-import { GetComplexity_modelPlan_payments as GetComplexityType } from 'queries/Payments/types/GetComplexity';
 import {
   AnticipatedPaymentFrequencyType,
   ClaimsBasedPayType,
@@ -13,6 +12,8 @@ import {
 } from 'types/graphql-global-types';
 
 import ClaimsBasedPayment from './index';
+
+type GetComplexityType = GetComplexityQuery['modelPlan']['payments'];
 
 const mockData: GetComplexityType = {
   __typename: 'PlanPayments',
@@ -32,7 +33,7 @@ const mockData: GetComplexityType = {
 const paymentsMock = [
   {
     request: {
-      query: GetComplexity,
+      query: GetComplexityDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

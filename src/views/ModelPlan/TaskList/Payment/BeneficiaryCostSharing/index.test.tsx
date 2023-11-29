@@ -2,12 +2,16 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import {
+  GetBeneficiaryCostSharingDocument,
+  GetBeneficiaryCostSharingQuery
+} from 'gql/gen/graphql';
 
-import GetBeneficiaryCostSharing from 'queries/Payments/GetBeneficiaryCostSharing';
-import { GetBeneficiaryCostSharing_modelPlan_payments as GetBeneficiaryCostSharingType } from 'queries/Payments/types/GetBeneficiaryCostSharing';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 
 import BeneficiaryCostSharing from './index';
+
+type GetBeneficiaryCostSharingType = GetBeneficiaryCostSharingQuery['modelPlan']['payments'];
 
 const mockData: GetBeneficiaryCostSharingType = {
   __typename: 'PlanPayments',
@@ -24,7 +28,7 @@ const mockData: GetBeneficiaryCostSharingType = {
 const paymentsMock = [
   {
     request: {
-      query: GetBeneficiaryCostSharing,
+      query: GetBeneficiaryCostSharingDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
