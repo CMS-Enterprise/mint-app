@@ -1,0 +1,1 @@
+ALTER TABLE plan_general_characteristics DROP COLUMN existing_model;
