@@ -8,10 +8,10 @@ import (
 	"strings"
 
 	"github.com/99designs/gqlgen/graphql/handler/transport"
+	"github.com/launchdarkly/go-sdk-common/v3/ldcontext"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	jwtverifier "github.com/okta/okta-jwt-verifier-golang"
 	"go.uber.org/zap"
-	"gopkg.in/launchdarkly/go-sdk-common.v2/lduser"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/apperrors"
@@ -174,13 +174,13 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 	// NOTE: This is copied pkg flags.Principal(). That function couldn't be used here because it
 	// actually depends on tha authentication.ApplicationPrincipal
 	key := flags.UserKeyForID(euaID)
-	ldUser := lduser.
-		NewUserBuilder(key).
+	ldContext := ldcontext.
+		NewBuilder(key).
 		Anonymous(false).
 		Build()
 
 	// Fetch whether or not we should downgrade the assessment team job code, and properly downgrade if necessary
-	downgradeAssessment, err := f.ldClient.BoolVariation(flags.DowngradeAssessmentTeamKey, ldUser, false)
+	downgradeAssessment, err := f.ldClient.BoolVariation(flags.DowngradeAssessmentTeamKey, ldContext, false)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +189,7 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 	}
 
 	// Fetch whether or not we should downgrade the non-CMS job code, and properly downgrade if necessary
-	downgradeNonCMS, err := f.ldClient.BoolVariation(flags.DowngradeNonCMSKey, ldUser, false)
+	downgradeNonCMS, err := f.ldClient.BoolVariation(flags.DowngradeNonCMSKey, ldContext, false)
 	if err != nil {
 		return nil, err
 	}

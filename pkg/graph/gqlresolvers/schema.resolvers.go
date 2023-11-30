@@ -821,9 +821,9 @@ func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Contex
 
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
-	ldUser := flags.Principal(ctx)
-	userKey := ldUser.GetKey()
-	signedHash := r.ldClient.SecureModeHash(ldUser)
+	ldContext := flags.Principal(ctx)
+	userKey := ldContext.Key()
+	signedHash := r.ldClient.SecureModeHash(ldContext)
 
 	currentUser := model.CurrentUser{
 		LaunchDarkly: &model.LaunchDarklySettings{
