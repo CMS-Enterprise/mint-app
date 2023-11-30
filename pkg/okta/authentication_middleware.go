@@ -173,7 +173,7 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 	// Create a LaunchDarkly user
 	// NOTE: This is copied pkg flags.Principal(). That function couldn't be used here because it
 	// actually depends on tha authentication.ApplicationPrincipal
-	key := flags.UserKeyForID(euaID)
+	key := flags.ContextKeyForID(euaID)
 	ldContext := ldcontext.
 		NewBuilder(key).
 		Anonymous(false).
