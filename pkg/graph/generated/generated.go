@@ -7537,7 +7537,6 @@ https://gqlgen.com/reference/changesets/
 input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   isNewModel: Boolean
-  existingModel: String
   currentModelPlanID: UUID
   existingModelID: Int
   resemblesExistingModel: Boolean
