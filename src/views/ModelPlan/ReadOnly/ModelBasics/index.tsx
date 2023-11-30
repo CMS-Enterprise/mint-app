@@ -1,6 +1,5 @@
 import React, { Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import {
   Grid,
   Icon,
@@ -10,14 +9,12 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { ModelCategory, useGetAllBasicsQuery } from 'gql/gen/graphql';
 
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
-import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
-import { ModelCategory } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -56,7 +53,7 @@ const ReadOnlyModelBasics = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<GetAllBasicsTypes>(GetAllBasics, {
+  const { data, loading, error } = useGetAllBasicsQuery({
     variables: {
       id: modelID
     }

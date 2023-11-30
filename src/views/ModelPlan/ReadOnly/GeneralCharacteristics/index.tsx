@@ -1,10 +1,10 @@
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
+import {
+  KeyCharacteristic,
+  useGetAllGeneralCharacteristicsQuery
+} from 'gql/gen/graphql';
 
-import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
-import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
-import { KeyCharacteristic } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -31,14 +31,11 @@ const ReadOnlyGeneralCharacteristics = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<GetAllGeneralCharacteristicsTypes>(
-    GetAllGeneralCharacteristics,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetAllGeneralCharacteristicsQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const mappedExistingModels: (string | number)[] = useMemo(() => {
     return (
