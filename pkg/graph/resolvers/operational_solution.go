@@ -40,14 +40,14 @@ func OperationalSolutionCreate(
 	}
 
 	// Send an email to the selected POCs
-	go func() {
-		sendEmailErr := sendSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
-		if sendEmailErr != nil {
-			logger.Error("error sending solution selected emails",
-				zap.String("solutionID", sol.ID.String()),
-				zap.Error(sendEmailErr))
-		}
-	}()
+	// go func() { // TODO: SW make this asyn
+	sendEmailErr := sendSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
+	if sendEmailErr != nil {
+		logger.Error("error sending solution selected emails",
+			zap.String("solutionID", sol.ID.String()),
+			zap.Error(sendEmailErr))
+	}
+	// }()
 	return sol, err
 
 }
@@ -130,17 +130,31 @@ func sendSolutionSelectedEmails(
 	if err != nil {
 		return err
 	}
-	pocEmailAddress := []string{}
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, opNeed.ModelPlanID)
+	if err != nil {
+		return err
+	}
+	pocEmailAddress := []string{"test@test.test"}
 	modelLeadNames := []string{}
-	filterViewLink := "TODO: SW" + posSol.Name // TODO add filterview to the possible solution table.
+	filterViewLink := posSol.FilterView.ValueOrEmpty() // TODO add filterview to the possible solution table.
+
+	modelStartDate := ""
+	if basics.PerformancePeriodStarts != nil {
+		modelStartDate = basics.PerformancePeriodStarts.String()
+	}
 
 	err = sendSolutionSelectedForUseByModelEmail(
 		emailService,
 		emailTemplateService,
 		addressBook,
-		operationalSolution,
-		opNeed,
-		modelPlan,
+		models.ValueOrEmpty(operationalSolution.Name),
+		operationalSolution.Status.Humanize(), // TODO: SW Verify the humanized Statuses
+		models.ValueOrEmpty(opNeed.Name),
+		modelPlan.ModelName,
+		modelPlan.ID.String(),
+		models.ValueOrEmpty(modelPlan.Abbreviation),
+		modelPlan.Status.Humanize(),
+		modelStartDate,
 		pocEmailAddress,
 		modelLeadNames,
 		filterViewLink,
@@ -154,12 +168,18 @@ func sendSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	solution *models.OperationalSolution,
-	need *models.OperationalNeed,
-	modelPlan *models.ModelPlan,
+	solutionName string,
+	solutionStatus string,
+	needName string,
+	modelPlanName string,
+	modelPlanID string,
+	modelAbbreviation string,
+	modelStatus string,
+	modelStartDate string,
+
 	pocEmailAddress []string,
 	modelLeadNames []string,
-	filterViewLink string,
+	filterView string,
 ) error {
 	// TODO: SW, extract the logic from func sendPlanDiscussionTagEmails to obfuscu
 
@@ -173,8 +193,8 @@ func sendSolutionSelectedForUseByModelEmail(
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.SolutionSelectedSubjectContent{
-		ModelName:    modelPlan.ModelName,
-		SolutionName: models.ValueOrEmpty(solution.Name),
+		ModelName:    modelPlanName,
+		SolutionName: solutionName,
 	})
 	if err != nil {
 		return err
@@ -182,15 +202,16 @@ func sendSolutionSelectedForUseByModelEmail(
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.SolutionSelectedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
-		FilterViewLink:    filterViewLink,
-		SolutionName:      models.ValueOrEmpty(solution.Name),
-		SolutionStatus:    string(solution.Status),
-		NeedName:          models.ValueOrEmpty(need.Name),
+		FilterView:        filterView,
+		SolutionName:      solutionName,
+		SolutionStatus:    solutionStatus,
 		ModelLeadNames:    modelLeadNames,
-		ModelName:         modelPlan.ModelName,
-		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
-
-		ModelStatus: string(modelPlan.Status),
+		NeedName:          needName,
+		ModelID:           modelPlanID,
+		ModelName:         modelPlanName,
+		ModelAbbreviation: modelAbbreviation,
+		ModelStatus:       modelStatus,
+		ModelStartDate:    modelStartDate, // TODO:SW use the correct data, this is
 	})
 	if err != nil {
 		return err

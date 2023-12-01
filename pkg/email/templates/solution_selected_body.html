@@ -1,0 +1,39 @@
+{{template "shared_header.html"}}
+
+
+<h3>A model plans to use {{.SolutionName}}:</h3>
+<br/>
+<table>
+  <tr>
+    <td>
+      <div class="container-border">
+        <h2>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </h2>
+        <br/>
+        <p><b>Status</b></p>
+        <p>{{.ModelStatus}}</p>
+        {{ if .ModelStartDate }}
+        <p><b>Model start date</b></p>
+        <p>{{.ModelStartDate}}</p>
+        {{ end }}
+        <p><b>Model leads</b></p>
+        <p>{{.ModelLeadNames}}</p>
+        <p><b>Operational need</b></p>
+        <p>{{.NeedName}}</p>
+        <p><b>Solution Status</b></p>
+        <p>{{.SolutionStatus}}</p>
+        <p style="font-weight: normal">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only{{ if .FilterView }}?filter-view={{.FilterView}} {{end}}">
+            {{ if .FilterView}} View {{.FilterView}} {{ else }} more {{end}} details in MINT
+          </a>
+        </p>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<hr/>
+<br/>
+<p>You are receiving this email because you were identified as a point of contact for {{.SolutionName}}. If you are no longer a point of contact, please contact
+  <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>
+</p>
