@@ -152,8 +152,16 @@ func sendSolutionSelectedEmails(
 		}
 		return account.CommonName
 	})
+	pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, posSol.ID)
+	if err != nil {
+		return err
+	}
+	pocEmailAddress, err := models.GetPOCEmailAddresses(pocs, emailService.GetConfig().GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
+	if err != nil {
+		return err
+	}
 
-	pocEmailAddress := []string{"test@test.test"}
+	// pocEmailAddress := []string{"test@test.test"}
 	modelLeadNames := leadNames
 	filterViewLink := posSol.FilterView.ValueOrEmpty()
 
