@@ -11,16 +11,21 @@
         <br/>
         <p><b>Status</b></p>
         <p>{{.ModelStatus}}</p>
+        <br/>
         {{ if .ModelStartDate }}
         <p><b>Model start date</b></p>
         <p>{{.ModelStartDate}}</p>
+        <br/>
         {{ end }}
         <p><b>Model leads</b></p>
         <p>{{.ModelLeadNames}}</p>
+        <br/>
         <p><b>Operational need</b></p>
         <p>{{.NeedName}}</p>
+        <br/>
         <p><b>Solution Status</b></p>
         <p>{{.SolutionStatus}}</p>
+        <br/>
         <p style="font-weight: normal">
           <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only{{ if .FilterView }}?filter-view={{.FilterView}} {{end}}">
             {{ if .FilterView}} View {{.FilterView}} {{ else }} more {{end}} details in MINT
