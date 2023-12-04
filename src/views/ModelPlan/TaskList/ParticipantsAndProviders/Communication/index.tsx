@@ -475,7 +475,7 @@ export const Communication = () => {
         }}
       </Formik>
 
-      <PageNumber currentPage={4} totalPages={5} className="margin-y-6" />
+      <PageNumber currentPage={3} totalPages={5} className="margin-y-6" />
     </>
   );
 };
