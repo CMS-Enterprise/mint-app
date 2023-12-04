@@ -2,8 +2,10 @@ package resolvers
 
 import (
 	"context"
+	"slices"
 
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -134,9 +136,26 @@ func sendSolutionSelectedEmails(
 	if err != nil {
 		return err
 	}
+	// TODO, can we make this more efficient? Need to do a DB call for each account. Will this block that data loader? Do we need another function?
+	collaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, opNeed.ModelPlanID)
+	if err != nil {
+		return err
+	}
+	leads := lo.Filter(collaborators, func(collab *models.PlanCollaborator, _ int) bool {
+		return slices.Contains(collab.TeamRoles, string(models.TeamRoleModelLead))
+
+	})
+	leadNames := lo.Map(leads, func(lead *models.PlanCollaborator, _ int) string {
+		account, err2 := UserAccountGetByIDLOADER(ctx, lead.UserID) // TODO: SW, maybe call a function directly if you pass a list of ids? this is synchronous
+		if err2 != nil {
+			return ""
+		}
+		return account.CommonName
+	})
+
 	pocEmailAddress := []string{"test@test.test"}
-	modelLeadNames := []string{}
-	filterViewLink := posSol.FilterView.ValueOrEmpty() // TODO add filterview to the possible solution table.
+	modelLeadNames := leadNames
+	filterViewLink := posSol.FilterView.ValueOrEmpty()
 
 	modelStartDate := ""
 	if basics.PerformancePeriodStarts != nil {
