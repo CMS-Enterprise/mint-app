@@ -7,7 +7,10 @@
   <tr>
     <td>
       <div class="container-border">
-        <h2>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </h2>
+        <h2>{{.ModelName}}</h2>
+        {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}})
+         <br/>
+        {{end}}
         <br/>
         <p><b>Status</b></p>
         <p>{{.ModelStatus}}</p>
