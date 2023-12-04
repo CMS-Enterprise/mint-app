@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"slices"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/samber/lo"
@@ -226,13 +227,14 @@ func sendSolutionSelectedForUseByModelEmail(
 	if err != nil {
 		return err
 	}
+	modelLeadJoin := strings.Join(modelLeadNames, ", ")
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.SolutionSelectedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		FilterView:        filterView,
 		SolutionName:      solutionName,
 		SolutionStatus:    solutionStatus,
-		ModelLeadNames:    modelLeadNames,
+		ModelLeadNames:    modelLeadJoin,
 		NeedName:          needName,
 		ModelID:           modelPlanID,
 		ModelName:         modelPlanName,

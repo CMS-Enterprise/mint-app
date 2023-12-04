@@ -12,7 +12,7 @@ type SolutionSelectedBodyContent struct {
 	FilterView        string
 	SolutionName      string
 	SolutionStatus    string
-	ModelLeadNames    []string
+	ModelLeadNames    string
 	NeedName          string
 	ModelID           string
 	ModelName         string
