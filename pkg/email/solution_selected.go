@@ -19,5 +19,4 @@ type SolutionSelectedBodyContent struct {
 	ModelAbbreviation string
 	ModelStatus       string
 	ModelStartDate    string
-	// TODO: SW, should we make the contact link in the footer be dynamic based on an email passed here?
 }

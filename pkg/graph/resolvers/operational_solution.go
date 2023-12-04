@@ -119,13 +119,11 @@ func sendSolutionSelectedEmails(
 	6. Solution Status
 	7. Information to link to the specific solution in MINT
 	*/
-	// TODO: Get data --> send email
 	opNeed, err := OperationalNeedGetByID(logger, operationalSolution.OperationalNeedID, store) // TODO: if desired this could be a data loader as well
 	if err != nil {
 		return err
 	}
-	modelPlan, err := ModelPlanGetByIDLOADER(ctx, opNeed.ModelPlanID) //TODO: SW add context to this function call so we can use the data loader..
-	// modelPlan, err := ModelPlanGetByID(logger, opNeed.ModelPlanID, store)
+	modelPlan, err := ModelPlanGetByIDLOADER(ctx, opNeed.ModelPlanID)
 	if err != nil {
 		return err
 	}
@@ -162,7 +160,6 @@ func sendSolutionSelectedEmails(
 		return err
 	}
 
-	// pocEmailAddress := []string{"test@test.test"}
 	modelLeadNames := leadNames
 	filterViewLink := posSol.FilterView.ValueOrEmpty()
 
@@ -176,7 +173,7 @@ func sendSolutionSelectedEmails(
 		emailTemplateService,
 		addressBook,
 		models.ValueOrEmpty(operationalSolution.Name),
-		operationalSolution.Status.Humanize(), // TODO: SW Verify the humanized Statuses
+		operationalSolution.Status.Humanize(),
 		models.ValueOrEmpty(opNeed.Name),
 		modelPlan.ModelName,
 		modelPlan.ID.String(),
@@ -209,7 +206,6 @@ func sendSolutionSelectedForUseByModelEmail(
 	modelLeadNames []string,
 	filterView string,
 ) error {
-	// TODO: SW, extract the logic from func sendPlanDiscussionTagEmails to obfuscu
 
 	if emailService == nil || emailTemplateService == nil {
 		return nil
@@ -240,7 +236,7 @@ func sendSolutionSelectedForUseByModelEmail(
 		ModelName:         modelPlanName,
 		ModelAbbreviation: modelAbbreviation,
 		ModelStatus:       modelStatus,
-		ModelStartDate:    modelStartDate, // TODO:SW use the correct data, this is
+		ModelStartDate:    modelStartDate,
 	})
 	if err != nil {
 		return err
