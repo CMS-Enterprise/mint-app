@@ -444,6 +444,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         subComponents={subComponents}
         subinfo={subinfo}
         isHelpArticle={isHelpArticle}
+        isFilteredView={!!filteredView}
       />
 
       <GridContainer className="model-plan-alert-wrapper">
