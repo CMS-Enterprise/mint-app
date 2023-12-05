@@ -44,33 +44,29 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Medicaid providers
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               States
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               State Medicaid agencies
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Other
             </li>
             <ul
               data-testid="other-entry"
             >
-              <li
-                class="font-sans-md line-height-sans-4"
-              >
-                This is the other
-              </li>
+              This is the other
             </ul>
           </ul>
         </div>
@@ -300,12 +296,12 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Use an application review and scoring tool
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Another CMS component or process will provide support
             </li>
@@ -351,12 +347,12 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Manage ongoing communications with participants using an IT tool
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Send mass emails to new participants
             </li>
@@ -622,7 +618,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               CCNs
             </li>
@@ -704,7 +700,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Add retrospectively (once an interaction happens this year)
             </li>
@@ -746,7 +742,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Not applicable
             </li>
