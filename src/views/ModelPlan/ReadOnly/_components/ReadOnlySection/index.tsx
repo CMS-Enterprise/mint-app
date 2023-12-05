@@ -48,14 +48,18 @@ const ReadOnlySection = ({
     );
   };
 
-  const renderListItemOthers = (index: number) => {
+  const renderListItemOthers = (index: number, isOther: boolean) => {
     if (listOtherItems) {
       if (listOtherItems[index]) {
         return listOtherItems[index];
       }
       return (
         <li className="font-sans-md line-height-sans-4 ">
-          <em className="text-base">{miscellaneousT('otherNotSpecified')}</em>
+          <em className="text-base">
+            {isOther
+              ? miscellaneousT('otherNotSpecified')
+              : miscellaneousT('noAdditionalInformation')}
+          </em>
         </li>
       );
     }
@@ -104,7 +108,8 @@ const ReadOnlySection = ({
             {(item === 'Other' || listOtherItems) && (
               <ul data-testid="other-entry">
                 {!listOtherItems && renderListItemOther(listOtherItem)}
-                {listOtherItems && renderListItemOthers(index)}
+                {listOtherItems &&
+                  renderListItemOthers(index, item === 'Other')}
               </ul>
             )}
           </React.Fragment>
