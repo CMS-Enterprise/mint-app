@@ -37,6 +37,7 @@ const ReadOnlySection = ({
     return React.isValidElement(element);
   };
 
+  // Legacy function to render "Other" option or translation for other not specifed
   const renderListItemOther = (otherItem: string | null | undefined) => {
     if (otherItem) {
       return otherItem;
@@ -48,6 +49,8 @@ const ReadOnlySection = ({
     );
   };
 
+  // Can render a single "Other" option or multiple additional information options
+  // as well as default text for both if not specified
   const renderListItemOthers = (index: number, isOther: boolean) => {
     if (listOtherItems) {
       if (listOtherItems[index]) {
