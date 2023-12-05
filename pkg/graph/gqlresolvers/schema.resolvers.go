@@ -6,6 +6,7 @@ package gqlresolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -1116,3 +1117,19 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planBeneficiariesResolver) PrecedentRulesExistYes(ctx context.Context, obj *models.PlanBeneficiaries) (*bool, error) {
+	panic(fmt.Errorf("not implemented: PrecedentRulesExistYes - precedentRulesExistYes"))
+}
+func (r *planBeneficiariesResolver) PrecedenceRulesExistNo(ctx context.Context, obj *models.PlanBeneficiaries) (*bool, error) {
+	panic(fmt.Errorf("not implemented: PrecedenceRulesExistNo - precedenceRulesExistNo"))
+}
+func (r *planBeneficiariesResolver) PrecedenceRulesNote(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error) {
+	panic(fmt.Errorf("not implemented: PrecedenceRulesNote - precedenceRulesNote"))
+}

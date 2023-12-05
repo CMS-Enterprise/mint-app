@@ -196,7 +196,9 @@ export interface GetAllSingleModelData_modelPlan_beneficiaries {
   beneficiarySelectionFrequency: FrequencyType | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
-  precedenceRules: string | null;
+  precedenceRulesExistYes: boolean | null;
+  precedenceRulesExistNo: boolean | null;
+  precedenceRulesNote: string | null;
   numberPeopleImpacted: number | null;
   estimateConfidence: ConfidenceType | null;
   confidenceNote: string | null;

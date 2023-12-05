@@ -388,7 +388,9 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount                 func(childComplexity int) int
 		ModifiedDts                           func(childComplexity int) int
 		NumberPeopleImpacted                  func(childComplexity int) int
-		PrecedenceRules                       func(childComplexity int) int
+		PrecedenceRulesExistNo                func(childComplexity int) int
+		PrecedenceRulesExistYes               func(childComplexity int) int
+		PrecedenceRulesNote                   func(childComplexity int) int
 		ReadyForClearanceBy                   func(childComplexity int) int
 		ReadyForClearanceByUserAccount        func(childComplexity int) int
 		ReadyForClearanceDts                  func(childComplexity int) int
@@ -3205,12 +3207,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBeneficiaries.NumberPeopleImpacted(childComplexity), true
 
-	case "PlanBeneficiaries.precedenceRules":
-		if e.complexity.PlanBeneficiaries.PrecedenceRules == nil {
+	case "PlanBeneficiaries.precedenceRulesExistNo":
+		if e.complexity.PlanBeneficiaries.PrecedenceRulesExistNo == nil {
 			break
 		}
 
-		return e.complexity.PlanBeneficiaries.PrecedenceRules(childComplexity), true
+		return e.complexity.PlanBeneficiaries.PrecedenceRulesExistNo(childComplexity), true
+
+	case "PlanBeneficiaries.precedenceRulesExistYes":
+		if e.complexity.PlanBeneficiaries.PrecedenceRulesExistYes == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.PrecedenceRulesExistYes(childComplexity), true
+
+	case "PlanBeneficiaries.precedenceRulesNote":
+		if e.complexity.PlanBeneficiaries.PrecedenceRulesNote == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.PrecedenceRulesNote(childComplexity), true
 
 	case "PlanBeneficiaries.readyForClearanceBy":
 		if e.complexity.PlanBeneficiaries.ReadyForClearanceBy == nil {
@@ -7629,7 +7645,9 @@ type PlanBeneficiaries {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: String
+  precedenceRulesExistYes: Boolean
+  precedenceRulesExistNo: Boolean
+  precedenceRulesNote: String
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -7673,7 +7691,9 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: String
+  precedenceRulesExistYes: Boolean
+  precedenceRulesExistNo: Boolean
+  precedenceRulesNote: String
 
   status: TaskStatusInput
 }
@@ -15458,8 +15478,12 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlap(ctx, field)
 			case "beneficiaryOverlapNote":
 				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlapNote(ctx, field)
-			case "precedenceRules":
-				return ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
+			case "precedenceRulesExistYes":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesExistYes(ctx, field)
+			case "precedenceRulesExistNo":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesExistNo(ctx, field)
+			case "precedenceRulesNote":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanBeneficiaries_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -17698,8 +17722,12 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlap(ctx, field)
 			case "beneficiaryOverlapNote":
 				return ec.fieldContext_PlanBeneficiaries_beneficiaryOverlapNote(ctx, field)
-			case "precedenceRules":
-				return ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
+			case "precedenceRulesExistYes":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesExistYes(ctx, field)
+			case "precedenceRulesExistNo":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesExistNo(ctx, field)
+			case "precedenceRulesNote":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanBeneficiaries_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -26124,8 +26152,8 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaryOverlapNot
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanBeneficiaries_precedenceRules(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
+func (ec *executionContext) _PlanBeneficiaries_precedenceRulesExistYes(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_precedenceRulesExistYes(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -26138,7 +26166,89 @@ func (ec *executionContext) _PlanBeneficiaries_precedenceRules(ctx context.Conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PrecedenceRules, nil
+		return obj.PrecedenceRulesExistYes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRulesExistYes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_precedenceRulesExistNo(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_precedenceRulesExistNo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PrecedenceRulesExistNo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRulesExistNo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_precedenceRulesNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PrecedenceRulesNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -26152,7 +26262,7 @@ func (ec *executionContext) _PlanBeneficiaries_precedenceRules(ctx context.Conte
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRules(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
@@ -55767,8 +55877,12 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 			out.Values[i] = ec._PlanBeneficiaries_beneficiaryOverlap(ctx, field, obj)
 		case "beneficiaryOverlapNote":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiaryOverlapNote(ctx, field, obj)
-		case "precedenceRules":
-			out.Values[i] = ec._PlanBeneficiaries_precedenceRules(ctx, field, obj)
+		case "precedenceRulesExistYes":
+			out.Values[i] = ec._PlanBeneficiaries_precedenceRulesExistYes(ctx, field, obj)
+		case "precedenceRulesExistNo":
+			out.Values[i] = ec._PlanBeneficiaries_precedenceRulesExistNo(ctx, field, obj)
+		case "precedenceRulesNote":
+			out.Values[i] = ec._PlanBeneficiaries_precedenceRulesNote(ctx, field, obj)
 		case "createdBy":
 			out.Values[i] = ec._PlanBeneficiaries_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

@@ -34,7 +34,9 @@ type PlanBeneficiaries struct {
 	BeneficiarySelectionFrequencyNote  *string        `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
 	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
 	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
-	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
+	PrecedenceRulesExistYes            *bool          `json:"precedenceRulesExistYes" db:"precedence_rules_exist_yes"`
+	PrecedenceRulesExistNo             *bool          `json:"precedenceRulesExistNo" db:"precedence_rules_exist_no"`
+	PrecedenceRulesNote                *string        `json:"precedenceRulesNote" db:"precedence_rules_note"`
 }
 
 // NewPlanBeneficiaries returns a new plan Beneficiaries
