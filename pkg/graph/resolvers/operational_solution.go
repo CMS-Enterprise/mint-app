@@ -144,13 +144,25 @@ func sendSolutionSelectedEmails(
 		return slices.Contains(collab.TeamRoles, string(models.TeamRoleModelLead))
 
 	})
-	leadNames := lo.Map(leads, func(lead *models.PlanCollaborator, _ int) string {
-		account, err2 := UserAccountGetByIDLOADER(ctx, lead.UserID) // TODO: SW, maybe call a function directly if you pass a list of ids? this is synchronous
-		if err2 != nil {
-			return ""
-		}
+	leadIDs := lo.Map(leads, func(lead *models.PlanCollaborator, _ int) uuid.UUID {
+		return lead.UserID
+	})
+	leadAccounts, err := UserAccountsGetByIDs(logger, store, leadIDs)
+	if err != nil {
+		return err
+	}
+
+	leadNames := lo.Map(leadAccounts, func(account *authentication.UserAccount, _ int) string {
 		return account.CommonName
 	})
+	// leadNames := lo.Map(leads, func(lead *models.PlanCollaborator, _ int) string {
+	// 	account, err2 := UserAccountGetByIDLOADER(ctx, lead.UserID) // TODO: SW, maybe call a function directly if you pass a list of ids? this is synchronous
+	// 	if err2 != nil {
+	// 		return ""
+	// 	}
+	// 	return account.CommonName
+	// })
+
 	pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, posSol.ID)
 	if err != nil {
 		return err

@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+
+	"github.com/google/uuid"
 )
 
 // the tag db is what is used to convert a struct to it's relevant DB field
@@ -89,4 +91,23 @@ func StructArrayToJSONArray[StructType ~struct{}](structArray []StructType) (str
 
 	return MapArrayToJSONArray(mapSlice)
 
+}
+
+// UUIDArrayToMapArray converts an array of UUIDs to a map array with the UUID being called whatever you name it
+func UUIDArrayToMapArray(uuidArray []uuid.UUID, propertyName string) []map[string]interface{} {
+	mapSlice := []map[string]interface{}{}
+
+	for _, uuid := range uuidArray {
+		uMap := map[string]interface{}{
+			propertyName: uuid.String(),
+		}
+		mapSlice = append(mapSlice, uMap)
+	}
+	return mapSlice
+}
+
+// UUIDArrayToJSONArray converts an array of UUIDs to JSON
+func UUIDArrayToJSONArray(uuidArray []uuid.UUID, propertyName string) (string, error) {
+	mapSlice := UUIDArrayToMapArray(uuidArray, propertyName)
+	return MapArrayToJSONArray(mapSlice)
 }
