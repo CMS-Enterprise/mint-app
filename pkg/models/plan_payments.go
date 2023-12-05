@@ -68,6 +68,10 @@ const (
 	FundingSourcePatientProtectionAffordableCareAct FundingSource = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
 	// FundingSourceTrustFund indicates the funding source is categorically trust fund
 	FundingSourceTrustFund FundingSource = "TRUST_FUND"
+
+	FundingSourceMedicareA FundingSource = "MEDICARE_PART_A_HI_TRUST_FUND"
+
+	FundingSourceMedicareB FundingSource = "MEDICARE_PART_B_SMI_TRUST_FUND"
 	// FundingSourceOther indicates the funding source is not included in the provided options
 	FundingSourceOther FundingSource = "Other"
 )
@@ -129,26 +133,21 @@ const (
 	PayTypeGrants PayType = "GRANTS"
 )
 
-// TrustFundType is the enumeration of options for this category
-type TrustFundType string
-
-//goland:noinspection ALL
-const (
-	TrustFundTypeMedicarePartAHI  TrustFundType = "MEDICARE_PART_A_HI_TRUST_FUND"
-	TrustFundTypeMedicarePartBSMI TrustFundType = "MEDICARE_PART_B_SMI_TRUST_FUND"
-)
-
 // PlanPayments defines the data associated with a plan payments model
 type PlanPayments struct {
 	baseTaskListSection
 
 	// Page 1
-	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
-	FundingSourceTrustFundType      pq.StringArray `json:"fundingSourceTrustFundType" db:"funding_source_trust_fund_type"`
-	FundingSourceOther              *string        `json:"fundingSourceOther" db:"funding_source_other"`
-	FundingSourceNote               *string        `json:"fundingSourceNote" db:"funding_source_note"`
-	FundingSourceR                  pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
-	FundingSourceRTrustFundType     pq.StringArray `json:"fundingSourceRTrustFundType" db:"funding_source_r_trust_fund_type"`
+	FundingSource              pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
+	FundingSourceMedicareAInfo *string        `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
+	FundingSourceMedicareBInfo *string        `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
+	// FundingSourceTrustFundType      pq.StringArray `json:"fundingSourceTrustFundType" db:"funding_source_trust_fund_type"`
+	FundingSourceOther          *string        `json:"fundingSourceOther" db:"funding_source_other"`
+	FundingSourceNote           *string        `json:"fundingSourceNote" db:"funding_source_note"`
+	FundingSourceR              pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
+	FundingSourceRMedicareAInfo *string        `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
+	FundingSourceRMedicareBInfo *string        `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
+	// FundingSourceRTrustFundType     pq.StringArray `json:"fundingSourceRTrustFundType" db:"funding_source_r_trust_fund_type"`
 	FundingSourceROther             *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
 	FundingSourceRNote              *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
 	PayRecipients                   pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`

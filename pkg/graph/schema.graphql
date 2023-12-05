@@ -910,11 +910,13 @@ type PlanPayments {
 
   # Page 1
   fundingSource:                      [FundingSource!]!
-  fundingSourceTrustFundType:         [TrustFundType!]!
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]!
-  fundingSourceRTrustFundType:        [TrustFundType!]!
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]!
@@ -1002,12 +1004,16 @@ type PlanPayments {
 
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
-  fundingSource:                      [FundingSource!]
-  fundingSourceTrustFundType:         [TrustFundType!]
+  fundingSource:                      [FundingSource!] #Combine these
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
+  # fundingSourceTrustFundType:         [TrustFundType!]
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFundType:        [TrustFundType!]
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
+  # fundingSourceRTrustFundType:        [TrustFundType!]
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
@@ -2214,13 +2220,9 @@ enum DataStartsType {
 
 enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
-  TRUST_FUND
-  OTHER
-}
-
-enum TrustFundType {
   MEDICARE_PART_A_HI_TRUST_FUND
   MEDICARE_PART_B_SMI_TRUST_FUND
+  OTHER
 }
 
 enum PayRecipient {

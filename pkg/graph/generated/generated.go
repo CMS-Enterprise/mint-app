@@ -767,13 +767,15 @@ type ComplexityRoot struct {
 		ExpectedCalculationComplexityLevel                func(childComplexity int) int
 		ExpectedCalculationComplexityLevelNote            func(childComplexity int) int
 		FundingSource                                     func(childComplexity int) int
+		FundingSourceMedicareAInfo                        func(childComplexity int) int
+		FundingSourceMedicareBInfo                        func(childComplexity int) int
 		FundingSourceNote                                 func(childComplexity int) int
 		FundingSourceOther                                func(childComplexity int) int
 		FundingSourceR                                    func(childComplexity int) int
+		FundingSourceRMedicareAInfo                       func(childComplexity int) int
+		FundingSourceRMedicareBInfo                       func(childComplexity int) int
 		FundingSourceRNote                                func(childComplexity int) int
 		FundingSourceROther                               func(childComplexity int) int
-		FundingSourceRTrustFundType                       func(childComplexity int) int
-		FundingSourceTrustFundType                        func(childComplexity int) int
 		ID                                                func(childComplexity int) int
 		IsContractorAwareTestDataRequirements             func(childComplexity int) int
 		ModelPlanID                                       func(childComplexity int) int
@@ -1120,10 +1122,8 @@ type PlanParticipantsAndProvidersResolver interface {
 }
 type PlanPaymentsResolver interface {
 	FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error)
-	FundingSourceTrustFundType(ctx context.Context, obj *models.PlanPayments) ([]models.TrustFundType, error)
 
 	FundingSourceR(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error)
-	FundingSourceRTrustFundType(ctx context.Context, obj *models.PlanPayments) ([]models.TrustFundType, error)
 
 	PayRecipients(ctx context.Context, obj *models.PlanPayments) ([]models.PayRecipient, error)
 
@@ -5648,6 +5648,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.FundingSource(childComplexity), true
 
+	case "PlanPayments.fundingSourceMedicareAInfo":
+		if e.complexity.PlanPayments.FundingSourceMedicareAInfo == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceMedicareAInfo(childComplexity), true
+
+	case "PlanPayments.fundingSourceMedicareBInfo":
+		if e.complexity.PlanPayments.FundingSourceMedicareBInfo == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceMedicareBInfo(childComplexity), true
+
 	case "PlanPayments.fundingSourceNote":
 		if e.complexity.PlanPayments.FundingSourceNote == nil {
 			break
@@ -5669,6 +5683,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.FundingSourceR(childComplexity), true
 
+	case "PlanPayments.fundingSourceRMedicareAInfo":
+		if e.complexity.PlanPayments.FundingSourceRMedicareAInfo == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceRMedicareAInfo(childComplexity), true
+
+	case "PlanPayments.fundingSourceRMedicareBInfo":
+		if e.complexity.PlanPayments.FundingSourceRMedicareBInfo == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceRMedicareBInfo(childComplexity), true
+
 	case "PlanPayments.fundingSourceRNote":
 		if e.complexity.PlanPayments.FundingSourceRNote == nil {
 			break
@@ -5682,20 +5710,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.FundingSourceROther(childComplexity), true
-
-	case "PlanPayments.fundingSourceRTrustFundType":
-		if e.complexity.PlanPayments.FundingSourceRTrustFundType == nil {
-			break
-		}
-
-		return e.complexity.PlanPayments.FundingSourceRTrustFundType(childComplexity), true
-
-	case "PlanPayments.fundingSourceTrustFundType":
-		if e.complexity.PlanPayments.FundingSourceTrustFundType == nil {
-			break
-		}
-
-		return e.complexity.PlanPayments.FundingSourceTrustFundType(childComplexity), true
 
 	case "PlanPayments.id":
 		if e.complexity.PlanPayments.ID == nil {
@@ -7835,11 +7849,13 @@ type PlanPayments {
 
   # Page 1
   fundingSource:                      [FundingSource!]!
-  fundingSourceTrustFundType:         [TrustFundType!]!
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]!
-  fundingSourceRTrustFundType:        [TrustFundType!]!
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]!
@@ -7927,12 +7943,16 @@ type PlanPayments {
 
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
-  fundingSource:                      [FundingSource!]
-  fundingSourceTrustFundType:         [TrustFundType!]
+  fundingSource:                      [FundingSource!] #Combine these
+  fundingSourceMedicareAInfo:         String
+  fundingSourceMedicareBInfo:         String
+  # fundingSourceTrustFundType:         [TrustFundType!]
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFundType:        [TrustFundType!]
+  fundingSourceRMedicareAInfo:        String
+  fundingSourceRMedicareBInfo:        String
+  # fundingSourceRTrustFundType:        [TrustFundType!]
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
@@ -9139,13 +9159,9 @@ enum DataStartsType {
 
 enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
-  TRUST_FUND
-  OTHER
-}
-
-enum TrustFundType {
   MEDICARE_PART_A_HI_TRUST_FUND
   MEDICARE_PART_B_SMI_TRUST_FUND
+  OTHER
 }
 
 enum PayRecipient {
@@ -16034,16 +16050,20 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
 			case "fundingSource":
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
-			case "fundingSourceTrustFundType":
-				return ec.fieldContext_PlanPayments_fundingSourceTrustFundType(ctx, field)
+			case "fundingSourceMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx, field)
+			case "fundingSourceMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx, field)
 			case "fundingSourceOther":
 				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
 				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
-			case "fundingSourceRTrustFundType":
-				return ec.fieldContext_PlanPayments_fundingSourceRTrustFundType(ctx, field)
+			case "fundingSourceRMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx, field)
+			case "fundingSourceRMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx, field)
 			case "fundingSourceROther":
 				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
 			case "fundingSourceRNote":
@@ -19109,16 +19129,20 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
 			case "fundingSource":
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
-			case "fundingSourceTrustFundType":
-				return ec.fieldContext_PlanPayments_fundingSourceTrustFundType(ctx, field)
+			case "fundingSourceMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx, field)
+			case "fundingSourceMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx, field)
 			case "fundingSourceOther":
 				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
 				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
-			case "fundingSourceRTrustFundType":
-				return ec.fieldContext_PlanPayments_fundingSourceRTrustFundType(ctx, field)
+			case "fundingSourceRMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx, field)
+			case "fundingSourceRMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx, field)
 			case "fundingSourceROther":
 				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
 			case "fundingSourceRNote":
@@ -40872,8 +40896,8 @@ func (ec *executionContext) fieldContext_PlanPayments_fundingSource(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_fundingSourceTrustFundType(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_fundingSourceTrustFundType(ctx, field)
+func (ec *executionContext) _PlanPayments_fundingSourceMedicareAInfo(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -40886,31 +40910,69 @@ func (ec *executionContext) _PlanPayments_fundingSourceTrustFundType(ctx context
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().FundingSourceTrustFundType(rctx, obj)
+		return obj.FundingSourceMedicareAInfo, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.TrustFundType)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNTrustFundType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_fundingSourceTrustFundType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type TrustFundType does not have child fields")
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceMedicareBInfo(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceMedicareBInfo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -41042,8 +41104,8 @@ func (ec *executionContext) fieldContext_PlanPayments_fundingSourceR(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_fundingSourceRTrustFundType(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_fundingSourceRTrustFundType(ctx, field)
+func (ec *executionContext) _PlanPayments_fundingSourceRMedicareAInfo(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -41056,31 +41118,69 @@ func (ec *executionContext) _PlanPayments_fundingSourceRTrustFundType(ctx contex
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().FundingSourceRTrustFundType(rctx, obj)
+		return obj.FundingSourceRMedicareAInfo, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.TrustFundType)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNTrustFundType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_fundingSourceRTrustFundType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type TrustFundType does not have child fields")
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceRMedicareBInfo(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceRMedicareBInfo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -46548,16 +46648,20 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
 			case "fundingSource":
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
-			case "fundingSourceTrustFundType":
-				return ec.fieldContext_PlanPayments_fundingSourceTrustFundType(ctx, field)
+			case "fundingSourceMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareAInfo(ctx, field)
+			case "fundingSourceMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceMedicareBInfo(ctx, field)
 			case "fundingSourceOther":
 				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
 				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
-			case "fundingSourceRTrustFundType":
-				return ec.fieldContext_PlanPayments_fundingSourceRTrustFundType(ctx, field)
+			case "fundingSourceRMedicareAInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareAInfo(ctx, field)
+			case "fundingSourceRMedicareBInfo":
+				return ec.fieldContext_PlanPayments_fundingSourceRMedicareBInfo(ctx, field)
 			case "fundingSourceROther":
 				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
 			case "fundingSourceRNote":
@@ -59122,42 +59226,10 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "fundingSourceTrustFundType":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_fundingSourceTrustFundType(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "fundingSourceMedicareAInfo":
+			out.Values[i] = ec._PlanPayments_fundingSourceMedicareAInfo(ctx, field, obj)
+		case "fundingSourceMedicareBInfo":
+			out.Values[i] = ec._PlanPayments_fundingSourceMedicareBInfo(ctx, field, obj)
 		case "fundingSourceOther":
 			out.Values[i] = ec._PlanPayments_fundingSourceOther(ctx, field, obj)
 		case "fundingSourceNote":
@@ -59198,42 +59270,10 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "fundingSourceRTrustFundType":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_fundingSourceRTrustFundType(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "fundingSourceRMedicareAInfo":
+			out.Values[i] = ec._PlanPayments_fundingSourceRMedicareAInfo(ctx, field, obj)
+		case "fundingSourceRMedicareBInfo":
+			out.Values[i] = ec._PlanPayments_fundingSourceRMedicareBInfo(ctx, field, obj)
 		case "fundingSourceROther":
 			out.Values[i] = ec._PlanPayments_fundingSourceROther(ctx, field, obj)
 		case "fundingSourceRNote":
@@ -66039,83 +66079,6 @@ func (ec *executionContext) marshalNTime2ᚖtimeᚐTime(ctx context.Context, sel
 	return res
 }
 
-func (ec *executionContext) unmarshalNTrustFundType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundType(ctx context.Context, v interface{}) (models.TrustFundType, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.TrustFundType(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNTrustFundType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundType(ctx context.Context, sel ast.SelectionSet, v models.TrustFundType) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
-func (ec *executionContext) unmarshalNTrustFundType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundTypeᚄ(ctx context.Context, v interface{}) ([]models.TrustFundType, error) {
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]models.TrustFundType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNTrustFundType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalNTrustFundType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.TrustFundType) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNTrustFundType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
 func (ec *executionContext) unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (uuid.UUID, error) {
 	res, err := models.UnmarshalUUID(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -69637,73 +69600,6 @@ func (ec *executionContext) marshalOTriStateAnswer2ᚖgithubᚗcomᚋcmsgovᚋmi
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
-}
-
-func (ec *executionContext) unmarshalOTrustFundType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundTypeᚄ(ctx context.Context, v interface{}) ([]models.TrustFundType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]models.TrustFundType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNTrustFundType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalOTrustFundType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.TrustFundType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNTrustFundType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTrustFundType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
 }
 
 func (ec *executionContext) unmarshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (uuid.UUID, error) {

@@ -2,11 +2,9 @@ SELECT
     id,
     model_plan_id,
     funding_source,
-    funding_source_trust_fund_type,
     funding_source_other,
     funding_source_note,
     funding_source_r,
-    funding_source_r_trust_fund_type,
     funding_source_r_other,
     funding_source_r_note,
     pay_recipients,
@@ -68,6 +66,10 @@ SELECT
     ready_for_review_dts,
     ready_for_clearance_by,
     ready_for_clearance_dts,
-    status
+    status,
+    funding_source_medicare_a_info,
+    funding_source_medicare_b_info,
+    funding_source_r_medicare_a_info,
+    funding_source_r_medicare_b_info
 FROM plan_payments
 WHERE id = :id
