@@ -28,6 +28,7 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -377,6 +378,26 @@ const Frequency = () => {
                           {flatErrors.precedenceRules}
                         </FieldErrorMsg>
 
+                        <Fieldset>
+                          {[true, false].map(key => (
+                            <Field
+                              as={CheckboxField}
+                              key={key}
+                              id={`document-upload-restricted-${key}`}
+                              name="restricted"
+                              label={
+                                key
+                                  ? miscellaneousT('yes')
+                                  : miscellaneousT('no')
+                              }
+                              value={key ? 'YES' : 'NO'}
+                              // checked={values.precedenceRules === key}
+                              onChange={() => {
+                                setFieldValue('restricted', key);
+                              }}
+                            />
+                          ))}
+                        </Fieldset>
                         <Field
                           as={TextAreaField}
                           className="height-15"
