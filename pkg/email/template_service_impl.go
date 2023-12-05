@@ -100,6 +100,9 @@ var sharedAccessBannerTemplate string
 //go:embed templates/shared_footer.html
 var sharedFooterTemplate string
 
+//go:embed templates/shared_solution_poc_footer.html
+var sharedSolutionPOCFooterTemplate string
+
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
 
@@ -226,10 +229,11 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	}
 
 	predefinedTemplates := map[string]string{
-		"shared_style.html":         sharedStyleTemplate,
-		"shared_header.html":        sharedHeaderTemplate,
-		"shared_footer.html":        sharedFooterTemplate,
-		"shared_access_banner.html": sharedAccessBannerTemplate,
+		"shared_style.html":               sharedStyleTemplate,
+		"shared_header.html":              sharedHeaderTemplate,
+		"shared_footer.html":              sharedFooterTemplate,
+		"shared_access_banner.html":       sharedAccessBannerTemplate,
+		"shared_solution_poc_footer.html": sharedSolutionPOCFooterTemplate,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
