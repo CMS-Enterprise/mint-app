@@ -44,11 +44,13 @@ const ReadOnlyPayments = ({
 
   const {
     fundingSource,
-    fundingSourceTrustFundType,
+    fundingSourceMedicareAInfo,
+    fundingSourceMedicareBInfo,
     fundingSourceOther,
     fundingSourceNote,
     fundingSourceR,
-    fundingSourceRTrustFundType,
+    fundingSourceRMedicareAInfo,
+    fundingSourceRMedicareBInfo,
     fundingSourceROther,
     fundingSourceRNote,
     payRecipients,
@@ -160,17 +162,27 @@ const ReadOnlyPayments = ({
           />
         )}
 
-        {fundingSource?.includes(FundingSource.TRUST_FUND) &&
+        {fundingSource?.includes(FundingSource.MEDICARE_PART_A_HI_TRUST_FUND) &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'fundingSource',
             <ReadOnlySection
-              heading={paymentsT('fundingSourceTrustFundType.label')}
-              list
-              listItems={fundingSourceTrustFundType?.map((type): string =>
-                paymentsT(`fundingSourceTrustFundType.options.${type}`)
-              )}
+              heading={paymentsT('fundingSourceMedicareAInfo.label')}
+              copy={fundingSourceMedicareAInfo}
+            />
+          )}
+
+        {fundingSource?.includes(
+          FundingSource.MEDICARE_PART_B_SMI_TRUST_FUND
+        ) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSource',
+            <ReadOnlySection
+              heading={paymentsT('fundingSourceMedicareBInfo.label')}
+              copy={fundingSourceMedicareBInfo}
             />
           )}
 
@@ -199,17 +211,29 @@ const ReadOnlyPayments = ({
           />
         )}
 
-        {fundingSourceR?.includes(FundingSource.TRUST_FUND) &&
+        {fundingSourceR?.includes(
+          FundingSource.MEDICARE_PART_A_HI_TRUST_FUND
+        ) &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'fundingSourceR',
             <ReadOnlySection
-              heading={paymentsT('fundingSourceRTrustFundType.label')}
-              list
-              listItems={fundingSourceRTrustFundType?.map((type): string =>
-                paymentsT(`fundingSourceRTrustFundType.options.${type}`)
-              )}
+              heading={paymentsT('fundingSourceRMedicareAInfo.label')}
+              copy={fundingSourceRMedicareAInfo}
+            />
+          )}
+
+        {fundingSourceR?.includes(
+          FundingSource.MEDICARE_PART_B_SMI_TRUST_FUND
+        ) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSourceR',
+            <ReadOnlySection
+              heading={paymentsT('fundingSourceRMedicareBInfo.label')}
+              copy={fundingSourceRMedicareBInfo}
             />
           )}
 

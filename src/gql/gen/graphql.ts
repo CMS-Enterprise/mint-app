@@ -416,9 +416,10 @@ export enum FrequencyType {
 }
 
 export enum FundingSource {
+  MEDICARE_PART_A_HI_TRUST_FUND = 'MEDICARE_PART_A_HI_TRUST_FUND',
+  MEDICARE_PART_B_SMI_TRUST_FUND = 'MEDICARE_PART_B_SMI_TRUST_FUND',
   OTHER = 'OTHER',
-  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
-  TRUST_FUND = 'TRUST_FUND'
+  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
 }
 
 export enum GqlTableName {
@@ -1967,13 +1968,15 @@ export type PlanPayments = {
   expectedCalculationComplexityLevel?: Maybe<ComplexityCalculationLevelType>;
   expectedCalculationComplexityLevelNote?: Maybe<Scalars['String']['output']>;
   fundingSource: Array<FundingSource>;
+  fundingSourceMedicareAInfo?: Maybe<Scalars['String']['output']>;
+  fundingSourceMedicareBInfo?: Maybe<Scalars['String']['output']>;
   fundingSourceNote?: Maybe<Scalars['String']['output']>;
   fundingSourceOther?: Maybe<Scalars['String']['output']>;
   fundingSourceR: Array<FundingSource>;
+  fundingSourceRMedicareAInfo?: Maybe<Scalars['String']['output']>;
+  fundingSourceRMedicareBInfo?: Maybe<Scalars['String']['output']>;
   fundingSourceRNote?: Maybe<Scalars['String']['output']>;
   fundingSourceROther?: Maybe<Scalars['String']['output']>;
-  fundingSourceRTrustFundType: Array<TrustFundType>;
-  fundingSourceTrustFundType: Array<TrustFundType>;
   id: Scalars['UUID']['output'];
   isContractorAwareTestDataRequirements?: Maybe<Scalars['Boolean']['output']>;
   modelPlanID: Scalars['UUID']['output'];
@@ -2041,13 +2044,15 @@ export type PlanPaymentsChanges = {
   expectedCalculationComplexityLevel?: InputMaybe<ComplexityCalculationLevelType>;
   expectedCalculationComplexityLevelNote?: InputMaybe<Scalars['String']['input']>;
   fundingSource?: InputMaybe<Array<FundingSource>>;
+  fundingSourceMedicareAInfo?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceMedicareBInfo?: InputMaybe<Scalars['String']['input']>;
   fundingSourceNote?: InputMaybe<Scalars['String']['input']>;
   fundingSourceOther?: InputMaybe<Scalars['String']['input']>;
   fundingSourceR?: InputMaybe<Array<FundingSource>>;
+  fundingSourceRMedicareAInfo?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceRMedicareBInfo?: InputMaybe<Scalars['String']['input']>;
   fundingSourceRNote?: InputMaybe<Scalars['String']['input']>;
   fundingSourceROther?: InputMaybe<Scalars['String']['input']>;
-  fundingSourceRTrustFundType?: InputMaybe<Array<TrustFundType>>;
-  fundingSourceTrustFundType?: InputMaybe<Array<TrustFundType>>;
   isContractorAwareTestDataRequirements?: InputMaybe<Scalars['Boolean']['input']>;
   needsClaimsDataCollection?: InputMaybe<Scalars['Boolean']['input']>;
   needsClaimsDataCollectionNote?: InputMaybe<Scalars['String']['input']>;
@@ -2560,11 +2565,6 @@ export enum TriStateAnswer {
   YES = 'YES'
 }
 
-export enum TrustFundType {
-  MEDICARE_PART_A_HI_TRUST_FUND = 'MEDICARE_PART_A_HI_TRUST_FUND',
-  MEDICARE_PART_B_SMI_TRUST_FUND = 'MEDICARE_PART_B_SMI_TRUST_FUND'
-}
-
 export type UpdateOperationalSolutionSubtaskChangesInput = {
   name: Scalars['String']['input'];
   status: OperationalSolutionSubtaskStatus;
@@ -2919,7 +2919,7 @@ export type GetAllPaymentsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<AnticipatedPaymentFrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
+export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<AnticipatedPaymentFrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
 
 export type GetAnticipateDependenciesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2954,7 +2954,7 @@ export type GetFundingQueryVariables = Exact<{
 }>;
 
 
-export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
 export type GetNonClaimsBasedPaymentQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5381,11 +5381,13 @@ export const GetAllPaymentsDocument = gql`
     id
     payments {
       fundingSource
-      fundingSourceTrustFundType
+      fundingSourceMedicareAInfo
+      fundingSourceMedicareBInfo
       fundingSourceOther
       fundingSourceNote
       fundingSourceR
-      fundingSourceRTrustFundType
+      fundingSourceRMedicareAInfo
+      fundingSourceRMedicareBInfo
       fundingSourceROther
       fundingSourceRNote
       payRecipients
@@ -5701,11 +5703,13 @@ export const GetFundingDocument = gql`
     payments {
       id
       fundingSource
-      fundingSourceTrustFundType
+      fundingSourceMedicareAInfo
+      fundingSourceMedicareBInfo
       fundingSourceOther
       fundingSourceNote
       fundingSourceR
-      fundingSourceRTrustFundType
+      fundingSourceRMedicareAInfo
+      fundingSourceRMedicareBInfo
       fundingSourceROther
       fundingSourceRNote
       payRecipients

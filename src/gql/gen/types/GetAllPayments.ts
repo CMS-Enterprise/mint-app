@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FundingSource, TrustFundType, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, TaskStatus } from "./../../../types/graphql-global-types";
+import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllPayments
@@ -12,11 +12,13 @@ import { FundingSource, TrustFundType, PayRecipient, PayType, ClaimsBasedPayType
 export interface GetAllPayments_modelPlan_payments {
   __typename: "PlanPayments";
   fundingSource: FundingSource[];
-  fundingSourceTrustFundType: TrustFundType[];
+  fundingSourceMedicareAInfo: string | null;
+  fundingSourceMedicareBInfo: string | null;
   fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
-  fundingSourceRTrustFundType: TrustFundType[];
+  fundingSourceRMedicareAInfo: string | null;
+  fundingSourceRMedicareBInfo: string | null;
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
   payRecipients: PayRecipient[];
