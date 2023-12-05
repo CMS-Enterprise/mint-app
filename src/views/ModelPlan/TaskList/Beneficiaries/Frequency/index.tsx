@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import {
@@ -55,6 +55,8 @@ const Frequency = () => {
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
 
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const [tempRules, setTempRules] = useState(['']);
 
   const {
     beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
@@ -379,33 +381,61 @@ const Frequency = () => {
                         </FieldErrorMsg>
 
                         <Fieldset>
-                          {[true, false].map(key => (
-                            <Field
-                              as={CheckboxField}
-                              key={key}
-                              id={`document-upload-restricted-${key}`}
-                              name="restricted"
-                              label={
-                                key
-                                  ? miscellaneousT('yes')
-                                  : miscellaneousT('no')
-                              }
-                              value={key ? 'YES' : 'NO'}
-                              // checked={values.precedenceRules === key}
-                              onChange={() => {
-                                setFieldValue('restricted', key);
-                              }}
-                            />
+                          {/* {/* {getKeys(NEW_PRECEDENCE_RULES_OPTIONS).map(key => ( */}
+                          {['Yes', 'No'].map(key => (
+                            <Fragment key={key}>
+                              <Field
+                                as={CheckboxField}
+                                id={`beneficiaries-precedence-rules-${key}`}
+                                data-testid={`beneficiaries-precedence-rules-${key}`}
+                                name={`precedence-rules-${key}`}
+                                // label={t(`NEW_PRECEDENCE_RULES_OPTIONS.${key}`)}
+                                // value={t(`NEW_PRECEDENCE_RULES_OPTIONS.${key}`)}
+                                // checked={values.precedenceRules?.includes(
+                                //   key as MintUses
+                                // )}
+                                label={key}
+                                value={key}
+                                onChange={() => {
+                                  setTempRules(prevArray => [
+                                    ...prevArray,
+                                    key
+                                  ]);
+                                }}
+                              />
+
+                              {/* {values.precedenceRules?.includes(key) && ( */}
+                              {tempRules.includes(key) && (
+                                <div className="margin-left-4">
+                                  <span>
+                                    {miscellaneousT('pleaseDescribe')}
+                                  </span>
+                                  <Field
+                                    as={TextAreaField}
+                                    className="height-15"
+                                    error={flatErrors.precedenceRules}
+                                    id="beneficiaries-precedence-rules"
+                                    data-testid="beneficiaries-precedence-rules"
+                                    name="precedenceRules"
+                                  />
+                                </div>
+                              )}
+                            </Fragment>
                           ))}
                         </Fieldset>
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          error={flatErrors.precedenceRules}
-                          id="beneficiaries-precedence-rules"
-                          data-testid="beneficiaries-precedence-rules"
-                          name="precedenceRules"
+                        <AddNote
+                          id="beneficiaries-precedence-note"
+                          field="beneficiaryPrecedenceNote"
                         />
+
+                        {/* <Field
+                            as={TextAreaField}
+                            className="height-15"
+                            error={flatErrors.precedenceRules}
+                            id="beneficiaries-precedence-rules"
+                            data-testid="beneficiaries-precedence-rules"
+                            name="precedenceRules"
+                          /> */}
                       </FieldGroup>
 
                       {!loading && values.status && (
