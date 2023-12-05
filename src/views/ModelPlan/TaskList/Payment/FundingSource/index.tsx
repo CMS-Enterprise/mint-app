@@ -213,7 +213,7 @@ const FundingSource = () => {
                 <Tooltip
                   label={config.optionsLabels?.[trustType] || ''}
                   position="right"
-                  className="margin-left-05 height-105"
+                  className="margin-left-05"
                 >
                   <Icon.Info className="text-base-light" />
                 </Tooltip>

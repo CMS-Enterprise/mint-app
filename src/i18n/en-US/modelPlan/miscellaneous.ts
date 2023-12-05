@@ -23,7 +23,7 @@ export const miscellaneous: Record<string, string> = {
   notes: 'Notes',
   noneEntered: 'None entered',
   na: 'No answer entered',
-  otherNotSpecified: 'Other not specified',
+  otherNotSpecified: 'No additional information specified',
   dateWarning:
     'You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.',
   helpText:

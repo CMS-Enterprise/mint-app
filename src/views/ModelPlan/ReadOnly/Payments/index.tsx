@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import {
   ClaimsBasedPayType,
-  FundingSource,
   PayType,
   useGetAllPaymentsQuery
 } from 'gql/gen/graphql';
@@ -25,9 +24,7 @@ const ReadOnlyPayments = ({
   filteredQuestions
 }: ReadOnlyProps) => {
   const { t: paymentsT } = useTranslation('payments');
-
   const { t: paymentsMiscT } = useTranslation('paymentsMisc');
-
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -158,33 +155,17 @@ const ReadOnlyPayments = ({
             listItems={fundingSource?.map((type): string =>
               paymentsT(`fundingSource.options.${type}`)
             )}
-            listOtherItem={fundingSourceOther}
+            listOtherItems={[
+              null,
+              fundingSourceMedicareAInfo,
+              fundingSourceMedicareBInfo,
+              fundingSourceOther
+            ].filter(item => item)}
+            tooltips={fundingSource?.map((type): string =>
+              paymentsT(`fundingSource.optionsLabels.${type}`)
+            )}
           />
         )}
-
-        {fundingSource?.includes(FundingSource.MEDICARE_PART_A_HI_TRUST_FUND) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSource',
-            <ReadOnlySection
-              heading={paymentsT('fundingSourceMedicareAInfo.label')}
-              copy={fundingSourceMedicareAInfo}
-            />
-          )}
-
-        {fundingSource?.includes(
-          FundingSource.MEDICARE_PART_B_SMI_TRUST_FUND
-        ) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSource',
-            <ReadOnlySection
-              heading={paymentsT('fundingSourceMedicareBInfo.label')}
-              copy={fundingSourceMedicareBInfo}
-            />
-          )}
 
         {fundingSourceNote &&
           checkGroupMap(
@@ -207,35 +188,17 @@ const ReadOnlyPayments = ({
             listItems={fundingSourceR?.map((type): string =>
               paymentsT(`fundingSourceR.options.${type}`)
             )}
-            listOtherItem={fundingSourceROther}
+            listOtherItems={[
+              null,
+              fundingSourceRMedicareAInfo,
+              fundingSourceRMedicareBInfo,
+              fundingSourceROther
+            ].filter(item => item)}
+            tooltips={fundingSourceR?.map((type): string =>
+              paymentsT(`fundingSourceR.optionsLabels.${type}`)
+            )}
           />
         )}
-
-        {fundingSourceR?.includes(
-          FundingSource.MEDICARE_PART_A_HI_TRUST_FUND
-        ) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSourceR',
-            <ReadOnlySection
-              heading={paymentsT('fundingSourceRMedicareAInfo.label')}
-              copy={fundingSourceRMedicareAInfo}
-            />
-          )}
-
-        {fundingSourceR?.includes(
-          FundingSource.MEDICARE_PART_B_SMI_TRUST_FUND
-        ) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSourceR',
-            <ReadOnlySection
-              heading={paymentsT('fundingSourceRMedicareBInfo.label')}
-              copy={fundingSourceRMedicareBInfo}
-            />
-          )}
 
         {fundingSourceRNote &&
           checkGroupMap(
