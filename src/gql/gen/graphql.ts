@@ -185,6 +185,7 @@ export enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS = 'ADJUSTMENTS_TO_FFS_PAYMENTS',
   CARE_MANAGEMENT_HOME_VISITS = 'CARE_MANAGEMENT_HOME_VISITS',
   OTHER = 'OTHER',
+  PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS = 'PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS',
   REDUCTIONS_TO_BENEFICIARY_COST_SHARING = 'REDUCTIONS_TO_BENEFICIARY_COST_SHARING',
   SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE = 'SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE',
   SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS = 'SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS',
@@ -1569,7 +1570,6 @@ export type PlanGeneralCharacteristicsChanges = {
   communityPartnersInvolvedDescription?: InputMaybe<Scalars['String']['input']>;
   communityPartnersInvolvedNote?: InputMaybe<Scalars['String']['input']>;
   currentModelPlanID?: InputMaybe<Scalars['UUID']['input']>;
-  existingModel?: InputMaybe<Scalars['String']['input']>;
   existingModelID?: InputMaybe<Scalars['Int']['input']>;
   geographiesTargeted?: InputMaybe<Scalars['Boolean']['input']>;
   geographiesTargetedAppliedTo?: InputMaybe<Array<GeographyApplication>>;
@@ -2606,6 +2606,13 @@ export enum WaiverType {
   PROGRAM_PAYMENT = 'PROGRAM_PAYMENT'
 }
 
+export type GetAllBasicsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAllBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmsOther?: string | null, cmmiGroups: Array<CmmiGroup>, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, status: TaskStatus } } };
+
 export type GetBasicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -2644,6 +2651,13 @@ export type UpdateModelPlanAndBasicsMutationVariables = Exact<{
 
 
 export type UpdateModelPlanAndBasicsMutation = { __typename: 'Mutation', updateModelPlan: { __typename: 'ModelPlan', id: UUID }, updatePlanBasics: { __typename: 'PlanBasics', id: UUID } };
+
+export type GetAllBeneficiariesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAllBeneficiariesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, modelPlanID: UUID, beneficiaries: Array<BeneficiariesType>, diseaseSpecificGroup?: string | null, beneficiariesOther?: string | null, beneficiariesNote?: string | null, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, beneficiarySelectionOther?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyOther?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules?: string | null, status: TaskStatus } } };
 
 export type GetBeneficiaryIdentificationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2696,6 +2710,13 @@ export type CreatSendFeedbackMutationVariables = Exact<{
 export type CreatSendFeedbackMutation = { __typename: 'Mutation', sendFeedbackEmail: boolean };
 
 export type ReadyForReviewUserFragmentFragment = { __typename: 'UserAccount', id: UUID, commonName: string };
+
+export type GetAllGeneralCharacteristicsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAllGeneralCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, existingModelLinks: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModel?: { __typename: 'ExistingModel', id?: number | null, modelName?: string | null } | null, currentModelPlan?: { __typename: 'ModelPlan', id: UUID, modelName: string } | null }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: boolean | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, keyCharacteristicsNote?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, status: TaskStatus } } };
 
 export type GetAuthorityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2765,6 +2786,13 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
+
+export type GetAllOpsEvalAndLearningQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: boolean | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<DataFrequencyType>, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<DataFrequencyType>, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
 
 export type GetCcwAndQualityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2837,6 +2865,13 @@ export type UpdatePlanOpsEvalAndLearningMutationVariables = Exact<{
 
 export type UpdatePlanOpsEvalAndLearningMutation = { __typename: 'Mutation', updatePlanOpsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID } };
 
+export type GetAllParticipantsAndProvidersQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAllParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, participantAssumeRisk?: boolean | null, riskType?: ParticipantRiskType | null, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, providerAdditionFrequency?: FrequencyType | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, status: TaskStatus } } };
+
 export type GetCommunicationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -2880,12 +2915,61 @@ export type UpdatePlanParticipantsAndProvidersMutationVariables = Exact<{
 
 export type UpdatePlanParticipantsAndProvidersMutation = { __typename: 'Mutation', updatePlanParticipantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID } };
 
+export type GetAllPaymentsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<AnticipatedPaymentFrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
+
+export type GetAnticipateDependenciesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAnticipateDependenciesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null } } };
+
+export type GetBeneficiaryCostSharingQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetBeneficiaryCostSharingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null } } };
+
+export type GetClaimsBasedPaymentQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
+export type GetComplexityQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetComplexityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<AnticipatedPaymentFrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null } } };
+
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
 export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
+export type GetNonClaimsBasedPaymentQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetNonClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+
+export type GetRecoverQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetRecoverQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type UpdatePaymentsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2916,6 +3000,75 @@ export const ReadyForReviewUserFragmentFragmentDoc = gql`
   commonName
 }
     `;
+export const GetAllBasicsDocument = gql`
+    query GetAllBasics($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    nameHistory(sort: DESC)
+    basics {
+      id
+      demoCode
+      amsModelID
+      modelCategory
+      additionalModelCategories
+      cmsCenters
+      cmsOther
+      cmmiGroups
+      modelType
+      problem
+      goal
+      testInterventions
+      note
+      completeICIP
+      clearanceStarts
+      clearanceEnds
+      announced
+      applicationsStart
+      applicationsEnd
+      performancePeriodStarts
+      performancePeriodEnds
+      wrapUpEnds
+      highLevelNote
+      phasedIn
+      phasedInNote
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllBasicsQuery__
+ *
+ * To run a query within a React component, call `useGetAllBasicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllBasicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllBasicsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAllBasicsQuery(baseOptions: Apollo.QueryHookOptions<GetAllBasicsQuery, GetAllBasicsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllBasicsQuery, GetAllBasicsQueryVariables>(GetAllBasicsDocument, options);
+      }
+export function useGetAllBasicsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllBasicsQuery, GetAllBasicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllBasicsQuery, GetAllBasicsQueryVariables>(GetAllBasicsDocument, options);
+        }
+export function useGetAllBasicsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllBasicsQuery, GetAllBasicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllBasicsQuery, GetAllBasicsQueryVariables>(GetAllBasicsDocument, options);
+        }
+export type GetAllBasicsQueryHookResult = ReturnType<typeof useGetAllBasicsQuery>;
+export type GetAllBasicsLazyQueryHookResult = ReturnType<typeof useGetAllBasicsLazyQuery>;
+export type GetAllBasicsSuspenseQueryHookResult = ReturnType<typeof useGetAllBasicsSuspenseQuery>;
+export type GetAllBasicsQueryResult = Apollo.QueryResult<GetAllBasicsQuery, GetAllBasicsQueryVariables>;
 export const GetBasicsDocument = gql`
     query GetBasics($id: UUID!) {
   modelPlan(id: $id) {
@@ -3152,6 +3305,73 @@ export function useUpdateModelPlanAndBasicsMutation(baseOptions?: Apollo.Mutatio
 export type UpdateModelPlanAndBasicsMutationHookResult = ReturnType<typeof useUpdateModelPlanAndBasicsMutation>;
 export type UpdateModelPlanAndBasicsMutationResult = Apollo.MutationResult<UpdateModelPlanAndBasicsMutation>;
 export type UpdateModelPlanAndBasicsMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanAndBasicsMutation, UpdateModelPlanAndBasicsMutationVariables>;
+export const GetAllBeneficiariesDocument = gql`
+    query GetAllBeneficiaries($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    beneficiaries {
+      id
+      modelPlanID
+      beneficiaries
+      diseaseSpecificGroup
+      beneficiariesOther
+      beneficiariesNote
+      treatDualElligibleDifferent
+      treatDualElligibleDifferentHow
+      treatDualElligibleDifferentNote
+      excludeCertainCharacteristics
+      excludeCertainCharacteristicsCriteria
+      excludeCertainCharacteristicsNote
+      numberPeopleImpacted
+      estimateConfidence
+      confidenceNote
+      beneficiarySelectionMethod
+      beneficiarySelectionOther
+      beneficiarySelectionNote
+      beneficiarySelectionFrequency
+      beneficiarySelectionFrequencyOther
+      beneficiarySelectionFrequencyNote
+      beneficiaryOverlap
+      beneficiaryOverlapNote
+      precedenceRules
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllBeneficiariesQuery__
+ *
+ * To run a query within a React component, call `useGetAllBeneficiariesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllBeneficiariesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllBeneficiariesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAllBeneficiariesQuery(baseOptions: Apollo.QueryHookOptions<GetAllBeneficiariesQuery, GetAllBeneficiariesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllBeneficiariesQuery, GetAllBeneficiariesQueryVariables>(GetAllBeneficiariesDocument, options);
+      }
+export function useGetAllBeneficiariesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllBeneficiariesQuery, GetAllBeneficiariesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllBeneficiariesQuery, GetAllBeneficiariesQueryVariables>(GetAllBeneficiariesDocument, options);
+        }
+export function useGetAllBeneficiariesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllBeneficiariesQuery, GetAllBeneficiariesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllBeneficiariesQuery, GetAllBeneficiariesQueryVariables>(GetAllBeneficiariesDocument, options);
+        }
+export type GetAllBeneficiariesQueryHookResult = ReturnType<typeof useGetAllBeneficiariesQuery>;
+export type GetAllBeneficiariesLazyQueryHookResult = ReturnType<typeof useGetAllBeneficiariesLazyQuery>;
+export type GetAllBeneficiariesSuspenseQueryHookResult = ReturnType<typeof useGetAllBeneficiariesSuspenseQuery>;
+export type GetAllBeneficiariesQueryResult = Apollo.QueryResult<GetAllBeneficiariesQuery, GetAllBeneficiariesQueryVariables>;
 export const GetBeneficiaryIdentificationDocument = gql`
     query GetBeneficiaryIdentification($id: UUID!) {
   modelPlan(id: $id) {
@@ -3445,6 +3665,110 @@ export function useCreatSendFeedbackMutation(baseOptions?: Apollo.MutationHookOp
 export type CreatSendFeedbackMutationHookResult = ReturnType<typeof useCreatSendFeedbackMutation>;
 export type CreatSendFeedbackMutationResult = Apollo.MutationResult<CreatSendFeedbackMutation>;
 export type CreatSendFeedbackMutationOptions = Apollo.BaseMutationOptions<CreatSendFeedbackMutation, CreatSendFeedbackMutationVariables>;
+export const GetAllGeneralCharacteristicsDocument = gql`
+    query GetAllGeneralCharacteristics($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    existingModelLinks {
+      id
+      existingModel {
+        id
+        modelName
+      }
+      currentModelPlan {
+        id
+        modelName
+      }
+    }
+    generalCharacteristics {
+      id
+      isNewModel
+      existingModel
+      resemblesExistingModel
+      resemblesExistingModelHow
+      resemblesExistingModelNote
+      hasComponentsOrTracks
+      hasComponentsOrTracksDiffer
+      hasComponentsOrTracksNote
+      alternativePaymentModelTypes
+      alternativePaymentModelNote
+      keyCharacteristics
+      keyCharacteristicsOther
+      keyCharacteristicsNote
+      collectPlanBids
+      collectPlanBidsNote
+      managePartCDEnrollment
+      managePartCDEnrollmentNote
+      planContractUpdated
+      planContractUpdatedNote
+      careCoordinationInvolved
+      careCoordinationInvolvedDescription
+      careCoordinationInvolvedNote
+      additionalServicesInvolved
+      additionalServicesInvolvedDescription
+      additionalServicesInvolvedNote
+      communityPartnersInvolved
+      communityPartnersInvolvedDescription
+      communityPartnersInvolvedNote
+      geographiesTargeted
+      geographiesTargetedTypes
+      geographiesTargetedTypesOther
+      geographiesTargetedAppliedTo
+      geographiesTargetedAppliedToOther
+      geographiesTargetedNote
+      participationOptions
+      participationOptionsNote
+      agreementTypes
+      agreementTypesOther
+      multiplePatricipationAgreementsNeeded
+      multiplePatricipationAgreementsNeededNote
+      rulemakingRequired
+      rulemakingRequiredDescription
+      rulemakingRequiredNote
+      authorityAllowances
+      authorityAllowancesOther
+      authorityAllowancesNote
+      waiversRequired
+      waiversRequiredTypes
+      waiversRequiredNote
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllGeneralCharacteristicsQuery__
+ *
+ * To run a query within a React component, call `useGetAllGeneralCharacteristicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllGeneralCharacteristicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllGeneralCharacteristicsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAllGeneralCharacteristicsQuery(baseOptions: Apollo.QueryHookOptions<GetAllGeneralCharacteristicsQuery, GetAllGeneralCharacteristicsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllGeneralCharacteristicsQuery, GetAllGeneralCharacteristicsQueryVariables>(GetAllGeneralCharacteristicsDocument, options);
+      }
+export function useGetAllGeneralCharacteristicsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllGeneralCharacteristicsQuery, GetAllGeneralCharacteristicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllGeneralCharacteristicsQuery, GetAllGeneralCharacteristicsQueryVariables>(GetAllGeneralCharacteristicsDocument, options);
+        }
+export function useGetAllGeneralCharacteristicsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllGeneralCharacteristicsQuery, GetAllGeneralCharacteristicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllGeneralCharacteristicsQuery, GetAllGeneralCharacteristicsQueryVariables>(GetAllGeneralCharacteristicsDocument, options);
+        }
+export type GetAllGeneralCharacteristicsQueryHookResult = ReturnType<typeof useGetAllGeneralCharacteristicsQuery>;
+export type GetAllGeneralCharacteristicsLazyQueryHookResult = ReturnType<typeof useGetAllGeneralCharacteristicsLazyQuery>;
+export type GetAllGeneralCharacteristicsSuspenseQueryHookResult = ReturnType<typeof useGetAllGeneralCharacteristicsSuspenseQuery>;
+export type GetAllGeneralCharacteristicsQueryResult = Apollo.QueryResult<GetAllGeneralCharacteristicsQuery, GetAllGeneralCharacteristicsQueryVariables>;
 export const GetAuthorityDocument = gql`
     query GetAuthority($id: UUID!) {
   modelPlan(id: $id) {
@@ -3932,6 +4256,144 @@ export type GetNdaQueryHookResult = ReturnType<typeof useGetNdaQuery>;
 export type GetNdaLazyQueryHookResult = ReturnType<typeof useGetNdaLazyQuery>;
 export type GetNdaSuspenseQueryHookResult = ReturnType<typeof useGetNdaSuspenseQuery>;
 export type GetNdaQueryResult = Apollo.QueryResult<GetNdaQuery, GetNdaQueryVariables>;
+export const GetAllOpsEvalAndLearningDocument = gql`
+    query GetAllOpsEvalAndLearning($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    opsEvalAndLearning {
+      id
+      modelPlanID
+      agencyOrStateHelp
+      agencyOrStateHelpOther
+      agencyOrStateHelpNote
+      stakeholders
+      stakeholdersOther
+      stakeholdersNote
+      helpdeskUse
+      helpdeskUseNote
+      contractorSupport
+      contractorSupportOther
+      contractorSupportHow
+      contractorSupportNote
+      iddocSupport
+      iddocSupportNote
+      technicalContactsIdentified
+      technicalContactsIdentifiedDetail
+      technicalContactsIdentifiedNote
+      captureParticipantInfo
+      captureParticipantInfoNote
+      icdOwner
+      draftIcdDueDate
+      icdNote
+      uatNeeds
+      stcNeeds
+      testingTimelines
+      testingNote
+      dataMonitoringFileTypes
+      dataMonitoringFileOther
+      dataResponseType
+      dataResponseFileFrequency
+      dataFullTimeOrIncremental
+      eftSetUp
+      unsolicitedAdjustmentsIncluded
+      dataFlowDiagramsNeeded
+      produceBenefitEnhancementFiles
+      fileNamingConventions
+      dataMonitoringNote
+      benchmarkForPerformance
+      benchmarkForPerformanceNote
+      computePerformanceScores
+      computePerformanceScoresNote
+      riskAdjustPerformance
+      riskAdjustFeedback
+      riskAdjustPayments
+      riskAdjustOther
+      riskAdjustNote
+      appealPerformance
+      appealFeedback
+      appealPayments
+      appealOther
+      appealNote
+      evaluationApproaches
+      evaluationApproachOther
+      evalutaionApproachNote
+      ccmInvolvment
+      ccmInvolvmentOther
+      ccmInvolvmentNote
+      dataNeededForMonitoring
+      dataNeededForMonitoringOther
+      dataNeededForMonitoringNote
+      dataToSendParticicipants
+      dataToSendParticicipantsOther
+      dataToSendParticicipantsNote
+      shareCclfData
+      shareCclfDataNote
+      sendFilesBetweenCcw
+      sendFilesBetweenCcwNote
+      appToSendFilesToKnown
+      appToSendFilesToWhich
+      appToSendFilesToNote
+      useCcwForFileDistribiutionToParticipants
+      useCcwForFileDistribiutionToParticipantsNote
+      developNewQualityMeasures
+      developNewQualityMeasuresNote
+      qualityPerformanceImpactsPayment
+      qualityPerformanceImpactsPaymentNote
+      dataSharingStarts
+      dataSharingStartsOther
+      dataSharingFrequency
+      dataSharingFrequencyOther
+      dataSharingStartsNote
+      dataCollectionStarts
+      dataCollectionStartsOther
+      dataCollectionFrequency
+      dataCollectionFrequencyOther
+      dataCollectionFrequencyNote
+      qualityReportingStarts
+      qualityReportingStartsOther
+      qualityReportingStartsNote
+      modelLearningSystems
+      modelLearningSystemsOther
+      modelLearningSystemsNote
+      anticipatedChallenges
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllOpsEvalAndLearningQuery__
+ *
+ * To run a query within a React component, call `useGetAllOpsEvalAndLearningQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllOpsEvalAndLearningQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllOpsEvalAndLearningQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAllOpsEvalAndLearningQuery(baseOptions: Apollo.QueryHookOptions<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>(GetAllOpsEvalAndLearningDocument, options);
+      }
+export function useGetAllOpsEvalAndLearningLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>(GetAllOpsEvalAndLearningDocument, options);
+        }
+export function useGetAllOpsEvalAndLearningSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>(GetAllOpsEvalAndLearningDocument, options);
+        }
+export type GetAllOpsEvalAndLearningQueryHookResult = ReturnType<typeof useGetAllOpsEvalAndLearningQuery>;
+export type GetAllOpsEvalAndLearningLazyQueryHookResult = ReturnType<typeof useGetAllOpsEvalAndLearningLazyQuery>;
+export type GetAllOpsEvalAndLearningSuspenseQueryHookResult = ReturnType<typeof useGetAllOpsEvalAndLearningSuspenseQuery>;
+export type GetAllOpsEvalAndLearningQueryResult = Apollo.QueryResult<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>;
 export const GetCcwAndQualityDocument = gql`
     query GetCCWAndQuality($id: UUID!) {
   modelPlan(id: $id) {
@@ -4504,6 +4966,96 @@ export function useUpdatePlanOpsEvalAndLearningMutation(baseOptions?: Apollo.Mut
 export type UpdatePlanOpsEvalAndLearningMutationHookResult = ReturnType<typeof useUpdatePlanOpsEvalAndLearningMutation>;
 export type UpdatePlanOpsEvalAndLearningMutationResult = Apollo.MutationResult<UpdatePlanOpsEvalAndLearningMutation>;
 export type UpdatePlanOpsEvalAndLearningMutationOptions = Apollo.BaseMutationOptions<UpdatePlanOpsEvalAndLearningMutation, UpdatePlanOpsEvalAndLearningMutationVariables>;
+export const GetAllParticipantsAndProvidersDocument = gql`
+    query GetAllParticipantsAndProviders($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    participantsAndProviders {
+      id
+      participants
+      medicareProviderType
+      statesEngagement
+      participantsOther
+      participantsNote
+      participantsCurrentlyInModels
+      participantsCurrentlyInModelsNote
+      modelApplicationLevel
+      expectedNumberOfParticipants
+      estimateConfidence
+      confidenceNote
+      recruitmentMethod
+      recruitmentOther
+      recruitmentNote
+      selectionMethod
+      selectionOther
+      selectionNote
+      communicationMethod
+      communicationMethodOther
+      communicationNote
+      participantAssumeRisk
+      riskType
+      riskOther
+      riskNote
+      willRiskChange
+      willRiskChangeNote
+      coordinateWork
+      coordinateWorkNote
+      gainsharePayments
+      gainsharePaymentsTrack
+      gainsharePaymentsNote
+      participantsIds
+      participantsIdsOther
+      participantsIDSNote
+      providerAdditionFrequency
+      providerAdditionFrequencyOther
+      providerAdditionFrequencyNote
+      providerAddMethod
+      providerAddMethodOther
+      providerAddMethodNote
+      providerLeaveMethod
+      providerLeaveMethodOther
+      providerLeaveMethodNote
+      providerOverlap
+      providerOverlapHierarchy
+      providerOverlapNote
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllParticipantsAndProvidersQuery__
+ *
+ * To run a query within a React component, call `useGetAllParticipantsAndProvidersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllParticipantsAndProvidersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllParticipantsAndProvidersQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAllParticipantsAndProvidersQuery(baseOptions: Apollo.QueryHookOptions<GetAllParticipantsAndProvidersQuery, GetAllParticipantsAndProvidersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllParticipantsAndProvidersQuery, GetAllParticipantsAndProvidersQueryVariables>(GetAllParticipantsAndProvidersDocument, options);
+      }
+export function useGetAllParticipantsAndProvidersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllParticipantsAndProvidersQuery, GetAllParticipantsAndProvidersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllParticipantsAndProvidersQuery, GetAllParticipantsAndProvidersQueryVariables>(GetAllParticipantsAndProvidersDocument, options);
+        }
+export function useGetAllParticipantsAndProvidersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllParticipantsAndProvidersQuery, GetAllParticipantsAndProvidersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllParticipantsAndProvidersQuery, GetAllParticipantsAndProvidersQueryVariables>(GetAllParticipantsAndProvidersDocument, options);
+        }
+export type GetAllParticipantsAndProvidersQueryHookResult = ReturnType<typeof useGetAllParticipantsAndProvidersQuery>;
+export type GetAllParticipantsAndProvidersLazyQueryHookResult = ReturnType<typeof useGetAllParticipantsAndProvidersLazyQuery>;
+export type GetAllParticipantsAndProvidersSuspenseQueryHookResult = ReturnType<typeof useGetAllParticipantsAndProvidersSuspenseQuery>;
+export type GetAllParticipantsAndProvidersQueryResult = Apollo.QueryResult<GetAllParticipantsAndProvidersQuery, GetAllParticipantsAndProvidersQueryVariables>;
 export const GetCommunicationDocument = gql`
     query GetCommunication($id: UUID!) {
   modelPlan(id: $id) {
@@ -4824,6 +5376,324 @@ export function useUpdatePlanParticipantsAndProvidersMutation(baseOptions?: Apol
 export type UpdatePlanParticipantsAndProvidersMutationHookResult = ReturnType<typeof useUpdatePlanParticipantsAndProvidersMutation>;
 export type UpdatePlanParticipantsAndProvidersMutationResult = Apollo.MutationResult<UpdatePlanParticipantsAndProvidersMutation>;
 export type UpdatePlanParticipantsAndProvidersMutationOptions = Apollo.BaseMutationOptions<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>;
+export const GetAllPaymentsDocument = gql`
+    query GetAllPayments($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    payments {
+      fundingSource
+      fundingSourceTrustFundType
+      fundingSourceOther
+      fundingSourceNote
+      fundingSourceR
+      fundingSourceRTrustFundType
+      fundingSourceROther
+      fundingSourceRNote
+      payRecipients
+      payRecipientsOtherSpecification
+      payRecipientsNote
+      payType
+      payTypeNote
+      payClaims
+      payClaimsOther
+      payClaimsNote
+      shouldAnyProvidersExcludedFFSSystems
+      shouldAnyProviderExcludedFFSSystemsNote
+      changesMedicarePhysicianFeeSchedule
+      changesMedicarePhysicianFeeScheduleNote
+      affectsMedicareSecondaryPayerClaims
+      affectsMedicareSecondaryPayerClaimsHow
+      affectsMedicareSecondaryPayerClaimsNote
+      payModelDifferentiation
+      creatingDependenciesBetweenServices
+      creatingDependenciesBetweenServicesNote
+      needsClaimsDataCollection
+      needsClaimsDataCollectionNote
+      providingThirdPartyFile
+      isContractorAwareTestDataRequirements
+      beneficiaryCostSharingLevelAndHandling
+      waiveBeneficiaryCostSharingForAnyServices
+      waiveBeneficiaryCostSharingServiceSpecification
+      waiverOnlyAppliesPartOfPayment
+      waiveBeneficiaryCostSharingNote
+      nonClaimsPayments
+      nonClaimsPaymentsNote
+      nonClaimsPaymentOther
+      paymentCalculationOwner
+      numberPaymentsPerPayCycle
+      numberPaymentsPerPayCycleNote
+      sharedSystemsInvolvedAdditionalClaimPayment
+      sharedSystemsInvolvedAdditionalClaimPaymentNote
+      planningToUseInnovationPaymentContractor
+      planningToUseInnovationPaymentContractorNote
+      expectedCalculationComplexityLevel
+      expectedCalculationComplexityLevelNote
+      canParticipantsSelectBetweenPaymentMechanisms
+      canParticipantsSelectBetweenPaymentMechanismsHow
+      canParticipantsSelectBetweenPaymentMechanismsNote
+      anticipatedPaymentFrequency
+      anticipatedPaymentFrequencyOther
+      anticipatedPaymentFrequencyNote
+      willRecoverPayments
+      willRecoverPaymentsNote
+      anticipateReconcilingPaymentsRetrospectively
+      anticipateReconcilingPaymentsRetrospectivelyNote
+      paymentStartDate
+      paymentStartDateNote
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllPaymentsQuery__
+ *
+ * To run a query within a React component, call `useGetAllPaymentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPaymentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllPaymentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAllPaymentsQuery(baseOptions: Apollo.QueryHookOptions<GetAllPaymentsQuery, GetAllPaymentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllPaymentsQuery, GetAllPaymentsQueryVariables>(GetAllPaymentsDocument, options);
+      }
+export function useGetAllPaymentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllPaymentsQuery, GetAllPaymentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllPaymentsQuery, GetAllPaymentsQueryVariables>(GetAllPaymentsDocument, options);
+        }
+export function useGetAllPaymentsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllPaymentsQuery, GetAllPaymentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllPaymentsQuery, GetAllPaymentsQueryVariables>(GetAllPaymentsDocument, options);
+        }
+export type GetAllPaymentsQueryHookResult = ReturnType<typeof useGetAllPaymentsQuery>;
+export type GetAllPaymentsLazyQueryHookResult = ReturnType<typeof useGetAllPaymentsLazyQuery>;
+export type GetAllPaymentsSuspenseQueryHookResult = ReturnType<typeof useGetAllPaymentsSuspenseQuery>;
+export type GetAllPaymentsQueryResult = Apollo.QueryResult<GetAllPaymentsQuery, GetAllPaymentsQueryVariables>;
+export const GetAnticipateDependenciesDocument = gql`
+    query GetAnticipateDependencies($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      creatingDependenciesBetweenServices
+      creatingDependenciesBetweenServicesNote
+      needsClaimsDataCollection
+      needsClaimsDataCollectionNote
+      providingThirdPartyFile
+      isContractorAwareTestDataRequirements
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAnticipateDependenciesQuery__
+ *
+ * To run a query within a React component, call `useGetAnticipateDependenciesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnticipateDependenciesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAnticipateDependenciesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAnticipateDependenciesQuery(baseOptions: Apollo.QueryHookOptions<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>(GetAnticipateDependenciesDocument, options);
+      }
+export function useGetAnticipateDependenciesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>(GetAnticipateDependenciesDocument, options);
+        }
+export function useGetAnticipateDependenciesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>(GetAnticipateDependenciesDocument, options);
+        }
+export type GetAnticipateDependenciesQueryHookResult = ReturnType<typeof useGetAnticipateDependenciesQuery>;
+export type GetAnticipateDependenciesLazyQueryHookResult = ReturnType<typeof useGetAnticipateDependenciesLazyQuery>;
+export type GetAnticipateDependenciesSuspenseQueryHookResult = ReturnType<typeof useGetAnticipateDependenciesSuspenseQuery>;
+export type GetAnticipateDependenciesQueryResult = Apollo.QueryResult<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>;
+export const GetBeneficiaryCostSharingDocument = gql`
+    query GetBeneficiaryCostSharing($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      beneficiaryCostSharingLevelAndHandling
+      waiveBeneficiaryCostSharingForAnyServices
+      waiveBeneficiaryCostSharingServiceSpecification
+      waiverOnlyAppliesPartOfPayment
+      waiveBeneficiaryCostSharingNote
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBeneficiaryCostSharingQuery__
+ *
+ * To run a query within a React component, call `useGetBeneficiaryCostSharingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBeneficiaryCostSharingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBeneficiaryCostSharingQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetBeneficiaryCostSharingQuery(baseOptions: Apollo.QueryHookOptions<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>(GetBeneficiaryCostSharingDocument, options);
+      }
+export function useGetBeneficiaryCostSharingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>(GetBeneficiaryCostSharingDocument, options);
+        }
+export function useGetBeneficiaryCostSharingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>(GetBeneficiaryCostSharingDocument, options);
+        }
+export type GetBeneficiaryCostSharingQueryHookResult = ReturnType<typeof useGetBeneficiaryCostSharingQuery>;
+export type GetBeneficiaryCostSharingLazyQueryHookResult = ReturnType<typeof useGetBeneficiaryCostSharingLazyQuery>;
+export type GetBeneficiaryCostSharingSuspenseQueryHookResult = ReturnType<typeof useGetBeneficiaryCostSharingSuspenseQuery>;
+export type GetBeneficiaryCostSharingQueryResult = Apollo.QueryResult<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>;
+export const GetClaimsBasedPaymentDocument = gql`
+    query GetClaimsBasedPayment($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      payClaimsNote
+      payClaimsOther
+      shouldAnyProvidersExcludedFFSSystems
+      shouldAnyProviderExcludedFFSSystemsNote
+      changesMedicarePhysicianFeeSchedule
+      changesMedicarePhysicianFeeScheduleNote
+      affectsMedicareSecondaryPayerClaims
+      affectsMedicareSecondaryPayerClaimsHow
+      affectsMedicareSecondaryPayerClaimsNote
+      payModelDifferentiation
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetClaimsBasedPaymentQuery__
+ *
+ * To run a query within a React component, call `useGetClaimsBasedPaymentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetClaimsBasedPaymentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetClaimsBasedPaymentQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetClaimsBasedPaymentQuery(baseOptions: Apollo.QueryHookOptions<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>(GetClaimsBasedPaymentDocument, options);
+      }
+export function useGetClaimsBasedPaymentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>(GetClaimsBasedPaymentDocument, options);
+        }
+export function useGetClaimsBasedPaymentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>(GetClaimsBasedPaymentDocument, options);
+        }
+export type GetClaimsBasedPaymentQueryHookResult = ReturnType<typeof useGetClaimsBasedPaymentQuery>;
+export type GetClaimsBasedPaymentLazyQueryHookResult = ReturnType<typeof useGetClaimsBasedPaymentLazyQuery>;
+export type GetClaimsBasedPaymentSuspenseQueryHookResult = ReturnType<typeof useGetClaimsBasedPaymentSuspenseQuery>;
+export type GetClaimsBasedPaymentQueryResult = Apollo.QueryResult<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>;
+export const GetComplexityDocument = gql`
+    query GetComplexity($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      expectedCalculationComplexityLevel
+      expectedCalculationComplexityLevelNote
+      canParticipantsSelectBetweenPaymentMechanisms
+      canParticipantsSelectBetweenPaymentMechanismsHow
+      canParticipantsSelectBetweenPaymentMechanismsNote
+      anticipatedPaymentFrequency
+      anticipatedPaymentFrequencyOther
+      anticipatedPaymentFrequencyNote
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetComplexityQuery__
+ *
+ * To run a query within a React component, call `useGetComplexityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetComplexityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetComplexityQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetComplexityQuery(baseOptions: Apollo.QueryHookOptions<GetComplexityQuery, GetComplexityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetComplexityQuery, GetComplexityQueryVariables>(GetComplexityDocument, options);
+      }
+export function useGetComplexityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetComplexityQuery, GetComplexityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetComplexityQuery, GetComplexityQueryVariables>(GetComplexityDocument, options);
+        }
+export function useGetComplexitySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetComplexityQuery, GetComplexityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetComplexityQuery, GetComplexityQueryVariables>(GetComplexityDocument, options);
+        }
+export type GetComplexityQueryHookResult = ReturnType<typeof useGetComplexityQuery>;
+export type GetComplexityLazyQueryHookResult = ReturnType<typeof useGetComplexityLazyQuery>;
+export type GetComplexitySuspenseQueryHookResult = ReturnType<typeof useGetComplexitySuspenseQuery>;
+export type GetComplexityQueryResult = Apollo.QueryResult<GetComplexityQuery, GetComplexityQueryVariables>;
 export const GetFundingDocument = gql`
     query GetFunding($id: UUID!) {
   modelPlan(id: $id) {
@@ -4885,6 +5755,127 @@ export type GetFundingQueryHookResult = ReturnType<typeof useGetFundingQuery>;
 export type GetFundingLazyQueryHookResult = ReturnType<typeof useGetFundingLazyQuery>;
 export type GetFundingSuspenseQueryHookResult = ReturnType<typeof useGetFundingSuspenseQuery>;
 export type GetFundingQueryResult = Apollo.QueryResult<GetFundingQuery, GetFundingQueryVariables>;
+export const GetNonClaimsBasedPaymentDocument = gql`
+    query GetNonClaimsBasedPayment($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      nonClaimsPayments
+      nonClaimsPaymentsNote
+      nonClaimsPaymentOther
+      paymentCalculationOwner
+      numberPaymentsPerPayCycle
+      numberPaymentsPerPayCycleNote
+      sharedSystemsInvolvedAdditionalClaimPayment
+      sharedSystemsInvolvedAdditionalClaimPaymentNote
+      planningToUseInnovationPaymentContractor
+      planningToUseInnovationPaymentContractorNote
+    }
+    operationalNeeds {
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNonClaimsBasedPaymentQuery__
+ *
+ * To run a query within a React component, call `useGetNonClaimsBasedPaymentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNonClaimsBasedPaymentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNonClaimsBasedPaymentQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetNonClaimsBasedPaymentQuery(baseOptions: Apollo.QueryHookOptions<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>(GetNonClaimsBasedPaymentDocument, options);
+      }
+export function useGetNonClaimsBasedPaymentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>(GetNonClaimsBasedPaymentDocument, options);
+        }
+export function useGetNonClaimsBasedPaymentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>(GetNonClaimsBasedPaymentDocument, options);
+        }
+export type GetNonClaimsBasedPaymentQueryHookResult = ReturnType<typeof useGetNonClaimsBasedPaymentQuery>;
+export type GetNonClaimsBasedPaymentLazyQueryHookResult = ReturnType<typeof useGetNonClaimsBasedPaymentLazyQuery>;
+export type GetNonClaimsBasedPaymentSuspenseQueryHookResult = ReturnType<typeof useGetNonClaimsBasedPaymentSuspenseQuery>;
+export type GetNonClaimsBasedPaymentQueryResult = Apollo.QueryResult<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>;
+export const GetRecoverDocument = gql`
+    query GetRecover($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    payments {
+      id
+      payType
+      payClaims
+      willRecoverPayments
+      willRecoverPaymentsNote
+      anticipateReconcilingPaymentsRetrospectively
+      anticipateReconcilingPaymentsRetrospectivelyNote
+      paymentStartDate
+      paymentStartDateNote
+      readyForReviewByUserAccount {
+        id
+        commonName
+      }
+      readyForReviewDts
+      status
+    }
+    operationalNeeds {
+      id
+      modifiedDts
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRecoverQuery__
+ *
+ * To run a query within a React component, call `useGetRecoverQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecoverQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecoverQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetRecoverQuery(baseOptions: Apollo.QueryHookOptions<GetRecoverQuery, GetRecoverQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRecoverQuery, GetRecoverQueryVariables>(GetRecoverDocument, options);
+      }
+export function useGetRecoverLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRecoverQuery, GetRecoverQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRecoverQuery, GetRecoverQueryVariables>(GetRecoverDocument, options);
+        }
+export function useGetRecoverSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetRecoverQuery, GetRecoverQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetRecoverQuery, GetRecoverQueryVariables>(GetRecoverDocument, options);
+        }
+export type GetRecoverQueryHookResult = ReturnType<typeof useGetRecoverQuery>;
+export type GetRecoverLazyQueryHookResult = ReturnType<typeof useGetRecoverLazyQuery>;
+export type GetRecoverSuspenseQueryHookResult = ReturnType<typeof useGetRecoverSuspenseQuery>;
+export type GetRecoverQueryResult = Apollo.QueryResult<GetRecoverQuery, GetRecoverQueryVariables>;
 export const UpdatePaymentsDocument = gql`
     mutation UpdatePayments($id: UUID!, $changes: PlanPaymentsChanges!) {
   updatePlanPayments(id: $id, changes: $changes) {

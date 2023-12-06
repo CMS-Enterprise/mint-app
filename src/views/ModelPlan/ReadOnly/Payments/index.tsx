@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import classNames from 'classnames';
-import { FundingSource } from 'gql/gen/graphql';
+import {
+  ClaimsBasedPayType,
+  FundingSource,
+  PayType,
+  useGetAllPaymentsQuery
+} from 'gql/gen/graphql';
 
-import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
-import { GetAllPayments as GetModelPlanPaymentType } from 'queries/ReadOnly/types/GetAllPayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -31,14 +32,11 @@ const ReadOnlyPayments = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<GetModelPlanPaymentType>(
-    GetAllPayments,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetAllPaymentsQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   if ((!loading && error) || (!loading && !data)) {
     return <NotFoundPartial />;

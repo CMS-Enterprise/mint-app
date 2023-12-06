@@ -310,7 +310,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="display-flex flex-align-center"
                         style="gap: 4px;"
                       >
-                        State-Based
+                        State & Community-Based
                         <span
                           class="usa-tooltip"
                           data-testid="tooltipWrapper"
@@ -343,9 +343,9 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                             data-testid="tooltipBody"
                             id="tooltip-550000"
                             role="tooltip"
-                            title="Models in which a state serves as the main contractual participant"
+                            title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                           >
-                            Models in which a state serves as the main contractual participant
+                            Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                           </span>
                         </span>
                       </span>
@@ -2705,7 +2705,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Disease-specific (based on a diagnosis, procedure code, condition, etc.)
+                      Disease-specific
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
@@ -6603,7 +6603,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         class="display-flex flex-align-center"
                         style="gap: 4px;"
                       >
-                        State-Based
+                        State & Community-Based
                         <span
                           class="usa-tooltip"
                           data-testid="tooltipWrapper"
@@ -6636,9 +6636,9 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                             data-testid="tooltipBody"
                             id="tooltip-550000"
                             role="tooltip"
-                            title="Models in which a state serves as the main contractual participant"
+                            title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                           >
-                            Models in which a state serves as the main contractual participant
+                            Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
                           </span>
                         </span>
                       </span>
@@ -8998,7 +8998,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Disease-specific (based on a diagnosis, procedure code, condition, etc.)
+                      Disease-specific
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"

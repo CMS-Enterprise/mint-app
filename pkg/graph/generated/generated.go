@@ -7546,7 +7546,6 @@ https://gqlgen.com/reference/changesets/
 input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   isNewModel: Boolean
-  existingModel: String
   currentModelPlanID: UUID
   existingModelID: Int
   resemblesExistingModel: Boolean
@@ -9179,6 +9178,7 @@ enum ClaimsBasedPayType {
   SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
   TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
   SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE
+  PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS
   OTHER
 }
 

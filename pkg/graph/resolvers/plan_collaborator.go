@@ -17,26 +17,29 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// CreatePlanCollaborator implements resolver logic to create a plan collaborator
+// CreatePlanCollaboratorTransaction implements resolver logic to create a plan collaborator
 // If the email service or email template service is not provided this method will not
 //
 //	send the collaborator a notification email
 //
 // A plan favorite is created for the collaborating user when the user is added as a collaborator
+// The transaction object does not commit or rollback in the scope of this function
 func CreatePlanCollaborator(
 	ctx context.Context,
+	np storage.NamedPreparer,
+	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
-	store *storage.Store,
 	checkAccess bool,
 	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
+	//TODO make these clustered with store methods?
 
 	isMacUser := false
-	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, input.UserName, false, isMacUser, getAccountInformation)
+	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, np, store, input.UserName, false, isMacUser, getAccountInformation)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -47,17 +50,17 @@ func CreatePlanCollaborator(
 		return nil, nil, err
 	}
 
-	modelPlan, err := store.ModelPlanGetByID(logger, input.ModelPlanID)
+	modelPlan, err := store.ModelPlanGetByID(np, logger, input.ModelPlanID)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
+	retCollaborator, err := store.PlanCollaboratorCreate(np, logger, collaborator)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	planFavorite, err := PlanFavoriteCreate(logger, principal, collabAccount.ID, store, modelPlan.ID)
+	planFavorite, err := PlanFavoriteCreate(np, logger, principal, collabAccount.ID, store, modelPlan.ID)
 	if err != nil {
 		return retCollaborator, nil, err
 	}

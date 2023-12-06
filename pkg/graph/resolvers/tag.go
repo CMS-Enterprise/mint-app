@@ -112,7 +112,7 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 		return fmt.Errorf(" invalid operation. attempted to fetch user account information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
 	}
 	isMacUser := false
-	taggedUserAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
+	taggedUserAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, store, mention.EntityRaw, false, isMacUser, getAccountInformation)
 	if err != nil || taggedUserAccount == nil {
 		return fmt.Errorf("unable to get tagged user account reference. error : %w", err)
 	}
@@ -177,6 +177,5 @@ func TagCollectionCreate(logger *zap.Logger, store *storage.Store, principal aut
 		return nil, tx, err
 	}
 	return retTags, tx2, nil
-	//TODO: EASI-3288 send an email to tagged individuals
 
 }

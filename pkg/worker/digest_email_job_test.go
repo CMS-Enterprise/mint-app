@@ -52,7 +52,7 @@ func (suite *WorkerSuite) TestDigestEmail() {
 		[]models.TeamRole{models.TeamRoleModelLead},
 		"testuser@email.com",
 	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
 	suite.NoError(err)
 
 	var analyzedAudits []*models.AnalyzedAudit
@@ -252,7 +252,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		[]models.TeamRole{models.TeamRoleModelLead},
 		"testuser@email.com",
 	)
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(suite.testConfigs.Store, collaborator.UserID)
 	suite.NoError(err)
 
 	modelNameChange := "Old Name"

@@ -7,21 +7,24 @@ import (
 
 	"github.com/facebookgo/clock"
 	"github.com/jmoiron/sqlx"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	_ "github.com/lib/pq" // required for postgres driver in sqlx
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
 type StoreTestSuite struct {
 	suite.Suite
-	db     *sqlx.DB
-	logger *zap.Logger
-	store  *Store
+	db        *sqlx.DB
+	logger    *zap.Logger
+	store     *Store
+	principal *authentication.ApplicationPrincipal
 }
 
 // EqualTime uses time.Time's Equal() to check for equality
@@ -55,13 +58,63 @@ func TestStoreTestSuite(t *testing.T) {
 		t.Fail()
 	}
 	store.clock = clock.NewMock()
+	princ, err := getTestPrincipal(store, "TestSuiteUserAccount")
+	assert.NoError(t, err)
 
 	storeTestSuite := &StoreTestSuite{
-		Suite:  suite.Suite{},
-		db:     store.db,
-		logger: logger,
-		store:  store,
+		Suite:     suite.Suite{},
+		db:        store.db,
+		logger:    logger,
+		store:     store,
+		principal: princ,
 	}
 
 	suite.Run(t, storeTestSuite)
+}
+
+// getTestPrincipal either inserts a new user account record into the database, or returns the record already in the database
+func getTestPrincipal(store *Store, userName string) (*authentication.ApplicationPrincipal, error) {
+	userAccount, accErr := store.UserAccountGetByUsername(userName)
+	if accErr != nil {
+		return nil, accErr
+	}
+	if userAccount != nil {
+		return &authentication.ApplicationPrincipal{
+			Username:          *userAccount.Username,
+			JobCodeUSER:       true,
+			JobCodeASSESSMENT: true,
+			JobCodeMAC:        false,
+			JobCodeNonCMS:     false,
+			UserAccount:       userAccount,
+		}, nil
+	}
+	// we mock a user account to the DB directly here
+	userAccount = &authentication.UserAccount{
+		Username:    models.StringPointer(userName),
+		IsEUAID:     true,
+		CommonName:  "testTestTest",
+		Locale:      "testTestTest",
+		Email:       "testTestTest",
+		GivenName:   "testTestTest",
+		FamilyName:  "testTestTest",
+		ZoneInfo:    "testTestTest",
+		HasLoggedIn: true,
+	}
+
+	newAccount, newErr := store.UserAccountInsertByUsername(store, userAccount)
+	if newErr != nil {
+		return nil, newErr
+	}
+	// return newAccount, nil
+
+	princ := &authentication.ApplicationPrincipal{
+		Username:          *newAccount.Username,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: true,
+		JobCodeMAC:        false,
+		JobCodeNonCMS:     false,
+		UserAccount:       newAccount,
+	}
+	return princ, nil
+
 }

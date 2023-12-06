@@ -50,10 +50,10 @@ func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserA
 }
 
 // UserAccountGetByID gets a User account from the database by its internal id.
-func (s *Store) UserAccountGetByID(id uuid.UUID) (*authentication.UserAccount, error) {
+func (s *Store) UserAccountGetByID(np NamedPreparer, id uuid.UUID) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	stmt, err := s.db.PrepareNamed(userAccountGetByID)
+	stmt, err := np.PrepareNamed(userAccountGetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -97,18 +97,15 @@ func (s *Store) UserAccountGetByIDLOADER(
 	return userSlice, nil
 }
 
-// UserAccountInsertByUsername creates a new user account for a given EUAID
-func (s *Store) UserAccountInsertByUsername(userAccount *authentication.UserAccount) (
-	*authentication.UserAccount,
-	error,
-) {
+// UserAccountInsertByUsername creates a new user account for a given username
+func (s *Store) UserAccountInsertByUsername(np NamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
 
 	user := &authentication.UserAccount{}
 	if userAccount.ID == uuid.Nil {
 		userAccount.ID = uuid.New()
 	}
 
-	stmt, err := s.db.PrepareNamed(userAccountInsertByUsername)
+	stmt, err := np.PrepareNamed(userAccountInsertByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +120,7 @@ func (s *Store) UserAccountInsertByUsername(userAccount *authentication.UserAcco
 }
 
 // UserAccountUpdateByUserName updates an existing user account for a given username
-func (s *Store) UserAccountUpdateByUserName(userAccount *authentication.UserAccount) (
+func (s *Store) UserAccountUpdateByUserName(np NamedPreparer, userAccount *authentication.UserAccount) (
 	*authentication.UserAccount,
 	error,
 ) {
@@ -133,7 +130,7 @@ func (s *Store) UserAccountUpdateByUserName(userAccount *authentication.UserAcco
 		userAccount.ID = uuid.New()
 	}
 
-	stmt, err := s.db.PrepareNamed(userAccountUpdateByUsername)
+	stmt, err := np.PrepareNamed(userAccountUpdateByUsername)
 	if err != nil {
 		return nil, err
 	}

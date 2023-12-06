@@ -180,14 +180,16 @@ export const payments: TranslationPayments = {
     options: {
       ADJUSTMENTS_TO_FFS_PAYMENTS: 'Adjustments to FFS payments',
       CARE_MANAGEMENT_HOME_VISITS: 'Payments for care management home visits',
-      REDUCTIONS_TO_BENEFICIARY_COST_SHARING:
-        'Reductions to beneficiary cost-sharing',
+      PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS:
+        'Payments for post-discharge home visits',
+      SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE:
+        'Payments for services not covered through Traditional Medicare',
       SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS:
         'Payments for SNF claims without 3-day hospital admissions',
       TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE:
         'Payments for telehealth services not covered through Traditional Medicare',
-      SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE:
-        'Payments for services not covered through Traditional Medicare',
+      REDUCTIONS_TO_BENEFICIARY_COST_SHARING:
+        'Reductions to beneficiary cost-sharing',
       OTHER: 'Other'
     },
     filterGroups: ['cmmi', 'oact']

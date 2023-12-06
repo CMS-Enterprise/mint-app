@@ -62,13 +62,14 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 
 	_, _, err := CreatePlanCollaborator(
 		context.Background(),
+		s.testConfigs.Store,
+		s.testConfigs.Store,
 		s.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
 		addressBook,
 		collaboratorInput,
 		s.testConfigs.Principal,
-		s.testConfigs.Store,
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.stubFetchUserInfo),
 	)

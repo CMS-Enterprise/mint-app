@@ -55,6 +55,8 @@ const (
 	ClaimsBasedPayTypeSNFClaimsWithout3DayHospitalAdmissions ClaimsBasedPayType = "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS"
 	// ClaimsBasedPayTypeTeleHealthServicesNotTraditionalMedicare indicates TeleHealth services not traditional medicare
 	ClaimsBasedPayTypeTeleHealthServicesNotTraditionalMedicare ClaimsBasedPayType = "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE"
+	// ClaimsBasedPayTypePaymentsForPostDischargeHomeVisits indicates payments for post discharge home visits
+	PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS ClaimsBasedPayType = "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS"
 )
 
 // FundingSource is an enumeration of options for this category
