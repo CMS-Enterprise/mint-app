@@ -58,7 +58,6 @@ import {
   TaskStatus,
   TeamRole,
   TriStateAnswer,
-  TrustFundType,
   WaiverType
 } from 'gql/gen/graphql';
 
@@ -493,11 +492,13 @@ export const opsEvalAndLearningMocks = [
 const paymentsData: PaymentTypes = {
   __typename: 'PlanPayments',
   fundingSource: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
-  fundingSourceTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
+  fundingSourceMedicareAInfo: 'PartA',
+  fundingSourceMedicareBInfo: 'PartB',
   fundingSourceOther: 'Other funding source',
   fundingSourceNote: 'Funding source note',
   fundingSourceR: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
-  fundingSourceRTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
+  fundingSourceRMedicareAInfo: 'PartRA',
+  fundingSourceRMedicareBInfo: 'PartRB',
   fundingSourceROther: 'Other funding r',
   fundingSourceRNote: 'Funding r note',
   payRecipients: [PayRecipient.BENEFICIARIES],

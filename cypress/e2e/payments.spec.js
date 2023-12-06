@@ -20,15 +20,13 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-source-TRUST_FUND')
+    cy.get('#payment-funding-source-MEDICARE_PART_A_HI_TRUST_FUND')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get(
-      '#payment-funding-source-fundingSourceTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND'
-    )
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#payment-fundingSource-medicare-a-info')
+      .type('Part A Type')
+      .should('have.value', 'Part A Type');
 
     cy.get('#payment-funding-source-OTHER')
       .check({ force: true })
@@ -44,15 +42,15 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-source-reconciliation-TRUST_FUND')
-      .check({ force: true })
-      .should('be.checked');
-
     cy.get(
-      '#payment-funding-source-fundingSourceRTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND'
+      '#payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND'
     )
       .check({ force: true })
       .should('be.checked');
+
+    cy.get('#payment-fundingSourceR-medicare-a-info')
+      .type('Part A Type R')
+      .should('have.value', 'Part A Type R');
 
     cy.get('#payment-pay-recipients-BENEFICIARIES')
       .check({ force: true })

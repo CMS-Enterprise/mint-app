@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid } from '@trussworks/react-uswds';
+import { Grid, Icon } from '@trussworks/react-uswds';
+
+import Tooltip from 'components/shared/Tooltip';
 
 export type ReadOnlySectionProps = {
   copy?: string | null | React.ReactNode;
@@ -8,6 +10,8 @@ export type ReadOnlySectionProps = {
   list?: boolean;
   listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
+  listOtherItems?: (string | null | undefined)[] | null;
+  tooltips?: (string | null | undefined)[];
   notes?: string | null;
 };
 
@@ -17,6 +21,8 @@ const ReadOnlySection = ({
   list,
   listItems = [],
   listOtherItem,
+  listOtherItems,
+  tooltips,
   notes
 }: ReadOnlySectionProps) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -29,6 +35,35 @@ const ReadOnlySection = ({
     element: string | number | React.ReactElement | React.ReactNode
   ) => {
     return React.isValidElement(element);
+  };
+
+  const renderListItemOther = (otherItem: string | null | undefined) => {
+    if (otherItem) {
+      return otherItem;
+    }
+    return (
+      <li className="font-sans-md line-height-sans-4">
+        <em className="text-base">{miscellaneousT('otherNotSpecified')}</em>
+      </li>
+    );
+  };
+
+  const renderListItemOthers = (index: number, isOther: boolean) => {
+    if (listOtherItems) {
+      if (listOtherItems[index]) {
+        return listOtherItems[index];
+      }
+      return (
+        <li className="font-sans-md line-height-sans-4 ">
+          <em className="text-base">
+            {isOther
+              ? miscellaneousT('otherNotSpecified')
+              : miscellaneousT('noAdditionalInformation')}
+          </em>
+        </li>
+      );
+    }
+    return null;
   };
 
   const renderCopyOrList = () => {
@@ -58,16 +93,23 @@ const ReadOnlySection = ({
               isElement(listItems[index]) ? index : `${sectionName}--${item}`
             }
           >
-            <li className="font-sans-md line-height-sans-4">{item}</li>
-            {item === 'Other' && (
+            <li className="font-sans-md line-height-sans-4 display-flex flex-align-center">
+              {item}
+              {tooltips && tooltips[index] && (
+                <Tooltip
+                  label={tooltips[index]!}
+                  position="right"
+                  className="margin-left-05"
+                >
+                  <Icon.Info className="text-base-light" />
+                </Tooltip>
+              )}
+            </li>
+            {(item === 'Other' || listOtherItems) && (
               <ul data-testid="other-entry">
-                <li className="font-sans-md line-height-sans-4">
-                  {listOtherItem || (
-                    <em className="text-base">
-                      {miscellaneousT('otherNotSpecified')}
-                    </em>
-                  )}
-                </li>
+                {!listOtherItems && renderListItemOther(listOtherItem)}
+                {listOtherItems &&
+                  renderListItemOthers(index, item === 'Other')}
               </ul>
             )}
           </React.Fragment>

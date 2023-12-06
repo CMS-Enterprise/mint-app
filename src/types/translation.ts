@@ -50,7 +50,6 @@ import {
   TaskStatus,
   TeamRole,
   TriStateAnswer,
-  TrustFundType,
   WaiverType
 } from 'gql/gen/graphql';
 
@@ -395,11 +394,13 @@ export type TranslationOpsEvalAndLearning = {
 // Payments
 export type TranslationPayments = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
-  fundingSourceTrustFundType: TranslationFieldPropertiesWithOptions<TrustFundType>;
+  fundingSourceMedicareAInfo: TranslationFieldProperties;
+  fundingSourceMedicareBInfo: TranslationFieldProperties;
   fundingSourceOther: TranslationFieldProperties;
   fundingSourceNote: TranslationFieldProperties;
   fundingSourceR: TranslationFieldPropertiesWithOptions<FundingSource>;
-  fundingSourceRTrustFundType: TranslationFieldPropertiesWithOptions<TrustFundType>;
+  fundingSourceRMedicareAInfo: TranslationFieldProperties;
+  fundingSourceRMedicareBInfo: TranslationFieldProperties;
   fundingSourceROther: TranslationFieldProperties;
   fundingSourceRNote: TranslationFieldProperties;
   payRecipients: TranslationFieldPropertiesWithOptions<PayRecipient>;

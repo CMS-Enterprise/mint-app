@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import {
   ClaimsBasedPayType,
-  FundingSource,
   PayType,
   useGetAllPaymentsQuery
 } from 'gql/gen/graphql';
@@ -25,9 +24,7 @@ const ReadOnlyPayments = ({
   filteredQuestions
 }: ReadOnlyProps) => {
   const { t: paymentsT } = useTranslation('payments');
-
   const { t: paymentsMiscT } = useTranslation('paymentsMisc');
-
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -44,11 +41,13 @@ const ReadOnlyPayments = ({
 
   const {
     fundingSource,
-    fundingSourceTrustFundType,
+    fundingSourceMedicareAInfo,
+    fundingSourceMedicareBInfo,
     fundingSourceOther,
     fundingSourceNote,
     fundingSourceR,
-    fundingSourceRTrustFundType,
+    fundingSourceRMedicareAInfo,
+    fundingSourceRMedicareBInfo,
     fundingSourceROther,
     fundingSourceRNote,
     payRecipients,
@@ -156,23 +155,17 @@ const ReadOnlyPayments = ({
             listItems={fundingSource?.map((type): string =>
               paymentsT(`fundingSource.options.${type}`)
             )}
-            listOtherItem={fundingSourceOther}
+            listOtherItems={[
+              null,
+              fundingSourceMedicareAInfo,
+              fundingSourceMedicareBInfo,
+              fundingSourceOther
+            ].filter(item => item)}
+            tooltips={fundingSource?.map((type): string =>
+              paymentsT(`fundingSource.optionsLabels.${type}`)
+            )}
           />
         )}
-
-        {fundingSource?.includes(FundingSource.TRUST_FUND) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSource',
-            <ReadOnlySection
-              heading={paymentsT('fundingSourceTrustFundType.label')}
-              list
-              listItems={fundingSourceTrustFundType?.map((type): string =>
-                paymentsT(`fundingSourceTrustFundType.options.${type}`)
-              )}
-            />
-          )}
 
         {fundingSourceNote &&
           checkGroupMap(
@@ -195,23 +188,17 @@ const ReadOnlyPayments = ({
             listItems={fundingSourceR?.map((type): string =>
               paymentsT(`fundingSourceR.options.${type}`)
             )}
-            listOtherItem={fundingSourceROther}
+            listOtherItems={[
+              null,
+              fundingSourceRMedicareAInfo,
+              fundingSourceRMedicareBInfo,
+              fundingSourceROther
+            ].filter(item => item)}
+            tooltips={fundingSourceR?.map((type): string =>
+              paymentsT(`fundingSourceR.optionsLabels.${type}`)
+            )}
           />
         )}
-
-        {fundingSourceR?.includes(FundingSource.TRUST_FUND) &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'fundingSourceR',
-            <ReadOnlySection
-              heading={paymentsT('fundingSourceRTrustFundType.label')}
-              list
-              listItems={fundingSourceRTrustFundType?.map((type): string =>
-                paymentsT(`fundingSourceRTrustFundType.options.${type}`)
-              )}
-            />
-          )}
 
         {fundingSourceRNote &&
           checkGroupMap(
