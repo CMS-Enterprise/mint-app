@@ -704,8 +704,9 @@ type PlanBeneficiaries {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRulesExistYes: Boolean
-  precedenceRulesExistNo: Boolean
+  precedenceRulesExist: [YesNoFilter!]!
+  precedenceRulesExistYes: String
+  precedenceRulesExistNo: String
   precedenceRulesNote: String
 
   createdBy: UUID!
@@ -750,8 +751,9 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRulesExistYes: Boolean
-  precedenceRulesExistNo: Boolean
+  precedenceRulesExist: [YesNoFilter!]!
+  precedenceRulesExistYes: String
+  precedenceRulesExistNo: String
   precedenceRulesNote: String
 
   status: TaskStatusInput
@@ -2554,4 +2556,9 @@ enum ModelViewFilter {
   MDM, # MASTER_DATA_MANAGEMENT
   OACT, # OFFICE_OF_THE_ACTUARY
   PBG, # PROVIDER_BILLING_GROUP
+}
+
+enum YesNoFilter {
+  YES,
+  NO
 }

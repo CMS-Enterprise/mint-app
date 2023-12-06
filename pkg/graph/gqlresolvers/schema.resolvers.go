@@ -540,6 +540,21 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
+// PrecedenceRulesExist is the resolver for the precedenceRulesExist field.
+func (r *planBeneficiariesResolver) PrecedenceRulesExist(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.YesNoFilter, error) {
+	panic(fmt.Errorf("not implemented: PrecedenceRulesExist - precedenceRulesExist"))
+}
+
+// PrecedenceRulesExistYes is the resolver for the precedenceRulesExistYes field.
+func (r *planBeneficiariesResolver) PrecedenceRulesExistYes(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error) {
+	panic(fmt.Errorf("not implemented: PrecedenceRulesExistYes - precedenceRulesExistYes"))
+}
+
+// PrecedenceRulesExistNo is the resolver for the precedenceRulesExistNo field.
+func (r *planBeneficiariesResolver) PrecedenceRulesExistNo(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error) {
+	panic(fmt.Errorf("not implemented: PrecedenceRulesExistNo - precedenceRulesExistNo"))
+}
+
 // TeamRoles is the resolver for the teamRoles field.
 func (r *planCollaboratorResolver) TeamRoles(ctx context.Context, obj *models.PlanCollaborator) ([]models.TeamRole, error) {
 	return models.ConvertEnums[models.TeamRole](obj.TeamRoles), nil
@@ -1126,9 +1141,6 @@ type taggedContentResolver struct{ *Resolver }
 //   - You have helper methods in this file. Move them out to keep these resolver files clean.
 func (r *planBeneficiariesResolver) PrecedentRulesExistYes(ctx context.Context, obj *models.PlanBeneficiaries) (*bool, error) {
 	panic(fmt.Errorf("not implemented: PrecedentRulesExistYes - precedentRulesExistYes"))
-}
-func (r *planBeneficiariesResolver) PrecedenceRulesExistNo(ctx context.Context, obj *models.PlanBeneficiaries) (*bool, error) {
-	panic(fmt.Errorf("not implemented: PrecedenceRulesExistNo - precedenceRulesExistNo"))
 }
 func (r *planBeneficiariesResolver) PrecedenceRulesNote(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error) {
 	panic(fmt.Errorf("not implemented: PrecedenceRulesNote - precedenceRulesNote"))

@@ -196,8 +196,8 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   beneficiarySelectionFrequency: FrequencyType | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
-  precedenceRulesExistYes: boolean | null;
-  precedenceRulesExistNo: boolean | null;
+  precedenceRulesExistYes: string | null;
+  precedenceRulesExistNo: string | null;
   precedenceRulesNote: string | null;
   numberPeopleImpacted: number | null;
   estimateConfidence: ConfidenceType | null;
