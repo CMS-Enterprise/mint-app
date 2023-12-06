@@ -20,6 +20,7 @@ const FieldGroup = ({
     { 'usa-form-group--error': error },
     className
   );
+
   return (
     <div className={fieldGroupClasses} data-scroll={scrollElement} {...props}>
       {children}
