@@ -741,9 +741,24 @@ func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.C
 	return communicationTypes, nil
 }
 
+// GainsharePayments is the resolver for the gainsharePayments field.
+func (r *planParticipantsAndProvidersResolver) GainsharePayments(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*bool, error) {
+	panic(fmt.Errorf("not implemented: GainsharePayments - gainsharePayments"))
+}
+
+// GainsharePaymentsTrack is the resolver for the gainsharePaymentsTrack field.
+func (r *planParticipantsAndProvidersResolver) GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*bool, error) {
+	panic(fmt.Errorf("not implemented: GainsharePaymentsTrack - gainsharePaymentsTrack"))
+}
+
 // GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
 func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
 	panic(fmt.Errorf("not implemented: GainsharePaymentsEligibility - gainsharePaymentsEligibility"))
+}
+
+// GainsharePaymentsEligibilityOther is the resolver for the gainsharePaymentsEligibilityOther field.
+func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibilityOther(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error) {
+	panic(fmt.Errorf("not implemented: GainsharePaymentsEligibilityOther - gainsharePaymentsEligibilityOther"))
 }
 
 // ParticipantsIds is the resolver for the participantsIds field.

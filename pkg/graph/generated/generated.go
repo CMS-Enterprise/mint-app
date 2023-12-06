@@ -692,9 +692,11 @@ type ComplexityRoot struct {
 		CreatedDts                        func(childComplexity int) int
 		EstimateConfidence                func(childComplexity int) int
 		ExpectedNumberOfParticipants      func(childComplexity int) int
-		GainshareEligibilityOtherNote     func(childComplexity int) int
+		GainsharePayments                 func(childComplexity int) int
 		GainsharePaymentsEligibility      func(childComplexity int) int
+		GainsharePaymentsEligibilityOther func(childComplexity int) int
 		GainsharePaymentsNote             func(childComplexity int) int
+		GainsharePaymentsTrack            func(childComplexity int) int
 		ID                                func(childComplexity int) int
 		MedicareProviderType              func(childComplexity int) int
 		ModelApplicationLevel             func(childComplexity int) int
@@ -1112,7 +1114,10 @@ type PlanParticipantsAndProvidersResolver interface {
 
 	CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error)
 
+	GainsharePayments(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*bool, error)
+	GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*bool, error)
 	GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error)
+	GainsharePaymentsEligibilityOther(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error)
 
 	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
 
@@ -5146,12 +5151,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.ExpectedNumberOfParticipants(childComplexity), true
 
-	case "PlanParticipantsAndProviders.gainshareEligibilityOtherNote":
-		if e.complexity.PlanParticipantsAndProviders.GainshareEligibilityOtherNote == nil {
+	case "PlanParticipantsAndProviders.gainsharePayments":
+		if e.complexity.PlanParticipantsAndProviders.GainsharePayments == nil {
 			break
 		}
 
-		return e.complexity.PlanParticipantsAndProviders.GainshareEligibilityOtherNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.GainsharePayments(childComplexity), true
 
 	case "PlanParticipantsAndProviders.gainsharePaymentsEligibility":
 		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsEligibility == nil {
@@ -5160,12 +5165,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsEligibility(childComplexity), true
 
+	case "PlanParticipantsAndProviders.gainsharePaymentsEligibilityOther":
+		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsEligibilityOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsEligibilityOther(childComplexity), true
+
 	case "PlanParticipantsAndProviders.gainsharePaymentsNote":
 		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsNote == nil {
 			break
 		}
 
 		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsNote(childComplexity), true
+
+	case "PlanParticipantsAndProviders.gainsharePaymentsTrack":
+		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsTrack == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsTrack(childComplexity), true
 
 	case "PlanParticipantsAndProviders.id":
 		if e.complexity.PlanParticipantsAndProviders.ID == nil {
@@ -7720,8 +7739,10 @@ type PlanParticipantsAndProviders {
   #Page 4
   coordinateWork:          Boolean
   coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack:  Boolean
   gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
-  gainshareEligibilityOtherNote: String
+  gainsharePaymentsEligibilityOther: String
   gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]!
   participantsIdsOther:    String
@@ -7802,8 +7823,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   #Page 4
   coordinateWork:          Boolean
   coordinateWorkNote:      String
-  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
-  gainshareEligibilityOtherNote: String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack:  Boolean
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
+  gainsharePaymentsEligibilityOther: String
   gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String
@@ -15311,10 +15334,14 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
 			case "coordinateWorkNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
+			case "gainsharePayments":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
+			case "gainsharePaymentsTrack":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
 			case "gainsharePaymentsEligibility":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibility(ctx, field)
-			case "gainshareEligibilityOtherNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainshareEligibilityOtherNote(ctx, field)
+			case "gainsharePaymentsEligibilityOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field)
 			case "gainsharePaymentsNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "participantsIds":
@@ -17874,10 +17901,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
 			case "coordinateWorkNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
+			case "gainsharePayments":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
+			case "gainsharePaymentsTrack":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
 			case "gainsharePaymentsEligibility":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibility(ctx, field)
-			case "gainshareEligibilityOtherNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainshareEligibilityOtherNote(ctx, field)
+			case "gainsharePaymentsEligibilityOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field)
 			case "gainsharePaymentsNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "participantsIds":
@@ -39367,6 +39398,88 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_coordinate
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePayments(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanParticipantsAndProviders().GainsharePayments(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanParticipantsAndProviders().GainsharePaymentsTrack(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsEligibility(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibility(ctx, field)
 	if err != nil {
@@ -39411,8 +39524,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainshareP
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanParticipantsAndProviders_gainshareEligibilityOtherNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainshareEligibilityOtherNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -39425,7 +39538,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainshareEligibilityOt
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.GainshareEligibilityOtherNote, nil
+		return ec.resolvers.PlanParticipantsAndProviders().GainsharePaymentsEligibilityOther(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -39439,12 +39552,12 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainshareEligibilityOt
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainshareEligibilityOtherNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -58752,6 +58865,72 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Values[i] = ec._PlanParticipantsAndProviders_coordinateWork(ctx, field, obj)
 		case "coordinateWorkNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_coordinateWorkNote(ctx, field, obj)
+		case "gainsharePayments":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_gainsharePayments(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "gainsharePaymentsTrack":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "gainsharePaymentsEligibility":
 			field := field
 
@@ -58788,8 +58967,39 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "gainshareEligibilityOtherNote":
-			out.Values[i] = ec._PlanParticipantsAndProviders_gainshareEligibilityOtherNote(ctx, field, obj)
+		case "gainsharePaymentsEligibilityOther":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "gainsharePaymentsNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field, obj)
 		case "participantsIds":
@@ -67963,6 +68173,73 @@ func (ec *executionContext) marshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmin
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOGainshareArrangementEligibility2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGainshareArrangementEligibilityᚄ(ctx context.Context, v interface{}) ([]model.GainshareArrangementEligibility, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.GainshareArrangementEligibility, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNGainshareArrangementEligibility2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGainshareArrangementEligibility(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOGainshareArrangementEligibility2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGainshareArrangementEligibilityᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GainshareArrangementEligibility) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNGainshareArrangementEligibility2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGainshareArrangementEligibility(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

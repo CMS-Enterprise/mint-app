@@ -447,6 +447,13 @@ export enum GqlTableName {
   USERACCOUNT = 'userAccount'
 }
 
+export enum GainshareArrangementEligibility {
+  ALL_PROVIDERS = 'ALL_PROVIDERS',
+  NO = 'NO',
+  OTHER = 'OTHER',
+  SOME_PROVIDERS = 'SOME_PROVIDERS'
+}
+
 export enum GeographyApplication {
   BENEFICIARIES = 'BENEFICIARIES',
   OTHER = 'OTHER',
@@ -1835,6 +1842,8 @@ export type PlanParticipantsAndProviders = {
   estimateConfidence?: Maybe<ConfidenceType>;
   expectedNumberOfParticipants?: Maybe<Scalars['Int']['output']>;
   gainsharePayments?: Maybe<Scalars['Boolean']['output']>;
+  gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>;
+  gainsharePaymentsEligibilityOther?: Maybe<Scalars['String']['output']>;
   gainsharePaymentsNote?: Maybe<Scalars['String']['output']>;
   gainsharePaymentsTrack?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['UUID']['output'];
@@ -1902,6 +1911,8 @@ export type PlanParticipantsAndProvidersChanges = {
   estimateConfidence?: InputMaybe<ConfidenceType>;
   expectedNumberOfParticipants?: InputMaybe<Scalars['Int']['input']>;
   gainsharePayments?: InputMaybe<Scalars['Boolean']['input']>;
+  gainsharePaymentsEligibility?: InputMaybe<Array<GainshareArrangementEligibility>>;
+  gainsharePaymentsEligibilityOther?: InputMaybe<Scalars['String']['input']>;
   gainsharePaymentsNote?: InputMaybe<Scalars['String']['input']>;
   gainsharePaymentsTrack?: InputMaybe<Scalars['Boolean']['input']>;
   medicareProviderType?: InputMaybe<Scalars['String']['input']>;

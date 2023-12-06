@@ -793,8 +793,10 @@ type PlanParticipantsAndProviders {
   #Page 4
   coordinateWork:          Boolean
   coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack:  Boolean
   gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
-  gainshareEligibilityOtherNote: String
+  gainsharePaymentsEligibilityOther: String
   gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]!
   participantsIdsOther:    String
@@ -875,8 +877,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   #Page 4
   coordinateWork:          Boolean
   coordinateWorkNote:      String
-  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
-  gainshareEligibilityOtherNote: String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack:  Boolean
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
+  gainsharePaymentsEligibilityOther: String
   gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String
