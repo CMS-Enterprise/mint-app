@@ -22,7 +22,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
 
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 )
 
 // The main entrypoint for the dbseed command.

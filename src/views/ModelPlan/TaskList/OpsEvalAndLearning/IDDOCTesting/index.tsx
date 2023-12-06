@@ -237,7 +237,6 @@ const IDDOCTesting = () => {
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      error={flatErrors.uatNeeds}
                       id="ops-eval-and-learning-uat-needs"
                       name="uatNeeds"
                     />
@@ -257,7 +256,6 @@ const IDDOCTesting = () => {
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      error={flatErrors.stcNeeds}
                       id="ops-eval-and-learning-stc-needs"
                       data-testid="ops-eval-and-learning-stc-needs"
                       name="stcNeeds"
@@ -278,7 +276,6 @@ const IDDOCTesting = () => {
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      error={flatErrors.testingTimelines}
                       id="ops-eval-and-learning-testing-timelines"
                       name="testingTimelines"
                     />
@@ -380,7 +377,6 @@ const IDDOCTesting = () => {
 
                     <Field
                       as={TextInput}
-                      error={!!flatErrors.dataResponseType}
                       id="ops-eval-and-learning-data-response-type"
                       maxLength={50}
                       name="dataResponseType"
@@ -402,7 +398,6 @@ const IDDOCTesting = () => {
 
                     <Field
                       as={TextInput}
-                      error={!!flatErrors.dataResponseFileFrequency}
                       id="ops-eval-and-learning-data-file-frequency"
                       maxLength={50}
                       name="dataResponseFileFrequency"

@@ -321,7 +321,6 @@ const AddCustomSolution = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors.nameOther}
                                   id="it-solution-custom-name-other"
                                   data-testid="it-solution-custom-name-other"
                                   maxLength={50}
@@ -347,7 +346,6 @@ const AddCustomSolution = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors.otherHeader}
                                   id="it-solution-other-header"
                                   data-testid="it-solution-other-header"
                                   maxLength={50}
@@ -376,7 +374,6 @@ const AddCustomSolution = () => {
 
                               <Field
                                 as={TextInput}
-                                error={!!flatErrors.pocName}
                                 id="it-solution-custom-poc-name"
                                 data-testid="it-solution-custom-poc-name"
                                 maxLength={50}
@@ -403,7 +400,6 @@ const AddCustomSolution = () => {
 
                               <Field
                                 as={TextInput}
-                                error={!!flatErrors.pocEmail}
                                 id="it-solution-custom-poc-email"
                                 data-testid="it-solution-custom-poc-email"
                                 maxLength={50}

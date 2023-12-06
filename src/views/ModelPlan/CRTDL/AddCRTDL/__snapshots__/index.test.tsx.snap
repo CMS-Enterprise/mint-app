@@ -118,7 +118,6 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                         aria-hidden="true"
                         class="usa-input usa-sr-only usa-date-picker__internal-input"
                         data-testid="date-picker-internal-input"
-                        error="0"
                         maxlength="50"
                         name="dateInitiated"
                         readonly=""
@@ -133,7 +132,6 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                         <input
                           class="usa-input usa-date-picker__external-input"
                           data-testid="date-picker-external-input"
-                          error="0"
                           id="cr-tdl-date-initiated"
                           maxlength="50"
                           type="text"
