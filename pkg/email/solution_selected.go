@@ -31,7 +31,7 @@ type SolutionSelectedBodyContent struct {
 
 // SolutionSelectedDB this represents the data retrieved from the database for when a solution is selected from the database
 type SolutionSelectedDB struct {
-	FilterView        models.ModelViewFilter  `json:"filterView" db:"filter_view"`
+	FilterView        *models.ModelViewFilter `json:"filterView" db:"filter_view"`
 	SolutionName      string                  `json:"solName" db:"sol_name"` //From possible operational solution
 	SolutionStatus    models.OpSolutionStatus `json:"solStatus" db:"sol_status"`
 	ModelLeadNames    string                  `json:"modelLeadNames" db:"model_lead_names"` // This comes from plan collaborators and user account table
@@ -40,7 +40,7 @@ type SolutionSelectedDB struct {
 	ModelName         string                  `json:"modelName" db:"model_name"`
 	ModelAbbreviation *string                 `json:"modelAbbreviation" db:"model_abbreviation"`
 	ModelStatus       models.ModelStatus      `json:"modelStatus" db:"model_status"`
-	ModelStartDate    *time.Time              `json:"modelStartDate" db:"model_start_date"` // from plan basics
+	ModelStartDate    *time.Time              `json:"modelStartDate" db:"model_start_date"` // from plan basics performance_period_starts
 }
 
 // ToSolutionSelectedBodyContent converts a SolutionSelectedDB struct to SolutionSelctedBodyContent

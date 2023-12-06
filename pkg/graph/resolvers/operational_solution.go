@@ -40,14 +40,14 @@ func OperationalSolutionCreate(
 	}
 
 	// Send an email to the selected POCs
-	// go func() { // TODO: SW make this asyn
-	sendEmailErr := sendSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
-	if sendEmailErr != nil {
-		logger.Error("error sending solution selected emails",
-			zap.String("solutionID", sol.ID.String()),
-			zap.Error(sendEmailErr))
-	}
-	// }()
+	go func() {
+		sendEmailErr := sendSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
+		if sendEmailErr != nil {
+			logger.Error("error sending solution selected emails",
+				zap.String("solutionID", sol.ID.String()),
+				zap.Error(sendEmailErr))
+		}
+	}()
 	return sol, err
 
 }
@@ -104,7 +104,11 @@ func sendSolutionSelectedEmails(
 	operationalSolution *models.OperationalSolution,
 
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil || emailTemplateService == nil || operationalSolution == nil {
+		return nil
+	}
+	if operationalSolution.IsOther == nil || *operationalSolution.IsOther { // Don't send an email for treat as other solutions
+		logger.Info("operational solution is of the other type, no solution selected email being sent", zap.Any("solution", operationalSolution))
 		return nil
 	}
 	solSelectedDB, err := store.GetSolutionSelectedDetails(operationalSolution.ID)
@@ -115,6 +119,11 @@ func sendSolutionSelectedEmails(
 	pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *operationalSolution.SolutionType)
 	if err != nil {
 		return err
+	}
+	if len(pocs) < 1 {
+		logger.Info("operational solution doesn't have any defined points of contact, no solution selected email being sent", zap.Any("solution", operationalSolution))
+		// Note, if we support this in the future, we potentially look at the solution POC information in the actual solution.
+		return nil // Don't send an email if there aren't any recipients (Note, custom solutions do not have pocs configured in the db)
 	}
 	pocEmailAddress, err := models.GetPOCEmailAddresses(pocs, emailService.GetConfig().GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
 	if err != nil {
