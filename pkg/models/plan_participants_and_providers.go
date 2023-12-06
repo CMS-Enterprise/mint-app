@@ -41,14 +41,14 @@ type PlanParticipantsAndProviders struct {
 	WillRiskChangeNote       *string              `json:"willRiskChangeNote" db:"will_risk_change_note"`
 
 	//page 4
-	CoordinateWork         *bool          `json:"coordinateWork" db:"coordinate_work" statusWeight:"1"`
-	CoordinateWorkNote     *string        `json:"coordinateWorkNote" db:"coordinate_work_note"`
-	GainsharePayments      *bool          `json:"gainsharePayments" db:"gainshare_payments" statusWeight:"1"`
-	GainsharePaymentsTrack *bool          `json:"gainsharePaymentsTrack" db:"gainshare_payments_track"`
-	GainsharePaymentsNote  *string        `json:"gainsharePaymentsNote" db:"gainshare_payments_note"`
-	ParticipantsIds        pq.StringArray `json:"participantsIds" db:"participants_ids"`
-	ParticipantsIdsOther   *string        `json:"participantsIdsOther" db:"participants_ids_other"`
-	ParticipantsIDSNote    *string        `json:"participantsIDSNote" db:"participants_ids_note"`
+	CoordinateWork                *bool          `json:"coordinateWork" db:"coordinate_work" statusWeight:"1"`
+	CoordinateWorkNote            *string        `json:"coordinateWorkNote" db:"coordinate_work_note"`
+	GainsharePaymentsEligibility  pq.StringArray `json:"gainsharePaymentsEligibility" db:"gainshare_payments_eligibility"`
+	GainshareEligibilityOtherNote *string        `json:"gainshareEligibilityOtherNote" db:"gainshare_eligibility_other_note"`
+	GainsharePaymentsNote         *string        `json:"gainsharePaymentsNote" db:"gainshare_payments_note"`
+	ParticipantsIds               pq.StringArray `json:"participantsIds" db:"participants_ids"`
+	ParticipantsIdsOther          *string        `json:"participantsIdsOther" db:"participants_ids_other"`
+	ParticipantsIDSNote           *string        `json:"participantsIDSNote" db:"participants_ids_note"`
 
 	//page 5
 	ProviderAdditionFrequency      *FrequencyType `json:"providerAdditionFrequency" db:"provider_addition_frequency" statusWeight:"1"`
@@ -86,6 +86,17 @@ const (
 	RiskONESIDED   ParticipantRiskType = "ONE_SIDED"
 	RiskCAPITATION ParticipantRiskType = "CAPITATION"
 	RiskOTHER      ParticipantRiskType = "OTHER"
+)
+
+// GainsharePaymentsEligibility represents the possible GainsharePaymentsEligibility values
+type GainsharePaymentsEligibility string
+
+// These constants represent the choices for GainsharePaymentsEligibility
+const (
+	GainsharePaymentsEligibilityALLPROVIDERS  GainsharePaymentsEligibility = "ALL_PROVIDERS"
+	GainsharePaymentsEligibilitySOMEPROVIDERS GainsharePaymentsEligibility = "SOME_PROVIDERS"
+	GainsharePaymentsEligibilityOTHER         GainsharePaymentsEligibility = "OTHER"
+	GainsharePaymentsEligibilityNO            GainsharePaymentsEligibility = "NO"
 )
 
 // NewPlanParticipantsAndProviders returns a new plan Beneficiaries

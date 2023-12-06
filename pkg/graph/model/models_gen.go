@@ -966,6 +966,51 @@ func (e EvaluationApproachType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type GainshareArrangementEligibility string
+
+const (
+	GainshareArrangementEligibilityAllProviders  GainshareArrangementEligibility = "ALL_PROVIDERS"
+	GainshareArrangementEligibilitySomeProviders GainshareArrangementEligibility = "SOME_PROVIDERS"
+	GainshareArrangementEligibilityOther         GainshareArrangementEligibility = "OTHER"
+	GainshareArrangementEligibilityNo            GainshareArrangementEligibility = "NO"
+)
+
+var AllGainshareArrangementEligibility = []GainshareArrangementEligibility{
+	GainshareArrangementEligibilityAllProviders,
+	GainshareArrangementEligibilitySomeProviders,
+	GainshareArrangementEligibilityOther,
+	GainshareArrangementEligibilityNo,
+}
+
+func (e GainshareArrangementEligibility) IsValid() bool {
+	switch e {
+	case GainshareArrangementEligibilityAllProviders, GainshareArrangementEligibilitySomeProviders, GainshareArrangementEligibilityOther, GainshareArrangementEligibilityNo:
+		return true
+	}
+	return false
+}
+
+func (e GainshareArrangementEligibility) String() string {
+	return string(e)
+}
+
+func (e *GainshareArrangementEligibility) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = GainshareArrangementEligibility(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid GainshareArrangementEligibility", str)
+	}
+	return nil
+}
+
+func (e GainshareArrangementEligibility) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type GeographyApplication string
 
 const (

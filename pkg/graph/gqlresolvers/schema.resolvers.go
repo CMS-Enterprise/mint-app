@@ -6,6 +6,7 @@ package gqlresolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -738,6 +739,11 @@ func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Conte
 func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
 	communicationTypes := models.ConvertEnums[model.ParticipantCommunicationType](obj.CommunicationMethod)
 	return communicationTypes, nil
+}
+
+// GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
+func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
+	panic(fmt.Errorf("not implemented: GainsharePaymentsEligibility - gainsharePaymentsEligibility"))
 }
 
 // ParticipantsIds is the resolver for the participantsIds field.
