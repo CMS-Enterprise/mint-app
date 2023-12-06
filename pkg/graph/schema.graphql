@@ -704,7 +704,9 @@ type PlanBeneficiaries {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: String
+  precedenceRulesExistYes: Boolean
+  precedenceRulesExistNo: Boolean
+  precedenceRulesNote: String
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -748,7 +750,9 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: String
+  precedenceRulesExistYes: Boolean
+  precedenceRulesExistNo: Boolean
+  precedenceRulesNote: String
 
   status: TaskStatusInput
 }

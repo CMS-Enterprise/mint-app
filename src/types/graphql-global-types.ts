@@ -734,7 +734,9 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;
   beneficiaryOverlapNote?: string | null;
-  precedenceRules?: string | null;
+  precedenceRulesExistYes?: boolean | null;
+  precedenceRulesExistNo?: boolean | null;
+  precedenceRulesNote?: string | null;
   status?: TaskStatusInput | null;
 }
 

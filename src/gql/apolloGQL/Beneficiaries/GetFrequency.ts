@@ -12,7 +12,9 @@ export default gql(/* GraphQL */ `
         beneficiarySelectionFrequencyOther
         beneficiaryOverlap
         beneficiaryOverlapNote
-        precedenceRules
+        precedenceRulesExistYes
+        precedenceRulesExistNo
+        precedenceRulesNote
         readyForReviewByUserAccount {
           id
           commonName
