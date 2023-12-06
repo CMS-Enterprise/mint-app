@@ -26,7 +26,7 @@ type SolutionSelectedBodyContent struct {
 	ModelName         string
 	ModelAbbreviation string
 	ModelStatus       string
-	ModelStartDate    string
+	ModelStartDate    *time.Time
 }
 
 // SolutionSelectedDB this represents the data retrieved from the database for when a solution is selected from the database
@@ -56,6 +56,6 @@ func (ssdb *SolutionSelectedDB) ToSolutionSelectedBodyContent(clientAddress stri
 		ModelName:         ssdb.ModelName,
 		ModelAbbreviation: models.ValueOrEmpty(ssdb.ModelAbbreviation),
 		ModelStatus:       ssdb.ModelStatus.Humanize(),
-		ModelStartDate:    ssdb.ModelStartDate.String(), // TODO: SW double check the formatting here
+		ModelStartDate:    ssdb.ModelStartDate,
 	}
 }

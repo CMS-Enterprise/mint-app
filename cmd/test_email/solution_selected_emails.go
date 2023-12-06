@@ -2,6 +2,7 @@ package main
 
 import (
 	"strings"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -21,7 +22,7 @@ func sendSolutionSelectedTestEmail(
 	modelShortName := "TMaH"
 	modelStatus := "CMS clearance"
 	modelPlanID := uuid.New()
-	startDate := "06/11/2024"
+	startDate := time.Date(2020, 5, 13, 20, 47, 50, 120000000, time.UTC)
 	pocEmails := []string{"poc1@email.email", "poc2@email.email"}
 	leadNames := []string{"Model Lead1", "Model Lead2"}
 	filterView := "CBOSC"
@@ -36,7 +37,7 @@ func sendSolutionSelectedTestEmail(
 		modelPlanID.String(),
 		modelShortName,
 		modelStatus,
-		startDate,
+		&startDate,
 		pocEmails,
 		leadNames,
 		filterView,
@@ -56,7 +57,7 @@ func sendSolutionSelectedForUseByModelEmail(
 	modelPlanID string,
 	modelAbbreviation string,
 	modelStatus string,
-	modelStartDate string,
+	modelStartDate *time.Time,
 
 	pocEmailAddress []string,
 	modelLeadNames []string,
@@ -93,7 +94,7 @@ func sendSolutionSelectedForUseByModelEmail(
 		ModelName:         modelPlanName,
 		ModelAbbreviation: modelAbbreviation,
 		ModelStatus:       modelStatus,
-		ModelStartDate:    modelStartDate, // TODO:SW use the correct data, this is
+		ModelStartDate:    modelStartDate,
 	})
 	if err != nil {
 		return err
