@@ -332,3 +332,44 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByID() {
 	suite.EqualValues(solGet.ID, sol.ID)
 
 }
+
+func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
+
+	plan := suite.createModelPlan("plan for solutions")
+	needType := models.OpNKManageCd
+	solType := models.OpSKInnovation
+
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
+
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	changes := map[string]interface{}{
+		"performancePeriodStarts": "2020-05-13T20:47:50.12Z",
+	}
+
+	basics, err = UpdatePlanBasics(
+		suite.testConfigs.Logger,
+		basics.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solType, nil, suite.testConfigs.Principal)
+	suite.NoError(err)
+	suite.NotNil(sol)
+	solutionSelectedDetails, err := suite.testConfigs.Store.GetSolutionSelectedDetails(sol.ID)
+	suite.NoError(err)
+
+	suite.EqualValues(plan.Abbreviation, solutionSelectedDetails.ModelAbbreviation)
+	suite.EqualValues(basics.PerformancePeriodStarts, solutionSelectedDetails.ModelStartDate)
+	suite.EqualValues(plan.ModelName, solutionSelectedDetails.ModelName)
+	suite.EqualValues(plan.Status, solutionSelectedDetails.ModelStatus)
+	suite.EqualValues(sol.Status, solutionSelectedDetails.SolutionStatus)
+
+}

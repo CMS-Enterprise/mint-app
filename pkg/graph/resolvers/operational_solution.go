@@ -2,11 +2,8 @@ package resolvers
 
 import (
 	"context"
-	"slices"
-	"strings"
 
 	"github.com/google/uuid"
-	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -107,63 +104,15 @@ func sendSolutionSelectedEmails(
 	operationalSolution *models.OperationalSolution,
 
 ) error {
-
-	/* TODO: SW
-
-	Data Needed
-	1. Model Name
-	2. Solution Name (from the possible operational solution...)
-	3. Model Status
-	4. Model Start Date
-	5. Operational Need Name
-	6. Solution Status
-	7. Information to link to the specific solution in MINT
-	*/
-	opNeed, err := OperationalNeedGetByID(logger, operationalSolution.OperationalNeedID, store) // TODO: if desired this could be a data loader as well
-	if err != nil {
-		return err
+	if emailService == nil || emailTemplateService == nil {
+		return nil
 	}
-	modelPlan, err := ModelPlanGetByIDLOADER(ctx, opNeed.ModelPlanID)
-	if err != nil {
-		return err
-	}
-	posSol, err := store.PossibleOperationalSolutionGetByID(logger, *operationalSolution.SolutionType)
-	if err != nil {
-		return err
-	}
-	basics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, opNeed.ModelPlanID)
-	if err != nil {
-		return err
-	}
-	// TODO, can we make this more efficient? Need to do a DB call for each account. Will this block that data loader? Do we need another function?
-	collaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, opNeed.ModelPlanID)
-	if err != nil {
-		return err
-	}
-	leads := lo.Filter(collaborators, func(collab *models.PlanCollaborator, _ int) bool {
-		return slices.Contains(collab.TeamRoles, string(models.TeamRoleModelLead))
-
-	})
-	leadIDs := lo.Map(leads, func(lead *models.PlanCollaborator, _ int) uuid.UUID {
-		return lead.UserID
-	})
-	leadAccounts, err := UserAccountsGetByIDs(logger, store, leadIDs)
+	solSelectedDB, err := store.GetSolutionSelectedDetails(operationalSolution.ID)
 	if err != nil {
 		return err
 	}
 
-	leadNames := lo.Map(leadAccounts, func(account *authentication.UserAccount, _ int) string {
-		return account.CommonName
-	})
-	// leadNames := lo.Map(leads, func(lead *models.PlanCollaborator, _ int) string {
-	// 	account, err2 := UserAccountGetByIDLOADER(ctx, lead.UserID) // TODO: SW, maybe call a function directly if you pass a list of ids? this is synchronous
-	// 	if err2 != nil {
-	// 		return ""
-	// 	}
-	// 	return account.CommonName
-	// })
-
-	pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, posSol.ID)
+	pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *operationalSolution.SolutionType)
 	if err != nil {
 		return err
 	}
@@ -172,29 +121,12 @@ func sendSolutionSelectedEmails(
 		return err
 	}
 
-	modelLeadNames := leadNames
-	filterViewLink := posSol.FilterView.ValueOrEmpty()
-
-	modelStartDate := ""
-	if basics.PerformancePeriodStarts != nil {
-		modelStartDate = basics.PerformancePeriodStarts.String()
-	}
-
 	err = sendSolutionSelectedForUseByModelEmail(
 		emailService,
 		emailTemplateService,
 		addressBook,
-		models.ValueOrEmpty(operationalSolution.Name),
-		operationalSolution.Status.Humanize(),
-		models.ValueOrEmpty(opNeed.Name),
-		modelPlan.ModelName,
-		modelPlan.ID.String(),
-		models.ValueOrEmpty(modelPlan.Abbreviation),
-		modelPlan.Status.Humanize(),
-		modelStartDate,
+		solSelectedDB,
 		pocEmailAddress,
-		modelLeadNames,
-		filterViewLink,
 	)
 
 	return err
@@ -205,18 +137,8 @@ func sendSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	solutionName string,
-	solutionStatus string,
-	needName string,
-	modelPlanName string,
-	modelPlanID string,
-	modelAbbreviation string,
-	modelStatus string,
-	modelStartDate string,
-
+	solutionSelectedDB *email.SolutionSelectedDB,
 	pocEmailAddress []string,
-	modelLeadNames []string,
-	filterView string,
 ) error {
 
 	if emailService == nil || emailTemplateService == nil {
@@ -229,27 +151,15 @@ func sendSolutionSelectedForUseByModelEmail(
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.SolutionSelectedSubjectContent{
-		ModelName:    modelPlanName,
-		SolutionName: solutionName,
+		ModelName:    solutionSelectedDB.ModelName,
+		SolutionName: solutionSelectedDB.SolutionName,
 	})
 	if err != nil {
 		return err
 	}
-	modelLeadJoin := strings.Join(modelLeadNames, ", ")
+	bodyContent := solutionSelectedDB.ToSolutionSelectedBodyContent(emailService.GetConfig().GetClientAddress())
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.SolutionSelectedBodyContent{
-		ClientAddress:     emailService.GetConfig().GetClientAddress(),
-		FilterView:        filterView,
-		SolutionName:      solutionName,
-		SolutionStatus:    solutionStatus,
-		ModelLeadNames:    modelLeadJoin,
-		NeedName:          needName,
-		ModelID:           modelPlanID,
-		ModelName:         modelPlanName,
-		ModelAbbreviation: modelAbbreviation,
-		ModelStatus:       modelStatus,
-		ModelStartDate:    modelStartDate,
-	})
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
 	if err != nil {
 		return err
 	}
