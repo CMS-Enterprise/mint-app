@@ -296,6 +296,7 @@ const AddCRTDL = () => {
                                 <Field
                                   as={DatePicker}
                                   id="cr-tdl-date-initiated"
+                                  error={+!!flatErrors.dateInitiated}
                                   data-testid="cr-tdl-date-initiated"
                                   maxLength={50}
                                   name="dateInitiated"
