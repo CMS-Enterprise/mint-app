@@ -2,8 +2,8 @@ package services
 
 import (
 	"github.com/facebookgo/clock"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
 
 // NewConfig returns a Config for services
