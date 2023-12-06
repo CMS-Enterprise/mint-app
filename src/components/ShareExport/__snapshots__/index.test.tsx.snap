@@ -2705,7 +2705,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Disease-specific (based on a diagnosis, procedure code, condition, etc.)
+                      Disease-specific
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
@@ -8998,7 +8998,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Disease-specific (based on a diagnosis, procedure code, condition, etc.)
+                      Disease-specific
                     </li>
                     <li
                       class="font-sans-md line-height-sans-4"
