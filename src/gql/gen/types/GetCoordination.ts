@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ParticipantsIDType } from "./../../../types/graphql-global-types";
+import { GainshareArrangementEligibility, ParticipantsIDType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetCoordination
@@ -15,6 +15,8 @@ export interface GetCoordination_modelPlan_participantsAndProviders {
   coordinateWork: boolean | null;
   coordinateWorkNote: string | null;
   gainsharePayments: boolean | null;
+  gainsharePaymentsEligibility: GainshareArrangementEligibility[];
+  gainsharePaymentsEligibilityOther: string | null;
   gainsharePaymentsTrack: boolean | null;
   gainsharePaymentsNote: string | null;
   participantsIds: ParticipantsIDType[];

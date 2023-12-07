@@ -76,6 +76,8 @@ const ReadOnlyParticipantsAndProviders = ({
     gainsharePayments,
     gainsharePaymentsTrack,
     gainsharePaymentsNote,
+    gainsharePaymentsEligibility,
+    gainsharePaymentsEligibilityOther,
     participantsIds,
     participantsIdsOther,
     participantsIDSNote,
@@ -383,6 +385,27 @@ const ReadOnlyParticipantsAndProviders = ({
             }
           />
         )}
+
+        {gainsharePayments &&
+          gainsharePaymentsTrack &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'gainsharePaymentsEligibility',
+            <ReadOnlySection
+              heading={participantsAndProvidersT(
+                'gainsharePaymentsEligibility.label'
+              )}
+              list
+              listItems={gainsharePaymentsEligibility?.map((type): string =>
+                participantsAndProvidersT(
+                  `gainsharePaymentsEligibility.options.${type}`
+                )
+              )}
+              listOtherItem={gainsharePaymentsEligibilityOther}
+            />
+          )}
+
         {gainsharePaymentsNote &&
           checkGroupMap(
             isViewingFilteredView,
