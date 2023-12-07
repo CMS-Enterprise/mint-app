@@ -47,12 +47,12 @@ func TestPrincipal(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			base := appcontext.Principal(tc.ctx)
 
-			lduser := Principal(tc.ctx)
+			ldContext := Principal(tc.ctx)
 
-			assert.Equal(t, tc.anon, lduser.GetAnonymous())
-			assert.NotEqual(t, base.ID(), lduser.GetKey())
-			assert.Equal(t, len(lduser.GetKey()), sha256.Size*2)
-			// t.Logf("key: %s\n", lduser.GetKey())
+			assert.Equal(t, tc.anon, ldContext.Anonymous())
+			assert.NotEqual(t, base.ID(), ldContext.Key())
+			assert.Equal(t, len(ldContext.Key()), sha256.Size*2)
+			// t.Logf("key: %s\n", ldContext.GetKey())
 		})
 	}
 }

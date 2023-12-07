@@ -7,8 +7,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/facebookgo/clock"
 	"github.com/jmoiron/sqlx"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	_ "github.com/lib/pq" // required for postgres driver in sql
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
 
 // Store performs database operations for MINT

@@ -106,7 +106,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'benchmarkForPerformance',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:benchmarkForPerformance.label',
-    section: 'operationsEvaluaopsEvalAndLearningMisctionAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   PROCESS_PART_APPEALS: {
     route: 'ops-eval-and-learning/performance',
@@ -168,7 +168,7 @@ const operationalNeedMap: Record<OperationalNeedKey | string, NeedMap> = {
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
     question: 'opsEvalAndLearning:modelLearningSystems.label',
-    section: 'opsEvalAndLearning'
+    section: 'opsEvalAndLearningMisc'
   },
   EDUCATE_BENEF: {
     route: 'ops-eval-and-learning/learning',

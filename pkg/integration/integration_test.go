@@ -9,11 +9,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/handlers"

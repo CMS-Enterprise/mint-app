@@ -2115,6 +2115,7 @@ export type PossibleOperationalSolution = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  filterView?: Maybe<ModelViewFilter>;
   id: Scalars['Int']['output'];
   key: OperationalSolutionKey;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;

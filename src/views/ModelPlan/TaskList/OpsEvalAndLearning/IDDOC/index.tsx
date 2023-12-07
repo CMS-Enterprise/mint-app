@@ -337,7 +337,6 @@ const IDDOC = () => {
 
                     <Field
                       as={TextInput}
-                      error={!!flatErrors.icdOwner}
                       id="ops-eval-and-learning-capture-icd-owner"
                       data-testid="ops-eval-and-learning-capture-icd-owner"
                       maxLength={50}
