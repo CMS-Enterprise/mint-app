@@ -89,8 +89,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	changes := map[string]interface{}{
 		"modelType":     models.MTVoluntary,
 		"goal":          "Some goal",
-		"cmsCenters":    []string{"CMMI", "OTHER"},
-		"cmsOther":      "SOME OTHER CMS CENTER",
+		"cmsCenters":    []string{"CMMI"},
 		"cmmiGroups":    []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 		"completeICIP":  "2020-05-13T20:47:50.12Z",
 		"phasedIn":      true,
