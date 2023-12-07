@@ -165,18 +165,6 @@ const BasicsContent = () => {
     }
   };
 
-  // 4 options
-  // 1. Basics (name, category, CMS Component without CMMI and Other)
-  // 2. Basics + cmmi group
-  // 3. Basics + other group
-  // 4. Basics + Cmmi + Other
-  let validationSchema;
-  if (areCmmiGroupsShown) {
-    validationSchema = planBasicsSchema.pageOneSchemaWithCmmiGroups;
-  } else {
-    validationSchema = planBasicsSchema.pageOneSchema;
-  }
-
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
@@ -218,7 +206,7 @@ const BasicsContent = () => {
           handleFormSubmit(values, 'next');
         }}
         enableReinitialize
-        validationSchema={validationSchema}
+        validationSchema={planBasicsSchema.pageOneSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}

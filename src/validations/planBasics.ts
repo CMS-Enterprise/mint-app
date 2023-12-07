@@ -9,18 +9,6 @@ const planBasicsSchema = {
         .required('Enter the Model Category'),
       cmsCenters: Yup.array()
         .min(1, 'Select a CMS Component')
-        .required('Select a CMS Component')
-    })
-  }),
-
-  pageOneSchemaWithCmmiGroups: Yup.object().shape({
-    modelName: Yup.string().trim().required('Enter the Model Name'),
-    basics: Yup.object().shape({
-      modelCategory: Yup.string()
-        .nullable()
-        .required('Enter the Model Category'),
-      cmsCenters: Yup.array()
-        .min(1, 'Select a CMS Component')
         .required('Select a CMS Component'),
       cmmiGroups: Yup.array().when('cmsCenters', {
         is: (val: [string]) => {
