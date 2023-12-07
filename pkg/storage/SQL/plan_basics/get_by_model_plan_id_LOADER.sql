@@ -14,7 +14,6 @@ SELECT
     plan_basics.model_category,
     plan_basics.additional_model_categories,
     plan_basics.cms_centers,
-    plan_basics.cms_other,
     plan_basics.cmmi_groups,
     plan_basics.model_type,
     plan_basics.problem,
