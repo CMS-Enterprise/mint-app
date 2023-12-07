@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import {
@@ -55,8 +55,6 @@ const Frequency = () => {
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
 
   const { t: miscellaneousT } = useTranslation('miscellaneous');
-
-  const [tempRules, setTempRules] = useState(['']);
 
   const {
     beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
@@ -396,16 +394,10 @@ const Frequency = () => {
                                 // )}
                                 label={key}
                                 value={key}
-                                onChange={() => {
-                                  setTempRules(prevArray => [
-                                    ...prevArray,
-                                    key
-                                  ]);
-                                }}
+                                onChange={() => {}}
                               />
 
-                              {/* {values.precedenceRules?.includes(key) && ( */}
-                              {tempRules.includes(key) && (
+                              {values.precedenceRules?.includes(key) && (
                                 <div className="margin-left-4">
                                   <span>
                                     {miscellaneousT('pleaseDescribe')}
