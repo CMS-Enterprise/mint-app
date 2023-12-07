@@ -742,7 +742,7 @@ export interface PlanBeneficiariesChanges {
   precedenceRulesExist: YesNoFilter[];
   precedenceRulesExistYes?: string | null;
   precedenceRulesExistNo?: string | null;
-  precedenceRulesNote?: string | null;
+  precedenceRules?: string | null;
   status?: TaskStatusInput | null;
 }
 

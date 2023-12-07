@@ -25,7 +25,7 @@ export interface GetFrequency_modelPlan_beneficiaries {
   beneficiaryOverlapNote: string | null;
   precedenceRulesExistYes: string | null;
   precedenceRulesExistNo: string | null;
-  precedenceRulesNote: string | null;
+  precedenceRules: string | null;
   readyForReviewByUserAccount: GetFrequency_modelPlan_beneficiaries_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;

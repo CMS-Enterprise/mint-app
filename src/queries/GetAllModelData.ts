@@ -177,7 +177,7 @@ export default gql`
         beneficiarySelectionFrequencyOther
         precedenceRulesExistYes
         precedenceRulesExistNo
-        precedenceRulesNote
+        precedenceRules
         numberPeopleImpacted
         estimateConfidence
         confidenceNote
