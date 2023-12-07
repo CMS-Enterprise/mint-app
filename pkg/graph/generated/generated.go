@@ -388,10 +388,10 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount                 func(childComplexity int) int
 		ModifiedDts                           func(childComplexity int) int
 		NumberPeopleImpacted                  func(childComplexity int) int
+		PrecedenceRules                       func(childComplexity int) int
 		PrecedenceRulesExist                  func(childComplexity int) int
 		PrecedenceRulesExistNo                func(childComplexity int) int
 		PrecedenceRulesExistYes               func(childComplexity int) int
-		PrecedenceRulesNote                   func(childComplexity int) int
 		ReadyForClearanceBy                   func(childComplexity int) int
 		ReadyForClearanceByUserAccount        func(childComplexity int) int
 		ReadyForClearanceDts                  func(childComplexity int) int
@@ -1047,9 +1047,7 @@ type PlanBeneficiariesResolver interface {
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
 
-	PrecedenceRulesExist(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.YesNoFilter, error)
-	PrecedenceRulesExistYes(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error)
-	PrecedenceRulesExistNo(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error)
+	PrecedenceRulesExist(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoFilter, error)
 }
 type PlanCollaboratorResolver interface {
 	TeamRoles(ctx context.Context, obj *models.PlanCollaborator) ([]models.TeamRole, error)
@@ -3212,6 +3210,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBeneficiaries.NumberPeopleImpacted(childComplexity), true
 
+	case "PlanBeneficiaries.precedenceRules":
+		if e.complexity.PlanBeneficiaries.PrecedenceRules == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.PrecedenceRules(childComplexity), true
+
 	case "PlanBeneficiaries.precedenceRulesExist":
 		if e.complexity.PlanBeneficiaries.PrecedenceRulesExist == nil {
 			break
@@ -3232,13 +3237,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBeneficiaries.PrecedenceRulesExistYes(childComplexity), true
-
-	case "PlanBeneficiaries.precedenceRulesNote":
-		if e.complexity.PlanBeneficiaries.PrecedenceRulesNote == nil {
-			break
-		}
-
-		return e.complexity.PlanBeneficiaries.PrecedenceRulesNote(childComplexity), true
 
 	case "PlanBeneficiaries.readyForClearanceBy":
 		if e.complexity.PlanBeneficiaries.ReadyForClearanceBy == nil {
@@ -7660,7 +7658,7 @@ type PlanBeneficiaries {
   precedenceRulesExist: [YesNoFilter!]!
   precedenceRulesExistYes: String
   precedenceRulesExistNo: String
-  precedenceRulesNote: String
+  precedenceRules: String
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -7707,7 +7705,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   precedenceRulesExist: [YesNoFilter!]!
   precedenceRulesExistYes: String
   precedenceRulesExistNo: String
-  precedenceRulesNote: String
+  precedenceRules: String
 
   status: TaskStatusInput
 }
@@ -15503,8 +15501,8 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 				return ec.fieldContext_PlanBeneficiaries_precedenceRulesExistYes(ctx, field)
 			case "precedenceRulesExistNo":
 				return ec.fieldContext_PlanBeneficiaries_precedenceRulesExistNo(ctx, field)
-			case "precedenceRulesNote":
-				return ec.fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx, field)
+			case "precedenceRules":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanBeneficiaries_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -17749,8 +17747,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 				return ec.fieldContext_PlanBeneficiaries_precedenceRulesExistYes(ctx, field)
 			case "precedenceRulesExistNo":
 				return ec.fieldContext_PlanBeneficiaries_precedenceRulesExistNo(ctx, field)
-			case "precedenceRulesNote":
-				return ec.fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx, field)
+			case "precedenceRules":
+				return ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanBeneficiaries_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -26201,9 +26199,9 @@ func (ec *executionContext) _PlanBeneficiaries_precedenceRulesExist(ctx context.
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.YesNoFilter)
+	res := resTmp.([]models.YesNoFilter)
 	fc.Result = res
-	return ec.marshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐYesNoFilterᚄ(ctx, field.Selections, res)
+	return ec.marshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilterᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRulesExist(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -26233,7 +26231,7 @@ func (ec *executionContext) _PlanBeneficiaries_precedenceRulesExistYes(ctx conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBeneficiaries().PrecedenceRulesExistYes(rctx, obj)
+		return obj.PrecedenceRulesExistYes, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -26251,8 +26249,8 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRulesExistY
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -26274,7 +26272,7 @@ func (ec *executionContext) _PlanBeneficiaries_precedenceRulesExistNo(ctx contex
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBeneficiaries().PrecedenceRulesExistNo(rctx, obj)
+		return obj.PrecedenceRulesExistNo, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -26292,8 +26290,8 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRulesExistN
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -26301,8 +26299,8 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRulesExistN
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanBeneficiaries_precedenceRulesNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx, field)
+func (ec *executionContext) _PlanBeneficiaries_precedenceRules(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -26315,7 +26313,7 @@ func (ec *executionContext) _PlanBeneficiaries_precedenceRulesNote(ctx context.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PrecedenceRulesNote, nil
+		return obj.PrecedenceRules, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -26329,7 +26327,7 @@ func (ec *executionContext) _PlanBeneficiaries_precedenceRulesNote(ctx context.C
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRulesNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRules(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
@@ -55981,73 +55979,11 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "precedenceRulesExistYes":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBeneficiaries_precedenceRulesExistYes(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Values[i] = ec._PlanBeneficiaries_precedenceRulesExistYes(ctx, field, obj)
 		case "precedenceRulesExistNo":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBeneficiaries_precedenceRulesExistNo(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "precedenceRulesNote":
-			out.Values[i] = ec._PlanBeneficiaries_precedenceRulesNote(ctx, field, obj)
+			out.Values[i] = ec._PlanBeneficiaries_precedenceRulesExistNo(ctx, field, obj)
+		case "precedenceRules":
+			out.Values[i] = ec._PlanBeneficiaries_precedenceRules(ctx, field, obj)
 		case "createdBy":
 			out.Values[i] = ec._PlanBeneficiaries_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -66622,26 +66558,32 @@ func (ec *executionContext) marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐYesNoFilter(ctx context.Context, v interface{}) (model.YesNoFilter, error) {
-	var res model.YesNoFilter
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx context.Context, v interface{}) (models.YesNoFilter, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.YesNoFilter(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐYesNoFilter(ctx context.Context, sel ast.SelectionSet, v model.YesNoFilter) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx context.Context, sel ast.SelectionSet, v models.YesNoFilter) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐYesNoFilterᚄ(ctx context.Context, v interface{}) ([]model.YesNoFilter, error) {
+func (ec *executionContext) unmarshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilterᚄ(ctx context.Context, v interface{}) ([]models.YesNoFilter, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.YesNoFilter, len(vSlice))
+	res := make([]models.YesNoFilter, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐYesNoFilter(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -66649,7 +66591,7 @@ func (ec *executionContext) unmarshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmin
 	return res, nil
 }
 
-func (ec *executionContext) marshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐYesNoFilterᚄ(ctx context.Context, sel ast.SelectionSet, v []model.YesNoFilter) graphql.Marshaler {
+func (ec *executionContext) marshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilterᚄ(ctx context.Context, sel ast.SelectionSet, v []models.YesNoFilter) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -66673,7 +66615,7 @@ func (ec *executionContext) marshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐYesNoFilter(ctx, sel, v[i])
+			ret[i] = ec.marshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

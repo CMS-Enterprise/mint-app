@@ -707,7 +707,7 @@ type PlanBeneficiaries {
   precedenceRulesExist: [YesNoFilter!]!
   precedenceRulesExistYes: String
   precedenceRulesExistNo: String
-  precedenceRulesNote: String
+  precedenceRules: String
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -754,7 +754,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   precedenceRulesExist: [YesNoFilter!]!
   precedenceRulesExistYes: String
   precedenceRulesExistNo: String
-  precedenceRulesNote: String
+  precedenceRules: String
 
   status: TaskStatusInput
 }
