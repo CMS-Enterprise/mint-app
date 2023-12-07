@@ -51,9 +51,7 @@ type InitialValueType = Omit<
 
 const Frequency = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
-
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
-
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
