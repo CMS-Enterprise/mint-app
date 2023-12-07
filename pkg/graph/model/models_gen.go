@@ -481,23 +481,23 @@ const (
 	CMSCenterCmmi                                 CMSCenter = "CMMI"
 	CMSCenterCenterForMedicare                    CMSCenter = "CENTER_FOR_MEDICARE"
 	CMSCenterFederalCoordinatedHealthCareOffice   CMSCenter = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+	CMSCenterCenterForMedicaidAndChipServices     CMSCenter = "CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
 	CMSCenterCenterForClinicalStandardsAndQuality CMSCenter = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
 	CMSCenterCenterForProgramIntegrity            CMSCenter = "CENTER_FOR_PROGRAM_INTEGRITY"
-	CMSCenterOther                                CMSCenter = "OTHER"
 )
 
 var AllCMSCenter = []CMSCenter{
 	CMSCenterCmmi,
 	CMSCenterCenterForMedicare,
 	CMSCenterFederalCoordinatedHealthCareOffice,
+	CMSCenterCenterForMedicaidAndChipServices,
 	CMSCenterCenterForClinicalStandardsAndQuality,
 	CMSCenterCenterForProgramIntegrity,
-	CMSCenterOther,
 }
 
 func (e CMSCenter) IsValid() bool {
 	switch e {
-	case CMSCenterCmmi, CMSCenterCenterForMedicare, CMSCenterFederalCoordinatedHealthCareOffice, CMSCenterCenterForClinicalStandardsAndQuality, CMSCenterCenterForProgramIntegrity, CMSCenterOther:
+	case CMSCenterCmmi, CMSCenterCenterForMedicare, CMSCenterFederalCoordinatedHealthCareOffice, CMSCenterCenterForMedicaidAndChipServices, CMSCenterCenterForClinicalStandardsAndQuality, CMSCenterCenterForProgramIntegrity:
 		return true
 	}
 	return false
