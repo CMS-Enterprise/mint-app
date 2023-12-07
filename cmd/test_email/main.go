@@ -32,6 +32,9 @@ func main() {
 	sendFeedbackEmail(emailService, templateService, addressBook)
 	reportAProblemEmail(emailService, templateService, addressBook)
 
+	// Solution emails
+	sendSolutionSelectedTestEmail(emailService, templateService, addressBook)
+
 }
 
 func noErr(err error) {

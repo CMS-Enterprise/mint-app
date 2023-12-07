@@ -216,12 +216,16 @@ func (s *Seeder) addOperationalSolution(
 	solType := models.OpSKMarx
 
 	operationalSolution, err := resolvers.OperationalSolutionCreate(
+		s.Config.Context,
+		s.Config.Store,
 		s.Config.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
 		operationalNeedID,
 		&solType,
 		changes,
 		principal,
-		s.Config.Store,
 	)
 
 	if err != nil {

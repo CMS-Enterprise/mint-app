@@ -195,7 +195,7 @@ func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolut
 	changes := map[string]interface{}{
 		"nameOther": "AnotherSolution",
 	}
-	operationalSolution, _ := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	operationalSolution, _ := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 	return operationalSolution
 }
 

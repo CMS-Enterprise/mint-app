@@ -3,6 +3,7 @@ SELECT
     sol_name,
     sol_key,
     treat_as_other,
+    filter_view,
     created_by,
     created_dts,
     modified_by,

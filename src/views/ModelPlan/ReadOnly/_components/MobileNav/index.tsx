@@ -14,13 +14,15 @@ interface MobileNavProps {
   subinfo: SubpageKey;
   isHelpArticle: boolean | undefined;
   solutionDetailRoute?: string;
+  isFilteredView?: boolean;
 }
 
 const MobileNav = ({
   subComponents,
   subinfo,
   isHelpArticle,
-  solutionDetailRoute
+  solutionDetailRoute,
+  isFilteredView
 }: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
@@ -51,7 +53,9 @@ const MobileNav = ({
         aria-controls="read-only-model-plan__subNav"
       >
         <h3 className="padding-left-1">
-          {translationKey(`navigation.${subinfo}`)}
+          {isFilteredView
+            ? translationKey(`navigation.model-basics`)
+            : translationKey(`navigation.${subinfo}`)}
         </h3>
         {!isAccordionOpen ? (
           <Icon.ExpandMore size={3} />
