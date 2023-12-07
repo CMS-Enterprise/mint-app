@@ -26,14 +26,17 @@
         <p><b>Operational need</b></p>
         <p>{{.NeedName}}</p>
         <br/>
+        {{- /* Uncomment this if solution is desired in the future
         <p><b>Solution Status</b></p>
         <p>{{.SolutionStatus}}</p>
         <br/>
+        - */}}
         <p style="font-weight: normal">
           <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only{{ if .FilterView }}?filter-view={{.FilterView}} {{end}}">
             View {{ if .FilterView}} {{.FilterView}} {{ else }} more {{end}} details in MINT
           </a>
         </p>
+        <br/>
       </div>
     </td>
   </tr>
