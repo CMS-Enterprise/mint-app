@@ -4,7 +4,7 @@ ALTER TABLE plan_payments
     ADD COLUMN funding_source_medicare_a_info ZERO_STRING,
     ADD COLUMN funding_source_medicare_b_info ZERO_STRING,
     ADD COLUMN funding_source_r_medicare_a_info ZERO_STRING,
-    ADD COLUMN funding_source_r_medicare_b_info ZERO_STRING,
+    ADD COLUMN funding_source_r_medicare_b_info ZERO_STRING;
     -- DROP COLUMN funding_source_trust_fund_type,
     -- DROP COLUMN funding_source_r_trust_fund_type;
 
@@ -16,7 +16,7 @@ ALTER TABLE plan_payments
 ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_A_HI_TRUST_FUND'; -- TODO: SW this will need to be renamed more properly later
 ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_B_SMI_TRUST_FUND';
 
-WITH
+-- WITH Updates AS
 
 /*
 Update answer options to:
@@ -34,6 +34,6 @@ Check "Other" and add the text "Trust Fund" to the "Please describe the funding 
 
 
 -- TODO Drop old values
-ALTER TABLE plan_payments
-    DROP COLUMN funding_source_trust_fund_type,
-    DROP COLUMN funding_source_r_trust_fund_type;
+-- ALTER TABLE plan_payments
+--     DROP COLUMN funding_source_trust_fund_type,
+--     DROP COLUMN funding_source_r_trust_fund_type;
