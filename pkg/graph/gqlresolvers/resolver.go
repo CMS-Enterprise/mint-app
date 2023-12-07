@@ -11,7 +11,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
 
-	ldclient "gopkg.in/launchdarkly/go-server-sdk.v5"
+	ldclient "github.com/launchdarkly/go-server-sdk/v6"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"

@@ -268,7 +268,6 @@ const AddCRTDL = () => {
                             <FieldErrorMsg>{flatErrors.idNumber}</FieldErrorMsg>
                             <Field
                               as={TextInput}
-                              error={!!flatErrors.idNumber}
                               id="cr-tdl-id-number"
                               data-testid="cr-tdl-id-number"
                               maxLength={50}
@@ -296,7 +295,6 @@ const AddCRTDL = () => {
                               <div className="width-card-lg position-relative">
                                 <Field
                                   as={DatePicker}
-                                  error={+!!flatErrors.dateInitiated}
                                   id="cr-tdl-date-initiated"
                                   data-testid="cr-tdl-date-initiated"
                                   maxLength={50}
@@ -327,7 +325,6 @@ const AddCRTDL = () => {
                             <FieldErrorMsg>{flatErrors.title}</FieldErrorMsg>
                             <Field
                               as={TextAreaField}
-                              error={!!flatErrors.title}
                               className="maxw-none mint-textarea"
                               id="cr-tdl-title"
                               data-testid="cr-tdl-title"
@@ -348,7 +345,6 @@ const AddCRTDL = () => {
                             <Field
                               as={Textarea}
                               className="height-15"
-                              error={flatErrors.note}
                               id="cr-tdl-note"
                               data-testid="cr-tdl-note"
                               value={values.note || ''}

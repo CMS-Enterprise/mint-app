@@ -291,7 +291,6 @@ const BasicsContent = () => {
 
                           <Field
                             as={TextInput}
-                            error={!!flatErrors.modelName}
                             id="plan-basics-model-name"
                             maxLength={50}
                             name="modelName"
@@ -317,7 +316,6 @@ const BasicsContent = () => {
 
                           <Field
                             as={TextInput}
-                            error={!!flatErrors.abbreviation}
                             id="plan-basics-abbreviation"
                             maxLength={50}
                             name="abbreviation"
@@ -371,7 +369,6 @@ const BasicsContent = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors['basics.amsModelID']}
                                   id="plan-basics-ams-model-id"
                                   maxLength={50}
                                   name="basics.amsModelID"
@@ -394,7 +391,6 @@ const BasicsContent = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors['basics.demoCode']}
                                   id="plan-basics-demo-code"
                                   maxLength={50}
                                   name="basics.demoCode"

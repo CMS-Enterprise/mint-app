@@ -6,14 +6,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-
-	"gopkg.in/launchdarkly/go-sdk-common.v2/lduser"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
-	"gopkg.in/launchdarkly/go-server-sdk.v5/ldfiledata"
-	"gopkg.in/launchdarkly/go-server-sdk.v5/ldfilewatch"
+	"github.com/launchdarkly/go-sdk-common/v3/ldcontext"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
+	"github.com/launchdarkly/go-server-sdk/v6/ldfiledata"
+	"github.com/launchdarkly/go-server-sdk/v6/ldfilewatch"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 // DowngradeAssessmentTeamKey is the Flag Key in LaunchDarkly for downgrading assessment team users
@@ -52,9 +51,9 @@ func NewLaunchDarklyClient(config Config) (*ld.LDClient, error) {
 
 // Principal builds the LaunchDarkly user object for the
 // currently authenticated principal.
-func Principal(ctx context.Context) lduser.User {
+func Principal(ctx context.Context) ldcontext.Context {
 	p := appcontext.Principal(ctx)
-	key := UserKeyForID(p.ID())
+	key := ContextKeyForID(p.ID())
 
 	// this is a bit of a loose inference, assuming a user w/o Job Codes
 	// is an Anonymous user. Over time, may want to consider adding
@@ -62,17 +61,17 @@ func Principal(ctx context.Context) lduser.User {
 	// definition instead of doing this inference
 	authed := (p.AllowUSER() || p.AllowASSESSMENT())
 
-	return lduser.
-		NewUserBuilder(key).
+	return ldcontext.
+		NewBuilder(key).
 		Anonymous(!authed).
 		Build()
 }
 
-// UserKeyForID generates a user key from an ID
+// ContextKeyForID generates a context key from an ID
 // we should not be using bare EUA IDs as identifiers to
 // LaunchDarkly (per Jimil/ISSO), so we use a cryptographically
-// secure one-way hash of the EUA ID as "key" for the LD User object.
-func UserKeyForID(id string) string {
+// secure one-way hash of the EUA ID as "key" for the LD Context object.
+func ContextKeyForID(id string) string {
 	h := sha256.New()
 	_, _ = h.Write([]byte(id))
 	return fmt.Sprintf("%x", h.Sum(nil))
