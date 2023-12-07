@@ -119,7 +119,6 @@ export type TranslationBasics = {
   modelCategory: TranslationFieldPropertiesWithOptions<ModelCategory>;
   additionalModelCategories: TranslationFieldPropertiesWithOptions<ModelCategory>;
   cmsCenters: TranslationFieldPropertiesWithOptions<CmsCenter>;
-  cmsOther: TranslationFieldProperties;
   cmmiGroups: TranslationFieldPropertiesWithOptions<CmmiGroup>;
   // Overview
   modelType: TranslationFieldPropertiesWithOptions<ModelType>;

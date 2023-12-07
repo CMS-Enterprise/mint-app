@@ -31,7 +31,6 @@ const csvFields = [
   'basics.demoCode',
   'basics.cmsCenters', // array
   'basics.cmmiGroups', // array
-  'basics.cmsOther',
   'basics.modelType',
   'basics.problem',
   'basics.goal',

@@ -89,23 +89,18 @@ export const basics: TranslationBasics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      CMMI: 'CMMI',
-      CENTER_FOR_MEDICARE: 'Center for Medicare (CM)',
-      FEDERAL_COORDINATED_HEALTH_CARE_OFFICE: 'Federal Coordinated Health Care',
+      CMMI: 'Center for Medicare and Medicaid Innovation (CMMI)',
       CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY:
         'Center for Clinical Standards and Quality (CCSQ)',
-      CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)',
-      OTHER: 'Other'
+      CENTER_FOR_MEDICAID_AND_CHIP_SERVICES:
+        'Center for Medicaid and CHIP Services (CMCS)',
+      CENTER_FOR_MEDICARE: 'Center for Medicare (CM)',
+      FEDERAL_COORDINATED_HEALTH_CARE_OFFICE:
+        'Federal Coordinated Health Care Office (FCHCO)',
+
+      CENTER_FOR_PROGRAM_INTEGRITY: 'Center for Program Integrity (CPI)'
     },
     filterGroups: ['ipc']
-  },
-  cmsOther: {
-    gqlField: 'cmsOther',
-    goField: 'CmsOther',
-    dbField: 'cms_other',
-    label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea'
   },
   cmmiGroups: {
     gqlField: 'cmmiGroups',
