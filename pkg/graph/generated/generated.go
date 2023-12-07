@@ -1114,10 +1114,7 @@ type PlanParticipantsAndProvidersResolver interface {
 
 	CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error)
 
-	GainsharePayments(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*bool, error)
-	GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*bool, error)
 	GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error)
-	GainsharePaymentsEligibilityOther(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error)
 
 	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
 
@@ -6944,7 +6941,9 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schema.graphql", Input: `"""
+	{Name: "../schema.graphql", Input: `
+
+"""
 The current user's Launch Darkly key
 """
 type LaunchDarklySettings {
@@ -7025,52 +7024,52 @@ type ModelPlan {
 }
 
 type OperationalNeed {
-  id: UUID!
-  modelPlanID: UUID!
+    id: UUID!
+    modelPlanID: UUID!
 
-  needed: Boolean # if null, it has not been answered
-  solutions(includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+    needed: Boolean # if null, it has not been answered
+    solutions(includeNotNeeded: Boolean! = false): [OperationalSolution!]!
 
-  key: OperationalNeedKey
-  name: String
-  nameOther: String
-  section: TaskListSection
+    key: OperationalNeedKey
+    name: String
+    nameOther: String
+    section: TaskListSection
 
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
 }
 
 type PossibleOperationalNeed {
-  id: Int!
-  possibleSolutions: [PossibleOperationalSolution!]!
-  name: String!
-  key: OperationalNeedKey!
-  section: TaskListSection
+    id: Int!
+    possibleSolutions: [PossibleOperationalSolution!]!
+    name: String!
+    key: OperationalNeedKey!
+    section: TaskListSection
 
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
 }
 type PossibleOperationalSolution {
-  id: Int!
-  name: String!
-  key: OperationalSolutionKey!
-  treatAsOther: Boolean!
-  pointsOfContact: [PossibleOperationalSolutionContact!]!
+    id: Int!
+    name: String!
+    key: OperationalSolutionKey!
+    treatAsOther: Boolean!
+    pointsOfContact: [PossibleOperationalSolutionContact!]!
 
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
 }
 
 """
@@ -7395,17 +7394,17 @@ type Tag {
 }
 
 enum TagType {
-  USER_ACCOUNT
-  POSSIBLE_SOLUTION
+    USER_ACCOUNT
+    POSSIBLE_SOLUTION
 }
 
 """
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
-  id: UUID!
-  modelPlanID: UUID!
-  content: TaggedContent
+	id: UUID!
+	modelPlanID: UUID!
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   replies: [DiscussionReply!]!
@@ -7435,9 +7434,9 @@ input PlanDiscussionCreateInput {
 DiscussionReply represents a discussion reply
 """
 type DiscussionReply  {
-  id: UUID!
-  discussionID: UUID!
-  content: TaggedContent
+	id: UUID!
+	discussionID: UUID!
+	content: TaggedContent
   userRole: DiscussionUserRole
   userRoleDescription: String
   isAssessment: Boolean!
@@ -7740,10 +7739,10 @@ type PlanParticipantsAndProviders {
   coordinateWork:          Boolean
   coordinateWorkNote:      String
   gainsharePayments:       Boolean
-  gainsharePaymentsTrack:  Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
   gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
   gainsharePaymentsEligibilityOther: String
-  gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]!
   participantsIdsOther:    String
   participantsIDSNote:     String
@@ -7824,10 +7823,10 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   coordinateWork:          Boolean
   coordinateWorkNote:      String
   gainsharePayments:       Boolean
-  gainsharePaymentsTrack:  Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
   gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
   gainsharePaymentsEligibilityOther: String
-  gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String
   participantsIDSNote:     String
@@ -8029,127 +8028,127 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
 """
 type PlanOpsEvalAndLearning {
-  id: UUID!
-  modelPlanID: UUID!
+    id: UUID!
+    modelPlanID: UUID!
 
-  #Page 1
-  agencyOrStateHelp: [AgencyOrStateHelpType!]!
-  agencyOrStateHelpOther: String
-  agencyOrStateHelpNote: String
-  stakeholders: [StakeholdersType!]!
-  stakeholdersOther: String
-  stakeholdersNote: String
-  helpdeskUse: Boolean
-  helpdeskUseNote: String
-  contractorSupport: [ContractorSupportType!]!
-  contractorSupportOther: String
-  contractorSupportHow: String
-  contractorSupportNote: String
-  iddocSupport: Boolean
-  iddocSupportNote: String
-  #Page 2
-  technicalContactsIdentified: Boolean
-  technicalContactsIdentifiedDetail: String
-  technicalContactsIdentifiedNote: String
-  captureParticipantInfo: Boolean
-  captureParticipantInfoNote: String
-  icdOwner: String
-  draftIcdDueDate: Time
-  icdNote: String
-  #Page 3
-  uatNeeds: String
-  stcNeeds: String
-  testingTimelines: String
-  testingNote: String
-  dataMonitoringFileTypes: [MonitoringFileType!]!
-  dataMonitoringFileOther: String
-  dataResponseType: String
-  dataResponseFileFrequency: String
-  #Page 4
-  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-  eftSetUp: Boolean
-  unsolicitedAdjustmentsIncluded: Boolean
-  dataFlowDiagramsNeeded: Boolean
-  produceBenefitEnhancementFiles: Boolean
-  fileNamingConventions: String
-  dataMonitoringNote: String
-  #Page 5
-  benchmarkForPerformance: BenchmarkForPerformanceType
-  benchmarkForPerformanceNote: String
-  computePerformanceScores: Boolean
-  computePerformanceScoresNote: String
-  riskAdjustPerformance: Boolean
-  riskAdjustFeedback: Boolean
-  riskAdjustPayments: Boolean
-  riskAdjustOther: Boolean
-  riskAdjustNote: String
-  appealPerformance: Boolean
-  appealFeedback: Boolean
-  appealPayments: Boolean
-  appealOther: Boolean
-  appealNote: String
-  #Page 6
-  evaluationApproaches: [EvaluationApproachType!]!
-  evaluationApproachOther: String
-  evalutaionApproachNote: String
-  ccmInvolvment: [CcmInvolvmentType!]!
-  ccmInvolvmentOther: String
-  ccmInvolvmentNote: String
-  dataNeededForMonitoring: [DataForMonitoringType!]!
-  dataNeededForMonitoringOther: String
-  dataNeededForMonitoringNote: String
-  dataToSendParticicipants: [DataToSendParticipantsType!]!
-  dataToSendParticicipantsOther: String
-  dataToSendParticicipantsNote: String
-  shareCclfData: Boolean
-  shareCclfDataNote: String
-  #Page 7
-  sendFilesBetweenCcw: Boolean
-  sendFilesBetweenCcwNote: String
-  appToSendFilesToKnown: Boolean
-  appToSendFilesToWhich: String
-  appToSendFilesToNote: String
-  useCcwForFileDistribiutionToParticipants: Boolean
-  useCcwForFileDistribiutionToParticipantsNote: String
-  developNewQualityMeasures: Boolean
-  developNewQualityMeasuresNote: String
-  qualityPerformanceImpactsPayment: Boolean
-  qualityPerformanceImpactsPaymentNote: String
-  #Page 8
-  dataSharingStarts: DataStartsType
-  dataSharingStartsOther: String
-  dataSharingFrequency: [DataFrequencyType!]!
-  dataSharingFrequencyOther: String
-  dataSharingStartsNote: String
-  dataCollectionStarts: DataStartsType
-  dataCollectionStartsOther: String
-  dataCollectionFrequency: [DataFrequencyType!]!
-  dataCollectionFrequencyOther: String
-  dataCollectionFrequencyNote: String
-  qualityReportingStarts: DataStartsType
-  qualityReportingStartsOther: String
-  qualityReportingStartsNote: String
-  #Page 9
-  modelLearningSystems: [ModelLearningSystemType!]!
-  modelLearningSystemsOther: String
-  modelLearningSystemsNote: String
-  anticipatedChallenges: String
+    #Page 1
+    agencyOrStateHelp: [AgencyOrStateHelpType!]!
+    agencyOrStateHelpOther: String
+    agencyOrStateHelpNote: String
+    stakeholders: [StakeholdersType!]!
+    stakeholdersOther: String
+    stakeholdersNote: String
+    helpdeskUse: Boolean
+    helpdeskUseNote: String
+    contractorSupport: [ContractorSupportType!]!
+    contractorSupportOther: String
+    contractorSupportHow: String
+    contractorSupportNote: String
+    iddocSupport: Boolean
+    iddocSupportNote: String
+    #Page 2
+    technicalContactsIdentified: Boolean
+    technicalContactsIdentifiedDetail: String
+    technicalContactsIdentifiedNote: String
+    captureParticipantInfo: Boolean
+    captureParticipantInfoNote: String
+    icdOwner: String
+    draftIcdDueDate: Time
+    icdNote: String
+    #Page 3
+    uatNeeds: String
+    stcNeeds: String
+    testingTimelines: String
+    testingNote: String
+    dataMonitoringFileTypes: [MonitoringFileType!]!
+    dataMonitoringFileOther: String
+    dataResponseType: String
+    dataResponseFileFrequency: String
+    #Page 4
+    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+    eftSetUp: Boolean
+    unsolicitedAdjustmentsIncluded: Boolean
+    dataFlowDiagramsNeeded: Boolean
+    produceBenefitEnhancementFiles: Boolean
+    fileNamingConventions: String
+    dataMonitoringNote: String
+    #Page 5
+    benchmarkForPerformance: BenchmarkForPerformanceType
+    benchmarkForPerformanceNote: String
+    computePerformanceScores: Boolean
+    computePerformanceScoresNote: String
+    riskAdjustPerformance: Boolean
+    riskAdjustFeedback: Boolean
+    riskAdjustPayments: Boolean
+    riskAdjustOther: Boolean
+    riskAdjustNote: String
+    appealPerformance: Boolean
+    appealFeedback: Boolean
+    appealPayments: Boolean
+    appealOther: Boolean
+    appealNote: String
+    #Page 6
+    evaluationApproaches: [EvaluationApproachType!]!
+    evaluationApproachOther: String
+    evalutaionApproachNote: String
+    ccmInvolvment: [CcmInvolvmentType!]!
+    ccmInvolvmentOther: String
+    ccmInvolvmentNote: String
+    dataNeededForMonitoring: [DataForMonitoringType!]!
+    dataNeededForMonitoringOther: String
+    dataNeededForMonitoringNote: String
+    dataToSendParticicipants: [DataToSendParticipantsType!]!
+    dataToSendParticicipantsOther: String
+    dataToSendParticicipantsNote: String
+    shareCclfData: Boolean
+    shareCclfDataNote: String
+    #Page 7
+    sendFilesBetweenCcw: Boolean
+    sendFilesBetweenCcwNote: String
+    appToSendFilesToKnown: Boolean
+    appToSendFilesToWhich: String
+    appToSendFilesToNote: String
+    useCcwForFileDistribiutionToParticipants: Boolean
+    useCcwForFileDistribiutionToParticipantsNote: String
+    developNewQualityMeasures: Boolean
+    developNewQualityMeasuresNote: String
+    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPaymentNote: String
+    #Page 8
+    dataSharingStarts: DataStartsType
+    dataSharingStartsOther: String
+    dataSharingFrequency: [DataFrequencyType!]!
+    dataSharingFrequencyOther: String
+    dataSharingStartsNote: String
+    dataCollectionStarts: DataStartsType
+    dataCollectionStartsOther: String
+    dataCollectionFrequency: [DataFrequencyType!]!
+    dataCollectionFrequencyOther: String
+    dataCollectionFrequencyNote: String
+    qualityReportingStarts: DataStartsType
+    qualityReportingStartsOther: String
+    qualityReportingStartsNote: String
+    #Page 9
+    modelLearningSystems: [ModelLearningSystemType!]!
+    modelLearningSystemsOther: String
+    modelLearningSystemsNote: String
+    anticipatedChallenges: String
 
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
 
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
+    readyForReviewBy: UUID
+    readyForReviewByUserAccount: UserAccount
+    readyForReviewDts: Time
+    readyForClearanceBy: UUID
+    readyForClearanceByUserAccount: UserAccount
+    readyForClearanceDts: Time
 
-  status: TaskStatus!
+    status: TaskStatus!
 }
 
 """
@@ -8160,110 +8159,110 @@ https://gqlgen.com/reference/changesets/
 """
 input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
-  #Page 1
-  agencyOrStateHelp: [AgencyOrStateHelpType!]
-  agencyOrStateHelpOther: String
-  agencyOrStateHelpNote: String
-  stakeholders: [StakeholdersType!]
-  stakeholdersOther: String
-  stakeholdersNote: String
-  helpdeskUse: Boolean
-  helpdeskUseNote: String
-  contractorSupport: [ContractorSupportType!]
-  contractorSupportOther: String
-  contractorSupportHow: String
-  contractorSupportNote: String
-  iddocSupport: Boolean
-  iddocSupportNote: String
-  #Page 2
-  technicalContactsIdentified: Boolean
-  technicalContactsIdentifiedDetail: String
-  technicalContactsIdentifiedNote: String
-  captureParticipantInfo: Boolean
-  captureParticipantInfoNote: String
-  icdOwner: String
-  draftIcdDueDate: Time
-  icdNote: String
-  #Page 3
-  uatNeeds: String
-  stcNeeds: String
-  testingTimelines: String
-  testingNote: String
-  dataMonitoringFileTypes: [MonitoringFileType!]
-  dataMonitoringFileOther: String
-  dataResponseType: String
-  dataResponseFileFrequency: String
-  #Page 4
-  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-  eftSetUp: Boolean
-  unsolicitedAdjustmentsIncluded: Boolean
-  dataFlowDiagramsNeeded: Boolean
-  produceBenefitEnhancementFiles: Boolean
-  fileNamingConventions: String
-  dataMonitoringNote: String
-  #Page 5
-  benchmarkForPerformance: BenchmarkForPerformanceType
-  benchmarkForPerformanceNote: String
-  computePerformanceScores: Boolean
-  computePerformanceScoresNote: String
-  riskAdjustPerformance: Boolean
-  riskAdjustFeedback: Boolean
-  riskAdjustPayments: Boolean
-  riskAdjustOther: Boolean
-  riskAdjustNote: String
-  appealPerformance: Boolean
-  appealFeedback: Boolean
-  appealPayments: Boolean
-  appealOther: Boolean
-  appealNote: String
-  #Page 6
-  evaluationApproaches: [EvaluationApproachType!]
-  evaluationApproachOther: String
-  evalutaionApproachNote: String
-  ccmInvolvment: [CcmInvolvmentType!]
-  ccmInvolvmentOther: String
-  ccmInvolvmentNote: String
-  dataNeededForMonitoring: [DataForMonitoringType!]
-  dataNeededForMonitoringOther: String
-  dataNeededForMonitoringNote: String
-  dataToSendParticicipants: [DataToSendParticipantsType!]
-  dataToSendParticicipantsOther: String
-  dataToSendParticicipantsNote: String
-  shareCclfData: Boolean
-  shareCclfDataNote: String
-  #Page 7
-  sendFilesBetweenCcw: Boolean
-  sendFilesBetweenCcwNote: String
-  appToSendFilesToKnown: Boolean
-  appToSendFilesToWhich: String
-  appToSendFilesToNote: String
-  useCcwForFileDistribiutionToParticipants: Boolean
-  useCcwForFileDistribiutionToParticipantsNote: String
-  developNewQualityMeasures: Boolean
-  developNewQualityMeasuresNote: String
-  qualityPerformanceImpactsPayment: Boolean
-  qualityPerformanceImpactsPaymentNote: String
-  #Page 8
-  dataSharingStarts: DataStartsType
-  dataSharingStartsOther: String
-  dataSharingFrequency: [DataFrequencyType!]
-  dataSharingFrequencyOther: String
-  dataSharingStartsNote: String
-  dataCollectionStarts: DataStartsType
-  dataCollectionStartsOther: String
-  dataCollectionFrequency: [DataFrequencyType!]
-  dataCollectionFrequencyOther: String
-  dataCollectionFrequencyNote: String
-  qualityReportingStarts: DataStartsType
-  qualityReportingStartsOther: String
-  qualityReportingStartsNote: String
-  #Page 9
-  modelLearningSystems: [ModelLearningSystemType!]
-  modelLearningSystemsOther: String
-  modelLearningSystemsNote: String
-  anticipatedChallenges: String
+    #Page 1
+    agencyOrStateHelp: [AgencyOrStateHelpType!]
+    agencyOrStateHelpOther: String
+    agencyOrStateHelpNote: String
+    stakeholders: [StakeholdersType!]
+    stakeholdersOther: String
+    stakeholdersNote: String
+    helpdeskUse: Boolean
+    helpdeskUseNote: String
+    contractorSupport: [ContractorSupportType!]
+    contractorSupportOther: String
+    contractorSupportHow: String
+    contractorSupportNote: String
+    iddocSupport: Boolean
+    iddocSupportNote: String
+    #Page 2
+    technicalContactsIdentified: Boolean
+    technicalContactsIdentifiedDetail: String
+    technicalContactsIdentifiedNote: String
+    captureParticipantInfo: Boolean
+    captureParticipantInfoNote: String
+    icdOwner: String
+    draftIcdDueDate: Time
+    icdNote: String
+    #Page 3
+    uatNeeds: String
+    stcNeeds: String
+    testingTimelines: String
+    testingNote: String
+    dataMonitoringFileTypes: [MonitoringFileType!]
+    dataMonitoringFileOther: String
+    dataResponseType: String
+    dataResponseFileFrequency: String
+    #Page 4
+    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+    eftSetUp: Boolean
+    unsolicitedAdjustmentsIncluded: Boolean
+    dataFlowDiagramsNeeded: Boolean
+    produceBenefitEnhancementFiles: Boolean
+    fileNamingConventions: String
+    dataMonitoringNote: String
+    #Page 5
+    benchmarkForPerformance: BenchmarkForPerformanceType
+    benchmarkForPerformanceNote: String
+    computePerformanceScores: Boolean
+    computePerformanceScoresNote: String
+    riskAdjustPerformance: Boolean
+    riskAdjustFeedback: Boolean
+    riskAdjustPayments: Boolean
+    riskAdjustOther: Boolean
+    riskAdjustNote: String
+    appealPerformance: Boolean
+    appealFeedback: Boolean
+    appealPayments: Boolean
+    appealOther: Boolean
+    appealNote: String
+    #Page 6
+    evaluationApproaches: [EvaluationApproachType!]
+    evaluationApproachOther: String
+    evalutaionApproachNote: String
+    ccmInvolvment: [CcmInvolvmentType!]
+    ccmInvolvmentOther: String
+    ccmInvolvmentNote: String
+    dataNeededForMonitoring: [DataForMonitoringType!]
+    dataNeededForMonitoringOther: String
+    dataNeededForMonitoringNote: String
+    dataToSendParticicipants: [DataToSendParticipantsType!]
+    dataToSendParticicipantsOther: String
+    dataToSendParticicipantsNote: String
+    shareCclfData: Boolean
+    shareCclfDataNote: String
+    #Page 7
+    sendFilesBetweenCcw: Boolean
+    sendFilesBetweenCcwNote: String
+    appToSendFilesToKnown: Boolean
+    appToSendFilesToWhich: String
+    appToSendFilesToNote: String
+    useCcwForFileDistribiutionToParticipants: Boolean
+    useCcwForFileDistribiutionToParticipantsNote: String
+    developNewQualityMeasures: Boolean
+    developNewQualityMeasuresNote: String
+    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPaymentNote: String
+    #Page 8
+    dataSharingStarts: DataStartsType
+    dataSharingStartsOther: String
+    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequencyOther: String
+    dataSharingStartsNote: String
+    dataCollectionStarts: DataStartsType
+    dataCollectionStartsOther: String
+    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequencyOther: String
+    dataCollectionFrequencyNote: String
+    qualityReportingStarts: DataStartsType
+    qualityReportingStartsOther: String
+    qualityReportingStartsNote: String
+    #Page 9
+    modelLearningSystems: [ModelLearningSystemType!]
+    modelLearningSystemsOther: String
+    modelLearningSystemsNote: String
+    anticipatedChallenges: String
 
-  status: TaskStatusInput
+    status: TaskStatusInput
 }
 """
 NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
@@ -8300,51 +8299,51 @@ enum ReportAProblemSeverity {
 }
 
 type PlanFavorite {
-  id: UUID!
-  modelPlanID: UUID!
-  userID: UUID!
-  userAccount: UserAccount!
+    id: UUID!
+    modelPlanID: UUID!
+    userID: UUID!
+    userAccount: UserAccount!
 
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
 
 }
 
 type PlanCrTdl {
-  id: UUID!
-  modelPlanID: UUID!
+    id: UUID!
+    modelPlanID: UUID!
 
-  idNumber: String!
-  dateInitiated: Time!
-  title: String!
-  note: String
+    idNumber: String!
+    dateInitiated: Time!
+    title: String!
+    note: String
 
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
 }
 
 input PlanCrTdlCreateInput {
-  modelPlanID: UUID!
+    modelPlanID: UUID!
 
-  idNumber: String!
-  dateInitiated: Time!
-  title: String!
-  note: String
+    idNumber: String!
+    dateInitiated: Time!
+    title: String!
+    note: String
 }
 
 input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
-  idNumber: String
-  dateInitiated: Time
-  title: String
-  note: String
+    idNumber: String
+    dateInitiated: Time
+    title: String
+    note: String
 }
 
 type PrepareForClearance {
@@ -8366,58 +8365,58 @@ type AuditChange {
 
 
 type OperationalSolution {
-  id: UUID!
-  operationalNeedID: UUID!
+    id: UUID!
+    operationalNeedID: UUID!
 
-  solutionType: Int
-  needed: Boolean # if null, it has not been selectd
-  name: String
-  key: OperationalSolutionKey
-  nameOther: String
+    solutionType: Int
+    needed: Boolean # if null, it has not been selectd
+    name: String
+    key: OperationalSolutionKey
+    nameOther: String
 
-  pocName: String
-  pocEmail: String
-  mustStartDts: Time
-  mustFinishDts: Time
-  isOther: Boolean!
-  isCommonSolution: Boolean!
-  otherHeader: String
-  status: OpSolutionStatus!
+    pocName: String
+    pocEmail: String
+    mustStartDts: Time
+    mustFinishDts: Time
+    isOther: Boolean!
+    isCommonSolution: Boolean!
+    otherHeader: String
+    status: OpSolutionStatus!
 
-  documents: [PlanDocument!]!
-  operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
+    documents: [PlanDocument!]!
+    operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
 
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
 }
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
-  needed: Boolean
-  nameOther: String # Only valid for when solution type is null
+    needed: Boolean
+    nameOther: String # Only valid for when solution type is null
 
-  pocName: String
-  pocEmail: String
-  mustStartDts: Time
-  mustFinishDts: Time
-  otherHeader: String
-  status: OpSolutionStatus
+    pocName: String
+    pocEmail: String
+    mustStartDts: Time
+    mustFinishDts: Time
+    otherHeader: String
+    status: OpSolutionStatus
 }
 
 type PlanDocumentSolutionLink {
-  id: UUID!
-  solutionID: UUID!
-  documentID: UUID!
+id: UUID!
+solutionID: UUID!
+documentID: UUID!
 
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+createdBy: UUID!
+createdByUserAccount: UserAccount!
+createdDts: Time!
+modifiedBy: UUID
+modifiedByUserAccount: UserAccount
+modifiedDts: Time
 }
 
 input CreateOperationalSolutionSubtaskInput {
@@ -8635,120 +8634,120 @@ enum ModelPlanFilter {
 Mutations definition for the schema
 """
 type Mutation {
-  createModelPlan(modelName: String!): ModelPlan!
-  @hasRole(role: MINT_USER)
+createModelPlan(modelName: String!): ModelPlan!
+@hasRole(role: MINT_USER)
 
-  updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
-  @hasRole(role: MINT_USER)
+updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
+@hasRole(role: MINT_USER)
 
-  createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
-  @hasRole(role: MINT_USER)
+createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
+@hasRole(role: MINT_USER)
 
-  updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
-  @hasRole(role: MINT_USER)
+updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
+@hasRole(role: MINT_USER)
 
-  deletePlanCollaborator(id: UUID!): PlanCollaborator!
-  @hasRole(role: MINT_USER)
+deletePlanCollaborator(id: UUID!): PlanCollaborator!
+@hasRole(role: MINT_USER)
 
-  updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
-  @hasRole(role: MINT_USER)
+updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
+@hasRole(role: MINT_USER)
 
-  updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
-  @hasRole(role: MINT_USER)
+updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
+@hasRole(role: MINT_USER)
 
-  updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
-  @hasRole(role: MINT_USER)
+updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
+@hasRole(role: MINT_USER)
 
-  updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
-  @hasRole(role: MINT_USER)
+updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
+@hasRole(role: MINT_USER)
 
-  updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
-  @hasRole(role: MINT_USER)
+updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
+@hasRole(role: MINT_USER)
 
-  uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
-  @hasRole(role: MINT_USER)
+uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
+@hasRole(role: MINT_USER)
 
-  linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
-  @hasRole(role: MINT_USER)
+linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
+@hasRole(role: MINT_USER)
 
-  deletePlanDocument(id: UUID!): Int!
-  @hasRole(role: MINT_USER)
+deletePlanDocument(id: UUID!): Int!
+@hasRole(role: MINT_USER)
 
-  createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-  createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-  lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
-  @hasRole(role: MINT_USER)
+lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+@hasRole(role: MINT_USER)
 
-  unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
-  @hasRole(role: MINT_USER)
+unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+@hasRole(role: MINT_USER)
 
-  unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
-  @hasRole(role: MINT_ASSESSMENT)
+unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+@hasRole(role: MINT_ASSESSMENT)
 
-  updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
-  @hasRole(role: MINT_USER)
+updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
+@hasRole(role: MINT_USER)
 
-  agreeToNDA(agree: Boolean! = true): NDAInfo!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+agreeToNDA(agree: Boolean! = true): NDAInfo!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-  addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-  deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
-  createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
-  @hasRole(role: MINT_USER)
+createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
+@hasRole(role: MINT_USER)
 
-  updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
-  @hasRole(role: MINT_USER)
+updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
+@hasRole(role: MINT_USER)
 
-  deletePlanCrTdl(id: UUID!): PlanCrTdl!
-  @hasRole(role: MINT_USER)
+deletePlanCrTdl(id: UUID!): PlanCrTdl!
+@hasRole(role: MINT_USER)
 
-  addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
-  @hasRole(role: MINT_USER)
+addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
+@hasRole(role: MINT_USER)
 
-  updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
-  @hasRole(role: MINT_USER)
+updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
+@hasRole(role: MINT_USER)
 
-  createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
-  @hasRole(role: MINT_USER)
+createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
+@hasRole(role: MINT_USER)
 
-  updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
-  @hasRole(role: MINT_USER)
+updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
+@hasRole(role: MINT_USER)
 
-  createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
-  @hasRole(role: MINT_USER)
+createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
+@hasRole(role: MINT_USER)
 
-  removePlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): Boolean!
-  @hasRole(role: MINT_USER)
+removePlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): Boolean!
+@hasRole(role: MINT_USER)
 
-  createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
-  @hasRole(role: MINT_USER)
+createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+@hasRole(role: MINT_USER)
 
-  updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
-  @hasRole(role: MINT_USER)
+updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+@hasRole(role: MINT_USER)
 
-  deleteOperationalSolutionSubtask(id: UUID!): Int!
-  @hasRole(role: MINT_USER)
+deleteOperationalSolutionSubtask(id: UUID!): Int!
+@hasRole(role: MINT_USER)
 
-  updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
-  @hasRole(role: MINT_USER)
+updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
+@hasRole(role: MINT_USER)
 
-  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
-  @hasRole(role: MINT_USER)
+shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
+@hasRole(role: MINT_USER)
 
-  reportAProblem(input: ReportAProblemInput!): Boolean!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  """
-  This mutation sends feedback about the MINT product to the MINT team
-  """
-  sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+reportAProblem(input: ReportAProblemInput!): Boolean!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
+"""
+This mutation sends feedback about the MINT product to the MINT team
+"""
+sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
 }
 
 type Subscription {
@@ -8825,15 +8824,15 @@ enum ModelCategory {
 }
 
 enum ModelStatus {
-  PLAN_DRAFT
-  PLAN_COMPLETE
-  ICIP_COMPLETE
-  INTERNAL_CMMI_CLEARANCE
-  CMS_CLEARANCE
-  HHS_CLEARANCE
-  OMB_ASRF_CLEARANCE
-  CLEARED
-  ANNOUNCED
+	PLAN_DRAFT
+	PLAN_COMPLETE
+	ICIP_COMPLETE
+	INTERNAL_CMMI_CLEARANCE
+	CMS_CLEARANCE
+	HHS_CLEARANCE
+	OMB_ASRF_CLEARANCE
+	CLEARED
+	ANNOUNCED
   PAUSED
   CANCELED
   ACTIVE
@@ -9030,133 +9029,133 @@ enum ProviderAddType {
 
 enum ProviderLeaveType {
 
-  VOLUNTARILY_WITHOUT_IMPLICATIONS
-  AFTER_A_CERTAIN_WITH_IMPLICATIONS
-  VARIES_BY_TYPE_OF_PROVIDER
-  NOT_ALLOWED_TO_LEAVE
-  OTHER
-  NOT_APPLICABLE
+VOLUNTARILY_WITHOUT_IMPLICATIONS
+AFTER_A_CERTAIN_WITH_IMPLICATIONS
+VARIES_BY_TYPE_OF_PROVIDER
+NOT_ALLOWED_TO_LEAVE
+OTHER
+NOT_APPLICABLE
 }
 
 
 #Ops Eval and Learning types begin
 
 enum AgencyOrStateHelpType {
-  YES_STATE
-  YES_AGENCY_IDEAS
-  YES_AGENCY_IAA
-  NO
-  OTHER
+    YES_STATE
+    YES_AGENCY_IDEAS
+    YES_AGENCY_IAA
+    NO
+    OTHER
 }
 
 enum StakeholdersType {
-  BENEFICIARIES
-  COMMUNITY_ORGANIZATIONS
-  PARTICIPANTS
-  PROFESSIONAL_ORGANIZATIONS
-  PROVIDERS
-  STATES
-  OTHER
+    BENEFICIARIES
+    COMMUNITY_ORGANIZATIONS
+    PARTICIPANTS
+    PROFESSIONAL_ORGANIZATIONS
+    PROVIDERS
+    STATES
+    OTHER
 }
 
 
 enum ContractorSupportType {
-  ONE
-  MULTIPLE
-  NONE
-  OTHER
+    ONE
+    MULTIPLE
+    NONE
+    OTHER
 }
 
 enum MonitoringFileType {
-  BENEFICIARY
-  PROVIDER
-  PART_A
-  PART_B
-  OTHER
+    BENEFICIARY
+    PROVIDER
+    PART_A
+    PART_B
+    OTHER
 }
 
 enum EvaluationApproachType {
-  CONTROL_INTERVENTION
-  COMPARISON_MATCH
-  INTERRUPTED_TIME
-  NON_MEDICARE_DATA
-  OTHER
+    CONTROL_INTERVENTION
+    COMPARISON_MATCH
+    INTERRUPTED_TIME
+    NON_MEDICARE_DATA
+    OTHER
 }
 
 enum CcmInvolvmentType {
-  YES_EVALUATION
-  YES__IMPLEMENTATION
-  NO
-  OTHER
+    YES_EVALUATION
+    YES__IMPLEMENTATION
+    NO
+    OTHER
 }
 
 enum DataForMonitoringType {
-  SITE_VISITS
-  MEDICARE_CLAIMS
-  MEDICAID_CLAIMS
-  ENCOUNTER_DATA
-  NO_PAY_CLAIMS
-  QUALITY_CLAIMS_BASED_MEASURES
-  QUALITY_REPORTED_MEASURES
-  CLINICAL_DATA
-  NON_CLINICAL_DATA
-  NON_MEDICAL_DATA
-  OTHER
-  NOT_PLANNING_TO_COLLECT_DATA
+    SITE_VISITS
+    MEDICARE_CLAIMS
+    MEDICAID_CLAIMS
+    ENCOUNTER_DATA
+    NO_PAY_CLAIMS
+    QUALITY_CLAIMS_BASED_MEASURES
+    QUALITY_REPORTED_MEASURES
+    CLINICAL_DATA
+    NON_CLINICAL_DATA
+    NON_MEDICAL_DATA
+    OTHER
+    NOT_PLANNING_TO_COLLECT_DATA
 }
 
 enum DataToSendParticipantsType {
-  BASELINE_HISTORICAL_DATA
-  CLAIMS_LEVEL_DATA
-  BENEFICIARY_LEVEL_DATA
-  PARTICIPANT_LEVEL_DATA
-  PROVIDER_LEVEL_DATA
-  OTHER_MIPS_DATA
-  NOT_PLANNING_TO_SEND_DATA
+    BASELINE_HISTORICAL_DATA
+    CLAIMS_LEVEL_DATA
+    BENEFICIARY_LEVEL_DATA
+    PARTICIPANT_LEVEL_DATA
+    PROVIDER_LEVEL_DATA
+    OTHER_MIPS_DATA
+    NOT_PLANNING_TO_SEND_DATA
 }
 
 enum DataFrequencyType {
-  ANNUALLY
-  BIANNUALLY
-  QUARTERLY
-  MONTHLY
-  SEMI_MONTHLY
-  WEEKLY
-  DAILY
-  OTHER
-  NOT_PLANNING_TO_DO_THIS
+    ANNUALLY
+    BIANNUALLY
+    QUARTERLY
+    MONTHLY
+    SEMI_MONTHLY
+    WEEKLY
+    DAILY
+    OTHER
+    NOT_PLANNING_TO_DO_THIS
 }
 
 enum ModelLearningSystemType {
-  LEARNING_CONTRACTOR
-  IT_PLATFORM_CONNECT
-  PARTICIPANT_COLLABORATION
-  EDUCATE_BENEFICIARIES
-  OTHER
-  NO_LEARNING_SYSTEM
+    LEARNING_CONTRACTOR
+    IT_PLATFORM_CONNECT
+    PARTICIPANT_COLLABORATION
+    EDUCATE_BENEFICIARIES
+    OTHER
+    NO_LEARNING_SYSTEM
 }
 
 
 enum DataFullTimeOrIncrementalType {
-  FULL_TIME
-  INCREMENTAL
+    FULL_TIME
+    INCREMENTAL
 }
 
 enum BenchmarkForPerformanceType {
-  YES_RECONCILE
-  YES_NO_RECONCILE
-  NO
+    YES_RECONCILE
+    YES_NO_RECONCILE
+    NO
 }
 
 enum DataStartsType {
-  DURING_APPLICATION_PERIOD
-  SHORTLY_BEFORE_THE_START_DATE
-  EARLY_IN_THE_FIRST_PERFORMANCE_YEAR
-  LATER_IN_THE_FIRST_PERFORMANCE_YEAR
-  IN_THE_SUBSEQUENT_PERFORMANCE_YEAR
-  AT_SOME_OTHER_POINT_IN_TIME
-  NOT_PLANNING_TO_DO_THIS
-  OTHER
+    DURING_APPLICATION_PERIOD
+    SHORTLY_BEFORE_THE_START_DATE
+    EARLY_IN_THE_FIRST_PERFORMANCE_YEAR
+    LATER_IN_THE_FIRST_PERFORMANCE_YEAR
+    IN_THE_SUBSEQUENT_PERFORMANCE_YEAR
+    AT_SOME_OTHER_POINT_IN_TIME
+    NOT_PLANNING_TO_DO_THIS
+    OTHER
 }
 #Ops Eval and Learning types end
 
@@ -9328,16 +9327,16 @@ directive @goModel(
 ) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
 
 type UserAccount {
-  id: UUID!
-  username: String!
-  isEUAID: Boolean
-  commonName: String!
-  locale: String!
-  email: String!
-  givenName: String!
-  familyName: String!
-  zoneInfo: String!
-  hasLoggedIn: Boolean
+	id: UUID!
+	username: String!
+	isEUAID: Boolean
+	commonName: String!
+	locale: String!
+	email: String!
+	givenName: String!
+	familyName: String!
+	zoneInfo: String!
+	hasLoggedIn: Boolean
 }
 
 
@@ -15338,12 +15337,12 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
 			case "gainsharePaymentsTrack":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
+			case "gainsharePaymentsNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "gainsharePaymentsEligibility":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibility(ctx, field)
 			case "gainsharePaymentsEligibilityOther":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field)
-			case "gainsharePaymentsNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "participantsIds":
 				return ec.fieldContext_PlanParticipantsAndProviders_participantsIds(ctx, field)
 			case "participantsIdsOther":
@@ -17905,12 +17904,12 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
 			case "gainsharePaymentsTrack":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
+			case "gainsharePaymentsNote":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "gainsharePaymentsEligibility":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibility(ctx, field)
 			case "gainsharePaymentsEligibilityOther":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field)
-			case "gainsharePaymentsNote":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "participantsIds":
 				return ec.fieldContext_PlanParticipantsAndProviders_participantsIds(ctx, field)
 			case "participantsIdsOther":
@@ -39412,7 +39411,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePayments(ctx 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanParticipantsAndProviders().GainsharePayments(rctx, obj)
+		return obj.GainsharePayments, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -39430,8 +39429,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainshareP
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
 		},
@@ -39453,7 +39452,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsTrack
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanParticipantsAndProviders().GainsharePaymentsTrack(rctx, obj)
+		return obj.GainsharePaymentsTrack, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -39471,10 +39470,51 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainshareP
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GainsharePaymentsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -39538,7 +39578,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsEligi
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanParticipantsAndProviders().GainsharePaymentsEligibilityOther(rctx, obj)
+		return obj.GainsharePaymentsEligibilityOther, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -39553,47 +39593,6 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsEligi
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanParticipantsAndProviders",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.GainsharePaymentsNote, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
@@ -58866,71 +58865,11 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 		case "coordinateWorkNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_coordinateWorkNote(ctx, field, obj)
 		case "gainsharePayments":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanParticipantsAndProviders_gainsharePayments(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePayments(ctx, field, obj)
 		case "gainsharePaymentsTrack":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field, obj)
+		case "gainsharePaymentsNote":
+			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field, obj)
 		case "gainsharePaymentsEligibility":
 			field := field
 
@@ -58968,40 +58907,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "gainsharePaymentsEligibilityOther":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "gainsharePaymentsNote":
-			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsEligibilityOther(ctx, field, obj)
 		case "participantsIds":
 			field := field
 

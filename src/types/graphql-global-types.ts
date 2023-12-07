@@ -1004,9 +1004,9 @@ export interface PlanParticipantsAndProvidersChanges {
   coordinateWorkNote?: string | null;
   gainsharePayments?: boolean | null;
   gainsharePaymentsTrack?: boolean | null;
+  gainsharePaymentsNote?: string | null;
   gainsharePaymentsEligibility?: GainshareArrangementEligibility[] | null;
   gainsharePaymentsEligibilityOther?: string | null;
-  gainsharePaymentsNote?: string | null;
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
