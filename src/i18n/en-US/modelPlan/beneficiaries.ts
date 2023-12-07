@@ -262,12 +262,16 @@ export const beneficiaries: TranslationBeneficiaries = {
   precedenceRules: {
     gqlField: 'precedenceRules',
     goField: 'PrecedenceRules',
-    dbField: 'beneficiary_overlap_note',
+    dbField: 'precedence_rules',
     label: 'Are there precedence rules between this model and other model(s)?',
     sublabel:
       'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      YES: 'Yes',
+      NO: 'No'
+    },
     filterGroups: ['mdm', 'oact']
   },
   status: {
