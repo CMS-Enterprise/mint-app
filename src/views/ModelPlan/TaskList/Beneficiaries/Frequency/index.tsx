@@ -56,7 +56,8 @@ const Frequency = () => {
 
   const {
     beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
-    beneficiaryOverlap: beneficiaryOverlapConfig
+    beneficiaryOverlap: beneficiaryOverlapConfig,
+    precedenceRules: beneficiaryPrecedenceConfig
   } = usePlanTranslation('beneficiaries');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -377,41 +378,46 @@ const Frequency = () => {
                         </FieldErrorMsg>
 
                         <Fieldset>
-                          {/* {/* {getKeys(NEW_PRECEDENCE_RULES_OPTIONS).map(key => ( */}
-                          {['Yes', 'No'].map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={CheckboxField}
-                                id={`beneficiaries-precedence-rules-${key}`}
-                                data-testid={`beneficiaries-precedence-rules-${key}`}
-                                name={`precedence-rules-${key}`}
-                                // label={t(`NEW_PRECEDENCE_RULES_OPTIONS.${key}`)}
-                                // value={t(`NEW_PRECEDENCE_RULES_OPTIONS.${key}`)}
-                                // checked={values.precedenceRules?.includes(
-                                //   key as MintUses
-                                // )}
-                                label={key}
-                                value={key}
-                                onChange={() => {}}
-                              />
+                          {getKeys(beneficiaryPrecedenceConfig.options).map(
+                            key => (
+                              <Fragment key={key}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`beneficiaries-precedence-rules-${key}`}
+                                  data-testid={`beneficiaries-precedence-rules-${key}`}
+                                  name={`precedence-rules-${key}`}
+                                  label={
+                                    beneficiaryPrecedenceConfig.options[key]
+                                  }
+                                  value={
+                                    beneficiaryPrecedenceConfig.options[key]
+                                  }
+                                  // checked={values.precedenceRules?.includes(
+                                  //   key as MintUses
+                                  // )}
+                                  label={key}
+                                  value={key}
+                                  onChange={() => {}}
+                                />
 
-                              {values.precedenceRules?.includes(key) && (
-                                <div className="margin-left-4">
-                                  <span>
-                                    {miscellaneousT('pleaseDescribe')}
-                                  </span>
-                                  <Field
-                                    as={TextAreaField}
-                                    className="height-15"
-                                    error={flatErrors.precedenceRules}
-                                    id="beneficiaries-precedence-rules"
-                                    data-testid="beneficiaries-precedence-rules"
-                                    name="precedenceRules"
-                                  />
-                                </div>
-                              )}
-                            </Fragment>
-                          ))}
+                                {values.precedenceRules?.includes(key) && (
+                                  <div className="margin-left-4">
+                                    <span>
+                                      {miscellaneousT('pleaseDescribe')}
+                                    </span>
+                                    <Field
+                                      as={TextAreaField}
+                                      className="height-15"
+                                      error={flatErrors.precedenceRules}
+                                      id="beneficiaries-precedence-rules"
+                                      data-testid="beneficiaries-precedence-rules"
+                                      name="precedenceRules"
+                                    />
+                                  </div>
+                                )}
+                              </Fragment>
+                            )
+                          )}
                         </Fieldset>
                         <AddNote
                           id="beneficiaries-precedence-note"
