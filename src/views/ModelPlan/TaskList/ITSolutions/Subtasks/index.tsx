@@ -441,7 +441,6 @@ const Subtasks = ({
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
-                                            error={!!flatErrors.name}
                                             id={`subtask-name--${index}`}
                                             data-testid={`subtask-name--${index}`}
                                             maxLength={50}

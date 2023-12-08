@@ -125,7 +125,6 @@ const NewPlanContent = () => {
 
                       <Field
                         as={TextInput}
-                        error={!!flatErrors.modelName}
                         id="new-plan-model-name"
                         maxLength={50}
                         name="modelName"

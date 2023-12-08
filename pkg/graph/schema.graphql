@@ -120,6 +120,7 @@ type PossibleOperationalSolution {
     key: OperationalSolutionKey!
     treatAsOther: Boolean!
     pointsOfContact: [PossibleOperationalSolutionContact!]!
+    filterView: ModelViewFilter
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
