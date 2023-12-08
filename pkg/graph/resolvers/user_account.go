@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
@@ -22,5 +23,18 @@ func UserAccountGetByUsername(logger *zap.Logger, store *storage.Store, userName
 // UserAccountGetByIDLOADER returns a user account by it's internal ID, utilizing a data loader
 func UserAccountGetByIDLOADER(ctx context.Context, id uuid.UUID) (*authentication.UserAccount, error) {
 	return userhelpers.UserAccountGetByIDLOADER(ctx, id)
+
+}
+
+// UserAccountsGetByIDs returns a list of user account by it's internal ID
+func UserAccountsGetByIDs(logger *zap.Logger, store *storage.Store, ids []uuid.UUID) ([]*authentication.UserAccount, error) {
+
+	//TODO, build the JSON based on the ids. Verify if the generic methodology I wrote previously will work for this. Also use it for the user account data loader if possible ( I took this from there)
+
+	jsonParam, err := models.UUIDArrayToJSONArray(ids, "id")
+	if err != nil {
+		logger.Error("issue converting uuids to JSON for User Accounts", zap.Error(err))
+	}
+	return store.UserAccountGetByIDLOADER(logger, jsonParam)
 
 }

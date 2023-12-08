@@ -3,6 +3,7 @@ SELECT
     POS.sol_name,
     POS.sol_key,
     POS.treat_as_other,
+    POS.filter_view,
     POS.created_by,
     POS.created_dts,
     POS.modified_by,

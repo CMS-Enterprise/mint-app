@@ -6,6 +6,7 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -42,12 +43,16 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 	defStatus := models.OpSNotStarted
 
 	sol, err := OperationalSolutionCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
 		need.ID,
 		&solType,
 		changes,
 		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
 	)
 	suite.NoError(err)
 	suite.NotNil(sol)
