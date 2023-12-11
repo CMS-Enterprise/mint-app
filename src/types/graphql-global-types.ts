@@ -640,7 +640,7 @@ export enum WaiverType {
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
 }
 
-export enum YesNoFilter {
+export enum YesNoType {
   NO = "NO",
   YES = "YES",
 }
@@ -738,7 +738,7 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;
   beneficiaryOverlapNote?: string | null;
-  precedenceRules?: YesNoFilter[] | null;
+  precedenceRules?: YesNoType[] | null;
   precedenceRulesYes?: string | null;
   precedenceRulesNo?: string | null;
   precedenceRulesNote?: string | null;

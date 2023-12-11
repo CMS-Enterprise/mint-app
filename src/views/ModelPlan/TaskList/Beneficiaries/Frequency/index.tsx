@@ -35,7 +35,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import { YesNoFilter } from 'types/graphql-global-types';
+import { YesNoType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -407,7 +407,7 @@ const Frequency = () => {
                                           arrayHelpers.push(e.target.value);
                                         } else {
                                           const idx = values.precedenceRules.indexOf(
-                                            e.target.value as YesNoFilter
+                                            e.target.value as YesNoType
                                           );
                                           arrayHelpers.remove(idx);
                                         }

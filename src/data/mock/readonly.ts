@@ -60,7 +60,7 @@ import {
   TriStateAnswer,
   TrustFundType,
   WaiverType,
-  YesNoFilter
+  YesNoType
 } from 'gql/gen/graphql';
 
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
@@ -325,7 +325,7 @@ const beneficiaryData: AllBeneficiariesTypes = {
   beneficiarySelectionFrequencyNote: 'Note frequency',
   beneficiaryOverlap: OverlapType.YES_NEED_POLICIES,
   beneficiaryOverlapNote: 'Note overlap',
-  precedenceRules: [YesNoFilter.YES],
+  precedenceRules: [YesNoType.YES],
   precedenceRulesYes: 'Yes precedence rules',
   status: TaskStatus.IN_PROGRESS
 };

@@ -47,11 +47,11 @@ func NewPlanBeneficiaries(tls baseTaskListSection) *PlanBeneficiaries {
 	}
 }
 
-// YesNoFilter represents the yes no filter type
-type YesNoFilter string
+// YesNoType represents the yes no filter type
+type YesNoType string
 
-// These constants represent the yes no filter types
+// These constants represent the yes no type types
 const (
-	YesNoFilterYes YesNoFilter = "YES"
-	YesNoFilterNo  YesNoFilter = "NO"
+	YesNoTypeYes YesNoType = "YES"
+	YesNoTypeNo  YesNoType = "NO"
 )

@@ -703,7 +703,7 @@ type PlanBeneficiaries {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: [YesNoFilter!]!
+  precedenceRules: [YesNoType!]!
   precedenceRulesYes: String
   precedenceRulesNo: String
   precedenceRulesNote: String
@@ -750,7 +750,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: [YesNoFilter!]
+  precedenceRules: [YesNoType!]
   precedenceRulesYes: String
   precedenceRulesNo: String
   precedenceRulesNote: String
@@ -2557,7 +2557,7 @@ enum ModelViewFilter {
   PBG, # PROVIDER_BILLING_GROUP
 }
 
-enum YesNoFilter {
+enum YesNoType {
   YES,
   NO
 }

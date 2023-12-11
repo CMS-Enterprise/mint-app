@@ -9,7 +9,7 @@ import {
   OperationalNeedKey,
   OverlapType,
   TaskStatus,
-  YesNoFilter
+  YesNoType
 } from 'gql/gen/graphql';
 
 import Frequency from './index';
@@ -27,7 +27,7 @@ const mockData: BeneficiaryFrequencyType = {
   beneficiarySelectionFrequencyOther: 'Very often',
   beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',
-  precedenceRules: [YesNoFilter.YES],
+  precedenceRules: [YesNoType.YES],
   precedenceRulesYes: 'Yes precedence rules',
   readyForReviewByUserAccount: {
     commonName: 'ASDF',

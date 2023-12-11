@@ -1046,7 +1046,7 @@ type PlanBeneficiariesResolver interface {
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
 
-	PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoFilter, error)
+	PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error)
 }
 type PlanCollaboratorResolver interface {
 	TeamRoles(ctx context.Context, obj *models.PlanCollaborator) ([]models.TeamRole, error)
@@ -7653,7 +7653,7 @@ type PlanBeneficiaries {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: [YesNoFilter!]!
+  precedenceRules: [YesNoType!]!
   precedenceRulesYes: String
   precedenceRulesNo: String
   precedenceRulesNote: String
@@ -7700,7 +7700,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: [YesNoFilter!]
+  precedenceRules: [YesNoType!]
   precedenceRulesYes: String
   precedenceRulesNo: String
   precedenceRulesNote: String
@@ -9507,7 +9507,7 @@ enum ModelViewFilter {
   PBG, # PROVIDER_BILLING_GROUP
 }
 
-enum YesNoFilter {
+enum YesNoType {
   YES,
   NO
 }`, BuiltIn: false},
@@ -26152,9 +26152,9 @@ func (ec *executionContext) _PlanBeneficiaries_precedenceRules(ctx context.Conte
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.YesNoFilter)
+	res := resTmp.([]models.YesNoType)
 	fc.Result = res
-	return ec.marshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilterᚄ(ctx, field.Selections, res)
+	return ec.marshalNYesNoType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRules(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -26164,7 +26164,7 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_precedenceRules(ctx c
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type YesNoFilter does not have child fields")
+			return nil, errors.New("field of type YesNoType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -66556,13 +66556,13 @@ func (ec *executionContext) marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx context.Context, v interface{}) (models.YesNoFilter, error) {
+func (ec *executionContext) unmarshalNYesNoType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoType(ctx context.Context, v interface{}) (models.YesNoType, error) {
 	tmp, err := graphql.UnmarshalString(v)
-	res := models.YesNoFilter(tmp)
+	res := models.YesNoType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx context.Context, sel ast.SelectionSet, v models.YesNoFilter) graphql.Marshaler {
+func (ec *executionContext) marshalNYesNoType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoType(ctx context.Context, sel ast.SelectionSet, v models.YesNoType) graphql.Marshaler {
 	res := graphql.MarshalString(string(v))
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -66572,16 +66572,16 @@ func (ec *executionContext) marshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑa
 	return res
 }
 
-func (ec *executionContext) unmarshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilterᚄ(ctx context.Context, v interface{}) ([]models.YesNoFilter, error) {
+func (ec *executionContext) unmarshalNYesNoType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoTypeᚄ(ctx context.Context, v interface{}) ([]models.YesNoType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]models.YesNoFilter, len(vSlice))
+	res := make([]models.YesNoType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNYesNoType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -66589,7 +66589,7 @@ func (ec *executionContext) unmarshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmin
 	return res, nil
 }
 
-func (ec *executionContext) marshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilterᚄ(ctx context.Context, sel ast.SelectionSet, v []models.YesNoFilter) graphql.Marshaler {
+func (ec *executionContext) marshalNYesNoType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.YesNoType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -66613,7 +66613,7 @@ func (ec *executionContext) marshalNYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx, sel, v[i])
+			ret[i] = ec.marshalNYesNoType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -70134,7 +70134,7 @@ func (ec *executionContext) marshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return ret
 }
 
-func (ec *executionContext) unmarshalOYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilterᚄ(ctx context.Context, v interface{}) ([]models.YesNoFilter, error) {
+func (ec *executionContext) unmarshalOYesNoType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoTypeᚄ(ctx context.Context, v interface{}) ([]models.YesNoType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -70143,10 +70143,10 @@ func (ec *executionContext) unmarshalOYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmin
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]models.YesNoFilter, len(vSlice))
+	res := make([]models.YesNoType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNYesNoType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -70154,7 +70154,7 @@ func (ec *executionContext) unmarshalOYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmin
 	return res, nil
 }
 
-func (ec *executionContext) marshalOYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilterᚄ(ctx context.Context, sel ast.SelectionSet, v []models.YesNoFilter) graphql.Marshaler {
+func (ec *executionContext) marshalOYesNoType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.YesNoType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -70181,7 +70181,7 @@ func (ec *executionContext) marshalOYesNoFilter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNYesNoFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoFilter(ctx, sel, v[i])
+			ret[i] = ec.marshalNYesNoType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
