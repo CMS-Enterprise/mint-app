@@ -387,7 +387,6 @@ const ReadOnlyParticipantsAndProviders = ({
         )}
 
         {gainsharePayments &&
-          gainsharePaymentsTrack &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
