@@ -8,6 +8,10 @@ ALTER TABLE plan_payments
     ADD COLUMN funding_source_r_medicare_a_info ZERO_STRING,
     ADD COLUMN funding_source_r_medicare_b_info ZERO_STRING;
 
+ALTER TABLE plan_payments
+ALTER COLUMN funding_source TYPE TEXT[];
+ALTER TABLE plan_payments
+ALTER COLUMN funding_source_r TYPE TEXT[];
 ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_A_HI_TRUST_FUND';
 ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_B_SMI_TRUST_FUND';
 
@@ -48,15 +52,15 @@ paymentCalcs AS (
 	funding_source_trust_fund_type,
 	CASE WHEN
 	 ((funding_source_trust_fund_type IS NULL OR funding_source_trust_fund_type = '{}') AND funding_source @> '{"TRUST_FUND"}' )
-	THEN 'OTHER'::PP_FUNDING_SOURCE
+	THEN 'OTHER'
 	ELSE NULL
 	END	AS trust_fund_not_selected, -- no trust fund selected, and funding source said trust fund
 	 funding_source_trust_fund_type AS funding_source_trust_fund_type_update, 
 	-- Set fields to include the new values if they were selected as a trust fund type
-	 CASE WHEN funding_source_trust_fund_type @> '{"MEDICARE_PART_A_HI_TRUST_FUND"}' THEN 'MEDICARE_PART_A_HI_TRUST_FUND'::PP_FUNDING_SOURCE
+	 CASE WHEN funding_source_trust_fund_type @> '{"MEDICARE_PART_A_HI_TRUST_FUND"}' THEN 'MEDICARE_PART_A_HI_TRUST_FUND'
 		ELSE NULL
 		END AS funding_source_trust_fund_medicare_a,
-	 CASE WHEN funding_source_trust_fund_type @> '{"MEDICARE_PART_B_SMI_TRUST_FUND"}' THEN 'MEDICARE_PART_B_SMI_TRUST_FUND'::PP_FUNDING_SOURCE
+	 CASE WHEN funding_source_trust_fund_type @> '{"MEDICARE_PART_B_SMI_TRUST_FUND"}' THEN 'MEDICARE_PART_B_SMI_TRUST_FUND'
 		ELSE NULL
 		END AS funding_source_trust_fund_medicare_b, 
 	 array_remove(funding_source_r,'TRUST_FUND') AS funding_source_r_update,
@@ -64,14 +68,14 @@ paymentCalcs AS (
 	 funding_source_r_trust_fund_type,
 	CASE WHEN
 	 ((funding_source_r_trust_fund_type IS NULL OR funding_source_r_trust_fund_type = '{}') AND funding_source_r @> '{"TRUST_FUND"}') 
-	THEN 'OTHER'::PP_FUNDING_SOURCE
+	THEN 'OTHER'
 	ELSE NULL
 	END AS trust_fund_r_not_selected, -- no trust fund selected, and funding source r said trust fund
 	-- Set fields to include the new values if they were selected as a trust fund type
-	 CASE WHEN funding_source_r_trust_fund_type @> '{"MEDICARE_PART_A_HI_TRUST_FUND"}' THEN 'MEDICARE_PART_A_HI_TRUST_FUND'::PP_FUNDING_SOURCE
+	 CASE WHEN funding_source_r_trust_fund_type @> '{"MEDICARE_PART_A_HI_TRUST_FUND"}' THEN 'MEDICARE_PART_A_HI_TRUST_FUND'
 		ELSE NULL
 		END AS funding_source_r_trust_fund_medicare_a,
-	 CASE WHEN funding_source_r_trust_fund_type @> '{"MEDICARE_PART_B_SMI_TRUST_FUND"}' THEN 'MEDICARE_PART_B_SMI_TRUST_FUND'::PP_FUNDING_SOURCE
+	 CASE WHEN funding_source_r_trust_fund_type @> '{"MEDICARE_PART_B_SMI_TRUST_FUND"}' THEN 'MEDICARE_PART_B_SMI_TRUST_FUND'
 		ELSE NULL
 		END AS funding_source_r_trust_fund_medicare_b,
 		funding_source_other,
