@@ -599,18 +599,14 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Other
             </li>
             <ul
               data-testid="other-entry"
             >
-              <li
-                class="font-sans-md line-height-sans-4"
-              >
-                Other gainsharing
-              </li>
+              Other gainsharing
             </ul>
           </ul>
         </div>
