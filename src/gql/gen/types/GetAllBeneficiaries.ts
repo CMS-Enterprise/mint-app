@@ -34,9 +34,10 @@ export interface GetAllBeneficiaries_modelPlan_beneficiaries {
   beneficiarySelectionFrequencyNote: string | null;
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
+  precedenceRules: YesNoFilter[];
   precedenceRulesYes: string | null;
   precedenceRulesNo: string | null;
-  precedenceRules: YesNoFilter[];
+  precedenceRulesNote: string | null;
   status: TaskStatus;
 }
 
