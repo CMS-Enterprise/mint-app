@@ -31,7 +31,6 @@ const csvFields = [
   'basics.demoCode',
   'basics.cmsCenters', // array
   'basics.cmmiGroups', // array
-  'basics.cmsOther',
   'basics.modelType',
   'basics.problem',
   'basics.goal',
@@ -122,6 +121,8 @@ const csvFields = [
   'participantsAndProviders.coordinateWorkNote',
   'participantsAndProviders.gainsharePayments',
   'participantsAndProviders.gainsharePaymentsTrack',
+  'participantsAndProviders.gainsharePaymentsEligibility',
+  'participantsAndProviders.gainsharePaymentsEligibilityOther',
   'participantsAndProviders.gainsharePaymentsNote',
   'participantsAndProviders.participantsIds', // array
   'participantsAndProviders.participantsIdsOther',

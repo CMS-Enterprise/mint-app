@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -85,11 +86,11 @@ func (suite *ResolverSuite) TestOperationalSolutionSubtaskDataLoader() {
 	changes := map[string]interface{}{}
 	changes["nameOther"] = "AnotherSolution"
 
-	sol1, _ := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol1, _ := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 
 	changes["nameOther"] = "AnotherSolution Again"
 
-	sol2, _ := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol2, _ := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 
 	inputs := []*model.CreateOperationalSolutionSubtaskInput{{
 		Name:   "Test Operational Solution Input 1",

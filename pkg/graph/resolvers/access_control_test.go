@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/accesscontrol"
+	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -73,7 +74,17 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 	solType := models.OpSKOutlookMailbox
-	opSol, err := OperationalSolutionCreate(suite.testConfigs.Logger, opNeeds[0].ID, &solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	opSol, err := OperationalSolutionCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		opNeeds[0].ID,
+		&solType,
+		nil,
+		suite.testConfigs.Principal)
 	suite.NoError(err)
 
 	//9. User is collaborator by solutionID

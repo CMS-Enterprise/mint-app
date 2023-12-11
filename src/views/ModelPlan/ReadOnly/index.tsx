@@ -178,6 +178,15 @@ export const filteredViewOutput = (value: string) => {
     .value.toUpperCase();
 };
 
+// Checks if the url query param is a valid filteredView and converts to lowercase
+// Returns null for any query param that is not a valid filteredView
+export const getValidFilterViewParam = (param: string | null) => {
+  if (param && filterGroups.includes(param.toLowerCase())) {
+    return param.toLowerCase() as typeof filterGroups[number];
+  }
+  return null;
+};
+
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const { t: filterViewT } = useTranslation('filterView');
@@ -197,7 +206,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const filteredView = params.get('filter-view') as typeof filterGroups[number];
+  const filteredViewParam = params.get('filter-view');
+
+  const filteredView = getValidFilterViewParam(filteredViewParam);
+
   const isViewingFilteredGroup = filteredView !== null;
 
   const history = useHistory();
@@ -430,6 +442,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         subComponents={subComponents}
         subinfo={subinfo}
         isHelpArticle={isHelpArticle}
+        isFilteredView={!!filteredView}
       />
 
       <GridContainer className="model-plan-alert-wrapper">

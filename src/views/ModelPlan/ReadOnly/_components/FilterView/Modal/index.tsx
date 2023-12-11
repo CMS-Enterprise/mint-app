@@ -13,7 +13,7 @@ import {
 import { groupOptions } from '../util';
 
 type FilterViewModalProps = {
-  filteredView: string | null;
+  filteredView: string | null | undefined;
   closeModal: () => void;
 };
 

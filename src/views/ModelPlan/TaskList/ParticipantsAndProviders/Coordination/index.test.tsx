@@ -3,6 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
+  GainshareArrangementEligibility,
   GetCoordinationDocument,
   GetCoordinationQuery,
   ParticipantsIdType
@@ -20,6 +21,8 @@ const coordinationMockData: GetCoordinationType = {
   gainsharePayments: null,
   gainsharePaymentsTrack: null,
   gainsharePaymentsNote: '',
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility.OTHER],
+  gainsharePaymentsEligibilityOther: 'Eligibility other',
   participantsIds: [ParticipantsIdType.OTHER],
   participantsIdsOther: 'Candy Kingdom Operations Number',
   participantsIDSNote: ''

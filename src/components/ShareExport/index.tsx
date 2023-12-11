@@ -42,7 +42,7 @@ const FileTypes = ['csv', 'pdf'] as const;
 type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
-  filteredView?: typeof filterGroups[number] | 'all';
+  filteredView?: typeof filterGroups[number] | 'all' | null;
   setStatusMessage: (message: StatusMessageType) => void;
 } & JSX.IntrinsicElements['button'];
 

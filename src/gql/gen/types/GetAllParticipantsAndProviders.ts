@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
+import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllParticipantsAndProviders
@@ -43,6 +43,8 @@ export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProvide
   gainsharePayments: boolean | null;
   gainsharePaymentsTrack: boolean | null;
   gainsharePaymentsNote: string | null;
+  gainsharePaymentsEligibility: GainshareArrangementEligibility[];
+  gainsharePaymentsEligibilityOther: string | null;
   participantsIds: ParticipantsIDType[];
   participantsIdsOther: string | null;
   participantsIDSNote: string | null;

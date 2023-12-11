@@ -10,6 +10,8 @@ export default gql(/* GraphQL */ `
         coordinateWork
         coordinateWorkNote
         gainsharePayments
+        gainsharePaymentsEligibility
+        gainsharePaymentsEligibilityOther
         gainsharePaymentsTrack
         gainsharePaymentsNote
         participantsIds

@@ -21,11 +21,11 @@ import (
 	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"

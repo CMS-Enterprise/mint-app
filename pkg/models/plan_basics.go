@@ -16,8 +16,8 @@ type PlanBasics struct {
 	ModelCategory             *ModelCategory `json:"modelCategory" db:"model_category"`
 	AdditionalModelCategories pq.StringArray `json:"additionalModelCategories" db:"additional_model_categories"`
 	CMSCenters                pq.StringArray `json:"cmsCenters" db:"cms_centers"`
-	CMSOther                  *string        `json:"cmsOther" db:"cms_other"`
-	CMMIGroups                pq.StringArray `json:"cmmiGroups" db:"cmmi_groups"`
+	// CMSOther                  *string        `json:"cmsOther" db:"cms_other"`
+	CMMIGroups pq.StringArray `json:"cmmiGroups" db:"cmmi_groups"`
 
 	ModelType *ModelType `json:"modelType" db:"model_type" statusWeight:"1"`
 

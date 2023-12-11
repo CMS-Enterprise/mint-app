@@ -3,11 +3,8 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"go.uber.org/zap"
-
-	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -174,27 +171,11 @@ func sendPlanDiscussionTagEmails(
 				errs = append(errs, err) //non blocking
 				continue
 			}
-			var pocEmailAddress []string
-
-			// pocEmailAddress
-			if config.GetSendTaggedPOCEmails() { //send to the pocs
-				pocEmailAddress = lo.Map(pocs, func(poc *models.PossibleOperationalSolutionContact, _ int) string {
-					return poc.Email
-				})
-			} else {
-				devEmailusername, devEmailDomain, emailValid := strings.Cut(addressBook.DevTeamEmail, "@")
-				if !emailValid {
-					if err != nil {
-						errs = append(errs, fmt.Errorf("dev team email format is invalid, unable to send mock solution POC emails. Expected email to only have @ symbol, email :%s", addressBook.DevTeamEmail))
-						continue //non blocking
-					}
-				}
-				pocEmailAddress = lo.Map(pocs, func(poc *models.PossibleOperationalSolutionContact, _ int) string {
-					// this takes advantage of the fact that you can append extra information after the + sign to send to an email address with extra info.
-					noSpaceName := strings.ReplaceAll(poc.Name, " ", "")
-					return devEmailusername + "+" + noSpaceName + "@" + devEmailDomain
-				})
-
+			// var pocEmailAddress []string
+			pocEmailAddress, err := models.GetPOCEmailAddresses(pocs, config.GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
+			if err != nil {
+				errs = append(errs, err)
+				continue
 			}
 
 			err = sendPlanDiscussionTaggedSolutionEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, createdByUserName, createdByUserRole, soln, pocEmailAddress)

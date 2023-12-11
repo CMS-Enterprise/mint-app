@@ -100,6 +100,9 @@ var sharedAccessBannerTemplate string
 //go:embed templates/shared_footer.html
 var sharedFooterTemplate string
 
+//go:embed templates/shared_solution_poc_footer.html
+var sharedSolutionPOCFooterTemplate string
+
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
 
@@ -117,6 +120,15 @@ var sendFeedbackBodyTemplate string
 
 //go:embed templates/send_feedback_subject.html
 var sendFeedbackSubjectTemplate string
+
+// SolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
+const SolutionSelectedTemplateName string = "solution_selected"
+
+//go:embed templates/solution_selected_body.html
+var solutionSelectedBodyTemplate string
+
+//go:embed templates/solution_selected_subject.html
+var solutionSelectedSubjectTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -194,6 +206,11 @@ func (t *TemplateServiceImpl) Load() error {
 	if err != nil {
 		return err
 	}
+
+	err = t.loadEmailTemplate(SolutionSelectedTemplateName, solutionSelectedSubjectTemplate, solutionSelectedBodyTemplate)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -212,10 +229,11 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	}
 
 	predefinedTemplates := map[string]string{
-		"shared_style.html":         sharedStyleTemplate,
-		"shared_header.html":        sharedHeaderTemplate,
-		"shared_footer.html":        sharedFooterTemplate,
-		"shared_access_banner.html": sharedAccessBannerTemplate,
+		"shared_style.html":               sharedStyleTemplate,
+		"shared_header.html":              sharedHeaderTemplate,
+		"shared_footer.html":              sharedFooterTemplate,
+		"shared_access_banner.html":       sharedAccessBannerTemplate,
+		"shared_solution_poc_footer.html": sharedSolutionPOCFooterTemplate,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)

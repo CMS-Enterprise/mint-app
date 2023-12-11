@@ -32,7 +32,6 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.Nil(basics.Goal)
 	suite.Nil(basics.ModelCategory)
 	suite.Nil(basics.CMSCenters)
-	suite.Nil(basics.CMSOther)
 	suite.Nil(basics.CMMIGroups)
 	suite.Nil(basics.TestInterventions)
 	suite.Nil(basics.Note)
@@ -90,8 +89,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	changes := map[string]interface{}{
 		"modelType":     models.MTVoluntary,
 		"goal":          "Some goal",
-		"cmsCenters":    []string{"CMMI", "OTHER"},
-		"cmsOther":      "SOME OTHER CMS CENTER",
+		"cmsCenters":    []string{"CMMI"},
 		"cmmiGroups":    []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 		"completeICIP":  "2020-05-13T20:47:50.12Z",
 		"phasedIn":      true,
@@ -116,7 +114,6 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.Nil(updatedBasics.Problem)
 	suite.EqualValues("Some goal", *updatedBasics.Goal)
 	suite.EqualValues(changes["cmsCenters"], updatedBasics.CMSCenters)
-	suite.EqualValues(changes["cmsOther"], *updatedBasics.CMSOther)
 	suite.EqualValues(changes["cmmiGroups"], updatedBasics.CMMIGroups)
 	suite.WithinDuration(time.Date(2020, 5, 13, 20, 47, 50, 120000000, time.UTC), *updatedBasics.CompleteICIP, 0)
 	suite.EqualValues(changes["highLevelNote"], *updatedBasics.HighLevelNote)
