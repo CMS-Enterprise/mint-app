@@ -455,17 +455,8 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other
+                        Center for Medicaid and CHIP Services (CMCS)
                       </li>
-                      <ul
-                        data-testid="other-entry"
-                      >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          The Center for Awesomeness
-                        </li>
-                      </ul>
                     </ul>
                   </div>
                 </div>
@@ -6748,17 +6739,8 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other
+                        Center for Medicaid and CHIP Services (CMCS)
                       </li>
-                      <ul
-                        data-testid="other-entry"
-                      >
-                        <li
-                          class="font-sans-md line-height-sans-4"
-                        >
-                          The Center for Awesomeness
-                        </li>
-                      </ul>
                     </ul>
                   </div>
                 </div>

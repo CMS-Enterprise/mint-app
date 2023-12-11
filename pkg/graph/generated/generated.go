@@ -325,7 +325,6 @@ type ComplexityRoot struct {
 		Announced                      func(childComplexity int) int
 		ApplicationsEnd                func(childComplexity int) int
 		ApplicationsStart              func(childComplexity int) int
-		CMSOther                       func(childComplexity int) int
 		ClearanceEnds                  func(childComplexity int) int
 		ClearanceStarts                func(childComplexity int) int
 		CmmiGroups                     func(childComplexity int) int
@@ -1037,7 +1036,6 @@ type OperationalSolutionResolver interface {
 type PlanBasicsResolver interface {
 	AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error)
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
-
 	CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error)
 }
 type PlanBeneficiariesResolver interface {
@@ -2785,13 +2783,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBasics.ApplicationsStart(childComplexity), true
-
-	case "PlanBasics.cmsOther":
-		if e.complexity.PlanBasics.CMSOther == nil {
-			break
-		}
-
-		return e.complexity.PlanBasics.CMSOther(childComplexity), true
 
 	case "PlanBasics.clearanceEnds":
 		if e.complexity.PlanBasics.ClearanceEnds == nil {
@@ -7259,7 +7250,6 @@ type PlanBasics {
   modelCategory: ModelCategory
   additionalModelCategories: [ModelCategory!]!
   cmsCenters: [CMSCenter!]!
-  cmsOther: String
   cmmiGroups: [CMMIGroup!]!
   modelType: ModelType
   problem: String
@@ -7310,7 +7300,6 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   modelCategory: ModelCategory
   additionalModelCategories: [ModelCategory!]
   cmsCenters: [CMSCenter!]
-  cmsOther: String
   cmmiGroups: [CMMIGroup!]
   modelType: ModelType
   problem: String
@@ -8830,10 +8819,10 @@ enum CMSCenter {
   CMMI
   CENTER_FOR_MEDICARE
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
   CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
   CENTER_FOR_PROGRAM_INTEGRITY
-  OTHER
-}
+  }
 
 enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP
@@ -14961,8 +14950,6 @@ func (ec *executionContext) fieldContext_ModelPlan_basics(ctx context.Context, f
 				return ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
 			case "cmsCenters":
 				return ec.fieldContext_PlanBasics_cmsCenters(ctx, field)
-			case "cmsOther":
-				return ec.fieldContext_PlanBasics_cmsOther(ctx, field)
 			case "cmmiGroups":
 				return ec.fieldContext_PlanBasics_cmmiGroups(ctx, field)
 			case "modelType":
@@ -17299,8 +17286,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 				return ec.fieldContext_PlanBasics_additionalModelCategories(ctx, field)
 			case "cmsCenters":
 				return ec.fieldContext_PlanBasics_cmsCenters(ctx, field)
-			case "cmsOther":
-				return ec.fieldContext_PlanBasics_cmsOther(ctx, field)
 			case "cmmiGroups":
 				return ec.fieldContext_PlanBasics_cmmiGroups(ctx, field)
 			case "modelType":
@@ -23758,47 +23743,6 @@ func (ec *executionContext) fieldContext_PlanBasics_cmsCenters(ctx context.Conte
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type CMSCenter does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanBasics_cmsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanBasics_cmsOther(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CMSOther, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanBasics_cmsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanBasics",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -55433,8 +55377,6 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "cmsOther":
-			out.Values[i] = ec._PlanBasics_cmsOther(ctx, field, obj)
 		case "cmmiGroups":
 			field := field
 

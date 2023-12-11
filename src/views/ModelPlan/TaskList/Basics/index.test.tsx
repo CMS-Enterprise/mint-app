@@ -32,8 +32,10 @@ const basicMockData: GetModelPlanInfoType = {
       CmmiGroup.STATE_AND_POPULATION_HEALTH_GROUP,
       CmmiGroup.POLICY_AND_PROGRAMS_GROUP
     ],
-    cmsCenters: [CmsCenter.CENTER_FOR_MEDICARE, CmsCenter.OTHER],
-    cmsOther: 'The Center for Awesomeness '
+    cmsCenters: [
+      CmsCenter.CENTER_FOR_MEDICARE,
+      CmsCenter.CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
+    ]
   }
 };
 
