@@ -375,27 +375,97 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
             class="usa-form-group"
             data-scroll="precedenceRules"
           >
-            <label
-              class="usa-label maxw-none"
-              data-testid="label"
-              for="beneficiaries-precedence-rules"
+            <legend
+              class="usa-label"
             >
               Are there precedence rules between this model and other model(s)?
-            </label>
+            </legend>
             <p
-              class="text-base margin-0 line-height-body-3"
+              class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
             >
               i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)
             </p>
-            <textarea
-              aria-labelledby="label-beneficiaries-precedence-rules hint-beneficiaries-precedence-rules"
-              class="height-15 usa-textarea"
-              data-testid="beneficiaries-precedence-rules"
-              id="beneficiaries-precedence-rules"
-              name="precedenceRules"
+            <div
+              class="mint-checkbox usa-checkbox"
             >
-              lorem ipsum
-            </textarea>
+              <input
+                class="usa-checkbox__input"
+                id="beneficiaries-precedence-rules-YES"
+                name="precedence-rules-YES"
+                type="checkbox"
+                value="YES"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiaries-precedence-rules-YES"
+              >
+                Yes
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="margin-left-4"
+            >
+              <span>
+                Please describe
+              </span>
+              <textarea
+                aria-labelledby="label-beneficiaries-precedence-rules-YES-note hint-beneficiaries-precedence-rules-YES-note"
+                class="height-15 usa-textarea"
+                data-testid="beneficiaries-precedence-rules-YES-note"
+                id="beneficiaries-precedence-rules-YES-note"
+                name="precedenceRulesYes"
+              >
+                Yes precedence rules
+              </textarea>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiaries-precedence-rules-NO"
+                name="precedence-rules-NO"
+                type="checkbox"
+                value="NO"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiaries-precedence-rules-NO"
+              >
+                No
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
+            </div>
           </div>
           <div
             class="usa-form-group margin-top-8 margin-bottom-3"
