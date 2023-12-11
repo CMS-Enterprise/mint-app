@@ -12,8 +12,10 @@ ALTER TABLE plan_payments
 ALTER COLUMN funding_source TYPE TEXT[];
 ALTER TABLE plan_payments
 ALTER COLUMN funding_source_r TYPE TEXT[];
-ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_A_HI_TRUST_FUND';
-ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_B_SMI_TRUST_FUND';
+
+-- We will add these new values later, not needed now because the columns take text
+-- ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_A_HI_TRUST_FUND';
+-- ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_B_SMI_TRUST_FUND';
 
 /***
 Section: Update Historic Data
@@ -144,7 +146,9 @@ WHERE finalData.id = plan_payments.id;
 Section: Rename Type and recreate
 
 ***/
-ALTER TYPE PP_FUNDING_SOURCE RENAME TO PP_FUNDING_SOURCE_OLD;
+
+-- Drop old type
+DROP TYPE PP_FUNDING_SOURCE;
 
 CREATE TYPE PP_FUNDING_SOURCE AS ENUM (
   'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
@@ -164,8 +168,6 @@ ALTER TABLE plan_payments
 ALTER COLUMN funding_source_r TYPE PP_FUNDING_SOURCE[]
     using funding_source_r::text[]::PP_FUNDING_SOURCE[];
 
--- Drop old type
-DROP TYPE PP_FUNDING_SOURCE_OLD;
 
 -- Drop old columns
 ALTER TABLE plan_payments
