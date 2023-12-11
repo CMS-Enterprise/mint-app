@@ -17,7 +17,6 @@ export interface GetBasics_modelPlan_basics {
   modelCategory: ModelCategory | null;
   additionalModelCategories: ModelCategory[];
   cmsCenters: CMSCenter[];
-  cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
 }
 

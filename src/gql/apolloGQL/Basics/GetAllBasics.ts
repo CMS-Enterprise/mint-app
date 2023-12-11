@@ -12,7 +12,6 @@ export default gql(/* GraphQL */ `
         modelCategory
         additionalModelCategories
         cmsCenters
-        cmsOther
         cmmiGroups
         modelType
         problem

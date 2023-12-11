@@ -8,10 +8,12 @@ import {
   Button,
   Fieldset,
   Icon,
-  Label
+  Label,
+  TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  GainshareArrangementEligibility,
   GetCoordinationQuery,
   ParticipantsIdType,
   useGetCoordinationQuery,
@@ -29,7 +31,6 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
@@ -52,6 +53,7 @@ export const Coordination = () => {
     coordinateWork: coordinateWorkConfig,
     gainsharePayments: gainsharePaymentsConfig,
     gainsharePaymentsTrack: gainsharePaymentsTrackConfig,
+    gainsharePaymentsEligibility: gainsharePaymentsEligibilityConfig,
     participantsIds: participantsIdsConfig
   } = usePlanTranslation('participantsAndProviders');
 
@@ -72,6 +74,8 @@ export const Coordination = () => {
     coordinateWorkNote,
     gainsharePayments,
     gainsharePaymentsTrack,
+    gainsharePaymentsEligibility,
+    gainsharePaymentsEligibilityOther,
     gainsharePaymentsNote,
     participantsIds,
     participantsIdsOther,
@@ -128,6 +132,8 @@ export const Coordination = () => {
     coordinateWorkNote: coordinateWorkNote ?? '',
     gainsharePayments: gainsharePayments ?? null,
     gainsharePaymentsTrack: gainsharePaymentsTrack ?? null,
+    gainsharePaymentsEligibility: gainsharePaymentsEligibility ?? null,
+    gainsharePaymentsEligibilityOther: gainsharePaymentsEligibilityOther ?? '',
     gainsharePaymentsNote: gainsharePaymentsNote ?? '',
     participantsIds: participantsIds ?? [],
     participantsIdsOther: participantsIdsOther ?? '',
@@ -268,7 +274,11 @@ export const Coordination = () => {
                     />
 
                     {values.gainsharePayments && (
-                      <>
+                      <FieldGroup
+                        scrollElement="gainsharePaymentsTrack"
+                        error={!!flatErrors.gainsharePaymentsTrack}
+                        className="margin-top-4"
+                      >
                         <Label
                           htmlFor="participants-and-providers-gainshare-track"
                           className="text-normal"
@@ -289,8 +299,83 @@ export const Coordination = () => {
                           setFieldValue={setFieldValue}
                           options={gainsharePaymentsTrackConfig.options}
                         />
-                      </>
+                      </FieldGroup>
                     )}
+
+                    {values.gainsharePayments && (
+                      <FieldGroup
+                        scrollElement="gainsharePaymentsEligibility"
+                        error={!!flatErrors.gainsharePaymentsEligibility}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="participants-and-providers-gainshare-eligibility"
+                          className="text-normal maxw-none"
+                        >
+                          {participantsAndProvidersT(
+                            'gainsharePaymentsEligibility.label'
+                          )}
+                        </Label>
+
+                        <FieldErrorMsg>
+                          {flatErrors.gainsharePaymentsEligibility}
+                        </FieldErrorMsg>
+
+                        {getKeys(
+                          gainsharePaymentsEligibilityConfig.options
+                        ).map(type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`participants-and-providers-participant-eligibility-${type}`}
+                                name="gainsharePaymentsEligibility"
+                                label={
+                                  gainsharePaymentsEligibilityConfig.options[
+                                    type
+                                  ]
+                                }
+                                value={type}
+                                checked={values?.gainsharePaymentsEligibility.includes(
+                                  type
+                                )}
+                              />
+
+                              {type === GainshareArrangementEligibility.OTHER &&
+                                values.gainsharePaymentsEligibility.includes(
+                                  type
+                                ) && (
+                                  <div className="margin-left-4">
+                                    <Label
+                                      htmlFor="participants-and-providers-participant-eligibility-other"
+                                      className="text-normal margin-top-1"
+                                    >
+                                      {participantsAndProvidersT(
+                                        'gainsharePaymentsEligibilityOther.label'
+                                      )}
+                                    </Label>
+
+                                    <FieldErrorMsg>
+                                      {
+                                        flatErrors.gainsharePaymentsEligibilityOther
+                                      }
+                                    </FieldErrorMsg>
+
+                                    <Field
+                                      as={TextInput}
+                                      className="maxw-none mint-textarea"
+                                      id="participants-and-providers-participant-eligibility-other"
+                                      data-testid="participants-and-providers-participant-eligibility-other"
+                                      name="gainsharePaymentsEligibilityOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          );
+                        })}
+                      </FieldGroup>
+                    )}
+
                     <AddNote
                       id="participants-and-providers-gainshare-payment-note"
                       field="gainsharePaymentsNote"
@@ -301,96 +386,74 @@ export const Coordination = () => {
                     scrollElement="participantsIds"
                     error={!!flatErrors.participantsIds}
                   >
-                    <FieldArray
-                      name="participantsIds"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label">
-                            {participantsAndProvidersT('participantsIds.label')}
-                          </legend>
+                    <Label
+                      htmlFor="participants-and-providers-id"
+                      className="maxw-none"
+                    >
+                      {participantsAndProvidersT('participantsIds.label')}
+                    </Label>
 
-                          {itSolutionsStarted && (
-                            <ITSolutionsWarning
-                              id="ops-eval-and-learning-data-needed-warning"
-                              onClick={() =>
-                                handleFormSubmit(
-                                  `/models/${modelID}/task-list/it-solutions`
-                                )
-                              }
-                            />
-                          )}
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-data-needed-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
+                    )}
 
-                          <p className="text-base margin-0 line-height-body-3">
-                            {participantsAndProvidersT(
-                              'participantsIds.sublabel'
-                            )}
-                          </p>
+                    <p className="text-base margin-0 line-height-body-3">
+                      {participantsAndProvidersT('participantsIds.sublabel')}
+                    </p>
 
-                          <FieldErrorMsg>
-                            {flatErrors.participantsIds}
-                          </FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.participantsIds}</FieldErrorMsg>
 
-                          {getKeys(participantsIdsConfig.options).map(type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`participants-and-providers-participant-id-${type}`}
-                                  name="participantsIds"
-                                  label={participantsIdsConfig.options[type]}
-                                  value={type}
-                                  checked={values?.participantsIds.includes(
-                                    type
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.participantsIds.indexOf(
-                                        e.target.value as ParticipantsIdType
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
-                                  }}
-                                />
-
-                                {type === ParticipantsIdType.OTHER &&
-                                  values.participantsIds.includes(type) && (
-                                    <div className="margin-left-4">
-                                      <Label
-                                        htmlFor="participants-and-providers-participant-id-other"
-                                        className="text-normal margin-top-1"
-                                      >
-                                        {participantsAndProvidersT(
-                                          'participantsIdsOther.label'
-                                        )}
-                                      </Label>
-
-                                      <FieldErrorMsg>
-                                        {flatErrors.participantsIdsOther}
-                                      </FieldErrorMsg>
-
-                                      <Field
-                                        as={TextAreaField}
-                                        className="maxw-none mint-textarea"
-                                        id="participants-and-providers-participant-id-other"
-                                        data-testid="participants-and-providers-participant-id-other"
-                                        maxLength={5000}
-                                        name="participantsIdsOther"
-                                      />
-                                    </div>
-                                  )}
-                              </Fragment>
-                            );
-                          })}
-                          <AddNote
-                            id="participants-and-providers-participant-id-note"
-                            field="participantsIDSNote"
+                    {getKeys(participantsIdsConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`participants-and-providers-participant-id-${type}`}
+                            name="participantsIds"
+                            label={participantsIdsConfig.options[type]}
+                            value={type}
+                            checked={values?.participantsIds.includes(type)}
                           />
-                        </>
-                      )}
+
+                          {type === ParticipantsIdType.OTHER &&
+                            values.participantsIds.includes(type) && (
+                              <div className="margin-left-4">
+                                <Label
+                                  htmlFor="participants-and-providers-participant-id-other"
+                                  className="text-normal margin-top-1"
+                                >
+                                  {participantsAndProvidersT(
+                                    'participantsIdsOther.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.participantsIdsOther}
+                                </FieldErrorMsg>
+
+                                <Field
+                                  as={TextInput}
+                                  className="maxw-none mint-textarea"
+                                  id="participants-and-providers-participant-id-other"
+                                  data-testid="participants-and-providers-participant-id-other"
+                                  maxLength={5000}
+                                  name="participantsIdsOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
+                    <AddNote
+                      id="participants-and-providers-participant-id-note"
+                      field="participantsIDSNote"
                     />
                   </FieldGroup>
 

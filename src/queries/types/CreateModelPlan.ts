@@ -15,7 +15,6 @@ export interface CreateModelPlan_createModelPlan_basics {
   modelPlanID: UUID;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
-  cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
   modelType: ModelType | null;
   problem: string | null;

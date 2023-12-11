@@ -11,7 +11,6 @@ export default gql`
         modelPlanID
         modelCategory
         cmsCenters
-        cmsOther
         cmmiGroups
         modelType
         problem

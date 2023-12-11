@@ -5,7 +5,7 @@ type PossibleOperationalSolution struct {
 	ID int `json:"id" db:"id"`
 	createdByRelation
 	modifiedByRelation
-
+	FilterView   *ModelViewFilter       `json:"filterView" db:"filter_view"`
 	Name         string                 `json:"name" db:"sol_name"`
 	Key          OperationalSolutionKey `json:"key" db:"sol_key"`
 	TreatAsOther bool                   `json:"treatAsOther" db:"treat_as_other"`

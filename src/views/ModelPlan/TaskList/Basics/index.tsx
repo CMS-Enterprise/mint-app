@@ -36,7 +36,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import TextAreaField from 'components/shared/TextAreaField';
 import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -75,10 +74,6 @@ const BasicsContent = () => {
     formikRef?.current?.values.basics.cmsCenters.includes(CmsCenter.CMMI)
   );
 
-  const [showOther, setShowOther] = useState(
-    formikRef?.current?.values.basics.cmsCenters.includes(CmsCenter.OTHER)
-  );
-
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
       id: modelID
@@ -100,8 +95,7 @@ const BasicsContent = () => {
     modelCategory,
     additionalModelCategories,
     cmsCenters,
-    cmmiGroups,
-    cmsOther
+    cmmiGroups
   } = basics || {};
 
   const [update] = useUpdateModelPlanAndBasicsMutation();
@@ -136,8 +130,7 @@ const BasicsContent = () => {
           modelCategory: updateBasics.modelCategory,
           additionalModelCategories: updateBasics.additionalModelCategories,
           cmsCenters: updateBasics.cmsCenters,
-          cmmiGroups: updateBasics.cmmiGroups,
-          cmsOther: updateBasics.cmsOther
+          cmmiGroups: updateBasics.cmmiGroups
         }
       }
     })
@@ -168,26 +161,9 @@ const BasicsContent = () => {
       modelCategory: modelCategory ?? null,
       additionalModelCategories: additionalModelCategories ?? [],
       cmsCenters: cmsCenters ?? [],
-      cmmiGroups: cmmiGroups ?? [],
-      cmsOther: cmsOther ?? ''
+      cmmiGroups: cmmiGroups ?? []
     }
   };
-
-  // 4 options
-  // 1. Basics (name, category, CMS Component without CMMI and Other)
-  // 2. Basics + cmmi group
-  // 3. Basics + other group
-  // 4. Basics + Cmmi + Other
-  let validationSchema;
-  if (areCmmiGroupsShown && showOther) {
-    validationSchema = planBasicsSchema.pageOneSchemaWithOtherAndCmmi;
-  } else if (areCmmiGroupsShown) {
-    validationSchema = planBasicsSchema.pageOneSchemaWithCmmiGroups;
-  } else if (showOther) {
-    validationSchema = planBasicsSchema.pageOneSchemaWithOther;
-  } else {
-    validationSchema = planBasicsSchema.pageOneSchema;
-  }
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -230,7 +206,7 @@ const BasicsContent = () => {
           handleFormSubmit(values, 'next');
         }}
         enableReinitialize
-        validationSchema={validationSchema}
+        validationSchema={planBasicsSchema.pageOneSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
@@ -291,7 +267,6 @@ const BasicsContent = () => {
 
                           <Field
                             as={TextInput}
-                            error={!!flatErrors.modelName}
                             id="plan-basics-model-name"
                             maxLength={50}
                             name="modelName"
@@ -317,7 +292,6 @@ const BasicsContent = () => {
 
                           <Field
                             as={TextInput}
-                            error={!!flatErrors.abbreviation}
                             id="plan-basics-abbreviation"
                             maxLength={50}
                             name="abbreviation"
@@ -371,7 +345,6 @@ const BasicsContent = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors['basics.amsModelID']}
                                   id="plan-basics-ams-model-id"
                                   maxLength={50}
                                   name="basics.amsModelID"
@@ -394,7 +367,6 @@ const BasicsContent = () => {
 
                                 <Field
                                   as={TextInput}
-                                  error={!!flatErrors['basics.demoCode']}
                                   id="plan-basics-demo-code"
                                   maxLength={50}
                                   name="basics.demoCode"
@@ -589,40 +561,10 @@ const BasicsContent = () => {
                                                 !areCmmiGroupsShown
                                               );
                                             }
-                                            if (
-                                              e.target.value === CmsCenter.OTHER
-                                            ) {
-                                              setShowOther(!showOther);
-                                            }
                                           }}
                                         />
                                       );
                                     }
-                                  )}
-
-                                  {values.basics.cmsCenters.includes(
-                                    CmsCenter.OTHER
-                                  ) && (
-                                    <FieldGroup
-                                      className="margin-top-4"
-                                      error={!!flatErrors['basics.cmsOther']}
-                                    >
-                                      <Label htmlFor="plan-basics-cmsCategory--Other">
-                                        {basicsT('cmsOther.label')}
-                                      </Label>
-
-                                      <FieldErrorMsg>
-                                        {flatErrors['basics.cmsOther']}
-                                      </FieldErrorMsg>
-
-                                      <Field
-                                        as={TextAreaField}
-                                        id="plan-basics-cmsCategory--Other"
-                                        maxLength={5000}
-                                        className="mint-textarea"
-                                        name="basics.cmsOther"
-                                      />
-                                    </FieldGroup>
                                   )}
                                 </>
                               )}

@@ -380,7 +380,6 @@ const KeyCharacteristics = () => {
                       <Field
                         as={TextInput}
                         data-testid="plan-characteristics-key-other"
-                        error={!!flatErrors.keyCharacteristicsOther}
                         id="plan-characteristics-key-other"
                         maxLength={50}
                         name="keyCharacteristicsOther"

@@ -75,7 +75,6 @@ const ReadOnlyModelBasics = ({
     modelCategory,
     additionalModelCategories,
     cmsCenters,
-    cmsOther,
     cmmiGroups,
     modelType,
     problem,
@@ -275,8 +274,7 @@ const ReadOnlyModelBasics = ({
             list: true,
             listItems: cmsCenters?.map((cmsCenter): string =>
               basicsT(`cmsCenters.options.${cmsCenter}`)
-            ),
-            listOtherItem: cmsOther
+            )
           }}
           secondSection={{
             heading: basicsT('cmmiGroups.label'),

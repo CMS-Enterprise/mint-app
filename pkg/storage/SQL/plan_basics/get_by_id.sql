@@ -6,7 +6,6 @@ SELECT
     model_category,
     additional_model_categories,
     cms_centers,
-    cms_other,
     cmmi_groups,
     model_type,
     problem,

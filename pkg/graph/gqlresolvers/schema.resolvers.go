@@ -398,7 +398,17 @@ func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, 
 func (r *mutationResolver) CreateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalSolutionCreate(logger, operationalNeedID, solutionType, changes, principal, r.store)
+	return resolvers.OperationalSolutionCreate(
+		ctx,
+		r.store,
+		logger,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		operationalNeedID,
+		solutionType,
+		changes,
+		principal)
 }
 
 // UpdateOperationalSolution is the resolver for the updateOperationalSolution field.
@@ -740,6 +750,12 @@ func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.C
 	return communicationTypes, nil
 }
 
+// GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
+func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
+	gainshareArrangementEligibilities := models.ConvertEnums[model.GainshareArrangementEligibility](obj.GainsharePaymentsEligibility)
+	return gainshareArrangementEligibilities, nil
+}
+
 // ParticipantsIds is the resolver for the participantsIds field.
 func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error) {
 	participantsIDTypes := models.ConvertEnums[model.ParticipantsIDType](obj.ParticipantsIds)
@@ -811,9 +827,9 @@ func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Contex
 
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
-	ldUser := flags.Principal(ctx)
-	userKey := ldUser.GetKey()
-	signedHash := r.ldClient.SecureModeHash(ldUser)
+	ldContext := flags.Principal(ctx)
+	userKey := ldContext.Key()
+	signedHash := r.ldClient.SecureModeHash(ldContext)
 
 	currentUser := model.CurrentUser{
 		LaunchDarkly: &model.LaunchDarklySettings{
