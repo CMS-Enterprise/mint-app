@@ -312,6 +312,7 @@ const ReadOnlyBeneficiaries = ({
             listItems={precedenceRules?.map((type): string =>
               beneficiariesT(`precedenceRules.options.${type}`)
             )}
+            additionalDetails={[precedenceRulesYes, precedenceRulesNo]}
             notes={precedenceRulesNote}
           />
         )}
