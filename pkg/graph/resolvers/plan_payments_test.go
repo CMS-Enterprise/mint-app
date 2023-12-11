@@ -18,7 +18,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"fundingSource":     []string{"TRUST_FUND"},
+		"fundingSource":     []string{"OTHER"},
 		"fundingSourceNote": "Ello gov'na",
 		"payType":           []string{"CLAIMS_BASED_PAYMENTS"},
 	}
