@@ -119,11 +119,11 @@ export enum CmmiGroup {
 
 export enum CmsCenter {
   CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY = 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY',
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES = 'CENTER_FOR_MEDICAID_AND_CHIP_SERVICES',
   CENTER_FOR_MEDICARE = 'CENTER_FOR_MEDICARE',
   CENTER_FOR_PROGRAM_INTEGRITY = 'CENTER_FOR_PROGRAM_INTEGRITY',
   CMMI = 'CMMI',
-  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE',
-  OTHER = 'OTHER'
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
 export enum CcmInvolvmentType {
@@ -1179,7 +1179,6 @@ export type PlanBasics = {
   clearanceStarts?: Maybe<Scalars['Time']['output']>;
   cmmiGroups: Array<CmmiGroup>;
   cmsCenters: Array<CmsCenter>;
-  cmsOther?: Maybe<Scalars['String']['output']>;
   completeICIP?: Maybe<Scalars['Time']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1226,7 +1225,6 @@ export type PlanBasicsChanges = {
   clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   cmmiGroups?: InputMaybe<Array<CmmiGroup>>;
   cmsCenters?: InputMaybe<Array<CmsCenter>>;
-  cmsOther?: InputMaybe<Scalars['String']['input']>;
   completeICIP?: InputMaybe<Scalars['Time']['input']>;
   demoCode?: InputMaybe<Scalars['String']['input']>;
   goal?: InputMaybe<Scalars['String']['input']>;
@@ -2110,6 +2108,7 @@ export type PossibleOperationalSolution = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  filterView?: Maybe<ModelViewFilter>;
   id: Scalars['Int']['output'];
   key: OperationalSolutionKey;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -2621,14 +2620,14 @@ export type GetAllBasicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmsOther?: string | null, cmmiGroups: Array<CmmiGroup>, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, status: TaskStatus } } };
+export type GetAllBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, status: TaskStatus } } };
 
 export type GetBasicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmsOther?: string | null, cmmiGroups: Array<CmmiGroup> } } };
+export type GetBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup> } } };
 
 export type GetMilestonesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3022,7 +3021,6 @@ export const GetAllBasicsDocument = gql`
       modelCategory
       additionalModelCategories
       cmsCenters
-      cmsOther
       cmmiGroups
       modelType
       problem
@@ -3093,7 +3091,6 @@ export const GetBasicsDocument = gql`
       modelCategory
       additionalModelCategories
       cmsCenters
-      cmsOther
       cmmiGroups
     }
   }

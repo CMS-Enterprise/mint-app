@@ -22,7 +22,7 @@ import {
 } from 'data/mock/readonly';
 import { ModelStatus } from 'types/graphql-global-types';
 
-import ReadOnly from './index';
+import ReadOnly, { getValidFilterViewParam } from './index';
 
 const mockAuthReducer = {
   isUserSet: true,
@@ -73,6 +73,20 @@ describe('Read Only Model Plan Summary', () => {
         screen.getByTestId('read-only-side-nav__wrapper')
       ).toBeInTheDocument();
     });
+  });
+
+  it('get a valid filter view param', () => {
+    const param = 'CBOSC';
+    const isValidParam = getValidFilterViewParam(param);
+    expect(isValidParam).toBe('cbosc');
+
+    const param2 = null;
+    const isValidParam2 = getValidFilterViewParam(param2);
+    expect(isValidParam2).toBe(null);
+
+    const param3 = 'cbosc2';
+    const isValidParam3 = getValidFilterViewParam(param3);
+    expect(isValidParam3).toBe(null);
   });
 
   it('matches snapshot', async () => {

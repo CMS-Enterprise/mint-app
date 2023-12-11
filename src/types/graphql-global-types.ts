@@ -79,11 +79,11 @@ export enum CMMIGroup {
 
 export enum CMSCenter {
   CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY",
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES = "CENTER_FOR_MEDICAID_AND_CHIP_SERVICES",
   CENTER_FOR_MEDICARE = "CENTER_FOR_MEDICARE",
   CENTER_FOR_PROGRAM_INTEGRITY = "CENTER_FOR_PROGRAM_INTEGRITY",
   CMMI = "CMMI",
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE",
-  OTHER = "OTHER",
 }
 
 export enum CcmInvolvmentType {
@@ -695,7 +695,6 @@ export interface PlanBasicsChanges {
   modelCategory?: ModelCategory | null;
   additionalModelCategories?: ModelCategory[] | null;
   cmsCenters?: CMSCenter[] | null;
-  cmsOther?: string | null;
   cmmiGroups?: CMMIGroup[] | null;
   modelType?: ModelType | null;
   problem?: string | null;

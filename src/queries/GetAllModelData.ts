@@ -21,7 +21,6 @@ export default gql`
         demoCode
         cmsCenters
         cmmiGroups
-        cmsOther
         modelType
         problem
         goal
