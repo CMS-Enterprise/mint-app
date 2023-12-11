@@ -196,9 +196,10 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   beneficiarySelectionFrequency: FrequencyType | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
+  precedenceRules: YesNoFilter[];
   precedenceRulesYes: string | null;
   precedenceRulesNo: string | null;
-  precedenceRules: YesNoFilter[];
+  precedenceRulesNote: string | null;
   numberPeopleImpacted: number | null;
   estimateConfidence: ConfidenceType | null;
   confidenceNote: string | null;

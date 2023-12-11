@@ -8,7 +8,8 @@ import {
   GetFrequencyQuery,
   OperationalNeedKey,
   OverlapType,
-  TaskStatus
+  TaskStatus,
+  YesNoFilter
 } from 'gql/gen/graphql';
 
 import Frequency from './index';
@@ -26,7 +27,8 @@ const mockData: BeneficiaryFrequencyType = {
   beneficiarySelectionFrequencyOther: 'Very often',
   beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',
-  precedenceRules: 'lorem ipsum',
+  precedenceRules: [YesNoFilter.YES],
+  precedenceRulesYes: 'Yes precedence rules',
   readyForReviewByUserAccount: {
     commonName: 'ASDF',
     id: '000',
@@ -91,7 +93,7 @@ describe('Model Plan Beneficiaries', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('beneficiaries-precedence-rules')).toHaveValue(
-        'lorem ipsum'
+        'Yes'
       );
     });
   });
