@@ -115,6 +115,8 @@ export default gql`
         coordinateWorkNote
         gainsharePayments
         gainsharePaymentsTrack
+        gainsharePaymentsEligibility
+        gainsharePaymentsEligibilityOther
         gainsharePaymentsNote
         participantsIds
         participantsIdsOther

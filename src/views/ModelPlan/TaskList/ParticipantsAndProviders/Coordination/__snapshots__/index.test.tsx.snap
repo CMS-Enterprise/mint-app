@@ -266,11 +266,13 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         class="usa-form-group"
         data-scroll="participantsIds"
       >
-        <legend
-          class="usa-label"
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="participants-and-providers-id"
         >
           Will you collect participant IDs? If so, select which types.
-        </legend>
+        </label>
         <div
           class="usa-alert usa-alert--warning flex it-solutions-warning"
           data-testid="alert"
@@ -390,16 +392,14 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
           >
             Please specify
           </label>
-          <textarea
-            aria-labelledby="label-participants-and-providers-participant-id-other hint-participants-and-providers-participant-id-other"
-            class="maxw-none mint-textarea usa-textarea"
+          <input
+            class="usa-input maxw-none mint-textarea"
             data-testid="participants-and-providers-participant-id-other"
             id="participants-and-providers-participant-id-other"
             maxlength="5000"
             name="participantsIdsOther"
-          >
-            Candy Kingdom Operations Number
-          </textarea>
+            value="Candy Kingdom Operations Number"
+          />
         </div>
         <div
           class="mint-checkbox usa-checkbox"

@@ -797,6 +797,8 @@ type PlanParticipantsAndProviders {
   gainsharePayments:       Boolean
   gainsharePaymentsTrack: Boolean
   gainsharePaymentsNote:   String
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
+  gainsharePaymentsEligibilityOther: String
   participantsIds:         [ParticipantsIDType!]!
   participantsIdsOther:    String
   participantsIDSNote:     String
@@ -879,6 +881,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   gainsharePayments:       Boolean
   gainsharePaymentsTrack: Boolean
   gainsharePaymentsNote:   String
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
+  gainsharePaymentsEligibilityOther: String
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String
   participantsIDSNote:     String
@@ -2549,4 +2553,11 @@ enum ModelViewFilter {
   MDM, # MASTER_DATA_MANAGEMENT
   OACT, # OFFICE_OF_THE_ACTUARY
   PBG, # PROVIDER_BILLING_GROUP
+}
+
+enum GainshareArrangementEligibility {
+  ALL_PROVIDERS,
+  SOME_PROVIDERS,
+  OTHER,
+  NO
 }

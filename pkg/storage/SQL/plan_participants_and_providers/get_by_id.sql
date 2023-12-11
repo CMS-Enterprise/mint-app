@@ -32,6 +32,8 @@ SELECT
     gainshare_payments,
     gainshare_payments_track,
     gainshare_payments_note,
+    gainshare_payments_eligibility,
+    gainshare_payments_eligibility_other,
     participants_ids,
     participants_ids_other,
     participants_ids_note,

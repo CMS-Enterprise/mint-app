@@ -356,6 +356,28 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       false: 'No'
     }
   },
+  gainsharePaymentsEligibility: {
+    gqlField: 'gainsharePaymentsEligibility',
+    goField: 'GainsharePaymentsEligibility',
+    dbField: 'gainshare_payments_eligibility',
+    label: 'Are providers eligible to participate in gainsharing arrangements?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      ALL_PROVIDERS: 'All providers',
+      SOME_PROVIDERS: 'Some providers',
+      OTHER: 'Other',
+      NO: 'No'
+    }
+  },
+  gainsharePaymentsEligibilityOther: {
+    gqlField: 'gainsharePaymentsEligibilityOther',
+    goField: 'GainsharePaymentsEligibilityOther',
+    dbField: 'gainshare_payments_eligibility_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
   gainsharePaymentsNote: {
     gqlField: 'gainsharePaymentsNote',
     goField: 'GainsharePaymentsNote',

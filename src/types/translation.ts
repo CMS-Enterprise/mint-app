@@ -25,6 +25,7 @@ import {
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
+  GainshareArrangementEligibility,
   GeographyApplication,
   GeographyType,
   KeyCharacteristic,
@@ -236,6 +237,8 @@ export type TranslationParticipantsAndProviders = {
   coordinateWorkNote: TranslationFieldProperties;
   gainsharePayments: TranslationFieldPropertiesWithOptions<Bool>;
   gainsharePaymentsTrack: TranslationFieldPropertiesWithOptions<Bool>;
+  gainsharePaymentsEligibility: TranslationFieldPropertiesWithOptions<GainshareArrangementEligibility>;
+  gainsharePaymentsEligibilityOther: TranslationFieldProperties;
   gainsharePaymentsNote: TranslationFieldProperties;
   participantsIds: TranslationFieldPropertiesWithOptions<ParticipantsIdType>;
   participantsIdsOther: TranslationFieldProperties;

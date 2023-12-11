@@ -2428,6 +2428,38 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
+                  class="read-only-section read-only-section--are-providers-eligible-to-participate-in-gainsharing-arrangements margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are providers eligible to participate in gainsharing arrangements?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other gainsharing
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
                   class="read-only-section read-only-section--notes margin-bottom-3"
                 >
                   <p
@@ -8705,6 +8737,38 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--are-providers-eligible-to-participate-in-gainsharing-arrangements margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Are providers eligible to participate in gainsharing arrangements?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Other gainsharing
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
               <div

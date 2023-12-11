@@ -417,14 +417,12 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         navigation
         shouldCloseOnOverlayClick
       >
-        {filteredView && (
-          <ShareExportModal
-            closeModal={() => setIsExportModalOpen(false)}
-            modelID={modelID}
-            filteredView={filteredView}
-            setStatusMessage={setStatusMessage}
-          />
-        )}
+        <ShareExportModal
+          closeModal={() => setIsExportModalOpen(false)}
+          modelID={modelID}
+          filteredView={filteredView}
+          setStatusMessage={setStatusMessage}
+        />
       </Modal>
 
       {Summary}

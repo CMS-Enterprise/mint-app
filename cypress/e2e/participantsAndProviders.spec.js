@@ -147,6 +147,14 @@ describe('The Model Plan Participants and Providers Form', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.get('#participants-and-providers-participant-eligibility-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-participant-eligibility-other')
+      .type('Providers are eligible in certain cases')
+      .should('have.value', 'Providers are eligible in certain cases');
+
     cy.get('#participants-and-providers-participant-id-OTHER')
       .check({ force: true })
       .should('be.checked');

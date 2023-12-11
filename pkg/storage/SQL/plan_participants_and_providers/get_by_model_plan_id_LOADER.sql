@@ -40,6 +40,8 @@ SELECT
     pAndP.gainshare_payments,
     pAndP.gainshare_payments_track,
     pAndP.gainshare_payments_note,
+    pAndP.gainshare_payments_eligibility,
+    pAndP.gainshare_payments_eligibility_other,
     pAndP.participants_ids,
     pAndP.participants_ids_other,
     pAndP.participants_ids_note,
