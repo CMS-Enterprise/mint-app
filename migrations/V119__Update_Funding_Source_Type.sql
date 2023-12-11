@@ -1,22 +1,19 @@
--- TODO: SW This should be updated to migrate the data appropriately. This migration right now is meant to unblock front end development only
+/***
+Section: Add the new columns to the database, add the new values to the old type
+***/
 
 ALTER TABLE plan_payments
     ADD COLUMN funding_source_medicare_a_info ZERO_STRING,
     ADD COLUMN funding_source_medicare_b_info ZERO_STRING,
     ADD COLUMN funding_source_r_medicare_a_info ZERO_STRING,
     ADD COLUMN funding_source_r_medicare_b_info ZERO_STRING;
-    -- DROP COLUMN funding_source_trust_fund_type,
-    -- DROP COLUMN funding_source_r_trust_fund_type;
 
-
--- TODO add new values to the enum first, don't rename trust fund, just make a new type after this is dropped, which doesn't include trust fund
-
-
--- ALTER TYPE PP_FUNDING_SOURCE RENAME VALUE 'TRUST_FUND' TO 'MEDICARE_PART_A_HI_TRUST_FUND'; -- TODO: SW this will need to be renamed more properly later
-ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_A_HI_TRUST_FUND'; -- TODO: SW this will need to be renamed more properly later
+ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_A_HI_TRUST_FUND';
 ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_B_SMI_TRUST_FUND';
 
--- WITH Updates AS
+/***
+Section: Update Historic Data
+***/
 
 /*
 Update answer options to:
@@ -33,7 +30,35 @@ Check "Other" and add the text "Trust Fund" to the "Please describe the funding 
 
 
 
--- TODO Drop old values
--- ALTER TABLE plan_payments
---     DROP COLUMN funding_source_trust_fund_type,
---     DROP COLUMN funding_source_r_trust_fund_type;
+
+/*** 
+Section: Rename Type and recreate
+
+***/
+ALTER TYPE PP_FUNDING_SOURCE RENAME TO PP_FUNDING_SOURCE_OLD;
+
+CREATE TYPE PP_FUNDING_SOURCE AS ENUM (
+  'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
+  'MEDICARE_PART_A_HI_TRUST_FUND',
+  'MEDICARE_PART_B_SMI_TRUST_FUND',
+  'OTHER'
+);
+
+-- Update funding_source_ column to use the updated type
+ALTER TABLE plan_payments
+ALTER COLUMN funding_source TYPE PP_FUNDING_SOURCE[]
+    using funding_source::text[]::PP_FUNDING_SOURCE[];
+
+
+-- Update funding_source_r column to use the updated type
+ALTER TABLE plan_payments
+ALTER COLUMN funding_source_r TYPE PP_FUNDING_SOURCE[]
+    using funding_source_r::text[]::PP_FUNDING_SOURCE[];
+
+-- Drop old type
+DROP TYPE PP_FUNDING_SOURCE_OLD;
+
+-- Drop old columns
+ALTER TABLE plan_payments
+    DROP COLUMN funding_source_trust_fund_type,
+    DROP COLUMN funding_source_r_trust_fund_type;
