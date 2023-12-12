@@ -234,6 +234,13 @@ export enum FundingSource {
   TRUST_FUND = "TRUST_FUND",
 }
 
+export enum GainshareArrangementEligibility {
+  ALL_PROVIDERS = "ALL_PROVIDERS",
+  NO = "NO",
+  OTHER = "OTHER",
+  SOME_PROVIDERS = "SOME_PROVIDERS",
+}
+
 export enum GeographyApplication {
   BENEFICIARIES = "BENEFICIARIES",
   OTHER = "OTHER",
@@ -1005,6 +1012,8 @@ export interface PlanParticipantsAndProvidersChanges {
   gainsharePayments?: boolean | null;
   gainsharePaymentsTrack?: boolean | null;
   gainsharePaymentsNote?: string | null;
+  gainsharePaymentsEligibility?: GainshareArrangementEligibility[] | null;
+  gainsharePaymentsEligibilityOther?: string | null;
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
