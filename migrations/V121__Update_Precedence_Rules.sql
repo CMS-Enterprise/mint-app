@@ -7,7 +7,16 @@ ALTER TABLE plan_beneficiaries
   ADD COLUMN precedence_rules_note ZERO_STRING;
 
 UPDATE plan_beneficiaries
-  SET precedence_rules_note = precedence_rules;
+  SET modified_by = '00000001-0001-0001-0001-000000000001', --System Account
+      modified_dts = current_timestamp
+WHERE precedence_rules IS NOT NULL
+  AND precedence_rules != '';
+
+
+UPDATE plan_beneficiaries
+  SET precedence_rules_note = precedence_rules
+WHERE precedence_rules IS NOT NULL
+  AND precedence_rules != '';
 
 ALTER TABLE plan_beneficiaries
   DROP COLUMN precedence_rules;
