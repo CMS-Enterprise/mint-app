@@ -96,17 +96,22 @@ func sendDiscussionReplyOriginatorTestEmail(
 		{
 			UserName: "Joe Soccer",
 			Role:     "Sportsball Star",
-			Content:  "<b>Hey here is a reply</b>",
+			Content:  "<p>Hey here is a reply</p>",
 		},
 		{
 			UserName: "Joe Baseball",
 			Role:     "Sportsball Coach",
-			Content:  "<b>Hey here is a reply again</b> <ul><li>bulletPoint</li></ul>",
+			Content:  "<p>Hey here is a reply again</p> <ul><li>bulletPoint</li></ul>",
 		},
 		{
 			UserName: "Jane Football",
 			Role:     "Sportsball Star",
-			Content:  "<b>Hey here is a football reply </b> <ul><li>bulletPoint</li><li>football</li></ul>",
+			Content:  "<p>Hey here is a football reply </p> <ul><li>bulletPoint</li><li>football</li></ul>",
+		},
+		{
+			UserName: "Tim Swim",
+			Role:     "Swimming Star",
+			Content:  "<p>Hey here is a noodle reply </p>",
 		},
 	}
 
