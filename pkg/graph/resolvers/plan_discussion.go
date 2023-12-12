@@ -124,6 +124,17 @@ func CreatePlanDiscussion(
 
 	return discussion, nil
 }
+
+func sendDiscussionReplyOriginatorEmail(
+	ctx context.Context,
+	store *storage.Store,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook) error {
+	return nil
+}
+
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
 	store *storage.Store,
@@ -436,6 +447,15 @@ func CreateDiscussionReply(
 		return reply, err
 	}
 	commonName := principal.Account().CommonName
+
+	// TODO: Send email to originator
+	sendDiscussionReplyOriginatorEmail(
+		ctx,
+		store,
+		logger,
+		emailService,
+		emailTemplateService,
+		addressBook)
 
 	go func() {
 		err = sendPlanDiscussionTagEmails(

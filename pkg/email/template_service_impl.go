@@ -52,14 +52,14 @@ var planDiscussionCreatedSubjectTemplate string
 //go:embed templates/plan_discussion_created_body.html
 var planDiscussionCreatedBodyTemplate string
 
-// DiscussionReplyOriginatorCreatedTemplateName is the template name definition for the corresponding email template
-const DiscussionReplyOriginatorCreatedTemplateName string = "discussion_reply_originator_created"
+// DiscussionReplyCreatedOriginatorTemplateName is the template name definition for the corresponding email template
+const DiscussionReplyCreatedOriginatorTemplateName string = "discussion_reply_created_originator"
 
-//go:embed templates/discussion_reply_originator_created_subject.html
-var discussionReplyOriginatorCreatedSubjectTemplate string
+//go:embed templates/discussion_reply_created_originator_subject.html
+var discussionReplyCreatedOriginatorSubjectTemplate string
 
-//go:embed templates/discussion_reply_originator_created_body.html
-var discussionReplyOriginatorCreatedBodyTemplate string
+//go:embed templates/discussion_reply_created_originator_body.html
+var discussionReplyCreatedOriginatorBodyTemplate string
 
 // PlanDiscussionTaggedPossibleSolutionTemplateName is the template name definition for the corresponding email template
 const PlanDiscussionTaggedPossibleSolutionTemplateName string = "plan_discussion_tagged_solution"
@@ -185,7 +185,7 @@ func (t *TemplateServiceImpl) Load() error {
 	if err != nil {
 		return err
 	}
-	err = t.loadEmailTemplate(DiscussionReplyOriginatorCreatedTemplateName, discussionReplyOriginatorCreatedSubjectTemplate, discussionReplyOriginatorCreatedBodyTemplate)
+	err = t.loadEmailTemplate(DiscussionReplyCreatedOriginatorTemplateName, discussionReplyCreatedOriginatorSubjectTemplate, discussionReplyCreatedOriginatorBodyTemplate)
 	if err != nil {
 		return err
 	}
