@@ -88,7 +88,7 @@ func sendDiscussionReplyEmails(ctx context.Context,
 
 	replyEmails := lo.Map(replies, func(reply *models.DiscussionReply, _ int) email.DiscussionReplyEmailContent {
 		return email.DiscussionReplyEmailContent{
-			UserName: "TODO",
+			UserName: "TODO UserNeeded",
 			Role:     reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
 			Content:  reply.Content.RawContent.ToTemplate(),
 		}
@@ -102,7 +102,7 @@ func sendDiscussionReplyEmails(ctx context.Context,
 		discussion.ID,
 		modelPlan.ID,
 		modelPlan.ModelName,
-		*modelPlan.Abbreviation,
+		models.ValueOrEmpty(modelPlan.Abbreviation),
 		replyUser.CommonName, // TODO: role should be the person who made the original discussion, not the reply user
 		reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
 		replyUser.Email, // TODO this is the wrong email
