@@ -125,16 +125,6 @@ func CreatePlanDiscussion(
 	return discussion, nil
 }
 
-func sendDiscussionReplyOriginatorEmail(
-	ctx context.Context,
-	store *storage.Store,
-	logger *zap.Logger,
-	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
-	addressBook email.AddressBook) error {
-	return nil
-}
-
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
 	store *storage.Store,
@@ -446,16 +436,28 @@ func CreateDiscussionReply(
 	if err != nil {
 		return reply, err
 	}
-	commonName := principal.Account().CommonName
+	replyUser := principal.Account()
+	commonName := replyUser.CommonName
 
 	// TODO: Send email to originator
-	sendDiscussionReplyOriginatorEmail(
+	errReplyEmail := sendDiscussionReplyEmails(
 		ctx,
 		store,
 		logger,
 		emailService,
 		emailTemplateService,
-		addressBook)
+		addressBook,
+		discussion,
+		reply,
+		modelPlan,
+		replyUser, //TODO, this should be the user who made the
+		reply.UserRole,
+	)
+	if errReplyEmail != nil {
+		logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+			zap.String("discussionID", discussion.ID.String()),
+			zap.Error(errReplyEmail))
+	}
 
 	go func() {
 		err = sendPlanDiscussionTagEmails(
