@@ -8,10 +8,9 @@ ALTER TABLE plan_payments
     ADD COLUMN funding_source_r_medicare_a_info ZERO_STRING,
     ADD COLUMN funding_source_r_medicare_b_info ZERO_STRING;
 
-ALTER TABLE plan_payments
-ALTER COLUMN funding_source TYPE TEXT[];
-ALTER TABLE plan_payments
-ALTER COLUMN funding_source_r TYPE TEXT[];
+ALTER TABLE plan_payments  
+  ALTER COLUMN funding_source TYPE TEXT[],  
+  ALTER COLUMN funding_source_r TYPE TEXT[];  
 
 -- We will add these new values later, not needed now because the columns take text
 -- ALTER TYPE PP_FUNDING_SOURCE ADD VALUE 'MEDICARE_PART_A_HI_TRUST_FUND';

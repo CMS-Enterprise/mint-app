@@ -138,16 +138,14 @@ type PlanPayments struct {
 	baseTaskListSection
 
 	// Page 1
-	FundingSource              pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
-	FundingSourceMedicareAInfo *string        `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
-	FundingSourceMedicareBInfo *string        `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
-	// FundingSourceTrustFundType      pq.StringArray `json:"fundingSourceTrustFundType" db:"funding_source_trust_fund_type"`
-	FundingSourceOther          *string        `json:"fundingSourceOther" db:"funding_source_other"`
-	FundingSourceNote           *string        `json:"fundingSourceNote" db:"funding_source_note"`
-	FundingSourceR              pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
-	FundingSourceRMedicareAInfo *string        `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
-	FundingSourceRMedicareBInfo *string        `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
-	// FundingSourceRTrustFundType     pq.StringArray `json:"fundingSourceRTrustFundType" db:"funding_source_r_trust_fund_type"`
+	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
+	FundingSourceMedicareAInfo      *string        `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
+	FundingSourceMedicareBInfo      *string        `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
+	FundingSourceOther              *string        `json:"fundingSourceOther" db:"funding_source_other"`
+	FundingSourceNote               *string        `json:"fundingSourceNote" db:"funding_source_note"`
+	FundingSourceR                  pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
+	FundingSourceRMedicareAInfo     *string        `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
+	FundingSourceRMedicareBInfo     *string        `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
 	FundingSourceROther             *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
 	FundingSourceRNote              *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
 	PayRecipients                   pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
