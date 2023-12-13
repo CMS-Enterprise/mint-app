@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import {
@@ -8,8 +8,7 @@ import {
   Button,
   Fieldset,
   Icon,
-  Label,
-  Radio
+  Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -23,6 +22,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -194,22 +194,18 @@ const Overview = () => {
                     <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
 
                     <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="ModelType-Voluntary"
-                        name="modelType"
-                        label={modelTypeConfig.options.VOLUNTARY}
-                        value="VOLUNTARY"
-                        checked={values.modelType === 'VOLUNTARY'}
-                      />
-                      <Field
-                        as={Radio}
-                        id="ModelType-Mandatory"
-                        name="modelType"
-                        label={modelTypeConfig.options.MANDATORY}
-                        value="MANDATORY"
-                        checked={values.modelType === 'MANDATORY'}
-                      />
+                      {getKeys(modelTypeConfig.options).map(key => (
+                        <Fragment key={key}>
+                          <Field
+                            as={CheckboxField}
+                            id={`ModelType-${key}`}
+                            name="modelType"
+                            label={modelTypeConfig.options[key]}
+                            value={key}
+                            checked={values.modelType === key}
+                          />
+                        </Fragment>
+                      ))}
                     </Fieldset>
                   </FieldGroup>
 
