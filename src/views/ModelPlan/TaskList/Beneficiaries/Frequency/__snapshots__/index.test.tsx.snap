@@ -375,11 +375,13 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
             class="usa-form-group"
             data-scroll="precedenceRules"
           >
-            <legend
+            <label
               class="usa-label"
+              data-testid="label"
+              for="precedenceRules"
             >
               Are there precedence rules between this model and other model(s)?
-            </legend>
+            </label>
             <p
               class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
             >
@@ -391,7 +393,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
               <input
                 class="usa-checkbox__input"
                 id="beneficiaries-precedence-rules-YES"
-                name="precedence-rules-YES"
+                name="precedenceRules"
                 type="checkbox"
                 value="YES"
               />
@@ -427,7 +429,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
               <input
                 class="usa-checkbox__input"
                 id="beneficiaries-precedence-rules-NO"
-                name="precedence-rules-NO"
+                name="precedenceRules"
                 type="checkbox"
                 value="NO"
               />

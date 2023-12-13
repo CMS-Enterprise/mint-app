@@ -101,7 +101,10 @@ describe('fetch csv utils', () => {
       'beneficiaries.estimateConfidence',
       'beneficiaries.beneficiaryOverlap',
       'beneficiaries.beneficiaryOverlapNote',
-      'beneficiaries.precedenceRules'
+      'beneficiaries.precedenceRules',
+      'beneficiaries.precedenceRulesYes',
+      'beneficiaries.precedenceRulesNo',
+      'beneficiaries.precedenceRulesNote'
     ];
 
     expect(
