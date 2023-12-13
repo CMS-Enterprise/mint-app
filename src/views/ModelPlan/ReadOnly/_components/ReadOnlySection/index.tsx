@@ -9,6 +9,7 @@ export type ReadOnlySectionProps = {
   listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
   notes?: string | null;
+  additionalDetails?: (string | null)[];
 };
 
 const ReadOnlySection = ({
@@ -17,7 +18,8 @@ const ReadOnlySection = ({
   list,
   listItems = [],
   listOtherItem,
-  notes
+  notes,
+  additionalDetails
 }: ReadOnlySectionProps) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const sectionName = heading
@@ -65,6 +67,28 @@ const ReadOnlySection = ({
                   {listOtherItem || (
                     <em className="text-base">
                       {miscellaneousT('otherNotSpecified')}
+                    </em>
+                  )}
+                </li>
+              </ul>
+            )}
+            {item === 'Yes' && additionalDetails && (
+              <ul data-testid="yes-entry">
+                <li className="font-sans-md line-height-sans-4">
+                  {additionalDetails[0] || (
+                    <em className="text-base">
+                      {miscellaneousT('noAdditionalInfo')}
+                    </em>
+                  )}
+                </li>
+              </ul>
+            )}
+            {item === 'No' && additionalDetails && (
+              <ul data-testid="no-entry">
+                <li className="font-sans-md line-height-sans-4">
+                  {additionalDetails[1] || (
+                    <em className="text-base">
+                      {miscellaneousT('noAdditionalInfo')}
                     </em>
                   )}
                 </li>

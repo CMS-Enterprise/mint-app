@@ -29,6 +29,9 @@ export default gql(/* GraphQL */ `
         beneficiaryOverlap
         beneficiaryOverlapNote
         precedenceRules
+        precedenceRulesYes
+        precedenceRulesNo
+        precedenceRulesNote
         status
       }
     }
