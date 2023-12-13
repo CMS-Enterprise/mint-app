@@ -13,7 +13,11 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
       className="read-only-model-plan--discussions"
       data-testid="read-only-model-plan--discussions"
     >
-      <Discussions modelID={modelID} readOnly discussionID={discussionID} />
+      <Discussions
+        modelID={modelID}
+        readOnly
+        discussionID={discussionID || 'discussion-readonly'}
+      />
     </div>
   );
 };
