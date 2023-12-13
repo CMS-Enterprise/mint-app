@@ -21,6 +21,7 @@ import {
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
+  GainshareArrangementEligibility,
   GeographyApplication,
   GeographyType,
   GetAllBasicsDocument,
@@ -83,8 +84,10 @@ const modelBasicsData: GetAllBasicsTypes = {
   amsModelID: '43532323',
   modelCategory: ModelCategory.STATE_BASED,
   additionalModelCategories: [ModelCategory.ACCOUNTABLE_CARE],
-  cmsCenters: [CmsCenter.CENTER_FOR_MEDICARE, CmsCenter.OTHER],
-  cmsOther: 'The Center for Awesomeness',
+  cmsCenters: [
+    CmsCenter.CENTER_FOR_MEDICARE,
+    CmsCenter.CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
+  ],
   cmmiGroups: [
     CmmiGroup.STATE_AND_POPULATION_HEALTH_GROUP,
     CmmiGroup.POLICY_AND_PROGRAMS_GROUP
@@ -258,6 +261,8 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   gainsharePayments: true,
   gainsharePaymentsTrack: true,
   gainsharePaymentsNote: 'Track note',
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility.OTHER],
+  gainsharePaymentsEligibilityOther: 'Other gainsharing',
   participantsIds: [ParticipantsIdType.CCNS],
   participantsIdsOther: 'PArt ids other',
   participantsIDSNote: 'Note for particpants',

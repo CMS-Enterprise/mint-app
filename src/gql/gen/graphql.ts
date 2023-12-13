@@ -119,11 +119,11 @@ export enum CmmiGroup {
 
 export enum CmsCenter {
   CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY = 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY',
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES = 'CENTER_FOR_MEDICAID_AND_CHIP_SERVICES',
   CENTER_FOR_MEDICARE = 'CENTER_FOR_MEDICARE',
   CENTER_FOR_PROGRAM_INTEGRITY = 'CENTER_FOR_PROGRAM_INTEGRITY',
   CMMI = 'CMMI',
-  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE',
-  OTHER = 'OTHER'
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
 export enum CcmInvolvmentType {
@@ -445,6 +445,13 @@ export enum GqlTableName {
   POSSIBLEOPERATIONALNEED = 'possibleOperationalNeed',
   POSSIBLEOPERATIONALSOLUTION = 'possibleOperationalSolution',
   USERACCOUNT = 'userAccount'
+}
+
+export enum GainshareArrangementEligibility {
+  ALL_PROVIDERS = 'ALL_PROVIDERS',
+  NO = 'NO',
+  OTHER = 'OTHER',
+  SOME_PROVIDERS = 'SOME_PROVIDERS'
 }
 
 export enum GeographyApplication {
@@ -1179,7 +1186,6 @@ export type PlanBasics = {
   clearanceStarts?: Maybe<Scalars['Time']['output']>;
   cmmiGroups: Array<CmmiGroup>;
   cmsCenters: Array<CmsCenter>;
-  cmsOther?: Maybe<Scalars['String']['output']>;
   completeICIP?: Maybe<Scalars['Time']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1226,7 +1232,6 @@ export type PlanBasicsChanges = {
   clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   cmmiGroups?: InputMaybe<Array<CmmiGroup>>;
   cmsCenters?: InputMaybe<Array<CmsCenter>>;
-  cmsOther?: InputMaybe<Scalars['String']['input']>;
   completeICIP?: InputMaybe<Scalars['Time']['input']>;
   demoCode?: InputMaybe<Scalars['String']['input']>;
   goal?: InputMaybe<Scalars['String']['input']>;
@@ -1835,6 +1840,8 @@ export type PlanParticipantsAndProviders = {
   estimateConfidence?: Maybe<ConfidenceType>;
   expectedNumberOfParticipants?: Maybe<Scalars['Int']['output']>;
   gainsharePayments?: Maybe<Scalars['Boolean']['output']>;
+  gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>;
+  gainsharePaymentsEligibilityOther?: Maybe<Scalars['String']['output']>;
   gainsharePaymentsNote?: Maybe<Scalars['String']['output']>;
   gainsharePaymentsTrack?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['UUID']['output'];
@@ -1902,6 +1909,8 @@ export type PlanParticipantsAndProvidersChanges = {
   estimateConfidence?: InputMaybe<ConfidenceType>;
   expectedNumberOfParticipants?: InputMaybe<Scalars['Int']['input']>;
   gainsharePayments?: InputMaybe<Scalars['Boolean']['input']>;
+  gainsharePaymentsEligibility?: InputMaybe<Array<GainshareArrangementEligibility>>;
+  gainsharePaymentsEligibilityOther?: InputMaybe<Scalars['String']['input']>;
   gainsharePaymentsNote?: InputMaybe<Scalars['String']['input']>;
   gainsharePaymentsTrack?: InputMaybe<Scalars['Boolean']['input']>;
   medicareProviderType?: InputMaybe<Scalars['String']['input']>;
@@ -2611,14 +2620,14 @@ export type GetAllBasicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmsOther?: string | null, cmmiGroups: Array<CmmiGroup>, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, status: TaskStatus } } };
+export type GetAllBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, status: TaskStatus } } };
 
 export type GetBasicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmsOther?: string | null, cmmiGroups: Array<CmmiGroup> } } };
+export type GetBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup> } } };
 
 export type GetMilestonesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2870,7 +2879,7 @@ export type GetAllParticipantsAndProvidersQueryVariables = Exact<{
 }>;
 
 
-export type GetAllParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, participantAssumeRisk?: boolean | null, riskType?: ParticipantRiskType | null, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, providerAdditionFrequency?: FrequencyType | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, status: TaskStatus } } };
+export type GetAllParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, participantAssumeRisk?: boolean | null, riskType?: ParticipantRiskType | null, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, providerAdditionFrequency?: FrequencyType | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, status: TaskStatus } } };
 
 export type GetCommunicationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2884,7 +2893,7 @@ export type GetCoordinationQueryVariables = Exact<{
 }>;
 
 
-export type GetCoordinationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetCoordinationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetParticipantOptionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3012,7 +3021,6 @@ export const GetAllBasicsDocument = gql`
       modelCategory
       additionalModelCategories
       cmsCenters
-      cmsOther
       cmmiGroups
       modelType
       problem
@@ -3083,7 +3091,6 @@ export const GetBasicsDocument = gql`
       modelCategory
       additionalModelCategories
       cmsCenters
-      cmsOther
       cmmiGroups
     }
   }
@@ -5003,6 +5010,8 @@ export const GetAllParticipantsAndProvidersDocument = gql`
       gainsharePayments
       gainsharePaymentsTrack
       gainsharePaymentsNote
+      gainsharePaymentsEligibility
+      gainsharePaymentsEligibilityOther
       participantsIds
       participantsIdsOther
       participantsIDSNote
@@ -5122,6 +5131,8 @@ export const GetCoordinationDocument = gql`
       coordinateWork
       coordinateWorkNote
       gainsharePayments
+      gainsharePaymentsEligibility
+      gainsharePaymentsEligibilityOther
       gainsharePaymentsTrack
       gainsharePaymentsNote
       participantsIds

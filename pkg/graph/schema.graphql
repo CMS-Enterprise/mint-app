@@ -326,7 +326,6 @@ type PlanBasics {
   modelCategory: ModelCategory
   additionalModelCategories: [ModelCategory!]!
   cmsCenters: [CMSCenter!]!
-  cmsOther: String
   cmmiGroups: [CMMIGroup!]!
   modelType: ModelType
   problem: String
@@ -377,7 +376,6 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   modelCategory: ModelCategory
   additionalModelCategories: [ModelCategory!]
   cmsCenters: [CMSCenter!]
-  cmsOther: String
   cmmiGroups: [CMMIGroup!]
   modelType: ModelType
   problem: String
@@ -799,6 +797,8 @@ type PlanParticipantsAndProviders {
   gainsharePayments:       Boolean
   gainsharePaymentsTrack: Boolean
   gainsharePaymentsNote:   String
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
+  gainsharePaymentsEligibilityOther: String
   participantsIds:         [ParticipantsIDType!]!
   participantsIdsOther:    String
   participantsIDSNote:     String
@@ -881,6 +881,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   gainsharePayments:       Boolean
   gainsharePaymentsTrack: Boolean
   gainsharePaymentsNote:   String
+  gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
+  gainsharePaymentsEligibilityOther: String
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String
   participantsIDSNote:     String
@@ -1897,10 +1899,10 @@ enum CMSCenter {
   CMMI
   CENTER_FOR_MEDICARE
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
   CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
   CENTER_FOR_PROGRAM_INTEGRITY
-  OTHER
-}
+  }
 
 enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP
@@ -2551,4 +2553,11 @@ enum ModelViewFilter {
   MDM, # MASTER_DATA_MANAGEMENT
   OACT, # OFFICE_OF_THE_ACTUARY
   PBG, # PROVIDER_BILLING_GROUP
+}
+
+enum GainshareArrangementEligibility {
+  ALL_PROVIDERS,
+  SOME_PROVIDERS,
+  OTHER,
+  NO
 }

@@ -37,6 +37,8 @@ export default gql(/* GraphQL */ `
         gainsharePayments
         gainsharePaymentsTrack
         gainsharePaymentsNote
+        gainsharePaymentsEligibility
+        gainsharePaymentsEligibilityOther
         participantsIds
         participantsIdsOther
         participantsIDSNote

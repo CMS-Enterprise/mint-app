@@ -79,11 +79,11 @@ export enum CMMIGroup {
 
 export enum CMSCenter {
   CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY",
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES = "CENTER_FOR_MEDICAID_AND_CHIP_SERVICES",
   CENTER_FOR_MEDICARE = "CENTER_FOR_MEDICARE",
   CENTER_FOR_PROGRAM_INTEGRITY = "CENTER_FOR_PROGRAM_INTEGRITY",
   CMMI = "CMMI",
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE",
-  OTHER = "OTHER",
 }
 
 export enum CcmInvolvmentType {
@@ -232,6 +232,13 @@ export enum FundingSource {
   OTHER = "OTHER",
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT",
   TRUST_FUND = "TRUST_FUND",
+}
+
+export enum GainshareArrangementEligibility {
+  ALL_PROVIDERS = "ALL_PROVIDERS",
+  NO = "NO",
+  OTHER = "OTHER",
+  SOME_PROVIDERS = "SOME_PROVIDERS",
 }
 
 export enum GeographyApplication {
@@ -690,7 +697,6 @@ export interface PlanBasicsChanges {
   modelCategory?: ModelCategory | null;
   additionalModelCategories?: ModelCategory[] | null;
   cmsCenters?: CMSCenter[] | null;
-  cmsOther?: string | null;
   cmmiGroups?: CMMIGroup[] | null;
   modelType?: ModelType | null;
   problem?: string | null;
@@ -998,6 +1004,8 @@ export interface PlanParticipantsAndProvidersChanges {
   gainsharePayments?: boolean | null;
   gainsharePaymentsTrack?: boolean | null;
   gainsharePaymentsNote?: string | null;
+  gainsharePaymentsEligibility?: GainshareArrangementEligibility[] | null;
+  gainsharePaymentsEligibilityOther?: string | null;
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
