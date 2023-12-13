@@ -13,7 +13,7 @@ import {
   Label,
   Radio
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   FrequencyType,
   GetFrequencyQuery,
@@ -35,7 +35,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import { YesNoType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
@@ -369,74 +368,50 @@ const Frequency = () => {
                         scrollElement="precedenceRules"
                         error={!!flatErrors.precedenceRules}
                       >
-                        <FieldArray
-                          name="precedenceRules"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label">
-                                {beneficiariesT('precedenceRules.label')}
-                              </legend>
+                        <Label htmlFor="precedenceRules">
+                          {beneficiariesT('precedenceRules.label')}
+                        </Label>
 
-                              <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
-                                {beneficiariesT('precedenceRules.sublabel')}
-                              </p>
+                        <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
+                          {beneficiariesT('precedenceRules.sublabel')}
+                        </p>
 
-                              <FieldErrorMsg>
-                                {flatErrors.precedenceRules}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.precedenceRules}
+                        </FieldErrorMsg>
 
-                              {getKeys(beneficiaryPrecedenceConfig.options).map(
-                                key => (
-                                  <Fragment key={key}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`beneficiaries-precedence-rules-${key}`}
-                                      data-testid={`beneficiaries-precedence-rules-${key}`}
-                                      name="precedenceRules"
-                                      label={
-                                        beneficiaryPrecedenceConfig.options[key]
-                                      }
-                                      value={key}
-                                      checked={values.precedenceRules.includes(
-                                        key
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.precedenceRules.indexOf(
-                                            e.target.value as YesNoType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
+                        {getKeys(beneficiaryPrecedenceConfig.options).map(
+                          key => (
+                            <Fragment key={key}>
+                              <Field
+                                as={CheckboxField}
+                                id={`beneficiaries-precedence-rules-${key}`}
+                                data-testid={`beneficiaries-precedence-rules-${key}`}
+                                name="precedenceRules"
+                                label={beneficiaryPrecedenceConfig.options[key]}
+                                value={key}
+                                checked={values.precedenceRules.includes(key)}
+                              />
 
-                                    {values.precedenceRules?.includes(key) && (
-                                      <div className="margin-left-4">
-                                        <span>
-                                          {beneficiariesT(
-                                            'precedenceRulesYes.label'
-                                          )}
-                                        </span>
-                                        <Field
-                                          as={TextAreaField}
-                                          className="height-15"
-                                          error={flatErrors.precedenceRules}
-                                          id={`beneficiaries-precedence-rules-${key}-note`}
-                                          data-testid={`beneficiaries-precedence-rules-${key}-note`}
-                                          name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
-                                        />
-                                      </div>
-                                    )}
-                                  </Fragment>
-                                )
+                              {values.precedenceRules?.includes(key) && (
+                                <div className="margin-left-4">
+                                  <span>
+                                    {beneficiariesT('precedenceRulesYes.label')}
+                                  </span>
+                                  <Field
+                                    as={TextAreaField}
+                                    className="height-15"
+                                    error={flatErrors.precedenceRules}
+                                    id={`beneficiaries-precedence-rules-${key}-note`}
+                                    data-testid={`beneficiaries-precedence-rules-${key}-note`}
+                                    name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
+                                  />
+                                </div>
                               )}
-                            </>
-                          )}
-                        />
+                            </Fragment>
+                          )
+                        )}
+
                         <AddNote
                           id="beneficiaries-precedence-note"
                           field="precedenceRulesNote"
