@@ -168,7 +168,7 @@ jobs:
           s3 mb s3://${{ env.S3_BUCKET }}
 
       - name: Set up go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
 
@@ -216,7 +216,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: yarn
       - name: Set up go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
       - name: Install go modules
@@ -311,7 +311,7 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Set up go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
       - name: Install go modules

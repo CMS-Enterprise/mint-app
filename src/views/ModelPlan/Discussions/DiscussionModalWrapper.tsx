@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { GridContainer, Icon } from '@trussworks/react-uswds';
+import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import noScroll from 'no-scroll';
 
 type DiscussionModalWrapperProps = {
@@ -51,7 +51,9 @@ const DiscussionModalWrapper = ({
           </button>
           <h4 className="margin-0">{t('modalHeading')}</h4>
         </div>
-        <GridContainer className="padding-y-6">{children}</GridContainer>
+        <GridContainer className="padding-y-6">
+          <Grid desktop={{ col: 12 }}>{children}</Grid>
+        </GridContainer>
       </div>
     </ReactModal>
   );
