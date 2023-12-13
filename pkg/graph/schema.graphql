@@ -327,7 +327,8 @@ type PlanBasics {
   additionalModelCategories: [ModelCategory!]!
   cmsCenters: [CMSCenter!]!
   cmmiGroups: [CMMIGroup!]!
-  modelType: ModelType
+  modelType: [ModelType!]!
+  modelTypeOther: String
   problem: String
   goal: String
   testInterventions: String
@@ -377,7 +378,8 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   additionalModelCategories: [ModelCategory!]
   cmsCenters: [CMSCenter!]
   cmmiGroups: [CMMIGroup!]
-  modelType: ModelType
+  modelType: [ModelType!]
+  modelTypeOther: String
   problem: String
   goal: String
   testInterventions: String
@@ -1871,8 +1873,9 @@ enum TeamRole {
 enum ModelType
 {
   VOLUNTARY
-  MANDATORY
-  TBD
+  MANDATORY_REGIONAL_OR_STATE
+  MANDATORY_NATIONAL
+  OTHER
 }
 
 enum ModelCategory {

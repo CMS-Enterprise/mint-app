@@ -12,7 +12,7 @@ import { ModelType } from "./../../../types/graphql-global-types";
 export interface GetOverview_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
-  modelType: ModelType | null;
+  modelType: ModelType[];
   problem: string | null;
   goal: string | null;
   testInterventions: string | null;

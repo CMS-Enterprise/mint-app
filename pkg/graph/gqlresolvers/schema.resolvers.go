@@ -6,6 +6,7 @@ package gqlresolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -535,6 +536,16 @@ func (r *planBasicsResolver) CmsCenters(ctx context.Context, obj *models.PlanBas
 func (r *planBasicsResolver) CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error) {
 	cmmiGroups := models.ConvertEnums[model.CMMIGroup](obj.CMMIGroups)
 	return cmmiGroups, nil
+}
+
+// ModelType is the resolver for the modelType field.
+func (r *planBasicsResolver) ModelType(ctx context.Context, obj *models.PlanBasics) ([]models.ModelType, error) {
+	panic(fmt.Errorf("not implemented: ModelType - modelType"))
+}
+
+// ModelTypeOther is the resolver for the modelTypeOther field.
+func (r *planBasicsResolver) ModelTypeOther(ctx context.Context, obj *models.PlanBasics) (*string, error) {
+	panic(fmt.Errorf("not implemented: ModelTypeOther - modelTypeOther"))
 }
 
 // Beneficiaries is the resolver for the beneficiaries field.
