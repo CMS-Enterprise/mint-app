@@ -352,9 +352,13 @@ export interface GetAllModelData_modelPlanCollection_payments {
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   fundingSource: FundingSource[];
+  fundingSourceMedicareAInfo: string | null;
+  fundingSourceMedicareBInfo: string | null;
   fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
+  fundingSourceRMedicareAInfo: string | null;
+  fundingSourceRMedicareBInfo: string | null;
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
   payRecipients: PayRecipient[];
