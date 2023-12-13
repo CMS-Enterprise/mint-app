@@ -140,7 +140,7 @@ const ModelPlan = () => {
           <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0 margin-bottom-3">
             {t('following.subheading')}
           </p>
-          {loading ? <PageLoading /> : Favorites}
+          {loading && !favorites.length ? <PageLoading /> : Favorites}
         </Grid>
 
         <Grid>
