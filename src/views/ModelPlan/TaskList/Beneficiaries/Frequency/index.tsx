@@ -396,12 +396,13 @@ const Frequency = () => {
                               {values.precedenceRules?.includes(key) && (
                                 <div className="margin-left-4">
                                   <span>
-                                    {beneficiariesT('precedenceRulesYes.label')}
+                                    {beneficiariesT(
+                                      `precedenceRules${beneficiaryPrecedenceConfig.options[key]}.label`
+                                    )}
                                   </span>
                                   <Field
                                     as={TextAreaField}
                                     className="height-15"
-                                    error={flatErrors.precedenceRules}
                                     id={`beneficiaries-precedence-rules-${key}-note`}
                                     data-testid={`beneficiaries-precedence-rules-${key}-note`}
                                     name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
