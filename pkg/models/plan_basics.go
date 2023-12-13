@@ -53,7 +53,8 @@ type ModelType string
 
 // These constants represent the different values of ModelType
 const (
-	MTVoluntary ModelType = "VOLUNTARY"
-	MTMandatory ModelType = "MANDATORY"
-	MTTBD       ModelType = "TBD"
+	MTVoluntary                ModelType = "VOLUNTARY"
+	MTMandatoryRegionalOrState ModelType = "MANDATORY_REGIONAL_OR_STATE"
+	MTMandatoryNational        ModelType = "MANDATORY_NATIONAL"
+	MTOther                    ModelType = "OTHER"
 )
