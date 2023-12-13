@@ -66,7 +66,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <ul
               data-testid="other-entry"
             >
-              This is the other
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>
@@ -606,7 +614,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <ul
               data-testid="other-entry"
             >
-              Other gainsharing
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>

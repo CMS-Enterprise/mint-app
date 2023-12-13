@@ -51,7 +51,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <ul
               data-testid="other-entry"
             >
-              PartA
+              <li
+                class="font-sans-md line-height-sans-4 "
+              >
+                <em
+                  class="text-base"
+                >
+                  No additional information specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>
@@ -98,7 +106,15 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <ul
               data-testid="other-entry"
             >
-              PartRA
+              <li
+                class="font-sans-md line-height-sans-4 "
+              >
+                <em
+                  class="text-base"
+                >
+                  No additional information specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>

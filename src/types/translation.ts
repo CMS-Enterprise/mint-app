@@ -99,6 +99,7 @@ export type TranslationFieldPropertiesWithOptions<
 > = TranslationFieldProperties & {
   options: Record<T, string>;
   optionsLabels?: Record<T, string>;
+  optionsRelatedInfo?: Record<T, string>;
 };
 
 // Model Plan

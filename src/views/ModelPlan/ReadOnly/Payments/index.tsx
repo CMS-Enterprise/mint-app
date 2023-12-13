@@ -104,6 +104,18 @@ const ReadOnlyPayments = ({
     status
   } = data?.modelPlan.payments || {};
 
+  const fundingSourceOtherInfo: Record<string, string | null | undefined> = {
+    fundingSourceMedicareAInfo,
+    fundingSourceMedicareBInfo,
+    fundingSourceOther
+  };
+
+  const fundingSourceROtherInfo: Record<string, string | null | undefined> = {
+    fundingSourceRMedicareAInfo,
+    fundingSourceRMedicareBInfo,
+    fundingSourceROther
+  };
+
   const isClaims: boolean =
     payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) || false;
 
@@ -155,12 +167,13 @@ const ReadOnlyPayments = ({
             listItems={fundingSource?.map((type): string =>
               paymentsT(`fundingSource.options.${type}`)
             )}
-            listOtherItems={[
-              null,
-              fundingSourceMedicareAInfo,
-              fundingSourceMedicareBInfo,
-              fundingSourceOther
-            ].filter(item => item)}
+            listOtherItems={fundingSource?.map((type): string => {
+              return (
+                fundingSourceOtherInfo[
+                  paymentsT(`fundingSource.optionsRelatedInfo.${type}`, '')
+                ] || ''
+              );
+            })}
             tooltips={fundingSource?.map((type): string =>
               paymentsT(`fundingSource.optionsLabels.${type}`)
             )}
@@ -188,12 +201,13 @@ const ReadOnlyPayments = ({
             listItems={fundingSourceR?.map((type): string =>
               paymentsT(`fundingSourceR.options.${type}`)
             )}
-            listOtherItems={[
-              null,
-              fundingSourceRMedicareAInfo,
-              fundingSourceRMedicareBInfo,
-              fundingSourceROther
-            ].filter(item => item)}
+            listOtherItems={fundingSourceR?.map((type): string => {
+              return (
+                fundingSourceROtherInfo[
+                  paymentsT(`fundingSourceR.optionsRelatedInfo.${type}`, '')
+                ] || ''
+              );
+            })}
             tooltips={fundingSourceR?.map((type): string =>
               paymentsT(`fundingSourceR.optionsLabels.${type}`)
             )}

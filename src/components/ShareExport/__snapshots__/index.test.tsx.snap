@@ -1137,7 +1137,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Custom characteristic
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -1437,7 +1445,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         <ul
                           data-testid="other-entry"
                         >
-                          Geography type other
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
+                          </li>
                         </ul>
                       </ul>
                     </div>
@@ -1475,7 +1491,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         <ul
                           data-testid="other-entry"
                         >
-                          Geography applied other
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
+                          </li>
                         </ul>
                       </ul>
                     </div>
@@ -1562,7 +1586,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other agreement
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -1707,7 +1739,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other allowance
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -1882,7 +1922,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      This is the other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -2422,7 +2470,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other gainsharing
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -3123,7 +3179,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Agency other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -3273,7 +3337,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         <ul
                           data-testid="other-entry"
                         >
-                          Support other
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
+                          </li>
                         </ul>
                       </ul>
                     </div>
@@ -4223,7 +4295,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other eval approach
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -4275,7 +4355,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      CCM involvement other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -4332,7 +4420,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Data mon other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -4389,7 +4485,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Data to send other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -4808,7 +4912,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other learning system
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -4906,7 +5018,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      PartA
+                      <li
+                        class="font-sans-md line-height-sans-4 "
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No additional information specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -4953,7 +5073,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      PartRA
+                      <li
+                        class="font-sans-md line-height-sans-4 "
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No additional information specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -7407,7 +7535,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Custom characteristic
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -7707,7 +7843,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         <ul
                           data-testid="other-entry"
                         >
-                          Geography type other
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
+                          </li>
                         </ul>
                       </ul>
                     </div>
@@ -7745,7 +7889,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         <ul
                           data-testid="other-entry"
                         >
-                          Geography applied other
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
+                          </li>
                         </ul>
                       </ul>
                     </div>
@@ -7832,7 +7984,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other agreement
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -7977,7 +8137,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other allowance
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -8152,7 +8320,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      This is the other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -8692,7 +8868,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other gainsharing
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -9393,7 +9577,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Agency other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -9543,7 +9735,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         <ul
                           data-testid="other-entry"
                         >
-                          Support other
+                          <li
+                            class="font-sans-md line-height-sans-4"
+                          >
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
+                          </li>
                         </ul>
                       </ul>
                     </div>
@@ -10493,7 +10693,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other eval approach
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -10545,7 +10753,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      CCM involvement other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -10602,7 +10818,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Data mon other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -10659,7 +10883,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Data to send other
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -11078,7 +11310,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      Other learning system
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -11176,7 +11416,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      PartA
+                      <li
+                        class="font-sans-md line-height-sans-4 "
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No additional information specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>
@@ -11223,7 +11471,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <ul
                       data-testid="other-entry"
                     >
-                      PartRA
+                      <li
+                        class="font-sans-md line-height-sans-4 "
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No additional information specified
+                        </em>
+                      </li>
                     </ul>
                   </ul>
                 </div>

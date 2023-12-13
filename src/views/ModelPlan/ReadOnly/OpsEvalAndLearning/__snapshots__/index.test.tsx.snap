@@ -56,7 +56,15 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <ul
               data-testid="other-entry"
             >
-              Agency other
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>
@@ -206,7 +214,15 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 <ul
                   data-testid="other-entry"
                 >
-                  Support other
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      Other not specified
+                    </em>
+                  </li>
                 </ul>
               </ul>
             </div>
@@ -1156,7 +1172,15 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <ul
               data-testid="other-entry"
             >
-              Other eval approach
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>
@@ -1208,7 +1232,15 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <ul
               data-testid="other-entry"
             >
-              CCM involvement other
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>
@@ -1265,7 +1297,15 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <ul
               data-testid="other-entry"
             >
-              Data mon other
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>
@@ -1322,7 +1362,15 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <ul
               data-testid="other-entry"
             >
-              Data to send other
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>
@@ -1741,7 +1789,15 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <ul
               data-testid="other-entry"
             >
-              Other learning system
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
+              </li>
             </ul>
           </ul>
         </div>

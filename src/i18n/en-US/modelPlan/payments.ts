@@ -25,6 +25,12 @@ export const payments: TranslationPayments = {
         'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.',
       OTHER: ''
     },
+    optionsRelatedInfo: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceMedicareAInfo',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceMedicareBInfo',
+      OTHER: 'fundingSourceOther'
+    },
     filterGroups: ['dfsdm', 'ipc', 'oact']
   },
   fundingSourceMedicareAInfo: {
@@ -87,6 +93,12 @@ export const payments: TranslationPayments = {
       MEDICARE_PART_B_SMI_TRUST_FUND:
         'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.',
       OTHER: ''
+    },
+    optionsRelatedInfo: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceRMedicareAInfo',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceRMedicareBInfo',
+      OTHER: 'fundingSourceROther'
     },
     filterGroups: ['dfsdm', 'ipc', 'oact']
   },

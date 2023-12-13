@@ -10,7 +10,7 @@ export type ReadOnlySectionProps = {
   list?: boolean;
   listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
-  listOtherItems?: (string | null | undefined)[] | null;
+  listOtherItems?: (string | null | undefined)[] | undefined;
   tooltips?: (string | null | undefined)[];
   notes?: string | null;
 };
@@ -40,7 +40,7 @@ const ReadOnlySection = ({
   // Legacy function to render "Other" option or translation for other not specifed
   const renderListItemOther = (otherItem: string | null | undefined) => {
     if (otherItem) {
-      return otherItem;
+      <li className="font-sans-md line-height-sans-4">{otherItem}</li>;
     }
     return (
       <li className="font-sans-md line-height-sans-4">
@@ -54,7 +54,11 @@ const ReadOnlySection = ({
   const renderListItemOthers = (index: number, isOther: boolean) => {
     if (listOtherItems) {
       if (listOtherItems[index]) {
-        return listOtherItems[index];
+        return (
+          <li className="font-sans-md line-height-sans-4">
+            {listOtherItems[index]}
+          </li>
+        );
       }
       return (
         <li className="font-sans-md line-height-sans-4 ">
