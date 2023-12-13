@@ -274,6 +274,33 @@ export const beneficiaries: TranslationBeneficiaries = {
     },
     filterGroups: ['mdm', 'oact']
   },
+  precedenceRulesYes: {
+    gqlField: 'precedenceRulesYes',
+    goField: 'PrecedenceRulesYes',
+    dbField: 'precedence_rules_yes',
+    label: 'Please describe',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['mdm', 'oact']
+  },
+  precedenceRulesNo: {
+    gqlField: 'precedenceRulesNo',
+    goField: 'PrecedenceRulesNo',
+    dbField: 'precedence_rules_no',
+    label: 'Please describe',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['mdm', 'oact']
+  },
+  precedenceRulesNote: {
+    gqlField: 'precedenceRulesNote',
+    goField: 'PrecedenceRulesNote',
+    dbField: 'precedence_rules_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['mdm', 'oact']
+  },
   status: {
     gqlField: 'status',
     goField: 'Status',

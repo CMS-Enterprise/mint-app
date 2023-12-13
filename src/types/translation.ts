@@ -286,6 +286,9 @@ export type TranslationBeneficiaries = {
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
   precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;
+  precedenceRulesYes: TranslationFieldProperties;
+  precedenceRulesNo: TranslationFieldProperties;
+  precedenceRulesNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 

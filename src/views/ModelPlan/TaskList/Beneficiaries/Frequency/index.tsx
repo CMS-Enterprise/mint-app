@@ -392,7 +392,7 @@ const Frequency = () => {
                                       as={CheckboxField}
                                       id={`beneficiaries-precedence-rules-${key}`}
                                       data-testid={`beneficiaries-precedence-rules-${key}`}
-                                      name={`precedence-rules-${key}`}
+                                      name="precedenceRules"
                                       label={
                                         beneficiaryPrecedenceConfig.options[key]
                                       }
