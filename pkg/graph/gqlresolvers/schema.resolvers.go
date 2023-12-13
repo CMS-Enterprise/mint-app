@@ -549,6 +549,11 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
+// PrecedenceRules is the resolver for the precedenceRules field.
+func (r *planBeneficiariesResolver) PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error) {
+	return models.ConvertEnums[models.YesNoType](obj.PrecedenceRules), nil
+}
+
 // TeamRoles is the resolver for the teamRoles field.
 func (r *planCollaboratorResolver) TeamRoles(ctx context.Context, obj *models.PlanCollaborator) ([]models.TeamRole, error) {
 	return models.ConvertEnums[models.TeamRole](obj.TeamRoles), nil

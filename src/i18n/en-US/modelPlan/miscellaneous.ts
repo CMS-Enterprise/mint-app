@@ -25,6 +25,7 @@ export const miscellaneous: Record<string, string> = {
   na: 'No answer entered',
   noAdditionalInformation: 'No additional information specified',
   otherNotSpecified: 'Other not specified',
+  noAdditionalInfo: 'No additional information specified',
   dateWarning:
     'You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.',
   helpText:

@@ -28,6 +28,7 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -50,14 +51,13 @@ type InitialValueType = Omit<
 
 const Frequency = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
-
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
-
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
     beneficiarySelectionFrequency: beneficiarySelectionFrequencyConfig,
-    beneficiaryOverlap: beneficiaryOverlapConfig
+    beneficiaryOverlap: beneficiaryOverlapConfig,
+    precedenceRules: beneficiaryPrecedenceConfig
   } = usePlanTranslation('beneficiaries');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -80,6 +80,9 @@ const Frequency = () => {
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
+    precedenceRulesYes,
+    precedenceRulesNo,
+    precedenceRulesNote,
     readyForReviewByUserAccount,
     readyForReviewDts,
     status
@@ -142,7 +145,10 @@ const Frequency = () => {
       beneficiarySelectionFrequencyOther ?? '',
     beneficiaryOverlap: beneficiaryOverlap ?? null,
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
-    precedenceRules: precedenceRules ?? '',
+    precedenceRules: precedenceRules ?? [],
+    precedenceRulesYes: precedenceRulesYes ?? '',
+    precedenceRulesNo: precedenceRulesNo ?? '',
+    precedenceRulesNote: precedenceRulesNote ?? '',
     status
   };
 
@@ -362,14 +368,11 @@ const Frequency = () => {
                         scrollElement="precedenceRules"
                         error={!!flatErrors.precedenceRules}
                       >
-                        <Label
-                          htmlFor="beneficiaries-precedence-rules"
-                          className="maxw-none"
-                        >
+                        <Label htmlFor="precedenceRules">
                           {beneficiariesT('precedenceRules.label')}
                         </Label>
 
-                        <p className="text-base margin-0 line-height-body-3">
+                        <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
                           {beneficiariesT('precedenceRules.sublabel')}
                         </p>
 
@@ -377,13 +380,42 @@ const Frequency = () => {
                           {flatErrors.precedenceRules}
                         </FieldErrorMsg>
 
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          error={flatErrors.precedenceRules}
-                          id="beneficiaries-precedence-rules"
-                          data-testid="beneficiaries-precedence-rules"
-                          name="precedenceRules"
+                        {getKeys(beneficiaryPrecedenceConfig.options).map(
+                          key => (
+                            <Fragment key={key}>
+                              <Field
+                                as={CheckboxField}
+                                id={`beneficiaries-precedence-rules-${key}`}
+                                data-testid={`beneficiaries-precedence-rules-${key}`}
+                                name="precedenceRules"
+                                label={beneficiaryPrecedenceConfig.options[key]}
+                                value={key}
+                                checked={values.precedenceRules.includes(key)}
+                              />
+
+                              {values.precedenceRules?.includes(key) && (
+                                <div className="margin-left-4">
+                                  <span>
+                                    {beneficiariesT(
+                                      `precedenceRules${beneficiaryPrecedenceConfig.options[key]}.label`
+                                    )}
+                                  </span>
+                                  <Field
+                                    as={TextAreaField}
+                                    className="height-15"
+                                    id={`beneficiaries-precedence-rules-${key}-note`}
+                                    data-testid={`beneficiaries-precedence-rules-${key}-note`}
+                                    name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
+                                  />
+                                </div>
+                              )}
+                            </Fragment>
+                          )
+                        )}
+
+                        <AddNote
+                          id="beneficiaries-precedence-note"
+                          field="precedenceRulesNote"
                         />
                       </FieldGroup>
 

@@ -108,7 +108,12 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'providerLeaveMethodOther',
       'providerLeaveMethodNote'
     ],
-    beneficiaries: ['precedenceRules'],
+    beneficiaries: [
+      'precedenceRules',
+      'precedenceRulesYes',
+      'precedenceRulesNo',
+      'precedenceRulesNote'
+    ],
     payments: [
       'fundingSource',
       'fundingSourceMedicareAInfo',
@@ -456,7 +461,10 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'estimateConfidence',
       'beneficiaryOverlap',
       'beneficiaryOverlapNote',
-      'precedenceRules'
+      'precedenceRules',
+      'precedenceRulesYes',
+      'precedenceRulesNo',
+      'precedenceRulesNote'
     ]
   },
   cbosc: {

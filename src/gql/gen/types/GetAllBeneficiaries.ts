@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { BeneficiariesType, TriStateAnswer, ConfidenceType, SelectionMethodType, FrequencyType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
+import { BeneficiariesType, TriStateAnswer, ConfidenceType, SelectionMethodType, FrequencyType, OverlapType, YesNoType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllBeneficiaries
@@ -34,7 +34,10 @@ export interface GetAllBeneficiaries_modelPlan_beneficiaries {
   beneficiarySelectionFrequencyNote: string | null;
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
-  precedenceRules: string | null;
+  precedenceRules: YesNoType[];
+  precedenceRulesYes: string | null;
+  precedenceRulesNo: string | null;
+  precedenceRulesNote: string | null;
   status: TaskStatus;
 }
 

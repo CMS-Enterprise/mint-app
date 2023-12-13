@@ -51,7 +51,8 @@ import {
   TaskStatus,
   TeamRole,
   TriStateAnswer,
-  WaiverType
+  WaiverType,
+  YesNoType
 } from 'gql/gen/graphql';
 
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
@@ -284,7 +285,10 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
-  precedenceRules: TranslationFieldProperties;
+  precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;
+  precedenceRulesYes: TranslationFieldProperties;
+  precedenceRulesNo: TranslationFieldProperties;
+  precedenceRulesNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 

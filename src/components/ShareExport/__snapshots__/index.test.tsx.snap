@@ -3112,11 +3112,24 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     Are there precedence rules between this model and other model(s)?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Yes precedence rules
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
+                    >
+                      Yes
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Yes precedence rules
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -9510,11 +9523,24 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     Are there precedence rules between this model and other model(s)?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Yes precedence rules
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
+                    >
+                      Yes
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Yes precedence rules
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
               </div>
             </div>

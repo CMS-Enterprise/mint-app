@@ -643,6 +643,11 @@ export enum WaiverType {
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
 }
 
+export enum YesNoType {
+  NO = "NO",
+  YES = "YES",
+}
+
 export interface CreateOperationalSolutionSubtaskInput {
   name: string;
   status: OperationalSolutionSubtaskStatus;
@@ -736,7 +741,10 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;
   beneficiaryOverlapNote?: string | null;
-  precedenceRules?: string | null;
+  precedenceRules?: YesNoType[] | null;
+  precedenceRulesYes?: string | null;
+  precedenceRulesNo?: string | null;
+  precedenceRulesNote?: string | null;
   status?: TaskStatusInput | null;
 }
 
