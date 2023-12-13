@@ -417,7 +417,9 @@ const Frequency = () => {
                                     {values.precedenceRules?.includes(key) && (
                                       <div className="margin-left-4">
                                         <span>
-                                          {miscellaneousT('pleaseDescribe')}
+                                          {beneficiariesT(
+                                            'precedenceRulesYes.label'
+                                          )}
                                         </span>
                                         <Field
                                           as={TextAreaField}
