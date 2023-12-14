@@ -453,6 +453,7 @@ func CreateDiscussionReply(
 		reply,
 		modelPlan,
 		discUser,
+		replyUser,
 	)
 	if errReplyEmail != nil {
 		logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",

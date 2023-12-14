@@ -13,7 +13,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-func sendDiscussionReplyOriginatorEmail( //TODO, this is very similar to the test email in the command package, we could reuse
+func sendDiscussionReplyOriginatorEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -78,6 +78,7 @@ func sendDiscussionReplyEmails(ctx context.Context,
 	reply *models.DiscussionReply,
 	modelPlan *models.ModelPlan,
 	discUser *authentication.UserAccount,
+	replyUser *authentication.UserAccount,
 ) error {
 	// Get the email details from the db
 	replyDetails, err := store.GetDiscussionReplyDetailsForEmail(discussion.ID)
@@ -100,7 +101,7 @@ func sendDiscussionReplyEmails(ctx context.Context,
 		discUser.CommonName,
 		discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription)),
 		discUser.Email,
-		discUser.CommonName,
+		replyUser.CommonName,
 		replyEmails,
 	)
 	if errEmail != nil {
