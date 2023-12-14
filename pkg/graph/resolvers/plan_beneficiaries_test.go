@@ -78,6 +78,9 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	suite.Nil(updatedBeneficiary.BeneficiaryOverlap)
 	suite.Nil(updatedBeneficiary.BeneficiaryOverlapNote)
 	suite.Nil(updatedBeneficiary.PrecedenceRules)
+	suite.Nil(updatedBeneficiary.PrecedenceRulesYes)
+	suite.Nil(updatedBeneficiary.PrecedenceRulesNo)
+	suite.Nil(updatedBeneficiary.PrecedenceRulesNote)
 
 }
 
@@ -114,5 +117,8 @@ func (suite *ResolverSuite) TestPlanBeneficiariesGetByModelPlanID() {
 	suite.Nil(b.BeneficiaryOverlap)
 	suite.Nil(b.BeneficiaryOverlapNote)
 	suite.Nil(b.PrecedenceRules)
+	suite.Nil(b.PrecedenceRulesYes)
+	suite.Nil(b.PrecedenceRulesNo)
+	suite.Nil(b.PrecedenceRulesNote)
 
 }

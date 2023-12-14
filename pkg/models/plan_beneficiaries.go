@@ -34,7 +34,10 @@ type PlanBeneficiaries struct {
 	BeneficiarySelectionFrequencyNote  *string        `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
 	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
 	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
-	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
+	PrecedenceRules                    pq.StringArray `json:"precedenceRules" db:"precedence_rules"`
+	PrecedenceRulesYes                 *string        `json:"precedenceRulesYes" db:"precedence_rules_yes"`
+	PrecedenceRulesNo                  *string        `json:"precedenceRulesNo" db:"precedence_rules_no"`
+	PrecedenceRulesNote                *string        `json:"precedenceRulesNote" db:"precedence_rules_note"`
 }
 
 // NewPlanBeneficiaries returns a new plan Beneficiaries
@@ -43,3 +46,12 @@ func NewPlanBeneficiaries(tls baseTaskListSection) *PlanBeneficiaries {
 		baseTaskListSection: tls,
 	}
 }
+
+// YesNoType represents the yes no filter type
+type YesNoType string
+
+// These constants represent the yes no type types
+const (
+	YesNoTypeYes YesNoType = "YES"
+	YesNoTypeNo  YesNoType = "NO"
+)

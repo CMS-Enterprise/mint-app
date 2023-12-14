@@ -703,7 +703,10 @@ type PlanBeneficiaries {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: String
+  precedenceRules: [YesNoType!]!
+  precedenceRulesYes: String
+  precedenceRulesNo: String
+  precedenceRulesNote: String
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -747,7 +750,10 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
-  precedenceRules: String
+  precedenceRules: [YesNoType!]
+  precedenceRulesYes: String
+  precedenceRulesNo: String
+  precedenceRulesNote: String
 
   status: TaskStatusInput
 }
@@ -2559,5 +2565,10 @@ enum GainshareArrangementEligibility {
   ALL_PROVIDERS,
   SOME_PROVIDERS,
   OTHER,
+  NO
+}
+
+enum YesNoType {
+  YES,
   NO
 }
