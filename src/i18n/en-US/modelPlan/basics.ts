@@ -130,8 +130,9 @@ export const basics: TranslationBasics = {
     formType: 'radio',
     options: {
       VOLUNTARY: 'Voluntary',
-      MANDATORY: 'Mandatory',
-      TBD: 'To be determined'
+      MANDATORY_NATIONAL: 'Mandatory national',
+      MANDATORY_REGIONAL_OR_STATE: 'Mandatory regional or state',
+      OTHER: 'Other'
     },
     filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },

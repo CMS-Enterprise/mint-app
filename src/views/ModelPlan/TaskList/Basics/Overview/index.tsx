@@ -89,7 +89,7 @@ const Overview = () => {
   const initialValues: BasicsFormType = {
     __typename: 'PlanBasics',
     id: id ?? '',
-    modelType: modelType ?? null,
+    modelType: modelType ?? [],
     problem: problem ?? '',
     goal: goal ?? '',
     testInterventions: testInterventions ?? '',
@@ -202,7 +202,7 @@ const Overview = () => {
                             name="modelType"
                             label={modelTypeConfig.options[key]}
                             value={key}
-                            checked={values.modelType === key}
+                            checked={values.modelType.includes(key)}
                           />
                         </Fragment>
                       ))}

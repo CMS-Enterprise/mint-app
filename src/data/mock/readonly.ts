@@ -93,7 +93,7 @@ const modelBasicsData: GetAllBasicsTypes = {
     CmmiGroup.STATE_AND_POPULATION_HEALTH_GROUP,
     CmmiGroup.POLICY_AND_PROGRAMS_GROUP
   ],
-  modelType: ModelType.MANDATORY,
+  modelType: [ModelType.MANDATORY_NATIONAL],
   problem: 'There is not enough candy',
   goal: 'To get more candy',
   testInterventions: 'The great candy machine',
