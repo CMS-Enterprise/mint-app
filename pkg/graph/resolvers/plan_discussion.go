@@ -428,25 +428,20 @@ func CreateDiscussionReply(
 		return nil, err
 	}
 
+	// Note these aren't async in order to prevent race condition. If possible, this can be made async.
+	discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
+	if err != nil {
+		return reply, err
+	}
+	modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
+	if err != nil {
+		return reply, err
+	}
 	go func() {
-
-		discussion, emailErr := store.PlanDiscussionByID(logger, reply.DiscussionID)
-		if emailErr != nil {
-			logger.Error("error sending discussion reply emails. Unable to retrieve discussion",
-				zap.String("replyID", reply.ID.String()),
-				zap.Error(emailErr))
-		}
-		modelPlan, emailErr2 := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
-		if emailErr2 != nil {
-			logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
-				zap.String("replyID", reply.ID.String()),
-				zap.Error(emailErr2))
-		}
 
 		replyUser := principal.Account()
 		commonName := replyUser.CommonName
 
-		// discUser, err := UserAccountGetByIDLOADER(ctx, discussion.CreatedBy)
 		if err != nil {
 			logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
 				zap.String("replyID", reply.ID.String()),
