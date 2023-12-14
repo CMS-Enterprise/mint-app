@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -78,21 +77,16 @@ func sendDiscussionReplyEmails(ctx context.Context,
 	discussion *models.PlanDiscussion,
 	reply *models.DiscussionReply,
 	modelPlan *models.ModelPlan,
-	replyUser *authentication.UserAccount,
-	replyUserRole *models.DiscussionUserRole, //TODO this should take other as needed
+	discUser *authentication.UserAccount,
 ) error {
-	replies, err := DiscussionReplyCollectionByDiscusionIDLOADER(ctx, discussion.ID)
+	// Get the email details from the db
+	replyDetails, err := store.GetDiscussionReplyDetailsForEmail(discussion.ID)
 	if err != nil {
 		return err
 	}
 
-	replyEmails := lo.Map(replies, func(reply *models.DiscussionReply, _ int) email.DiscussionReplyEmailContent {
-		return email.DiscussionReplyEmailContent{
-			UserName: "TODO UserNeeded",
-			Role:     reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
-			Content:  reply.Content.RawContent.ToTemplate(),
-		}
-	})
+	// convert the DB reply to the email type we need
+	replyEmails := email.DiscussionRepliesEmailContentDBToEmailForm(replyDetails)
 
 	errEmail := sendDiscussionReplyOriginatorEmail(
 		emailService,
@@ -103,10 +97,10 @@ func sendDiscussionReplyEmails(ctx context.Context,
 		modelPlan.ID,
 		modelPlan.ModelName,
 		models.ValueOrEmpty(modelPlan.Abbreviation),
-		replyUser.CommonName, // TODO: role should be the person who made the original discussion, not the reply user
-		reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),
-		replyUser.Email, // TODO this is the wrong email
-		replyUser.CommonName,
+		discUser.CommonName,
+		discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription)),
+		discUser.Email,
+		discUser.CommonName,
 		replyEmails,
 	)
 	if errEmail != nil {

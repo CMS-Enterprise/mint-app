@@ -439,6 +439,8 @@ func CreateDiscussionReply(
 	replyUser := principal.Account()
 	commonName := replyUser.CommonName
 
+	discUser, err := UserAccountGetByIDLOADER(ctx, discussion.CreatedBy)
+
 	// TODO: Send email to originator
 	errReplyEmail := sendDiscussionReplyEmails(
 		ctx,
@@ -450,8 +452,7 @@ func CreateDiscussionReply(
 		discussion,
 		reply,
 		modelPlan,
-		replyUser, //TODO, this should be the user who made the
-		reply.UserRole,
+		discUser,
 	)
 	if errReplyEmail != nil {
 		logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
