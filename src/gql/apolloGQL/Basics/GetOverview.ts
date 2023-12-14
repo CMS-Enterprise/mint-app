@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
       basics {
         id
         modelType
+        modelTypeOther
         problem
         goal
         testInterventions

@@ -13,6 +13,7 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetOverviewQuery,
+  ModelType,
   useGetOverviewQuery,
   useUpdateBasicsMutation
 } from 'gql/gen/graphql';
@@ -55,8 +56,15 @@ const Overview = () => {
 
   const { modelName } = data?.modelPlan || {};
 
-  const { id, modelType, problem, goal, testInterventions, note } = (data
-    ?.modelPlan?.basics || {}) as BasicsFormType;
+  const {
+    id,
+    modelType,
+    modelTypeOther,
+    problem,
+    goal,
+    testInterventions,
+    note
+  } = (data?.modelPlan?.basics || {}) as BasicsFormType;
 
   const [update] = useUpdateBasicsMutation();
 
@@ -90,6 +98,7 @@ const Overview = () => {
     __typename: 'PlanBasics',
     id: id ?? '',
     modelType: modelType ?? [],
+    modelTypeOther: modelTypeOther ?? '',
     problem: problem ?? '',
     goal: goal ?? '',
     testInterventions: testInterventions ?? '',
@@ -204,6 +213,21 @@ const Overview = () => {
                             value={key}
                             checked={values.modelType.includes(key)}
                           />
+
+                          {values.modelType?.includes(
+                            modelTypeConfig.options.OTHER as ModelType
+                          ) && (
+                            <div className="margin-left-4">
+                              <span>{basicsT('modelTypeOther.label')}</span>
+                              <Field
+                                as={TextAreaField}
+                                className="height-15"
+                                id="ModelType-Other"
+                                data-testid="ModelType-Other"
+                                name="modelTypeOther"
+                              />
+                            </div>
+                          )}
                         </Fragment>
                       ))}
                     </Fieldset>

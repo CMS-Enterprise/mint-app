@@ -136,6 +136,15 @@ export const basics: TranslationBasics = {
     },
     filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
   },
+  modelTypeOther: {
+    gqlField: 'modelTypeOther',
+    goField: 'ModelTypeOther',
+    dbField: 'model_type_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: ['dfsdm', 'ipc', 'iddoc', 'pbg']
+  },
   problem: {
     gqlField: 'problem',
     goField: 'Problem',

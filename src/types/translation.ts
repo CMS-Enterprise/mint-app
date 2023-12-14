@@ -124,6 +124,7 @@ export type TranslationBasics = {
   cmmiGroups: TranslationFieldPropertiesWithOptions<CmmiGroup>;
   // Overview
   modelType: TranslationFieldPropertiesWithOptions<ModelType>;
+  modelTypeOther: TranslationFieldProperties;
   problem: TranslationFieldProperties;
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
