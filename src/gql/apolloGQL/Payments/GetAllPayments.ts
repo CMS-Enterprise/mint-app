@@ -6,11 +6,13 @@ export default gql(/* GraphQL */ `
       id
       payments {
         fundingSource
-        fundingSourceTrustFundType
+        fundingSourceMedicareAInfo
+        fundingSourceMedicareBInfo
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
-        fundingSourceRTrustFundType
+        fundingSourceRMedicareAInfo
+        fundingSourceRMedicareBInfo
         fundingSourceROther
         fundingSourceRNote
         payRecipients

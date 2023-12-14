@@ -323,9 +323,13 @@ export default gql`
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         fundingSource
+        fundingSourceMedicareAInfo
+        fundingSourceMedicareBInfo
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
+        fundingSourceRMedicareAInfo
+        fundingSourceRMedicareBInfo
         fundingSourceROther
         fundingSourceRNote
         payRecipients
