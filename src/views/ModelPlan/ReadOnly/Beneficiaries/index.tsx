@@ -63,6 +63,9 @@ const ReadOnlyBeneficiaries = ({
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
+    precedenceRulesYes,
+    precedenceRulesNo,
+    precedenceRulesNote,
     status
   } = data?.modelPlan.beneficiaries || {};
 
@@ -283,7 +286,6 @@ const ReadOnlyBeneficiaries = ({
             notes={beneficiarySelectionFrequencyNote}
           />
         )}
-
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
@@ -300,14 +302,18 @@ const ReadOnlyBeneficiaries = ({
             notes={beneficiaryOverlapNote}
           />
         )}
-
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
           'precedenceRules',
           <ReadOnlySection
             heading={beneficiariesT('precedenceRules.label')}
-            copy={precedenceRules}
+            list
+            listItems={precedenceRules?.map((type): string =>
+              beneficiariesT(`precedenceRules.options.${type}`)
+            )}
+            additionalDetails={[precedenceRulesYes!, precedenceRulesNo!]}
+            notes={precedenceRulesNote}
           />
         )}
       </div>

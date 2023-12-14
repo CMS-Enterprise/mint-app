@@ -1278,7 +1278,10 @@ export type PlanBeneficiaries = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   numberPeopleImpacted?: Maybe<Scalars['Int']['output']>;
-  precedenceRules?: Maybe<Scalars['String']['output']>;
+  precedenceRules: Array<YesNoType>;
+  precedenceRulesNo?: Maybe<Scalars['String']['output']>;
+  precedenceRulesNote?: Maybe<Scalars['String']['output']>;
+  precedenceRulesYes?: Maybe<Scalars['String']['output']>;
   readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
   readyForClearanceByUserAccount?: Maybe<UserAccount>;
   readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
@@ -1310,7 +1313,10 @@ export type PlanBeneficiariesChanges = {
   excludeCertainCharacteristicsCriteria?: InputMaybe<Scalars['String']['input']>;
   excludeCertainCharacteristicsNote?: InputMaybe<Scalars['String']['input']>;
   numberPeopleImpacted?: InputMaybe<Scalars['Int']['input']>;
-  precedenceRules?: InputMaybe<Scalars['String']['input']>;
+  precedenceRules?: InputMaybe<Array<YesNoType>>;
+  precedenceRulesNo?: InputMaybe<Scalars['String']['input']>;
+  precedenceRulesNote?: InputMaybe<Scalars['String']['input']>;
+  precedenceRulesYes?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<TaskStatusInput>;
   treatDualElligibleDifferent?: InputMaybe<TriStateAnswer>;
   treatDualElligibleDifferentHow?: InputMaybe<Scalars['String']['input']>;
@@ -2615,6 +2621,11 @@ export enum WaiverType {
   PROGRAM_PAYMENT = 'PROGRAM_PAYMENT'
 }
 
+export enum YesNoType {
+  NO = 'NO',
+  YES = 'YES'
+}
+
 export type GetAllBasicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -2666,7 +2677,7 @@ export type GetAllBeneficiariesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBeneficiariesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, modelPlanID: UUID, beneficiaries: Array<BeneficiariesType>, diseaseSpecificGroup?: string | null, beneficiariesOther?: string | null, beneficiariesNote?: string | null, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, beneficiarySelectionOther?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyOther?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules?: string | null, status: TaskStatus } } };
+export type GetAllBeneficiariesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, modelPlanID: UUID, beneficiaries: Array<BeneficiariesType>, diseaseSpecificGroup?: string | null, beneficiariesOther?: string | null, beneficiariesNote?: string | null, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, beneficiarySelectionOther?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyOther?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, status: TaskStatus } } };
 
 export type GetBeneficiaryIdentificationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2680,7 +2691,7 @@ export type GetFrequencyQueryVariables = Exact<{
 }>;
 
 
-export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetPeopleImpactedQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3341,6 +3352,9 @@ export const GetAllBeneficiariesDocument = gql`
       beneficiaryOverlap
       beneficiaryOverlapNote
       precedenceRules
+      precedenceRulesYes
+      precedenceRulesNo
+      precedenceRulesNote
       status
     }
   }
@@ -3446,6 +3460,9 @@ export const GetFrequencyDocument = gql`
       beneficiaryOverlap
       beneficiaryOverlapNote
       precedenceRules
+      precedenceRulesYes
+      precedenceRulesNo
+      precedenceRulesNote
       readyForReviewByUserAccount {
         id
         commonName
