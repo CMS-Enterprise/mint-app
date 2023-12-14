@@ -427,41 +427,50 @@ func CreateDiscussionReply(
 	if err != nil {
 		return nil, err
 	}
-	// TODO: make this async
-	discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
-	if err != nil {
-		return reply, err
-	}
-	modelPlan, err := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
-	if err != nil {
-		return reply, err
-	}
-	replyUser := principal.Account()
-	commonName := replyUser.CommonName
-
-	discUser, err := UserAccountGetByIDLOADER(ctx, discussion.CreatedBy)
-
-	// TODO: Send email to originator
-	errReplyEmail := sendDiscussionReplyEmails(
-		ctx,
-		store,
-		logger,
-		emailService,
-		emailTemplateService,
-		addressBook,
-		discussion,
-		reply,
-		modelPlan,
-		discUser,
-		replyUser,
-	)
-	if errReplyEmail != nil {
-		logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
-			zap.String("discussionID", discussion.ID.String()),
-			zap.Error(errReplyEmail))
-	}
 
 	go func() {
+
+		discussion, emailErr := store.PlanDiscussionByID(logger, reply.DiscussionID)
+		if emailErr != nil {
+			logger.Error("error sending discussion reply emails. Unable to retrieve discussion",
+				zap.String("replyID", reply.ID.String()),
+				zap.Error(emailErr))
+		}
+		modelPlan, emailErr2 := ModelPlanGetByIDLOADER(ctx, discussion.ModelPlanID)
+		if emailErr2 != nil {
+			logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
+				zap.String("replyID", reply.ID.String()),
+				zap.Error(emailErr2))
+		}
+
+		replyUser := principal.Account()
+		commonName := replyUser.CommonName
+
+		// discUser, err := UserAccountGetByIDLOADER(ctx, discussion.CreatedBy)
+		if err != nil {
+			logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
+				zap.String("replyID", reply.ID.String()),
+				zap.Error(err))
+		}
+
+		errReplyEmail := sendDiscussionReplyEmails(
+			ctx,
+			store,
+			logger,
+			emailService,
+			emailTemplateService,
+			addressBook,
+			discussion,
+			reply,
+			modelPlan,
+			replyUser,
+		)
+		if errReplyEmail != nil {
+			logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+				zap.String("discussionID", discussion.ID.String()),
+				zap.Error(errReplyEmail))
+		}
+
 		err = sendPlanDiscussionTagEmails(
 			ctx,
 			store,

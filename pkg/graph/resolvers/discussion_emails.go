@@ -77,9 +77,13 @@ func sendDiscussionReplyEmails(ctx context.Context,
 	discussion *models.PlanDiscussion,
 	reply *models.DiscussionReply,
 	modelPlan *models.ModelPlan,
-	discUser *authentication.UserAccount,
 	replyUser *authentication.UserAccount,
 ) error {
+
+	discUser, err := UserAccountGetByIDLOADER(ctx, discussion.CreatedBy)
+	if err != nil {
+		return err
+	}
 	// Get the email details from the db
 	replyDetails, err := store.GetDiscussionReplyDetailsForEmail(discussion.ID)
 	if err != nil {
