@@ -2655,7 +2655,7 @@ export type GetOverviewQueryVariables = Exact<{
 }>;
 
 
-export type GetOverviewQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelType: Array<ModelType>, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null } } };
+export type GetOverviewQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null } } };
 
 export type UpdateBasicsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3212,6 +3212,7 @@ export const GetOverviewDocument = gql`
     basics {
       id
       modelType
+      modelTypeOther
       problem
       goal
       testInterventions
