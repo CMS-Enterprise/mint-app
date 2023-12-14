@@ -15,44 +15,46 @@ describe('The Model Plan Payment Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
     });
 
-    cy.get('#payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT')
+    cy.get(
+      '#payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
+    )
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-source-TRUST_FUND')
-      .check({ force: true })
-      .should('be.checked');
-
     cy.get(
-      '#payment-funding-source-fundingSourceTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND'
+      '#payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND'
     )
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-source-OTHER')
+    cy.get('#payment-fundingSource-medicare-a-info')
+      .type('Part A Type')
+      .should('have.value', 'Part A Type');
+
+    cy.get('#payment-funding-source-fundingSource-OTHER')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#payment-funding-source-other')
+    cy.get('#payment-fundingSource-other')
       .type('Department of Motor Vehicles')
       .should('have.value', 'Department of Motor Vehicles');
 
     cy.get(
-      '#payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
+      '#payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
     )
-      .check({ force: true })
-      .should('be.checked');
-
-    cy.get('#payment-funding-source-reconciliation-TRUST_FUND')
       .check({ force: true })
       .should('be.checked');
 
     cy.get(
-      '#payment-funding-source-fundingSourceRTrustFundType-MEDICARE_PART_A_HI_TRUST_FUND'
+      '#payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND'
     )
       .check({ force: true })
       .should('be.checked');
+
+    cy.get('#payment-fundingSourceR-medicare-a-info')
+      .type('Part A Type R')
+      .should('have.value', 'Part A Type R');
 
     cy.get('#payment-pay-recipients-BENEFICIARIES')
       .check({ force: true })

@@ -784,19 +784,9 @@ func (r *planPaymentsResolver) FundingSource(ctx context.Context, obj *models.Pl
 	return models.ConvertEnums[models.FundingSource](obj.FundingSource), nil
 }
 
-// FundingSourceTrustFundType is the resolver for the fundingSourceTrustFundType field.
-func (r *planPaymentsResolver) FundingSourceTrustFundType(ctx context.Context, obj *models.PlanPayments) ([]models.TrustFundType, error) {
-	return models.ConvertEnums[models.TrustFundType](obj.FundingSourceTrustFundType), nil
-}
-
 // FundingSourceR is the resolver for the fundingSourceR field.
 func (r *planPaymentsResolver) FundingSourceR(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
 	return models.ConvertEnums[models.FundingSource](obj.FundingSourceR), nil
-}
-
-// FundingSourceRTrustFundType is the resolver for the fundingSourceRTrustFundType field.
-func (r *planPaymentsResolver) FundingSourceRTrustFundType(ctx context.Context, obj *models.PlanPayments) ([]models.TrustFundType, error) {
-	return models.ConvertEnums[models.TrustFundType](obj.FundingSourceRTrustFundType), nil
 }
 
 // PayRecipients is the resolver for the payRecipients field.

@@ -13,28 +13,42 @@ export const payments: TranslationPayments = {
     options: {
       PATIENT_PROTECTION_AFFORDABLE_CARE_ACT:
         'Patient Protection Affordable Care Act (Sec 3021)',
-      TRUST_FUND: 'Trust Fund',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
       OTHER: 'Other'
     },
-    filterGroups: ['dfsdm', 'ipc', 'oact']
-  },
-  fundingSourceTrustFundType: {
-    gqlField: 'fundingSourceTrustFundType',
-    goField: 'FundingSourceTrustFundType',
-    dbField: 'funding_source_trust_fund',
-    label: 'Which type(s)?',
-    dataType: 'enum',
-    formType: 'checkbox',
-    options: {
-      MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
-      MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund'
-    },
     optionsLabels: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
-        'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.'
+        'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.',
+      OTHER: ''
     },
+    optionsRelatedInfo: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceMedicareAInfo',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceMedicareBInfo',
+      OTHER: 'fundingSourceOther'
+    },
+    filterGroups: ['dfsdm', 'ipc', 'oact']
+  },
+  fundingSourceMedicareAInfo: {
+    gqlField: 'fundingSourceMedicareAInfo',
+    goField: 'FundingSourceMedicareAInfo',
+    dbField: 'funding_source_medicare_a_info',
+    label: 'Additional details',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['dfsdm', 'ipc', 'oact']
+  },
+  fundingSourceMedicareBInfo: {
+    gqlField: 'fundingSourceMedicareBInfo',
+    goField: 'FundingSourceMedicareBInfo',
+    dbField: 'funding_source_medicare_b_info',
+    label: 'Additional details',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['dfsdm', 'ipc', 'oact']
   },
   fundingSourceOther: {
@@ -68,28 +82,42 @@ export const payments: TranslationPayments = {
     options: {
       PATIENT_PROTECTION_AFFORDABLE_CARE_ACT:
         'Patient Protection Affordable Care Act (Sec 3021)',
-      TRUST_FUND: 'Trust Fund',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund',
       OTHER: 'Other'
     },
-    filterGroups: ['dfsdm', 'ipc', 'oact']
-  },
-  fundingSourceRTrustFundType: {
-    gqlField: 'fundingSourceRTrustFundType',
-    goField: 'FundingSourceRTrustFundType',
-    dbField: 'funding_source_r_trust_fund',
-    label: 'Which type(s)?',
-    dataType: 'enum',
-    formType: 'checkbox',
-    options: {
-      MEDICARE_PART_A_HI_TRUST_FUND: 'Medicare Part A (HI) Trust Fund',
-      MEDICARE_PART_B_SMI_TRUST_FUND: 'Medicare Part B (SMI) Trust Fund'
-    },
     optionsLabels: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
-        'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.'
+        'Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.',
+      OTHER: ''
     },
+    optionsRelatedInfo: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
+      MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceRMedicareAInfo',
+      MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceRMedicareBInfo',
+      OTHER: 'fundingSourceROther'
+    },
+    filterGroups: ['dfsdm', 'ipc', 'oact']
+  },
+  fundingSourceRMedicareAInfo: {
+    gqlField: 'fundingSourceRMedicareAInfo',
+    goField: 'FundingSourceRMedicareAInfo',
+    dbField: 'funding_source_r_medicare_a_info',
+    label: 'Additional details',
+    dataType: 'string',
+    formType: 'text',
+    filterGroups: ['dfsdm', 'ipc', 'oact']
+  },
+  fundingSourceRMedicareBInfo: {
+    gqlField: 'fundingSourceRMedicareBInfo',
+    goField: 'FundingSourceRMedicareBInfo',
+    dbField: 'funding_source_r_medicare_b_info',
+    label: 'Additional details',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['dfsdm', 'ipc', 'oact']
   },
   fundingSourceROther: {

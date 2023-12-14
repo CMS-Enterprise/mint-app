@@ -1,11 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import {
-  GetFundingDocument,
-  GetFundingQuery,
-  TrustFundType
-} from 'gql/gen/graphql';
+import { GetFundingDocument, GetFundingQuery } from 'gql/gen/graphql';
 import Sinon from 'sinon';
 
 import {
@@ -23,12 +19,14 @@ const modelPlanID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const mockData: FundingType = {
   __typename: 'PlanPayments',
   id: '123',
-  fundingSource: [FundingSourceType.TRUST_FUND],
-  fundingSourceTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
+  fundingSource: [FundingSourceType.MEDICARE_PART_B_SMI_TRUST_FUND],
+  fundingSourceMedicareAInfo: '',
+  fundingSourceMedicareBInfo: 'PartB',
   fundingSourceOther: null,
   fundingSourceNote: null,
   fundingSourceR: [],
-  fundingSourceRTrustFundType: [TrustFundType.MEDICARE_PART_A_HI_TRUST_FUND],
+  fundingSourceRMedicareAInfo: '',
+  fundingSourceRMedicareBInfo: '',
   fundingSourceROther: null,
   fundingSourceRNote: null,
   payRecipients: [],
@@ -68,7 +66,7 @@ describe('Model Plan Payment', () => {
   Sinon.stub(Math, 'random').returns(0.5);
 
   it('renders without errors', async () => {
-    const { getAllByRole } = render(
+    const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
       >
@@ -87,13 +85,15 @@ describe('Model Plan Payment', () => {
     });
 
     await waitFor(() => {
-      const checkbox = getAllByRole('checkbox', { name: /Trust Fund/i })[0];
+      const checkbox = getByTestId(
+        'payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND'
+      );
       expect(checkbox).toBeChecked();
     });
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getAllByRole } = render(
+    const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
       >
@@ -106,7 +106,9 @@ describe('Model Plan Payment', () => {
     );
 
     await waitFor(() => {
-      const checkbox = getAllByRole('checkbox', { name: /Trust Fund/i })[0];
+      const checkbox = getByTestId(
+        'payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND'
+      );
       expect(checkbox).toBeChecked();
     });
 

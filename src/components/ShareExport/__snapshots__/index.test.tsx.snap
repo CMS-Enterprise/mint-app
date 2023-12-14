@@ -211,12 +211,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   class="margin-y-0 padding-left-3"
                 >
                   <li
-                    class="font-sans-md line-height-sans-4"
+                    class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                   >
                     First Name
                   </li>
                   <li
-                    class="font-sans-md line-height-sans-4"
+                    class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                   >
                     Second Name
                   </li>
@@ -373,7 +373,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 padding-left-2"
                     >
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         <span
                           class="display-flex flex-align-center"
@@ -448,12 +448,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 padding-left-3"
                     >
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         Center for Medicare (CM)
                       </li>
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         Center for Medicaid and CHIP Services (CMCS)
                       </li>
@@ -481,12 +481,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="margin-y-0 padding-left-3"
                     >
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         State and Population Health Group (SPHG)
                       </li>
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         Policy and Programs Group (PPG)
                       </li>
@@ -1068,12 +1068,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Regular APM
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       MIPS APM
                     </li>
@@ -1115,22 +1115,22 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Population-based Model
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Payment Model
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Service Delivery Model
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -1140,7 +1140,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Custom characteristic
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -1434,7 +1438,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="margin-y-0 padding-left-3"
                       >
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Other
                         </li>
@@ -1444,7 +1448,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            Geography type other
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
                           </li>
                         </ul>
                       </ul>
@@ -1471,12 +1479,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="margin-y-0 padding-left-3"
                       >
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Beneficiaries
                         </li>
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Other
                         </li>
@@ -1486,7 +1494,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            Geography applied other
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
                           </li>
                         </ul>
                       </ul>
@@ -1567,7 +1579,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -1577,7 +1589,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other agreement
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -1711,12 +1727,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       3021 Affordable Care Act (ACA)
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -1726,7 +1742,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other allowance
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -1799,12 +1819,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="margin-y-0 padding-left-3"
                       >
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Fraud and Abuse
                         </li>
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Medicaid
                         </li>
@@ -1880,22 +1900,22 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Medicaid providers
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       States
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       State Medicaid agencies
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -1905,7 +1925,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        This is the other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -2136,12 +2160,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Use an application review and scoring tool
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Another CMS component or process will provide support
                     </li>
@@ -2187,12 +2211,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Manage ongoing communications with participants using an IT tool
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Send mass emails to new participants
                     </li>
@@ -2439,7 +2463,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -2449,7 +2473,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other gainsharing
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -2490,7 +2518,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       CCNs
                     </li>
@@ -2572,7 +2600,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Add retrospectively (once an interaction happens this year)
                     </li>
@@ -2614,7 +2642,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Not applicable
                     </li>
@@ -2726,12 +2754,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Disease-specific
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Dually-eligible beneficiaries
                     </li>
@@ -2968,7 +2996,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Historical claims
                     </li>
@@ -3088,12 +3116,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Yes
                     </li>
                     <ul
-                      data-testid="yes-entry"
+                      data-testid="other-entry"
                     >
                       <li
                         class="font-sans-md line-height-sans-4"
@@ -3152,12 +3180,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Yes, we will partner with states
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -3167,7 +3195,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Agency other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -3208,17 +3240,17 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Beneficiaries
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Participants
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Providers
                     </li>
@@ -3306,12 +3338,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="margin-y-0 padding-left-3"
                       >
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           May have separate contractors for different implementation functions
                         </li>
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Other
                         </li>
@@ -3321,7 +3353,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            Support other
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
                           </li>
                         </ul>
                       </ul>
@@ -3697,12 +3733,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Part A
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Part B
                     </li>
@@ -4260,12 +4296,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Interrupted time series
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -4275,7 +4311,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other eval approach
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -4316,12 +4356,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Yes, for evaluation
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -4331,7 +4371,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        CCM involvement other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -4372,17 +4416,17 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Clinical data
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Medicare claims
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -4392,7 +4436,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Data mon other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -4433,17 +4481,17 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Baseline/historical data
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Beneficiary-level data
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -4453,7 +4501,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Data to send other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -4713,7 +4765,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Daily
                     </li>
@@ -4774,7 +4826,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Monthly
                     </li>
@@ -4856,17 +4908,17 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       We plan to use an IT platform (Connect)
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       No, we will not have a learning strategy
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -4876,7 +4928,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other learning system
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -4968,10 +5024,23 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Patient Protection Affordable Care Act (Sec 3021)
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4 "
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No additional information specified
+                        </em>
+                      </li>
+                    </ul>
                   </ul>
                 </div>
               </div>
@@ -5010,10 +5079,23 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Patient Protection Affordable Care Act (Sec 3021)
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4 "
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No additional information specified
+                        </em>
+                      </li>
+                    </ul>
                   </ul>
                 </div>
               </div>
@@ -5052,7 +5134,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Beneficiaries
                     </li>
@@ -5094,7 +5176,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Claims-Based Payments
                     </li>
@@ -5143,7 +5225,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Adjustments to FFS payments
                     </li>
@@ -5625,7 +5707,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Semiannually
                     </li>
@@ -6540,12 +6622,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   class="margin-y-0 padding-left-3"
                 >
                   <li
-                    class="font-sans-md line-height-sans-4"
+                    class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                   >
                     First Name
                   </li>
                   <li
-                    class="font-sans-md line-height-sans-4"
+                    class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                   >
                     Second Name
                   </li>
@@ -6702,7 +6784,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 padding-left-2"
                     >
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         <span
                           class="display-flex flex-align-center"
@@ -6777,12 +6859,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 padding-left-3"
                     >
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         Center for Medicare (CM)
                       </li>
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         Center for Medicaid and CHIP Services (CMCS)
                       </li>
@@ -6810,12 +6892,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="margin-y-0 padding-left-3"
                     >
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         State and Population Health Group (SPHG)
                       </li>
                       <li
-                        class="font-sans-md line-height-sans-4"
+                        class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                       >
                         Policy and Programs Group (PPG)
                       </li>
@@ -7397,12 +7479,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Regular APM
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       MIPS APM
                     </li>
@@ -7444,22 +7526,22 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Population-based Model
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Payment Model
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Service Delivery Model
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -7469,7 +7551,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Custom characteristic
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -7763,7 +7849,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         class="margin-y-0 padding-left-3"
                       >
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Other
                         </li>
@@ -7773,7 +7859,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            Geography type other
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
                           </li>
                         </ul>
                       </ul>
@@ -7800,12 +7890,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         class="margin-y-0 padding-left-3"
                       >
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Beneficiaries
                         </li>
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Other
                         </li>
@@ -7815,7 +7905,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            Geography applied other
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
                           </li>
                         </ul>
                       </ul>
@@ -7896,7 +7990,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -7906,7 +8000,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other agreement
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -8040,12 +8138,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       3021 Affordable Care Act (ACA)
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -8055,7 +8153,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other allowance
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -8128,12 +8230,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         class="margin-y-0 padding-left-3"
                       >
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Fraud and Abuse
                         </li>
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Medicaid
                         </li>
@@ -8209,22 +8311,22 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Medicaid providers
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       States
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       State Medicaid agencies
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -8234,7 +8336,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        This is the other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -8465,12 +8571,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Use an application review and scoring tool
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Another CMS component or process will provide support
                     </li>
@@ -8516,12 +8622,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Manage ongoing communications with participants using an IT tool
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Send mass emails to new participants
                     </li>
@@ -8768,7 +8874,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -8778,7 +8884,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other gainsharing
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -8819,7 +8929,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       CCNs
                     </li>
@@ -8901,7 +9011,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Add retrospectively (once an interaction happens this year)
                     </li>
@@ -8943,7 +9053,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Not applicable
                     </li>
@@ -9055,12 +9165,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Disease-specific
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Dually-eligible beneficiaries
                     </li>
@@ -9297,7 +9407,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Historical claims
                     </li>
@@ -9417,12 +9527,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Yes
                     </li>
                     <ul
-                      data-testid="yes-entry"
+                      data-testid="other-entry"
                     >
                       <li
                         class="font-sans-md line-height-sans-4"
@@ -9481,12 +9591,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Yes, we will partner with states
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -9496,7 +9606,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Agency other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -9537,17 +9651,17 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Beneficiaries
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Participants
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Providers
                     </li>
@@ -9635,12 +9749,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         class="margin-y-0 padding-left-3"
                       >
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           May have separate contractors for different implementation functions
                         </li>
                         <li
-                          class="font-sans-md line-height-sans-4"
+                          class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                         >
                           Other
                         </li>
@@ -9650,7 +9764,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            Support other
+                            <em
+                              class="text-base"
+                            >
+                              Other not specified
+                            </em>
                           </li>
                         </ul>
                       </ul>
@@ -10026,12 +10144,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Part A
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Part B
                     </li>
@@ -10589,12 +10707,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Interrupted time series
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -10604,7 +10722,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other eval approach
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -10645,12 +10767,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Yes, for evaluation
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -10660,7 +10782,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        CCM involvement other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -10701,17 +10827,17 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Clinical data
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Medicare claims
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -10721,7 +10847,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Data mon other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -10762,17 +10892,17 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Baseline/historical data
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Beneficiary-level data
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -10782,7 +10912,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Data to send other
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -11042,7 +11176,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Daily
                     </li>
@@ -11103,7 +11237,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Monthly
                     </li>
@@ -11185,17 +11319,17 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       We plan to use an IT platform (Connect)
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       No, we will not have a learning strategy
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Other
                     </li>
@@ -11205,7 +11339,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        Other learning system
+                        <em
+                          class="text-base"
+                        >
+                          Other not specified
+                        </em>
                       </li>
                     </ul>
                   </ul>
@@ -11297,10 +11435,23 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Patient Protection Affordable Care Act (Sec 3021)
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4 "
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No additional information specified
+                        </em>
+                      </li>
+                    </ul>
                   </ul>
                 </div>
               </div>
@@ -11339,10 +11490,23 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Patient Protection Affordable Care Act (Sec 3021)
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4 "
+                      >
+                        <em
+                          class="text-base"
+                        >
+                          No additional information specified
+                        </em>
+                      </li>
+                    </ul>
                   </ul>
                 </div>
               </div>
@@ -11381,7 +11545,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Beneficiaries
                     </li>
@@ -11423,7 +11587,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Claims-Based Payments
                     </li>
@@ -11472,7 +11636,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Adjustments to FFS payments
                     </li>
@@ -11954,7 +12118,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Semiannually
                     </li>

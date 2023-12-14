@@ -69,6 +69,11 @@ const ReadOnlyBeneficiaries = ({
     status
   } = data?.modelPlan.beneficiaries || {};
 
+  const precedenceRulesInfo: Record<string, string | null | undefined> = {
+    precedenceRulesYes,
+    precedenceRulesNo
+  };
+
   return (
     <div
       className="read-only-model-plan--beneficiaries"
@@ -312,7 +317,16 @@ const ReadOnlyBeneficiaries = ({
             listItems={precedenceRules?.map((type): string =>
               beneficiariesT(`precedenceRules.options.${type}`)
             )}
-            additionalDetails={[precedenceRulesYes!, precedenceRulesNo!]}
+            listOtherItems={precedenceRules?.map((type): string => {
+              return (
+                precedenceRulesInfo[
+                  beneficiariesT(
+                    `precedenceRules.optionsRelatedInfo.${type}`,
+                    ''
+                  )
+                ] || ''
+              );
+            })}
             notes={precedenceRulesNote}
           />
         )}
