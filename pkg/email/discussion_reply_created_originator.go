@@ -25,7 +25,8 @@ type DiscussionReplyCreatedOriginatorBody struct {
 	ModelAbbreviation string
 	OriginatorName    string
 	OriginatorRole    string
-	Replies           []DiscussionReplyEmailContent // all relevant reply information
+	ReplyCount        int
+	Replies           []DiscussionReplyEmailContent // two most recent  replies with all relevant reply information
 }
 
 // DiscussionReplyEmailContent represents the replies for a discussion
