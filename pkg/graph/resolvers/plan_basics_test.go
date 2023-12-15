@@ -28,6 +28,7 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 
 	// Many of the fields are nil upon creation
 	suite.Nil(basics.ModelType)
+	suite.Nil(basics.ModelTypeOther)
 	suite.Nil(basics.Problem)
 	suite.Nil(basics.Goal)
 	suite.Nil(basics.ModelCategory)
@@ -87,7 +88,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"modelType":     models.MTVoluntary,
+		"modelType":     []models.ModelType{models.MTVoluntary},
 		"goal":          "Some goal",
 		"cmsCenters":    []string{"CMMI"},
 		"cmmiGroups":    []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
@@ -110,7 +111,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.NoError(err)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedBasics.ModifiedBy)
 	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
-	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
+	suite.EqualValues([]models.ModelType{models.MTVoluntary}, updatedBasics.ModelType)
 	suite.Nil(updatedBasics.Problem)
 	suite.EqualValues("Some goal", *updatedBasics.Goal)
 	suite.EqualValues(changes["cmsCenters"], updatedBasics.CMSCenters)
