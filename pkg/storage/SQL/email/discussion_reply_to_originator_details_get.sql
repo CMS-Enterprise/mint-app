@@ -9,9 +9,6 @@ SELECT
     reply.user_role_description,
     reply.is_assessment,
     reply.created_dts
-    -- reply.created_by,
-    -- reply.modified_by,
-    -- reply.modified_dts
 FROM 
 
     discussion_reply AS reply

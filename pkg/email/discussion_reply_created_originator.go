@@ -60,13 +60,6 @@ func (dreb *DiscussionReplyEmailContentDB) ToDiscussionReplyEmailContent() Discu
 	}
 }
 
-// func (drebs *DiscussionRepliesEmailContentDB) ToDiscussionReplyEmailContent() []DiscussionReplyEmailContent {
-// 	replyEmails := lo.Map[*DiscussionRepliesEmailContentDB, DiscussionReplyEmailContent](drebs, func(reply *DiscussionReplyEmailContentDB, _ int) DiscussionReplyEmailContent {
-// 		return reply.ToDiscussionReplyEmailContent()
-// 	})
-// 	return replyEmails
-// }
-
 // DiscussionRepliesEmailContentDBToEmailForm converts an array of db contents to the form needed for email
 func DiscussionRepliesEmailContentDBToEmailForm(drebs []*DiscussionReplyEmailContentDB) []DiscussionReplyEmailContent {
 	replyEmails := lo.Map(drebs, func(reply *DiscussionReplyEmailContentDB, _ int) DiscussionReplyEmailContent {
