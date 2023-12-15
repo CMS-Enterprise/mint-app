@@ -52,6 +52,15 @@ var planDiscussionCreatedSubjectTemplate string
 //go:embed templates/plan_discussion_created_body.html
 var planDiscussionCreatedBodyTemplate string
 
+// DiscussionReplyCreatedOriginatorTemplateName is the template name definition for the corresponding email template
+const DiscussionReplyCreatedOriginatorTemplateName string = "discussion_reply_created_originator"
+
+//go:embed templates/discussion_reply_created_originator_subject.html
+var discussionReplyCreatedOriginatorSubjectTemplate string
+
+//go:embed templates/discussion_reply_created_originator_body.html
+var discussionReplyCreatedOriginatorBodyTemplate string
+
 // PlanDiscussionTaggedPossibleSolutionTemplateName is the template name definition for the corresponding email template
 const PlanDiscussionTaggedPossibleSolutionTemplateName string = "plan_discussion_tagged_solution"
 
@@ -173,6 +182,10 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(PlanDiscussionCreatedTemplateName, planDiscussionCreatedSubjectTemplate, planDiscussionCreatedBodyTemplate)
+	if err != nil {
+		return err
+	}
+	err = t.loadEmailTemplate(DiscussionReplyCreatedOriginatorTemplateName, discussionReplyCreatedOriginatorSubjectTemplate, discussionReplyCreatedOriginatorBodyTemplate)
 	if err != nil {
 		return err
 	}
