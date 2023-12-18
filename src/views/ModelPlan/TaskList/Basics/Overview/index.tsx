@@ -214,21 +214,20 @@ const Overview = () => {
                             value={key}
                             checked={values.modelType.includes(key)}
                           />
-
-                          {key === ModelType.OTHER &&
-                            values.modelType?.includes(ModelType.OTHER) && (
-                              <div className="margin-left-4">
-                                <span>{basicsT('modelTypeOther.label')}</span>
-                                <Field
-                                  as={TextInput}
-                                  id="ModelType-Other"
-                                  data-testid="ModelType-Other"
-                                  name="modelTypeOther"
-                                />
-                              </div>
-                            )}
                         </Fragment>
                       ))}
+
+                      {values.modelType?.includes(ModelType.OTHER) && (
+                        <div className="margin-left-4">
+                          <span>{basicsT('modelTypeOther.label')}</span>
+                          <Field
+                            as={TextInput}
+                            id="ModelType-Other"
+                            data-testid="ModelType-Other"
+                            name="modelTypeOther"
+                          />
+                        </div>
+                      )}
                     </Fieldset>
                   </FieldGroup>
 
