@@ -8,7 +8,8 @@ import {
   Button,
   Fieldset,
   Icon,
-  Label
+  Label,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -214,20 +215,18 @@ const Overview = () => {
                             checked={values.modelType.includes(key)}
                           />
 
-                          {values.modelType?.includes(
-                            modelTypeConfig.options.OTHER as ModelType
-                          ) && (
-                            <div className="margin-left-4">
-                              <span>{basicsT('modelTypeOther.label')}</span>
-                              <Field
-                                as={TextAreaField}
-                                className="height-15"
-                                id="ModelType-Other"
-                                data-testid="ModelType-Other"
-                                name="modelTypeOther"
-                              />
-                            </div>
-                          )}
+                          {key === ModelType.OTHER &&
+                            values.modelType?.includes(ModelType.OTHER) && (
+                              <div className="margin-left-4">
+                                <span>{basicsT('modelTypeOther.label')}</span>
+                                <Field
+                                  as={TextInput}
+                                  id="ModelType-Other"
+                                  data-testid="ModelType-Other"
+                                  name="modelTypeOther"
+                                />
+                              </div>
+                            )}
                         </Fragment>
                       ))}
                     </Fieldset>
