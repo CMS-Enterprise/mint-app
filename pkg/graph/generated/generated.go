@@ -755,6 +755,7 @@ type ComplexityRoot struct {
 		AnticipateReconcilingPaymentsRetrospectively      func(childComplexity int) int
 		AnticipateReconcilingPaymentsRetrospectivelyNote  func(childComplexity int) int
 		AnticipatedPaymentFrequency                       func(childComplexity int) int
+		AnticipatedPaymentFrequencyContinually            func(childComplexity int) int
 		AnticipatedPaymentFrequencyNote                   func(childComplexity int) int
 		AnticipatedPaymentFrequencyOther                  func(childComplexity int) int
 		BeneficiaryCostSharingLevelAndHandling            func(childComplexity int) int
@@ -1142,7 +1143,7 @@ type PlanPaymentsResolver interface {
 	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
 	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
 
-	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error)
+	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyTypeNew, error)
 }
 type PossibleOperationalNeedResolver interface {
 	PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error)
@@ -5572,6 +5573,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.AnticipatedPaymentFrequency(childComplexity), true
 
+	case "PlanPayments.anticipatedPaymentFrequencyContinually":
+		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyContinually(childComplexity), true
+
 	case "PlanPayments.anticipatedPaymentFrequencyNote":
 		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyNote == nil {
 			break
@@ -7962,8 +7970,9 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
+  anticipatedPaymentFrequency:                       [FrequencyTypeNew!]!
   anticipatedPaymentFrequencyOther:                  String
+  anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyNote:                   String
 
   # Page 7
@@ -8059,9 +8068,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequency:                              [FrequencyTypeNew!]
   anticipatedPaymentFrequencyOther:                         String
-  anticipatedPaymentFrequencyNote:                         String
+  anticipatedPaymentFrequencyContinually:                   String
+  anticipatedPaymentFrequencyNote:                          String
 
   # Page 7
   willRecoverPayments:                               Boolean
@@ -8998,6 +9008,7 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
+
 enum FrequencyType {
   ANNUALLY
   BIANNUALLY
@@ -9006,6 +9017,39 @@ enum FrequencyType {
   ROLLING
   OTHER
 }
+
+enum DataFrequencyType {
+    ANNUALLY
+    BIANNUALLY
+    QUARTERLY
+    MONTHLY
+    SEMI_MONTHLY
+    WEEKLY
+    DAILY
+    OTHER
+    NOT_PLANNING_TO_DO_THIS
+}
+
+# enum AnticipatedPaymentFrequencyType {
+#   ANNUALLY
+#   BIANNUALLY
+#   QUARTERLY
+#   MONTHLY
+#   SEMIMONTHLY
+#   WEEKLY
+#   DAILY
+#   OTHER
+# }
+
+enum FrequencyTypeNew {
+  ANNUALLY
+  SEMIANUALLY
+  QUARTERLY
+  MONTHLY
+  CONTINUALLY
+  OTHER
+}
+
 enum TriStateAnswer {
   YES
   NO
@@ -9164,18 +9208,6 @@ enum DataToSendParticipantsType {
     NOT_PLANNING_TO_SEND_DATA
 }
 
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
-    OTHER
-    NOT_PLANNING_TO_DO_THIS
-}
-
 enum ModelLearningSystemType {
     LEARNING_CONTRACTOR
     IT_PLATFORM_CONNECT
@@ -9258,17 +9290,6 @@ enum ComplexityCalculationLevelType {
   LOW
   MIDDLE
   HIGH
-}
-
-enum AnticipatedPaymentFrequencyType {
-  ANNUALLY
-  BIANNUALLY
-  QUARTERLY
-  MONTHLY
-  SEMIMONTHLY
-  WEEKLY
-  DAILY
-  OTHER
 }
 
 enum OpSolutionStatus {
@@ -16228,6 +16249,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+			case "anticipatedPaymentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
 			case "anticipatedPaymentFrequencyNote":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
 			case "willRecoverPayments":
@@ -19315,6 +19338,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+			case "anticipatedPaymentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
 			case "anticipatedPaymentFrequencyNote":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
 			case "willRecoverPayments":
@@ -43278,9 +43303,9 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequency(ctx contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.AnticipatedPaymentFrequencyType)
+	res := resTmp.([]models.FrequencyTypeNew)
 	fc.Result = res
-	return ec.marshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -43290,7 +43315,7 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequenc
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type AnticipatedPaymentFrequencyType does not have child fields")
+			return nil, errors.New("field of type FrequencyTypeNew does not have child fields")
 		},
 	}
 	return fc, nil
@@ -43325,6 +43350,47 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyOther(ctx c
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnticipatedPaymentFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -47047,6 +47113,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+			case "anticipatedPaymentFrequencyContinually":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field)
 			case "anticipatedPaymentFrequencyNote":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
 			case "willRecoverPayments":
@@ -59938,6 +60006,8 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "anticipatedPaymentFrequencyOther":
 			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyOther(ctx, field, obj)
+		case "anticipatedPaymentFrequencyContinually":
+			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyContinually(ctx, field, obj)
 		case "anticipatedPaymentFrequencyNote":
 			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyNote(ctx, field, obj)
 		case "willRecoverPayments":
@@ -62263,83 +62333,6 @@ func (ec *executionContext) marshalNAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx context.Context, v interface{}) (models.AnticipatedPaymentFrequencyType, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.AnticipatedPaymentFrequencyType(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx context.Context, sel ast.SelectionSet, v models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
-func (ec *executionContext) unmarshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.AnticipatedPaymentFrequencyType, error) {
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]models.AnticipatedPaymentFrequencyType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
 func (ec *executionContext) unmarshalNAny2interface(ctx context.Context, v interface{}) (interface{}, error) {
 	res, err := graphql.UnmarshalAny(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -63669,6 +63662,83 @@ func (ec *executionContext) marshalNField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑapp�
 
 func (ec *executionContext) marshalNFieldValue2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFieldValue(ctx context.Context, sel ast.SelectionSet, v models.FieldValue) graphql.Marshaler {
 	return ec._FieldValue(ctx, sel, &v)
+}
+
+func (ec *executionContext) unmarshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx context.Context, v interface{}) (models.FrequencyTypeNew, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.FrequencyTypeNew(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx context.Context, sel ast.SelectionSet, v models.FrequencyTypeNew) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, v interface{}) ([]models.FrequencyTypeNew, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.FrequencyTypeNew, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FrequencyTypeNew) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx context.Context, v interface{}) (models.FundingSource, error) {
@@ -67281,73 +67351,6 @@ func (ec *executionContext) marshalOAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
-func (ec *executionContext) unmarshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.AnticipatedPaymentFrequencyType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]models.AnticipatedPaymentFrequencyType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
 func (ec *executionContext) unmarshalOAny2interface(ctx context.Context, v interface{}) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -68282,6 +68285,73 @@ func (ec *executionContext) marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmin
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) unmarshalOFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, v interface{}) ([]models.FrequencyTypeNew, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.FrequencyTypeNew, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FrequencyTypeNew) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx context.Context, v interface{}) ([]models.FundingSource, error) {
