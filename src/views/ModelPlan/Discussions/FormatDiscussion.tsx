@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-
-import Divider from 'components/shared/Divider';
-import SectionWrapper from 'components/shared/SectionWrapper';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'queries/Discussions/types/GetModelPlanDiscussions';
+} from 'gql/gen/types/GetModelPlanDiscussions';
+
+import Divider from 'components/shared/Divider';
+import SectionWrapper from 'components/shared/SectionWrapper';
 
 import SingleDiscussion from './SingleDiscussion';
 
