@@ -13,6 +13,8 @@ CREATE TYPE MODEL_TYPE AS ENUM (
   'OTHER'
 );
 
+COMMIT;
+
 ALTER TABLE plan_basics
   ADD COLUMN model_type_other zero_string;
 
