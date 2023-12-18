@@ -38,7 +38,8 @@ func sendDiscussionReplyOriginatorEmail(
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.DiscussionReplyCreatedOriginatorSubject{
-		UserName: mostRecentReplyName,
+		ModelName:         modelPlanName,
+		ModelAbbreviation: modelPlanAbbreviation,
 	})
 	if err != nil {
 		return err

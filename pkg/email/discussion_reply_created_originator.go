@@ -12,7 +12,8 @@ import (
 
 // DiscussionReplyCreatedOriginatorSubject is the subject for hte email
 type DiscussionReplyCreatedOriginatorSubject struct {
-	UserName string // The full name of the user replying
+	ModelName         string
+	ModelAbbreviation string
 }
 
 // DiscussionReplyCreatedOriginatorBody is the fields needed for reply body
