@@ -93,6 +93,7 @@ const ReadOnlyPayments = ({
     canParticipantsSelectBetweenPaymentMechanismsHow,
     canParticipantsSelectBetweenPaymentMechanismsNote,
     anticipatedPaymentFrequency,
+    anticipatedPaymentFrequencyContinually,
     anticipatedPaymentFrequencyOther,
     anticipatedPaymentFrequencyNote,
     willRecoverPayments,

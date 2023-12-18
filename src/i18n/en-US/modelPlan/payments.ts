@@ -639,23 +639,38 @@ export const payments: TranslationPayments = {
     multiSelectLabel: 'Selected payment frequency',
     options: {
       ANNUALLY: 'Annually',
-      BIANNUALLY: 'Semiannually',
+      SEMIANUALLY: 'Semiannually',
       QUARTERLY: 'Quarterly',
       MONTHLY: 'Monthly',
-      SEMIMONTHLY: 'Semi-monthly',
-      WEEKLY: 'Weekly',
-      DAILY: 'Daily',
+      CONTINUALLY: 'Continually',
       OTHER: 'Other'
     },
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'anticipatedPaymentFrequencyContinually',
+      OTHER: 'anticipatedPaymentFrequencyOther'
+    },
+    filterGroups: ['cmmi', 'dfsdm', 'ipc']
+  },
+  anticipatedPaymentFrequencyContinually: {
+    gqlField: 'anticipatedPaymentFrequencyContinually',
+    goField: 'AnticipatedPaymentFrequencyContinually',
+    dbField: 'anticipated_payment_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']
   },
   anticipatedPaymentFrequencyOther: {
     gqlField: 'anticipatedPaymentFrequencyOther',
     goField: 'AnticipatedPaymentFrequencyOther',
     dbField: 'anticipated_payment_frequency_other',
-    label: 'Please describe the other payment frequency.',
+    label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']
   },
   anticipatedPaymentFrequencyNote: {
