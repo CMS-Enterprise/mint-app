@@ -25,7 +25,8 @@ export const collaborators: TranslationCollaborators = {
       MODEL_TEAM: 'Model Team',
       OACT: 'OACT',
       PAYMENT: 'Payment',
-      QUALITY: 'Quality'
+      QUALITY: 'Quality',
+      CM_FFS_COUNTERPART: 'CM FFS counterpart'
     }
   }
 };
