@@ -9,7 +9,6 @@ import {
   Fieldset,
   Icon,
   Label,
-  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
@@ -53,7 +52,6 @@ export const Communication = () => {
 
   const {
     communicationMethod: communicationMethodConfig,
-    participantAssumeRisk: participantAssumeRiskConfig,
     riskType: riskTypeConfig,
     willRiskChange: willRiskChangeConfig
   } = usePlanTranslation('participantsAndProviders');
@@ -74,7 +72,6 @@ export const Communication = () => {
     communicationMethod,
     communicationMethodOther,
     communicationNote,
-    participantAssumeRisk,
     riskType,
     riskOther,
     riskNote,
@@ -134,7 +131,6 @@ export const Communication = () => {
     communicationMethod: communicationMethod ?? [],
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
-    participantAssumeRisk: participantAssumeRisk ?? null,
     riskType: riskType ?? null,
     riskOther: riskOther ?? '',
     riskNote: riskNote ?? '',
@@ -327,81 +323,50 @@ export const Communication = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="participantAssumeRisk"
-                    error={!!flatErrors.participantAssumeRisk}
+                    scrollElement="riskType"
+                    error={!!flatErrors.riskType}
                     className="margin-y-4 margin-bottom-8"
                   >
-                    <Label htmlFor="participants-and-providers-risk">
-                      {participantsAndProvidersT('participantAssumeRisk.label')}
+                    <Label htmlFor="participants-and-providers-risk-type">
+                      {participantsAndProvidersT('riskType.label')}
                     </Label>
 
-                    <FieldErrorMsg>
-                      {flatErrors.participantAssumeRisk}
-                    </FieldErrorMsg>
+                    <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
 
-                    <BooleanRadio
-                      field="participantAssumeRisk"
-                      id="participants-and-providers-risk"
-                      value={values.participantAssumeRisk}
-                      setFieldValue={setFieldValue}
-                      options={participantAssumeRiskConfig.options}
-                    />
+                    <Fieldset>
+                      {getKeys(riskTypeConfig.options).map(key => (
+                        <Fragment key={key}>
+                          <Field
+                            as={CheckboxField}
+                            id={`participants-and-providers-risk-type-${key}`}
+                            name="riskType"
+                            label={riskTypeConfig.options[key]}
+                            value={key}
+                            checked={values.riskType?.includes(key)}
+                          />
+                        </Fragment>
+                      ))}
+                      {values.riskType?.includes(ParticipantRiskType.OTHER) && (
+                        <div className="margin-left-4">
+                          <Label
+                            htmlFor="participants-and-providers-risk-type-other"
+                            className="text-normal"
+                          >
+                            {participantsAndProvidersT('riskOther.label')}
+                          </Label>
 
-                    {values.participantAssumeRisk && (
-                      <>
-                        <Label
-                          htmlFor="participants-and-providers-risk-type"
-                          className="text-normal"
-                        >
-                          {participantsAndProvidersT('riskType.label')}
-                        </Label>
+                          <FieldErrorMsg>{flatErrors.riskOther}</FieldErrorMsg>
 
-                        <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
-
-                        <Fieldset>
-                          {getKeys(riskTypeConfig.options).map(key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={Radio}
-                                id={`participants-and-providers-risk-type-${key}`}
-                                name="riskType"
-                                label={riskTypeConfig.options[key]}
-                                value={key}
-                                checked={values.riskType === key}
-                                onChange={() => {
-                                  setFieldValue('riskType', key);
-                                }}
-                              />
-                              {key === ParticipantRiskType.OTHER &&
-                                values.riskType === key && (
-                                  <div className="margin-left-4 margin-top-2">
-                                    <Label
-                                      htmlFor="participants-and-providers-risk-type-other"
-                                      className="text-normal"
-                                    >
-                                      {participantsAndProvidersT(
-                                        'riskOther.label'
-                                      )}
-                                    </Label>
-
-                                    <FieldErrorMsg>
-                                      {flatErrors.riskOther}
-                                    </FieldErrorMsg>
-
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none mint-textarea"
-                                      id="participants-and-providers-risk-type-other"
-                                      data-testid="participants-and-providers-risk-type-other"
-                                      name="riskOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          ))}
-                        </Fieldset>
-                      </>
-                    )}
+                          <Field
+                            as={TextInput}
+                            className="maxw-none mint-textarea"
+                            id="participants-and-providers-risk-type-other"
+                            data-testid="participants-and-providers-risk-type-other"
+                            name="riskOther"
+                          />
+                        </div>
+                      )}
+                    </Fieldset>
                     <AddNote
                       id="participants-and-providers-risk-note"
                       field="riskNote"
