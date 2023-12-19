@@ -50,22 +50,23 @@ const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
 
 const FilteredViewGroupings = ({
   collaborators,
-  role
+  role,
+  heading
 }: {
   collaborators: CollaboratorsType[];
-  role: TeamRole.MODEL_LEAD | TeamRole.PAYMENT;
+  role: TeamRole.MODEL_LEAD | TeamRole.PAYMENT | TeamRole.CM_FFS_COUNTERPART;
+  heading: string;
 }) => {
   const { t } = useTranslation('generalReadOnly');
   return (
     <div className="margin-bottom-3">
-      <h3 className="margin-top-0 margin-bottom-2">
-        {role === TeamRole.MODEL_LEAD
-          ? t('contactInfo.modelLeads')
-          : t('contactInfo.payment')}
-      </h3>
+      <h3 className="margin-top-0 margin-bottom-2">{heading}</h3>
       <Grid row gap style={{ rowGap: '2rem' }}>
         {collaborators.length === 0 && role === TeamRole.PAYMENT && (
-          <em className="text-base">{t('contactInfo.emptyState')}</em>
+          <em className="text-base">{t('contactInfo.emptyStatePayment')}</em>
+        )}
+        {collaborators.length === 0 && role === TeamRole.CM_FFS_COUNTERPART && (
+          <em className="text-base">{t('contactInfo.emptyStateCMFFS')}</em>
         )}
         {collaborators
           .filter(c => c.teamRoles.includes(role))
@@ -104,6 +105,7 @@ const ReadOnlyTeamInfo = ({
   isViewingFilteredView?: boolean;
   filteredView?: string;
 }) => {
+  const { t } = useTranslation('generalReadOnly');
   const { data, loading, error } = useQuery<GetModelCollaborators>(
     GetModelPlanCollaborators,
     {
@@ -135,6 +137,7 @@ const ReadOnlyTeamInfo = ({
             collaborators={collaborators.filter(c =>
               c.teamRoles.includes(TeamRole.MODEL_LEAD)
             )}
+            heading={t('contactInfo.modelLeads')}
           />
           {filteredView === 'ipc' && (
             <FilteredViewGroupings
@@ -142,6 +145,16 @@ const ReadOnlyTeamInfo = ({
               collaborators={collaborators.filter(c =>
                 c.teamRoles.includes(TeamRole.PAYMENT)
               )}
+              heading={t('contactInfo.payment')}
+            />
+          )}
+          {filteredView === 'dfsdm' && (
+            <FilteredViewGroupings
+              role={TeamRole.CM_FFS_COUNTERPART}
+              collaborators={collaborators.filter(c =>
+                c.teamRoles.includes(TeamRole.CM_FFS_COUNTERPART)
+              )}
+              heading={t('contactInfo.cmFFS')}
             />
           )}
         </>
