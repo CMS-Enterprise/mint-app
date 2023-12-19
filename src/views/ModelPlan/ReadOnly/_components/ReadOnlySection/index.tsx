@@ -40,7 +40,7 @@ const ReadOnlySection = ({
   // Legacy function to render "Other" option or translation for other not specifed
   const renderListItemOther = (otherItem: string | null | undefined) => {
     if (otherItem) {
-      <li className="font-sans-md line-height-sans-4">{otherItem}</li>;
+      return <li className="font-sans-md line-height-sans-4">{otherItem}</li>;
     }
     return (
       <li className="font-sans-md line-height-sans-4">
@@ -100,17 +100,19 @@ const ReadOnlySection = ({
               isElement(listItems[index]) ? index : `${sectionName}--${item}`
             }
           >
-            <li className="font-sans-md line-height-sans-4 display-flex flex-align-center">
-              {item}
-              {tooltips && tooltips[index] && (
-                <Tooltip
-                  label={tooltips[index]!}
-                  position="right"
-                  className="margin-left-05"
-                >
-                  <Icon.Info className="text-base-light" />
-                </Tooltip>
-              )}
+            <li className="font-sans-md line-height-sans-4">
+              <div className="display-flex flex-align-center">
+                {item}
+                {tooltips && tooltips[index] && (
+                  <Tooltip
+                    label={tooltips[index]!}
+                    position="right"
+                    className="margin-left-05"
+                  >
+                    <Icon.Info className="text-base-light" />
+                  </Tooltip>
+                )}
+              </div>
             </li>
             {(item === 'Other' || listOtherItems) && (
               <ul data-testid="other-entry">
