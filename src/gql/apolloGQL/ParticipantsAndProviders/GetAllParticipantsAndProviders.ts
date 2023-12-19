@@ -26,7 +26,6 @@ export default gql(/* GraphQL */ `
         communicationMethod
         communicationMethodOther
         communicationNote
-        participantAssumeRisk
         riskType
         riskOther
         riskNote

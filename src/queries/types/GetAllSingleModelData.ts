@@ -122,7 +122,6 @@ export interface GetAllSingleModelData_modelPlan_participantsAndProviders {
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
-  participantAssumeRisk: boolean | null;
   riskType: ParticipantRiskType | null;
   riskOther: string | null;
   riskNote: string | null;

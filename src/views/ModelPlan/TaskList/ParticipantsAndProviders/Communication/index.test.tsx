@@ -18,7 +18,6 @@ const communicationMockData: GetCommunicationType = {
   communicationMethod: [],
   communicationMethodOther: '',
   communicationNote: '',
-  participantAssumeRisk: true,
   riskType: ParticipantRiskType.OTHER,
   riskOther: 'Programmatic Risk',
   riskNote: '',

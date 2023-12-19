@@ -250,7 +250,6 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   ],
   communicationMethodOther: 'Comm method other',
   communicationNote: 'Comm note',
-  participantAssumeRisk: true,
   riskType: ParticipantRiskType.CAPITATION,
   riskOther: 'Risk other',
   riskNote: 'Note risk',
