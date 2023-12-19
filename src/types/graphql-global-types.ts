@@ -620,6 +620,7 @@ export enum TaskStatusInput {
 }
 
 export enum TeamRole {
+  CM_FFS_COUNTERPART = "CM_FFS_COUNTERPART",
   EVALUATION = "EVALUATION",
   IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",
