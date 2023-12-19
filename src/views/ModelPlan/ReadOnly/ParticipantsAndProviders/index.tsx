@@ -66,7 +66,6 @@ const ReadOnlyParticipantsAndProviders = ({
     communicationMethod,
     communicationMethodOther,
     communicationNote,
-    participantAssumeRisk,
     riskType,
     riskOther,
     riskNote,
@@ -298,9 +297,8 @@ const ReadOnlyParticipantsAndProviders = ({
           <ReadOnlySection
             heading={participantsAndProvidersT('riskType.label')}
             list
-            // listItems={riskType
-            listItems={['CAPITATION', 'OTHER', 'ONE_SIDED']
-              .sort(sortOtherEnum)
+            listItems={riskType
+              ?.sort(sortOtherEnum)
               .map((type): string =>
                 participantsAndProvidersT(`riskType.options.${type}`)
               )}
@@ -308,40 +306,6 @@ const ReadOnlyParticipantsAndProviders = ({
             notes={riskNote}
           />
         )}
-
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'participantAssumeRisk',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: participantsAndProvidersT('participantAssumeRisk.label'),
-              copy: participantsAndProvidersT(
-                `participantAssumeRisk.options.${participantAssumeRisk}`,
-                ''
-              )
-            }}
-            secondSection={
-              participantAssumeRisk === true && {
-                heading: participantsAndProvidersT('riskType.label'),
-                copy:
-                  riskType &&
-                  participantsAndProvidersT(`riskType.options.${riskType}`, ''),
-                listOtherItem: riskOther
-              }
-            }
-          />
-        )}
-        {riskNote &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'participantAssumeRisk',
-            <ReadOnlySection
-              heading={participantsAndProvidersT('riskNote.label')}
-              copy={riskNote}
-            />
-          )}
 
         {checkGroupMap(
           isViewingFilteredView,
