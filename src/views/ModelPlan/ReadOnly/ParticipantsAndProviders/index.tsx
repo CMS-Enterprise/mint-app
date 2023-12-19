@@ -8,6 +8,7 @@ import {
   useGetAllParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
+import { sortOtherEnum } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -287,6 +288,24 @@ const ReadOnlyParticipantsAndProviders = ({
             )}
             listOtherItem={communicationMethodOther}
             notes={communicationNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'riskType',
+          <ReadOnlySection
+            heading={participantsAndProvidersT('riskType.label')}
+            list
+            // listItems={riskType
+            listItems={['CAPITATION', 'OTHER', 'ONE_SIDED']
+              .sort(sortOtherEnum)
+              .map((type): string =>
+                participantsAndProvidersT(`riskType.options.${type}`)
+              )}
+            listOtherItem={riskOther}
+            notes={riskNote}
           />
         )}
 
