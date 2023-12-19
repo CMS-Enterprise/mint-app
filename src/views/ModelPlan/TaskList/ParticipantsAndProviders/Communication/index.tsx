@@ -9,7 +9,8 @@ import {
   Fieldset,
   Icon,
   Label,
-  Radio
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import {
@@ -388,11 +389,10 @@ export const Communication = () => {
                                     </FieldErrorMsg>
 
                                     <Field
-                                      as={TextAreaField}
+                                      as={TextInput}
                                       className="maxw-none mint-textarea"
                                       id="participants-and-providers-risk-type-other"
                                       data-testid="participants-and-providers-risk-type-other"
-                                      maxLength={5000}
                                       name="riskOther"
                                     />
                                   </div>
