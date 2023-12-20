@@ -53,6 +53,9 @@ const ReadOnlySection = ({
   // as well as default text for both if not specified
   const renderListItemOthers = (index: number, isOther: boolean) => {
     if (listOtherItems) {
+      if (listOtherItems[index] === undefined) {
+        return null;
+      }
       if (listOtherItems[index]) {
         return (
           <li className="font-sans-md line-height-sans-4">

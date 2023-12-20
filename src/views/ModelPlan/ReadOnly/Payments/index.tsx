@@ -7,6 +7,8 @@ import {
   useGetAllPaymentsQuery
 } from 'gql/gen/graphql';
 
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
@@ -28,6 +30,10 @@ const ReadOnlyPayments = ({
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
+
+  const {
+    anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig
+  } = usePlanTranslation('payments');
 
   const { data, loading, error } = useGetAllPaymentsQuery({
     variables: {
@@ -115,6 +121,14 @@ const ReadOnlyPayments = ({
     fundingSourceRMedicareAInfo,
     fundingSourceRMedicareBInfo,
     fundingSourceROther
+  };
+
+  const anticipatedPaymentFrequencyInfo: Record<
+    string,
+    string | null | undefined
+  > = {
+    anticipatedPaymentFrequencyContinually,
+    anticipatedPaymentFrequencyOther
   };
 
   const isClaims: boolean =
@@ -615,6 +629,7 @@ const ReadOnlyPayments = ({
             }
           />
         )}
+
         {canParticipantsSelectBetweenPaymentMechanismsNote &&
           checkGroupMap(
             isViewingFilteredView,
@@ -635,10 +650,21 @@ const ReadOnlyPayments = ({
           <ReadOnlySection
             heading={paymentsT('anticipatedPaymentFrequency.label')}
             list
-            listItems={anticipatedPaymentFrequency?.map((type): string =>
-              paymentsT(`anticipatedPaymentFrequency.options.${type}`)
-            )}
-            listOtherItem={anticipatedPaymentFrequencyOther}
+            listItems={getKeys(anticipatedPaymentFrequencyConfig.options)
+              .filter(option => anticipatedPaymentFrequency?.includes(option))
+              .map((type): string =>
+                paymentsT(`anticipatedPaymentFrequency.options.${type}`)
+              )}
+            listOtherItems={getKeys(anticipatedPaymentFrequencyConfig.options)
+              .filter(option => anticipatedPaymentFrequency?.includes(option))
+              .map((type): string | null | undefined => {
+                return anticipatedPaymentFrequencyInfo[
+                  paymentsT(
+                    `anticipatedPaymentFrequency.optionsRelatedInfo.${type}`,
+                    ''
+                  )
+                ];
+              })}
             notes={anticipatedPaymentFrequencyNote}
           />
         )}
