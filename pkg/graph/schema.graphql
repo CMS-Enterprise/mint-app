@@ -790,7 +790,6 @@ type PlanParticipantsAndProviders {
   communicationMethod:   [ParticipantCommunicationType!]!
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
   riskType:              ParticipantRiskType
   riskOther:             String
   riskNote:              String
@@ -2075,6 +2074,7 @@ enum ParticipantRiskType {
   TWO_SIDED
   ONE_SIDED
   CAPITATION
+  NOT_RISK_BASED
   OTHER
 }
 
