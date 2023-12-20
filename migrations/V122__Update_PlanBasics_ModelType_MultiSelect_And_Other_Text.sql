@@ -26,9 +26,12 @@ SET model_type = NULL,
     modified_dts = current_timestamp
 WHERE 'TBD' = model_type;
 
--- Alter the model_type column back to the new MODEL_TYPE enum
+-- Alter the model_type column back to an array of the new MODEL_TYPE enum
 ALTER TABLE plan_basics
-  ALTER COLUMN model_type TYPE MODEL_TYPE
-    USING model_type::MODEL_TYPE;
+  ALTER COLUMN model_type TYPE MODEL_TYPE[]
+    USING CASE
+            WHEN model_type IS NULL THEN ARRAY[]::MODEL_TYPE[]
+            ELSE ARRAY[model_type]::MODEL_TYPE[]
+    END;
 
 DROP TYPE MODEL_TYPE_OLD;
