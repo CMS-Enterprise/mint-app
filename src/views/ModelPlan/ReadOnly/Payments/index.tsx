@@ -3,18 +3,21 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import {
   ClaimsBasedPayType,
+  GetAllPaymentsQuery,
   PayType,
   useGetAllPaymentsQuery
 } from 'gql/gen/graphql';
 
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems,
+  formatListOtherItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -32,7 +35,9 @@ const ReadOnlyPayments = ({
   const { modelName } = useContext(ModelInfoContext);
 
   const {
-    anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig
+    anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig,
+    fundingSource: fundingSourceConfig,
+    fundingSourceR: fundingSourceRConfig
   } = usePlanTranslation('payments');
 
   const { data, loading, error } = useGetAllPaymentsQuery({
@@ -45,16 +50,13 @@ const ReadOnlyPayments = ({
     return <NotFoundPartial />;
   }
 
+  const allPaymentData = (data?.modelPlan.payments ||
+    {}) as GetAllPaymentsQuery['modelPlan']['payments'];
+
   const {
     fundingSource,
-    fundingSourceMedicareAInfo,
-    fundingSourceMedicareBInfo,
-    fundingSourceOther,
     fundingSourceNote,
     fundingSourceR,
-    fundingSourceRMedicareAInfo,
-    fundingSourceRMedicareBInfo,
-    fundingSourceROther,
     fundingSourceRNote,
     payRecipients,
     payRecipientsOtherSpecification,
@@ -99,8 +101,6 @@ const ReadOnlyPayments = ({
     canParticipantsSelectBetweenPaymentMechanismsHow,
     canParticipantsSelectBetweenPaymentMechanismsNote,
     anticipatedPaymentFrequency,
-    anticipatedPaymentFrequencyContinually,
-    anticipatedPaymentFrequencyOther,
     anticipatedPaymentFrequencyNote,
     willRecoverPayments,
     willRecoverPaymentsNote,
@@ -109,27 +109,7 @@ const ReadOnlyPayments = ({
     paymentStartDate,
     paymentStartDateNote,
     status
-  } = data?.modelPlan.payments || {};
-
-  const fundingSourceOtherInfo: Record<string, string | null | undefined> = {
-    fundingSourceMedicareAInfo,
-    fundingSourceMedicareBInfo,
-    fundingSourceOther
-  };
-
-  const fundingSourceROtherInfo: Record<string, string | null | undefined> = {
-    fundingSourceRMedicareAInfo,
-    fundingSourceRMedicareBInfo,
-    fundingSourceROther
-  };
-
-  const anticipatedPaymentFrequencyInfo: Record<
-    string,
-    string | null | undefined
-  > = {
-    anticipatedPaymentFrequencyContinually,
-    anticipatedPaymentFrequencyOther
-  };
+  } = allPaymentData;
 
   const isClaims: boolean =
     payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) || false;
@@ -179,16 +159,12 @@ const ReadOnlyPayments = ({
           <ReadOnlySection
             heading={paymentsT('fundingSource.readonlyLabel')}
             list
-            listItems={fundingSource?.map((type): string =>
-              paymentsT(`fundingSource.options.${type}`)
+            listItems={formatListItems(fundingSourceConfig, fundingSource)}
+            listOtherItems={formatListOtherItems(
+              fundingSourceConfig,
+              fundingSource,
+              allPaymentData
             )}
-            listOtherItems={fundingSource?.map((type): string => {
-              return (
-                fundingSourceOtherInfo[
-                  paymentsT(`fundingSource.optionsRelatedInfo.${type}`, '')
-                ] || ''
-              );
-            })}
             tooltips={fundingSource?.map((type): string =>
               paymentsT(`fundingSource.optionsLabels.${type}`)
             )}
@@ -213,16 +189,12 @@ const ReadOnlyPayments = ({
           <ReadOnlySection
             heading={paymentsT('fundingSourceR.readonlyLabel')}
             list
-            listItems={fundingSourceR?.map((type): string =>
-              paymentsT(`fundingSourceR.options.${type}`)
+            listItems={formatListItems(fundingSourceRConfig, fundingSourceR)}
+            listOtherItems={formatListOtherItems(
+              fundingSourceRConfig,
+              fundingSourceR,
+              allPaymentData
             )}
-            listOtherItems={fundingSourceR?.map((type): string => {
-              return (
-                fundingSourceROtherInfo[
-                  paymentsT(`fundingSourceR.optionsRelatedInfo.${type}`, '')
-                ] || ''
-              );
-            })}
             tooltips={fundingSourceR?.map((type): string =>
               paymentsT(`fundingSourceR.optionsLabels.${type}`)
             )}
@@ -650,21 +622,15 @@ const ReadOnlyPayments = ({
           <ReadOnlySection
             heading={paymentsT('anticipatedPaymentFrequency.label')}
             list
-            listItems={getKeys(anticipatedPaymentFrequencyConfig.options)
-              .filter(option => anticipatedPaymentFrequency?.includes(option))
-              .map((type): string =>
-                paymentsT(`anticipatedPaymentFrequency.options.${type}`)
-              )}
-            listOtherItems={getKeys(anticipatedPaymentFrequencyConfig.options)
-              .filter(option => anticipatedPaymentFrequency?.includes(option))
-              .map((type): string | null | undefined => {
-                return anticipatedPaymentFrequencyInfo[
-                  paymentsT(
-                    `anticipatedPaymentFrequency.optionsRelatedInfo.${type}`,
-                    ''
-                  )
-                ];
-              })}
+            listItems={formatListItems(
+              anticipatedPaymentFrequencyConfig,
+              anticipatedPaymentFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              anticipatedPaymentFrequencyConfig,
+              anticipatedPaymentFrequency,
+              allPaymentData
+            )}
             notes={anticipatedPaymentFrequencyNote}
           />
         )}
