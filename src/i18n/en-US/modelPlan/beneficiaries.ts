@@ -272,6 +272,10 @@ export const beneficiaries: TranslationBeneficiaries = {
       YES: 'Yes',
       NO: 'No'
     },
+    optionsRelatedInfo: {
+      YES: 'precedenceRulesYes',
+      NO: 'precedenceRulesNo'
+    },
     filterGroups: ['mdm', 'oact']
   },
   precedenceRulesYes: {

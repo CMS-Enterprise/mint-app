@@ -416,9 +416,10 @@ export enum FrequencyType {
 }
 
 export enum FundingSource {
+  MEDICARE_PART_A_HI_TRUST_FUND = 'MEDICARE_PART_A_HI_TRUST_FUND',
+  MEDICARE_PART_B_SMI_TRUST_FUND = 'MEDICARE_PART_B_SMI_TRUST_FUND',
   OTHER = 'OTHER',
-  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
-  TRUST_FUND = 'TRUST_FUND'
+  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT'
 }
 
 export enum GqlTableName {
@@ -1985,13 +1986,15 @@ export type PlanPayments = {
   expectedCalculationComplexityLevel?: Maybe<ComplexityCalculationLevelType>;
   expectedCalculationComplexityLevelNote?: Maybe<Scalars['String']['output']>;
   fundingSource: Array<FundingSource>;
+  fundingSourceMedicareAInfo?: Maybe<Scalars['String']['output']>;
+  fundingSourceMedicareBInfo?: Maybe<Scalars['String']['output']>;
   fundingSourceNote?: Maybe<Scalars['String']['output']>;
   fundingSourceOther?: Maybe<Scalars['String']['output']>;
   fundingSourceR: Array<FundingSource>;
+  fundingSourceRMedicareAInfo?: Maybe<Scalars['String']['output']>;
+  fundingSourceRMedicareBInfo?: Maybe<Scalars['String']['output']>;
   fundingSourceRNote?: Maybe<Scalars['String']['output']>;
   fundingSourceROther?: Maybe<Scalars['String']['output']>;
-  fundingSourceRTrustFundType: Array<TrustFundType>;
-  fundingSourceTrustFundType: Array<TrustFundType>;
   id: Scalars['UUID']['output'];
   isContractorAwareTestDataRequirements?: Maybe<Scalars['Boolean']['output']>;
   modelPlanID: Scalars['UUID']['output'];
@@ -2059,13 +2062,15 @@ export type PlanPaymentsChanges = {
   expectedCalculationComplexityLevel?: InputMaybe<ComplexityCalculationLevelType>;
   expectedCalculationComplexityLevelNote?: InputMaybe<Scalars['String']['input']>;
   fundingSource?: InputMaybe<Array<FundingSource>>;
+  fundingSourceMedicareAInfo?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceMedicareBInfo?: InputMaybe<Scalars['String']['input']>;
   fundingSourceNote?: InputMaybe<Scalars['String']['input']>;
   fundingSourceOther?: InputMaybe<Scalars['String']['input']>;
   fundingSourceR?: InputMaybe<Array<FundingSource>>;
+  fundingSourceRMedicareAInfo?: InputMaybe<Scalars['String']['input']>;
+  fundingSourceRMedicareBInfo?: InputMaybe<Scalars['String']['input']>;
   fundingSourceRNote?: InputMaybe<Scalars['String']['input']>;
   fundingSourceROther?: InputMaybe<Scalars['String']['input']>;
-  fundingSourceRTrustFundType?: InputMaybe<Array<TrustFundType>>;
-  fundingSourceTrustFundType?: InputMaybe<Array<TrustFundType>>;
   isContractorAwareTestDataRequirements?: InputMaybe<Scalars['Boolean']['input']>;
   needsClaimsDataCollection?: InputMaybe<Scalars['Boolean']['input']>;
   needsClaimsDataCollectionNote?: InputMaybe<Scalars['String']['input']>;
@@ -2562,6 +2567,7 @@ export enum TaskStatusInput {
 }
 
 export enum TeamRole {
+  CM_FFS_COUNTERPART = 'CM_FFS_COUNTERPART',
   EVALUATION = 'EVALUATION',
   IT_LEAD = 'IT_LEAD',
   LEADERSHIP = 'LEADERSHIP',
@@ -2577,11 +2583,6 @@ export enum TriStateAnswer {
   NO = 'NO',
   TBD = 'TBD',
   YES = 'YES'
-}
-
-export enum TrustFundType {
-  MEDICARE_PART_A_HI_TRUST_FUND = 'MEDICARE_PART_A_HI_TRUST_FUND',
-  MEDICARE_PART_B_SMI_TRUST_FUND = 'MEDICARE_PART_B_SMI_TRUST_FUND'
 }
 
 export type UpdateOperationalSolutionSubtaskChangesInput = {
@@ -2710,6 +2711,25 @@ export type UpdateModelPlanBeneficiariesMutationVariables = Exact<{
 
 
 export type UpdateModelPlanBeneficiariesMutation = { __typename: 'Mutation', updatePlanBeneficiaries: { __typename: 'PlanBeneficiaries', id: UUID } };
+
+export type CreateModelPlanDiscussionMutationVariables = Exact<{
+  input: PlanDiscussionCreateInput;
+}>;
+
+
+export type CreateModelPlanDiscussionMutation = { __typename: 'Mutation', createPlanDiscussion: { __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null } };
+
+export type GetModelPlanDiscussionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelPlanDiscussionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, isAssessment: boolean, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, isAssessment: boolean, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> } };
+
+export type GetMostRecentRoleSelectionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMostRecentRoleSelectionQuery = { __typename: 'Query', mostRecentDiscussionRoleSelection?: { __typename: 'DiscussionRoleSelection', userRole: DiscussionUserRole, userRoleDescription?: string | null } | null };
 
 export type LinkNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentLinkInput;
@@ -2943,7 +2963,7 @@ export type GetAllPaymentsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<AnticipatedPaymentFrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
+export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<AnticipatedPaymentFrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
 
 export type GetAnticipateDependenciesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2978,7 +2998,7 @@ export type GetFundingQueryVariables = Exact<{
 }>;
 
 
-export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceTrustFundType: Array<TrustFundType>, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRTrustFundType: Array<TrustFundType>, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
 export type GetNonClaimsBasedPaymentQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3597,6 +3617,154 @@ export function useUpdateModelPlanBeneficiariesMutation(baseOptions?: Apollo.Mut
 export type UpdateModelPlanBeneficiariesMutationHookResult = ReturnType<typeof useUpdateModelPlanBeneficiariesMutation>;
 export type UpdateModelPlanBeneficiariesMutationResult = Apollo.MutationResult<UpdateModelPlanBeneficiariesMutation>;
 export type UpdateModelPlanBeneficiariesMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanBeneficiariesMutation, UpdateModelPlanBeneficiariesMutationVariables>;
+export const CreateModelPlanDiscussionDocument = gql`
+    mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
+  createPlanDiscussion(input: $input) {
+    id
+    content {
+      rawContent
+    }
+    createdBy
+    createdDts
+  }
+}
+    `;
+export type CreateModelPlanDiscussionMutationFn = Apollo.MutationFunction<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>;
+
+/**
+ * __useCreateModelPlanDiscussionMutation__
+ *
+ * To run a mutation, you first call `useCreateModelPlanDiscussionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateModelPlanDiscussionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createModelPlanDiscussionMutation, { data, loading, error }] = useCreateModelPlanDiscussionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateModelPlanDiscussionMutation(baseOptions?: Apollo.MutationHookOptions<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>(CreateModelPlanDiscussionDocument, options);
+      }
+export type CreateModelPlanDiscussionMutationHookResult = ReturnType<typeof useCreateModelPlanDiscussionMutation>;
+export type CreateModelPlanDiscussionMutationResult = Apollo.MutationResult<CreateModelPlanDiscussionMutation>;
+export type CreateModelPlanDiscussionMutationOptions = Apollo.BaseMutationOptions<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>;
+export const GetModelPlanDiscussionsDocument = gql`
+    query GetModelPlanDiscussions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    isCollaborator
+    discussions {
+      id
+      content {
+        rawContent
+      }
+      createdBy
+      createdDts
+      userRole
+      userRoleDescription
+      isAssessment
+      createdByUserAccount {
+        commonName
+      }
+      replies {
+        id
+        discussionID
+        content {
+          rawContent
+        }
+        userRole
+        userRoleDescription
+        isAssessment
+        createdBy
+        createdDts
+        createdByUserAccount {
+          commonName
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelPlanDiscussionsQuery__
+ *
+ * To run a query within a React component, call `useGetModelPlanDiscussionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelPlanDiscussionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelPlanDiscussionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelPlanDiscussionsQuery(baseOptions: Apollo.QueryHookOptions<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>(GetModelPlanDiscussionsDocument, options);
+      }
+export function useGetModelPlanDiscussionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>(GetModelPlanDiscussionsDocument, options);
+        }
+export function useGetModelPlanDiscussionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>(GetModelPlanDiscussionsDocument, options);
+        }
+export type GetModelPlanDiscussionsQueryHookResult = ReturnType<typeof useGetModelPlanDiscussionsQuery>;
+export type GetModelPlanDiscussionsLazyQueryHookResult = ReturnType<typeof useGetModelPlanDiscussionsLazyQuery>;
+export type GetModelPlanDiscussionsSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanDiscussionsSuspenseQuery>;
+export type GetModelPlanDiscussionsQueryResult = Apollo.QueryResult<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>;
+export const GetMostRecentRoleSelectionDocument = gql`
+    query GetMostRecentRoleSelection {
+  mostRecentDiscussionRoleSelection {
+    userRole
+    userRoleDescription
+  }
+}
+    `;
+
+/**
+ * __useGetMostRecentRoleSelectionQuery__
+ *
+ * To run a query within a React component, call `useGetMostRecentRoleSelectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMostRecentRoleSelectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMostRecentRoleSelectionQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMostRecentRoleSelectionQuery(baseOptions?: Apollo.QueryHookOptions<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>(GetMostRecentRoleSelectionDocument, options);
+      }
+export function useGetMostRecentRoleSelectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>(GetMostRecentRoleSelectionDocument, options);
+        }
+export function useGetMostRecentRoleSelectionSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>(GetMostRecentRoleSelectionDocument, options);
+        }
+export type GetMostRecentRoleSelectionQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionQuery>;
+export type GetMostRecentRoleSelectionLazyQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionLazyQuery>;
+export type GetMostRecentRoleSelectionSuspenseQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionSuspenseQuery>;
+export type GetMostRecentRoleSelectionQueryResult = Apollo.QueryResult<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>;
 export const LinkNewPlanDocumentDocument = gql`
     mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
   linkNewPlanDocument(input: $input) {
@@ -5413,11 +5581,13 @@ export const GetAllPaymentsDocument = gql`
     id
     payments {
       fundingSource
-      fundingSourceTrustFundType
+      fundingSourceMedicareAInfo
+      fundingSourceMedicareBInfo
       fundingSourceOther
       fundingSourceNote
       fundingSourceR
-      fundingSourceRTrustFundType
+      fundingSourceRMedicareAInfo
+      fundingSourceRMedicareBInfo
       fundingSourceROther
       fundingSourceRNote
       payRecipients
@@ -5733,11 +5903,13 @@ export const GetFundingDocument = gql`
     payments {
       id
       fundingSource
-      fundingSourceTrustFundType
+      fundingSourceMedicareAInfo
+      fundingSourceMedicareBInfo
       fundingSourceOther
       fundingSourceNote
       fundingSourceR
-      fundingSourceRTrustFundType
+      fundingSourceRMedicareAInfo
+      fundingSourceRMedicareBInfo
       fundingSourceROther
       fundingSourceRNote
       payRecipients

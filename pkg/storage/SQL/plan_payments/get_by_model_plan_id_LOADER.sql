@@ -10,11 +10,9 @@ SELECT
     pay.id,
     pay.model_plan_id,
     pay.funding_source,
-    pay.funding_source_trust_fund_type,
     pay.funding_source_other,
     pay.funding_source_note,
     pay.funding_source_r,
-    pay.funding_source_r_trust_fund_type,
     pay.funding_source_r_other,
     pay.funding_source_r_note,
     pay.pay_recipients,
@@ -76,6 +74,10 @@ SELECT
     pay.ready_for_review_dts,
     pay.ready_for_clearance_by,
     pay.ready_for_clearance_dts,
-    pay.status
+    pay.status,
+    pay.funding_source_medicare_a_info,
+    pay.funding_source_medicare_b_info,
+    pay.funding_source_r_medicare_a_info,
+    pay.funding_source_r_medicare_b_info
 FROM QUERIED_IDS AS qIDs
 INNER JOIN plan_payments AS pay ON pay.model_plan_id = qIDs.model_plan_id;

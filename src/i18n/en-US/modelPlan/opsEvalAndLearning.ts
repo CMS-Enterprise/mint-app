@@ -513,7 +513,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'riskAdjustNote',
     goField: 'RiskAdjustNote',
     dbField: 'risk_adjust_note',
-    label: 'Are data flow diagrams needed?',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },
@@ -573,7 +573,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealNote',
     goField: 'AppealNote',
     dbField: 'appeal_note',
-    label: 'Are data flow diagrams needed?',
+    label: 'Notes',
     dataType: 'string',
     formType: 'textarea'
   },

@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
+import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'gql/gen/types/GetModelPlanDiscussions';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
 import TruncatedText from 'components/shared/TruncatedText';
-import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';
 

@@ -25,6 +25,8 @@ func main() {
 	sendPlanDiscussionCreatedTestEmail(emailService, templateService, addressBook)
 	sendPlanDiscussionTaggedUserTestEmail(emailService, templateService, addressBook)
 	sendPlanDiscussionTaggedSolutionTestEmail(emailService, templateService, addressBook)
+	//DiscussionReply email
+	sendDiscussionReplyOriginatorTestEmail(emailService, templateService, addressBook)
 
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
