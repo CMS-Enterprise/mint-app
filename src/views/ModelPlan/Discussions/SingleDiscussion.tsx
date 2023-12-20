@@ -2,13 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { DateTime } from 'luxon';
-
-import MentionTextArea from 'components/shared/MentionTextArea';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'queries/Discussions/types/GetModelPlanDiscussions';
+} from 'gql/gen/types/GetModelPlanDiscussions';
+import { DateTime } from 'luxon';
+
+import MentionTextArea from 'components/shared/MentionTextArea';
 import { getDaysElapsed } from 'utils/date';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';

@@ -38,10 +38,15 @@ func sendDiscussionReplyOriginatorEmail(
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.DiscussionReplyCreatedOriginatorSubject{
-		UserName: mostRecentReplyName,
+		ModelName:         modelPlanName,
+		ModelAbbreviation: modelPlanAbbreviation,
 	})
 	if err != nil {
 		return err
+	}
+	replyCount := len(replies)
+	if replyCount > 2 {
+		replies = replies[:2] // only retain the first two replies
 	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.DiscussionReplyCreatedOriginatorBody{
@@ -54,6 +59,7 @@ func sendDiscussionReplyOriginatorEmail(
 		OriginatorName:    originatorName,
 		OriginatorRole:    originatorRole,
 		Replies:           replies,
+		ReplyCount:        replyCount,
 	})
 	if err != nil {
 		return err

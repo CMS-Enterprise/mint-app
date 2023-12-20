@@ -15,8 +15,8 @@
         <p>{{.DiscussionContent}}</p>
         <br/>
 
-        {{ $length := len .Replies }} {{ if gt $length 2 }}
-            <i class="subtitle">{{ len (slice (printf "%*s" $length "") 2) }} earlier {{if eq $length 3}} reply {{end}} {{if gt $length 3}} replies {{end}} not shown</i>
+        {{ if gt .ReplyCount 2 }}
+            <i class="subtitle">{{ len (slice (printf "%*s" .ReplyCount "") 2) }} earlier {{if eq .ReplyCount 3}} reply {{end}} {{if gt .ReplyCount 3}} replies {{end}} not shown</i>
             <br/>
             <br/>
         {{end}}
