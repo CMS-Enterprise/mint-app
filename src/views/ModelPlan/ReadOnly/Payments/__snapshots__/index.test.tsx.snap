@@ -50,17 +50,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </li>
             <ul
               data-testid="other-entry"
-            >
-              <li
-                class="font-sans-md line-height-sans-4 "
-              >
-                <em
-                  class="text-base"
-                >
-                  No additional information specified
-                </em>
-              </li>
-            </ul>
+            />
           </ul>
         </div>
       </div>
@@ -105,17 +95,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </li>
             <ul
               data-testid="other-entry"
-            >
-              <li
-                class="font-sans-md line-height-sans-4 "
-              >
-                <em
-                  class="text-base"
-                >
-                  No additional information specified
-                </em>
-              </li>
-            </ul>
+            />
           </ul>
         </div>
       </div>
@@ -731,6 +711,9 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Semiannually
             </li>
+            <ul
+              data-testid="other-entry"
+            />
           </ul>
         </div>
         <div
