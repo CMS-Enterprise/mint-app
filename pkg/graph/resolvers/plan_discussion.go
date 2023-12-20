@@ -124,6 +124,7 @@ func CreatePlanDiscussion(
 
 	return discussion, nil
 }
+
 func sendPlanDiscussionTagEmails(
 	ctx context.Context,
 	store *storage.Store,
@@ -426,7 +427,8 @@ func CreateDiscussionReply(
 	if err != nil {
 		return nil, err
 	}
-	// TODO: make this async
+
+	// Note these aren't async in order to prevent race condition. If possible, this can be made async.
 	discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
 	if err != nil {
 		return reply, err
@@ -435,9 +437,35 @@ func CreateDiscussionReply(
 	if err != nil {
 		return reply, err
 	}
-	commonName := principal.Account().CommonName
-
 	go func() {
+
+		replyUser := principal.Account()
+		commonName := replyUser.CommonName
+
+		if err != nil {
+			logger.Error("error sending discussion reply emails. Unable to retrieve modelPlan",
+				zap.String("replyID", reply.ID.String()),
+				zap.Error(err))
+		}
+
+		errReplyEmail := sendDiscussionReplyEmails(
+			ctx,
+			store,
+			logger,
+			emailService,
+			emailTemplateService,
+			addressBook,
+			discussion,
+			reply,
+			modelPlan,
+			replyUser,
+		)
+		if errReplyEmail != nil {
+			logger.Error("error sending tagged in plan discussion reply emails to tagged users and teams",
+				zap.String("discussionID", discussion.ID.String()),
+				zap.Error(errReplyEmail))
+		}
+
 		err = sendPlanDiscussionTagEmails(
 			ctx,
 			store,

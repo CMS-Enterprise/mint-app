@@ -23,6 +23,7 @@ export const miscellaneous: Record<string, string> = {
   notes: 'Notes',
   noneEntered: 'None entered',
   na: 'No answer entered',
+  noAdditionalInformation: 'No additional information specified',
   otherNotSpecified: 'Other not specified',
   noAdditionalInfo: 'No additional information specified',
   dateWarning:

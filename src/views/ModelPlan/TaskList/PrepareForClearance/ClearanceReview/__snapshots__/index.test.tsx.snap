@@ -112,12 +112,12 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                 class="margin-y-0 padding-left-3"
               >
                 <li
-                  class="font-sans-md line-height-sans-4"
+                  class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                 >
                   First Name
                 </li>
                 <li
-                  class="font-sans-md line-height-sans-4"
+                  class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                 >
                   Second Name
                 </li>
@@ -274,7 +274,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     class="margin-y-0 padding-left-2"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -349,12 +349,12 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Center for Medicare (CM)
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Center for Medicaid and CHIP Services (CMCS)
                     </li>
@@ -382,12 +382,12 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       State and Population Health Group (SPHG)
                     </li>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                     >
                       Policy and Programs Group (PPG)
                     </li>

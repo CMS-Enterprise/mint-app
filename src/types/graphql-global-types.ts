@@ -229,9 +229,10 @@ export enum FrequencyType {
 }
 
 export enum FundingSource {
+  MEDICARE_PART_A_HI_TRUST_FUND = "MEDICARE_PART_A_HI_TRUST_FUND",
+  MEDICARE_PART_B_SMI_TRUST_FUND = "MEDICARE_PART_B_SMI_TRUST_FUND",
   OTHER = "OTHER",
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT",
-  TRUST_FUND = "TRUST_FUND",
 }
 
 export enum GainshareArrangementEligibility {
@@ -620,6 +621,7 @@ export enum TaskStatusInput {
 }
 
 export enum TeamRole {
+  CM_FFS_COUNTERPART = "CM_FFS_COUNTERPART",
   EVALUATION = "EVALUATION",
   IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",
@@ -635,11 +637,6 @@ export enum TriStateAnswer {
   NO = "NO",
   TBD = "TBD",
   YES = "YES",
-}
-
-export enum TrustFundType {
-  MEDICARE_PART_A_HI_TRUST_FUND = "MEDICARE_PART_A_HI_TRUST_FUND",
-  MEDICARE_PART_B_SMI_TRUST_FUND = "MEDICARE_PART_B_SMI_TRUST_FUND",
 }
 
 export enum WaiverType {
@@ -1036,11 +1033,13 @@ export interface PlanParticipantsAndProvidersChanges {
 
 export interface PlanPaymentsChanges {
   fundingSource?: FundingSource[] | null;
-  fundingSourceTrustFundType?: TrustFundType[] | null;
+  fundingSourceMedicareAInfo?: string | null;
+  fundingSourceMedicareBInfo?: string | null;
   fundingSourceOther?: string | null;
   fundingSourceNote?: string | null;
   fundingSourceR?: FundingSource[] | null;
-  fundingSourceRTrustFundType?: TrustFundType[] | null;
+  fundingSourceRMedicareAInfo?: string | null;
+  fundingSourceRMedicareBInfo?: string | null;
   fundingSourceROther?: string | null;
   fundingSourceRNote?: string | null;
   payRecipients?: PayRecipient[] | null;

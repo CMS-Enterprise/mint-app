@@ -18,7 +18,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"fundingSource":     []string{"TRUST_FUND"},
+		"fundingSource":     []string{"OTHER"},
 		"fundingSourceNote": "Ello gov'na",
 		"payType":           []string{"CLAIMS_BASED_PAYMENTS"},
 	}
@@ -32,11 +32,9 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(pp.ModifiedBy)
 
 	//suite.Nil(updatedPP.FundingSource)
-	suite.Nil(updatedPP.FundingSourceTrustFundType)
 	suite.Nil(updatedPP.FundingSourceOther)
 	//suite.Nil(updatedPP.FundingSourceNote)
 	suite.Nil(updatedPP.FundingSourceR)
-	suite.Nil(updatedPP.FundingSourceRTrustFundType)
 	suite.Nil(updatedPP.FundingSourceROther)
 	suite.Nil(updatedPP.FundingSourceRNote)
 	suite.Nil(updatedPP.PayRecipients)
@@ -107,11 +105,10 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	//Asset these fields are nil upon creation
 
 	suite.Nil(pp.FundingSource)
-	suite.Nil(pp.FundingSourceTrustFundType)
+
 	suite.Nil(pp.FundingSourceOther)
 	suite.Nil(pp.FundingSourceNote)
 	suite.Nil(pp.FundingSourceR)
-	suite.Nil(pp.FundingSourceRTrustFundType)
 	suite.Nil(pp.FundingSourceROther)
 	suite.Nil(pp.FundingSourceRNote)
 	suite.Nil(pp.PayRecipients)

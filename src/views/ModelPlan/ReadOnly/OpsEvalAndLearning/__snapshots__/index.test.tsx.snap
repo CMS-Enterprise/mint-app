@@ -44,12 +44,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Yes, we will partner with states
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Other
             </li>
@@ -59,7 +59,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                Agency other
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
               </li>
             </ul>
           </ul>
@@ -100,17 +104,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Beneficiaries
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Participants
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Providers
             </li>
@@ -198,12 +202,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 class="margin-y-0 padding-left-3"
               >
                 <li
-                  class="font-sans-md line-height-sans-4"
+                  class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                 >
                   May have separate contractors for different implementation functions
                 </li>
                 <li
-                  class="font-sans-md line-height-sans-4"
+                  class="font-sans-md line-height-sans-4 display-flex flex-align-center"
                 >
                   Other
                 </li>
@@ -213,7 +217,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    Support other
+                    <em
+                      class="text-base"
+                    >
+                      Other not specified
+                    </em>
                   </li>
                 </ul>
               </ul>
@@ -589,12 +597,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Part A
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Part B
             </li>
@@ -1152,12 +1160,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Interrupted time series
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Other
             </li>
@@ -1167,7 +1175,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                Other eval approach
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
               </li>
             </ul>
           </ul>
@@ -1208,12 +1220,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Yes, for evaluation
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Other
             </li>
@@ -1223,7 +1235,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                CCM involvement other
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
               </li>
             </ul>
           </ul>
@@ -1264,17 +1280,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Clinical data
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Medicare claims
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Other
             </li>
@@ -1284,7 +1300,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                Data mon other
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
               </li>
             </ul>
           </ul>
@@ -1325,17 +1345,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Baseline/historical data
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Beneficiary-level data
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Other
             </li>
@@ -1345,7 +1365,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                Data to send other
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
               </li>
             </ul>
           </ul>
@@ -1605,7 +1629,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Daily
             </li>
@@ -1666,7 +1690,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Monthly
             </li>
@@ -1748,17 +1772,17 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               We plan to use an IT platform (Connect)
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               No, we will not have a learning strategy
             </li>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
             >
               Other
             </li>
@@ -1768,7 +1792,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               <li
                 class="font-sans-md line-height-sans-4"
               >
-                Other learning system
+                <em
+                  class="text-base"
+                >
+                  Other not specified
+                </em>
               </li>
             </ul>
           </ul>

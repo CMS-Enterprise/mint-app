@@ -1,0 +1,49 @@
+{{template "shared_header.html"}}
+
+<h3>New reply in</h3>
+<p>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </p>
+<br/>
+<table>
+  <tr>
+    <td>
+      <div class="container-border">
+        <h2>Discussion</h2>
+        <br/>
+        <p><b>{{.OriginatorName}}</b></p>
+        <p class="subtitle"> {{.OriginatorRole}}</p>
+        <br/>
+        <p>{{.DiscussionContent}}</p>
+        <br/>
+
+        {{ if gt .ReplyCount 2 }}
+            <i class="subtitle">{{ len (slice (printf "%*s" .ReplyCount "") 2) }} earlier {{if eq .ReplyCount 3}} reply {{end}} {{if gt .ReplyCount 3}} replies {{end}} not shown</i>
+            <br/>
+            <br/>
+        {{end}}
+
+        {{range $i, $reply := .Replies}}
+            {{if le $i 1}}
+                <p><b>{{$reply.UserName}}</b></p>
+                <p class="subtitle"> {{$reply.Role}}</p>
+                <p>{{$reply.Content}}</p>
+                <br/>
+            {{end}}
+        {{end}}
+
+        <p style="font-weight: normal">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/discussions?discussionID={{.DiscussionID}}">
+            Respond to this discussion in MINT
+          </a>
+        </p>
+        <br/>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<hr/>
+<br/>
+<p>You are receiving this email because a response has been added to your discussion topic.</p>
+
+{{template "shared_footer.html"}}
