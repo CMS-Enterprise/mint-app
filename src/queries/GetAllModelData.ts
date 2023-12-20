@@ -22,6 +22,7 @@ export default gql`
         cmsCenters
         cmmiGroups
         modelType
+        modelTypeOther
         problem
         goal
         testInterventions

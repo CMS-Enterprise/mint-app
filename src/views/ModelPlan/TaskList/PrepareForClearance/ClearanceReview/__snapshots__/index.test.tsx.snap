@@ -408,11 +408,15 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               >
                 Model Type
               </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              <ul
+                class="margin-y-0 padding-left-3"
               >
-                Mandatory
-              </p>
+                <li
+                  class="font-sans-md line-height-sans-4"
+                >
+                  Mandatory national
+                </li>
+              </ul>
             </div>
           </div>
           <div

@@ -13,6 +13,7 @@ export interface GetOverview_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
   modelType: ModelType[];
+  modelTypeOther: string | null;
   problem: string | null;
   goal: string | null;
   testInterventions: string | null;

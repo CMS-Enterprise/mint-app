@@ -16,6 +16,7 @@ import SectionWrapper from 'components/shared/SectionWrapper';
 import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
+import { sortOtherEnum } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -77,6 +78,7 @@ const ReadOnlyModelBasics = ({
     cmsCenters,
     cmmiGroups,
     modelType,
+    modelTypeOther,
     problem,
     goal,
     testInterventions,
@@ -292,7 +294,11 @@ const ReadOnlyModelBasics = ({
         'modelType',
         <ReadOnlySection
           heading={basicsT('modelType.label')}
-          copy={basicsT(`modelType.options.${modelType}`, '')}
+          list
+          listItems={modelType
+            ?.sort(sortOtherEnum)
+            .map((type): string => basicsT(`modelType.options.${type}`))}
+          listOtherItem={modelTypeOther}
         />
       )}
 
