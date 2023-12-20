@@ -2,13 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Icon, Link, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { DiscussionUserRole } from 'gql/gen/graphql';
+import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'gql/gen/types/GetModelPlanDiscussions';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { DiscussionUserRole } from 'types/graphql-global-types';
 import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
 
 import './index.scss';

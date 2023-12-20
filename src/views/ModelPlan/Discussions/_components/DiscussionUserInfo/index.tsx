@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import AssessmentIcon from 'components/shared/AssessmentIcon';
-import IconInitial from 'components/shared/IconInitial';
+import { DiscussionUserRole } from 'gql/gen/graphql';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { DiscussionUserRole } from 'types/graphql-global-types';
+} from 'gql/gen/types/GetModelPlanDiscussions';
+
+import AssessmentIcon from 'components/shared/AssessmentIcon';
+import IconInitial from 'components/shared/IconInitial';
 import { getTimeElapsed } from 'utils/date';
 
 import './index.scss';
