@@ -1,11 +1,5 @@
 ALTER TYPE MODEL_TYPE RENAME TO MODEL_TYPE_OLD;
 
--- Add the 'OTHER' and 'MANDATORY_REGIONAL_OR_STATE' values to the old type so we can migrate 'TBD' and 'MANDATORY'
--- selections later in this migration
-ALTER TYPE MODEL_TYPE_OLD ADD VALUE 'OTHER';
-ALTER TYPE MODEL_TYPE_OLD ADD VALUE 'MANDATORY_REGIONAL_OR_STATE';
-
-
 CREATE TYPE MODEL_TYPE AS ENUM (
   'VOLUNTARY',
   'MANDATORY_REGIONAL_OR_STATE',
@@ -13,28 +7,28 @@ CREATE TYPE MODEL_TYPE AS ENUM (
   'OTHER'
 );
 
-COMMIT;
-
+-- Temporarily alter the model_type column to TEXT
 ALTER TABLE plan_basics
+  ALTER COLUMN model_type TYPE zero_string,
   ADD COLUMN model_type_other zero_string;
-
--- If 'TBD' is selected we want to migrate it into the 'OTHER' note field and set our new
--- model type selection to 'OTHER'
-UPDATE plan_basics
-  SET model_type_other = 'TBD',
-      model_type = 'OTHER'
-  WHERE 'TBD' = model_type;
 
 -- If 'MANDATORY' is selected we want to migrate it to either 'MANDATORY_REGIONAL_OR_STATE' or 'MANDATORY_NATIONAL'
 -- As prod data is evenly split, we simply choose one
 UPDATE plan_basics
-  SET model_type = 'MANDATORY_REGIONAL_OR_STATE'
+  SET model_type = 'MANDATORY_REGIONAL_OR_STATE',
+      modified_by = '00000001-0001-0001-0001-000000000001',
+      modified_dts = current_timestamp
   WHERE 'MANDATORY' = model_type;
 
--- Update the model_type column to use the new MODEL_TYPE values
--- Project the old values into the new
+UPDATE plan_basics
+SET model_type = NULL,
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = current_timestamp
+WHERE 'TBD' = model_type;
+
+-- Alter the model_type column back to the new MODEL_TYPE enum
 ALTER TABLE plan_basics
-  ALTER COLUMN model_type TYPE MODEL_TYPE[]
-    using cms_centers::text[]::MODEL_TYPE[];
+  ALTER COLUMN model_type TYPE MODEL_TYPE
+    USING model_type::MODEL_TYPE;
 
 DROP TYPE MODEL_TYPE_OLD;
