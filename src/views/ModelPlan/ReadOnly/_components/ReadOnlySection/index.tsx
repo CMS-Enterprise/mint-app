@@ -107,16 +107,18 @@ const ReadOnlySection = ({
               isElement(listItems[index]) ? index : `${sectionName}--${item}`
             }
           >
-            <li className="font-sans-md line-height-sans-4 display-flex flex-align-center">
+            <li className="font-sans-md line-height-sans-4">
               {item}
               {tooltips && tooltips[index] && (
-                <Tooltip
-                  label={tooltips[index]!}
-                  position="right"
-                  className="margin-left-05"
-                >
-                  <Icon.Info className="text-base-light" />
-                </Tooltip>
+                <span className="top-2px position-relative">
+                  <Tooltip
+                    label={tooltips[index]!}
+                    position="right"
+                    className="margin-left-05"
+                  >
+                    <Icon.Info className="text-base-light" />
+                  </Tooltip>
+                </span>
               )}
             </li>
             {(item === 'Other' || listOtherItems) && (
