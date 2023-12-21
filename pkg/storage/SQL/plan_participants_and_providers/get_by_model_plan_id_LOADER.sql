@@ -29,7 +29,6 @@ SELECT
     pAndP.communication_method,
     pAndP.communication_method_other,
     pAndP.communication_note,
-    pAndP.participant_assume_risk,
     pAndP.risk_type,
     pAndP.risk_other,
     pAndP.risk_note,
