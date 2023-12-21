@@ -683,69 +683,70 @@ type ComplexityRoot struct {
 	}
 
 	PlanParticipantsAndProviders struct {
-		CommunicationMethod               func(childComplexity int) int
-		CommunicationMethodOther          func(childComplexity int) int
-		CommunicationNote                 func(childComplexity int) int
-		ConfidenceNote                    func(childComplexity int) int
-		CoordinateWork                    func(childComplexity int) int
-		CoordinateWorkNote                func(childComplexity int) int
-		CreatedBy                         func(childComplexity int) int
-		CreatedByUserAccount              func(childComplexity int) int
-		CreatedDts                        func(childComplexity int) int
-		EstimateConfidence                func(childComplexity int) int
-		ExpectedNumberOfParticipants      func(childComplexity int) int
-		GainsharePayments                 func(childComplexity int) int
-		GainsharePaymentsEligibility      func(childComplexity int) int
-		GainsharePaymentsEligibilityOther func(childComplexity int) int
-		GainsharePaymentsNote             func(childComplexity int) int
-		GainsharePaymentsTrack            func(childComplexity int) int
-		ID                                func(childComplexity int) int
-		MedicareProviderType              func(childComplexity int) int
-		ModelApplicationLevel             func(childComplexity int) int
-		ModelPlanID                       func(childComplexity int) int
-		ModifiedBy                        func(childComplexity int) int
-		ModifiedByUserAccount             func(childComplexity int) int
-		ModifiedDts                       func(childComplexity int) int
-		ParticipantAssumeRisk             func(childComplexity int) int
-		Participants                      func(childComplexity int) int
-		ParticipantsCurrentlyInModels     func(childComplexity int) int
-		ParticipantsCurrentlyInModelsNote func(childComplexity int) int
-		ParticipantsIDSNote               func(childComplexity int) int
-		ParticipantsIds                   func(childComplexity int) int
-		ParticipantsIdsOther              func(childComplexity int) int
-		ParticipantsNote                  func(childComplexity int) int
-		ParticipantsOther                 func(childComplexity int) int
-		ProviderAddMethod                 func(childComplexity int) int
-		ProviderAddMethodNote             func(childComplexity int) int
-		ProviderAddMethodOther            func(childComplexity int) int
-		ProviderAdditionFrequency         func(childComplexity int) int
-		ProviderAdditionFrequencyNote     func(childComplexity int) int
-		ProviderAdditionFrequencyOther    func(childComplexity int) int
-		ProviderLeaveMethod               func(childComplexity int) int
-		ProviderLeaveMethodNote           func(childComplexity int) int
-		ProviderLeaveMethodOther          func(childComplexity int) int
-		ProviderOverlap                   func(childComplexity int) int
-		ProviderOverlapHierarchy          func(childComplexity int) int
-		ProviderOverlapNote               func(childComplexity int) int
-		ReadyForClearanceBy               func(childComplexity int) int
-		ReadyForClearanceByUserAccount    func(childComplexity int) int
-		ReadyForClearanceDts              func(childComplexity int) int
-		ReadyForReviewBy                  func(childComplexity int) int
-		ReadyForReviewByUserAccount       func(childComplexity int) int
-		ReadyForReviewDts                 func(childComplexity int) int
-		RecruitmentMethod                 func(childComplexity int) int
-		RecruitmentNote                   func(childComplexity int) int
-		RecruitmentOther                  func(childComplexity int) int
-		RiskNote                          func(childComplexity int) int
-		RiskOther                         func(childComplexity int) int
-		RiskType                          func(childComplexity int) int
-		SelectionMethod                   func(childComplexity int) int
-		SelectionNote                     func(childComplexity int) int
-		SelectionOther                    func(childComplexity int) int
-		StatesEngagement                  func(childComplexity int) int
-		Status                            func(childComplexity int) int
-		WillRiskChange                    func(childComplexity int) int
-		WillRiskChangeNote                func(childComplexity int) int
+		CommunicationMethod                  func(childComplexity int) int
+		CommunicationMethodOther             func(childComplexity int) int
+		CommunicationNote                    func(childComplexity int) int
+		ConfidenceNote                       func(childComplexity int) int
+		CoordinateWork                       func(childComplexity int) int
+		CoordinateWorkNote                   func(childComplexity int) int
+		CreatedBy                            func(childComplexity int) int
+		CreatedByUserAccount                 func(childComplexity int) int
+		CreatedDts                           func(childComplexity int) int
+		EstimateConfidence                   func(childComplexity int) int
+		ExpectedNumberOfParticipants         func(childComplexity int) int
+		GainsharePayments                    func(childComplexity int) int
+		GainsharePaymentsEligibility         func(childComplexity int) int
+		GainsharePaymentsEligibilityOther    func(childComplexity int) int
+		GainsharePaymentsNote                func(childComplexity int) int
+		GainsharePaymentsTrack               func(childComplexity int) int
+		ID                                   func(childComplexity int) int
+		MedicareProviderType                 func(childComplexity int) int
+		ModelApplicationLevel                func(childComplexity int) int
+		ModelPlanID                          func(childComplexity int) int
+		ModifiedBy                           func(childComplexity int) int
+		ModifiedByUserAccount                func(childComplexity int) int
+		ModifiedDts                          func(childComplexity int) int
+		ParticipantAssumeRisk                func(childComplexity int) int
+		Participants                         func(childComplexity int) int
+		ParticipantsCurrentlyInModels        func(childComplexity int) int
+		ParticipantsCurrentlyInModelsNote    func(childComplexity int) int
+		ParticipantsIDSNote                  func(childComplexity int) int
+		ParticipantsIds                      func(childComplexity int) int
+		ParticipantsIdsOther                 func(childComplexity int) int
+		ParticipantsNote                     func(childComplexity int) int
+		ParticipantsOther                    func(childComplexity int) int
+		ProviderAddMethod                    func(childComplexity int) int
+		ProviderAddMethodNote                func(childComplexity int) int
+		ProviderAddMethodOther               func(childComplexity int) int
+		ProviderAdditionFrequency            func(childComplexity int) int
+		ProviderAdditionFrequencyContinually func(childComplexity int) int
+		ProviderAdditionFrequencyNote        func(childComplexity int) int
+		ProviderAdditionFrequencyOther       func(childComplexity int) int
+		ProviderLeaveMethod                  func(childComplexity int) int
+		ProviderLeaveMethodNote              func(childComplexity int) int
+		ProviderLeaveMethodOther             func(childComplexity int) int
+		ProviderOverlap                      func(childComplexity int) int
+		ProviderOverlapHierarchy             func(childComplexity int) int
+		ProviderOverlapNote                  func(childComplexity int) int
+		ReadyForClearanceBy                  func(childComplexity int) int
+		ReadyForClearanceByUserAccount       func(childComplexity int) int
+		ReadyForClearanceDts                 func(childComplexity int) int
+		ReadyForReviewBy                     func(childComplexity int) int
+		ReadyForReviewByUserAccount          func(childComplexity int) int
+		ReadyForReviewDts                    func(childComplexity int) int
+		RecruitmentMethod                    func(childComplexity int) int
+		RecruitmentNote                      func(childComplexity int) int
+		RecruitmentOther                     func(childComplexity int) int
+		RiskNote                             func(childComplexity int) int
+		RiskOther                            func(childComplexity int) int
+		RiskType                             func(childComplexity int) int
+		SelectionMethod                      func(childComplexity int) int
+		SelectionNote                        func(childComplexity int) int
+		SelectionOther                       func(childComplexity int) int
+		StatesEngagement                     func(childComplexity int) int
+		Status                               func(childComplexity int) int
+		WillRiskChange                       func(childComplexity int) int
+		WillRiskChangeNote                   func(childComplexity int) int
 	}
 
 	PlanPayments struct {
@@ -1124,6 +1125,8 @@ type PlanParticipantsAndProvidersResolver interface {
 	GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error)
 
 	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
+
+	ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyTypeNew, error)
 
 	ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error)
 
@@ -5342,6 +5345,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequency(childComplexity), true
 
+	case "PlanParticipantsAndProviders.providerAdditionFrequencyContinually":
+		if e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyContinually(childComplexity), true
+
 	case "PlanParticipantsAndProviders.providerAdditionFrequencyNote":
 		if e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyNote == nil {
 			break
@@ -7800,7 +7810,8 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyTypeNew!]!
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
@@ -7884,7 +7895,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyTypeNew!]
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
@@ -15421,6 +15433,8 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
 			case "providerAdditionFrequency":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
+			case "providerAdditionFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field)
 			case "providerAdditionFrequencyOther":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
 			case "providerAdditionFrequencyNote":
@@ -18004,6 +18018,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
 			case "providerAdditionFrequency":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
+			case "providerAdditionFrequencyContinually":
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field)
 			case "providerAdditionFrequencyOther":
 				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
 			case "providerAdditionFrequencyNote":
@@ -39922,7 +39938,51 @@ func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFreque
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ProviderAdditionFrequency, nil
+		return ec.resolvers.PlanParticipantsAndProviders().ProviderAdditionFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyTypeNew)
+	fc.Result = res
+	return ec.marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyTypeNew does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProviderAdditionFrequencyContinually, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -39931,19 +39991,19 @@ func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFreque
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.FrequencyType)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyType does not have child fields")
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -59332,7 +59392,43 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 		case "participantsIDSNote":
 			out.Values[i] = ec._PlanParticipantsAndProviders_participantsIDSNote(ctx, field, obj)
 		case "providerAdditionFrequency":
-			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field, obj)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "providerAdditionFrequencyContinually":
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequencyContinually(ctx, field, obj)
 		case "providerAdditionFrequencyOther":
 			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field, obj)
 		case "providerAdditionFrequencyNote":

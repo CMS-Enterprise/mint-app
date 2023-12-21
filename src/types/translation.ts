@@ -245,7 +245,8 @@ export type TranslationParticipantsAndProviders = {
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
-  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  providerAdditionFrequencyContinually: TranslationFieldProperties;
   providerAdditionFrequencyOther: TranslationFieldProperties;
   providerAdditionFrequencyNote: TranslationFieldProperties;
   providerAddMethod: TranslationFieldPropertiesWithOptions<ProviderAddType>;

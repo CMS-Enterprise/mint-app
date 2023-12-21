@@ -145,6 +145,7 @@ const csvFields = [
   'participantsAndProviders.participantsCurrentlyInModelsNote',
   'participantsAndProviders.modelApplicationLevel',
   'participantsAndProviders.providerAdditionFrequency',
+  'participantsAndProviders.providerAdditionFrequencyContinually',
   'participantsAndProviders.providerAdditionFrequencyOther',
   'participantsAndProviders.providerAdditionFrequencyNote',
   'participantsAndProviders.providerAddMethod', // array

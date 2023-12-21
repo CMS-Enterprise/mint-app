@@ -1011,7 +1011,8 @@ export interface PlanParticipantsAndProvidersChanges {
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
-  providerAdditionFrequency?: FrequencyType | null;
+  providerAdditionFrequency?: FrequencyTypeNew[] | null;
+  providerAdditionFrequencyContinually?: string | null;
   providerAdditionFrequencyOther?: string | null;
   providerAdditionFrequencyNote?: string | null;
   providerAddMethod?: ProviderAddType[] | null;

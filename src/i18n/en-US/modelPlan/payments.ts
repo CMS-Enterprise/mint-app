@@ -1,5 +1,7 @@
 import { TranslationPayments } from 'types/translation';
 
+import { fequencyOptions } from './miscellaneous';
+
 export const payments: TranslationPayments = {
   fundingSource: {
     gqlField: 'fundingSource',
@@ -637,14 +639,7 @@ export const payments: TranslationPayments = {
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected payment frequency',
-    options: {
-      ANNUALLY: 'Annually',
-      SEMIANUALLY: 'Semiannually',
-      QUARTERLY: 'Quarterly',
-      MONTHLY: 'Monthly',
-      CONTINUALLY: 'Continually',
-      OTHER: 'Other'
-    },
+    options: fequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
       SEMIANUALLY: '',

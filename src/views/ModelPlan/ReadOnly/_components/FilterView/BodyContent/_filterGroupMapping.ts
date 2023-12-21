@@ -99,6 +99,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ],
     'participants-and-providers': [
       'providerAdditionFrequency',
+      'providerAdditionFrequencyContinually',
       'providerAdditionFrequencyOther',
       'providerAdditionFrequencyNote',
       'providerAddMethod',
@@ -219,6 +220,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'estimateConfidence',
       'confidenceNote',
       'providerAdditionFrequency',
+      'providerAdditionFrequencyContinually',
       'providerAdditionFrequencyOther',
       'providerAdditionFrequencyNote',
       'providerAddMethod',

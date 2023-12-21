@@ -139,6 +139,7 @@ export default gql`
         participantsCurrentlyInModelsNote
         modelApplicationLevel
         providerAdditionFrequency
+        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod
