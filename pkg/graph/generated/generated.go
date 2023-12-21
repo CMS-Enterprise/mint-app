@@ -8876,6 +8876,7 @@ enum TeamRole {
   QUALITY
   OACT
   PAYMENT
+  CM_FFS_COUNTERPART
 }
 
 enum ModelType

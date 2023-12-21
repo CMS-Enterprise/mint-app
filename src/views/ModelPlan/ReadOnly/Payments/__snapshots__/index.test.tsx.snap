@@ -44,7 +44,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
+              class="font-sans-md line-height-sans-4"
             >
               Patient Protection Affordable Care Act (Sec 3021)
             </li>
@@ -89,7 +89,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
+              class="font-sans-md line-height-sans-4"
             >
               Patient Protection Affordable Care Act (Sec 3021)
             </li>
@@ -134,7 +134,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
+              class="font-sans-md line-height-sans-4"
             >
               Beneficiaries
             </li>
@@ -176,7 +176,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
+              class="font-sans-md line-height-sans-4"
             >
               Claims-Based Payments
             </li>
@@ -225,7 +225,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
+              class="font-sans-md line-height-sans-4"
             >
               Adjustments to FFS payments
             </li>
@@ -707,7 +707,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4 display-flex flex-align-center"
+              class="font-sans-md line-height-sans-4"
             >
               Semiannually
             </li>

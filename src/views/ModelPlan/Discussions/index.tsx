@@ -4,27 +4,23 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Accordion, Button, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import {
+  DiscussionUserRole,
+  useCreateModelPlanDiscussionMutation,
+  useGetModelPlanDiscussionsQuery
+} from 'gql/gen/graphql';
+import {
+  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
+  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
+} from 'gql/gen/types/GetModelPlanDiscussions';
 
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
-import useCacheQuery from 'hooks/useCacheQuery';
 import CreateModelPlanReply from 'queries/CreateModelPlanReply';
-import CreateModelPlanDiscussion from 'queries/Discussions/CreateModelPlanDiscussion';
-import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
-import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/Discussions/types/CreateModelPlanDiscussion';
-import {
-  GetModelPlanDiscussions as GetModelPlanDiscussionsType,
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
-  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType,
-  GetModelPlanDiscussionsVariables
-} from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
-import {
-  DiscussionUserRole,
-  PlanDiscussionCreateInput
-} from 'types/graphql-global-types';
+import { PlanDiscussionCreateInput } from 'types/graphql-global-types';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
@@ -60,22 +56,17 @@ const Discussions = ({
     return new URLSearchParams(location.search);
   }, [location.search]);
 
-  const { data, loading, error, refetch } = useCacheQuery<
-    GetModelPlanDiscussionsType,
-    GetModelPlanDiscussionsVariables
-  >(GetModelPlanDiscussions, {
+  const { data, loading, error, refetch } = useGetModelPlanDiscussionsQuery({
     variables: {
       id: modelID
     }
   });
 
   const discussions = useMemo(() => {
-    return data?.modelPlan?.discussions || ([] as DiscussionType[]);
+    return (data?.modelPlan?.discussions || []) as DiscussionType[];
   }, [data?.modelPlan?.discussions]);
 
-  const [createQuestion] = useMutation<CreateModelPlanDiscussionType>(
-    CreateModelPlanDiscussion
-  );
+  const [createQuestion] = useCreateModelPlanDiscussionMutation();
 
   const [createReply] = useMutation<CreateModelPlanReplyType>(
     CreateModelPlanReply
@@ -117,7 +108,7 @@ const Discussions = ({
       dis => dis.id === discussionReplyID
     );
 
-    if (discussionToReply && !loading) {
+    if (discussionToReply && !loading && discussions.length) {
       setIsDiscussionOpen(true);
       setDiscussionType('reply');
       setReply(discussionToReply);
@@ -345,7 +336,7 @@ const Discussions = ({
   };
 
   const chooseRenderMethod = () => {
-    if (loading) return <PageLoading />;
+    if (loading && !data) return <PageLoading />;
     if (readOnly || error || discussionType === 'discussion') {
       return renderDiscussions();
     }
@@ -370,7 +361,7 @@ const Discussions = ({
 
   return (
     <>
-      {loading ? (
+      {!data && loading ? (
         <PageLoading />
       ) : (
         <Grid desktop={{ col: 12 }}>

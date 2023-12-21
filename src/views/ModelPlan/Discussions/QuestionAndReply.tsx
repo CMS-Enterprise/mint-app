@@ -1,7 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -10,6 +9,14 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  DiscussionUserRole,
+  useGetMostRecentRoleSelectionQuery
+} from 'gql/gen/graphql';
+import {
+  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
+  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
+} from 'gql/gen/types/GetModelPlanDiscussions';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
@@ -18,13 +25,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MentionTextArea from 'components/shared/MentionTextArea';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
-import {
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
-  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'queries/Discussions/types/GetModelPlanDiscussions';
-import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
-import { DiscussionUserRole } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum } from 'utils/modelPlan';
 
@@ -66,9 +66,7 @@ const QuestionAndReply = ({
     content: Yup.string().trim().required(`Please enter a ${renderType}`)
   });
 
-  const { data, loading, error } = useQuery<GetMostRecentRoleSelectionType>(
-    GetMostRecentRoleSelection
-  );
+  const { data, loading, error } = useGetMostRecentRoleSelectionQuery();
 
   const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection?.userRole;
   const mostRecentUserRoleDescription =
