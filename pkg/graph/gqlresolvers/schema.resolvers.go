@@ -6,7 +6,6 @@ package gqlresolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -758,7 +757,7 @@ func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.C
 
 // RiskType is the resolver for the riskType field.
 func (r *planParticipantsAndProvidersResolver) RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error) {
-	panic(fmt.Errorf("not implemented: RiskType - riskType"))
+	return models.ConvertEnums[models.ParticipantRiskType](obj.RiskType), nil
 }
 
 // GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
