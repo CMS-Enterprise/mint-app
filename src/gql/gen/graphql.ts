@@ -2709,6 +2709,25 @@ export type UpdateModelPlanBeneficiariesMutationVariables = Exact<{
 
 export type UpdateModelPlanBeneficiariesMutation = { __typename: 'Mutation', updatePlanBeneficiaries: { __typename: 'PlanBeneficiaries', id: UUID } };
 
+export type CreateModelPlanDiscussionMutationVariables = Exact<{
+  input: PlanDiscussionCreateInput;
+}>;
+
+
+export type CreateModelPlanDiscussionMutation = { __typename: 'Mutation', createPlanDiscussion: { __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null } };
+
+export type GetModelPlanDiscussionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelPlanDiscussionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, isAssessment: boolean, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, isAssessment: boolean, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> } };
+
+export type GetMostRecentRoleSelectionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMostRecentRoleSelectionQuery = { __typename: 'Query', mostRecentDiscussionRoleSelection?: { __typename: 'DiscussionRoleSelection', userRole: DiscussionUserRole, userRoleDescription?: string | null } | null };
+
 export type LinkNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentLinkInput;
 }>;
@@ -3595,6 +3614,154 @@ export function useUpdateModelPlanBeneficiariesMutation(baseOptions?: Apollo.Mut
 export type UpdateModelPlanBeneficiariesMutationHookResult = ReturnType<typeof useUpdateModelPlanBeneficiariesMutation>;
 export type UpdateModelPlanBeneficiariesMutationResult = Apollo.MutationResult<UpdateModelPlanBeneficiariesMutation>;
 export type UpdateModelPlanBeneficiariesMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanBeneficiariesMutation, UpdateModelPlanBeneficiariesMutationVariables>;
+export const CreateModelPlanDiscussionDocument = gql`
+    mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
+  createPlanDiscussion(input: $input) {
+    id
+    content {
+      rawContent
+    }
+    createdBy
+    createdDts
+  }
+}
+    `;
+export type CreateModelPlanDiscussionMutationFn = Apollo.MutationFunction<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>;
+
+/**
+ * __useCreateModelPlanDiscussionMutation__
+ *
+ * To run a mutation, you first call `useCreateModelPlanDiscussionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateModelPlanDiscussionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createModelPlanDiscussionMutation, { data, loading, error }] = useCreateModelPlanDiscussionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateModelPlanDiscussionMutation(baseOptions?: Apollo.MutationHookOptions<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>(CreateModelPlanDiscussionDocument, options);
+      }
+export type CreateModelPlanDiscussionMutationHookResult = ReturnType<typeof useCreateModelPlanDiscussionMutation>;
+export type CreateModelPlanDiscussionMutationResult = Apollo.MutationResult<CreateModelPlanDiscussionMutation>;
+export type CreateModelPlanDiscussionMutationOptions = Apollo.BaseMutationOptions<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>;
+export const GetModelPlanDiscussionsDocument = gql`
+    query GetModelPlanDiscussions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    isCollaborator
+    discussions {
+      id
+      content {
+        rawContent
+      }
+      createdBy
+      createdDts
+      userRole
+      userRoleDescription
+      isAssessment
+      createdByUserAccount {
+        commonName
+      }
+      replies {
+        id
+        discussionID
+        content {
+          rawContent
+        }
+        userRole
+        userRoleDescription
+        isAssessment
+        createdBy
+        createdDts
+        createdByUserAccount {
+          commonName
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelPlanDiscussionsQuery__
+ *
+ * To run a query within a React component, call `useGetModelPlanDiscussionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelPlanDiscussionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelPlanDiscussionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelPlanDiscussionsQuery(baseOptions: Apollo.QueryHookOptions<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>(GetModelPlanDiscussionsDocument, options);
+      }
+export function useGetModelPlanDiscussionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>(GetModelPlanDiscussionsDocument, options);
+        }
+export function useGetModelPlanDiscussionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>(GetModelPlanDiscussionsDocument, options);
+        }
+export type GetModelPlanDiscussionsQueryHookResult = ReturnType<typeof useGetModelPlanDiscussionsQuery>;
+export type GetModelPlanDiscussionsLazyQueryHookResult = ReturnType<typeof useGetModelPlanDiscussionsLazyQuery>;
+export type GetModelPlanDiscussionsSuspenseQueryHookResult = ReturnType<typeof useGetModelPlanDiscussionsSuspenseQuery>;
+export type GetModelPlanDiscussionsQueryResult = Apollo.QueryResult<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>;
+export const GetMostRecentRoleSelectionDocument = gql`
+    query GetMostRecentRoleSelection {
+  mostRecentDiscussionRoleSelection {
+    userRole
+    userRoleDescription
+  }
+}
+    `;
+
+/**
+ * __useGetMostRecentRoleSelectionQuery__
+ *
+ * To run a query within a React component, call `useGetMostRecentRoleSelectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMostRecentRoleSelectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMostRecentRoleSelectionQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMostRecentRoleSelectionQuery(baseOptions?: Apollo.QueryHookOptions<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>(GetMostRecentRoleSelectionDocument, options);
+      }
+export function useGetMostRecentRoleSelectionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>(GetMostRecentRoleSelectionDocument, options);
+        }
+export function useGetMostRecentRoleSelectionSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>(GetMostRecentRoleSelectionDocument, options);
+        }
+export type GetMostRecentRoleSelectionQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionQuery>;
+export type GetMostRecentRoleSelectionLazyQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionLazyQuery>;
+export type GetMostRecentRoleSelectionSuspenseQueryHookResult = ReturnType<typeof useGetMostRecentRoleSelectionSuspenseQuery>;
+export type GetMostRecentRoleSelectionQueryResult = Apollo.QueryResult<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>;
 export const LinkNewPlanDocumentDocument = gql`
     mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
   linkNewPlanDocument(input: $input) {

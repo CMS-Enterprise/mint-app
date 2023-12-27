@@ -4,12 +4,12 @@ go 1.21
 
 require (
 	github.com/99designs/gqlgen v0.17.38
-	github.com/aws/aws-sdk-go v1.48.16
+	github.com/aws/aws-sdk-go v1.49.4
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
-	github.com/go-openapi/errors v0.20.4
-	github.com/go-openapi/swag v0.22.4
+	github.com/go-openapi/errors v0.21.0
+	github.com/go-openapi/swag v0.22.5
 	github.com/golang/mock v1.6.0
-	github.com/google/uuid v1.4.0
+	github.com/google/uuid v1.5.0
 	github.com/gorilla/mux v1.8.1
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/guregu/null v4.0.0+incompatible

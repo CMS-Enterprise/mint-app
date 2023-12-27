@@ -18,7 +18,7 @@ const generalReadOnly = {
     emptyStatePayment:
       'Not assigned - speak with Model lead(s) for payment-related questions',
     emptyStateCMFFS:
-      'Not assigned - speak with Model leads(s) for CM FFS counterpart-related questions',
+      'Not assigned - speak with Model lead(s) for CM FFS counterpart-related questions',
     sendAnEmail: 'Send an email',
     moreTeamMembers: 'More team members',
     cmFFS: 'CM FFS counterpart'
