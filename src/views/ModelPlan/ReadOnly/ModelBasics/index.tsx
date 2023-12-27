@@ -296,8 +296,9 @@ const ReadOnlyModelBasics = ({
           heading={basicsT('modelType.label')}
           list
           listItems={modelType
-            ?.sort(sortOtherEnum)
-            .map((type): string => basicsT(`modelType.options.${type}`))}
+            ?.slice() // https://stackoverflow.com/a/66256576
+            .sort(sortOtherEnum)
+            ?.map((type): string => basicsT(`modelType.options.${type}`))}
           listOtherItem={modelTypeOther}
         />
       )}
