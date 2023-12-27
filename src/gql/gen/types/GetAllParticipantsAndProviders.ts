@@ -32,7 +32,7 @@ export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProvide
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
-  riskType: ParticipantRiskType | null;
+  riskType: ParticipantRiskType[];
   riskOther: string | null;
   riskNote: string | null;
   willRiskChange: boolean | null;

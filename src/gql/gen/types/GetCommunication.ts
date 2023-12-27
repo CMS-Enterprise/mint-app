@@ -15,7 +15,7 @@ export interface GetCommunication_modelPlan_participantsAndProviders {
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
-  riskType: ParticipantRiskType | null;
+  riskType: ParticipantRiskType[];
   riskOther: string | null;
   riskNote: string | null;
   willRiskChange: boolean | null;

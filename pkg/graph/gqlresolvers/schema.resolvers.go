@@ -755,6 +755,11 @@ func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.C
 	return communicationTypes, nil
 }
 
+// RiskType is the resolver for the riskType field.
+func (r *planParticipantsAndProvidersResolver) RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error) {
+	return models.ConvertEnums[models.ParticipantRiskType](obj.RiskType), nil
+}
+
 // GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
 func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
 	gainshareArrangementEligibilities := models.ConvertEnums[model.GainshareArrangementEligibility](obj.GainsharePaymentsEligibility)

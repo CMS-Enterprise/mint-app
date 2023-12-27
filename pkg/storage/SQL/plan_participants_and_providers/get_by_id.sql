@@ -21,7 +21,6 @@ SELECT
     communication_method,
     communication_method_other,
     communication_note,
-    participant_assume_risk,
     risk_type,
     risk_other,
     risk_note,
