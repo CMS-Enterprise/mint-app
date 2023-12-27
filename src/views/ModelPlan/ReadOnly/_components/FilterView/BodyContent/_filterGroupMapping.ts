@@ -136,7 +136,13 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     ]
   },
   dfsdm: {
-    basics: ['nameHistory', 'modelType', 'goal', 'performancePeriodStarts'],
+    basics: [
+      'nameHistory',
+      'modelType',
+      'modelTypeOther',
+      'goal',
+      'performancePeriodStarts'
+    ],
     'participants-and-providers': [
       'expectedNumberOfParticipants',
       'estimateConfidence',
@@ -195,6 +201,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
       'cmsCenters',
       'cmmiGroups',
       'modelType',
+      'modelTypeOther',
       'goal',
       'completeICIP',
       'clearanceStarts',
@@ -263,6 +270,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: [
       'nameHistory',
       'modelType',
+      'modelTypeOther',
       'goal',
       'announced',
       'performancePeriodStarts',
@@ -377,6 +385,7 @@ const FilterGroupMap: Record<typeof filterGroups[number], any> = {
     basics: [
       'nameHistory',
       'modelType',
+      'modelTypeOther',
       'goal',
       'announced',
       'performancePeriodStarts',

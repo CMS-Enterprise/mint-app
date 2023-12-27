@@ -19,7 +19,8 @@ type PlanBasics struct {
 	// CMSOther                  *string        `json:"cmsOther" db:"cms_other"`
 	CMMIGroups pq.StringArray `json:"cmmiGroups" db:"cmmi_groups"`
 
-	ModelType *ModelType `json:"modelType" db:"model_type" statusWeight:"1"`
+	ModelType      pq.StringArray `json:"modelType" db:"model_type" statusWeight:"1"`
+	ModelTypeOther *string        `json:"modelTypeOther" db:"model_type_other"`
 
 	Problem           *string `json:"problem" db:"problem" statusWeight:"1"`
 	Goal              *string `json:"goal" db:"goal" statusWeight:"1"`
@@ -53,7 +54,8 @@ type ModelType string
 
 // These constants represent the different values of ModelType
 const (
-	MTVoluntary ModelType = "VOLUNTARY"
-	MTMandatory ModelType = "MANDATORY"
-	MTTBD       ModelType = "TBD"
+	MTVoluntary                ModelType = "VOLUNTARY"
+	MTMandatoryRegionalOrState ModelType = "MANDATORY_REGIONAL_OR_STATE"
+	MTMandatoryNational        ModelType = "MANDATORY_NATIONAL"
+	MTOther                    ModelType = "OTHER"
 )

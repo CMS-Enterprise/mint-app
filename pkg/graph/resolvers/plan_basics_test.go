@@ -28,6 +28,7 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 
 	// Many of the fields are nil upon creation
 	suite.Nil(basics.ModelType)
+	suite.Nil(basics.ModelTypeOther)
 	suite.Nil(basics.Problem)
 	suite.Nil(basics.Goal)
 	suite.Nil(basics.ModelCategory)
@@ -87,13 +88,14 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"modelType":     models.MTVoluntary,
-		"goal":          "Some goal",
-		"cmsCenters":    []string{"CMMI"},
-		"cmmiGroups":    []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-		"completeICIP":  "2020-05-13T20:47:50.12Z",
-		"phasedIn":      true,
-		"highLevelNote": "Some high level note",
+		"modelType":      []models.ModelType{models.MTVoluntary},
+		"modelTypeOther": "Some model type other note",
+		"goal":           "Some goal",
+		"cmsCenters":     []string{"CMMI"},
+		"cmmiGroups":     []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+		"completeICIP":   "2020-05-13T20:47:50.12Z",
+		"phasedIn":       true,
+		"highLevelNote":  "Some high level note",
 	}
 
 	updatedBasics, err := UpdatePlanBasics(
@@ -110,7 +112,8 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.NoError(err)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedBasics.ModifiedBy)
 	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
-	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
+	suite.EqualValues([]models.ModelType{models.MTVoluntary}, models.ConvertEnums[models.ModelType](updatedBasics.ModelType))
+	suite.EqualValues(changes["modelTypeOther"], *updatedBasics.ModelTypeOther)
 	suite.Nil(updatedBasics.Problem)
 	suite.EqualValues("Some goal", *updatedBasics.Goal)
 	suite.EqualValues(changes["cmsCenters"], updatedBasics.CMSCenters)
