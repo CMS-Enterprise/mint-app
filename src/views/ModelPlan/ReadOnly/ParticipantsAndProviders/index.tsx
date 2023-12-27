@@ -8,7 +8,7 @@ import {
   useGetAllParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
-import { sortOtherEnum } from 'utils/modelPlan';
+import { sortOtherEnum, sortOtherLast } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -298,7 +298,9 @@ const ReadOnlyParticipantsAndProviders = ({
             heading={participantsAndProvidersT('riskType.label')}
             list
             listItems={riskType
-              ?.sort(sortOtherEnum)
+              ?.slice()
+              .sort(sortOtherEnum)
+              .sort(sortOtherLast)
               .map((type): string =>
                 participantsAndProvidersT(`riskType.options.${type}`)
               )}

@@ -168,6 +168,13 @@ export const sortOtherEnum = (a: string, b: string) => {
   return 0;
 };
 
+export const sortOtherLast = (a: string, b: string) => {
+  if (b === 'OTHER') {
+    return -1;
+  }
+  return 0;
+};
+
 // Sort possible operational needs
 export const sortPossibleOperationalNeeds = (
   a: { name: string },
