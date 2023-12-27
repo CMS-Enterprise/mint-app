@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import {
@@ -9,11 +9,12 @@ import {
   Fieldset,
   Icon,
   Label,
-  Radio
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetOverviewQuery,
+  ModelType,
   useGetOverviewQuery,
   useUpdateBasicsMutation
 } from 'gql/gen/graphql';
@@ -23,6 +24,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -55,8 +57,15 @@ const Overview = () => {
 
   const { modelName } = data?.modelPlan || {};
 
-  const { id, modelType, problem, goal, testInterventions, note } = (data
-    ?.modelPlan?.basics || {}) as BasicsFormType;
+  const {
+    id,
+    modelType,
+    modelTypeOther,
+    problem,
+    goal,
+    testInterventions,
+    note
+  } = (data?.modelPlan?.basics || {}) as BasicsFormType;
 
   const [update] = useUpdateBasicsMutation();
 
@@ -89,7 +98,8 @@ const Overview = () => {
   const initialValues: BasicsFormType = {
     __typename: 'PlanBasics',
     id: id ?? '',
-    modelType: modelType ?? null,
+    modelType: modelType ?? [],
+    modelTypeOther: modelTypeOther ?? '',
     problem: problem ?? '',
     goal: goal ?? '',
     testInterventions: testInterventions ?? '',
@@ -194,22 +204,30 @@ const Overview = () => {
                     <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
 
                     <Fieldset>
-                      <Field
-                        as={Radio}
-                        id="ModelType-Voluntary"
-                        name="modelType"
-                        label={modelTypeConfig.options.VOLUNTARY}
-                        value="VOLUNTARY"
-                        checked={values.modelType === 'VOLUNTARY'}
-                      />
-                      <Field
-                        as={Radio}
-                        id="ModelType-Mandatory"
-                        name="modelType"
-                        label={modelTypeConfig.options.MANDATORY}
-                        value="MANDATORY"
-                        checked={values.modelType === 'MANDATORY'}
-                      />
+                      {getKeys(modelTypeConfig.options).map(key => (
+                        <Fragment key={key}>
+                          <Field
+                            as={CheckboxField}
+                            id={`ModelType-${key}`}
+                            name="modelType"
+                            label={modelTypeConfig.options[key]}
+                            value={key}
+                            checked={values.modelType.includes(key)}
+                          />
+                        </Fragment>
+                      ))}
+
+                      {values.modelType?.includes(ModelType.OTHER) && (
+                        <div className="margin-left-4">
+                          <span>{basicsT('modelTypeOther.label')}</span>
+                          <Field
+                            as={TextInput}
+                            id="ModelType-Other"
+                            data-testid="ModelType-Other"
+                            name="modelTypeOther"
+                          />
+                        </div>
+                      )}
                     </Fieldset>
                   </FieldGroup>
 

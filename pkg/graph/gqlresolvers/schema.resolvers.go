@@ -537,6 +537,12 @@ func (r *planBasicsResolver) CmmiGroups(ctx context.Context, obj *models.PlanBas
 	return cmmiGroups, nil
 }
 
+// ModelType is the resolver for the modelType field.
+func (r *planBasicsResolver) ModelType(ctx context.Context, obj *models.PlanBasics) ([]models.ModelType, error) {
+	modelTypes := models.ConvertEnums[models.ModelType](obj.ModelType)
+	return modelTypes, nil
+}
+
 // Beneficiaries is the resolver for the beneficiaries field.
 func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
 	bTypes := models.ConvertEnums[model.BeneficiariesType](obj.Beneficiaries)

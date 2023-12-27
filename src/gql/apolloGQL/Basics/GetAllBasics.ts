@@ -14,6 +14,7 @@ export default gql(/* GraphQL */ `
         cmsCenters
         cmmiGroups
         modelType
+        modelTypeOther
         problem
         goal
         testInterventions

@@ -8,6 +8,7 @@ SELECT
     cms_centers,
     cmmi_groups,
     model_type,
+    model_type_other,
     problem,
     goal,
     test_interventions,
