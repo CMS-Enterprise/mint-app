@@ -1,17 +1,3 @@
-
-/***
-Section: Add the new enum type
-***/
-
-CREATE TYPE FREQUENCY_TYPE_NEW AS ENUM (
-  'ANNUALLY',
-  'SEMIANUALLY',
-  'QUARTERLY',
-  'MONTHLY',
-  'CONTINUALLY',
-  'OTHER'
-);
-
 /***
 Section: Alter plan_payments to use this new type
 TODO: Handle historical data!!!
