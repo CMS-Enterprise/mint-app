@@ -6,7 +6,6 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -24,6 +23,7 @@ import {
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
+  FrequencyTypeNew,
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
@@ -457,7 +457,8 @@ export type TranslationPayments = {
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
-  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  anticipatedPaymentFrequencyContinually: TranslationFieldProperties;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;
   // Recover Payment

@@ -318,6 +318,7 @@ const csvFields = [
   'payments.canParticipantsSelectBetweenPaymentMechanismsHow',
   'payments.canParticipantsSelectBetweenPaymentMechanismsNote',
   'payments.anticipatedPaymentFrequency', // array
+  'payments.anticipatedPaymentFrequencyContinually',
   'payments.anticipatedPaymentFrequencyOther',
   'payments.anticipatedPaymentFrequencyNote',
   'payments.fundingSource', // array
