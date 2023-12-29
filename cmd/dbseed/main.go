@@ -117,7 +117,7 @@ func (s *Seeder) SeedData() {
 		email.AddressBook{},
 		planWithBasics,
 		map[string]interface{}{
-			"modelType":       models.MTVoluntary,
+			"modelType":       []models.ModelType{models.MTVoluntary},
 			"goal":            "Some goal",
 			"cmsCenters":      []string{"CMMI"},
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
@@ -202,7 +202,7 @@ func (s *Seeder) SeedData() {
 		map[string]interface{}{
 			"amsModelID":      "123",
 			"demoCode":        "1",
-			"modelType":       models.MTVoluntary,
+			"modelType":       []models.ModelType{models.MTVoluntary},
 			"goal":            "Some goal",
 			"cmsCenters":      []string{"CMMI"},
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},

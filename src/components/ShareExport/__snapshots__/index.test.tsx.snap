@@ -507,11 +507,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 >
                   Model Type
                 </p>
-                <p
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                <ul
+                  class="margin-y-0 padding-left-3"
                 >
-                  Mandatory
-                </p>
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    Mandatory national
+                  </li>
+                </ul>
               </div>
             </div>
             <div
@@ -1140,11 +1144,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Custom characteristic
                       </li>
                     </ul>
                   </ul>
@@ -1448,11 +1448,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            <em
-                              class="text-base"
-                            >
-                              Other not specified
-                            </em>
+                            Geography type other
                           </li>
                         </ul>
                       </ul>
@@ -1494,11 +1490,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            <em
-                              class="text-base"
-                            >
-                              Other not specified
-                            </em>
+                            Geography applied other
                           </li>
                         </ul>
                       </ul>
@@ -1589,11 +1581,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other agreement
                       </li>
                     </ul>
                   </ul>
@@ -1742,11 +1730,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other allowance
                       </li>
                     </ul>
                   </ul>
@@ -1925,11 +1909,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        This is the other
                       </li>
                     </ul>
                   </ul>
@@ -2473,11 +2453,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other gainsharing
                       </li>
                     </ul>
                   </ul>
@@ -3195,11 +3171,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Agency other
                       </li>
                     </ul>
                   </ul>
@@ -3353,11 +3325,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            <em
-                              class="text-base"
-                            >
-                              Other not specified
-                            </em>
+                            Support other
                           </li>
                         </ul>
                       </ul>
@@ -4311,11 +4279,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other eval approach
                       </li>
                     </ul>
                   </ul>
@@ -4371,11 +4335,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        CCM involvement other
                       </li>
                     </ul>
                   </ul>
@@ -4436,11 +4396,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Data mon other
                       </li>
                     </ul>
                   </ul>
@@ -4501,11 +4457,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Data to send other
                       </li>
                     </ul>
                   </ul>
@@ -4928,11 +4880,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other learning system
                       </li>
                     </ul>
                   </ul>
@@ -6901,11 +6849,15 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 >
                   Model Type
                 </p>
-                <p
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                <ul
+                  class="margin-y-0 padding-left-3"
                 >
-                  Mandatory
-                </p>
+                  <li
+                    class="font-sans-md line-height-sans-4"
+                  >
+                    Mandatory national
+                  </li>
+                </ul>
               </div>
             </div>
             <div
@@ -7534,11 +7486,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Custom characteristic
                       </li>
                     </ul>
                   </ul>
@@ -7842,11 +7790,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            <em
-                              class="text-base"
-                            >
-                              Other not specified
-                            </em>
+                            Geography type other
                           </li>
                         </ul>
                       </ul>
@@ -7888,11 +7832,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            <em
-                              class="text-base"
-                            >
-                              Other not specified
-                            </em>
+                            Geography applied other
                           </li>
                         </ul>
                       </ul>
@@ -7983,11 +7923,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other agreement
                       </li>
                     </ul>
                   </ul>
@@ -8136,11 +8072,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other allowance
                       </li>
                     </ul>
                   </ul>
@@ -8319,11 +8251,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        This is the other
                       </li>
                     </ul>
                   </ul>
@@ -8867,11 +8795,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other gainsharing
                       </li>
                     </ul>
                   </ul>
@@ -9589,11 +9513,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Agency other
                       </li>
                     </ul>
                   </ul>
@@ -9747,11 +9667,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                           <li
                             class="font-sans-md line-height-sans-4"
                           >
-                            <em
-                              class="text-base"
-                            >
-                              Other not specified
-                            </em>
+                            Support other
                           </li>
                         </ul>
                       </ul>
@@ -10705,11 +10621,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other eval approach
                       </li>
                     </ul>
                   </ul>
@@ -10765,11 +10677,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        CCM involvement other
                       </li>
                     </ul>
                   </ul>
@@ -10830,11 +10738,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Data mon other
                       </li>
                     </ul>
                   </ul>
@@ -10895,11 +10799,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Data to send other
                       </li>
                     </ul>
                   </ul>
@@ -11322,11 +11222,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       <li
                         class="font-sans-md line-height-sans-4"
                       >
-                        <em
-                          class="text-base"
-                        >
-                          Other not specified
-                        </em>
+                        Other learning system
                       </li>
                     </ul>
                   </ul>
