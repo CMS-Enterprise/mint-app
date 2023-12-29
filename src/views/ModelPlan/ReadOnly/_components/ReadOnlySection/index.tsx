@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 
 import Tooltip from 'components/shared/Tooltip';
+import {
+  getKeys,
+  TranslationFieldPropertiesWithOptions
+} from 'types/translation';
 
 export type ReadOnlySectionProps = {
   copy?: string | null | React.ReactNode;
@@ -147,6 +151,35 @@ const ReadOnlySection = ({
       )}
     </Grid>
   );
+};
+
+/* 
+  Util function for prepping data to listItems prop of ReadOnlySection
+  Using translation config instead of raw data allows us to ensure a predetermined order of render
+*/
+export const formatListItems = <T extends string | keyof T>(
+  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
+  value: T[] | undefined // field value/enum array
+): string[] => {
+  return getKeys(config.options)
+    .filter(option => value?.includes(option))
+    .map((option): string => config.options[option]);
+};
+
+/* 
+  Util function for prepping data to listOtherItems prop of ReadOnlySection
+  Using translation config instead of raw data allows us to ensure a predetermined order of render
+*/
+export const formatListOtherItems = <T extends string | keyof T>(
+  config: TranslationFieldPropertiesWithOptions<T>, // Translation config
+  value: T[] | undefined, // field value/enum array
+  values: any // All data for the task list section returned from query
+): (string | null | undefined)[] => {
+  return getKeys(config.options)
+    .filter(option => value?.includes(option))
+    .map((option): string | null | undefined => {
+      return values[config.optionsRelatedInfo?.[option]];
+    });
 };
 
 export default ReadOnlySection;
