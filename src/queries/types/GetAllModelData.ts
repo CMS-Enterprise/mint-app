@@ -197,6 +197,7 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   excludeCertainCharacteristicsCriteria: string | null;
   excludeCertainCharacteristicsNote: string | null;
   beneficiarySelectionFrequency: FrequencyTypeNew[];
+  beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
   precedenceRules: YesNoType[];

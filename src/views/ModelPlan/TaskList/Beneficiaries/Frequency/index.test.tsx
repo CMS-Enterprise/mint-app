@@ -24,6 +24,7 @@ const mockData: BeneficiaryFrequencyType = {
   id: '123',
   beneficiarySelectionFrequency: FrequencyType.OTHER,
   beneficiarySelectionFrequencyNote: '',
+  beneficiarySelectionFrequencyContinually: 'continually',
   beneficiarySelectionFrequencyOther: 'Very often',
   beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',

@@ -283,8 +283,9 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionOther: TranslationFieldProperties;
   // Frequency
   beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
-  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
+  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
   precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;

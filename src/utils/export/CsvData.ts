@@ -178,6 +178,7 @@ const csvFields = [
   'beneficiaries.excludeCertainCharacteristicsCriteria',
   'beneficiaries.excludeCertainCharacteristicsNote',
   'beneficiaries.beneficiarySelectionFrequency',
+  'beneficiaries.beneficiarySelectionFrequencyContinually',
   'beneficiaries.beneficiarySelectionFrequencyNote',
   'beneficiaries.beneficiarySelectionFrequencyOther',
   'beneficiaries.precedenceRules',

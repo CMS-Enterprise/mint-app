@@ -1,6 +1,6 @@
 import { TranslationPayments } from 'types/translation';
 
-import { fequencyOptions } from './miscellaneous';
+import { frequencyOptions } from './miscellaneous';
 
 export const payments: TranslationPayments = {
   fundingSource: {
@@ -639,7 +639,7 @@ export const payments: TranslationPayments = {
     dataType: 'enum',
     formType: 'multiSelect',
     multiSelectLabel: 'Selected payment frequency',
-    options: fequencyOptions,
+    options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
       SEMIANUALLY: '',

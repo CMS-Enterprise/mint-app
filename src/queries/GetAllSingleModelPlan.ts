@@ -175,6 +175,7 @@ export default gql`
         excludeCertainCharacteristicsCriteria
         excludeCertainCharacteristicsNote
         beneficiarySelectionFrequency
+        beneficiarySelectionFrequencyContinually
         beneficiarySelectionFrequencyNote
         beneficiarySelectionFrequencyOther
         precedenceRules

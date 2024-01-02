@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   BeneficiariesType,
-  FrequencyType,
+  FrequencyTypeNew,
   TriStateAnswer,
   useGetAllBeneficiariesQuery
 } from 'gql/gen/graphql';
@@ -278,7 +278,7 @@ const ReadOnlyBeneficiaries = ({
             heading={beneficiariesT('beneficiarySelectionFrequency.label')}
             copy={
               beneficiarySelectionFrequency &&
-              (beneficiarySelectionFrequency === FrequencyType.OTHER
+              (beneficiarySelectionFrequency === FrequencyTypeNew.OTHER
                 ? `${beneficiariesT(
                     `beneficiarySelectionFrequency.options.${beneficiarySelectionFrequency}`,
                     ''

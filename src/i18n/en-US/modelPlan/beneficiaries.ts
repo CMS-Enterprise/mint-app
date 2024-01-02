@@ -215,9 +215,18 @@ export const beneficiaries: TranslationBeneficiaries = {
       SEMIANUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
-      CONTINUALLY: 'providerAdditionFrequencyContinually',
-      OTHER: 'providerAdditionFrequencyOther'
+      CONTINUALLY: 'beneficiarySelectionFrequencyContinually',
+      OTHER: 'beneficiarySelectionFrequencyOther'
     },
+    filterGroups: ['cmmi']
+  },
+  beneficiarySelectionFrequencyContinually: {
+    gqlField: 'beneficiarySelectionFrequencyContinually',
+    goField: 'BeneficiarySelectionFrequencyContinually',
+    dbField: 'beneficiary_selection_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['cmmi']
   },
   beneficiarySelectionFrequencyOther: {
