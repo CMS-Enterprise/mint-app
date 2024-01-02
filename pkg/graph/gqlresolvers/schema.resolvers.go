@@ -731,14 +731,14 @@ func (r *planOpsEvalAndLearningResolver) DataToSendParticicipants(ctx context.Co
 }
 
 // DataSharingFrequency is the resolver for the dataSharingFrequency field.
-func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
-	dataFrequencyTypes := models.ConvertEnums[model.DataFrequencyType](obj.DataSharingFrequency)
+func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyTypeNew, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyTypeNew](obj.DataSharingFrequency)
 	return dataFrequencyTypes, nil
 }
 
 // DataCollectionFrequency is the resolver for the dataCollectionFrequency field.
-func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
-	dataFrequencyTypes := models.ConvertEnums[model.DataFrequencyType](obj.DataCollectionFrequency)
+func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyTypeNew, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyTypeNew](obj.DataCollectionFrequency)
 	return dataFrequencyTypes, nil
 }
 

@@ -227,18 +227,6 @@ export enum DataForMonitoringType {
   SITE_VISITS = 'SITE_VISITS'
 }
 
-export enum DataFrequencyType {
-  ANNUALLY = 'ANNUALLY',
-  BIANNUALLY = 'BIANNUALLY',
-  DAILY = 'DAILY',
-  MONTHLY = 'MONTHLY',
-  NOT_PLANNING_TO_DO_THIS = 'NOT_PLANNING_TO_DO_THIS',
-  OTHER = 'OTHER',
-  QUARTERLY = 'QUARTERLY',
-  SEMI_MONTHLY = 'SEMI_MONTHLY',
-  WEEKLY = 'WEEKLY'
-}
-
 export enum DataFullTimeOrIncrementalType {
   FULL_TIME = 'FULL_TIME',
   INCREMENTAL = 'INCREMENTAL'
@@ -1641,7 +1629,8 @@ export type PlanOpsEvalAndLearning = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  dataCollectionFrequency: Array<DataFrequencyType>;
+  dataCollectionFrequency: Array<FrequencyTypeNew>;
+  dataCollectionFrequencyContinually?: Maybe<Scalars['String']['output']>;
   dataCollectionFrequencyNote?: Maybe<Scalars['String']['output']>;
   dataCollectionFrequencyOther?: Maybe<Scalars['String']['output']>;
   dataCollectionStarts?: Maybe<DataStartsType>;
@@ -1656,7 +1645,8 @@ export type PlanOpsEvalAndLearning = {
   dataNeededForMonitoringOther?: Maybe<Scalars['String']['output']>;
   dataResponseFileFrequency?: Maybe<Scalars['String']['output']>;
   dataResponseType?: Maybe<Scalars['String']['output']>;
-  dataSharingFrequency: Array<DataFrequencyType>;
+  dataSharingFrequency: Array<FrequencyTypeNew>;
+  dataSharingFrequencyContinually?: Maybe<Scalars['String']['output']>;
   dataSharingFrequencyOther?: Maybe<Scalars['String']['output']>;
   dataSharingStarts?: Maybe<DataStartsType>;
   dataSharingStartsNote?: Maybe<Scalars['String']['output']>;
@@ -1755,7 +1745,8 @@ export type PlanOpsEvalAndLearningChanges = {
   contractorSupportHow?: InputMaybe<Scalars['String']['input']>;
   contractorSupportNote?: InputMaybe<Scalars['String']['input']>;
   contractorSupportOther?: InputMaybe<Scalars['String']['input']>;
-  dataCollectionFrequency?: InputMaybe<Array<DataFrequencyType>>;
+  dataCollectionFrequency?: InputMaybe<Array<FrequencyTypeNew>>;
+  dataCollectionFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   dataCollectionFrequencyNote?: InputMaybe<Scalars['String']['input']>;
   dataCollectionFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   dataCollectionStarts?: InputMaybe<DataStartsType>;
@@ -1770,7 +1761,8 @@ export type PlanOpsEvalAndLearningChanges = {
   dataNeededForMonitoringOther?: InputMaybe<Scalars['String']['input']>;
   dataResponseFileFrequency?: InputMaybe<Scalars['String']['input']>;
   dataResponseType?: InputMaybe<Scalars['String']['input']>;
-  dataSharingFrequency?: InputMaybe<Array<DataFrequencyType>>;
+  dataSharingFrequency?: InputMaybe<Array<FrequencyTypeNew>>;
+  dataSharingFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   dataSharingFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   dataSharingStarts?: InputMaybe<DataStartsType>;
   dataSharingStartsNote?: InputMaybe<Scalars['String']['input']>;
@@ -2830,7 +2822,7 @@ export type GetAllOpsEvalAndLearningQueryVariables = Exact<{
 }>;
 
 
-export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: boolean | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<DataFrequencyType>, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<DataFrequencyType>, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
+export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: boolean | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyTypeNew>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyTypeNew>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
 
 export type GetCcwAndQualityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2844,7 +2836,7 @@ export type GetDataSharingQueryVariables = Exact<{
 }>;
 
 
-export type GetDataSharingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<DataFrequencyType>, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<DataFrequencyType>, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null } } };
+export type GetDataSharingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyTypeNew>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyTypeNew>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null } } };
 
 export type GetEvaluationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -4536,11 +4528,13 @@ export const GetAllOpsEvalAndLearningDocument = gql`
       dataSharingStarts
       dataSharingStartsOther
       dataSharingFrequency
+      dataSharingFrequencyContinually
       dataSharingFrequencyOther
       dataSharingStartsNote
       dataCollectionStarts
       dataCollectionStartsOther
       dataCollectionFrequency
+      dataCollectionFrequencyContinually
       dataCollectionFrequencyOther
       dataCollectionFrequencyNote
       qualityReportingStarts
@@ -4663,11 +4657,13 @@ export const GetDataSharingDocument = gql`
       dataSharingStarts
       dataSharingStartsOther
       dataSharingFrequency
+      dataSharingFrequencyContinually
       dataSharingFrequencyOther
       dataSharingStartsNote
       dataCollectionStarts
       dataCollectionStartsOther
       dataCollectionFrequency
+      dataCollectionFrequencyContinually
       dataCollectionFrequencyOther
       dataCollectionFrequencyNote
       qualityReportingStarts

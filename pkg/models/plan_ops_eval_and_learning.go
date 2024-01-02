@@ -101,19 +101,21 @@ type PlanOpsEvalAndLearning struct {
 	QualityPerformanceImpactsPaymentNote         *string `json:"qualityPerformanceImpactsPaymentNote" db:"quality_performance_impacts_payment_note"`
 
 	//Page 8
-	DataSharingStarts            *DataStartsType `json:"dataSharingStarts" db:"data_sharing_starts" statusWeight:"1"`
-	DataSharingStartsOther       *string         `json:"dataSharingStartsOther" db:"data_sharing_starts_other"`
-	DataSharingFrequency         pq.StringArray  `json:"dataSharingFrequency" db:"data_sharing_frequency"`
-	DataSharingFrequencyOther    *string         `json:"dataSharingFrequencyOther" db:"data_sharing_frequency_other"`
-	DataSharingStartsNote        *string         `json:"dataSharingStartsNote" db:"data_sharing_starts_note"`
-	DataCollectionStarts         *DataStartsType `json:"dataCollectionStarts" db:"data_collection_starts" statusWeight:"1"`
-	DataCollectionStartsOther    *string         `json:"dataCollectionStartsOther" db:"data_collection_starts_other"`
-	DataCollectionFrequency      pq.StringArray  `json:"dataCollectionFrequency" db:"data_collection_frequency"`
-	DataCollectionFrequencyOther *string         `json:"dataCollectionFrequencyOther" db:"data_collection_frequency_other"`
-	DataCollectionFrequencyNote  *string         `json:"dataCollectionFrequencyNote" db:"data_collection_frequency_note"`
-	QualityReportingStarts       *DataStartsType `json:"qualityReportingStarts" db:"quality_reporting_starts" statusWeight:"1"`
-	QualityReportingStartsOther  *string         `json:"qualityReportingStartsOther" db:"quality_reporting_starts_other"`
-	QualityReportingStartsNote   *string         `json:"qualityReportingStartsNote" db:"quality_reporting_starts_note"`
+	DataSharingStarts                  *DataStartsType `json:"dataSharingStarts" db:"data_sharing_starts" statusWeight:"1"`
+	DataSharingStartsOther             *string         `json:"dataSharingStartsOther" db:"data_sharing_starts_other"`
+	DataSharingFrequency               pq.StringArray  `json:"dataSharingFrequency" db:"data_sharing_frequency"`
+	DataSharingFrequencyContinually    *string         `json:"dataSharingFrequencyContinually" db:"data_sharing_frequency_continually"`
+	DataSharingFrequencyOther          *string         `json:"dataSharingFrequencyOther" db:"data_sharing_frequency_other"`
+	DataSharingStartsNote              *string         `json:"dataSharingStartsNote" db:"data_sharing_starts_note"`
+	DataCollectionStarts               *DataStartsType `json:"dataCollectionStarts" db:"data_collection_starts" statusWeight:"1"`
+	DataCollectionStartsOther          *string         `json:"dataCollectionStartsOther" db:"data_collection_starts_other"`
+	DataCollectionFrequency            pq.StringArray  `json:"dataCollectionFrequency" db:"data_collection_frequency"`
+	DataCollectionFrequencyContinually *string         `json:"dataCollectionFrequencyContinually" db:"data_collection_frequency_continually"`
+	DataCollectionFrequencyOther       *string         `json:"dataCollectionFrequencyOther" db:"data_collection_frequency_other"`
+	DataCollectionFrequencyNote        *string         `json:"dataCollectionFrequencyNote" db:"data_collection_frequency_note"`
+	QualityReportingStarts             *DataStartsType `json:"qualityReportingStarts" db:"quality_reporting_starts" statusWeight:"1"`
+	QualityReportingStartsOther        *string         `json:"qualityReportingStartsOther" db:"quality_reporting_starts_other"`
+	QualityReportingStartsNote         *string         `json:"qualityReportingStartsNote" db:"quality_reporting_starts_note"`
 
 	//Page 9
 	ModelLearningSystems      pq.StringArray `json:"modelLearningSystems" db:"model_learning_systems"`
