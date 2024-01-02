@@ -141,7 +141,6 @@ export default gql`
         participantsCurrentlyInModelsNote
         modelApplicationLevel
         providerAdditionFrequency
-        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod
@@ -323,7 +322,6 @@ export default gql`
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote
         anticipatedPaymentFrequency
-        anticipatedPaymentFrequencyContinually
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         fundingSource

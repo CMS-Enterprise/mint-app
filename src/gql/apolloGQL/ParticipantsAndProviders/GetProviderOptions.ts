@@ -8,7 +8,6 @@ export default gql(/* GraphQL */ `
       participantsAndProviders {
         id
         providerAdditionFrequency
-        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod

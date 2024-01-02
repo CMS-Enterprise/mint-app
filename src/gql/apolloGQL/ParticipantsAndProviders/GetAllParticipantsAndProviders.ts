@@ -43,7 +43,6 @@ export default gql(/* GraphQL */ `
         participantsIdsOther
         participantsIDSNote
         providerAdditionFrequency
-        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod

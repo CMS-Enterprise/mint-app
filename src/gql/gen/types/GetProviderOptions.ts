@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FrequencyTypeNew, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
+import { FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetProviderOptions
@@ -18,8 +18,7 @@ export interface GetProviderOptions_modelPlan_participantsAndProviders_readyForR
 export interface GetProviderOptions_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
-  providerAdditionFrequency: FrequencyTypeNew[];
-  providerAdditionFrequencyContinually: string | null;
+  providerAdditionFrequency: FrequencyType | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];
