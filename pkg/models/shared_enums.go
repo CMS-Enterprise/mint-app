@@ -34,19 +34,6 @@ const (
 	SelectionOther      FrequencyType = "OTHER"
 )
 
-// FrequencyTypeNew represents the possible Frequency options
-type FrequencyTypeNew string
-
-// These constants represent the different values of CMSCenter
-const (
-	FrequencyTypeNewAnnually    FrequencyTypeNew = "ANNUALLY"
-	FrequencyTypeNewSemianually FrequencyTypeNew = "SEMIANUALLY"
-	FrequencyTypeNewQuarterly   FrequencyTypeNew = "QUARTERLY"
-	FrequencyTypeNewMonthly     FrequencyTypeNew = "MONTHLY"
-	FrequencyTypeNewContinually FrequencyTypeNew = "CONTINUALLY"
-	FrequencyTypeNewOther       FrequencyTypeNew = "OTHER"
-)
-
 // ConfidenceType representes the values possible for the amount of confidence in an answer
 type ConfidenceType string
 
