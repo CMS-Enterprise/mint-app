@@ -52,18 +52,19 @@ type PlanParticipantsAndProviders struct {
 	ParticipantsIDSNote               *string        `json:"participantsIDSNote" db:"participants_ids_note"`
 
 	//page 5
-	ProviderAdditionFrequency      *FrequencyType `json:"providerAdditionFrequency" db:"provider_addition_frequency" statusWeight:"1"`
-	ProviderAdditionFrequencyOther *string        `json:"providerAdditionFrequencyOther" db:"provider_addition_frequency_other"`
-	ProviderAdditionFrequencyNote  *string        `json:"providerAdditionFrequencyNote" db:"provider_addition_frequency_note"`
-	ProviderAddMethod              pq.StringArray `json:"providerAddMethod" db:"provider_add_method"`
-	ProviderAddMethodOther         *string        `json:"providerAddMethodOther" db:"provider_add_method_other"`
-	ProviderAddMethodNote          *string        `json:"providerAddMethodNote" db:"provider_add_method_note"`
-	ProviderLeaveMethod            pq.StringArray `json:"providerLeaveMethod" db:"provider_leave_method"`
-	ProviderLeaveMethodOther       *string        `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
-	ProviderLeaveMethodNote        *string        `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
-	ProviderOverlap                *OverlapType   `json:"providerOverlap" db:"provider_overlap" statusWeight:"1"`
-	ProviderOverlapHierarchy       *string        `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
-	ProviderOverlapNote            *string        `json:"providerOverlapNote" db:"provider_overlap_note"`
+	ProviderAdditionFrequency            pq.StringArray `json:"providerAdditionFrequency" db:"provider_addition_frequency" statusWeight:"1"`
+	ProviderAdditionFrequencyContinually *string        `json:"providerAdditionFrequencyContinually" db:"provider_addition_frequency_continually"`
+	ProviderAdditionFrequencyOther       *string        `json:"providerAdditionFrequencyOther" db:"provider_addition_frequency_other"`
+	ProviderAdditionFrequencyNote        *string        `json:"providerAdditionFrequencyNote" db:"provider_addition_frequency_note"`
+	ProviderAddMethod                    pq.StringArray `json:"providerAddMethod" db:"provider_add_method"`
+	ProviderAddMethodOther               *string        `json:"providerAddMethodOther" db:"provider_add_method_other"`
+	ProviderAddMethodNote                *string        `json:"providerAddMethodNote" db:"provider_add_method_note"`
+	ProviderLeaveMethod                  pq.StringArray `json:"providerLeaveMethod" db:"provider_leave_method"`
+	ProviderLeaveMethodOther             *string        `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
+	ProviderLeaveMethodNote              *string        `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
+	ProviderOverlap                      *OverlapType   `json:"providerOverlap" db:"provider_overlap" statusWeight:"1"`
+	ProviderOverlapHierarchy             *string        `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
+	ProviderOverlapNote                  *string        `json:"providerOverlapNote" db:"provider_overlap_note"`
 }
 
 // RecruitmentType represents the possible RecruitmentType options

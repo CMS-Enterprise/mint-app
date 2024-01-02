@@ -1,5 +1,7 @@
 import { TranslationParticipantsAndProviders } from 'types/translation';
 
+import { fequencyOptions } from './miscellaneous';
+
 export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participants: {
     gqlField: 'participants',
@@ -419,14 +421,24 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'How frequently are providers added?',
     dataType: 'enum',
     formType: 'radio',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Biannually',
-      MONTHLY: 'Monthly',
-      QUARTERLY: 'Quarterly',
-      ROLLING: 'Rolling',
-      OTHER: 'Other'
+    options: fequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'providerAdditionFrequencyContinually',
+      OTHER: 'providerAdditionFrequencyOther'
     },
+    filterGroups: ['oact', 'ipc']
+  },
+  providerAdditionFrequencyContinually: {
+    gqlField: 'providerAdditionFrequencyContinually',
+    goField: 'ProviderAdditionFrequencyContinually',
+    dbField: 'provider_addition_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['oact', 'ipc']
   },
   providerAdditionFrequencyOther: {
@@ -435,7 +447,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_addition_frequency_other',
     label: 'Please specify',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
     filterGroups: ['oact', 'ipc']
   },
   providerAdditionFrequencyNote: {

@@ -2,14 +2,14 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetComplexityDocument, GetComplexityQuery } from 'gql/gen/graphql';
-
 import {
-  AnticipatedPaymentFrequencyType,
   ClaimsBasedPayType,
   ComplexityCalculationLevelType,
+  FrequencyTypeNew,
+  GetComplexityDocument,
+  GetComplexityQuery,
   PayType
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import ClaimsBasedPayment from './index';
 
@@ -25,7 +25,7 @@ const mockData: GetComplexityType = {
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow: 'lorem ipsum',
   canParticipantsSelectBetweenPaymentMechanismsNote: null,
-  anticipatedPaymentFrequency: [AnticipatedPaymentFrequencyType.ANNUALLY],
+  anticipatedPaymentFrequency: [FrequencyTypeNew.ANNUALLY],
   anticipatedPaymentFrequencyOther: null,
   anticipatedPaymentFrequencyNote: null
 };

@@ -2632,11 +2632,24 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     How frequently are providers added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Biannually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -5200,17 +5213,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -5259,17 +5262,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -5901,6 +5894,9 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         Semiannually
                       </div>
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -9233,11 +9229,24 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     How frequently are providers added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Biannually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        Freq other
+                      </li>
+                    </ul>
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -11801,17 +11810,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -11860,17 +11859,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     </li>
                     <ul
                       data-testid="other-entry"
-                    >
-                      <li
-                        class="font-sans-md line-height-sans-4 "
-                      >
-                        <em
-                          class="text-base"
-                        >
-                          No additional information specified
-                        </em>
-                      </li>
-                    </ul>
+                    />
                   </ul>
                 </div>
               </div>
@@ -12502,6 +12491,9 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                         Semiannually
                       </div>
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div

@@ -33,17 +33,6 @@ export enum AlternativePaymentModelType {
   REGULAR = "REGULAR",
 }
 
-export enum AnticipatedPaymentFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMIMONTHLY = "SEMIMONTHLY",
-  WEEKLY = "WEEKLY",
-}
-
 export enum AuthorityAllowance {
   ACA = "ACA",
   CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
@@ -226,6 +215,15 @@ export enum FrequencyType {
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
   ROLLING = "ROLLING",
+}
+
+export enum FrequencyTypeNew {
+  ANNUALLY = "ANNUALLY",
+  CONTINUALLY = "CONTINUALLY",
+  MONTHLY = "MONTHLY",
+  OTHER = "OTHER",
+  QUARTERLY = "QUARTERLY",
+  SEMIANUALLY = "SEMIANUALLY",
 }
 
 export enum FundingSource {
@@ -1016,7 +1014,8 @@ export interface PlanParticipantsAndProvidersChanges {
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
-  providerAdditionFrequency?: FrequencyType | null;
+  providerAdditionFrequency?: FrequencyTypeNew[] | null;
+  providerAdditionFrequencyContinually?: string | null;
   providerAdditionFrequencyOther?: string | null;
   providerAdditionFrequencyNote?: string | null;
   providerAddMethod?: ProviderAddType[] | null;
@@ -1084,8 +1083,9 @@ export interface PlanPaymentsChanges {
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
-  anticipatedPaymentFrequency?: AnticipatedPaymentFrequencyType[] | null;
+  anticipatedPaymentFrequency?: FrequencyTypeNew[] | null;
   anticipatedPaymentFrequencyOther?: string | null;
+  anticipatedPaymentFrequencyContinually?: string | null;
   anticipatedPaymentFrequencyNote?: string | null;
   willRecoverPayments?: boolean | null;
   willRecoverPaymentsNote?: string | null;
