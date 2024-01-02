@@ -176,7 +176,7 @@ export const formatListItems = <T extends string | keyof T>(
 export const formatListOtherItems = <T extends string | keyof T>(
   config: TranslationFieldPropertiesWithOptions<T>, // Translation config
   value: T[] | undefined, // field value/enum array
-  values: any // All data for the ttask list section returned from query
+  values: any // All data for the task list section returned from query
 ): (string | null | undefined)[] => {
   return getKeys(config.options)
     .filter(option => value?.includes(option))
