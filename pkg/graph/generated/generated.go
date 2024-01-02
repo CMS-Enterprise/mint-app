@@ -362,46 +362,47 @@ type ComplexityRoot struct {
 	}
 
 	PlanBeneficiaries struct {
-		Beneficiaries                         func(childComplexity int) int
-		BeneficiariesNote                     func(childComplexity int) int
-		BeneficiariesOther                    func(childComplexity int) int
-		BeneficiaryOverlap                    func(childComplexity int) int
-		BeneficiaryOverlapNote                func(childComplexity int) int
-		BeneficiarySelectionFrequency         func(childComplexity int) int
-		BeneficiarySelectionFrequencyNote     func(childComplexity int) int
-		BeneficiarySelectionFrequencyOther    func(childComplexity int) int
-		BeneficiarySelectionMethod            func(childComplexity int) int
-		BeneficiarySelectionNote              func(childComplexity int) int
-		BeneficiarySelectionOther             func(childComplexity int) int
-		ConfidenceNote                        func(childComplexity int) int
-		CreatedBy                             func(childComplexity int) int
-		CreatedByUserAccount                  func(childComplexity int) int
-		CreatedDts                            func(childComplexity int) int
-		DiseaseSpecificGroup                  func(childComplexity int) int
-		EstimateConfidence                    func(childComplexity int) int
-		ExcludeCertainCharacteristics         func(childComplexity int) int
-		ExcludeCertainCharacteristicsCriteria func(childComplexity int) int
-		ExcludeCertainCharacteristicsNote     func(childComplexity int) int
-		ID                                    func(childComplexity int) int
-		ModelPlanID                           func(childComplexity int) int
-		ModifiedBy                            func(childComplexity int) int
-		ModifiedByUserAccount                 func(childComplexity int) int
-		ModifiedDts                           func(childComplexity int) int
-		NumberPeopleImpacted                  func(childComplexity int) int
-		PrecedenceRules                       func(childComplexity int) int
-		PrecedenceRulesNo                     func(childComplexity int) int
-		PrecedenceRulesNote                   func(childComplexity int) int
-		PrecedenceRulesYes                    func(childComplexity int) int
-		ReadyForClearanceBy                   func(childComplexity int) int
-		ReadyForClearanceByUserAccount        func(childComplexity int) int
-		ReadyForClearanceDts                  func(childComplexity int) int
-		ReadyForReviewBy                      func(childComplexity int) int
-		ReadyForReviewByUserAccount           func(childComplexity int) int
-		ReadyForReviewDts                     func(childComplexity int) int
-		Status                                func(childComplexity int) int
-		TreatDualElligibleDifferent           func(childComplexity int) int
-		TreatDualElligibleDifferentHow        func(childComplexity int) int
-		TreatDualElligibleDifferentNote       func(childComplexity int) int
+		Beneficiaries                            func(childComplexity int) int
+		BeneficiariesNote                        func(childComplexity int) int
+		BeneficiariesOther                       func(childComplexity int) int
+		BeneficiaryOverlap                       func(childComplexity int) int
+		BeneficiaryOverlapNote                   func(childComplexity int) int
+		BeneficiarySelectionFrequency            func(childComplexity int) int
+		BeneficiarySelectionFrequencyContinually func(childComplexity int) int
+		BeneficiarySelectionFrequencyNote        func(childComplexity int) int
+		BeneficiarySelectionFrequencyOther       func(childComplexity int) int
+		BeneficiarySelectionMethod               func(childComplexity int) int
+		BeneficiarySelectionNote                 func(childComplexity int) int
+		BeneficiarySelectionOther                func(childComplexity int) int
+		ConfidenceNote                           func(childComplexity int) int
+		CreatedBy                                func(childComplexity int) int
+		CreatedByUserAccount                     func(childComplexity int) int
+		CreatedDts                               func(childComplexity int) int
+		DiseaseSpecificGroup                     func(childComplexity int) int
+		EstimateConfidence                       func(childComplexity int) int
+		ExcludeCertainCharacteristics            func(childComplexity int) int
+		ExcludeCertainCharacteristicsCriteria    func(childComplexity int) int
+		ExcludeCertainCharacteristicsNote        func(childComplexity int) int
+		ID                                       func(childComplexity int) int
+		ModelPlanID                              func(childComplexity int) int
+		ModifiedBy                               func(childComplexity int) int
+		ModifiedByUserAccount                    func(childComplexity int) int
+		ModifiedDts                              func(childComplexity int) int
+		NumberPeopleImpacted                     func(childComplexity int) int
+		PrecedenceRules                          func(childComplexity int) int
+		PrecedenceRulesNo                        func(childComplexity int) int
+		PrecedenceRulesNote                      func(childComplexity int) int
+		PrecedenceRulesYes                       func(childComplexity int) int
+		ReadyForClearanceBy                      func(childComplexity int) int
+		ReadyForClearanceByUserAccount           func(childComplexity int) int
+		ReadyForClearanceDts                     func(childComplexity int) int
+		ReadyForReviewBy                         func(childComplexity int) int
+		ReadyForReviewByUserAccount              func(childComplexity int) int
+		ReadyForReviewDts                        func(childComplexity int) int
+		Status                                   func(childComplexity int) int
+		TreatDualElligibleDifferent              func(childComplexity int) int
+		TreatDualElligibleDifferentHow           func(childComplexity int) int
+		TreatDualElligibleDifferentNote          func(childComplexity int) int
 	}
 
 	PlanCollaborator struct {
@@ -1053,6 +1054,8 @@ type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
+
+	BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyTypeNew, error)
 
 	PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error)
 }
@@ -3078,6 +3081,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequency(childComplexity), true
+
+	case "PlanBeneficiaries.beneficiarySelectionFrequencyContinually":
+		if e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequencyContinually(childComplexity), true
 
 	case "PlanBeneficiaries.beneficiarySelectionFrequencyNote":
 		if e.complexity.PlanBeneficiaries.BeneficiarySelectionFrequencyNote == nil {
@@ -7709,7 +7719,8 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyTypeNew!]!
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
@@ -7756,7 +7767,8 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequency: [FrequencyTypeNew!]
+  beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
@@ -9034,14 +9046,14 @@ enum ConfidenceType {
   COMPLETELY
 }
 
-enum FrequencyType {
-  ANNUALLY
-  BIANNUALLY
-  QUARTERLY
-  MONTHLY
-  ROLLING
-  OTHER
-}
+# enum FrequencyType {
+#   ANNUALLY
+#   BIANNUALLY
+#   QUARTERLY
+#   MONTHLY
+#   ROLLING
+#   OTHER
+# }
 
 enum DataFrequencyType {
     ANNUALLY
@@ -15582,6 +15594,8 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionNote(ctx, field)
 			case "beneficiarySelectionFrequency":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field)
+			case "beneficiarySelectionFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field)
 			case "beneficiarySelectionFrequencyOther":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field)
 			case "beneficiarySelectionFrequencyNote":
@@ -17834,6 +17848,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionNote(ctx, field)
 			case "beneficiarySelectionFrequency":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field)
+			case "beneficiarySelectionFrequencyContinually":
+				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field)
 			case "beneficiarySelectionFrequencyOther":
 				return ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field)
 			case "beneficiarySelectionFrequencyNote":
@@ -26098,7 +26114,51 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequency(ctx
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.BeneficiarySelectionFrequency, nil
+		return ec.resolvers.PlanBeneficiaries().BeneficiarySelectionFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyTypeNew)
+	fc.Result = res
+	return ec.marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyTypeNew does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiarySelectionFrequencyContinually, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -26107,19 +26167,19 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequency(ctx
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.FrequencyType)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyType does not have child fields")
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -56380,7 +56440,43 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 		case "beneficiarySelectionNote":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionNote(ctx, field, obj)
 		case "beneficiarySelectionFrequency":
-			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field, obj)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBeneficiaries_beneficiarySelectionFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "beneficiarySelectionFrequencyContinually":
+			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequencyContinually(ctx, field, obj)
 		case "beneficiarySelectionFrequencyOther":
 			out.Values[i] = ec._PlanBeneficiaries_beneficiarySelectionFrequencyOther(ctx, field, obj)
 		case "beneficiarySelectionFrequencyNote":
@@ -68538,23 +68634,6 @@ func (ec *executionContext) marshalOExistingModel2ᚖgithubᚗcomᚋcmsgovᚋmin
 		return graphql.Null
 	}
 	return ec._ExistingModel(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, v interface{}) (*models.FrequencyType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.FrequencyType(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, sel ast.SelectionSet, v *models.FrequencyType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	res := graphql.MarshalString(string(*v))
-	return res
 }
 
 func (ec *executionContext) unmarshalOFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, v interface{}) ([]models.FrequencyTypeNew, error) {

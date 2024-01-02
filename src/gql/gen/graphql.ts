@@ -395,15 +395,6 @@ export type FieldValue = {
   old?: Maybe<Scalars['Any']['output']>;
 };
 
-export enum FrequencyType {
-  ANNUALLY = 'ANNUALLY',
-  BIANNUALLY = 'BIANNUALLY',
-  MONTHLY = 'MONTHLY',
-  OTHER = 'OTHER',
-  QUARTERLY = 'QUARTERLY',
-  ROLLING = 'ROLLING'
-}
-
 export enum FrequencyTypeNew {
   ANNUALLY = 'ANNUALLY',
   CONTINUALLY = 'CONTINUALLY',
@@ -1259,7 +1250,8 @@ export type PlanBeneficiaries = {
   beneficiariesOther?: Maybe<Scalars['String']['output']>;
   beneficiaryOverlap?: Maybe<OverlapType>;
   beneficiaryOverlapNote?: Maybe<Scalars['String']['output']>;
-  beneficiarySelectionFrequency?: Maybe<FrequencyType>;
+  beneficiarySelectionFrequency: Array<FrequencyTypeNew>;
+  beneficiarySelectionFrequencyContinually?: Maybe<Scalars['String']['output']>;
   beneficiarySelectionFrequencyNote?: Maybe<Scalars['String']['output']>;
   beneficiarySelectionFrequencyOther?: Maybe<Scalars['String']['output']>;
   beneficiarySelectionMethod: Array<SelectionMethodType>;
@@ -1302,7 +1294,8 @@ export type PlanBeneficiariesChanges = {
   beneficiariesOther?: InputMaybe<Scalars['String']['input']>;
   beneficiaryOverlap?: InputMaybe<OverlapType>;
   beneficiaryOverlapNote?: InputMaybe<Scalars['String']['input']>;
-  beneficiarySelectionFrequency?: InputMaybe<FrequencyType>;
+  beneficiarySelectionFrequency?: InputMaybe<Array<FrequencyTypeNew>>;
+  beneficiarySelectionFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   beneficiarySelectionFrequencyNote?: InputMaybe<Scalars['String']['input']>;
   beneficiarySelectionFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   beneficiarySelectionMethod?: InputMaybe<Array<SelectionMethodType>>;
@@ -2683,7 +2676,7 @@ export type GetAllBeneficiariesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBeneficiariesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, modelPlanID: UUID, beneficiaries: Array<BeneficiariesType>, diseaseSpecificGroup?: string | null, beneficiariesOther?: string | null, beneficiariesNote?: string | null, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, beneficiarySelectionOther?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyOther?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, status: TaskStatus } } };
+export type GetAllBeneficiariesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, modelPlanID: UUID, beneficiaries: Array<BeneficiariesType>, diseaseSpecificGroup?: string | null, beneficiariesOther?: string | null, beneficiariesNote?: string | null, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, beneficiarySelectionOther?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyTypeNew>, beneficiarySelectionFrequencyOther?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, status: TaskStatus } } };
 
 export type GetBeneficiaryIdentificationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2697,7 +2690,7 @@ export type GetFrequencyQueryVariables = Exact<{
 }>;
 
 
-export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency?: FrequencyType | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency: Array<FrequencyTypeNew>, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetPeopleImpactedQueryVariables = Exact<{
   id: Scalars['UUID']['input'];

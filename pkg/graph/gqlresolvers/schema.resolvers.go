@@ -555,6 +555,11 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
+// BeneficiarySelectionFrequency is the resolver for the beneficiarySelectionFrequency field.
+func (r *planBeneficiariesResolver) BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyTypeNew, error) {
+	return models.ConvertEnums[models.FrequencyTypeNew](obj.BeneficiarySelectionFrequency), nil
+}
+
 // PrecedenceRules is the resolver for the precedenceRules field.
 func (r *planBeneficiariesResolver) PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error) {
 	return models.ConvertEnums[models.YesNoType](obj.PrecedenceRules), nil
