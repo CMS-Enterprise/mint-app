@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyTypeNew, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, FrequencyType, YesNoType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyTypeNew, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllSingleModelData
@@ -196,7 +196,8 @@ export interface GetAllSingleModelData_modelPlan_beneficiaries {
   excludeCertainCharacteristics: TriStateAnswer | null;
   excludeCertainCharacteristicsCriteria: string | null;
   excludeCertainCharacteristicsNote: string | null;
-  beneficiarySelectionFrequency: FrequencyType | null;
+  beneficiarySelectionFrequency: FrequencyTypeNew[];
+  beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
   precedenceRules: YesNoType[];

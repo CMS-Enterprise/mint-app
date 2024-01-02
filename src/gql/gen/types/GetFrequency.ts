@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FrequencyType, OverlapType, YesNoType, TaskStatus } from "./../../../types/graphql-global-types";
+import { FrequencyTypeNew, OverlapType, YesNoType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetFrequency
@@ -18,7 +18,8 @@ export interface GetFrequency_modelPlan_beneficiaries_readyForReviewByUserAccoun
 export interface GetFrequency_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
-  beneficiarySelectionFrequency: FrequencyType | null;
+  beneficiarySelectionFrequency: FrequencyTypeNew[];
+  beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiarySelectionFrequencyOther: string | null;
   beneficiaryOverlap: OverlapType | null;

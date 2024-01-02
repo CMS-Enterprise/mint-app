@@ -208,15 +208,6 @@ export enum EvaluationApproachType {
   OTHER = "OTHER",
 }
 
-export enum FrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  MONTHLY = "MONTHLY",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  ROLLING = "ROLLING",
-}
-
 export enum FrequencyTypeNew {
   ANNUALLY = "ANNUALLY",
   CONTINUALLY = "CONTINUALLY",
@@ -737,7 +728,8 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionMethod?: SelectionMethodType[] | null;
   beneficiarySelectionOther?: string | null;
   beneficiarySelectionNote?: string | null;
-  beneficiarySelectionFrequency?: FrequencyType | null;
+  beneficiarySelectionFrequency?: FrequencyTypeNew[] | null;
+  beneficiarySelectionFrequencyContinually?: string | null;
   beneficiarySelectionFrequencyOther?: string | null;
   beneficiarySelectionFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;

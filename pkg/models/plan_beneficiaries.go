@@ -29,15 +29,16 @@ type PlanBeneficiaries struct {
 	BeneficiarySelectionNote   *string         `json:"beneficiarySelectionNote" db:"beneficiary_selection_note"`
 
 	// Page 3
-	BeneficiarySelectionFrequency      *FrequencyType `json:"beneficiarySelectionFrequency" db:"beneficiary_selection_frequency" statusWeight:"1"`
-	BeneficiarySelectionFrequencyOther *string        `json:"beneficiarySelectionFrequencyOther" db:"beneficiary_selection_frequency_other"`
-	BeneficiarySelectionFrequencyNote  *string        `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
-	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
-	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
-	PrecedenceRules                    pq.StringArray `json:"precedenceRules" db:"precedence_rules"`
-	PrecedenceRulesYes                 *string        `json:"precedenceRulesYes" db:"precedence_rules_yes"`
-	PrecedenceRulesNo                  *string        `json:"precedenceRulesNo" db:"precedence_rules_no"`
-	PrecedenceRulesNote                *string        `json:"precedenceRulesNote" db:"precedence_rules_note"`
+	BeneficiarySelectionFrequency            pq.StringArray `json:"beneficiarySelectionFrequency" db:"beneficiary_selection_frequency" statusWeight:"1"`
+	BeneficiarySelectionFrequencyContinually *string        `json:"beneficiarySelectionFrequencyContinually" db:"beneficiary_selection_frequency_continually"`
+	BeneficiarySelectionFrequencyOther       *string        `json:"beneficiarySelectionFrequencyOther" db:"beneficiary_selection_frequency_other"`
+	BeneficiarySelectionFrequencyNote        *string        `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
+	BeneficiaryOverlap                       *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
+	BeneficiaryOverlapNote                   *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
+	PrecedenceRules                          pq.StringArray `json:"precedenceRules" db:"precedence_rules"`
+	PrecedenceRulesYes                       *string        `json:"precedenceRulesYes" db:"precedence_rules_yes"`
+	PrecedenceRulesNo                        *string        `json:"precedenceRulesNo" db:"precedence_rules_no"`
+	PrecedenceRulesNote                      *string        `json:"precedenceRulesNote" db:"precedence_rules_note"`
 }
 
 // NewPlanBeneficiaries returns a new plan Beneficiaries

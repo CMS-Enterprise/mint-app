@@ -110,145 +110,150 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
             data-scroll="beneficiarySelectionFrequency"
           >
             <label
-              class="usa-label"
+              class="usa-label maxw-none"
               data-testid="label"
-              for="beneficiaries-beneficiarySelectionFrequency"
+              for="beneficiary-selection-frequency"
             >
               How frequently are beneficiaries chosen?
             </label>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
+            <div
+              class="mint-checkbox usa-checkbox"
             >
-              <div
-                class="usa-radio"
-                data-testid="radio"
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-annually"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="ANNUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-annually"
               >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-beneficiarySelectionFrequency-ANNUALLY"
-                  name="beneficiarySelectionFrequency"
-                  type="radio"
-                  value="ANNUALLY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-beneficiarySelectionFrequency-ANNUALLY"
-                >
-                  Annually
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
+                Annually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-semianually"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="SEMIANUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-semianually"
               >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-beneficiarySelectionFrequency-BIANNUALLY"
-                  name="beneficiarySelectionFrequency"
-                  type="radio"
-                  value="BIANNUALLY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-beneficiarySelectionFrequency-BIANNUALLY"
-                >
-                  Biannually
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
+                Semiannually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-quarterly"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="QUARTERLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-quarterly"
               >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-beneficiarySelectionFrequency-MONTHLY"
-                  name="beneficiarySelectionFrequency"
-                  type="radio"
-                  value="MONTHLY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-beneficiarySelectionFrequency-MONTHLY"
-                >
-                  Monthly
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
+                Quarterly
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-monthly"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="MONTHLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-monthly"
               >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-beneficiarySelectionFrequency-QUARTERLY"
-                  name="beneficiarySelectionFrequency"
-                  type="radio"
-                  value="QUARTERLY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-beneficiarySelectionFrequency-QUARTERLY"
-                >
-                  Quarterly
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
+                Monthly
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-continually"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="CONTINUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-continually"
               >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-beneficiarySelectionFrequency-ROLLING"
-                  name="beneficiarySelectionFrequency"
-                  type="radio"
-                  value="ROLLING"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-beneficiarySelectionFrequency-ROLLING"
-                >
-                  Rolling
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
+                Continually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-other"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="OTHER"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-other"
               >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-beneficiarySelectionFrequency-OTHER"
-                  name="beneficiarySelectionFrequency"
-                  type="radio"
-                  value="OTHER"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-beneficiarySelectionFrequency-OTHER"
-                >
-                  Other
-                </label>
-              </div>
-              <div
-                class="margin-left-4 margin-top-1"
+                Other
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="margin-left-4"
+            >
+              <label
+                class="usa-label text-normal margin-top-1"
+                data-testid="label"
+                for="beneficiary-selection-frequency-other"
               >
-                <label
-                  class="usa-label text-normal"
-                  data-testid="label"
-                  for="beneficiaries-beneficiary-selection-frequency-other"
-                >
-                  Please specify
-                </label>
-                <textarea
-                  aria-labelledby="label-beneficiaries-beneficiary-selection-frequency-other hint-beneficiaries-beneficiary-selection-frequency-other"
-                  class="maxw-none mint-textarea usa-textarea"
-                  id="beneficiaries-beneficiary-selection-frequency-other"
-                  maxlength="5000"
-                  name="beneficiarySelectionFrequencyOther"
-                >
-                  Very often
-                </textarea>
-              </div>
-            </fieldset>
+                Please specify
+              </label>
+              <input
+                class="usa-input"
+                data-testid="beneficiary-selection-frequency-other-text"
+                id="beneficiary-selection-frequency-other-text"
+                name="beneficiarySelectionFrequencyOther"
+                value="Very often"
+              />
+            </div>
             <div
               class="margin-top-4 margin-bottom-8"
             >

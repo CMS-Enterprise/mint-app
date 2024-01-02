@@ -1,5 +1,7 @@
 import { TranslationBeneficiaries } from 'types/translation';
 
+import { frequencyOptions } from './miscellaneous';
+
 export const beneficiaries: TranslationBeneficiaries = {
   beneficiaries: {
     gqlField: 'participantsCurrentlyInModels',
@@ -207,14 +209,24 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How frequently are beneficiaries chosen?',
     dataType: 'enum',
     formType: 'radio',
-    options: {
-      ANNUALLY: 'Annually',
-      BIANNUALLY: 'Biannually',
-      MONTHLY: 'Monthly',
-      QUARTERLY: 'Quarterly',
-      ROLLING: 'Rolling',
-      OTHER: 'Other'
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'beneficiarySelectionFrequencyContinually',
+      OTHER: 'beneficiarySelectionFrequencyOther'
     },
+    filterGroups: ['cmmi']
+  },
+  beneficiarySelectionFrequencyContinually: {
+    gqlField: 'beneficiarySelectionFrequencyContinually',
+    goField: 'BeneficiarySelectionFrequencyContinually',
+    dbField: 'beneficiary_selection_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea',
     filterGroups: ['cmmi']
   },
   beneficiarySelectionFrequencyOther: {

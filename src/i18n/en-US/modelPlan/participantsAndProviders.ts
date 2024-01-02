@@ -1,6 +1,6 @@
 import { TranslationParticipantsAndProviders } from 'types/translation';
 
-import { fequencyOptions } from './miscellaneous';
+import { frequencyOptions } from './miscellaneous';
 
 export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participants: {
@@ -432,7 +432,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'How frequently are providers added?',
     dataType: 'enum',
     formType: 'radio',
-    options: fequencyOptions,
+    options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
       SEMIANUALLY: '',

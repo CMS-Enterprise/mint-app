@@ -22,7 +22,6 @@ import {
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
-  FrequencyType,
   FrequencyTypeNew,
   FundingSource,
   GainshareArrangementEligibility,
@@ -282,9 +281,10 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionNote: TranslationFieldProperties;
   beneficiarySelectionOther: TranslationFieldProperties;
   // Frequency
-  beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
-  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
+  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
   precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;
