@@ -6,6 +6,7 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
+  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -23,7 +24,6 @@ import {
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
-  FrequencyTypeNew,
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
@@ -246,8 +246,7 @@ export type TranslationParticipantsAndProviders = {
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
-  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
-  providerAdditionFrequencyContinually: TranslationFieldProperties;
+  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   providerAdditionFrequencyOther: TranslationFieldProperties;
   providerAdditionFrequencyNote: TranslationFieldProperties;
   providerAddMethod: TranslationFieldPropertiesWithOptions<ProviderAddType>;
@@ -459,8 +458,7 @@ export type TranslationPayments = {
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
-  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
-  anticipatedPaymentFrequencyContinually: TranslationFieldProperties;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;
   // Recover Payment

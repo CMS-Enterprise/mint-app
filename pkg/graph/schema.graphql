@@ -812,8 +812,7 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      [FrequencyTypeNew!]!
-  providerAdditionFrequencyContinually: String
+  providerAdditionFrequency:      FrequencyType
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
@@ -897,8 +896,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      [FrequencyTypeNew!]
-  providerAdditionFrequencyContinually: String
+  providerAdditionFrequency:      FrequencyType
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
@@ -984,9 +982,8 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [FrequencyTypeNew!]!
+  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
   anticipatedPaymentFrequencyOther:                  String
-  anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyNote:                   String
 
   # Page 7
@@ -1082,10 +1079,9 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [FrequencyTypeNew!]
+  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
   anticipatedPaymentFrequencyOther:                         String
-  anticipatedPaymentFrequencyContinually:                   String
-  anticipatedPaymentFrequencyNote:                          String
+  anticipatedPaymentFrequencyNote:                         String
 
   # Page 7
   willRecoverPayments:                               Boolean
@@ -2024,7 +2020,6 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
-
 enum FrequencyType {
   ANNUALLY
   BIANNUALLY
@@ -2033,39 +2028,6 @@ enum FrequencyType {
   ROLLING
   OTHER
 }
-
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
-    OTHER
-    NOT_PLANNING_TO_DO_THIS
-}
-
-# enum AnticipatedPaymentFrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   SEMIMONTHLY
-#   WEEKLY
-#   DAILY
-#   OTHER
-# }
-
-enum FrequencyTypeNew {
-  ANNUALLY
-  SEMIANUALLY
-  QUARTERLY
-  MONTHLY
-  CONTINUALLY
-  OTHER
-}
-
 enum TriStateAnswer {
   YES
   NO
@@ -2224,6 +2186,18 @@ enum DataToSendParticipantsType {
     NOT_PLANNING_TO_SEND_DATA
 }
 
+enum DataFrequencyType {
+    ANNUALLY
+    BIANNUALLY
+    QUARTERLY
+    MONTHLY
+    SEMI_MONTHLY
+    WEEKLY
+    DAILY
+    OTHER
+    NOT_PLANNING_TO_DO_THIS
+}
+
 enum ModelLearningSystemType {
     LEARNING_CONTRACTOR
     IT_PLATFORM_CONNECT
@@ -2306,6 +2280,17 @@ enum ComplexityCalculationLevelType {
   LOW
   MIDDLE
   HIGH
+}
+
+enum AnticipatedPaymentFrequencyType {
+  ANNUALLY
+  BIANNUALLY
+  QUARTERLY
+  MONTHLY
+  SEMIMONTHLY
+  WEEKLY
+  DAILY
+  OTHER
 }
 
 enum OpSolutionStatus {

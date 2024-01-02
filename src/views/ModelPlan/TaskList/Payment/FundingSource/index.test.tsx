@@ -1,14 +1,13 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import {
-  FundingSource as FundingSourceType,
-  GetFundingDocument,
-  GetFundingQuery,
-  PayType
-} from 'gql/gen/graphql';
+import { GetFundingDocument, GetFundingQuery } from 'gql/gen/graphql';
 import Sinon from 'sinon';
 
+import {
+  FundingSource as FundingSourceType,
+  PayType
+} from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import FundingSource from './index';
