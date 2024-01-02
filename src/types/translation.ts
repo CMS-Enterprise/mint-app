@@ -22,7 +22,6 @@ import {
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
-  FrequencyType,
   FrequencyTypeNew,
   FundingSource,
   GainshareArrangementEligibility,
