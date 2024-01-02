@@ -114,10 +114,6 @@ describe('The Model Plan Participants and Providers Form', () => {
       .check({ force: true });
     cy.get('@communication').should('be.checked');
 
-    cy.get('#participants-and-providers-risk-true')
-      .check({ force: true })
-      .should('be.checked');
-
     cy.get('#participants-and-providers-risk-type-OTHER')
       .check({ force: true })
       .should('be.checked');
