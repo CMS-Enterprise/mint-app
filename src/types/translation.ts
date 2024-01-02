@@ -6,7 +6,6 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -24,6 +23,7 @@ import {
   DataToSendParticipantsType,
   EvaluationApproachType,
   FrequencyType,
+  FrequencyTypeNew,
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
@@ -124,6 +124,7 @@ export type TranslationBasics = {
   cmmiGroups: TranslationFieldPropertiesWithOptions<CmmiGroup>;
   // Overview
   modelType: TranslationFieldPropertiesWithOptions<ModelType>;
+  modelTypeOther: TranslationFieldProperties;
   problem: TranslationFieldProperties;
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
@@ -245,7 +246,8 @@ export type TranslationParticipantsAndProviders = {
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
-  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  providerAdditionFrequencyContinually: TranslationFieldProperties;
   providerAdditionFrequencyOther: TranslationFieldProperties;
   providerAdditionFrequencyNote: TranslationFieldProperties;
   providerAddMethod: TranslationFieldPropertiesWithOptions<ProviderAddType>;
@@ -457,7 +459,8 @@ export type TranslationPayments = {
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
-  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  anticipatedPaymentFrequencyContinually: TranslationFieldProperties;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;
   // Recover Payment

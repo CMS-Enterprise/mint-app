@@ -327,7 +327,8 @@ type PlanBasics {
   additionalModelCategories: [ModelCategory!]!
   cmsCenters: [CMSCenter!]!
   cmmiGroups: [CMMIGroup!]!
-  modelType: ModelType
+  modelType: [ModelType!]!
+  modelTypeOther: String
   problem: String
   goal: String
   testInterventions: String
@@ -377,7 +378,8 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   additionalModelCategories: [ModelCategory!]
   cmsCenters: [CMSCenter!]
   cmmiGroups: [CMMIGroup!]
-  modelType: ModelType
+  modelType: [ModelType!]
+  modelTypeOther: String
   problem: String
   goal: String
   testInterventions: String
@@ -809,7 +811,8 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyTypeNew!]!
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
@@ -892,7 +895,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyTypeNew!]
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
@@ -978,8 +982,9 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
+  anticipatedPaymentFrequency:                       [FrequencyTypeNew!]!
   anticipatedPaymentFrequencyOther:                  String
+  anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyNote:                   String
 
   # Page 7
@@ -1075,9 +1080,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequency:                              [FrequencyTypeNew!]
   anticipatedPaymentFrequencyOther:                         String
-  anticipatedPaymentFrequencyNote:                         String
+  anticipatedPaymentFrequencyContinually:                   String
+  anticipatedPaymentFrequencyNote:                          String
 
   # Page 7
   willRecoverPayments:                               Boolean
@@ -1876,8 +1882,9 @@ enum TeamRole {
 enum ModelType
 {
   VOLUNTARY
-  MANDATORY
-  TBD
+  MANDATORY_REGIONAL_OR_STATE
+  MANDATORY_NATIONAL
+  OTHER
 }
 
 enum ModelCategory {
@@ -2015,6 +2022,7 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY
 }
+
 enum FrequencyType {
   ANNUALLY
   BIANNUALLY
@@ -2023,6 +2031,39 @@ enum FrequencyType {
   ROLLING
   OTHER
 }
+
+enum DataFrequencyType {
+    ANNUALLY
+    BIANNUALLY
+    QUARTERLY
+    MONTHLY
+    SEMI_MONTHLY
+    WEEKLY
+    DAILY
+    OTHER
+    NOT_PLANNING_TO_DO_THIS
+}
+
+# enum AnticipatedPaymentFrequencyType {
+#   ANNUALLY
+#   BIANNUALLY
+#   QUARTERLY
+#   MONTHLY
+#   SEMIMONTHLY
+#   WEEKLY
+#   DAILY
+#   OTHER
+# }
+
+enum FrequencyTypeNew {
+  ANNUALLY
+  SEMIANUALLY
+  QUARTERLY
+  MONTHLY
+  CONTINUALLY
+  OTHER
+}
+
 enum TriStateAnswer {
   YES
   NO
@@ -2183,18 +2224,6 @@ enum DataToSendParticipantsType {
     NOT_PLANNING_TO_SEND_DATA
 }
 
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
-    OTHER
-    NOT_PLANNING_TO_DO_THIS
-}
-
 enum ModelLearningSystemType {
     LEARNING_CONTRACTOR
     IT_PLATFORM_CONNECT
@@ -2277,17 +2306,6 @@ enum ComplexityCalculationLevelType {
   LOW
   MIDDLE
   HIGH
-}
-
-enum AnticipatedPaymentFrequencyType {
-  ANNUALLY
-  BIANNUALLY
-  QUARTERLY
-  MONTHLY
-  SEMIMONTHLY
-  WEEKLY
-  DAILY
-  OTHER
 }
 
 enum OpSolutionStatus {

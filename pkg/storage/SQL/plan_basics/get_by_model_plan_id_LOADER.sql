@@ -16,6 +16,7 @@ SELECT
     plan_basics.cms_centers,
     plan_basics.cmmi_groups,
     plan_basics.model_type,
+    plan_basics.model_type_other,
     plan_basics.problem,
     plan_basics.goal,
     plan_basics.test_interventions,

@@ -537,6 +537,12 @@ func (r *planBasicsResolver) CmmiGroups(ctx context.Context, obj *models.PlanBas
 	return cmmiGroups, nil
 }
 
+// ModelType is the resolver for the modelType field.
+func (r *planBasicsResolver) ModelType(ctx context.Context, obj *models.PlanBasics) ([]models.ModelType, error) {
+	modelTypes := models.ConvertEnums[models.ModelType](obj.ModelType)
+	return modelTypes, nil
+}
+
 // Beneficiaries is the resolver for the beneficiaries field.
 func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
 	bTypes := models.ConvertEnums[model.BeneficiariesType](obj.Beneficiaries)
@@ -772,6 +778,11 @@ func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Conte
 	return participantsIDTypes, nil
 }
 
+// ProviderAdditionFrequency is the resolver for the providerAdditionFrequency field.
+func (r *planParticipantsAndProvidersResolver) ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyTypeNew, error) {
+	return models.ConvertEnums[models.FrequencyTypeNew](obj.ProviderAdditionFrequency), nil
+}
+
 // ProviderAddMethod is the resolver for the providerAddMethod field.
 func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
 	providerAddTypes := models.ConvertEnums[model.ProviderAddType](obj.ProviderAddMethod)
@@ -820,8 +831,8 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 }
 
 // AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
-func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error) {
-	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
+func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyTypeNew, error) {
+	return models.ConvertEnums[models.FrequencyTypeNew](obj.AnticipatedPaymentFrequency), nil
 }
 
 // PossibleSolutions is the resolver for the possibleSolutions field.

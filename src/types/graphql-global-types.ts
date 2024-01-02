@@ -33,17 +33,6 @@ export enum AlternativePaymentModelType {
   REGULAR = "REGULAR",
 }
 
-export enum AnticipatedPaymentFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMIMONTHLY = "SEMIMONTHLY",
-  WEEKLY = "WEEKLY",
-}
-
 export enum AuthorityAllowance {
   ACA = "ACA",
   CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
@@ -228,6 +217,15 @@ export enum FrequencyType {
   ROLLING = "ROLLING",
 }
 
+export enum FrequencyTypeNew {
+  ANNUALLY = "ANNUALLY",
+  CONTINUALLY = "CONTINUALLY",
+  MONTHLY = "MONTHLY",
+  OTHER = "OTHER",
+  QUARTERLY = "QUARTERLY",
+  SEMIANUALLY = "SEMIANUALLY",
+}
+
 export enum FundingSource {
   MEDICARE_PART_A_HI_TRUST_FUND = "MEDICARE_PART_A_HI_TRUST_FUND",
   MEDICARE_PART_B_SMI_TRUST_FUND = "MEDICARE_PART_B_SMI_TRUST_FUND",
@@ -319,8 +317,9 @@ export enum ModelStatus {
 }
 
 export enum ModelType {
-  MANDATORY = "MANDATORY",
-  TBD = "TBD",
+  MANDATORY_NATIONAL = "MANDATORY_NATIONAL",
+  MANDATORY_REGIONAL_OR_STATE = "MANDATORY_REGIONAL_OR_STATE",
+  OTHER = "OTHER",
   VOLUNTARY = "VOLUNTARY",
 }
 
@@ -701,7 +700,8 @@ export interface PlanBasicsChanges {
   additionalModelCategories?: ModelCategory[] | null;
   cmsCenters?: CMSCenter[] | null;
   cmmiGroups?: CMMIGroup[] | null;
-  modelType?: ModelType | null;
+  modelType?: ModelType[] | null;
+  modelTypeOther?: string | null;
   problem?: string | null;
   goal?: string | null;
   testInterventions?: string | null;
@@ -1014,7 +1014,8 @@ export interface PlanParticipantsAndProvidersChanges {
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
-  providerAdditionFrequency?: FrequencyType | null;
+  providerAdditionFrequency?: FrequencyTypeNew[] | null;
+  providerAdditionFrequencyContinually?: string | null;
   providerAdditionFrequencyOther?: string | null;
   providerAdditionFrequencyNote?: string | null;
   providerAddMethod?: ProviderAddType[] | null;
@@ -1082,8 +1083,9 @@ export interface PlanPaymentsChanges {
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
-  anticipatedPaymentFrequency?: AnticipatedPaymentFrequencyType[] | null;
+  anticipatedPaymentFrequency?: FrequencyTypeNew[] | null;
   anticipatedPaymentFrequencyOther?: string | null;
+  anticipatedPaymentFrequencyContinually?: string | null;
   anticipatedPaymentFrequencyNote?: string | null;
   willRecoverPayments?: boolean | null;
   willRecoverPaymentsNote?: string | null;
