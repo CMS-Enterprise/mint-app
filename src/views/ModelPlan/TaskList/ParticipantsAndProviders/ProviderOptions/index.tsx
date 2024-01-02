@@ -13,6 +13,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import {
+  FrequencyType,
   GetProviderOptionsQuery,
   OverlapType,
   ProviderAddType,
@@ -23,7 +24,6 @@ import {
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -82,7 +82,6 @@ export const ProviderOptions = () => {
   const {
     id,
     providerAdditionFrequency,
-    providerAdditionFrequencyContinually,
     providerAdditionFrequencyOther,
     providerAdditionFrequencyNote,
     providerAddMethod,
@@ -113,7 +112,7 @@ export const ProviderOptions = () => {
   const handleFormSubmit = (
     redirect?: 'back' | 'task-list' | 'next' | string
   ) => {
-    const dirtyInputs: any = dirtyInput(
+    const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
     );
@@ -152,8 +151,6 @@ export const ProviderOptions = () => {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
     providerAdditionFrequency: providerAdditionFrequency ?? null,
-    providerAdditionFrequencyContinually:
-      providerAdditionFrequencyContinually ?? '',
     providerAdditionFrequencyOther: providerAdditionFrequencyOther ?? '',
     providerAdditionFrequencyNote: providerAdditionFrequencyNote ?? '',
     providerAddMethod: providerAddMethod ?? [],
@@ -251,17 +248,74 @@ export const ProviderOptions = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FrequencyForm
-                    field="providerAdditionFrequency"
-                    values={values.providerAdditionFrequency}
-                    config={providerAdditionFrequencyConfig}
-                    nameSpace="participantsAndProviders"
-                    id="participants-and-providers-additional-frequency"
-                    label={participantsAndProvidersT(
-                      'providerAdditionFrequency.label'
-                    )}
-                    disabled={loading}
-                  />
+                  <FieldGroup
+                    scrollElement="providerAdditionFrequency"
+                    error={!!flatErrors.providerAdditionFrequency}
+                    className="margin-bottom-8"
+                  >
+                    <Label htmlFor="participants-and-providers-additional-frequency">
+                      {participantsAndProvidersT(
+                        'providerAdditionFrequency.label'
+                      )}
+                    </Label>
+
+                    <FieldErrorMsg>
+                      {flatErrors.providerAdditionFrequency}
+                    </FieldErrorMsg>
+
+                    <Fieldset>
+                      {getKeys(providerAdditionFrequencyConfig.options).map(
+                        key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`participants-and-providers-additional-frequency-${key}`}
+                              name="providerAdditionFrequency"
+                              label={
+                                providerAdditionFrequencyConfig.options[key]
+                              }
+                              value={key}
+                              checked={values.providerAdditionFrequency === key}
+                              onChange={() => {
+                                setFieldValue('providerAdditionFrequency', key);
+                              }}
+                            />
+
+                            {key === FrequencyType.OTHER &&
+                              values.providerAdditionFrequency === key && (
+                                <div className="margin-left-4 margin-top-1">
+                                  <Label
+                                    htmlFor="participants-and-providers-additional-frequency-other"
+                                    className="text-normal"
+                                  >
+                                    {participantsAndProvidersT(
+                                      'providerAdditionFrequencyOther.label'
+                                    )}
+                                  </Label>
+
+                                  <FieldErrorMsg>
+                                    {flatErrors.providerAdditionFrequencyOther}
+                                  </FieldErrorMsg>
+
+                                  <Field
+                                    as={TextAreaField}
+                                    className="maxw-none mint-textarea"
+                                    id="participants-and-providers-additional-frequency-other"
+                                    maxLength={5000}
+                                    name="providerAdditionFrequencyOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        )
+                      )}
+                    </Fieldset>
+
+                    <AddNote
+                      id="participants-and-providers-additional-frequency-note"
+                      field="providerAdditionFrequencyNote"
+                    />
+                  </FieldGroup>
 
                   <FieldGroup
                     scrollElement="providerAddMethod"

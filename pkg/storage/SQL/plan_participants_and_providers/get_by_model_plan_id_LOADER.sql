@@ -45,7 +45,6 @@ SELECT
     pAndP.participants_ids_other,
     pAndP.participants_ids_note,
     pAndP.provider_addition_frequency,
-    pAndP.provider_addition_frequency_continually,
     pAndP.provider_addition_frequency_other,
     pAndP.provider_addition_frequency_note,
     pAndP.provider_add_method,

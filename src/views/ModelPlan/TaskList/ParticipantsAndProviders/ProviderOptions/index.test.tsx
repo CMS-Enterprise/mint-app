@@ -3,7 +3,6 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
-  FrequencyTypeNew,
   GetProviderOptionsDocument,
   GetProviderOptionsQuery,
   OperationalNeedKey,
@@ -21,8 +20,7 @@ type GetProviderOptionsType = GetProviderOptionsQuery['modelPlan']['participants
 const providerOptionsMockData: GetProviderOptionsType = {
   __typename: 'PlanParticipantsAndProviders',
   id: '123',
-  providerAdditionFrequency: [FrequencyTypeNew.CONTINUALLY],
-  providerAdditionFrequencyContinually: 'Continually',
+  providerAdditionFrequency: null,
   providerAdditionFrequencyOther: '',
   providerAdditionFrequencyNote: '',
   providerAddMethod: [ProviderAddType.OTHER],
