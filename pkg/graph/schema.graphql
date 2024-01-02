@@ -812,7 +812,8 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyTypeNew!]!
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
@@ -896,7 +897,8 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequency:      [FrequencyTypeNew!]
+  providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]

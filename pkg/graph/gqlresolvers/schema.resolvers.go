@@ -773,6 +773,11 @@ func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Conte
 	return participantsIDTypes, nil
 }
 
+// ProviderAdditionFrequency is the resolver for the providerAdditionFrequency field.
+func (r *planParticipantsAndProvidersResolver) ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyTypeNew, error) {
+	return models.ConvertEnums[models.FrequencyTypeNew](obj.ProviderAdditionFrequency), nil
+}
+
 // ProviderAddMethod is the resolver for the providerAddMethod field.
 func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
 	providerAddTypes := models.ConvertEnums[model.ProviderAddType](obj.ProviderAddMethod)
