@@ -3,11 +3,11 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
+  ClaimsBasedPayType,
   GetClaimsBasedPaymentDocument,
-  GetClaimsBasedPaymentQuery
+  GetClaimsBasedPaymentQuery,
+  PayType
 } from 'gql/gen/graphql';
-
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 
 import ClaimsBasedPayment from './index';
 

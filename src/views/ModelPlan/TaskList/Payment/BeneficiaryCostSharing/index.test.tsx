@@ -3,11 +3,11 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
+  ClaimsBasedPayType,
   GetBeneficiaryCostSharingDocument,
-  GetBeneficiaryCostSharingQuery
+  GetBeneficiaryCostSharingQuery,
+  PayType
 } from 'gql/gen/graphql';
-
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 
 import BeneficiaryCostSharing from './index';
 
