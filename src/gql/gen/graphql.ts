@@ -590,8 +590,9 @@ export enum ModelStatus {
 }
 
 export enum ModelType {
-  MANDATORY = 'MANDATORY',
-  TBD = 'TBD',
+  MANDATORY_NATIONAL = 'MANDATORY_NATIONAL',
+  MANDATORY_REGIONAL_OR_STATE = 'MANDATORY_REGIONAL_OR_STATE',
+  OTHER = 'OTHER',
   VOLUNTARY = 'VOLUNTARY'
 }
 
@@ -1198,7 +1199,8 @@ export type PlanBasics = {
   id: Scalars['UUID']['output'];
   modelCategory?: Maybe<ModelCategory>;
   modelPlanID: Scalars['UUID']['output'];
-  modelType?: Maybe<ModelType>;
+  modelType: Array<ModelType>;
+  modelTypeOther?: Maybe<Scalars['String']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -1239,7 +1241,8 @@ export type PlanBasicsChanges = {
   goal?: InputMaybe<Scalars['String']['input']>;
   highLevelNote?: InputMaybe<Scalars['String']['input']>;
   modelCategory?: InputMaybe<ModelCategory>;
-  modelType?: InputMaybe<ModelType>;
+  modelType?: InputMaybe<Array<ModelType>>;
+  modelTypeOther?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
   performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
   performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;
@@ -2631,7 +2634,7 @@ export type GetAllBasicsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, status: TaskStatus } } };
+export type GetAllBasicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, nameHistory: Array<string>, basics: { __typename: 'PlanBasics', id: UUID, demoCode?: string | null, amsModelID?: string | null, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, wrapUpEnds?: Time | null, highLevelNote?: string | null, phasedIn?: boolean | null, phasedInNote?: string | null, status: TaskStatus } } };
 
 export type GetBasicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2652,7 +2655,7 @@ export type GetOverviewQueryVariables = Exact<{
 }>;
 
 
-export type GetOverviewQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelType?: ModelType | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null } } };
+export type GetOverviewQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null } } };
 
 export type UpdateBasicsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3053,6 +3056,7 @@ export const GetAllBasicsDocument = gql`
       cmsCenters
       cmmiGroups
       modelType
+      modelTypeOther
       problem
       goal
       testInterventions
@@ -3228,6 +3232,7 @@ export const GetOverviewDocument = gql`
     basics {
       id
       modelType
+      modelTypeOther
       problem
       goal
       testInterventions

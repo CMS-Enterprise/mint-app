@@ -115,40 +115,84 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
             data-testid="fieldset"
           >
             <div
-              class="usa-radio"
-              data-testid="radio"
+              class="mint-checkbox usa-checkbox"
             >
               <input
-                class="usa-radio__input"
-                id="ModelType-Voluntary"
+                class="usa-checkbox__input"
+                id="ModelType-VOLUNTARY"
                 name="modelType"
-                type="radio"
+                type="checkbox"
                 value="VOLUNTARY"
               />
               <label
-                class="usa-radio__label"
-                for="ModelType-Voluntary"
+                class="usa-checkbox__label"
+                for="ModelType-VOLUNTARY"
               >
                 Voluntary
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
             <div
-              class="usa-radio"
-              data-testid="radio"
+              class="mint-checkbox usa-checkbox"
             >
               <input
-                class="usa-radio__input"
-                id="ModelType-Mandatory"
+                class="usa-checkbox__input"
+                id="ModelType-MANDATORY_NATIONAL"
                 name="modelType"
-                type="radio"
-                value="MANDATORY"
+                type="checkbox"
+                value="MANDATORY_NATIONAL"
               />
               <label
-                class="usa-radio__label"
-                for="ModelType-Mandatory"
+                class="usa-checkbox__label"
+                for="ModelType-MANDATORY_NATIONAL"
               >
-                Mandatory
+                Mandatory national
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="ModelType-MANDATORY_REGIONAL_OR_STATE"
+                name="modelType"
+                type="checkbox"
+                value="MANDATORY_REGIONAL_OR_STATE"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="ModelType-MANDATORY_REGIONAL_OR_STATE"
+              >
+                Mandatory regional or state
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="ModelType-OTHER"
+                name="modelType"
+                type="checkbox"
+                value="OTHER"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="ModelType-OTHER"
+              >
+                Other
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
           </fieldset>
         </div>

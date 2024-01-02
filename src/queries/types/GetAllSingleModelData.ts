@@ -27,7 +27,8 @@ export interface GetAllSingleModelData_modelPlan_basics {
   demoCode: string | null;
   cmsCenters: CMSCenter[];
   cmmiGroups: CMMIGroup[];
-  modelType: ModelType | null;
+  modelType: ModelType[];
+  modelTypeOther: string | null;
   problem: string | null;
   goal: string | null;
   testInterventions: string | null;
