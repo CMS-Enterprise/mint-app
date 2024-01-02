@@ -541,7 +541,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    Mandatory national
+                    <div
+                      class="display-flex flex-align-center"
+                    >
+                      Mandatory national
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -7142,7 +7146,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   <li
                     class="font-sans-md line-height-sans-4"
                   >
-                    Mandatory national
+                    <div
+                      class="display-flex flex-align-center"
+                    >
+                      Mandatory national
+                    </div>
                   </li>
                 </ul>
               </div>
