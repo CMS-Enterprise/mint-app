@@ -56,6 +56,18 @@ func newPopulateUserTableModel() populateUserTableTuiModel {
 				CommandName: "Seed the Database",
 				CommandRun:  func() { command.DBSeedCommand.Run(command.DBSeedCommand, []string{}) },
 			},
+			// genericCommandOption{
+			// 	CommandName: "Say Hi",
+			// 	CommandRun:  func() { command.DBSeedCommand.Run(command.DBSeedCommand, []string{}) },
+			// },
+			genericCommandOption{
+				CommandName: "Bring up FrontEnd Locally",
+				CommandRun:  func() { command.FrontEndStartCommand.Run(command.FrontEndStartCommand, []string{}) },
+			},
+			genericCommandOption{
+				CommandName: "Prune Docker",
+				CommandRun:  func() { command.PruneDockerCommand.Run(command.PruneDockerCommand, []string{}) },
+			},
 		},
 		// A map which indicates which choices are selected. We're using
 		// the  map like a mathematical set. The keys refer to the indexes

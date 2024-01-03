@@ -25,6 +25,20 @@ var StartDockerCommand = &cobra.Command{
 	},
 }
 
+var PruneDockerCommand = &cobra.Command{
+	Use:   "docker:prune",
+	Short: "",
+	Long:  "",
+	Run: func(cmd *cobra.Command, args []string) {
+		config := viper.New()
+		config.AutomaticEnv()
+		fmt.Printf("Ran the Prune Docker Command with command : %s", cmd.Use)
+		dockerPrune()
+		// NOTE, this command reads the raw docker logs too, TODO: don't show the docker logs, just the main command
+
+	},
+}
+
 func up(frontendIncluded bool, args []string, debug, wait, ci bool) {
 	conf := " "
 	if debug {
@@ -66,6 +80,8 @@ func up(frontendIncluded bool, args []string, debug, wait, ci bool) {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
+	// docker compose -f docker-compose.backend.yml up --build
+	// TODO, we shouldn't stop docker when we stop this command. Look at the dev script for verification
 	err := cmd.Start()
 	if err != nil {
 		log.Fatal(err)
@@ -93,4 +109,8 @@ func up(frontendIncluded bool, args []string, debug, wait, ci bool) {
 	if frontendIncluded {
 		waitForSuccess("Waiting for the front end to build...", "curl", "--silent", "--output", "/dev/null", "-m", "1", "localhost:3005")
 	}
+}
+
+func dockerPrune() {
+
 }
