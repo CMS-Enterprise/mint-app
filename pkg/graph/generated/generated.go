@@ -8858,6 +8858,7 @@ enum TeamRole {
   OACT
   PAYMENT
   CM_FFS_COUNTERPART
+  COR
 }
 
 enum ModelType
