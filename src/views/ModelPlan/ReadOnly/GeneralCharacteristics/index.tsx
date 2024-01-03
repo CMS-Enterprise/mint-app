@@ -5,11 +5,14 @@ import {
   useGetAllGeneralCharacteristicsQuery
 } from 'gql/gen/graphql';
 
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -28,6 +31,10 @@ const ReadOnlyGeneralCharacteristics = ({
     'generalCharacteristicsMisc'
   );
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
+
+  const {
+    geographiesTargetedTypes: geographiesTargetedTypesConfig
+  } = usePlanTranslation('generalCharacteristics');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -459,10 +466,9 @@ const ReadOnlyGeneralCharacteristics = ({
                 'geographiesTargetedTypes.label'
               ),
               list: true,
-              listItems: geographiesTargetedTypes?.map((type): string =>
-                generalCharacteristicsT(
-                  `geographiesTargetedTypes.options.${type}`
-                )
+              listItems: formatListItems(
+                geographiesTargetedTypesConfig,
+                geographiesTargetedTypes
               ),
               listOtherItem: geographiesTargetedTypesOther
             }}
