@@ -324,7 +324,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     formType: 'checkbox',
     options: {
       REGION: 'Region (CBSA, MSA, HRR, etc.)',
-      STATE: 'State',
+      STATE: 'States and territories',
       OTHER: 'Other'
     },
     filterGroups: ['iddoc', 'pbg']
