@@ -212,11 +212,13 @@ const csvFields = [
   'opsEvalAndLearning.dataSharingStarts',
   'opsEvalAndLearning.dataSharingStartsOther',
   'opsEvalAndLearning.dataSharingFrequency', // array
+  'opsEvalAndLearning.dataSharingFrequencyContinually',
   'opsEvalAndLearning.dataSharingFrequencyOther',
   'opsEvalAndLearning.dataSharingStartsNote',
   'opsEvalAndLearning.dataCollectionStarts',
   'opsEvalAndLearning.dataCollectionStartsOther',
   'opsEvalAndLearning.dataCollectionFrequency', // array
+  'opsEvalAndLearning.dataCollectionFrequencyContinually',
   'opsEvalAndLearning.dataCollectionFrequencyOther',
   'opsEvalAndLearning.dataCollectionFrequencyNote',
   'opsEvalAndLearning.qualityReportingStarts',

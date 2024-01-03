@@ -1193,12 +1193,14 @@ type PlanOpsEvalAndLearning {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]!
+    dataSharingFrequency: [FrequencyType!]!
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]!
+    dataCollectionFrequency: [FrequencyType!]!
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
@@ -1321,12 +1323,14 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequency: [FrequencyType!]
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequency: [FrequencyType!]
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
@@ -2036,17 +2040,18 @@ enum ConfidenceType {
 #   OTHER
 # }
 
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
-    OTHER
-    NOT_PLANNING_TO_DO_THIS
-}
+
+# enum DataFrequencyType {
+#   ANNUALLY
+#   BIANNUALLY
+#   QUARTERLY
+#   MONTHLY
+#   SEMI_MONTHLY
+#   WEEKLY
+#   DAILY
+#   OTHER
+#   NOT_PLANNING_TO_DO_THIS
+# }
 
 # enum AnticipatedPaymentFrequencyType {
 #   ANNUALLY

@@ -17,7 +17,6 @@ import {
   ConfidenceType,
   ContractorSupportType,
   DataForMonitoringType,
-  DataFrequencyType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
@@ -381,12 +380,14 @@ export type TranslationOpsEvalAndLearning = {
   // Data Sharing
   dataSharingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataSharingStartsOther: TranslationFieldProperties;
-  dataSharingFrequency: TranslationFieldPropertiesWithOptions<DataFrequencyType>;
+  dataSharingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  dataSharingFrequencyContinually: TranslationFieldProperties;
   dataSharingFrequencyOther: TranslationFieldProperties;
   dataSharingStartsNote: TranslationFieldProperties;
   dataCollectionStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataCollectionStartsOther: TranslationFieldProperties;
-  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<DataFrequencyType>;
+  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  dataCollectionFrequencyContinually: TranslationFieldProperties;
   dataCollectionFrequencyOther: TranslationFieldProperties;
   dataCollectionFrequencyNote: TranslationFieldProperties;
   qualityReportingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;

@@ -603,6 +603,7 @@ type ComplexityRoot struct {
 		CreatedByUserAccount                         func(childComplexity int) int
 		CreatedDts                                   func(childComplexity int) int
 		DataCollectionFrequency                      func(childComplexity int) int
+		DataCollectionFrequencyContinually           func(childComplexity int) int
 		DataCollectionFrequencyNote                  func(childComplexity int) int
 		DataCollectionFrequencyOther                 func(childComplexity int) int
 		DataCollectionStarts                         func(childComplexity int) int
@@ -618,6 +619,7 @@ type ComplexityRoot struct {
 		DataResponseFileFrequency                    func(childComplexity int) int
 		DataResponseType                             func(childComplexity int) int
 		DataSharingFrequency                         func(childComplexity int) int
+		DataSharingFrequencyContinually              func(childComplexity int) int
 		DataSharingFrequencyOther                    func(childComplexity int) int
 		DataSharingStarts                            func(childComplexity int) int
 		DataSharingStartsNote                        func(childComplexity int) int
@@ -1114,9 +1116,9 @@ type PlanOpsEvalAndLearningResolver interface {
 
 	DataToSendParticicipants(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataToSendParticipantsType, error)
 
-	DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error)
+	DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
 
-	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error)
+	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
 
 	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
 }
@@ -4559,6 +4561,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequency(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.dataCollectionFrequencyContinually":
+		if e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyContinually(childComplexity), true
+
 	case "PlanOpsEvalAndLearning.dataCollectionFrequencyNote":
 		if e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyNote == nil {
 			break
@@ -4663,6 +4672,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanOpsEvalAndLearning.DataSharingFrequency(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataSharingFrequencyContinually":
+		if e.complexity.PlanOpsEvalAndLearning.DataSharingFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataSharingFrequencyContinually(childComplexity), true
 
 	case "PlanOpsEvalAndLearning.dataSharingFrequencyOther":
 		if e.complexity.PlanOpsEvalAndLearning.DataSharingFrequencyOther == nil {
@@ -8212,12 +8228,14 @@ type PlanOpsEvalAndLearning {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]!
+    dataSharingFrequency: [FrequencyType!]!
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]!
+    dataCollectionFrequency: [FrequencyType!]!
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
@@ -8340,12 +8358,14 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequency: [FrequencyType!]
+    dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequency: [FrequencyType!]
+    dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
@@ -9055,17 +9075,18 @@ enum ConfidenceType {
 #   OTHER
 # }
 
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
-    OTHER
-    NOT_PLANNING_TO_DO_THIS
-}
+
+# enum DataFrequencyType {
+#   ANNUALLY
+#   BIANNUALLY
+#   QUARTERLY
+#   MONTHLY
+#   SEMI_MONTHLY
+#   WEEKLY
+#   DAILY
+#   OTHER
+#   NOT_PLANNING_TO_DO_THIS
+# }
 
 # enum AnticipatedPaymentFrequencyType {
 #   ANNUALLY
@@ -15846,6 +15867,8 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
 			case "dataSharingFrequency":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
+			case "dataSharingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field)
 			case "dataSharingFrequencyOther":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
 			case "dataSharingStartsNote":
@@ -15856,6 +15879,8 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
 			case "dataCollectionFrequency":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
+			case "dataCollectionFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field)
 			case "dataCollectionFrequencyOther":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
 			case "dataCollectionFrequencyNote":
@@ -18344,6 +18369,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
 			case "dataSharingFrequency":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
+			case "dataSharingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field)
 			case "dataSharingFrequencyOther":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
 			case "dataSharingStartsNote":
@@ -18354,6 +18381,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
 			case "dataCollectionFrequency":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
+			case "dataCollectionFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field)
 			case "dataCollectionFrequencyOther":
 				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
 			case "dataCollectionFrequencyNote":
@@ -37235,9 +37264,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingFrequency(ctx con
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.DataFrequencyType)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNDataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37247,7 +37276,48 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequ
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type DataFrequencyType does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataSharingFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -37443,9 +37513,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionFrequency(ctx 
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.DataFrequencyType)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNDataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37455,7 +37525,48 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFr
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type DataFrequencyType does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataCollectionFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -59040,6 +59151,8 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "dataSharingFrequencyContinually":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataSharingFrequencyContinually(ctx, field, obj)
 		case "dataSharingFrequencyOther":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field, obj)
 		case "dataSharingStartsNote":
@@ -59084,6 +59197,8 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "dataCollectionFrequencyContinually":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataCollectionFrequencyContinually(ctx, field, obj)
 		case "dataCollectionFrequencyOther":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field, obj)
 		case "dataCollectionFrequencyNote":
@@ -63402,77 +63517,6 @@ func (ec *executionContext) marshalNDataForMonitoringType2ᚕgithubᚗcomᚋcmsg
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNDataForMonitoringType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) unmarshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx context.Context, v interface{}) (model.DataFrequencyType, error) {
-	var res model.DataFrequencyType
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx context.Context, sel ast.SelectionSet, v model.DataFrequencyType) graphql.Marshaler {
-	return v
-}
-
-func (ec *executionContext) unmarshalNDataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]model.DataFrequencyType, error) {
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.DataFrequencyType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalNDataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.DataFrequencyType) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -68335,73 +68379,6 @@ func (ec *executionContext) marshalODataForMonitoringType2ᚕgithubᚗcomᚋcmsg
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNDataForMonitoringType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) unmarshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]model.DataFrequencyType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.DataFrequencyType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.DataFrequencyType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
