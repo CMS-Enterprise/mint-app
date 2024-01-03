@@ -1607,8 +1607,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Daily
+              Monthly
             </li>
+            <ul
+              data-testid="other-entry"
+            />
           </ul>
         </div>
         <div
@@ -1668,8 +1671,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Monthly
+              Annually
             </li>
+            <ul
+              data-testid="other-entry"
+            />
           </ul>
         </div>
         <div

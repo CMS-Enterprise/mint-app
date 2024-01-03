@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   DataStartsType,
+  GetAllOpsEvalAndLearningQuery,
   useGetAllOpsEvalAndLearningQuery
 } from 'gql/gen/graphql';
 
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import {
@@ -14,7 +16,10 @@ import {
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems,
+  formatListOtherItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -33,6 +38,11 @@ const ReadOnlyOpsEvalAndLearning = ({
 
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
+  const {
+    dataSharingFrequency: dataSharingFrequencyConfig,
+    dataCollectionFrequency: dataCollectionFrequencyConfig
+  } = usePlanTranslation('opsEvalAndLearning');
+
   const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useGetAllOpsEvalAndLearningQuery({
@@ -44,6 +54,9 @@ const ReadOnlyOpsEvalAndLearning = ({
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
+
+  const allOpsEvalAndLearningData = (data?.modelPlan.opsEvalAndLearning ||
+    {}) as GetAllOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
 
   const {
     // OpsEvalAndLearningContent
@@ -133,12 +146,10 @@ const ReadOnlyOpsEvalAndLearning = ({
     dataSharingStarts,
     dataSharingStartsOther,
     dataSharingFrequency,
-    dataSharingFrequencyOther,
     dataSharingStartsNote,
     dataCollectionStarts,
     dataCollectionStartsOther,
     dataCollectionFrequency,
-    dataCollectionFrequencyOther,
     dataCollectionFrequencyNote,
     qualityReportingStarts,
     qualityReportingStartsOther,
@@ -149,7 +160,7 @@ const ReadOnlyOpsEvalAndLearning = ({
     modelLearningSystemsNote,
     anticipatedChallenges,
     status
-  } = data?.modelPlan.opsEvalAndLearning || {};
+  } = allOpsEvalAndLearningData;
 
   return (
     <div
@@ -946,10 +957,15 @@ const ReadOnlyOpsEvalAndLearning = ({
           <ReadOnlySection
             heading={opsEvalAndLearningT('dataSharingFrequency.label')}
             list
-            listItems={dataSharingFrequency?.map((type): string =>
-              opsEvalAndLearningT(`dataSharingFrequency.options.${type}`)
+            listItems={formatListItems(
+              dataSharingFrequencyConfig,
+              dataSharingFrequency
             )}
-            listOtherItem={dataSharingFrequencyOther}
+            listOtherItems={formatListOtherItems(
+              dataSharingFrequencyConfig,
+              dataSharingFrequency,
+              allOpsEvalAndLearningData
+            )}
             notes={dataSharingStartsNote}
           />
         )}
@@ -982,10 +998,15 @@ const ReadOnlyOpsEvalAndLearning = ({
           <ReadOnlySection
             heading={opsEvalAndLearningT('dataCollectionFrequency.label')}
             list
-            listItems={dataCollectionFrequency?.map((type): string =>
-              opsEvalAndLearningT(`dataCollectionFrequency.options.${type}`)
+            listItems={formatListItems(
+              dataCollectionFrequencyConfig,
+              dataCollectionFrequency
             )}
-            listOtherItem={dataCollectionFrequencyOther}
+            listOtherItems={formatListOtherItems(
+              dataCollectionFrequencyConfig,
+              dataCollectionFrequency,
+              allOpsEvalAndLearningData
+            )}
             notes={dataCollectionFrequencyNote}
           />
         )}
