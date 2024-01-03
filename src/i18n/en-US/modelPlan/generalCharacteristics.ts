@@ -323,7 +323,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      REGION: 'Region (CBSA, MSA, HRR, etc.)',
+      REGION: 'Region',
       STATE: 'States and territories',
       OTHER: 'Other'
     },
