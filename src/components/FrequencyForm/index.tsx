@@ -73,8 +73,8 @@ const FrequencyForm = ({
 
                 <Field
                   as={TextInput}
-                  id={`${id}-continually`}
-                  data-testid={`${id}-continually`}
+                  id={`${id}-continually-text`}
+                  data-testid={`${id}-continually-text`}
                   name={`${fieldName}Continually`}
                   disabled={disabled}
                 />
