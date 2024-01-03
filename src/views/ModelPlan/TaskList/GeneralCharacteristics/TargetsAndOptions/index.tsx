@@ -467,92 +467,67 @@ const TargetsAndOptions = () => {
                     scrollElement="agreementTypes"
                     error={!!flatErrors.agreementTypes}
                   >
-                    <FieldArray
-                      name="agreementTypes"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label">
-                            {generalCharacteristicsT('agreementTypes.label')}
-                          </legend>
+                    <Label htmlFor="agreementTypes">
+                      {generalCharacteristicsT('agreementTypes.label')}
+                    </Label>
 
-                          {itSolutionsStarted && (
-                            <ITSolutionsWarning
-                              id="ops-eval-and-learning-data-needed-warning"
-                              onClick={() =>
-                                handleFormSubmit(
-                                  `/models/${modelID}/task-list/it-solutions`
-                                )
-                              }
-                            />
+                    {itSolutionsStarted && (
+                      <ITSolutionsWarning
+                        id="ops-eval-and-learning-data-needed-warning"
+                        onClick={() =>
+                          handleFormSubmit(
+                            `/models/${modelID}/task-list/it-solutions`
+                          )
+                        }
+                      />
+                    )}
+
+                    <p className="text-base margin-y-1">
+                      {generalCharacteristicsT('agreementTypes.sublabel')}
+                    </p>
+
+                    <FieldErrorMsg>{flatErrors.agreementTypes}</FieldErrorMsg>
+
+                    {getKeys(agreementTypesConfig.options).map(type => (
+                      <Fragment key={type}>
+                        <Field
+                          as={CheckboxField}
+                          id={`plan-characteristics-agreement-type-${type}`}
+                          name="agreementTypes"
+                          label={agreementTypesConfig.options[type]}
+                          value={type}
+                          checked={values.agreementTypes.includes(type)}
+                        />
+                        {type === AgreementType.OTHER &&
+                          values.agreementTypes.includes(type) && (
+                            <FieldGroup
+                              className="margin-left-4 margin-top-2 margin-bottom-0"
+                              error={!!flatErrors.agreementTypesOther}
+                            >
+                              <Label
+                                htmlFor="plan-characteristics-agreement-type-other"
+                                className="text-normal"
+                              >
+                                {generalCharacteristicsT(
+                                  'agreementTypesOther.label'
+                                )}
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors.agreementTypesOther}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextAreaField}
+                                className="mint-textarea"
+                                id="plan-characteristics-agreement-type-other"
+                                maxLength={5000}
+                                name="agreementTypesOther"
+                              />
+                            </FieldGroup>
                           )}
-
-                          <p className="text-base margin-y-1">
-                            {generalCharacteristicsT('agreementTypes.sublabel')}
-                          </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.agreementTypes}
-                          </FieldErrorMsg>
-
-                          {getKeys(agreementTypesConfig.options).map(type => {
-                            type KeyType = keyof typeof agreementTypesConfig.options;
-
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`plan-characteristics-agreement-type-${type}`}
-                                  name="agreementTypes"
-                                  label={agreementTypesConfig.options[type]}
-                                  value={type}
-                                  checked={values.agreementTypes.includes(type)}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.agreementTypes.indexOf(
-                                        e.target.value as KeyType
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
-                                  }}
-                                />
-                                {type === AgreementType.OTHER &&
-                                  values.agreementTypes.includes(type) && (
-                                    <FieldGroup
-                                      className="margin-left-4 margin-top-2 margin-bottom-0"
-                                      error={!!flatErrors.agreementTypesOther}
-                                    >
-                                      <Label
-                                        htmlFor="plan-characteristics-agreement-type-other"
-                                        className="text-normal"
-                                      >
-                                        {generalCharacteristicsT(
-                                          'agreementTypesOther.label'
-                                        )}
-                                      </Label>
-
-                                      <FieldErrorMsg>
-                                        {flatErrors.agreementTypesOther}
-                                      </FieldErrorMsg>
-
-                                      <Field
-                                        as={TextAreaField}
-                                        className="mint-textarea"
-                                        id="plan-characteristics-agreement-type-other"
-                                        maxLength={5000}
-                                        name="agreementTypesOther"
-                                      />
-                                    </FieldGroup>
-                                  )}
-                              </Fragment>
-                            );
-                          })}
-                        </>
-                      )}
-                    />
+                      </Fragment>
+                    ))}
                   </FieldGroup>
 
                   {values.agreementTypes.includes(
