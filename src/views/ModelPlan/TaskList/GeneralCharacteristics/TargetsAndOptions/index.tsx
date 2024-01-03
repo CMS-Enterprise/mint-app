@@ -10,7 +10,7 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   AgreementType,
   GeographyApplication,
@@ -254,179 +254,146 @@ const TargetsAndOptions = () => {
 
                     {values.geographiesTargeted && (
                       <>
-                        <FieldArray
-                          name="geographiesTargetedTypes"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label text-normal">
-                                {generalCharacteristicsT(
-                                  'geographiesTargetedTypes.label'
-                                )}
-                              </legend>
+                        <FieldGroup
+                          scrollElement="geographiesTargetedTypes"
+                          error={!!flatErrors.geographiesTargetedTypes}
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="geographiesTargetedTypes">
+                            {generalCharacteristicsT(
+                              'geographiesTargetedTypes.label'
+                            )}
+                          </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.geographiesTargetedTypes}
-                              </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors.geographiesTargetedTypes}
+                          </FieldErrorMsg>
 
-                              {getKeys(
-                                geographiesTargetedTypesConfig.options
-                              ).map(type => {
-                                type KeyType = keyof typeof geographiesTargetedTypesConfig.options;
+                          {getKeys(geographiesTargetedTypesConfig.options).map(
+                            type => (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`plan-characteristics-geographies-type-${type}`}
+                                  name="geographiesTargetedTypes"
+                                  label={
+                                    geographiesTargetedTypesConfig.options[type]
+                                  }
+                                  value={type}
+                                  checked={values.geographiesTargetedTypes.includes(
+                                    type
+                                  )}
+                                />
 
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`plan-characteristics-geographies-type-${type}`}
-                                      name="geographiesTargetedTypes"
-                                      label={
-                                        geographiesTargetedTypesConfig.options[
-                                          type
-                                        ]
+                                {type === GeographyType.OTHER &&
+                                  values.geographiesTargetedTypes.includes(
+                                    type
+                                  ) && (
+                                    <FieldGroup
+                                      className="margin-left-4 margin-y-2"
+                                      error={
+                                        !!flatErrors.geographiesTargetedTypesOther
                                       }
-                                      value={type}
-                                      checked={values.geographiesTargetedTypes.includes(
-                                        type
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.geographiesTargetedTypes.indexOf(
-                                            e.target.value as KeyType
-                                          );
-                                          arrayHelpers.remove(idx);
+                                    >
+                                      <Label
+                                        htmlFor="plan-characteristics-geographies-targeted-other"
+                                        className="text-normal"
+                                      >
+                                        {generalCharacteristicsT(
+                                          'geographiesTargetedTypesOther.label'
+                                        )}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {
+                                          flatErrors.geographiesTargetedTypesOther
                                         }
-                                      }}
-                                    />
-
-                                    {type === GeographyType.OTHER &&
-                                      values.geographiesTargetedTypes.includes(
-                                        type
-                                      ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-y-2"
-                                          error={
-                                            !!flatErrors.geographiesTargetedTypesOther
-                                          }
-                                        >
-                                          <Label
-                                            htmlFor="plan-characteristics-geographies-targeted-other"
-                                            className="text-normal"
-                                          >
-                                            {generalCharacteristicsT(
-                                              'geographiesTargetedTypesOther.label'
-                                            )}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.geographiesTargetedTypesOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextAreaField}
-                                            data-testid="plan-characteristics-geographies-targeted-other"
-                                            id="plan-characteristics-geographies-targeted-other"
-                                            maxLength={5000}
-                                            className="mint-textarea"
-                                            name="geographiesTargetedTypesOther"
-                                          />
-                                        </FieldGroup>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            </>
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        data-testid="plan-characteristics-geographies-targeted-other"
+                                        id="plan-characteristics-geographies-targeted-other"
+                                        maxLength={5000}
+                                        className="mint-textarea"
+                                        name="geographiesTargetedTypesOther"
+                                      />
+                                    </FieldGroup>
+                                  )}
+                              </Fragment>
+                            )
                           )}
-                        />
+                        </FieldGroup>
 
-                        <FieldArray
-                          name="geographiesTargetedAppliedTo"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label text-normal">
-                                {generalCharacteristicsT(
-                                  'geographiesTargetedAppliedTo.label'
-                                )}
-                              </legend>
+                        <FieldGroup
+                          scrollElement="geographiesTargetedAppliedTo"
+                          error={!!flatErrors.geographiesTargetedAppliedTo}
+                          className="margin-top-4"
+                        >
+                          <Label htmlFor="geographiesTargetedAppliedTo">
+                            {generalCharacteristicsT(
+                              'geographiesTargetedAppliedTo.label'
+                            )}
+                          </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.geographiesTargetedAppliedTo}
-                              </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors.geographiesTargetedAppliedTo}
+                          </FieldErrorMsg>
 
-                              {getKeys(
-                                geographiesTargetedAppliedToConfig.options
-                              ).map(type => {
-                                type KeyType = keyof typeof geographiesTargetedAppliedToConfig.options;
+                          {getKeys(
+                            geographiesTargetedAppliedToConfig.options
+                          ).map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`plan-characteristics-geographies-applied-to-${type}`}
+                                  name="geographiesTargetedAppliedTo"
+                                  label={
+                                    geographiesTargetedAppliedToConfig.options[
+                                      type
+                                    ]
+                                  }
+                                  value={type}
+                                  checked={values.geographiesTargetedAppliedTo.includes(
+                                    type
+                                  )}
+                                />
 
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`plan-characteristics-geographies-applied-to-${type}`}
-                                      name="geographiesTargetedAppliedTo"
-                                      label={
-                                        geographiesTargetedAppliedToConfig
-                                          .options[type]
+                                {type === GeographyApplication.OTHER &&
+                                  values.geographiesTargetedAppliedTo.includes(
+                                    type
+                                  ) && (
+                                    <FieldGroup
+                                      className="margin-left-4 margin-top-2 margin-bottom-0"
+                                      error={
+                                        !!flatErrors.geographiesTargetedAppliedToOther
                                       }
-                                      value={type}
-                                      checked={values.geographiesTargetedAppliedTo.includes(
-                                        type
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.geographiesTargetedAppliedTo.indexOf(
-                                            e.target.value as KeyType
-                                          );
-                                          arrayHelpers.remove(idx);
+                                    >
+                                      <Label
+                                        htmlFor="plan-characteristics-geographies-applied-to-other"
+                                        className="text-normal"
+                                      >
+                                        {generalCharacteristicsT(
+                                          'geographiesTargetedAppliedToOther.label'
+                                        )}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {
+                                          flatErrors.geographiesTargetedAppliedToOther
                                         }
-                                      }}
-                                    />
-
-                                    {type === GeographyApplication.OTHER &&
-                                      values.geographiesTargetedAppliedTo.includes(
-                                        type
-                                      ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-top-2 margin-bottom-0"
-                                          error={
-                                            !!flatErrors.geographiesTargetedAppliedToOther
-                                          }
-                                        >
-                                          <Label
-                                            htmlFor="plan-characteristics-geographies-applied-to-other"
-                                            className="text-normal"
-                                          >
-                                            {generalCharacteristicsT(
-                                              'geographiesTargetedAppliedToOther.label'
-                                            )}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.geographiesTargetedAppliedToOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextAreaField}
-                                            id="plan-characteristics-geographies-applied-to-other"
-                                            maxLength={5000}
-                                            className="mint-textarea"
-                                            name="geographiesTargetedAppliedToOther"
-                                          />
-                                        </FieldGroup>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            </>
-                          )}
-                        />
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        id="plan-characteristics-geographies-applied-to-other"
+                                        maxLength={5000}
+                                        className="mint-textarea"
+                                        name="geographiesTargetedAppliedToOther"
+                                      />
+                                    </FieldGroup>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        </FieldGroup>
 
                         <AddNote
                           id="plan-characteristics-geographies-targeted-note"
