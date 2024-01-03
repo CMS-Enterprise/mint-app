@@ -323,8 +323,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'enum',
     formType: 'checkbox',
     options: {
-      REGION: 'Region',
       STATE: 'States and territories',
+      REGION: 'Region',
       OTHER: 'Other'
     },
     filterGroups: ['iddoc', 'pbg']
