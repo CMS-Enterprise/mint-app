@@ -220,8 +220,8 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
           </label>
           <input
             class="usa-input"
-            data-testid="participants-and-providers-additional-frequency-continually"
-            id="participants-and-providers-additional-frequency-continually"
+            data-testid="participants-and-providers-additional-frequency-continually-text"
+            id="participants-and-providers-additional-frequency-continually-text"
             name="providerAdditionFrequencyContinually"
             value="Continually"
           />

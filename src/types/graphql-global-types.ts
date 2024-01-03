@@ -134,18 +134,6 @@ export enum DataForMonitoringType {
   SITE_VISITS = "SITE_VISITS",
 }
 
-export enum DataFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMI_MONTHLY = "SEMI_MONTHLY",
-  WEEKLY = "WEEKLY",
-}
-
 export enum DataFullTimeOrIncrementalType {
   FULL_TIME = "FULL_TIME",
   INCREMENTAL = "INCREMENTAL",
@@ -945,12 +933,14 @@ export interface PlanOpsEvalAndLearningChanges {
   qualityPerformanceImpactsPaymentNote?: string | null;
   dataSharingStarts?: DataStartsType | null;
   dataSharingStartsOther?: string | null;
-  dataSharingFrequency?: DataFrequencyType[] | null;
+  dataSharingFrequency?: FrequencyTypeNew[] | null;
+  dataSharingFrequencyContinually?: string | null;
   dataSharingFrequencyOther?: string | null;
   dataSharingStartsNote?: string | null;
   dataCollectionStarts?: DataStartsType | null;
   dataCollectionStartsOther?: string | null;
-  dataCollectionFrequency?: DataFrequencyType[] | null;
+  dataCollectionFrequency?: FrequencyTypeNew[] | null;
+  dataCollectionFrequencyContinually?: string | null;
   dataCollectionFrequencyOther?: string | null;
   dataCollectionFrequencyNote?: string | null;
   qualityReportingStarts?: DataStartsType | null;

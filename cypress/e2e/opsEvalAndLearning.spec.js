@@ -314,17 +314,13 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .type('the next leap year')
       .should('have.value', 'the next leap year');
 
-    cy.get('#ops-eval-and-learning-data-sharing-frequency').within(() => {
-      cy.get("input[type='text']").click();
-    });
-
-    cy.get('[data-testid="option-OTHER"]')
+    cy.get('#ops-eval-and-learning-data-sharing-frequency-other')
       .check({ force: true })
       .should('be.checked');
 
-    cy.clickOutside();
-
-    cy.get('[data-testid="multiselect-tag--Other"]').first().contains('Other');
+    cy.get('#ops-eval-and-learning-data-sharing-frequency-other-text')
+      .type('Data Sharing Frequency Other')
+      .should('have.value', 'Data Sharing Frequency Other');
 
     cy.get('#ops-eval-and-learning-data-collection-starts').select('Other');
 
@@ -332,17 +328,13 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .type('the next leap year again')
       .should('have.value', 'the next leap year again');
 
-    cy.get('#ops-eval-and-learning-data-collection-frequency').within(() => {
-      cy.get("input[type='text']").click();
-    });
-
-    cy.get('[data-testid="option-OTHER"]')
+    cy.get('#ops-eval-and-learning-data-collection-frequency-continually')
       .check({ force: true })
       .should('be.checked');
 
-    cy.clickOutside();
-
-    cy.get('[data-testid="multiselect-tag--Other"]').first().contains('Other');
+    cy.get('#ops-eval-and-learning-data-collection-frequency-continually-text')
+      .type('Data Sharing Frequency Continually')
+      .should('have.value', 'Data Sharing Frequency Continually');
 
     cy.get('#ops-eval-and-learning-data-reporting-starts').select('Other');
 

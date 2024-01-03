@@ -213,11 +213,13 @@ export default gql`
         dataSharingStarts
         dataSharingStartsOther
         dataSharingFrequency
+        dataSharingFrequencyContinually
         dataSharingFrequencyOther
         dataSharingStartsNote
         dataCollectionStarts
         dataCollectionStartsOther
         dataCollectionFrequency
+        dataCollectionFrequencyContinually
         dataCollectionFrequencyOther
         dataCollectionFrequencyNote
         qualityReportingStarts

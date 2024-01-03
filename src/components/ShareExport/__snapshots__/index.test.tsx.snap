@@ -4739,8 +4739,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Daily
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -4800,8 +4803,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Monthly
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11101,8 +11107,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Daily
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11162,8 +11171,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Monthly
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
