@@ -249,29 +249,18 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     filterGroups: ['cbosc']
   },
-  participantAssumeRisk: {
-    gqlField: 'participantAssumeRisk',
-    goField: 'ParticipantAssumeRisk',
-    dbField: 'participant_assume_risk',
-    label: 'Will the participants assume risk?',
-    dataType: 'boolean',
-    formType: 'radio',
-    options: {
-      true: 'Yes',
-      false: 'No'
-    }
-  },
   riskType: {
     gqlField: 'riskType',
     goField: 'RiskType',
     dbField: 'risk_type',
     label: 'What type of risk will the participant assume?',
     dataType: 'enum',
-    formType: 'radio',
+    formType: 'checkbox',
     options: {
-      CAPITATION: 'Capitation',
-      ONE_SIDED: 'One-sided',
       TWO_SIDED: 'Two-sided',
+      ONE_SIDED: 'One-sided',
+      CAPITATION: 'Capitation',
+      NOT_RISK_BASED: 'Not risk-based',
       OTHER: 'Other'
     }
   },

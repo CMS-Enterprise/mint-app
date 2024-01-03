@@ -464,6 +464,7 @@ export enum ParticipantCommunicationType {
 
 export enum ParticipantRiskType {
   CAPITATION = "CAPITATION",
+  NOT_RISK_BASED = "NOT_RISK_BASED",
   ONE_SIDED = "ONE_SIDED",
   OTHER = "OTHER",
   TWO_SIDED = "TWO_SIDED",
@@ -1000,8 +1001,7 @@ export interface PlanParticipantsAndProvidersChanges {
   communicationMethod?: ParticipantCommunicationType[] | null;
   communicationMethodOther?: string | null;
   communicationNote?: string | null;
-  participantAssumeRisk?: boolean | null;
-  riskType?: ParticipantRiskType | null;
+  riskType?: ParticipantRiskType[] | null;
   riskOther?: string | null;
   riskNote?: string | null;
   willRiskChange?: boolean | null;

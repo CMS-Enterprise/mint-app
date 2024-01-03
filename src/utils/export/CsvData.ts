@@ -112,7 +112,6 @@ const csvFields = [
   'participantsAndProviders.communicationMethod', // array
   'participantsAndProviders.communicationMethodOther',
   'participantsAndProviders.communicationNote',
-  'participantsAndProviders.participantAssumeRisk',
   'participantsAndProviders.riskType',
   'participantsAndProviders.riskOther',
   'participantsAndProviders.riskNote',

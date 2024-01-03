@@ -214,60 +214,10 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="participantAssumeRisk"
+        data-scroll="riskType"
       >
         <label
           class="usa-label"
-          data-testid="label"
-          for="participants-and-providers-risk"
-        >
-          Will the participants assume risk?
-        </label>
-        <fieldset
-          class="usa-fieldset"
-          data-testid="fieldset"
-        >
-          <div
-            class="usa-radio"
-            data-testid="radio"
-          >
-            <input
-              class="usa-radio__input"
-              data-testid="participants-and-providers-risk-true"
-              id="participants-and-providers-risk-true"
-              name="participantAssumeRisk"
-              type="radio"
-              value="TRUE"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-risk-true"
-            >
-              Yes
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
-          >
-            <input
-              class="usa-radio__input"
-              data-testid="participants-and-providers-risk-false"
-              id="participants-and-providers-risk-false"
-              name="participantAssumeRisk"
-              type="radio"
-              value="FALSE"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-risk-false"
-            >
-              No
-            </label>
-          </div>
-        </fieldset>
-        <label
-          class="usa-label text-normal"
           data-testid="label"
           for="participants-and-providers-risk-type"
         >
@@ -278,80 +228,107 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
           data-testid="fieldset"
         >
           <div
-            class="usa-radio"
-            data-testid="radio"
+            class="mint-checkbox usa-checkbox"
           >
             <input
-              class="usa-radio__input"
-              id="participants-and-providers-risk-type-CAPITATION"
-              name="riskType"
-              type="radio"
-              value="CAPITATION"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-risk-type-CAPITATION"
-            >
-              Capitation
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
-          >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-risk-type-ONE_SIDED"
-              name="riskType"
-              type="radio"
-              value="ONE_SIDED"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-risk-type-ONE_SIDED"
-            >
-              One-sided
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
-          >
-            <input
-              class="usa-radio__input"
+              class="usa-checkbox__input"
               id="participants-and-providers-risk-type-TWO_SIDED"
               name="riskType"
-              type="radio"
+              type="checkbox"
               value="TWO_SIDED"
             />
             <label
-              class="usa-radio__label"
+              class="usa-checkbox__label"
               for="participants-and-providers-risk-type-TWO_SIDED"
             >
               Two-sided
             </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
           </div>
           <div
-            class="usa-radio"
-            data-testid="radio"
+            class="mint-checkbox usa-checkbox"
           >
             <input
-              checked=""
-              class="usa-radio__input"
+              class="usa-checkbox__input"
+              id="participants-and-providers-risk-type-ONE_SIDED"
+              name="riskType"
+              type="checkbox"
+              value="ONE_SIDED"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-risk-type-ONE_SIDED"
+            >
+              One-sided
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-risk-type-CAPITATION"
+              name="riskType"
+              type="checkbox"
+              value="CAPITATION"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-risk-type-CAPITATION"
+            >
+              Capitation
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-risk-type-NOT_RISK_BASED"
+              name="riskType"
+              type="checkbox"
+              value="NOT_RISK_BASED"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-risk-type-NOT_RISK_BASED"
+            >
+              Not risk-based
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
               id="participants-and-providers-risk-type-OTHER"
               name="riskType"
-              type="radio"
+              type="checkbox"
               value="OTHER"
             />
             <label
-              class="usa-radio__label"
+              class="usa-checkbox__label"
               for="participants-and-providers-risk-type-OTHER"
             >
               Other
             </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
           </div>
           <div
-            class="margin-left-4 margin-top-2"
+            class="margin-left-4"
           >
             <label
               class="usa-label text-normal"
@@ -360,16 +337,13 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             >
               Please specify
             </label>
-            <textarea
-              aria-labelledby="label-participants-and-providers-risk-type-other hint-participants-and-providers-risk-type-other"
-              class="maxw-none mint-textarea usa-textarea"
+            <input
+              class="usa-input maxw-none mint-textarea"
               data-testid="participants-and-providers-risk-type-other"
               id="participants-and-providers-risk-type-other"
-              maxlength="5000"
               name="riskOther"
-            >
-              Programmatic Risk
-            </textarea>
+              value="Programmatic Risk"
+            />
           </div>
         </fieldset>
         <div

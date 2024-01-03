@@ -8,11 +8,14 @@ import {
   useGetAllParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import ReadOnlySection, {
+  formatListItems
+} from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -30,6 +33,11 @@ const ReadOnlyParticipantsAndProviders = ({
   const { t: participantsAndProvidersMiscT } = useTranslation(
     'participantsAndProvidersMisc'
   );
+
+  const { riskType: riskTypeConfig } = usePlanTranslation(
+    'participantsAndProviders'
+  );
+
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -65,7 +73,6 @@ const ReadOnlyParticipantsAndProviders = ({
     communicationMethod,
     communicationMethodOther,
     communicationNote,
-    participantAssumeRisk,
     riskType,
     riskOther,
     riskNote,
@@ -293,36 +300,15 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'participantAssumeRisk',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: participantsAndProvidersT('participantAssumeRisk.label'),
-              copy: participantsAndProvidersT(
-                `participantAssumeRisk.options.${participantAssumeRisk}`,
-                ''
-              )
-            }}
-            secondSection={
-              participantAssumeRisk === true && {
-                heading: participantsAndProvidersT('riskType.label'),
-                copy:
-                  riskType &&
-                  participantsAndProvidersT(`riskType.options.${riskType}`, ''),
-                listOtherItem: riskOther
-              }
-            }
+          'riskType',
+          <ReadOnlySection
+            heading={participantsAndProvidersT('riskType.label')}
+            list
+            listItems={formatListItems(riskTypeConfig, riskType)}
+            listOtherItem={riskOther}
+            notes={riskNote}
           />
         )}
-        {riskNote &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'participantAssumeRisk',
-            <ReadOnlySection
-              heading={participantsAndProvidersT('riskNote.label')}
-              copy={riskNote}
-            />
-          )}
 
         {checkGroupMap(
           isViewingFilteredView,

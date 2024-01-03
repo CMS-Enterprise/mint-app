@@ -228,7 +228,6 @@ export type TranslationParticipantsAndProviders = {
   communicationMethod: TranslationFieldPropertiesWithOptions<ParticipantCommunicationType>;
   communicationMethodOther: TranslationFieldProperties;
   communicationNote: TranslationFieldProperties;
-  participantAssumeRisk: TranslationFieldPropertiesWithOptions<Bool>;
   riskType: TranslationFieldPropertiesWithOptions<ParticipantRiskType>;
   riskOther: TranslationFieldProperties;
   riskNote: TranslationFieldProperties;
