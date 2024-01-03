@@ -22,7 +22,7 @@ import {
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
-  FrequencyTypeNew,
+  FrequencyType,
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
@@ -245,7 +245,7 @@ export type TranslationParticipantsAndProviders = {
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
-  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   providerAdditionFrequencyContinually: TranslationFieldProperties;
   providerAdditionFrequencyOther: TranslationFieldProperties;
   providerAdditionFrequencyNote: TranslationFieldProperties;
@@ -281,7 +281,7 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionNote: TranslationFieldProperties;
   beneficiarySelectionOther: TranslationFieldProperties;
   // Frequency
-  beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
   beneficiarySelectionFrequencyNote: TranslationFieldProperties;
@@ -459,7 +459,7 @@ export type TranslationPayments = {
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
-  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   anticipatedPaymentFrequencyContinually: TranslationFieldProperties;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;

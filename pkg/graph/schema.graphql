@@ -700,7 +700,7 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: [FrequencyTypeNew!]!
+  beneficiarySelectionFrequency: [FrequencyType!]!
   beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
@@ -748,7 +748,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: [FrequencyTypeNew!]
+  beneficiarySelectionFrequency: [FrequencyType!]
   beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
@@ -814,7 +814,7 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      [FrequencyTypeNew!]!
+  providerAdditionFrequency:      [FrequencyType!]!
   providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
@@ -899,7 +899,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      [FrequencyTypeNew!]
+  providerAdditionFrequency:      [FrequencyType!]
   providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
@@ -986,7 +986,7 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [FrequencyTypeNew!]!
+  anticipatedPaymentFrequency:                       [FrequencyType!]!
   anticipatedPaymentFrequencyOther:                  String
   anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyNote:                   String
@@ -1084,7 +1084,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [FrequencyTypeNew!]
+  anticipatedPaymentFrequency:                              [FrequencyType!]
   anticipatedPaymentFrequencyOther:                         String
   anticipatedPaymentFrequencyContinually:                   String
   anticipatedPaymentFrequencyNote:                          String
@@ -2059,7 +2059,7 @@ enum DataFrequencyType {
 #   OTHER
 # }
 
-enum FrequencyTypeNew {
+enum FrequencyType {
   ANNUALLY
   SEMIANUALLY
   QUARTERLY

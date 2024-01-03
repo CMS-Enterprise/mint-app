@@ -208,7 +208,7 @@ export enum EvaluationApproachType {
   OTHER = "OTHER",
 }
 
-export enum FrequencyTypeNew {
+export enum FrequencyType {
   ANNUALLY = "ANNUALLY",
   CONTINUALLY = "CONTINUALLY",
   MONTHLY = "MONTHLY",
@@ -728,7 +728,7 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionMethod?: SelectionMethodType[] | null;
   beneficiarySelectionOther?: string | null;
   beneficiarySelectionNote?: string | null;
-  beneficiarySelectionFrequency?: FrequencyTypeNew[] | null;
+  beneficiarySelectionFrequency?: FrequencyType[] | null;
   beneficiarySelectionFrequencyContinually?: string | null;
   beneficiarySelectionFrequencyOther?: string | null;
   beneficiarySelectionFrequencyNote?: string | null;
@@ -1006,7 +1006,7 @@ export interface PlanParticipantsAndProvidersChanges {
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
-  providerAdditionFrequency?: FrequencyTypeNew[] | null;
+  providerAdditionFrequency?: FrequencyType[] | null;
   providerAdditionFrequencyContinually?: string | null;
   providerAdditionFrequencyOther?: string | null;
   providerAdditionFrequencyNote?: string | null;
@@ -1075,7 +1075,7 @@ export interface PlanPaymentsChanges {
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
-  anticipatedPaymentFrequency?: FrequencyTypeNew[] | null;
+  anticipatedPaymentFrequency?: FrequencyType[] | null;
   anticipatedPaymentFrequencyOther?: string | null;
   anticipatedPaymentFrequencyContinually?: string | null;
   anticipatedPaymentFrequencyNote?: string | null;

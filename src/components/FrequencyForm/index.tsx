@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Label, TextInput } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
-import { FrequencyTypeNew } from 'gql/gen/graphql';
+import { FrequencyType } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import CheckboxField from 'components/shared/CheckboxField';
@@ -16,8 +16,8 @@ import {
 
 type FrequencyFormType = {
   field: string;
-  values: FrequencyTypeNew[] | null | undefined;
-  config: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  values: FrequencyType[] | null | undefined;
+  config: TranslationFieldPropertiesWithOptions<FrequencyType>;
   nameSpace: keyof TranslationPlan;
   label: string;
   id: string;
@@ -62,7 +62,7 @@ const FrequencyForm = ({
               checked={values?.includes(type)}
             />
 
-            {type === FrequencyTypeNew.CONTINUALLY && values?.includes(type) && (
+            {type === FrequencyType.CONTINUALLY && values?.includes(type) && (
               <div className="margin-left-4">
                 <Label
                   htmlFor={`${id}-continually`}
@@ -81,7 +81,7 @@ const FrequencyForm = ({
               </div>
             )}
 
-            {type === FrequencyTypeNew.OTHER && values?.includes(type) && (
+            {type === FrequencyType.OTHER && values?.includes(type) && (
               <div className="margin-left-4">
                 <Label
                   htmlFor={`${id}-other`}
