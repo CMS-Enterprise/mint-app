@@ -33,7 +33,8 @@ const ReadOnlyGeneralCharacteristics = ({
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const {
-    geographiesTargetedTypes: geographiesTargetedTypesConfig
+    geographiesTargetedTypes: geographiesTargetedTypesConfig,
+    geographiesTargetedAppliedTo: geographiesTargetedAppliedToConfig
   } = usePlanTranslation('generalCharacteristics');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -477,10 +478,9 @@ const ReadOnlyGeneralCharacteristics = ({
                 'geographiesTargetedAppliedTo.label'
               ),
               list: true,
-              listItems: geographiesTargetedAppliedTo?.map((type): string =>
-                generalCharacteristicsT(
-                  `geographiesTargetedAppliedTo.options.${type}`
-                )
+              listItems: formatListItems(
+                geographiesTargetedAppliedToConfig,
+                geographiesTargetedAppliedTo
               ),
               listOtherItem: geographiesTargetedAppliedToOther
             }}
