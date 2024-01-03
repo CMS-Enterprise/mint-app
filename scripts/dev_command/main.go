@@ -50,6 +50,7 @@ FRONTEND
 3. Update snapshots
 4. Populate Test suites that you want to run, and run those
 	--> FrontEnd --> Ashley has looked into VITest for test suites
+	--> consider subforms in the commands
 */
 func execute() {
 	if err := rootCmd.Execute(); err != nil {
