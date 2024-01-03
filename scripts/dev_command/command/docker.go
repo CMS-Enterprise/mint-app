@@ -7,6 +7,7 @@ import (
 	"os/exec"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // go run scripts/dev_command/*.go up
@@ -15,10 +16,11 @@ var StartDockerCommand = &cobra.Command{
 	Short: "",
 	Long:  "",
 	Run: func(cmd *cobra.Command, args []string) {
+		config := viper.New()
+		config.AutomaticEnv()
 		fmt.Printf("Ran the Start Docker Command with command : %s", cmd.Use)
 		up(false, []string{}, true, false, false)
-
-		// QueryUserNamesAndExportToJSON()
+		// NOTE, this command reads the raw docker logs too, TODO: don't show the docker logs, just the main command
 
 	},
 }
@@ -60,6 +62,7 @@ func up(frontendIncluded bool, args []string, debug, wait, ci bool) {
 	}
 
 	// Show the command line output in the terminal
+	// TODO, see about not capturing all docker logs
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
