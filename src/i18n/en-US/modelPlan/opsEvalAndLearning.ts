@@ -914,8 +914,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_sharing_frequency',
     label: 'How often do you anticipate sharing data?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Data sharing frequency',
+    formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
@@ -990,8 +989,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_collection_frequency',
     label: 'How often do you anticipate collecting data?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Data collection frequency',
+    formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',

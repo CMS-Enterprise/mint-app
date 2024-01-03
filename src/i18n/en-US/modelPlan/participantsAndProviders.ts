@@ -431,7 +431,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_addition_frequency',
     label: 'How frequently are providers added?',
     dataType: 'enum',
-    formType: 'radio',
+    formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',

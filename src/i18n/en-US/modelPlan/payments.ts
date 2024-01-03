@@ -637,8 +637,7 @@ export const payments: TranslationPayments = {
     dbField: 'anticipated_payment_frequency',
     label: 'How often do you anticipate making payments?',
     dataType: 'enum',
-    formType: 'multiSelect',
-    multiSelectLabel: 'Selected payment frequency',
+    formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',

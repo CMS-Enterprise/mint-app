@@ -208,7 +208,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_frequency',
     label: 'How frequently are beneficiaries chosen?',
     dataType: 'enum',
-    formType: 'radio',
+    formType: 'checkbox',
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
