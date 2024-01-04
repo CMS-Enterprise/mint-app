@@ -1,4 +1,4 @@
-package storage
+package sqlutils
 
 import (
 	"fmt"
@@ -11,8 +11,8 @@ type TransactionFunc[T any] func(*sqlx.Tx) (*T, error)
 
 // WithTransaction is a wrapper function which handles creating, committing or rolling back a transaction
 // If there are any errors when executing the txFunc, the tx is rolled back. Otherwise, the tx is committed.
-func WithTransaction[T any](s *Store, txFunc TransactionFunc[T]) (*T, error) {
-	tx, err := s.db.Beginx()
+func WithTransaction[T any](txPrep TransactionPreparer, txFunc TransactionFunc[T]) (*T, error) {
+	tx, err := txPrep.Beginx()
 	if err != nil {
 		return nil, fmt.Errorf("error creating transaction %w", err)
 	}

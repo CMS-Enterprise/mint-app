@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
+)
 
 // ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
@@ -130,4 +134,11 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 	ModelViewFilterMasterDataManagement:                             "Master Data Management",
 	ModelViewFilterOfficeOfTheActuary:                               "Office of the Actuary",
 	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
+}
+
+// NewModelPlanDBRecord Saves the inital model plan record to the database
+func (m *ModelPlan) NewModelPlanDBRecord(np sqlutils.NamedPreparer) (*ModelPlan, error) {
+	_ = np
+	return m, nil
+
 }
