@@ -81,8 +81,8 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   return translation;
 };
 
-const parentFieldsToTranslate = ['archived', 'status'];
-const unwindSections = ['collaborators'];
+const parentFieldsToTranslate: string[] = ['archived', 'status'];
+const unwindSections: string[] = ['collaborators'];
 
 /**
  * @param transformObj Data obj to transform from gql query for all/single model plan
@@ -115,6 +115,7 @@ export const dataFormatter = (
         ? formatDateUtc(transformObj[key], 'MM/dd/yyyy')
         : transformObj[key];
     }
+
     // Translates any enum values - either single value or an array
     else if (allPlanTranslation?.[key]?.options) {
       if (Array.isArray(transformObj[key])) {
@@ -125,6 +126,7 @@ export const dataFormatter = (
         mappedObj[key] = allPlanTranslation[key].options[transformObj[key]];
       }
     }
+
     // Translates and predefined/custom date field to human readable date
     else if (
       allPlanTranslation?.[key]?.dataType === 'date' &&
@@ -132,7 +134,8 @@ export const dataFormatter = (
     ) {
       mappedObj[key] = formatDateLocal(transformObj[key], 'MM/dd/yyyy');
     }
-    // If parent is an array - ex: Collaborators, Discussionsm etc
+
+    // If parent is an array - ex: Collaborators, Discussions etc
     else if (parentKey && unwindSections.includes(parentKey)) {
       mappedObj[key] = i18next.t<string>(
         `${parentKey}:${key}.options.${transformObj[key]}`
@@ -145,12 +148,14 @@ export const dataFormatter = (
       !allPlanTranslation?.[key]?.options
     ) {
       mappedObj[key] = transformObj[key].join(', ');
-      // TODO: Remove once/if discussion translations work has been completed
+
+      // TODO: Remove once/if discussion translations work has been completed - can use parentKey and unwindSections once translations are implemented
     } else if (key === 'userRole') {
       mappedObj[key] = i18next.t<string>(
         `discussions:userRole.${transformObj[key]}`
       );
     }
+
     // If the value is a nested task list item - Basics, Payments, etc - apply it to the current value
     else if (
       transformObj[key] &&
@@ -158,6 +163,15 @@ export const dataFormatter = (
       !Array.isArray(transformObj[key])
     ) {
       mappedObj[key] = transformObj[key];
+    }
+
+    // Strip html tags from TipTap RTE rawContent value
+    else if (
+      transformObj[key] &&
+      typeof transformObj[key] === 'string' &&
+      key === 'rawContent'
+    ) {
+      mappedObj[key] = transformObj[key].replace(/<[^>]*>?/gm, '');
     }
 
     // If the current value can be further iterated and translated, call the recursive function again
