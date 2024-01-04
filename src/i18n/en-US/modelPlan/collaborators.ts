@@ -17,16 +17,17 @@ export const collaborators: TranslationCollaborators = {
     dataType: 'enum',
     formType: 'select',
     options: {
+      CM_FFS_COUNTERPART: 'CM FFS counterpart',
+      COR: `Contracting Officer's Representative (COR)`,
       EVALUATION: 'Evaluation',
       IT_LEAD: 'IT Lead',
       LEADERSHIP: 'Leadership',
       LEARNING: 'Learning',
       MODEL_LEAD: 'Model Lead',
       MODEL_TEAM: 'Model Team',
-      OACT: 'OACT',
+      OACT: 'Office of the Actuary (OACT)',
       PAYMENT: 'Payment',
-      QUALITY: 'Quality',
-      CM_FFS_COUNTERPART: 'CM FFS counterpart'
+      QUALITY: 'Quality'
     }
   }
 };
