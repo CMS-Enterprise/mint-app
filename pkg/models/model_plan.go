@@ -143,8 +143,8 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 
 //TODO: perhaps only export the save function so it only makes a record if the UUID is not nil, the toehr is a holdover from explicitly specifying a UUID
 
-// NewModelPlanDBRecord Saves the inital model plan record to the database
-func (m *ModelPlan) NewModelPlanDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
+// createDBRecord Saves the inital model plan record to the database
+func (m *ModelPlan) createDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
 
 	if m.ID == uuid.Nil { //TODO, should we always just make a new ID for this?
 		m.ID = uuid.New()
@@ -209,10 +209,12 @@ func (m *ModelPlan) UpdateDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger
 	return m, nil
 }
 
-// SaveToDatabase conditionally saves or updates a db model plan
+// SaveToDatabase will interacts with the model plan table in the db
+// it will create a db record if the ID is nil
+// or will update it if it is not nil
 func (m *ModelPlan) SaveToDatabase(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
 	if m.ID == uuid.Nil {
-		return m.NewModelPlanDBRecord(np, logger)
+		return m.createDBRecord(np, logger)
 	}
 	return m.UpdateDBRecord(np, logger)
 }

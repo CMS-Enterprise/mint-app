@@ -48,7 +48,7 @@ func ModelPlanCreate(
 
 		userAccount := principal.Account()
 
-		createdPlan, err := plan.NewModelPlanDBRecord(tx, logger)
+		createdPlan, err := plan.SaveToDatabase(tx, logger)
 
 		if err != nil {
 			return nil, err

@@ -16,7 +16,7 @@ func (suite *StoreTestSuite) TestWithTransaction() {
 		plan, err := sqlutils.WithTransaction[models.ModelPlan](suite.store.db, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 			modelName := "testing transactions"
 			plan := models.NewModelPlan(suite.principal.Account().ID, modelName)
-			createdPlan, err := plan.NewModelPlanDBRecord(tx, suite.logger)
+			createdPlan, err := plan.SaveToDatabase(tx, suite.logger)
 			if err != nil {
 				return nil, err
 			}
@@ -35,7 +35,7 @@ func (suite *StoreTestSuite) TestWithTransaction() {
 		plan, err := sqlutils.WithTransaction[models.ModelPlan](suite.store.db, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 			modelName := "testing transactions rollback"
 			plan := models.NewModelPlan(suite.principal.Account().ID, modelName)
-			createdPlan, err := plan.NewModelPlanDBRecord(tx, suite.logger)
+			createdPlan, err := plan.SaveToDatabase(tx, suite.logger)
 			if err != nil {
 				return nil, err
 			}
@@ -52,7 +52,7 @@ func (suite *StoreTestSuite) TestWithTransaction() {
 		plan, err := sqlutils.WithTransaction[models.ModelPlan](suite.store.db, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 
 			plan := models.NewModelPlan(suite.principal.Account().ID, modelName)
-			createdPlan, err := plan.NewModelPlanDBRecord(suite.store, suite.logger) //Call the method on the store itself, so it is automatically created
+			createdPlan, err := plan.SaveToDatabase(suite.store, suite.logger) //Call the method on the store itself, so it is automatically created
 			if err != nil {
 				return nil, err
 			}
