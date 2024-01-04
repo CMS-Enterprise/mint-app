@@ -141,8 +141,6 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
 }
 
-//TODO: perhaps only export the save function so it only makes a record if the UUID is not nil, the toehr is a holdover from explicitly specifying a UUID
-
 // createDBRecord Saves the inital model plan record to the database
 func (m *ModelPlan) createDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
 

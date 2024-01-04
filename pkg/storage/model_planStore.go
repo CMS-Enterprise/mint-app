@@ -17,12 +17,6 @@ import (
 	_ "embed"
 )
 
-// //go:embed SQL/model_plan/create.sql
-// var modelPlanCreateSQL string
-
-// //go:embed SQL/model_plan/update.sql
-// var modelPlanUpdateSQL string
-
 //go:embed SQL/model_plan/get_by_id.sql
 var modelPlanGetByIDSQL string
 
