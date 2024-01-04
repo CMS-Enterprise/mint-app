@@ -60,7 +60,7 @@ const CollaboratorsTable = ({
           ];
           return modelLeadFirst
             .map((role: TeamRole) => {
-              return collaboratorsT(`teamRole.options.${role}`);
+              return collaboratorsT(`teamRoles.options.${role}`);
             })
             .join(', ');
         }

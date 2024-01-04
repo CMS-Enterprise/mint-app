@@ -82,6 +82,7 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
 };
 
 const parentFieldsToTranslate = ['archived', 'status'];
+const unwindSections = ['collaborators'];
 
 /**
  * @param transformObj Data obj to transform from gql query for all/single model plan
@@ -89,7 +90,11 @@ const parentFieldsToTranslate = ['archived', 'status'];
  */
 
 // Recursive function to map through data and apply translation transforms
-export const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
+export const dataFormatter = (
+  transformObj: any,
+  allPlanTranslation: any,
+  parentKey?: string
+) => {
   const mappedObj: any = { ...transformObj };
 
   getKeys(transformObj).forEach((key: any) => {
@@ -127,13 +132,19 @@ export const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
     ) {
       mappedObj[key] = formatDateLocal(transformObj[key], 'MM/dd/yyyy');
     }
+    // If parent is an array - ex: Collaborators, Discussionsm etc
+    else if (parentKey && unwindSections.includes(parentKey)) {
+      mappedObj[key] = i18next.t<string>(
+        `${parentKey}:${key}.options.${transformObj[key]}`
+      );
+    }
+
     // Converts any arrays of entered text into a comma-separated array - ex: Previous names
     else if (
       Array.isArray(transformObj[key]) &&
       !allPlanTranslation?.[key]?.options
     ) {
       mappedObj[key] = transformObj[key].join(', ');
-
       // TODO: Remove once/if discussion translations work has been completed
     } else if (key === 'userRole') {
       mappedObj[key] = i18next.t<string>(
@@ -158,7 +169,8 @@ export const dataFormatter = (transformObj: any, allPlanTranslation: any) => {
     ) {
       mappedObj[key] = dataFormatter(
         transformObj[key],
-        allPlanTranslation?.[key]
+        allPlanTranslation?.[key],
+        key
       );
     }
   });

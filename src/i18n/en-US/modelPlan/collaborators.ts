@@ -9,10 +9,10 @@ export const collaborators: TranslationCollaborators = {
     dataType: 'string',
     formType: 'select'
   },
-  teamRole: {
-    gqlField: 'teamRole',
-    goField: 'TeamRole',
-    dbField: 'team_role',
+  teamRoles: {
+    gqlField: 'teamRoles',
+    goField: 'TeamRoles',
+    dbField: 'team_roles',
     label: 'Team member role(s)',
     dataType: 'enum',
     formType: 'select',

@@ -368,8 +368,8 @@ const csvFields = [
   {
     label: `${i18next.t<string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string>('collaborators:teamRole.label')}`,
-    value: 'collaborators.teamRole'
+    )} ${i18next.t<string>('collaborators:teamRoles.label')}`,
+    value: 'collaborators.teamRoles'
   },
 
   // Discussions
