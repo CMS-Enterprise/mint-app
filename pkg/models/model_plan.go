@@ -1,9 +1,14 @@
 package models
 
 import (
-	"github.com/google/uuid"
+	"fmt"
 
+	"github.com/google/uuid"
+	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
+	"github.com/cmsgov/mint-app/pkg/sqlutils/sqlscripts"
 )
 
 // ModelPlan is the top-level object for an entire draft model plan
@@ -136,9 +141,78 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
 }
 
-// NewModelPlanDBRecord Saves the inital model plan record to the database
-func (m *ModelPlan) NewModelPlanDBRecord(np sqlutils.NamedPreparer) (*ModelPlan, error) {
-	_ = np
-	return m, nil
+//TODO: perhaps only export the save function so it only makes a record if the UUID is not nil, the toehr is a holdover from explicitly specifying a UUID
 
+// NewModelPlanDBRecord Saves the inital model plan record to the database
+func (m *ModelPlan) NewModelPlanDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
+
+	if m.ID == uuid.Nil { //TODO, should we always just make a new ID for this?
+		m.ID = uuid.New()
+	}
+
+	stmt, err := np.PrepareNamed(sqlscripts.ModelPlanCreateSQL)
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to create model plan with error %s", err),
+			zap.String("user", m.CreatedBy.String()),
+		)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	retPlan := ModelPlan{}
+
+	m.ModifiedBy = nil
+	m.ModifiedDts = nil
+
+	err = stmt.Get(&retPlan, m)
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to create model plan with error %s", err),
+			zap.String("user", m.CreatedBy.String()),
+		)
+		return nil, err
+
+	}
+
+	return &retPlan, nil
+
+}
+
+// UpdateDBRecord updates the db model
+func (m *ModelPlan) UpdateDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
+	stmt, err := np.PrepareNamed(sqlscripts.ModelPlanUpdateSQL)
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to update system intake %s", err),
+			zap.String("id", m.ID.String()),
+			zap.String("user", UUIDValueOrEmpty(m.ModifiedBy)),
+		)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	err = stmt.Get(m, m)
+	if err != nil {
+		logger.Error(
+			fmt.Sprintf("Failed to update system intake %s", err),
+			zap.String("id", m.ID.String()),
+			zap.String("user", UUIDValueOrEmpty(m.ModifiedBy)),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     m,
+			Operation: apperrors.QueryUpdate,
+		}
+	}
+
+	return m, nil
+}
+
+// SaveToDatabase conditionally saves or updates a db model plan
+func (m *ModelPlan) SaveToDatabase(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
+	if m.ID == uuid.Nil {
+		return m.NewModelPlanDBRecord(np, logger)
+	}
+	return m.UpdateDBRecord(np, logger)
 }

@@ -48,7 +48,7 @@ func ModelPlanCreate(
 
 		userAccount := principal.Account()
 
-		createdPlan, err := store.ModelPlanCreate(tx, logger, plan)
+		createdPlan, err := plan.NewModelPlanDBRecord(tx, logger)
 
 		if err != nil {
 			return nil, err
@@ -209,7 +209,9 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
+	retPlan, err := existingPlan.UpdateDBRecord(store, logger)
+
+	// retPlan, err := store.ModelPlanUpdate(store, logger, existingPlan)
 	if err != nil {
 		return nil, err
 	}

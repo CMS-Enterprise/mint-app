@@ -162,7 +162,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// Dont create if there are no changes
 	mp := models.NewModelPlan(suite.testConfigs.Principal.UserAccount.ID, "NO CHANGES")
 
-	noChangeMp, err := suite.testConfigs.Store.ModelPlanCreate(suite.testConfigs.Store, suite.testConfigs.Logger, mp)
+	noChangeMp, err := mp.NewModelPlanDBRecord(suite.testConfigs.Store, suite.testConfigs.Logger)
 	suite.NoError(err)
 	suite.NotNil(noChangeMp)
 
