@@ -129,9 +129,12 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     formType: 'multiSelect',
     multiSelectLabel: 'Selected key characteristics',
     options: {
+      // TODO: Update enums when BE implements it
       EPISODE_BASED: 'Episode-Based Model',
+      MEDICAID_MODEL: 'Medicaid Model',
       PART_C: 'Medicare-Advantage (Part C) Model',
-      PART_D: 'Part D Model',
+      MEDICARE_FFS_MODEL: 'Medicare Fee-for-Service (FFS) Model',
+      PART_D: 'Medicare Prescription Drug (Part D) Model',
       PAYMENT: 'Payment Model',
       POPULATION_BASED: 'Population-based Model',
       PREVENTATIVE: 'Preventative Model',
