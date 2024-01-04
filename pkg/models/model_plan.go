@@ -179,8 +179,8 @@ func (m *ModelPlan) createDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger
 
 }
 
-// UpdateDBRecord updates the db model
-func (m *ModelPlan) UpdateDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
+// updateDBRecord updates the db model
+func (m *ModelPlan) updateDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
 	stmt, err := np.PrepareNamed(sqlscripts.ModelPlanUpdateSQL)
 	if err != nil {
 		logger.Error(
@@ -216,5 +216,5 @@ func (m *ModelPlan) SaveToDatabase(np sqlutils.NamedPreparer, logger *zap.Logger
 	if m.ID == uuid.Nil {
 		return m.createDBRecord(np, logger)
 	}
-	return m.UpdateDBRecord(np, logger)
+	return m.updateDBRecord(np, logger)
 }

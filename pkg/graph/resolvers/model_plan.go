@@ -209,9 +209,8 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	retPlan, err := existingPlan.UpdateDBRecord(store, logger)
+	retPlan, err := existingPlan.SaveToDatabase(store, logger)
 
-	// retPlan, err := store.ModelPlanUpdate(store, logger, existingPlan)
 	if err != nil {
 		return nil, err
 	}
