@@ -1057,7 +1057,7 @@ type PlanBeneficiariesResolver interface {
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
 
-	BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyTypeNew, error)
+	BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error)
 
 	PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error)
 }
@@ -1116,9 +1116,9 @@ type PlanOpsEvalAndLearningResolver interface {
 
 	DataToSendParticicipants(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataToSendParticipantsType, error)
 
-	DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyTypeNew, error)
+	DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
 
-	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyTypeNew, error)
+	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
 
 	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
 }
@@ -1133,7 +1133,7 @@ type PlanParticipantsAndProvidersResolver interface {
 
 	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
 
-	ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyTypeNew, error)
+	ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error)
 
 	ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error)
 
@@ -1153,7 +1153,7 @@ type PlanPaymentsResolver interface {
 	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
 	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
 
-	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyTypeNew, error)
+	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
 }
 type PossibleOperationalNeedResolver interface {
 	PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error)
@@ -7735,7 +7735,7 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: [FrequencyTypeNew!]!
+  beneficiarySelectionFrequency: [FrequencyType!]!
   beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
@@ -7783,7 +7783,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: [FrequencyTypeNew!]
+  beneficiarySelectionFrequency: [FrequencyType!]
   beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
@@ -7849,7 +7849,7 @@ type PlanParticipantsAndProviders {
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      [FrequencyTypeNew!]!
+  providerAdditionFrequency:      [FrequencyType!]!
   providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
@@ -7934,7 +7934,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   participantsIDSNote:     String
 
   #Page 5
-  providerAdditionFrequency:      [FrequencyTypeNew!]
+  providerAdditionFrequency:      [FrequencyType!]
   providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
   providerAdditionFrequencyNote:  String
@@ -8021,7 +8021,7 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [FrequencyTypeNew!]!
+  anticipatedPaymentFrequency:                       [FrequencyType!]!
   anticipatedPaymentFrequencyOther:                  String
   anticipatedPaymentFrequencyContinually:            String
   anticipatedPaymentFrequencyNote:                   String
@@ -8119,7 +8119,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [FrequencyTypeNew!]
+  anticipatedPaymentFrequency:                              [FrequencyType!]
   anticipatedPaymentFrequencyOther:                         String
   anticipatedPaymentFrequencyContinually:                   String
   anticipatedPaymentFrequencyNote:                          String
@@ -8228,13 +8228,13 @@ type PlanOpsEvalAndLearning {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [FrequencyTypeNew!]!
+    dataSharingFrequency: [FrequencyType!]!
     dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [FrequencyTypeNew!]!
+    dataCollectionFrequency: [FrequencyType!]!
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
@@ -8358,13 +8358,13 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [FrequencyTypeNew!]
+    dataSharingFrequency: [FrequencyType!]
     dataSharingFrequencyContinually: String
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [FrequencyTypeNew!]
+    dataCollectionFrequency: [FrequencyType!]
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
@@ -9099,7 +9099,7 @@ enum ConfidenceType {
 #   OTHER
 # }
 
-enum FrequencyTypeNew {
+enum FrequencyType {
   ANNUALLY
   SEMIANUALLY
   QUARTERLY
@@ -26155,9 +26155,9 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequency(ctx
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.FrequencyTypeNew)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -26167,7 +26167,7 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionF
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyTypeNew does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -37264,9 +37264,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingFrequency(ctx con
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.FrequencyTypeNew)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37276,7 +37276,7 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequ
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyTypeNew does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -37513,9 +37513,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionFrequency(ctx 
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.FrequencyTypeNew)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37525,7 +37525,7 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFr
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyTypeNew does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -40182,9 +40182,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFreque
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.FrequencyTypeNew)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -40194,7 +40194,7 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAd
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyTypeNew does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -43595,9 +43595,9 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequency(ctx contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.FrequencyTypeNew)
+	res := resTmp.([]models.FrequencyType)
 	fc.Result = res
-	return ec.marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx, field.Selections, res)
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -43607,7 +43607,7 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequenc
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type FrequencyTypeNew does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -63997,13 +63997,13 @@ func (ec *executionContext) marshalNFieldValue2githubᚗcomᚋcmsgovᚋmintᚑap
 	return ec._FieldValue(ctx, sel, &v)
 }
 
-func (ec *executionContext) unmarshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx context.Context, v interface{}) (models.FrequencyTypeNew, error) {
+func (ec *executionContext) unmarshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, v interface{}) (models.FrequencyType, error) {
 	tmp, err := graphql.UnmarshalString(v)
-	res := models.FrequencyTypeNew(tmp)
+	res := models.FrequencyType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx context.Context, sel ast.SelectionSet, v models.FrequencyTypeNew) graphql.Marshaler {
+func (ec *executionContext) marshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, sel ast.SelectionSet, v models.FrequencyType) graphql.Marshaler {
 	res := graphql.MarshalString(string(v))
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -64013,16 +64013,16 @@ func (ec *executionContext) marshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmin
 	return res
 }
 
-func (ec *executionContext) unmarshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, v interface{}) ([]models.FrequencyTypeNew, error) {
+func (ec *executionContext) unmarshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.FrequencyType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]models.FrequencyTypeNew, len(vSlice))
+	res := make([]models.FrequencyType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -64030,7 +64030,7 @@ func (ec *executionContext) unmarshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgov�
 	return res, nil
 }
 
-func (ec *executionContext) marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FrequencyTypeNew) graphql.Marshaler {
+func (ec *executionContext) marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FrequencyType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -64054,7 +64054,7 @@ func (ec *executionContext) marshalNFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx, sel, v[i])
+			ret[i] = ec.marshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -68613,7 +68613,7 @@ func (ec *executionContext) marshalOExistingModel2ᚖgithubᚗcomᚋcmsgovᚋmin
 	return ec._ExistingModel(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, v interface{}) ([]models.FrequencyTypeNew, error) {
+func (ec *executionContext) unmarshalOFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.FrequencyType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -68622,10 +68622,10 @@ func (ec *executionContext) unmarshalOFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgov�
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]models.FrequencyTypeNew, len(vSlice))
+	res := make([]models.FrequencyType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -68633,7 +68633,7 @@ func (ec *executionContext) unmarshalOFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgov�
 	return res, nil
 }
 
-func (ec *executionContext) marshalOFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNewᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FrequencyTypeNew) graphql.Marshaler {
+func (ec *executionContext) marshalOFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FrequencyType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -68660,7 +68660,7 @@ func (ec *executionContext) marshalOFrequencyTypeNew2ᚕgithubᚗcomᚋcmsgovᚋ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNFrequencyTypeNew2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeNew(ctx, sel, v[i])
+			ret[i] = ec.marshalNFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

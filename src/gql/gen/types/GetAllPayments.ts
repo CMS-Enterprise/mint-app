@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBasedPayType, ComplexityCalculationLevelType, FrequencyTypeNew, TaskStatus } from "./../../../types/graphql-global-types";
+import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, NonClaimsBasedPayType, ComplexityCalculationLevelType, FrequencyType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllPayments
@@ -63,7 +63,7 @@ export interface GetAllPayments_modelPlan_payments {
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
-  anticipatedPaymentFrequency: FrequencyTypeNew[];
+  anticipatedPaymentFrequency: FrequencyType[];
   anticipatedPaymentFrequencyContinually: string | null;
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;

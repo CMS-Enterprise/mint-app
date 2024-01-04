@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import {
   ClaimsBasedPayType,
   ComplexityCalculationLevelType,
-  FrequencyTypeNew,
+  FrequencyType,
   GetComplexityDocument,
   GetComplexityQuery,
   PayType
@@ -25,7 +25,7 @@ const mockData: GetComplexityType = {
   canParticipantsSelectBetweenPaymentMechanisms: true,
   canParticipantsSelectBetweenPaymentMechanismsHow: 'lorem ipsum',
   canParticipantsSelectBetweenPaymentMechanismsNote: null,
-  anticipatedPaymentFrequency: [FrequencyTypeNew.ANNUALLY],
+  anticipatedPaymentFrequency: [FrequencyType.ANNUALLY],
   anticipatedPaymentFrequencyOther: null,
   anticipatedPaymentFrequencyNote: null
 };

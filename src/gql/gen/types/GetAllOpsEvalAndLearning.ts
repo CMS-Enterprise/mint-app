@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, MonitoringFileType, DataFullTimeOrIncrementalType, BenchmarkForPerformanceType, EvaluationApproachType, CcmInvolvmentType, DataForMonitoringType, DataToSendParticipantsType, DataStartsType, FrequencyTypeNew, ModelLearningSystemType, TaskStatus } from "./../../../types/graphql-global-types";
+import { AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, MonitoringFileType, DataFullTimeOrIncrementalType, BenchmarkForPerformanceType, EvaluationApproachType, CcmInvolvmentType, DataForMonitoringType, DataToSendParticipantsType, DataStartsType, FrequencyType, ModelLearningSystemType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllOpsEvalAndLearning
@@ -91,13 +91,13 @@ export interface GetAllOpsEvalAndLearning_modelPlan_opsEvalAndLearning {
   qualityPerformanceImpactsPaymentNote: string | null;
   dataSharingStarts: DataStartsType | null;
   dataSharingStartsOther: string | null;
-  dataSharingFrequency: FrequencyTypeNew[];
+  dataSharingFrequency: FrequencyType[];
   dataSharingFrequencyContinually: string | null;
   dataSharingFrequencyOther: string | null;
   dataSharingStartsNote: string | null;
   dataCollectionStarts: DataStartsType | null;
   dataCollectionStartsOther: string | null;
-  dataCollectionFrequency: FrequencyTypeNew[];
+  dataCollectionFrequency: FrequencyType[];
   dataCollectionFrequencyContinually: string | null;
   dataCollectionFrequencyOther: string | null;
   dataCollectionFrequencyNote: string | null;
