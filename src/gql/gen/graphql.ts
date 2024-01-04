@@ -474,6 +474,13 @@ export enum GeographyType {
   STATE = 'STATE'
 }
 
+// TODO: Update these enums to the exact ones BE implements
+export enum GeographyRegionType {
+  CBSA = "CBSA",
+  HRR = "HRR",
+  MSA = "MSA"
+}
+
 export enum KeyCharacteristic {
   EPISODE_BASED = 'EPISODE_BASED',
   OTHER = 'OTHER',

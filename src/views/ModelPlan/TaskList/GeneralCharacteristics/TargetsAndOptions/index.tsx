@@ -54,6 +54,7 @@ const TargetsAndOptions = () => {
     geographiesTargeted: geographiesTargetedConfig,
     geographiesTargetedTypes: geographiesTargetedTypesConfig,
     geographiesTargetedAppliedTo: geographiesTargetedAppliedToConfig,
+    geograpghiesTargetedRegionTypes: geograpghiesTargetedRegionTypesConfig,
     participationOptions: participationOptionsConfig,
     agreementTypes: agreementTypesConfig,
     multiplePatricipationAgreementsNeeded: multiplePatricipationAgreementsNeededConfig
@@ -77,6 +78,7 @@ const TargetsAndOptions = () => {
     geographiesTargeted,
     geographiesTargetedTypes,
     geographiesTargetedTypesOther,
+    geograpghiesTargetedRegionTypes,
     geographiesTargetedAppliedTo,
     geographiesTargetedAppliedToOther,
     geographiesTargetedNote,
@@ -136,6 +138,7 @@ const TargetsAndOptions = () => {
     geographiesTargeted: geographiesTargeted ?? null,
     geographiesTargetedTypes: geographiesTargetedTypes ?? [],
     geographiesTargetedTypesOther: geographiesTargetedTypesOther ?? '',
+    geograpghiesTargetedRegionTypes: geograpghiesTargetedRegionTypes ?? [],
     geographiesTargetedAppliedTo: geographiesTargetedAppliedTo ?? [],
     geographiesTargetedAppliedToOther: geographiesTargetedAppliedToOther ?? '',
     geographiesTargetedNote: geographiesTargetedNote ?? null,
@@ -285,6 +288,33 @@ const TargetsAndOptions = () => {
                                   )}
                                 />
 
+                                {/* TODO: Update property once BE implements the BE */}
+                                {type === GeographyType.REGION &&
+                                  values.geographiesTargetedTypes.includes(
+                                    type
+                                  ) && (
+                                    <FieldGroup className="margin-left-4 margin-y-2">
+                                      {getKeys(
+                                        geograpghiesTargetedRegionTypesConfig.options
+                                      ).map(regionType => (
+                                        <Fragment key={regionType}>
+                                          <Field
+                                            as={CheckboxField}
+                                            id={`plan-characteristics-geographies-region-type-${regionType}`}
+                                            name="geograpghiesTargetedRegionType"
+                                            label={
+                                              geograpghiesTargetedRegionTypesConfig
+                                                .options[regionType]
+                                            }
+                                            value={regionType}
+                                            checked={values.geograpghiesTargetedRegionTypes.includes(
+                                              regionType
+                                            )}
+                                          />
+                                        </Fragment>
+                                      ))}
+                                    </FieldGroup>
+                                  )}
                                 {type === GeographyType.OTHER &&
                                   values.geographiesTargetedTypes.includes(
                                     type

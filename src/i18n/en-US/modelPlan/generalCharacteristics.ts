@@ -329,6 +329,21 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     filterGroups: ['iddoc', 'pbg']
   },
+  // TODO: Update when BE implements the enums
+  geograpghiesTargetedRegionTypes: {
+    gqlField: 'geograpghiesTargetedRegionType',
+    goField: 'GeograpghiesTargetedRegionType',
+    dbField: 'geographies_targeted_region_types',
+    label: '',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      CBSA: 'Core-based statistical areas (CBSAs)',
+      HRR: 'Hospital Referral Regions (HRR)',
+      MSA: 'Metropolitan Statistical Areas (MSAs)'
+    },
+    filterGroups: ['iddoc', 'pbg']
+  },
   geographiesTargetedTypesOther: {
     gqlField: 'geographiesTargetedTypesOther',
     goField: 'GeographiesTargetedTypesOther',

@@ -27,6 +27,7 @@ import {
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   KeyCharacteristic,
   ModelCategory,
@@ -182,6 +183,8 @@ export type TranslationGeneralCharacteristics = {
   geographiesTargeted: TranslationFieldPropertiesWithOptions<Bool>;
   geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
   geographiesTargetedTypesOther: TranslationFieldProperties;
+  // TODO: Update these enums to the exact ones BE implements
+  geograpghiesTargetedRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
   geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;
   geographiesTargetedAppliedToOther: TranslationFieldProperties;
   geographiesTargetedNote: TranslationFieldProperties;
