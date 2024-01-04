@@ -19,8 +19,8 @@ var StartDockerCommand = &cobra.Command{
 		config := viper.New()
 		config.AutomaticEnv()
 		fmt.Printf("Ran the Start Docker Command with command : %s", cmd.Use)
-		up(false, []string{}, true, false, false)
-		// NOTE, this command reads the raw docker logs too, TODO: don't show the docker logs, just the main command
+		up(false, []string{"-d"}, true, false, false)
+		// Note -d is used to ensure that we don't also see the logs, and that docker continues to run when this is done.
 
 	},
 }
@@ -34,7 +34,6 @@ var PruneDockerCommand = &cobra.Command{
 		config.AutomaticEnv()
 		fmt.Printf("Ran the Prune Docker Command with command : %s", cmd.Use)
 		dockerPrune()
-		// NOTE, this command reads the raw docker logs too, TODO: don't show the docker logs, just the main command
 
 	},
 }
