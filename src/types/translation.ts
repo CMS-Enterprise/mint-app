@@ -472,7 +472,7 @@ export type TranslationPayments = {
 
 // Collaborators
 export type TranslationCollaborators = {
-  teamRole: TranslationFieldPropertiesWithOptions<TeamRole>;
+  teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
 };
 
