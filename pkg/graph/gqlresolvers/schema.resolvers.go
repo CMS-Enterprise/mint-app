@@ -6,6 +6,7 @@ package gqlresolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -651,6 +652,16 @@ func (r *planGeneralCharacteristicsResolver) KeyCharacteristics(ctx context.Cont
 func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyType, error) {
 	geographyTypes := models.ConvertEnums[model.GeographyType](obj.GeographiesTargetedTypes)
 	return geographyTypes, nil
+}
+
+// GeographiesStatesAndTerritories is the resolver for the geographiesStatesAndTerritories field.
+func (r *planGeneralCharacteristicsResolver) GeographiesStatesAndTerritories(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.StatesAndTerritories, error) {
+	panic(fmt.Errorf("not implemented: GeographiesStatesAndTerritories - geographiesStatesAndTerritories"))
+}
+
+// GeographiesRegionTypes is the resolver for the geographiesRegionTypes field.
+func (r *planGeneralCharacteristicsResolver) GeographiesRegionTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyRegionType, error) {
+	panic(fmt.Errorf("not implemented: GeographiesRegionTypes - geographiesRegionTypes"))
 }
 
 // GeographiesTargetedAppliedTo is the resolver for the geographiesTargetedAppliedTo field.

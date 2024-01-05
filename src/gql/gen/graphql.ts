@@ -462,6 +462,12 @@ export enum GeographyApplication {
   PROVIDERS = 'PROVIDERS'
 }
 
+export enum GeographyRegionType {
+  CBSA = 'CBSA',
+  HRR = 'HRR',
+  MSA = 'MSA'
+}
+
 export enum GeographyType {
   OTHER = 'OTHER',
   REGION = 'REGION',
@@ -1516,6 +1522,8 @@ export type PlanGeneralCharacteristics = {
   existingModel?: Maybe<Scalars['String']['output']>;
   existingModelID?: Maybe<Scalars['Int']['output']>;
   existingModelPlan?: Maybe<ExistingModel>;
+  geographiesRegionTypes: Array<GeographyRegionType>;
+  geographiesStatesAndTerritories: Array<StatesAndTerritories>;
   geographiesTargeted?: Maybe<Scalars['Boolean']['output']>;
   geographiesTargetedAppliedTo: Array<GeographyApplication>;
   geographiesTargetedAppliedToOther?: Maybe<Scalars['String']['output']>;
@@ -1587,6 +1595,8 @@ export type PlanGeneralCharacteristicsChanges = {
   communityPartnersInvolvedNote?: InputMaybe<Scalars['String']['input']>;
   currentModelPlanID?: InputMaybe<Scalars['UUID']['input']>;
   existingModelID?: InputMaybe<Scalars['Int']['input']>;
+  geographiesRegionTypes?: InputMaybe<Array<GeographyRegionType>>;
+  geographiesStatesAndTerritories?: InputMaybe<Array<StatesAndTerritories>>;
   geographiesTargeted?: InputMaybe<Scalars['Boolean']['input']>;
   geographiesTargetedAppliedTo?: InputMaybe<Array<GeographyApplication>>;
   geographiesTargetedAppliedToOther?: InputMaybe<Scalars['String']['input']>;
@@ -2474,6 +2484,66 @@ export enum StakeholdersType {
   PROFESSIONAL_ORGANIZATIONS = 'PROFESSIONAL_ORGANIZATIONS',
   PROVIDERS = 'PROVIDERS',
   STATES = 'STATES'
+}
+
+export enum StatesAndTerritories {
+  AK = 'AK',
+  AL = 'AL',
+  AR = 'AR',
+  AS = 'AS',
+  AZ = 'AZ',
+  CA = 'CA',
+  CO = 'CO',
+  CT = 'CT',
+  DC = 'DC',
+  DE = 'DE',
+  FL = 'FL',
+  GA = 'GA',
+  GU = 'GU',
+  HI = 'HI',
+  IA = 'IA',
+  ID = 'ID',
+  IL = 'IL',
+  IN = 'IN',
+  KS = 'KS',
+  KY = 'KY',
+  LA = 'LA',
+  MA = 'MA',
+  MD = 'MD',
+  ME = 'ME',
+  MI = 'MI',
+  MN = 'MN',
+  MO = 'MO',
+  MP = 'MP',
+  MS = 'MS',
+  MT = 'MT',
+  NC = 'NC',
+  ND = 'ND',
+  NE = 'NE',
+  NH = 'NH',
+  NJ = 'NJ',
+  NM = 'NM',
+  NV = 'NV',
+  NY = 'NY',
+  OH = 'OH',
+  OK = 'OK',
+  OR = 'OR',
+  PA = 'PA',
+  PR = 'PR',
+  RI = 'RI',
+  SC = 'SC',
+  SD = 'SD',
+  TN = 'TN',
+  TX = 'TX',
+  UM = 'UM',
+  UT = 'UT',
+  VA = 'VA',
+  VI = 'VI',
+  VT = 'VT',
+  WA = 'WA',
+  WI = 'WI',
+  WV = 'WV',
+  WY = 'WY'
 }
 
 export type Subscription = {
