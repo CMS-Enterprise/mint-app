@@ -148,7 +148,7 @@ func (m *ModelPlan) createDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger
 		m.ID = uuid.New()
 	}
 
-	stmt, err := np.PrepareNamed(sqlscripts.ModelPlanCreateSQL)
+	stmt, err := np.PrepareNamed(sqlscripts.ModelPlan.Create)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -179,7 +179,7 @@ func (m *ModelPlan) createDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger
 
 // updateDBRecord updates the db model
 func (m *ModelPlan) updateDBRecord(np sqlutils.NamedPreparer, logger *zap.Logger) (*ModelPlan, error) {
-	stmt, err := np.PrepareNamed(sqlscripts.ModelPlanUpdateSQL)
+	stmt, err := np.PrepareNamed(sqlscripts.ModelPlan.Update)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
