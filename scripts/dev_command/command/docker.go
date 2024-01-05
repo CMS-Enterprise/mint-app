@@ -10,6 +10,30 @@ import (
 	"github.com/spf13/viper"
 )
 
+var includeFrontendFlag = flagComponent{
+	Name:      "frontend",
+	ShortHand: "f",
+	Usage:     "Include the frontend when bringing docker up",
+}
+
+var debugFlag = flagComponent{
+	Name:      "debug",
+	ShortHand: "d",
+	Usage:     "Debug the application on the backend using delve",
+}
+
+var debugWaitFlag = flagComponent{
+	Name:      "wait",
+	ShortHand: "w",
+	Usage:     "Wait for to attach to the debugger on the backend using delve. Setting this automatically sets the debug flag to true",
+}
+
+type flagComponent struct {
+	Name      string
+	ShortHand string
+	Usage     string
+}
+
 // go run scripts/dev_command/*.go up
 var StartDockerCommand = &cobra.Command{
 	Use:   "up",
@@ -18,11 +42,47 @@ var StartDockerCommand = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		config := viper.New()
 		config.AutomaticEnv()
-		fmt.Printf("Ran the Start Docker Command with command : %s", cmd.Use)
-		up(false, []string{"-d"}, true, false, false)
+		fmt.Printf("Ran the Start Docker Command with command : %s ", cmd.Use)
+		frontend, err := cmd.Flags().GetBool(includeFrontendFlag.Name)
+		if err != nil {
+			panic(fmt.Errorf("unable to run command, %w", err))
+		}
+
+		debug, err := cmd.Flags().GetBool(debugFlag.Name)
+		if err != nil {
+			panic(fmt.Errorf("unable to run command, %w", err))
+		}
+		debugWait, err := cmd.Flags().GetBool(debugWaitFlag.Name)
+		if err != nil {
+			panic(fmt.Errorf("unable to run command, %w", err))
+		}
+
+		fmt.Printf("Include frontend %v . Debug %v. Debugwait %v ", frontend, debug, debugWait)
+		_ = up
+
+		// up(false, []string{"-d"}, true, false, false)
 		// Note -d is used to ensure that we don't also see the logs, and that docker continues to run when this is done.
 
 	},
+
+	//TODO: add flags for all variations of the command
+}
+
+// getStartDockerCommandFlags
+
+func init() {
+	// frontend command
+	StartDockerCommand.Flags().BoolP(includeFrontendFlag.Name, includeFrontendFlag.ShortHand, false, includeFrontendFlag.Usage)
+	StartDockerCommand.Flags().Lookup(includeFrontendFlag.Name).NoOptDefVal = "true" // Sets the default value to true when the flag is present
+
+	//debug command
+	StartDockerCommand.Flags().BoolP(debugFlag.Name, debugFlag.ShortHand, false, debugFlag.Usage)
+	StartDockerCommand.Flags().Lookup(debugFlag.Name).NoOptDefVal = "true" // Sets the default value to true when the flag is present
+
+	//debug wait command
+	StartDockerCommand.Flags().BoolP(debugWaitFlag.Name, debugWaitFlag.ShortHand, false, debugWaitFlag.Usage)
+	StartDockerCommand.Flags().Lookup(debugWaitFlag.Name).NoOptDefVal = "true" // Sets the default value to true when the flag is present
+
 }
 
 var PruneDockerCommand = &cobra.Command{
