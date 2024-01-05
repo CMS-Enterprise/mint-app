@@ -37,8 +37,8 @@ var upCIFlag = flagComponent{
 // go run scripts/dev_command/*.go up
 var StartDockerCommand = &cobra.Command{
 	Use:   "up",
-	Short: "",
-	Long:  "",
+	Short: "Starts the docker environment",
+	Long:  "Starts the docker environment",
 	Run: func(cmd *cobra.Command, args []string) {
 		config := viper.New()
 		config.AutomaticEnv()
@@ -67,12 +67,17 @@ var StartDockerCommand = &cobra.Command{
 		// fmt.Printf("Include frontend %v . Debug %v. DebugWait %v. CI %v ", frontend, debug, debugWait, ci)
 
 		detachCommand := []string{"-d"} // Note -d is used to ensure that we don't also see the logs, and that docker continues to run when this is done.
-		up(frontend, detachCommand, debug, debugWait, ci)
+		bringDockerUp(frontend, detachCommand, debug, debugWait, ci)
+	},
+}
 
-		_ = up
-		_ = detachCommand
-		// Note -d is used to ensure that we don't also see the logs, and that docker continues to run when this is done.
-
+// StopDockerCommand is the command to stop the MINT docker services
+var StopDockerCommand = &cobra.Command{
+	Use:   "down",
+	Short: "Stops all services",
+	Long:  "Stops all services in the project",
+	Run: func(cmd *cobra.Command, args []string) {
+		bringDockerDown()
 	},
 }
 
@@ -108,7 +113,8 @@ var PruneDockerCommand = &cobra.Command{
 	},
 }
 
-func up(frontendIncluded bool, args []string, debug, wait, ci bool) {
+// bringDockerUp is the method to bring up all services in the application
+func bringDockerUp(frontendIncluded bool, args []string, debug, wait, ci bool) {
 	conf := " "
 	if debug {
 		conf = os.Getenv("AIR_CONFIG_DEBUG")
@@ -124,21 +130,22 @@ func up(frontendIncluded bool, args []string, debug, wait, ci bool) {
 
 	contribsysDockerLogin()
 
-	command := []string{"docker", "compose", "-f", "docker-compose.backend.yml"}
+	command := "docker-compose"
+	comArgs := []string{"-f", "docker-compose.backend.yml"}
 	if frontendIncluded {
-		command = append(command, "-f", "docker-compose.frontend.yml")
+		comArgs = append(comArgs, "-f", "docker-compose.frontend.yml")
 	}
-	command = append(command, "up")
+	comArgs = append(comArgs, "up")
 	if !ci {
-		command = append(command, "--build")
+		comArgs = append(comArgs, "--build")
 	}
 
 	if len(args) > 0 {
-		command = append(command, args...)
+		comArgs = append(comArgs, args...)
 	}
 
-	//TODO: use cobra to set environment variables? I don't know that you need to set the os.ENVIRON (or maybe you do)
-	cmd := exec.Command(command[0], command[1:]...)
+	// #nosec G204 // We have sanitized the command, so we can ignore this warning
+	cmd := exec.Command(command, comArgs[0:]...)
 	cmd.Env = os.Environ()
 	for key, value := range environment {
 		cmd.Env = append(cmd.Env, fmt.Sprintf("%s=%s", key, value))
@@ -178,5 +185,26 @@ func up(frontendIncluded bool, args []string, debug, wait, ci bool) {
 }
 
 func dockerPrune() {
+
+}
+
+// bringDockerDown stops all docker containers
+func bringDockerDown() {
+	mainCommand := "docker-compose"
+	command := []string{"-f", "docker-compose.backend.yml", "-f", "docker-compose.frontend.yml", "down"}
+	// #nosec G204 // We have sanitized the command, so we can ignore this warning
+	cmd := exec.Command(mainCommand, command[0:]...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	err := cmd.Start()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = cmd.Wait()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }

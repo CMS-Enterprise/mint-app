@@ -23,6 +23,7 @@ func init() {
 	rootCmd.AddCommand(command.DBSeedCommand)
 	rootCmd.AddCommand(command.FrontEndStartCommand)
 	rootCmd.AddCommand(command.PruneDockerCommand)
+	rootCmd.AddCommand(command.StopDockerCommand)
 
 }
 

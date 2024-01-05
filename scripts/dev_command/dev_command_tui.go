@@ -68,6 +68,10 @@ func newPopulateUserTableModel() populateUserTableTuiModel {
 				CommandName: "Prune Docker",
 				CommandRun:  func() { command.PruneDockerCommand.Run(command.PruneDockerCommand, []string{}) },
 			},
+			genericCommandOption{
+				CommandName: "Stop Docker",
+				CommandRun:  func() { command.StopDockerCommand.Run(command.StopDockerCommand, []string{}) },
+			},
 		},
 		// A map which indicates which choices are selected. We're using
 		// the  map like a mathematical set. The keys refer to the indexes
