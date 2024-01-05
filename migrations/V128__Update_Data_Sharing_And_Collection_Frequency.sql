@@ -2,6 +2,20 @@
 Section: Alter plan_ops_eval_and_learning to use this new type
 TODO: Handle historical data!!!
 ***/
+ALTER TYPE DATA_FREQUENCY_TYPE RENAME TO DATA_FREQUENCY_TYPE_OLD;
+
+CREATE TYPE DATA_FREQUENCY_TYPE AS ENUM (
+  'daily',
+  'weekly',
+  'monthly',
+  'quarterly',
+  'yearly',
+  'continually'
+);
+
+
+ALTER TABLE plan_ops_eval_and_learning
+  ALTER
 
 ALTER TABLE plan_ops_eval_and_learning
     ADD COLUMN data_collection_frequency_continually ZERO_STRING,
