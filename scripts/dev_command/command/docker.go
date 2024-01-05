@@ -34,12 +34,6 @@ var upCIFlag = flagComponent{
 	Usage:     "CI is used when the command is being run in CI. It will append other command",
 }
 
-type flagComponent struct {
-	Name      string
-	ShortHand string
-	Usage     string
-}
-
 // go run scripts/dev_command/*.go up
 var StartDockerCommand = &cobra.Command{
 	Use:   "up",
