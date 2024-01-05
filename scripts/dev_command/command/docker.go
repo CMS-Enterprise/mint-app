@@ -71,15 +71,10 @@ var StartDockerCommand = &cobra.Command{
 
 		_ = up
 		_ = detachCommand
-		// up(false, []string{"-d"}, true, false, false)
 		// Note -d is used to ensure that we don't also see the logs, and that docker continues to run when this is done.
 
 	},
-
-	//TODO: add flags for all variations of the command
 }
-
-// getStartDockerCommandFlags
 
 func init() {
 	// frontend command
@@ -149,13 +144,10 @@ func up(frontendIncluded bool, args []string, debug, wait, ci bool) {
 		cmd.Env = append(cmd.Env, fmt.Sprintf("%s=%s", key, value))
 	}
 
-	// Show the command line output in the terminal
-	// TODO, see about not capturing all docker logs
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	// docker compose -f docker-compose.backend.yml up --build
-	// TODO, we shouldn't stop docker when we stop this command. Look at the dev script for verification
+	// docker compose -f docker-compose.backend.yml up --build -d
 	err := cmd.Start()
 	if err != nil {
 		log.Fatal(err)
