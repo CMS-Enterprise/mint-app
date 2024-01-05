@@ -26,6 +26,9 @@ func init() {
 
 }
 
+// go build -o scripts/dev-command ./scripts/dev_command/main.go
+// go build -o scripts/dev-command ./scripts/dev_command/*.go --build the command as an executable
+
 // TODO:
 /*
  Maybe a user preference file for sequence of tasks
