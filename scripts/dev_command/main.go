@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/cmsgov/mint-app/scripts/dev_command/command"
 )
@@ -57,6 +58,9 @@ FRONTEND
 	--> consider subforms in the commands
 */
 func execute() {
+	// get Variables once instead of in multiple places
+	config := viper.New()
+	config.AutomaticEnv()
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)

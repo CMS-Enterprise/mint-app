@@ -40,8 +40,7 @@ var StartDockerCommand = &cobra.Command{
 	Short: "Starts the docker environment",
 	Long:  "Starts the docker environment",
 	Run: func(cmd *cobra.Command, args []string) {
-		config := viper.New()
-		config.AutomaticEnv()
+
 		fmt.Printf("Ran the Start Docker Command with command : %s ", cmd.Use)
 		frontend, err := cmd.Flags().GetBool(upIncludeFrontendFlag.Name)
 		if err != nil {
