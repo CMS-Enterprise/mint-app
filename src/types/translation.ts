@@ -184,7 +184,6 @@ export type TranslationGeneralCharacteristics = {
   geographiesTargeted: TranslationFieldPropertiesWithOptions<Bool>;
   geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
   geographiesTargetedTypesOther: TranslationFieldProperties;
-  // TODO: Update these enums to the exact ones BE implements
   geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptions<StatesAndTerritories>;
   geographiesRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
   geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;

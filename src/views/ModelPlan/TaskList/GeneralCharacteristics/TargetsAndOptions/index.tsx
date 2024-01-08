@@ -308,9 +308,10 @@ const TargetsAndOptions = () => {
                                       </Label>
                                       <Field
                                         as={MultiSelect}
-                                        id="plan-characteristics-geographies-state-type"
+                                        id="plan-characteristics-geographies-state-and-territories-type"
                                         name="geographiesStatesAndTerritories"
-                                        ariaLabel="label-plan-characteristics-geographies-state-type"
+                                        ariaLabel="label-plan-characteristics-geographies-state-and-territories-type"
+                                        role="combobox"
                                         options={composeMultiSelectOptions(
                                           geographiesStatesAndTerritoriesConfig.options
                                         )}

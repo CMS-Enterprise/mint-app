@@ -17,6 +17,8 @@ const targetsAndOptionsMockData: GetTargetsAndOptionsType = {
   id: '123',
   geographiesTargeted: true,
   geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesStatesAndTerritories: [],
+  geographiesRegionTypes: [],
   geographiesTargetedTypesOther: 'Other geography type',
   geographiesTargetedAppliedTo: [],
   geographiesTargetedAppliedToOther: '',

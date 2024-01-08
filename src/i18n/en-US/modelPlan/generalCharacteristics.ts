@@ -329,7 +329,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     filterGroups: ['iddoc', 'pbg']
   },
-  // TODO: Update when BE implements the enums
   geographiesStatesAndTerritories: {
     gqlField: 'geographiesStatesAndTerritories',
     goField: 'GeographiesStatesAndTerritories',
@@ -399,7 +398,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     filterGroups: ['iddoc', 'pbg']
   },
-  // TODO: Update when BE implements the enums
   geographiesRegionTypes: {
     gqlField: 'geographiesRegionTypes',
     goField: 'GeographiesRegionTypes',

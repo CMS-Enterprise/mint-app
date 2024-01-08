@@ -172,6 +172,8 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
   geographiesTargeted: true,
   geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesStatesAndTerritories: [],
+  geographiesRegionTypes: [],
   geographiesTargetedTypesOther: 'Geography type other',
   geographiesTargetedAppliedTo: [
     GeographyApplication.BENEFICIARIES,
