@@ -24,7 +24,7 @@ const (
 // FrequencyType represents the possible Frequency options
 type FrequencyType string
 
-// These constants represent the different values of CMSCenter
+// These constants represent the different values of FrequencyType
 const (
 	FrequencyTypeAnnually    FrequencyType = "ANNUALLY"
 	FrequencyTypeSemianually FrequencyType = "SEMIANUALLY"

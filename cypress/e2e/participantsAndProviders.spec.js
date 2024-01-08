@@ -163,12 +163,12 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/provider-options
 
-    cy.get('#participants-and-providers-additional-frequency-OTHER')
+    cy.get('#participants-and-providers-additional-frequency-other')
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#participants-and-providers-additional-frequency-other')
+    cy.get('#participants-and-providers-additional-frequency-other-text')
       .type('Every other leap year')
       .should('have.value', 'Every other leap year');
 
