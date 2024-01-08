@@ -6,7 +6,6 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,

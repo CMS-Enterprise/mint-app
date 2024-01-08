@@ -156,6 +156,7 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   participantsCurrentlyInModelsNote: string | null;
   modelApplicationLevel: string | null;
   providerAdditionFrequency: FrequencyType[];
+  providerAdditionFrequencyContinually: string | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];
@@ -355,6 +356,7 @@ export interface GetAllModelData_modelPlanCollection_payments {
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
   anticipatedPaymentFrequency: FrequencyType[];
+  anticipatedPaymentFrequencyContinually: string | null;
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   fundingSource: FundingSource[];

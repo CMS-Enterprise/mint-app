@@ -145,6 +145,7 @@ const csvFields = [
   'participantsAndProviders.participantsCurrentlyInModelsNote',
   'participantsAndProviders.modelApplicationLevel',
   'participantsAndProviders.providerAdditionFrequency',
+  'participantsAndProviders.providerAdditionFrequencyContinually',
   'participantsAndProviders.providerAdditionFrequencyOther',
   'participantsAndProviders.providerAdditionFrequencyNote',
   'participantsAndProviders.providerAddMethod', // array
@@ -321,6 +322,7 @@ const csvFields = [
   'payments.canParticipantsSelectBetweenPaymentMechanismsHow',
   'payments.canParticipantsSelectBetweenPaymentMechanismsNote',
   'payments.anticipatedPaymentFrequency', // array
+  'payments.anticipatedPaymentFrequencyContinually',
   'payments.anticipatedPaymentFrequencyOther',
   'payments.anticipatedPaymentFrequencyNote',
   'payments.fundingSource', // array

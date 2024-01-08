@@ -15,6 +15,7 @@ export default gql(/* GraphQL */ `
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote
         anticipatedPaymentFrequency
+        anticipatedPaymentFrequencyContinually
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
       }
