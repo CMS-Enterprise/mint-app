@@ -31,12 +31,14 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
+import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 type TargetsAndOptionsFormType = GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
@@ -54,7 +56,8 @@ const TargetsAndOptions = () => {
     geographiesTargeted: geographiesTargetedConfig,
     geographiesTargetedTypes: geographiesTargetedTypesConfig,
     geographiesTargetedAppliedTo: geographiesTargetedAppliedToConfig,
-    geograpghiesTargetedRegionTypes: geograpghiesTargetedRegionTypesConfig,
+    geographiesStatesAndTerritories: geographiesStatesAndTerritoriesConfig,
+    geographiesRegionTypes: geographiesRegionTypesConfig,
     participationOptions: participationOptionsConfig,
     agreementTypes: agreementTypesConfig,
     multiplePatricipationAgreementsNeeded: multiplePatricipationAgreementsNeededConfig
@@ -78,7 +81,8 @@ const TargetsAndOptions = () => {
     geographiesTargeted,
     geographiesTargetedTypes,
     geographiesTargetedTypesOther,
-    geograpghiesTargetedRegionTypes,
+    geographiesStatesAndTerritories,
+    geographiesRegionTypes,
     geographiesTargetedAppliedTo,
     geographiesTargetedAppliedToOther,
     geographiesTargetedNote,
@@ -138,7 +142,8 @@ const TargetsAndOptions = () => {
     geographiesTargeted: geographiesTargeted ?? null,
     geographiesTargetedTypes: geographiesTargetedTypes ?? [],
     geographiesTargetedTypesOther: geographiesTargetedTypesOther ?? '',
-    geograpghiesTargetedRegionTypes: geograpghiesTargetedRegionTypes ?? [],
+    geographiesStatesAndTerritories: geographiesStatesAndTerritories ?? '',
+    geographiesRegionTypes: geographiesRegionTypes ?? [],
     geographiesTargetedAppliedTo: geographiesTargetedAppliedTo ?? [],
     geographiesTargetedAppliedToOther: geographiesTargetedAppliedToOther ?? '',
     geographiesTargetedNote: geographiesTargetedNote ?? null,
@@ -289,13 +294,50 @@ const TargetsAndOptions = () => {
                                 />
 
                                 {/* TODO: Update property once BE implements the BE */}
+                                {type === GeographyType.STATE &&
+                                  values.geographiesTargetedTypes.includes(
+                                    type
+                                  ) && (
+                                    <FieldGroup className="margin-left-4 margin-y-2">
+                                      {getKeys(
+                                        geographiesStatesAndTerritoriesConfig.options
+                                      ).map(regionType => (
+                                        <Fragment key={regionType}>
+                                          <Field
+                                            as={MultiSelect}
+                                            id="plan-characteristics-geographies-state-type"
+                                            name="geographiesStatesAndTerritories"
+                                            ariaLabel="label-plan-characteristics-geographies-state-type"
+                                            options={composeMultiSelectOptions(
+                                              geographiesStatesAndTerritoriesConfig.options
+                                            )}
+                                            selectedLabel={generalCharacteristicsT(
+                                              'geographiesStatesAndTerritories.multiSelectLabel'
+                                            )}
+                                            onChange={(
+                                              value: string[] | []
+                                            ) => {
+                                              setFieldValue(
+                                                'geographiesStatesAndTerritories',
+                                                value
+                                              );
+                                            }}
+                                            initialValues={
+                                              initialValues.geographiesStatesAndTerritories
+                                            }
+                                          />
+                                        </Fragment>
+                                      ))}
+                                    </FieldGroup>
+                                  )}
+                                {/* TODO: Update property once BE implements the BE */}
                                 {type === GeographyType.REGION &&
                                   values.geographiesTargetedTypes.includes(
                                     type
                                   ) && (
                                     <FieldGroup className="margin-left-4 margin-y-2">
                                       {getKeys(
-                                        geograpghiesTargetedRegionTypesConfig.options
+                                        geographiesRegionTypesConfig.options
                                       ).map(regionType => (
                                         <Fragment key={regionType}>
                                           <Field
@@ -303,11 +345,11 @@ const TargetsAndOptions = () => {
                                             id={`plan-characteristics-geographies-region-type-${regionType}`}
                                             name="geograpghiesTargetedRegionType"
                                             label={
-                                              geograpghiesTargetedRegionTypesConfig
+                                              geographiesRegionTypesConfig
                                                 .options[regionType]
                                             }
                                             value={regionType}
-                                            checked={values.geograpghiesTargetedRegionTypes.includes(
+                                            checked={values.geographiesRegionTypes.includes(
                                               regionType
                                             )}
                                           />

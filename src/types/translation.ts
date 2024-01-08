@@ -49,6 +49,7 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -184,7 +185,8 @@ export type TranslationGeneralCharacteristics = {
   geographiesTargetedTypes: TranslationFieldPropertiesWithOptions<GeographyType>;
   geographiesTargetedTypesOther: TranslationFieldProperties;
   // TODO: Update these enums to the exact ones BE implements
-  geograpghiesTargetedRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
+  geographiesStatesAndTerritories: TranslationFieldPropertiesWithOptions<StatesAndTerritories>;
+  geographiesRegionTypes: TranslationFieldPropertiesWithOptions<GeographyRegionType>;
   geographiesTargetedAppliedTo: TranslationFieldPropertiesWithOptions<GeographyApplication>;
   geographiesTargetedAppliedToOther: TranslationFieldProperties;
   geographiesTargetedNote: TranslationFieldProperties;
