@@ -293,41 +293,40 @@ const TargetsAndOptions = () => {
                                   )}
                                 />
 
-                                {/* TODO: Update property once BE implements the BE */}
                                 {type === GeographyType.STATE &&
                                   values.geographiesTargetedTypes.includes(
                                     type
                                   ) && (
                                     <FieldGroup className="margin-left-4 margin-y-2">
-                                      {getKeys(
-                                        geographiesStatesAndTerritoriesConfig.options
-                                      ).map(regionType => (
-                                        <Fragment key={regionType}>
-                                          <Field
-                                            as={MultiSelect}
-                                            id="plan-characteristics-geographies-state-type"
-                                            name="geographiesStatesAndTerritories"
-                                            ariaLabel="label-plan-characteristics-geographies-state-type"
-                                            options={composeMultiSelectOptions(
-                                              geographiesStatesAndTerritoriesConfig.options
-                                            )}
-                                            selectedLabel={generalCharacteristicsT(
-                                              'geographiesStatesAndTerritories.multiSelectLabel'
-                                            )}
-                                            onChange={(
-                                              value: string[] | []
-                                            ) => {
-                                              setFieldValue(
-                                                'geographiesStatesAndTerritories',
-                                                value
-                                              );
-                                            }}
-                                            initialValues={
-                                              initialValues.geographiesStatesAndTerritories
-                                            }
-                                          />
-                                        </Fragment>
-                                      ))}
+                                      <Label
+                                        htmlFor="geographiesStatesAndTerritories"
+                                        className="text-normal"
+                                      >
+                                        {generalCharacteristicsT(
+                                          'geographiesStatesAndTerritories.label'
+                                        )}
+                                      </Label>
+                                      <Field
+                                        as={MultiSelect}
+                                        id="plan-characteristics-geographies-state-type"
+                                        name="geographiesStatesAndTerritories"
+                                        ariaLabel="label-plan-characteristics-geographies-state-type"
+                                        options={composeMultiSelectOptions(
+                                          geographiesStatesAndTerritoriesConfig.options
+                                        )}
+                                        selectedLabel={generalCharacteristicsT(
+                                          'geographiesStatesAndTerritories.multiSelectLabel'
+                                        )}
+                                        onChange={(value: string[] | []) => {
+                                          setFieldValue(
+                                            'geographiesStatesAndTerritories',
+                                            value
+                                          );
+                                        }}
+                                        initialValues={
+                                          initialValues.geographiesStatesAndTerritories
+                                        }
+                                      />
                                     </FieldGroup>
                                   )}
 
