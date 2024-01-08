@@ -80,6 +80,8 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	suite.Nil(gc.CommunityPartnersInvolvedNote)
 	suite.Nil(gc.GeographiesTargeted)
 	suite.Nil(gc.GeographiesTargetedTypes)
+	suite.Nil(gc.GeographiesStatesAndTerritories)
+	suite.Nil(gc.GeographiesRegionTypes)
 	suite.Nil(gc.GeographiesTargetedTypesOther)
 	suite.Nil(gc.GeographiesTargetedAppliedTo)
 	suite.Nil(gc.GeographiesTargetedAppliedToOther)
@@ -108,12 +110,15 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"hasComponentsOrTracks":        true,
-		"hasComponentsOrTracksDiffer":  "One track does something one way, the other does it another way",
-		"hasComponentsOrTracksNote":    "Look at the tracks carefully",
-		"alternativePaymentModelTypes": []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()},
-		"AlternativePaymentModelNote":  "Has 2 APM types!",
+		"hasComponentsOrTracks":           true,
+		"hasComponentsOrTracksDiffer":     "One track does something one way, the other does it another way",
+		"hasComponentsOrTracksNote":       "Look at the tracks carefully",
+		"alternativePaymentModelTypes":    []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()},
+		"AlternativePaymentModelNote":     "Has 2 APM types!",
+		"GeographiesStatesAndTerritories": []string{"AL", "AK", "AZ"},
+		"GeographiesRegionTypes":          []string{"CBSA", "HRR"},
 	}
+
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *updatedGeneralCharacteristics.ModifiedBy)
@@ -125,6 +130,8 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.EqualValues([]string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()}, updatedGeneralCharacteristics.AlternativePaymentModelTypes)
 	suite.EqualValues("Has 2 APM types!", *updatedGeneralCharacteristics.AlternativePaymentModelNote)
 	suite.EqualValues(models.TaskInProgress, updatedGeneralCharacteristics.Status)
+	suite.EqualValues([]string{"AL", "AK", "AZ"}, updatedGeneralCharacteristics.GeographiesStatesAndTerritories)
+	suite.EqualValues([]string{"CBSA", "HRR"}, updatedGeneralCharacteristics.GeographiesRegionTypes)
 
 	// Assert that no other fields got updated
 	suite.Nil(updatedGeneralCharacteristics.IsNewModel)
