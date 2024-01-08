@@ -1097,6 +1097,7 @@ export enum ParticipantCommunicationType {
 
 export enum ParticipantRiskType {
   CAPITATION = 'CAPITATION',
+  NOT_RISK_BASED = 'NOT_RISK_BASED',
   ONE_SIDED = 'ONE_SIDED',
   OTHER = 'OTHER',
   TWO_SIDED = 'TWO_SIDED'
@@ -1844,7 +1845,6 @@ export type PlanParticipantsAndProviders = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  participantAssumeRisk?: Maybe<Scalars['Boolean']['output']>;
   participants: Array<ParticipantsType>;
   participantsCurrentlyInModels?: Maybe<Scalars['Boolean']['output']>;
   participantsCurrentlyInModelsNote?: Maybe<Scalars['String']['output']>;
@@ -1877,7 +1877,7 @@ export type PlanParticipantsAndProviders = {
   recruitmentOther?: Maybe<Scalars['String']['output']>;
   riskNote?: Maybe<Scalars['String']['output']>;
   riskOther?: Maybe<Scalars['String']['output']>;
-  riskType?: Maybe<ParticipantRiskType>;
+  riskType: Array<ParticipantRiskType>;
   selectionMethod: Array<ParticipantSelectionType>;
   selectionNote?: Maybe<Scalars['String']['output']>;
   selectionOther?: Maybe<Scalars['String']['output']>;
@@ -1909,7 +1909,6 @@ export type PlanParticipantsAndProvidersChanges = {
   gainsharePaymentsTrack?: InputMaybe<Scalars['Boolean']['input']>;
   medicareProviderType?: InputMaybe<Scalars['String']['input']>;
   modelApplicationLevel?: InputMaybe<Scalars['String']['input']>;
-  participantAssumeRisk?: InputMaybe<Scalars['Boolean']['input']>;
   participants?: InputMaybe<Array<ParticipantsType>>;
   participantsCurrentlyInModels?: InputMaybe<Scalars['Boolean']['input']>;
   participantsCurrentlyInModelsNote?: InputMaybe<Scalars['String']['input']>;
@@ -1936,7 +1935,7 @@ export type PlanParticipantsAndProvidersChanges = {
   recruitmentOther?: InputMaybe<Scalars['String']['input']>;
   riskNote?: InputMaybe<Scalars['String']['input']>;
   riskOther?: InputMaybe<Scalars['String']['input']>;
-  riskType?: InputMaybe<ParticipantRiskType>;
+  riskType?: InputMaybe<Array<ParticipantRiskType>>;
   selectionMethod?: InputMaybe<Array<ParticipantSelectionType>>;
   selectionNote?: InputMaybe<Scalars['String']['input']>;
   selectionOther?: InputMaybe<Scalars['String']['input']>;
@@ -2555,6 +2554,7 @@ export enum TaskStatusInput {
 
 export enum TeamRole {
   CM_FFS_COUNTERPART = 'CM_FFS_COUNTERPART',
+  COR = 'COR',
   EVALUATION = 'EVALUATION',
   IT_LEAD = 'IT_LEAD',
   LEADERSHIP = 'LEADERSHIP',
@@ -2900,14 +2900,14 @@ export type GetAllParticipantsAndProvidersQueryVariables = Exact<{
 }>;
 
 
-export type GetAllParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, participantAssumeRisk?: boolean | null, riskType?: ParticipantRiskType | null, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, status: TaskStatus } } };
+export type GetAllParticipantsAndProvidersQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participants: Array<ParticipantsType>, medicareProviderType?: string | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, status: TaskStatus } } };
 
 export type GetCommunicationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, participantAssumeRisk?: boolean | null, riskType?: ParticipantRiskType | null, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
+export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', modifiedDts?: Time | null }> } };
 
 export type GetCoordinationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2935,7 +2935,7 @@ export type GetProviderOptionsQueryVariables = Exact<{
 }>;
 
 
-export type GetProviderOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetProviderOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type UpdatePlanParticipantsAndProvidersMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2950,7 +2950,7 @@ export type GetAllPaymentsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
+export type GetAllPaymentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, payments: { __typename: 'PlanPayments', fundingSource: Array<FundingSource>, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType>, payClaimsOther?: string | null, payClaimsNote?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, status: TaskStatus } } };
 
 export type GetAnticipateDependenciesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2978,7 +2978,7 @@ export type GetComplexityQueryVariables = Exact<{
 }>;
 
 
-export type GetComplexityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null } } };
+export type GetComplexityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null } } };
 
 export type GetFundingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5182,7 +5182,6 @@ export const GetAllParticipantsAndProvidersDocument = gql`
       communicationMethod
       communicationMethodOther
       communicationNote
-      participantAssumeRisk
       riskType
       riskOther
       riskNote
@@ -5199,7 +5198,6 @@ export const GetAllParticipantsAndProvidersDocument = gql`
       participantsIdsOther
       participantsIDSNote
       providerAdditionFrequency
-      providerAdditionFrequencyContinually
       providerAdditionFrequencyOther
       providerAdditionFrequencyNote
       providerAddMethod
@@ -5259,7 +5257,6 @@ export const GetCommunicationDocument = gql`
       communicationMethod
       communicationMethodOther
       communicationNote
-      participantAssumeRisk
       riskType
       riskOther
       riskNote
@@ -5479,7 +5476,6 @@ export const GetProviderOptionsDocument = gql`
     participantsAndProviders {
       id
       providerAdditionFrequency
-      providerAdditionFrequencyContinually
       providerAdditionFrequencyOther
       providerAdditionFrequencyNote
       providerAddMethod
@@ -5630,7 +5626,6 @@ export const GetAllPaymentsDocument = gql`
       canParticipantsSelectBetweenPaymentMechanismsHow
       canParticipantsSelectBetweenPaymentMechanismsNote
       anticipatedPaymentFrequency
-      anticipatedPaymentFrequencyContinually
       anticipatedPaymentFrequencyOther
       anticipatedPaymentFrequencyNote
       willRecoverPayments
@@ -5854,7 +5849,6 @@ export const GetComplexityDocument = gql`
       canParticipantsSelectBetweenPaymentMechanismsHow
       canParticipantsSelectBetweenPaymentMechanismsNote
       anticipatedPaymentFrequency
-      anticipatedPaymentFrequencyContinually
       anticipatedPaymentFrequencyOther
       anticipatedPaymentFrequencyNote
     }

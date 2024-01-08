@@ -64,7 +64,6 @@ export interface GetAllPayments_modelPlan_payments {
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
   anticipatedPaymentFrequency: FrequencyType[];
-  anticipatedPaymentFrequencyContinually: string | null;
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   willRecoverPayments: boolean | null;

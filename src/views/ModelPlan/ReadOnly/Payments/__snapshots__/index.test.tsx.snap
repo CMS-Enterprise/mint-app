@@ -46,11 +46,25 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Patient Protection Affordable Care Act (Sec 3021)
+              <div
+                class="display-flex flex-align-center"
+              >
+                Patient Protection Affordable Care Act (Sec 3021)
+              </div>
             </li>
             <ul
               data-testid="other-entry"
-            />
+            >
+              <li
+                class="font-sans-md line-height-sans-4 "
+              >
+                <em
+                  class="text-base"
+                >
+                  No additional information specified
+                </em>
+              </li>
+            </ul>
           </ul>
         </div>
       </div>
@@ -91,11 +105,25 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Patient Protection Affordable Care Act (Sec 3021)
+              <div
+                class="display-flex flex-align-center"
+              >
+                Patient Protection Affordable Care Act (Sec 3021)
+              </div>
             </li>
             <ul
               data-testid="other-entry"
-            />
+            >
+              <li
+                class="font-sans-md line-height-sans-4 "
+              >
+                <em
+                  class="text-base"
+                >
+                  No additional information specified
+                </em>
+              </li>
+            </ul>
           </ul>
         </div>
       </div>
@@ -136,7 +164,11 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Beneficiaries
+              <div
+                class="display-flex flex-align-center"
+              >
+                Beneficiaries
+              </div>
             </li>
           </ul>
         </div>
@@ -178,7 +210,11 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Claims-Based Payments
+              <div
+                class="display-flex flex-align-center"
+              >
+                Claims-Based Payments
+              </div>
             </li>
           </ul>
         </div>
@@ -227,7 +263,11 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Adjustments to FFS payments
+              <div
+                class="display-flex flex-align-center"
+              >
+                Adjustments to FFS payments
+              </div>
             </li>
           </ul>
         </div>
@@ -709,11 +749,12 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Semiannually
+              <div
+                class="display-flex flex-align-center"
+              >
+                Semiannually
+              </div>
             </li>
-            <ul
-              data-testid="other-entry"
-            />
           </ul>
         </div>
         <div

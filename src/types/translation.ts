@@ -6,6 +6,7 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
+  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -226,7 +227,6 @@ export type TranslationParticipantsAndProviders = {
   communicationMethod: TranslationFieldPropertiesWithOptions<ParticipantCommunicationType>;
   communicationMethodOther: TranslationFieldProperties;
   communicationNote: TranslationFieldProperties;
-  participantAssumeRisk: TranslationFieldPropertiesWithOptions<Bool>;
   riskType: TranslationFieldPropertiesWithOptions<ParticipantRiskType>;
   riskOther: TranslationFieldProperties;
   riskNote: TranslationFieldProperties;
@@ -476,7 +476,7 @@ export type TranslationPayments = {
 
 // Collaborators
 export type TranslationCollaborators = {
-  teamRole: TranslationFieldPropertiesWithOptions<TeamRole>;
+  teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
 };
 

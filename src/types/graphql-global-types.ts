@@ -441,6 +441,7 @@ export enum ParticipantCommunicationType {
 
 export enum ParticipantRiskType {
   CAPITATION = "CAPITATION",
+  NOT_RISK_BASED = "NOT_RISK_BASED",
   ONE_SIDED = "ONE_SIDED",
   OTHER = "OTHER",
   TWO_SIDED = "TWO_SIDED",
@@ -599,6 +600,7 @@ export enum TaskStatusInput {
 
 export enum TeamRole {
   CM_FFS_COUNTERPART = "CM_FFS_COUNTERPART",
+  COR = "COR",
   EVALUATION = "EVALUATION",
   IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",
@@ -980,8 +982,7 @@ export interface PlanParticipantsAndProvidersChanges {
   communicationMethod?: ParticipantCommunicationType[] | null;
   communicationMethodOther?: string | null;
   communicationNote?: string | null;
-  participantAssumeRisk?: boolean | null;
-  riskType?: ParticipantRiskType | null;
+  riskType?: ParticipantRiskType[] | null;
   riskOther?: string | null;
   riskNote?: string | null;
   willRiskChange?: boolean | null;
@@ -1066,8 +1067,8 @@ export interface PlanPaymentsChanges {
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
   anticipatedPaymentFrequency?: FrequencyType[] | null;
-  anticipatedPaymentFrequencyOther?: string | null;
   anticipatedPaymentFrequencyContinually?: string | null;
+  anticipatedPaymentFrequencyOther?: string | null;
   anticipatedPaymentFrequencyNote?: string | null;
   willRecoverPayments?: boolean | null;
   willRecoverPaymentsNote?: string | null;

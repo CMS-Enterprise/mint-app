@@ -223,15 +223,17 @@ describe('The Model Plan Payment Form', () => {
       .type('Payment Funding Structure')
       .should('have.value', 'Payment Funding Structure');
 
-    cy.get('#anticipated-payment-frequency-quarterly')
+    cy.get('#payment-frequency-payments').within(() => {
+      cy.get("input[type='text']").click();
+    });
+
+    cy.get('[data-testid="option-OTHER"]')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#anticipated-payment-frequency-other')
-      .check({ force: true })
-      .should('be.checked');
+    cy.clickOutside();
 
-    cy.get('#anticipated-payment-frequency-other-text')
+    cy.get('#payment-frequency-payments-other')
       .type('Payment Frequency Payments Other')
       .should('have.value', 'Payment Frequency Payments Other');
 

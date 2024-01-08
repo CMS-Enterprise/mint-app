@@ -536,12 +536,20 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             <li
                               class="font-sans-md line-height-sans-4"
                             >
-                              First Name
+                              <div
+                                class="display-flex flex-align-center"
+                              >
+                                First Name
+                              </div>
                             </li>
                             <li
                               class="font-sans-md line-height-sans-4"
                             >
-                              Second Name
+                              <div
+                                class="display-flex flex-align-center"
+                              >
+                                Second Name
+                              </div>
                             </li>
                           </ul>
                         </div>
@@ -698,49 +706,53 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <li
                                   class="font-sans-md line-height-sans-4"
                                 >
-                                  <span
+                                  <div
                                     class="display-flex flex-align-center"
-                                    style="gap: 4px;"
                                   >
-                                    Accountable Care
                                     <span
-                                      class="usa-tooltip"
-                                      data-testid="tooltipWrapper"
+                                      class="display-flex flex-align-center"
+                                      style="gap: 4px;"
                                     >
-                                      <div
-                                        aria-describedby="tooltip-550000"
-                                        class="usa-tooltip__trigger"
-                                        data-testid="triggerElement"
-                                        position="right"
-                                        tabindex="0"
-                                        title=""
-                                      >
-                                        <svg
-                                          class="usa-icon text-base-light"
-                                          focusable="false"
-                                          height="1em"
-                                          role="img"
-                                          viewBox="0 0 24 24"
-                                          width="1em"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                                          />
-                                        </svg>
-                                      </div>
+                                      Accountable Care
                                       <span
-                                        aria-hidden="true"
-                                        class="usa-tooltip__body"
-                                        data-testid="tooltipBody"
-                                        id="tooltip-550000"
-                                        role="tooltip"
-                                        title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
+                                        class="usa-tooltip"
+                                        data-testid="tooltipWrapper"
                                       >
-                                        Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
+                                        <div
+                                          aria-describedby="tooltip-550000"
+                                          class="usa-tooltip__trigger"
+                                          data-testid="triggerElement"
+                                          position="right"
+                                          tabindex="0"
+                                          title=""
+                                        >
+                                          <svg
+                                            class="usa-icon text-base-light"
+                                            focusable="false"
+                                            height="1em"
+                                            role="img"
+                                            viewBox="0 0 24 24"
+                                            width="1em"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <span
+                                          aria-hidden="true"
+                                          class="usa-tooltip__body"
+                                          data-testid="tooltipBody"
+                                          id="tooltip-550000"
+                                          role="tooltip"
+                                          title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
+                                        >
+                                          Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
+                                        </span>
                                       </span>
                                     </span>
-                                  </span>
+                                  </div>
                                 </li>
                               </ul>
                             </div>
@@ -773,12 +785,20 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <li
                                   class="font-sans-md line-height-sans-4"
                                 >
-                                  Center for Medicare (CM)
+                                  <div
+                                    class="display-flex flex-align-center"
+                                  >
+                                    Center for Medicare (CM)
+                                  </div>
                                 </li>
                                 <li
                                   class="font-sans-md line-height-sans-4"
                                 >
-                                  Center for Medicaid and CHIP Services (CMCS)
+                                  <div
+                                    class="display-flex flex-align-center"
+                                  >
+                                    Center for Medicaid and CHIP Services (CMCS)
+                                  </div>
                                 </li>
                               </ul>
                             </div>
@@ -806,12 +826,20 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                 <li
                                   class="font-sans-md line-height-sans-4"
                                 >
-                                  State and Population Health Group (SPHG)
+                                  <div
+                                    class="display-flex flex-align-center"
+                                  >
+                                    State and Population Health Group (SPHG)
+                                  </div>
                                 </li>
                                 <li
                                   class="font-sans-md line-height-sans-4"
                                 >
-                                  Policy and Programs Group (PPG)
+                                  <div
+                                    class="display-flex flex-align-center"
+                                  >
+                                    Policy and Programs Group (PPG)
+                                  </div>
                                 </li>
                               </ul>
                             </div>
@@ -836,7 +864,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             <li
                               class="font-sans-md line-height-sans-4"
                             >
-                              Mandatory national
+                              <div
+                                class="display-flex flex-align-center"
+                              >
+                                Mandatory national
+                              </div>
                             </li>
                           </ul>
                         </div>

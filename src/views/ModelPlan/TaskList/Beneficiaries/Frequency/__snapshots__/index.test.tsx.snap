@@ -114,7 +114,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
               data-testid="label"
               for="beneficiary-selection-frequency"
             >
-              How frequently are beneficiaries chosen?
+              How frequently are beneficiaries added?
             </label>
             <div
               class="mint-checkbox usa-checkbox"

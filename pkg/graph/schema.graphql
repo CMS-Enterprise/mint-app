@@ -794,8 +794,7 @@ type PlanParticipantsAndProviders {
   communicationMethod:   [ParticipantCommunicationType!]!
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
+  riskType:              [ParticipantRiskType!]!
   riskOther:             String
   riskNote:              String
   willRiskChange:        Boolean
@@ -879,8 +878,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   communicationMethod:   [ParticipantCommunicationType!]
   communicationMethodOther:   String
   communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
+  riskType:              [ParticipantRiskType!]
   riskOther:             String
   riskNote:              String
   willRiskChange:        Boolean
@@ -987,8 +985,8 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
   anticipatedPaymentFrequency:                       [FrequencyType!]!
-  anticipatedPaymentFrequencyOther:                  String
   anticipatedPaymentFrequencyContinually:            String
+  anticipatedPaymentFrequencyOther:                  String
   anticipatedPaymentFrequencyNote:                   String
 
   # Page 7
@@ -1085,9 +1083,9 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
   anticipatedPaymentFrequency:                              [FrequencyType!]
-  anticipatedPaymentFrequencyOther:                         String
   anticipatedPaymentFrequencyContinually:                   String
-  anticipatedPaymentFrequencyNote:                          String
+  anticipatedPaymentFrequencyOther:                         String
+  anticipatedPaymentFrequencyNote:                         String
 
   # Page 7
   willRecoverPayments:                               Boolean
@@ -1885,6 +1883,7 @@ enum TeamRole {
   OACT
   PAYMENT
   CM_FFS_COUNTERPART
+  COR
 }
 
 enum ModelType
@@ -2119,10 +2118,12 @@ enum ParticipantCommunicationType {
   OTHER
   NO_COMMUNICATION
 }
+
 enum ParticipantRiskType {
   TWO_SIDED
   ONE_SIDED
   CAPITATION
+  NOT_RISK_BASED
   OTHER
 }
 

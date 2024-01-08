@@ -112,7 +112,6 @@ const csvFields = [
   'participantsAndProviders.communicationMethod', // array
   'participantsAndProviders.communicationMethodOther',
   'participantsAndProviders.communicationNote',
-  'participantsAndProviders.participantAssumeRisk',
   'participantsAndProviders.riskType',
   'participantsAndProviders.riskOther',
   'participantsAndProviders.riskNote',
@@ -146,7 +145,6 @@ const csvFields = [
   'participantsAndProviders.participantsCurrentlyInModelsNote',
   'participantsAndProviders.modelApplicationLevel',
   'participantsAndProviders.providerAdditionFrequency',
-  'participantsAndProviders.providerAdditionFrequencyContinually',
   'participantsAndProviders.providerAdditionFrequencyOther',
   'participantsAndProviders.providerAdditionFrequencyNote',
   'participantsAndProviders.providerAddMethod', // array
@@ -323,7 +321,6 @@ const csvFields = [
   'payments.canParticipantsSelectBetweenPaymentMechanismsHow',
   'payments.canParticipantsSelectBetweenPaymentMechanismsNote',
   'payments.anticipatedPaymentFrequency', // array
-  'payments.anticipatedPaymentFrequencyContinually',
   'payments.anticipatedPaymentFrequencyOther',
   'payments.anticipatedPaymentFrequencyNote',
   'payments.fundingSource', // array
@@ -374,8 +371,8 @@ const csvFields = [
   {
     label: `${i18next.t<string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string>('collaborators:teamRole.label')}`,
-    value: 'collaborators.teamRole'
+    )} ${i18next.t<string>('collaborators:teamRoles.label')}`,
+    value: 'collaborators.teamRoles'
   },
 
   // Discussions

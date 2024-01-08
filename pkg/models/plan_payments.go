@@ -6,10 +6,10 @@ import (
 	"github.com/lib/pq"
 )
 
-// // AnticipatedPaymentFrequencyType is the enumeration of options for this category
+// AnticipatedPaymentFrequencyType is the enumeration of options for this category
 // type AnticipatedPaymentFrequencyType string
 
-// //goland:noinspection ALL
+//goland:noinspection ALL
 // const (
 // 	// AnticipatedPaymentFrequencyTypeAnnually indicates annual payments
 // 	AnticipatedPaymentFrequencyTypeAnnually AnticipatedPaymentFrequencyType = "ANNUALLY"
@@ -201,8 +201,8 @@ type PlanPayments struct {
 	CanParticipantsSelectBetweenPaymentMechanismsHow  *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`
 	CanParticipantsSelectBetweenPaymentMechanismsNote *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
 	AnticipatedPaymentFrequency                       pq.StringArray                  `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency" statusWeight:"1"`
-	AnticipatedPaymentFrequencyOther                  *string                         `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
 	AnticipatedPaymentFrequencyContinually            *string                         `json:"anticipatedPaymentFrequencyContinually" db:"anticipated_payment_frequency_continually"`
+	AnticipatedPaymentFrequencyOther                  *string                         `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
 	AnticipatedPaymentFrequencyNote                   *string                         `json:"anticipatedPaymentFrequencyNote" db:"anticipated_payment_frequency_note"`
 
 	// Page 7

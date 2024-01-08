@@ -26,7 +26,6 @@ export default gql(/* GraphQL */ `
         communicationMethod
         communicationMethodOther
         communicationNote
-        participantAssumeRisk
         riskType
         riskOther
         riskNote
@@ -43,7 +42,6 @@ export default gql(/* GraphQL */ `
         participantsIdsOther
         participantsIDSNote
         providerAdditionFrequency
-        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod

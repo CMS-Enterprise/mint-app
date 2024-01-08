@@ -123,8 +123,7 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
-  participantAssumeRisk: boolean | null;
-  riskType: ParticipantRiskType | null;
+  riskType: ParticipantRiskType[];
   riskOther: string | null;
   riskNote: string | null;
   willRiskChange: boolean | null;
@@ -157,7 +156,6 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   participantsCurrentlyInModelsNote: string | null;
   modelApplicationLevel: string | null;
   providerAdditionFrequency: FrequencyType[];
-  providerAdditionFrequencyContinually: string | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];
@@ -357,7 +355,6 @@ export interface GetAllModelData_modelPlanCollection_payments {
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
   anticipatedPaymentFrequency: FrequencyType[];
-  anticipatedPaymentFrequencyContinually: string | null;
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
   fundingSource: FundingSource[];

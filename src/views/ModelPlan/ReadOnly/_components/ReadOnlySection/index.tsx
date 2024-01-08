@@ -57,9 +57,6 @@ const ReadOnlySection = ({
   // as well as default text for both if not specified
   const renderListItemOthers = (index: number, isOther: boolean) => {
     if (listOtherItems) {
-      if (listOtherItems[index] === undefined) {
-        return null;
-      }
       if (listOtherItems[index]) {
         return (
           <li className="font-sans-md line-height-sans-4">
@@ -108,9 +105,9 @@ const ReadOnlySection = ({
             }
           >
             <li className="font-sans-md line-height-sans-4">
-              {item}
-              {tooltips && tooltips[index] && (
-                <span className="top-2px position-relative">
+              <div className="display-flex flex-align-center">
+                {item}
+                {tooltips && tooltips[index] && (
                   <Tooltip
                     label={tooltips[index]!}
                     position="right"
@@ -118,8 +115,8 @@ const ReadOnlySection = ({
                   >
                     <Icon.Info className="text-base-light" />
                   </Tooltip>
-                </span>
-              )}
+                )}
+              </div>
             </li>
             {(item === 'Other' || listOtherItems) && (
               <ul data-testid="other-entry">

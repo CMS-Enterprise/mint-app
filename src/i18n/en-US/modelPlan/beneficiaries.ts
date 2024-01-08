@@ -206,7 +206,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     gqlField: 'beneficiarySelectionFrequency',
     goField: 'BeneficiarySelectionFrequency',
     dbField: 'beneficiary_selection_frequency',
-    label: 'How frequently are beneficiaries chosen?',
+    label: 'How frequently are beneficiaries added?',
     dataType: 'enum',
     formType: 'checkbox',
     options: frequencyOptions,

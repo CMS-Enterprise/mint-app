@@ -20,7 +20,6 @@ export interface GetComplexity_modelPlan_payments {
   canParticipantsSelectBetweenPaymentMechanismsHow: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote: string | null;
   anticipatedPaymentFrequency: FrequencyType[];
-  anticipatedPaymentFrequencyContinually: string | null;
   anticipatedPaymentFrequencyOther: string | null;
   anticipatedPaymentFrequencyNote: string | null;
 }

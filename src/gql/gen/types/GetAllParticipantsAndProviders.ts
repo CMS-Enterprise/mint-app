@@ -32,8 +32,7 @@ export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProvide
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
-  participantAssumeRisk: boolean | null;
-  riskType: ParticipantRiskType | null;
+  riskType: ParticipantRiskType[];
   riskOther: string | null;
   riskNote: string | null;
   willRiskChange: boolean | null;
@@ -49,7 +48,6 @@ export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProvide
   participantsIdsOther: string | null;
   participantsIDSNote: string | null;
   providerAdditionFrequency: FrequencyType[];
-  providerAdditionFrequencyContinually: string | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
   providerAddMethod: ProviderAddType[];

@@ -6,6 +6,7 @@ package gqlresolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -766,6 +767,11 @@ func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.C
 	return communicationTypes, nil
 }
 
+// RiskType is the resolver for the riskType field.
+func (r *planParticipantsAndProvidersResolver) RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error) {
+	return models.ConvertEnums[models.ParticipantRiskType](obj.RiskType), nil
+}
+
 // GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
 func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
 	gainshareArrangementEligibilities := models.ConvertEnums[model.GainshareArrangementEligibility](obj.GainsharePaymentsEligibility)
@@ -1143,3 +1149,13 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planParticipantsAndProvidersResolver) ProviderAdditionFrequencyContinually(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error) {
+	panic(fmt.Errorf("not implemented: ProviderAdditionFrequencyContinually - providerAdditionFrequencyContinually"))
+}

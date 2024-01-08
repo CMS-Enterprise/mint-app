@@ -46,22 +46,38 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Medicaid providers
+              <div
+                class="display-flex flex-align-center"
+              >
+                Medicaid providers
+              </div>
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              States
+              <div
+                class="display-flex flex-align-center"
+              >
+                States
+              </div>
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              State Medicaid agencies
+              <div
+                class="display-flex flex-align-center"
+              >
+                State Medicaid agencies
+              </div>
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Other
+              <div
+                class="display-flex flex-align-center"
+              >
+                Other
+              </div>
             </li>
             <ul
               data-testid="other-entry"
@@ -302,12 +318,20 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Use an application review and scoring tool
+              <div
+                class="display-flex flex-align-center"
+              >
+                Use an application review and scoring tool
+              </div>
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Another CMS component or process will provide support
+              <div
+                class="display-flex flex-align-center"
+              >
+                Another CMS component or process will provide support
+              </div>
             </li>
           </ul>
         </div>
@@ -353,12 +377,20 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Manage ongoing communications with participants using an IT tool
+              <div
+                class="display-flex flex-align-center"
+              >
+                Manage ongoing communications with participants using an IT tool
+              </div>
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Send mass emails to new participants
+              <div
+                class="display-flex flex-align-center"
+              >
+                Send mass emails to new participants
+              </div>
             </li>
           </ul>
         </div>
@@ -383,75 +415,49 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         </div>
       </div>
       <div
-        class="grid-row grid-gap"
-        data-testid="grid"
-      >
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                Will the participants assume risk?
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                Yes
-              </p>
-            </div>
-          </div>
-        </div>
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                What type of risk will the participant assume?
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                Capitation
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
         class="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
+          class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
         >
           <p
             class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
-            Notes
+            What type of risk will the participant assume?
           </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          <ul
+            class="margin-y-0 padding-left-3"
           >
-            Note risk
-          </p>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              <div
+                class="display-flex flex-align-center"
+              >
+                Capitation
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              Note risk
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -605,7 +611,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Other
+              <div
+                class="display-flex flex-align-center"
+              >
+                Other
+              </div>
             </li>
             <ul
               data-testid="other-entry"
@@ -656,7 +666,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              CCNs
+              <div
+                class="display-flex flex-align-center"
+              >
+                CCNs
+              </div>
             </li>
           </ul>
         </div>
@@ -694,24 +708,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           >
             How frequently are providers added?
           </p>
-          <ul
-            class="margin-y-0 padding-left-3"
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
           >
-            <li
-              class="font-sans-md line-height-sans-4"
-            >
-              Other
-            </li>
-            <ul
-              data-testid="other-entry"
-            >
-              <li
-                class="font-sans-md line-height-sans-4"
-              >
-                Freq other
-              </li>
-            </ul>
-          </ul>
+            Biannually
+          </p>
         </div>
         <div
           class="desktop:grid-col-12"
@@ -751,7 +752,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Add retrospectively (once an interaction happens this year)
+              <div
+                class="display-flex flex-align-center"
+              >
+                Add retrospectively (once an interaction happens this year)
+              </div>
             </li>
           </ul>
         </div>
@@ -793,7 +798,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              Not applicable
+              <div
+                class="display-flex flex-align-center"
+              >
+                Not applicable
+              </div>
             </li>
           </ul>
         </div>
