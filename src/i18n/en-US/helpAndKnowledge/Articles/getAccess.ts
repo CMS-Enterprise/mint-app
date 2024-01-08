@@ -38,7 +38,7 @@ const getAccess = {
       rowFour: {
         role:
           'Any other CMS contractors with an approved need for access to MINT',
-        jobCodeToRequest: 'MINT Contractor in <0>IDM</0>'
+        jobCodeToRequest: 'MINT_NON_CMS in <0>EUA</0>'
       }
     }
   },
@@ -60,7 +60,7 @@ const getAccess = {
         three:
           'You’ll see a screen with all of your active job codes. Below the list, click the <0>Add a Job Code</0> button.',
         four:
-          'Type the name of the job code into the search box (either <0>MINT_USER</0> or <0>MINT_CONTRACTOR_FFS</0> determined using the chart above) and click the <0>Search</0> button.',
+          'Type the name of the job code into the search box (either <0>MINT_USER</0>, <0>MINT_CONTRACTOR_FFS</0> or <0>MINT_NON_CMS</0> determined using the chart above) and click the <0>Search</0> button.',
         five:
           'Check the box next to the job code, then click the <0>Select</0> button.',
         six:
