@@ -330,7 +330,7 @@ const TargetsAndOptions = () => {
                                       ))}
                                     </FieldGroup>
                                   )}
-                                {/* TODO: Update property once BE implements the BE */}
+
                                 {type === GeographyType.REGION &&
                                   values.geographiesTargetedTypes.includes(
                                     type
@@ -343,7 +343,7 @@ const TargetsAndOptions = () => {
                                           <Field
                                             as={CheckboxField}
                                             id={`plan-characteristics-geographies-region-type-${regionType}`}
-                                            name="geograpghiesTargetedRegionType"
+                                            name="geographiesRegionTypes"
                                             label={
                                               geographiesRegionTypesConfig
                                                 .options[regionType]
