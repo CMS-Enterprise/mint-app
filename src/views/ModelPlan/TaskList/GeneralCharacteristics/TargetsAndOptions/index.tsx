@@ -142,7 +142,7 @@ const TargetsAndOptions = () => {
     geographiesTargeted: geographiesTargeted ?? null,
     geographiesTargetedTypes: geographiesTargetedTypes ?? [],
     geographiesTargetedTypesOther: geographiesTargetedTypesOther ?? '',
-    geographiesStatesAndTerritories: geographiesStatesAndTerritories ?? '',
+    geographiesStatesAndTerritories: geographiesStatesAndTerritories ?? [],
     geographiesRegionTypes: geographiesRegionTypes ?? [],
     geographiesTargetedAppliedTo: geographiesTargetedAppliedTo ?? [],
     geographiesTargetedAppliedToOther: geographiesTargetedAppliedToOther ?? '',
@@ -349,7 +349,7 @@ const TargetsAndOptions = () => {
                                                 .options[regionType]
                                             }
                                             value={regionType}
-                                            checked={values.geographiesRegionTypes.includes(
+                                            checked={values.geographiesRegionTypes?.includes(
                                               regionType
                                             )}
                                           />

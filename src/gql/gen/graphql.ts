@@ -474,73 +474,6 @@ export enum GeographyType {
   STATE = 'STATE'
 }
 
-// TODO: Update these enums to the exact ones BE implements
-export enum StatesAndTerritories {
-  AL = 'AL',
-  AK = 'AK',
-  AZ = 'AZ',
-  AR = 'AR',
-  CA = 'CA',
-  CO = 'CO',
-  CT = 'CT',
-  DE = 'DE',
-  DC = 'DC',
-  FL = 'FL',
-  GA = 'GA',
-  HI = 'HI',
-  ID = 'ID',
-  IL = 'IL',
-  IN = 'IN',
-  IA = 'IA',
-  KS = 'KS',
-  KY = 'KY',
-  LA = 'LA',
-  ME = 'ME',
-  MD = 'MD',
-  MA = 'MA',
-  MI = 'MI',
-  MN = 'MN',
-  MS = 'MS',
-  MO = 'MO',
-  MT = 'MT',
-  NE = 'NE',
-  NV = 'NV',
-  NH = 'NH',
-  NJ = 'NJ',
-  NM = 'NM',
-  NY = 'NY',
-  NC = 'NC',
-  ND = 'ND',
-  OH = 'OH',
-  OK = 'OK',
-  OR = 'OR',
-  PA = 'PA',
-  RI = 'RI',
-  SC = 'SC',
-  SD = 'SD',
-  TN = 'TN',
-  TX = 'TX',
-  UT = 'UT',
-  VT = 'VT',
-  VA = 'VA',
-  WA = 'WA',
-  WV = 'WV',
-  WI = 'WI',
-  WY = 'WY',
-  AS = 'AS',
-  GU = 'GU',
-  MP = 'MP',
-  PR = 'PR',
-  UM = 'UM',
-  VI = 'VI'
-}
-
-export enum GeographyRegionType {
-  CBSA = "CBSA",
-  HRR = "HRR",
-  MSA = "MSA"
-}
-
 export enum KeyCharacteristic {
   EPISODE_BASED = 'EPISODE_BASED',
   OTHER = 'OTHER',
@@ -2930,7 +2863,14 @@ export type GetTargetsAndOptionsQueryVariables = Exact<{
 }>;
 
 
-export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetTargetsAndOptionsQuery = {
+  __typename: 'Query', modelPlan: {
+    __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: {
+      __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesTargetedTypesOther?: string | null,
+      geographiesStatesAndTerritories?: Array<StatesAndTerritories>, geographiesRegionTypes?: Array<GeographyRegionType>,geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null
+    }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }>
+  }
+};
 
 export type UpdateExistingModelLinksMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
