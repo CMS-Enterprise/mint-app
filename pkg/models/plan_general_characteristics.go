@@ -47,6 +47,8 @@ type PlanGeneralCharacteristics struct {
 	// Page 4
 	GeographiesTargeted                       *bool          `json:"geographiesTargeted" db:"geographies_targeted" statusWeight:"1"`
 	GeographiesTargetedTypes                  pq.StringArray `json:"geographiesTargetedTypes" db:"geographies_targeted_types"`
+	GeographiesStatesAndTerritories           pq.StringArray `json:"geographiesStatesAndTerritories" db:"geographies_states_and_territories"`
+	GeographiesRegionTypes                    pq.StringArray `json:"geographiesRegionTypes" db:"geographies_region_types"`
 	GeographiesTargetedTypesOther             *string        `json:"geographiesTargetedTypesOther" db:"geographies_targeted_types_other"`
 	GeographiesTargetedAppliedTo              pq.StringArray `json:"geographiesTargetedAppliedTo" db:"geographies_targeted_applied_to"`
 	GeographiesTargetedAppliedToOther         *string        `json:"geographiesTargetedAppliedToOther" db:"geographies_targeted_applied_to_other"`
@@ -76,3 +78,145 @@ func NewPlanGeneralCharacteristics(tls baseTaskListSection) *PlanGeneralCharacte
 		baseTaskListSection: tls,
 	}
 }
+
+/*
+enum StatesAndTerritories {
+  AL,
+  AK,
+  AZ,
+  AR,
+  CA,
+  CO,
+  CT,
+  DE,
+  DC,
+  FL,
+  GA,
+  HI,
+  ID,
+  IL,
+  IN,
+  IA,
+  KS,
+  KY,
+  LA,
+  ME,
+  MD,
+  MA,
+  MI,
+  MN,
+  MS,
+  MO,
+  MT,
+  NE,
+  NV,
+  NH,
+  NJ,
+  NM,
+  NY,
+  NC,
+  ND,
+  OH,
+  OK,
+  OR,
+  PA,
+  RI,
+  SC,
+  SD,
+  TN,
+  TX,
+  UT,
+  VT,
+  VA,
+  WA,
+  WV,
+  WI,
+  WY,
+  AS,
+  GU,
+  MP,
+  PR,
+  UM,
+  VI
+}
+
+enum GeographyRegionType {
+  CBSA,
+  HRR,
+  MSA
+}
+*/
+
+// StatesAndTerritories represents the possible values for the "States and Territories" field
+type StatesAndTerritories string
+
+// These constants represent the different values of StatesAndTerritories
+const (
+	StatesAndTerritoriesAL StatesAndTerritories = "AL"
+	StatesAndTerritoriesAK StatesAndTerritories = "AK"
+	StatesAndTerritoriesAZ StatesAndTerritories = "AZ"
+	StatesAndTerritoriesAR StatesAndTerritories = "AR"
+	StatesAndTerritoriesCA StatesAndTerritories = "CA"
+	StatesAndTerritoriesCO StatesAndTerritories = "CO"
+	StatesAndTerritoriesCT StatesAndTerritories = "CT"
+	StatesAndTerritoriesDE StatesAndTerritories = "DE"
+	StatesAndTerritoriesDC StatesAndTerritories = "DC"
+	StatesAndTerritoriesFL StatesAndTerritories = "FL"
+	StatesAndTerritoriesGA StatesAndTerritories = "GA"
+	StatesAndTerritoriesHI StatesAndTerritories = "HI"
+	StatesAndTerritoriesID StatesAndTerritories = "ID"
+	StatesAndTerritoriesIL StatesAndTerritories = "IL"
+	StatesAndTerritoriesIN StatesAndTerritories = "IN"
+	StatesAndTerritoriesIA StatesAndTerritories = "IA"
+	StatesAndTerritoriesKS StatesAndTerritories = "KS"
+	StatesAndTerritoriesKY StatesAndTerritories = "KY"
+	StatesAndTerritoriesLA StatesAndTerritories = "LA"
+	StatesAndTerritoriesME StatesAndTerritories = "ME"
+	StatesAndTerritoriesMD StatesAndTerritories = "MD"
+	StatesAndTerritoriesMA StatesAndTerritories = "MA"
+	StatesAndTerritoriesMI StatesAndTerritories = "MI"
+	StatesAndTerritoriesMN StatesAndTerritories = "MN"
+	StatesAndTerritoriesMS StatesAndTerritories = "MS"
+	StatesAndTerritoriesMO StatesAndTerritories = "MO"
+	StatesAndTerritoriesMT StatesAndTerritories = "MT"
+	StatesAndTerritoriesNE StatesAndTerritories = "NE"
+	StatesAndTerritoriesNV StatesAndTerritories = "NV"
+	StatesAndTerritoriesNH StatesAndTerritories = "NH"
+	StatesAndTerritoriesNJ StatesAndTerritories = "NJ"
+	StatesAndTerritoriesNM StatesAndTerritories = "NM"
+	StatesAndTerritoriesNY StatesAndTerritories = "NY"
+	StatesAndTerritoriesNC StatesAndTerritories = "NC"
+	StatesAndTerritoriesND StatesAndTerritories = "ND"
+	StatesAndTerritoriesOH StatesAndTerritories = "OH"
+	StatesAndTerritoriesOK StatesAndTerritories = "OK"
+	StatesAndTerritoriesOR StatesAndTerritories = "OR"
+	StatesAndTerritoriesPA StatesAndTerritories = "PA"
+	StatesAndTerritoriesRI StatesAndTerritories = "RI"
+	StatesAndTerritoriesSC StatesAndTerritories = "SC"
+	StatesAndTerritoriesSD StatesAndTerritories = "SD"
+	StatesAndTerritoriesTN StatesAndTerritories = "TN"
+	StatesAndTerritoriesTX StatesAndTerritories = "TX"
+	StatesAndTerritoriesUT StatesAndTerritories = "UT"
+	StatesAndTerritoriesVT StatesAndTerritories = "VT"
+	StatesAndTerritoriesVA StatesAndTerritories = "VA"
+	StatesAndTerritoriesWA StatesAndTerritories = "WA"
+	StatesAndTerritoriesWV StatesAndTerritories = "WV"
+	StatesAndTerritoriesWI StatesAndTerritories = "WI"
+	StatesAndTerritoriesWY StatesAndTerritories = "WY"
+	StatesAndTerritoriesAS StatesAndTerritories = "AS"
+	StatesAndTerritoriesGU StatesAndTerritories = "GU"
+	StatesAndTerritoriesMP StatesAndTerritories = "MP"
+	StatesAndTerritoriesPR StatesAndTerritories = "PR"
+	StatesAndTerritoriesUM StatesAndTerritories = "UM"
+	StatesAndTerritoriesVI StatesAndTerritories = "VI"
+)
+
+// GeographyRegionType represents the possible values for the "Geography Region Type" field
+type GeographyRegionType string
+
+// These constants represent the different values of GeographyRegionType
+const (
+	GeographyRegionTypeCBSA GeographyRegionType = "CBSA"
+	GeographyRegionTypeHRR  GeographyRegionType = "HRR"
+	GeographyRegionTypeMSA  GeographyRegionType = "MSA"
+)

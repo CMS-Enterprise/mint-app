@@ -39,6 +39,8 @@ SELECT
     gc.community_partners_involved_description,
     gc.community_partners_involved_note,
     gc.geographies_targeted,
+    gc.geographies_states_and_territories,
+    gc.geographies_region_types,
     gc.geographies_targeted_types,
     gc.geographies_targeted_types_other,
     gc.geographies_targeted_applied_to,

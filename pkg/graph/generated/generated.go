@@ -1084,8 +1084,8 @@ type PlanGeneralCharacteristicsResolver interface {
 	KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error)
 
 	GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyType, error)
-	GeographiesStatesAndTerritories(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.StatesAndTerritories, error)
-	GeographiesRegionTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyRegionType, error)
+	GeographiesStatesAndTerritories(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.StatesAndTerritories, error)
+	GeographiesRegionTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyRegionType, error)
 
 	GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error)
 
@@ -32486,9 +32486,9 @@ func (ec *executionContext) _PlanGeneralCharacteristics_geographiesStatesAndTerr
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.StatesAndTerritories)
+	res := resTmp.([]models.StatesAndTerritories)
 	fc.Result = res
-	return ec.marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritoriesᚄ(ctx, field.Selections, res)
+	return ec.marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesStatesAndTerritories(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32530,9 +32530,9 @@ func (ec *executionContext) _PlanGeneralCharacteristics_geographiesRegionTypes(c
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.GeographyRegionType)
+	res := resTmp.([]models.GeographyRegionType)
 	fc.Result = res
-	return ec.marshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesRegionTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -64243,26 +64243,32 @@ func (ec *executionContext) marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgo
 	return ret
 }
 
-func (ec *executionContext) unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionType(ctx context.Context, v interface{}) (model.GeographyRegionType, error) {
-	var res model.GeographyRegionType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx context.Context, v interface{}) (models.GeographyRegionType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.GeographyRegionType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionType(ctx context.Context, sel ast.SelectionSet, v model.GeographyRegionType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx context.Context, sel ast.SelectionSet, v models.GeographyRegionType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionTypeᚄ(ctx context.Context, v interface{}) ([]model.GeographyRegionType, error) {
+func (ec *executionContext) unmarshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx context.Context, v interface{}) ([]models.GeographyRegionType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.GeographyRegionType, len(vSlice))
+	res := make([]models.GeographyRegionType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -64270,7 +64276,7 @@ func (ec *executionContext) unmarshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsg
 	return res, nil
 }
 
-func (ec *executionContext) marshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GeographyRegionType) graphql.Marshaler {
+func (ec *executionContext) marshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.GeographyRegionType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -64294,7 +64300,7 @@ func (ec *executionContext) marshalNGeographyRegionType2ᚕgithubᚗcomᚋcmsgov
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionType(ctx, sel, v[i])
+			ret[i] = ec.marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -66724,26 +66730,32 @@ func (ec *executionContext) marshalNStakeholdersType2ᚕgithubᚗcomᚋcmsgovᚋ
 	return ret
 }
 
-func (ec *executionContext) unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritories(ctx context.Context, v interface{}) (model.StatesAndTerritories, error) {
-	var res model.StatesAndTerritories
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx context.Context, v interface{}) (models.StatesAndTerritories, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.StatesAndTerritories(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritories(ctx context.Context, sel ast.SelectionSet, v model.StatesAndTerritories) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx context.Context, sel ast.SelectionSet, v models.StatesAndTerritories) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritoriesᚄ(ctx context.Context, v interface{}) ([]model.StatesAndTerritories, error) {
+func (ec *executionContext) unmarshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx context.Context, v interface{}) ([]models.StatesAndTerritories, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.StatesAndTerritories, len(vSlice))
+	res := make([]models.StatesAndTerritories, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritories(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -66751,7 +66763,7 @@ func (ec *executionContext) unmarshalNStatesAndTerritories2ᚕgithubᚗcomᚋcms
 	return res, nil
 }
 
-func (ec *executionContext) marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritoriesᚄ(ctx context.Context, sel ast.SelectionSet, v []model.StatesAndTerritories) graphql.Marshaler {
+func (ec *executionContext) marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx context.Context, sel ast.SelectionSet, v []models.StatesAndTerritories) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -66775,7 +66787,7 @@ func (ec *executionContext) marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritories(ctx, sel, v[i])
+			ret[i] = ec.marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -69118,7 +69130,7 @@ func (ec *executionContext) marshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgo
 	return ret
 }
 
-func (ec *executionContext) unmarshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionTypeᚄ(ctx context.Context, v interface{}) ([]model.GeographyRegionType, error) {
+func (ec *executionContext) unmarshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx context.Context, v interface{}) ([]models.GeographyRegionType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -69127,10 +69139,10 @@ func (ec *executionContext) unmarshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsg
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.GeographyRegionType, len(vSlice))
+	res := make([]models.GeographyRegionType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -69138,7 +69150,7 @@ func (ec *executionContext) unmarshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsg
 	return res, nil
 }
 
-func (ec *executionContext) marshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GeographyRegionType) graphql.Marshaler {
+func (ec *executionContext) marshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.GeographyRegionType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -69165,7 +69177,7 @@ func (ec *executionContext) marshalOGeographyRegionType2ᚕgithubᚗcomᚋcmsgov
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyRegionType(ctx, sel, v[i])
+			ret[i] = ec.marshalNGeographyRegionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyRegionType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -70835,7 +70847,7 @@ func (ec *executionContext) marshalOStakeholdersType2ᚕgithubᚗcomᚋcmsgovᚋ
 	return ret
 }
 
-func (ec *executionContext) unmarshalOStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritoriesᚄ(ctx context.Context, v interface{}) ([]model.StatesAndTerritories, error) {
+func (ec *executionContext) unmarshalOStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx context.Context, v interface{}) ([]models.StatesAndTerritories, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -70844,10 +70856,10 @@ func (ec *executionContext) unmarshalOStatesAndTerritories2ᚕgithubᚗcomᚋcms
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.StatesAndTerritories, len(vSlice))
+	res := make([]models.StatesAndTerritories, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritories(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -70855,7 +70867,7 @@ func (ec *executionContext) unmarshalOStatesAndTerritories2ᚕgithubᚗcomᚋcms
 	return res, nil
 }
 
-func (ec *executionContext) marshalOStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritoriesᚄ(ctx context.Context, sel ast.SelectionSet, v []model.StatesAndTerritories) graphql.Marshaler {
+func (ec *executionContext) marshalOStatesAndTerritories2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritoriesᚄ(ctx context.Context, sel ast.SelectionSet, v []models.StatesAndTerritories) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -70882,7 +70894,7 @@ func (ec *executionContext) marshalOStatesAndTerritories2ᚕgithubᚗcomᚋcmsgo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatesAndTerritories(ctx, sel, v[i])
+			ret[i] = ec.marshalNStatesAndTerritories2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐStatesAndTerritories(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

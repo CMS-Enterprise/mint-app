@@ -655,12 +655,12 @@ func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx contex
 }
 
 // GeographiesStatesAndTerritories is the resolver for the geographiesStatesAndTerritories field.
-func (r *planGeneralCharacteristicsResolver) GeographiesStatesAndTerritories(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.StatesAndTerritories, error) {
+func (r *planGeneralCharacteristicsResolver) GeographiesStatesAndTerritories(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.StatesAndTerritories, error) {
 	panic(fmt.Errorf("not implemented: GeographiesStatesAndTerritories - geographiesStatesAndTerritories"))
 }
 
 // GeographiesRegionTypes is the resolver for the geographiesRegionTypes field.
-func (r *planGeneralCharacteristicsResolver) GeographiesRegionTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyRegionType, error) {
+func (r *planGeneralCharacteristicsResolver) GeographiesRegionTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyRegionType, error) {
 	panic(fmt.Errorf("not implemented: GeographiesRegionTypes - geographiesRegionTypes"))
 }
 
