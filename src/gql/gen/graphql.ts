@@ -2003,6 +2003,10 @@ export type PlanPayments = {
   payType: Array<PayType>;
   payTypeNote?: Maybe<Scalars['String']['output']>;
   paymentCalculationOwner?: Maybe<Scalars['String']['output']>;
+  paymentReconciliationFrequency: Array<FrequencyType>;
+  paymentReconciliationFrequencyContinually?: Maybe<Scalars['String']['output']>;
+  paymentReconciliationFrequencyNote?: Maybe<Scalars['String']['output']>;
+  paymentReconciliationFrequencyOther?: Maybe<Scalars['String']['output']>;
   paymentStartDate?: Maybe<Scalars['Time']['output']>;
   paymentStartDateNote?: Maybe<Scalars['String']['output']>;
   planningToUseInnovationPaymentContractor?: Maybe<Scalars['Boolean']['output']>;
@@ -2075,6 +2079,10 @@ export type PlanPaymentsChanges = {
   payType?: InputMaybe<Array<PayType>>;
   payTypeNote?: InputMaybe<Scalars['String']['input']>;
   paymentCalculationOwner?: InputMaybe<Scalars['String']['input']>;
+  paymentReconciliationFrequency?: InputMaybe<Array<FrequencyType>>;
+  paymentReconciliationFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
+  paymentReconciliationFrequencyNote?: InputMaybe<Scalars['String']['input']>;
+  paymentReconciliationFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   paymentStartDate?: InputMaybe<Scalars['Time']['input']>;
   paymentStartDateNote?: InputMaybe<Scalars['String']['input']>;
   planningToUseInnovationPaymentContractor?: InputMaybe<Scalars['Boolean']['input']>;

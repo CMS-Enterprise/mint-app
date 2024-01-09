@@ -1074,6 +1074,10 @@ export interface PlanPaymentsChanges {
   willRecoverPaymentsNote?: string | null;
   anticipateReconcilingPaymentsRetrospectively?: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote?: string | null;
+  paymentReconciliationFrequency?: FrequencyType[] | null;
+  paymentReconciliationFrequencyContinually?: string | null;
+  paymentReconciliationFrequencyOther?: string | null;
+  paymentReconciliationFrequencyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
