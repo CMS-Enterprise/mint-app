@@ -468,6 +468,10 @@ export type TranslationPayments = {
   willRecoverPaymentsNote: TranslationFieldProperties;
   anticipateReconcilingPaymentsRetrospectively: TranslationFieldPropertiesWithOptions<Bool>;
   anticipateReconcilingPaymentsRetrospectivelyNote: TranslationFieldProperties;
+  paymentReconciliationFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  paymentReconciliationFrequencyContinually: TranslationFieldProperties;
+  paymentReconciliationFrequencyOther: TranslationFieldProperties;
+  paymentReconciliationFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;

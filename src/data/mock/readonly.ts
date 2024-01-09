@@ -558,6 +558,10 @@ const paymentsData: PaymentTypes = {
   willRecoverPaymentsNote: 'Will recover note',
   anticipateReconcilingPaymentsRetrospectively: true,
   anticipateReconcilingPaymentsRetrospectivelyNote: 'Anticipate note',
+  paymentReconciliationFrequency: [FrequencyType.CONTINUALLY],
+  paymentReconciliationFrequencyContinually: 'Continual Frequency',
+  paymentReconciliationFrequencyOther: '',
+  paymentReconciliationFrequencyNote: 'Reconciliation note',
   paymentStartDate: '2022-06-03T19:32:24.412662Z',
   paymentStartDateNote: 'Note for payment start date',
   status: TaskStatus.IN_PROGRESS

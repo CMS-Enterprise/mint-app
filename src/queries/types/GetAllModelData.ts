@@ -386,6 +386,10 @@ export interface GetAllModelData_modelPlanCollection_payments {
   willRecoverPaymentsNote: string | null;
   anticipateReconcilingPaymentsRetrospectively: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
+  paymentReconciliationFrequency: FrequencyType[];
+  paymentReconciliationFrequencyContinually: string | null;
+  paymentReconciliationFrequencyOther: string | null;
+  paymentReconciliationFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
   readyForReviewByUserAccount: GetAllModelData_modelPlanCollection_payments_readyForReviewByUserAccount | null;
