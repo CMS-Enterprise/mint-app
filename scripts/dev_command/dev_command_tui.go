@@ -98,12 +98,14 @@ func (tm populateUserTableTuiModel) View() string {
 		cursor := " " // no cursor
 		if tm.cursor == i {
 			cursor = ">" // cursor!
+			cursor = selectedStyle.Render(cursor)
 		}
 
 		// Is this choice selected?
 		checked := " " // not selected
 		if _, ok := tm.selected[i]; ok {
 			checked = "x" // selected!
+			checked = selectedStyle.Render(checked)
 		}
 
 		// Render the row

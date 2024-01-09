@@ -1,3 +1,4 @@
+// Package main contains the main dev commands for the mint app
 package main
 
 import (
