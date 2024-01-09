@@ -662,7 +662,7 @@ export const payments: TranslationPayments = {
     gqlField: 'anticipatedPaymentFrequencyOther',
     goField: 'AnticipatedPaymentFrequencyOther',
     dbField: 'anticipated_payment_frequency_other',
-    label: 'Please specify',
+    label: 'Please describe the other payment frequency.',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']

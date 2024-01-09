@@ -2,14 +2,14 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetComplexityDocument, GetComplexityQuery } from 'gql/gen/graphql';
-
 import {
   ClaimsBasedPayType,
   ComplexityCalculationLevelType,
   FrequencyType,
+  GetComplexityDocument,
+  GetComplexityQuery,
   PayType
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import ClaimsBasedPayment from './index';
 

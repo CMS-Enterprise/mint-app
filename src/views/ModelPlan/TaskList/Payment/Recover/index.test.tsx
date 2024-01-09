@@ -2,13 +2,13 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { GetRecoverDocument, GetRecoverQuery } from 'gql/gen/graphql';
+
 import {
   ClaimsBasedPayType,
-  GetRecoverDocument,
-  GetRecoverQuery,
   PayType,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'types/graphql-global-types';
 
 import Recover from './index';
 
