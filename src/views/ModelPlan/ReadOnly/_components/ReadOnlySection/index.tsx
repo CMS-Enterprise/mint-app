@@ -15,7 +15,7 @@ export type ReadOnlySectionProps = {
   listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
   listOtherItems?:
-    | (string | null | undefined | React.ReactElement)[]
+    | (string | null | undefined | React.ReactElement[])[]
     | undefined;
   tooltips?: (string | null | undefined)[];
   notes?: string | null;

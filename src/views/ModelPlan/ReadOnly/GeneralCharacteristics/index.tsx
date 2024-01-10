@@ -473,7 +473,7 @@ const ReadOnlyGeneralCharacteristics = ({
             )}
             listOtherItems={geographiesTargetedTypes?.map((type):
               | string
-              | React.ReactElement => {
+              | React.ReactElement[] => {
               if (type === GeographyType.STATE) {
                 if (geographiesStatesAndTerritories) {
                   return geographiesStatesAndTerritories
@@ -488,24 +488,24 @@ const ReadOnlyGeneralCharacteristics = ({
               }
               if (type === GeographyType.REGION) {
                 if (geographiesRegionTypes) {
-                  return (
-                    <ul>
-                      {geographiesRegionTypes?.map(region => {
-                        return (
-                          <li key={region}>
-                            {generalCharacteristicsT(
-                              `geographiesRegionTypes.options.${region}`
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  );
+                  return geographiesRegionTypes?.map(region => {
+                    return (
+                      <li key={region}>
+                        {generalCharacteristicsT(
+                          `geographiesRegionTypes.options.${region}`
+                        )}
+                      </li>
+                    );
+                  });
+                }
+              }
+              if (type === GeographyType.OTHER) {
+                if (geographiesTargetedTypesOther) {
+                  return geographiesTargetedTypesOther;
                 }
               }
               return '';
             })}
-            listOtherItem={geographiesTargetedTypesOther}
           />
         )}
 
