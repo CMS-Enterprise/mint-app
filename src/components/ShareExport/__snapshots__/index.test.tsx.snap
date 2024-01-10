@@ -3134,11 +3134,18 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   >
                     How frequently are beneficiaries added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Annually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Annually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -4921,12 +4928,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Daily
-                      </div>
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -4986,12 +4992,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Monthly
-                      </div>
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -9739,11 +9744,18 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   >
                     How frequently are beneficiaries added?
                   </p>
-                  <p
-                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  <ul
+                    class="margin-y-0 padding-left-3"
                   >
-                    Annually
-                  </p>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Annually
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
+                  </ul>
                 </div>
                 <div
                   class="desktop:grid-col-12"
@@ -11526,12 +11538,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Daily
-                      </div>
+                      Monthly
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div
@@ -11591,12 +11602,11 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        Monthly
-                      </div>
+                      Annually
                     </li>
+                    <ul
+                      data-testid="other-entry"
+                    />
                   </ul>
                 </div>
                 <div

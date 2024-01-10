@@ -140,6 +140,7 @@ export default gql`
         participantsCurrentlyInModelsNote
         modelApplicationLevel
         providerAdditionFrequency
+        providerAdditionFrequencyContinually
         providerAdditionFrequencyOther
         providerAdditionFrequencyNote
         providerAddMethod
@@ -174,6 +175,7 @@ export default gql`
         excludeCertainCharacteristicsCriteria
         excludeCertainCharacteristicsNote
         beneficiarySelectionFrequency
+        beneficiarySelectionFrequencyContinually
         beneficiarySelectionFrequencyNote
         beneficiarySelectionFrequencyOther
         precedenceRules
@@ -210,11 +212,13 @@ export default gql`
         dataSharingStarts
         dataSharingStartsOther
         dataSharingFrequency
+        dataSharingFrequencyContinually
         dataSharingFrequencyOther
         dataSharingStartsNote
         dataCollectionStarts
         dataCollectionStartsOther
         dataCollectionFrequency
+        dataCollectionFrequencyContinually
         dataCollectionFrequencyOther
         dataCollectionFrequencyNote
         qualityReportingStarts
@@ -321,6 +325,7 @@ export default gql`
         canParticipantsSelectBetweenPaymentMechanismsHow
         canParticipantsSelectBetweenPaymentMechanismsNote
         anticipatedPaymentFrequency
+        anticipatedPaymentFrequencyContinually
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         fundingSource

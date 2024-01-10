@@ -33,17 +33,6 @@ export enum AlternativePaymentModelType {
   REGULAR = "REGULAR",
 }
 
-export enum AnticipatedPaymentFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMIMONTHLY = "SEMIMONTHLY",
-  WEEKLY = "WEEKLY",
-}
-
 export enum AuthorityAllowance {
   ACA = "ACA",
   CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
@@ -145,18 +134,6 @@ export enum DataForMonitoringType {
   SITE_VISITS = "SITE_VISITS",
 }
 
-export enum DataFrequencyType {
-  ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
-  DAILY = "DAILY",
-  MONTHLY = "MONTHLY",
-  NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
-  OTHER = "OTHER",
-  QUARTERLY = "QUARTERLY",
-  SEMI_MONTHLY = "SEMI_MONTHLY",
-  WEEKLY = "WEEKLY",
-}
-
 export enum DataFullTimeOrIncrementalType {
   FULL_TIME = "FULL_TIME",
   INCREMENTAL = "INCREMENTAL",
@@ -221,11 +198,11 @@ export enum EvaluationApproachType {
 
 export enum FrequencyType {
   ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
+  CONTINUALLY = "CONTINUALLY",
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
-  ROLLING = "ROLLING",
+  SEMIANUALLY = "SEMIANUALLY",
 }
 
 export enum FundingSource {
@@ -741,7 +718,8 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionMethod?: SelectionMethodType[] | null;
   beneficiarySelectionOther?: string | null;
   beneficiarySelectionNote?: string | null;
-  beneficiarySelectionFrequency?: FrequencyType | null;
+  beneficiarySelectionFrequency?: FrequencyType[] | null;
+  beneficiarySelectionFrequencyContinually?: string | null;
   beneficiarySelectionFrequencyOther?: string | null;
   beneficiarySelectionFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;
@@ -957,12 +935,14 @@ export interface PlanOpsEvalAndLearningChanges {
   qualityPerformanceImpactsPaymentNote?: string | null;
   dataSharingStarts?: DataStartsType | null;
   dataSharingStartsOther?: string | null;
-  dataSharingFrequency?: DataFrequencyType[] | null;
+  dataSharingFrequency?: FrequencyType[] | null;
+  dataSharingFrequencyContinually?: string | null;
   dataSharingFrequencyOther?: string | null;
   dataSharingStartsNote?: string | null;
   dataCollectionStarts?: DataStartsType | null;
   dataCollectionStartsOther?: string | null;
-  dataCollectionFrequency?: DataFrequencyType[] | null;
+  dataCollectionFrequency?: FrequencyType[] | null;
+  dataCollectionFrequencyContinually?: string | null;
   dataCollectionFrequencyOther?: string | null;
   dataCollectionFrequencyNote?: string | null;
   qualityReportingStarts?: DataStartsType | null;
@@ -1017,7 +997,8 @@ export interface PlanParticipantsAndProvidersChanges {
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
-  providerAdditionFrequency?: FrequencyType | null;
+  providerAdditionFrequency?: FrequencyType[] | null;
+  providerAdditionFrequencyContinually?: string | null;
   providerAdditionFrequencyOther?: string | null;
   providerAdditionFrequencyNote?: string | null;
   providerAddMethod?: ProviderAddType[] | null;
@@ -1085,7 +1066,8 @@ export interface PlanPaymentsChanges {
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
-  anticipatedPaymentFrequency?: AnticipatedPaymentFrequencyType[] | null;
+  anticipatedPaymentFrequency?: FrequencyType[] | null;
+  anticipatedPaymentFrequencyContinually?: string | null;
   anticipatedPaymentFrequencyOther?: string | null;
   anticipatedPaymentFrequencyNote?: string | null;
   willRecoverPayments?: boolean | null;

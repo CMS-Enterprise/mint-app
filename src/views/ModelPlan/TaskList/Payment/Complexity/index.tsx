@@ -16,7 +16,6 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
-  AnticipatedPaymentFrequencyType,
   ClaimsBasedPayType,
   GetComplexityQuery,
   PayType,
@@ -27,18 +26,17 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import FrequencyForm from 'components/FrequencyForm';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import MultiSelect from 'components/shared/MultiSelect';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -79,6 +77,7 @@ const Complexity = () => {
     canParticipantsSelectBetweenPaymentMechanismsHow,
     canParticipantsSelectBetweenPaymentMechanismsNote,
     anticipatedPaymentFrequency,
+    anticipatedPaymentFrequencyContinually,
     anticipatedPaymentFrequencyOther,
     anticipatedPaymentFrequencyNote
   } = (data?.modelPlan?.payments || {}) as ComplexityFormType;
@@ -156,6 +155,8 @@ const Complexity = () => {
     canParticipantsSelectBetweenPaymentMechanismsNote:
       canParticipantsSelectBetweenPaymentMechanismsNote ?? '',
     anticipatedPaymentFrequency: anticipatedPaymentFrequency ?? [],
+    anticipatedPaymentFrequencyContinually:
+      anticipatedPaymentFrequencyContinually ?? '',
     anticipatedPaymentFrequencyOther: anticipatedPaymentFrequencyOther ?? '',
     anticipatedPaymentFrequencyNote: anticipatedPaymentFrequencyNote ?? ''
   };
@@ -380,83 +381,15 @@ const Complexity = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="anticipatedPaymentFrequency"
-                          error={!!flatErrors.anticipatedPaymentFrequency}
-                          className="margin-top-4"
-                        >
-                          <Label
-                            htmlFor="anticipatedPaymentFrequency"
-                            id="label-anticipatedPaymentFrequency"
-                          >
-                            {paymentsT('anticipatedPaymentFrequency.label')}
-                          </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.anticipatedPaymentFrequency}
-                          </FieldErrorMsg>
-
-                          <Field
-                            as={MultiSelect}
-                            id="payment-frequency-payments"
-                            name="anticipatedPaymentFrequency"
-                            ariaLabel="label-anticipatedPaymentFrequency"
-                            options={composeMultiSelectOptions(
-                              anticipatedPaymentFrequencyConfig.options
-                            )}
-                            selectedLabel={paymentsT(
-                              'anticipatedPaymentFrequency.multiSelectLabel'
-                            )}
-                            onChange={(value: string[] | []) => {
-                              setFieldValue(
-                                'anticipatedPaymentFrequency',
-                                value
-                              );
-                            }}
-                            initialValues={
-                              initialValues.anticipatedPaymentFrequency
-                            }
-                          />
-
-                          {(values?.anticipatedPaymentFrequency || []).includes(
-                            AnticipatedPaymentFrequencyType.OTHER
-                          ) && (
-                            <FieldGroup
-                              scrollElement="anticipatedPaymentFrequencyOther"
-                              error={
-                                !!flatErrors.anticipatedPaymentFrequencyOther
-                              }
-                            >
-                              <Label
-                                htmlFor="anticipatedPaymentFrequencyOther"
-                                className="text-normal"
-                              >
-                                {paymentsT(
-                                  'anticipatedPaymentFrequencyOther.label'
-                                )}
-                              </Label>
-
-                              <FieldErrorMsg>
-                                {flatErrors.anticipatedPaymentFrequencyOther}
-                              </FieldErrorMsg>
-
-                              <Field
-                                as={TextInput}
-                                error={
-                                  flatErrors.anticipatedPaymentFrequencyOther
-                                }
-                                id="payment-frequency-payments-other"
-                                data-testid="payment-frequency-payments-other"
-                                name="anticipatedPaymentFrequencyOther"
-                              />
-                            </FieldGroup>
-                          )}
-
-                          <AddNote
-                            id="payment-frequency-payments-note"
-                            field="anticipatedPaymentFrequencyNote"
-                          />
-                        </FieldGroup>
+                        <FrequencyForm
+                          field="anticipatedPaymentFrequency"
+                          values={values.anticipatedPaymentFrequency}
+                          config={anticipatedPaymentFrequencyConfig}
+                          nameSpace="payments"
+                          id="anticipated-payment-frequency"
+                          label={paymentsT('anticipatedPaymentFrequency.label')}
+                          disabled={loading}
+                        />
 
                         <div className="margin-top-6 margin-bottom-3">
                           <Button

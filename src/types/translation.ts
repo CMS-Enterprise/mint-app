@@ -6,7 +6,6 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
-  AnticipatedPaymentFrequencyType,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -18,7 +17,6 @@ import {
   ConfidenceType,
   ContractorSupportType,
   DataForMonitoringType,
-  DataFrequencyType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
@@ -246,6 +244,7 @@ export type TranslationParticipantsAndProviders = {
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
   providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerAdditionFrequencyContinually: TranslationFieldProperties;
   providerAdditionFrequencyOther: TranslationFieldProperties;
   providerAdditionFrequencyNote: TranslationFieldProperties;
   providerAddMethod: TranslationFieldPropertiesWithOptions<ProviderAddType>;
@@ -281,8 +280,9 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionOther: TranslationFieldProperties;
   // Frequency
   beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
-  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
+  beneficiarySelectionFrequencyNote: TranslationFieldProperties;
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
   precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;
@@ -379,12 +379,14 @@ export type TranslationOpsEvalAndLearning = {
   // Data Sharing
   dataSharingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataSharingStartsOther: TranslationFieldProperties;
-  dataSharingFrequency: TranslationFieldPropertiesWithOptions<DataFrequencyType>;
+  dataSharingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  dataSharingFrequencyContinually: TranslationFieldProperties;
   dataSharingFrequencyOther: TranslationFieldProperties;
   dataSharingStartsNote: TranslationFieldProperties;
   dataCollectionStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataCollectionStartsOther: TranslationFieldProperties;
-  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<DataFrequencyType>;
+  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  dataCollectionFrequencyContinually: TranslationFieldProperties;
   dataCollectionFrequencyOther: TranslationFieldProperties;
   dataCollectionFrequencyNote: TranslationFieldProperties;
   qualityReportingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
@@ -457,7 +459,8 @@ export type TranslationPayments = {
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
-  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<AnticipatedPaymentFrequencyType>;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  anticipatedPaymentFrequencyContinually: TranslationFieldProperties;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;
   // Recover Payment
