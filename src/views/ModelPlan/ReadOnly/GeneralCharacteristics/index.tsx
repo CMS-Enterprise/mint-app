@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  // GeographyType,
   KeyCharacteristic,
   useGetAllGeneralCharacteristicsQuery
 } from 'gql/gen/graphql';
@@ -35,6 +36,8 @@ const ReadOnlyGeneralCharacteristics = ({
   const {
     geographiesTargetedTypes: geographiesTargetedTypesConfig,
     geographiesTargetedAppliedTo: geographiesTargetedAppliedToConfig
+    // geographiesStatesAndTerritories: geographiesStatesAndTerritoriesConfig,
+    // geographiesRegionTypes: geographiesRegionTypesConfig
   } = usePlanTranslation('generalCharacteristics');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -89,6 +92,8 @@ const ReadOnlyGeneralCharacteristics = ({
     communityPartnersInvolvedNote,
     geographiesTargeted,
     geographiesTargetedTypes,
+    // geographiesStatesAndTerritories,
+    // geographiesRegionTypes,
     geographiesTargetedTypesOther,
     geographiesTargetedAppliedTo,
     geographiesTargetedAppliedToOther,
@@ -461,31 +466,62 @@ const ReadOnlyGeneralCharacteristics = ({
           isViewingFilteredView,
           filteredQuestions,
           'geographiesTargetedTypes',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: generalCharacteristicsT(
-                'geographiesTargetedTypes.label'
-              ),
-              list: true,
-              listItems: formatListItems(
-                geographiesTargetedTypesConfig,
-                geographiesTargetedTypes
-              ),
-              listOtherItem: geographiesTargetedTypesOther
-            }}
-            secondSection={{
-              heading: generalCharacteristicsT(
-                'geographiesTargetedAppliedTo.label'
-              ),
-              list: true,
-              listItems: formatListItems(
-                geographiesTargetedAppliedToConfig,
-                geographiesTargetedAppliedTo
-              ),
-              listOtherItem: geographiesTargetedAppliedToOther
-            }}
+          <ReadOnlySection
+            heading={generalCharacteristicsT('geographiesTargetedTypes.label')}
+            list
+            listItems={formatListItems(
+              geographiesTargetedTypesConfig,
+              geographiesTargetedTypes
+            )}
+            // TEMP: context switching
+            // listOtherItems={geographiesTargetedTypes?.map((type): string => {
+            //   if (type === GeographyType.STATE) {
+            //     console.log(
+            //       geographiesStatesAndTerritories
+            //         ?.map(
+            //           state =>
+            //             generalCharacteristicsT(
+            //               `geographiesStatesAndTerritories.options.${state}`
+            //             ).split(' - ')[1]
+            //         )
+            //         .join(', ')
+            //     );
+            //     geographiesStatesAndTerritories?.map(state =>
+            //       generalCharacteristicsT(
+            //         `geographiesStatesAndTerritories.options.${state}`
+            //       )
+            //     );
+            //   }
+            // return (
+            //   fundingSourceOtherInfo[
+            //     generalCharacteristicsT(
+            //       `fundingSource.optionsRelatedInfo.${type}`,
+            //       ''
+            //     )
+            //   ] || ''
+            // );
+            // })}
+            listOtherItem={geographiesTargetedTypesOther}
           />
         )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographiesTargetedTypes',
+          <ReadOnlySection
+            heading={generalCharacteristicsT(
+              'geographiesTargetedAppliedTo.label'
+            )}
+            list
+            listItems={formatListItems(
+              geographiesTargetedAppliedToConfig,
+              geographiesTargetedAppliedTo
+            )}
+            listOtherItem={geographiesTargetedAppliedToOther}
+          />
+        )}
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
