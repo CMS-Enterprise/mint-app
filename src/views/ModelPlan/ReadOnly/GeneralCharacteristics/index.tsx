@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  // GeographyType,
+  GeographyType,
   KeyCharacteristic,
   useGetAllGeneralCharacteristicsQuery
 } from 'gql/gen/graphql';
@@ -36,8 +36,6 @@ const ReadOnlyGeneralCharacteristics = ({
   const {
     geographiesTargetedTypes: geographiesTargetedTypesConfig,
     geographiesTargetedAppliedTo: geographiesTargetedAppliedToConfig
-    // geographiesStatesAndTerritories: geographiesStatesAndTerritoriesConfig,
-    // geographiesRegionTypes: geographiesRegionTypesConfig
   } = usePlanTranslation('generalCharacteristics');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -92,8 +90,8 @@ const ReadOnlyGeneralCharacteristics = ({
     communityPartnersInvolvedNote,
     geographiesTargeted,
     geographiesTargetedTypes,
-    // geographiesStatesAndTerritories,
-    // geographiesRegionTypes,
+    geographiesStatesAndTerritories,
+    geographiesRegionTypes,
     geographiesTargetedTypesOther,
     geographiesTargetedAppliedTo,
     geographiesTargetedAppliedToOther,
@@ -473,34 +471,40 @@ const ReadOnlyGeneralCharacteristics = ({
               geographiesTargetedTypesConfig,
               geographiesTargetedTypes
             )}
-            // TEMP: context switching
-            // listOtherItems={geographiesTargetedTypes?.map((type): string => {
-            //   if (type === GeographyType.STATE) {
-            //     console.log(
-            //       geographiesStatesAndTerritories
-            //         ?.map(
-            //           state =>
-            //             generalCharacteristicsT(
-            //               `geographiesStatesAndTerritories.options.${state}`
-            //             ).split(' - ')[1]
-            //         )
-            //         .join(', ')
-            //     );
-            //     geographiesStatesAndTerritories?.map(state =>
-            //       generalCharacteristicsT(
-            //         `geographiesStatesAndTerritories.options.${state}`
-            //       )
-            //     );
-            //   }
-            // return (
-            //   fundingSourceOtherInfo[
-            //     generalCharacteristicsT(
-            //       `fundingSource.optionsRelatedInfo.${type}`,
-            //       ''
-            //     )
-            //   ] || ''
-            // );
-            // })}
+            listOtherItems={geographiesTargetedTypes?.map((type):
+              | string
+              | React.ReactElement => {
+              if (type === GeographyType.STATE) {
+                if (geographiesStatesAndTerritories) {
+                  return geographiesStatesAndTerritories
+                    ?.map(
+                      state =>
+                        generalCharacteristicsT(
+                          `geographiesStatesAndTerritories.options.${state}`
+                        ).split(' - ')[1]
+                    )
+                    .join(', ');
+                }
+              }
+              if (type === GeographyType.REGION) {
+                if (geographiesRegionTypes) {
+                  return (
+                    <ul>
+                      {geographiesRegionTypes?.map(region => {
+                        return (
+                          <li key={region}>
+                            {generalCharacteristicsT(
+                              `geographiesRegionTypes.options.${region}`
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  );
+                }
+              }
+              return '';
+            })}
             listOtherItem={geographiesTargetedTypesOther}
           />
         )}
