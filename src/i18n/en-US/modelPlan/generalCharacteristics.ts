@@ -327,6 +327,11 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       REGION: 'Region',
       OTHER: 'Other'
     },
+    optionsRelatedInfo: {
+      STATE: 'geographiesStatesAndTerritories',
+      REGION: 'geographiesRegionTypes',
+      OTHER: 'geographiesTargetedTypesOther'
+    },
     filterGroups: ['iddoc', 'pbg']
   },
   geographiesStatesAndTerritories: {
