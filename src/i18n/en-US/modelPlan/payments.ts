@@ -641,7 +641,7 @@ export const payments: TranslationPayments = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'anticipatedPaymentFrequencyContinually',

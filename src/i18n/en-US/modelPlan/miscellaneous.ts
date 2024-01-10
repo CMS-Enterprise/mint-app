@@ -43,7 +43,7 @@ export const miscellaneous: Record<string, string> = {
 // Reusable translated option for all frequency type questions
 export const frequencyOptions: Record<FrequencyTypeNew, string> = {
   ANNUALLY: 'Annually',
-  SEMIANUALLY: 'Semiannually',
+  SEMIANNUALLY: 'Semiannually',
   QUARTERLY: 'Quarterly',
   MONTHLY: 'Monthly',
   CONTINUALLY: 'Continually',
