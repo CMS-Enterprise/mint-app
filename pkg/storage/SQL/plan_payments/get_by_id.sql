@@ -50,6 +50,7 @@ SELECT
     can_participants_select_between_payment_mechanisms_how,
     can_participants_select_between_payment_mechanisms_note,
     anticipated_payment_frequency,
+    anticipated_payment_frequency_continually,
     anticipated_payment_frequency_other,
     anticipated_payment_frequency_note,
     will_recover_payments,

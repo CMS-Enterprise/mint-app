@@ -29,7 +29,8 @@ export interface GetAllBeneficiaries_modelPlan_beneficiaries {
   beneficiarySelectionMethod: SelectionMethodType[];
   beneficiarySelectionOther: string | null;
   beneficiarySelectionNote: string | null;
-  beneficiarySelectionFrequency: FrequencyType | null;
+  beneficiarySelectionFrequency: FrequencyType[];
+  beneficiarySelectionFrequencyContinually: string | null;
   beneficiarySelectionFrequencyOther: string | null;
   beneficiarySelectionFrequencyNote: string | null;
   beneficiaryOverlap: OverlapType | null;

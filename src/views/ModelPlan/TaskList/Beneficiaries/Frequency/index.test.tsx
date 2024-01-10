@@ -22,8 +22,9 @@ const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 const mockData: BeneficiaryFrequencyType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
-  beneficiarySelectionFrequency: FrequencyType.OTHER,
+  beneficiarySelectionFrequency: [FrequencyType.OTHER],
   beneficiarySelectionFrequencyNote: '',
+  beneficiarySelectionFrequencyContinually: 'continually',
   beneficiarySelectionFrequencyOther: 'Very often',
   beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',

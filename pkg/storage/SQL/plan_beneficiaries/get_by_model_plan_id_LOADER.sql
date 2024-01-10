@@ -26,6 +26,7 @@ SELECT
     benes.beneficiary_selection_other,
     benes.beneficiary_selection_note,
     benes.beneficiary_selection_frequency,
+    benes.beneficiary_selection_frequency_continually,
     benes.beneficiary_selection_frequency_other,
     benes.beneficiary_selection_frequency_note,
     benes.beneficiary_overlap,
