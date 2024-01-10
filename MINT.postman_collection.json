@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "49746178-d709-42b2-9b5e-2a69b6337759",
+		"_postman_id": "d8479df9-3a47-46a1-bc57-c3e6300f5d27",
 		"name": "MINT",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22120875",
-		"_collection_link": "https://universal-moon-234509.postman.co/workspace/My-Workspace~f31d393a-9625-40f0-89f6-ecbc8fcb27b9/collection/22120875-49746178-d709-42b2-9b5e-2a69b6337759?action=share&source=collection_link&creator=22120875"
+		"_collection_link": "https://universal-moon-234509.postman.co/workspace/My-Workspace~f31d393a-9625-40f0-89f6-ecbc8fcb27b9/collection/22120875-d8479df9-3a47-46a1-bc57-c3e6300f5d27?action=share&source=collection_link&creator=22120875"
 	},
 	"item": [
 		{
@@ -56,7 +56,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -83,7 +88,12 @@
 								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"usernames\": [\"ABCD\", \"TEST\"],\n  \"optionalMessage\": \"\"\n}\n"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -99,7 +109,12 @@
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\",\n  \"changes\": {\n    \"modelName\": \"My Updated Model\",\n    \"archived\": true,\n    \"status\": \"PLAN_DRAFT\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -115,7 +130,12 @@
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -131,7 +151,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -147,7 +172,12 @@
 								"variables": "{\n    \"filter\": \"INCLUDE_ALL\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -163,7 +193,12 @@
 								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -179,7 +214,12 @@
 								"variables": "{\n  \"modelPlanID\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -200,7 +240,12 @@
 								"variables": "{\n  \"id\": \"{{basicsID}}\",\n  \"changes\": {\n    \"demoCode\": \"\",\n    \"amsModelID\": \"\",\n    \"modelCategory\": \"\",\n    \"cmsCenters\": [\n      \"\"\n    ],\n    \"cmmiGroups\": [\n      \"\"\n    ],\n    \"modelType\": [\n        \"\"\n    ],\n    \"modelTypeOther\": \"\",\n    \"problem\": \"\",\n    \"goal\": \"\",\n    \"testInterventions\": \"\",\n    \"note\": \"\",\n    \"completeICIP\": \"\",\n    \"clearanceStarts\": \"\",\n    \"clearanceEnds\": \"\",\n    \"announced\": \"\",\n    \"applicationsStart\": \"\",\n    \"applicationsEnd\": \"\",\n    \"performancePeriodStarts\": \"\",\n    \"performancePeriodEnds\": \"\",\n    \"wrapUpEnds\": \"\",\n    \"highLevelNote\": \"\",\n    \"phasedIn\": true,\n    \"phasedInNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -216,7 +261,12 @@
 								"variables": "{\n  \"id\": \"{{generalCharacteristicsID}}\",\n  \"changes\": {\n    \"isNewModel\": true,\n    \"currentModelPlanID\": null,\n    \"existingModelID\": null,\n    \"resemblesExistingModel\": true,\n    \"resemblesExistingModelHow\": \"\",\n    \"resemblesExistingModelNote\": \"\",\n    \"hasComponentsOrTracks\": true,\n    \"hasComponentsOrTracksDiffer\": \"\",\n    \"hasComponentsOrTracksNote\": \"\",\n    \"alternativePaymentModelTypes\": [\n      \"\"\n    ],\n    \"alternativePaymentModelNote\": \"\",\n    \"keyCharacteristics\": [\n      \"\"\n    ],\n    \"keyCharacteristicsOther\": \"\",\n    \"keyCharacteristicsNote\": \"\",\n    \"collectPlanBids\": true,\n    \"collectPlanBidsNote\": \"\",\n    \"managePartCDEnrollment\": true,\n    \"managePartCDEnrollmentNote\": \"\",\n    \"planContractUpdated\": true,\n    \"planContractUpdatedNote\": \"\",\n    \"careCoordinationInvolved\": true,\n    \"careCoordinationInvolvedDescription\": \"\",\n    \"careCoordinationInvolvedNote\": \"\",\n    \"additionalServicesInvolved\": true,\n    \"additionalServicesInvolvedDescription\": \"\",\n    \"additionalServicesInvolvedNote\": \"\",\n    \"communityPartnersInvolved\": true,\n    \"communityPartnersInvolvedDescription\": \"\",\n    \"communityPartnersInvolvedNote\": \"\",\n    \"geographiesTargeted\": true,\n    \"geographiesTargetedTypes\": [\n      \"\"\n    ],\n    \"geographiesTargetedTypesOther\": \"\",\n    \"geographiesTargetedAppliedTo\": [\n      \"\"\n    ],\n    \"geographiesTargetedAppliedToOther\": \"\",\n    \"geographiesTargetedNote\": \"\",\n    \"participationOptions\": true,\n    \"participationOptionsNote\": \"\",\n    \"agreementTypes\": [\n      \"\"\n    ],\n    \"agreementTypesOther\": \"\",\n    \"multiplePatricipationAgreementsNeeded\": true,\n    \"multiplePatricipationAgreementsNeededNote\": \"\",\n    \"rulemakingRequired\": true,\n    \"rulemakingRequiredDescription\": \"\",\n    \"rulemakingRequiredNote\": \"\",\n    \"authorityAllowances\": [\n      \"\"\n    ],\n    \"authorityAllowancesOther\": \"\",\n    \"authorityAllowancesNote\": \"\",\n    \"waiversRequired\": true,\n    \"waiversRequiredTypes\": [\n      \"\"\n    ],\n    \"waiversRequiredNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -232,7 +282,12 @@
 								"variables": "{\n  \"id\": \"{{participantsAndProvidersID}}\",\n  \"changes\": {\n    \"participants\": [\n      \"\"\n    ],\n    \"medicareProviderType\": \"\",\n    \"statesEngagement\": \"\",\n    \"participantsOther\": \"\",\n    \"participantsNote\": \"\",\n    \"participantsCurrentlyInModels\": true,\n    \"participantsCurrentlyInModelsNote\": \"\",\n    \"modelApplicationLevel\": \"\",\n    \"expectedNumberOfParticipants\": 0,\n    \"estimateConfidence\": \"\",\n    \"confidenceNote\": \"\",\n    \"recruitmentMethod\": \"\",\n    \"recruitmentOther\": \"\",\n    \"recruitmentNote\": \"\",\n    \"selectionMethod\": [\n      \"\"\n    ],\n    \"selectionOther\": \"\",\n    \"selectionNote\": \"\",\n    \"communicationMethod\": [\n      \"\"\n    ],\n    \"communicationMethodOther\": \"\",\n    \"communicationNote\": \"\",\n    \"riskType\": [\n        \"OTHER\"\n    ],\n    \"riskOther\": \"\",\n    \"riskNote\": \"\",\n    \"willRiskChange\": true,\n    \"willRiskChangeNote\": \"\",\n    \"coordinateWork\": true,\n    \"coordinateWorkNote\": \"\",\n    \"gainsharePayments\": true,\n    \"gainsharePaymentsTrack\": true,\n    \"gainsharePaymentsNote\": \"\",\n    \"gainsharePaymentsEligibility\": [\"\"],\n    \"gainsharePaymentsEligibilityOther\": \"\",\n    \"participantsIds\": [\n      \"\"\n    ],\n    \"participantsIdsOther\": \"\",\n    \"participantsIDSNote\": \"\",\n    \"providerAdditionFrequency\": \"\",\n    \"providerAdditionFrequencyOther\": \"\",\n    \"providerAdditionFrequencyNote\": \"\",\n    \"providerAddMethod\": [\n      \"\"\n    ],\n    \"providerAddMethodOther\": \"\",\n    \"providerAddMethodNote\": \"\",\n    \"providerLeaveMethod\": [\n      \"\"\n    ],\n    \"providerLeaveMethodOther\": \"\",\n    \"providerLeaveMethodNote\": \"\",\n    \"providerOverlap\": \"\",\n    \"providerOverlapHierarchy\": \"\",\n    \"providerOverlapNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -248,7 +303,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -264,7 +324,12 @@
 								"variables": "{\n  \"id\": \"{{opsEvalAndLearningID}}\",\n  \"changes\": {\n    \"agencyOrStateHelp\": [\n      \"\"\n    ],\n    \"agencyOrStateHelpOther\": \"\",\n    \"agencyOrStateHelpNote\": \"\",\n    \"stakeholders\": [\n      \"\"\n    ],\n    \"stakeholdersOther\": \"\",\n    \"stakeholdersNote\": \"\",\n    \"helpdeskUse\": true,\n    \"helpdeskUseNote\": \"\",\n    \"contractorSupport\": [\n      \"\"\n    ],\n    \"contractorSupportOther\": \"\",\n    \"contractorSupportHow\": \"\",\n    \"contractorSupportNote\": \"\",\n    \"iddocSupport\": true,\n    \"iddocSupportNote\": \"\",\n    \"technicalContactsIdentified\": true,\n    \"technicalContactsIdentifiedDetail\": \"\",\n    \"technicalContactsIdentifiedNote\": \"\",\n    \"captureParticipantInfo\": true,\n    \"captureParticipantInfoNote\": \"\",\n    \"icdOwner\": \"\",\n    \"draftIcdDueDate\": \"\",\n    \"icdNote\": \"\",\n    \"uatNeeds\": \"\",\n    \"stcNeeds\": \"\",\n    \"testingTimelines\": \"\",\n    \"testingNote\": \"\",\n    \"dataMonitoringFileTypes\": [\n      \"\"\n    ],\n    \"dataMonitoringFileOther\": \"\",\n    \"dataResponseType\": \"\",\n    \"dataResponseFileFrequency\": \"\",\n    \"dataFullTimeOrIncremental\": \"\",\n    \"eftSetUp\": true,\n    \"unsolicitedAdjustmentsIncluded\": true,\n    \"dataFlowDiagramsNeeded\": true,\n    \"produceBenefitEnhancementFiles\": true,\n    \"fileNamingConventions\": \"\",\n    \"dataMonitoringNote\": \"\",\n    \"benchmarkForPerformance\": \"\",\n    \"benchmarkForPerformanceNote\": \"\",\n    \"computePerformanceScores\": true,\n    \"computePerformanceScoresNote\": \"\",\n    \"riskAdjustPerformance\": true,\n    \"riskAdjustFeedback\": true,\n    \"riskAdjustPayments\": true,\n    \"riskAdjustOther\": true,\n    \"riskAdjustNote\": \"\",\n    \"appealPerformance\": true,\n    \"appealFeedback\": true,\n    \"appealPayments\": true,\n    \"appealOther\": true,\n    \"appealNote\": \"\",\n    \"evaluationApproaches\": [\n      \"\"\n    ],\n    \"evaluationApproachOther\": \"\",\n    \"evalutaionApproachNote\": \"\",\n    \"ccmInvolvment\": [\n      \"\"\n    ],\n    \"ccmInvolvmentOther\": \"\",\n    \"ccmInvolvmentNote\": \"\",\n    \"dataNeededForMonitoring\": [\n      \"\"\n    ],\n    \"dataNeededForMonitoringOther\": \"\",\n    \"dataNeededForMonitoringNote\": \"\",\n    \"dataToSendParticicipants\": [\n      \"\"\n    ],\n    \"dataToSendParticicipantsOther\": \"\",\n    \"dataToSendParticicipantsNote\": \"\",\n    \"shareCclfData\": true,\n    \"shareCclfDataNote\": \"\",\n    \"sendFilesBetweenCcw\": true,\n    \"sendFilesBetweenCcwNote\": \"\",\n    \"appToSendFilesToKnown\": true,\n    \"appToSendFilesToWhich\": \"\",\n    \"appToSendFilesToNote\": \"\",\n    \"useCcwForFileDistribiutionToParticipants\": true,\n    \"useCcwForFileDistribiutionToParticipantsNote\": \"\",\n    \"developNewQualityMeasures\": true,\n    \"developNewQualityMeasuresNote\": \"\",\n    \"qualityPerformanceImpactsPayment\": true,\n    \"qualityPerformanceImpactsPaymentNote\": \"\",\n    \"dataSharingStarts\": \"\",\n    \"dataSharingStartsOther\": \"\",\n    \"dataSharingFrequency\": [\n      \"\"\n    ],\n    \"dataSharingFrequencyOther\": \"\",\n    \"dataSharingStartsNote\": \"\",\n    \"dataCollectionStarts\": \"\",\n    \"dataCollectionStartsOther\": \"\",\n    \"dataCollectionFrequency\": [\n      \"\"\n    ],\n    \"dataCollectionFrequencyOther\": \"\",\n    \"dataCollectionFrequencyNote\": \"\",\n    \"qualityReportingStarts\": \"\",\n    \"qualityReportingStartsOther\": \"\",\n    \"qualityReportingStartsNote\": \"\",\n    \"modelLearningSystems\": [\n      \"\"\n    ],\n    \"modelLearningSystemsOther\": \"\",\n    \"modelLearningSystemsNote\": \"\",\n    \"anticipatedChallenges\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -277,10 +342,15 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation updatePlanPayments ($id: UUID!, $changes: PlanPaymentsChanges!) {\n    updatePlanPayments (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        fundingSource\n        fundingSourceTrustFund\n        fundingSourceTrustFundType\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFund\n        fundingSourceRTrustFundType\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n        payClaimsOther\n        payClaimsNote\n        shouldAnyProvidersExcludedFFSSystems\n        shouldAnyProviderExcludedFFSSystemsNote\n        changesMedicarePhysicianFeeSchedule\n        changesMedicarePhysicianFeeScheduleNote\n        affectsMedicareSecondaryPayerClaims\n        affectsMedicareSecondaryPayerClaimsHow\n        affectsMedicareSecondaryPayerClaimsNote\n        payModelDifferentiation\n        creatingDependenciesBetweenServices\n        creatingDependenciesBetweenServicesNote\n        needsClaimsDataCollection\n        needsClaimsDataCollectionNote\n        providingThirdPartyFile\n        isContractorAwareTestDataRequirements\n        beneficiaryCostSharingLevelAndHandling\n        waiveBeneficiaryCostSharingForAnyServices\n        waiveBeneficiaryCostSharingServiceSpecification\n        waiverOnlyAppliesPartOfPayment\n        waiveBeneficiaryCostSharingNote\n        nonClaimsPayments\n        nonClaimsPaymentOther\n        nonClaimsPaymentsNote\n        paymentCalculationOwner\n        numberPaymentsPerPayCycle\n        numberPaymentsPerPayCycleNote\n        sharedSystemsInvolvedAdditionalClaimPayment\n        sharedSystemsInvolvedAdditionalClaimPaymentNote\n        planningToUseInnovationPaymentContractor\n        planningToUseInnovationPaymentContractorNote\n        expectedCalculationComplexityLevel\n        expectedCalculationComplexityLevelNote\n        canParticipantsSelectBetweenPaymentMechanisms\n        canParticipantsSelectBetweenPaymentMechanismsHow\n        canParticipantsSelectBetweenPaymentMechanismsNote\n        anticipatedPaymentFrequency\n        anticipatedPaymentFrequencyOther\n        anticipatedPaymentFrequencyNote\n        willRecoverPayments\n        willRecoverPaymentsNote\n        anticipateReconcilingPaymentsRetrospectively\n        anticipateReconcilingPaymentsRetrospectivelyNote\n        paymentReconciliationFrequency\n        paymentReconciliationFrequencyContinually\n        paymentReconciliationFrequencyOther\n        paymentReconciliationFrequencyNote\n        paymentStartDate\n        paymentStartDateNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n    }\n}",
-								"variables": "{\n  \"id\": \"{{paymentsID}}\",\n  \"changes\": {\n    \"fundingSource\": [\n      \"\"\n    ],\n    \"fundingSourceTrustFund\": \"\",\n    \"fundingSourceTrustFundType\": \"\",\n    \"fundingSourceOther\": \"\",\n    \"fundingSourceNote\": \"\",\n    \"fundingSourceR\": [\n      \"\"\n    ],\n    \"fundingSourceRTrustFund\": \"\",\n    \"fundingSourceRTrustFundType\": \"\",\n    \"fundingSourceROther\": \"\",\n    \"fundingSourceRNote\": \"\",\n    \"payRecipients\": [\n      \"\"\n    ],\n    \"payRecipientsOtherSpecification\": \"\",\n    \"payRecipientsNote\": \"\",\n    \"payType\": [\n      \"\"\n    ],\n    \"payTypeNote\": \"\",\n    \"payClaims\": [\n      \"\"\n    ],\n    \"payClaimsOther\": \"\",\n    \"payClaimsNote\": \"\",\n    \"shouldAnyProvidersExcludedFFSSystems\": true,\n    \"shouldAnyProviderExcludedFFSSystemsNote\": \"\",\n    \"changesMedicarePhysicianFeeSchedule\": true,\n    \"changesMedicarePhysicianFeeScheduleNote\": \"\",\n    \"affectsMedicareSecondaryPayerClaims\": true,\n    \"affectsMedicareSecondaryPayerClaimsHow\": \"\",\n    \"affectsMedicareSecondaryPayerClaimsNote\": \"\",\n    \"payModelDifferentiation\": \"\",\n    \"creatingDependenciesBetweenServices\": true,\n    \"creatingDependenciesBetweenServicesNote\": \"\",\n    \"needsClaimsDataCollection\": true,\n    \"needsClaimsDataCollectionNote\": \"\",\n    \"providingThirdPartyFile\": true,\n    \"isContractorAwareTestDataRequirements\": true,\n    \"beneficiaryCostSharingLevelAndHandling\": \"\",\n    \"waiveBeneficiaryCostSharingForAnyServices\": true,\n    \"waiveBeneficiaryCostSharingServiceSpecification\": \"\",\n    \"waiverOnlyAppliesPartOfPayment\": true,\n    \"waiveBeneficiaryCostSharingNote\": \"\",\n    \"nonClaimsPayments\": [\n      \"\"\n    ],\n    \"nonClaimsPaymentOther\": \"\",\n    \"nonClaimsPaymentsNote\": \"\",\n    \"paymentCalculationOwner\": \"\",\n    \"numberPaymentsPerPayCycle\": \"\",\n    \"numberPaymentsPerPayCycleNote\": \"\",\n    \"sharedSystemsInvolvedAdditionalClaimPayment\": true,\n    \"sharedSystemsInvolvedAdditionalClaimPaymentNote\": \"\",\n    \"planningToUseInnovationPaymentContractor\": true,\n    \"planningToUseInnovationPaymentContractorNote\": \"\",\n    \"expectedCalculationComplexityLevel\": \"\",\n    \"expectedCalculationComplexityLevelNote\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanisms\": true,\n    \"canParticipantsSelectBetweenPaymentMechanismsHow\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanismsNote\": \"\",\n    \"anticipatedPaymentFrequency\": [\n      \"\"\n    ],\n    \"anticipatedPaymentFrequencyOther\": \"\",\n    \"anticipatedPaymentFrequencyNote\": \"\",\n    \"willRecoverPayments\": true,\n    \"willRecoverPaymentsNote\": \"\",\n    \"anticipateReconcilingPaymentsRetrospectively\": true,\n    \"anticipateReconcilingPaymentsRetrospectivelyNote\": \"\",\n    \"paymentReconciliationFrequency\": [],\n    \"paymentReconciliationFrequencyContinually\": \"\",\n    \"paymentReconciliationFrequencyOther\": \"\",\n    \"paymentReconciliationFrequencyNote\": \"\",\n    \"paymentStartDate\": \"\",\n    \"paymentStartDateNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"variables": "{\n  \"id\": \"{{paymentsID}}\",\n  \"changes\": {\n    \"fundingSource\": [\n      \"\"\n    ],\n    \"fundingSourceTrustFund\": \"\",\n    \"fundingSourceTrustFundType\": \"\",\n    \"fundingSourceOther\": \"\",\n    \"fundingSourceNote\": \"\",\n    \"fundingSourceR\": [\n      \"\"\n    ],\n    \"fundingSourceRTrustFund\": \"\",\n    \"fundingSourceRTrustFundType\": \"\",\n    \"fundingSourceROther\": \"\",\n    \"fundingSourceRNote\": \"\",\n    \"payRecipients\": [\n      \"\"\n    ],\n    \"payRecipientsOtherSpecification\": \"\",\n    \"payRecipientsNote\": \"\",\n    \"payType\": [\n      \"\"\n    ],\n    \"payTypeNote\": \"\",\n    \"payClaims\": [\n      \"\"\n    ],\n    \"payClaimsOther\": \"\",\n    \"payClaimsNote\": \"\",\n    \"shouldAnyProvidersExcludedFFSSystems\": true,\n    \"shouldAnyProviderExcludedFFSSystemsNote\": \"\",\n    \"changesMedicarePhysicianFeeSchedule\": true,\n    \"changesMedicarePhysicianFeeScheduleNote\": \"\",\n    \"affectsMedicareSecondaryPayerClaims\": true,\n    \"affectsMedicareSecondaryPayerClaimsHow\": \"\",\n    \"affectsMedicareSecondaryPayerClaimsNote\": \"\",\n    \"payModelDifferentiation\": \"\",\n    \"creatingDependenciesBetweenServices\": true,\n    \"creatingDependenciesBetweenServicesNote\": \"\",\n    \"needsClaimsDataCollection\": true,\n    \"needsClaimsDataCollectionNote\": \"\",\n    \"providingThirdPartyFile\": true,\n    \"isContractorAwareTestDataRequirements\": true,\n    \"beneficiaryCostSharingLevelAndHandling\": \"\",\n    \"waiveBeneficiaryCostSharingForAnyServices\": true,\n    \"waiveBeneficiaryCostSharingServiceSpecification\": \"\",\n    \"waiverOnlyAppliesPartOfPayment\": true,\n    \"waiveBeneficiaryCostSharingNote\": \"\",\n    \"nonClaimsPayments\": [\n      \"\"\n    ],\n    \"nonClaimsPaymentOther\": \"\",\n    \"nonClaimsPaymentsNote\": \"\",\n    \"paymentCalculationOwner\": \"\",\n    \"numberPaymentsPerPayCycle\": \"\",\n    \"numberPaymentsPerPayCycleNote\": \"\",\n    \"sharedSystemsInvolvedAdditionalClaimPayment\": true,\n    \"sharedSystemsInvolvedAdditionalClaimPaymentNote\": \"\",\n    \"planningToUseInnovationPaymentContractor\": true,\n    \"planningToUseInnovationPaymentContractorNote\": \"\",\n    \"expectedCalculationComplexityLevel\": \"\",\n    \"expectedCalculationComplexityLevelNote\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanisms\": true,\n    \"canParticipantsSelectBetweenPaymentMechanismsHow\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanismsNote\": \"\",\n    \"anticipatedPaymentFrequency\": [\n      \"\"\n    ],\n    \"anticipatedPaymentFrequencyOther\": \"\",\n    \"anticipatedPaymentFrequencyNote\": \"\",\n    \"willRecoverPayments\": true,\n    \"willRecoverPaymentsNote\": \"\",\n    \"anticipateReconcilingPaymentsRetrospectively\": true,\n    \"anticipateReconcilingPaymentsRetrospectivelyNote\": \"\",\n    \"paymentReconciliationFrequency\": [\n        \"\"\n    ],\n    \"paymentReconciliationFrequencyContinually\": \"\",\n    \"paymentReconciliationFrequencyOther\": \"\",\n    \"paymentReconciliationFrequencyNote\": \"\",\n    \"paymentStartDate\": \"\",\n    \"paymentStartDateNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -296,7 +366,12 @@
 								"variables": "{\n  \"id\": \"{{paymentsID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -312,7 +387,12 @@
 								"variables": "{\n  \"id\": \"{{itToolsID}}\",\n  \"changes\": {\n    \"gcPartCD\": [\n      \"\"\n    ],\n    \"gcPartCDOther\": \"\",\n    \"gcPartCDNote\": \"\",\n    \"gcCollectBids\": [\n      \"\"\n    ],\n    \"gcCollectBidsOther\": \"\",\n    \"gcCollectBidsNote\": \"\",\n    \"gcUpdateContract\": [\n      \"\"\n    ],\n    \"gcUpdateContractOther\": \"\",\n    \"gcUpdateContractNote\": \"\",\n    \"ppToAdvertise\": [\n      \"\"\n    ],\n    \"ppToAdvertiseOther\": \"\",\n    \"ppToAdvertiseNote\": \"\",\n    \"ppCollectScoreReview\": [\n      \"\"\n    ],\n    \"ppCollectScoreReviewOther\": \"\",\n    \"ppCollectScoreReviewNote\": \"\",\n    \"ppAppSupportContractor\": [\n      \"\"\n    ],\n    \"ppAppSupportContractorOther\": \"\",\n    \"ppAppSupportContractorNote\": \"\",\n    \"ppCommunicateWithParticipant\": [\n      \"\"\n    ],\n    \"ppCommunicateWithParticipantOther\": \"\",\n    \"ppCommunicateWithParticipantNote\": \"\",\n    \"ppManageProviderOverlap\": [\n      \"\"\n    ],\n    \"ppManageProviderOverlapOther\": \"\",\n    \"ppManageProviderOverlapNote\": \"\",\n    \"bManageBeneficiaryOverlap\": [\n      \"\"\n    ],\n    \"bManageBeneficiaryOverlapOther\": \"\",\n    \"bManageBeneficiaryOverlapNote\": \"\",\n    \"oelHelpdeskSupport\": [\n      \"\"\n    ],\n    \"oelHelpdeskSupportOther\": \"\",\n    \"oelHelpdeskSupportNote\": \"\",\n    \"oelManageAco\": [\n      \"\"\n    ],\n    \"oelManageAcoOther\": \"\",\n    \"oelManageAcoNote\": \"\",\n    \"oelPerformanceBenchmark\": [\n      \"\"\n    ],\n    \"oelPerformanceBenchmarkOther\": \"\",\n    \"oelPerformanceBenchmarkNote\": \"\",\n    \"oelProcessAppeals\": [\n      \"\"\n    ],\n    \"oelProcessAppealsOther\": \"\",\n    \"oelProcessAppealsNote\": \"\",\n    \"oelEvaluationContractor\": [\n      \"\"\n    ],\n    \"oelEvaluationContractorOther\": \"\",\n    \"oelEvaluationContractorNote\": \"\",\n    \"oelCollectData\": [\n      \"\"\n    ],\n    \"oelCollectDataOther\": \"\",\n    \"oelCollectDataNote\": \"\",\n    \"oelObtainData\": [\n      \"\"\n    ],\n    \"oelObtainDataOther\": \"\",\n    \"oelObtainDataNote\": \"\",\n    \"oelClaimsBasedMeasures\": [\n      \"\"\n    ],\n    \"oelClaimsBasedMeasuresOther\": \"\",\n    \"oelClaimsBasedMeasuresNote\": \"\",\n    \"oelQualityScores\": [\n      \"\"\n    ],\n    \"oelQualityScoresOther\": \"\",\n    \"oelQualityScoresNote\": \"\",\n    \"oelSendReports\": [\n      \"\"\n    ],\n    \"oelSendReportsOther\": \"\",\n    \"oelSendReportsNote\": \"\",\n    \"oelLearningContractor\": [\n      \"\"\n    ],\n    \"oelLearningContractorOther\": \"\",\n    \"oelLearningContractorNote\": \"\",\n    \"oelParticipantCollaboration\": [\n      \"\"\n    ],\n    \"oelParticipantCollaborationOther\": \"\",\n    \"oelParticipantCollaborationNote\": \"\",\n    \"oelEducateBeneficiaries\": [\n      \"\"\n    ],\n    \"oelEducateBeneficiariesOther\": \"\",\n    \"oelEducateBeneficiariesNote\": \"\",\n    \"pMakeClaimsPayments\": [\n      \"\"\n    ],\n    \"pMakeClaimsPaymentsOther\": \"\",\n    \"pMakeClaimsPaymentsNote\": \"\",\n    \"pInformFfs\": [\n      \"\"\n    ],\n    \"pInformFfsOther\": \"\",\n    \"pInformFfsNote\": \"\",\n    \"pNonClaimsBasedPayments\": [\n      \"\"\n    ],\n    \"pNonClaimsBasedPaymentsOther\": \"\",\n    \"pNonClaimsBasedPaymentsNote\": \"\",\n    \"pSharedSavingsPlan\": [\n      \"\"\n    ],\n    \"pSharedSavingsPlanOther\": \"\",\n    \"pSharedSavingsPlanNote\": \"\",\n    \"pRecoverPayments\": [\n      \"\"\n    ],\n    \"pRecoverPaymentsOther\": \"\",\n    \"pRecoverPaymentsNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -333,7 +413,12 @@
 								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"MINT\",\n    \"teamRoles\": [\"MODEL_LEAD\", \"IT_LEAD\"]\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -349,7 +434,12 @@
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\",\n  \"newRoles\": [\"LEARNING\"]\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -365,7 +455,12 @@
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -381,7 +476,12 @@
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -418,7 +518,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -434,7 +539,12 @@
 								"variables": "{\n  \"id\": \"{{discussionID}}\",\n  \"changes\": {\n    \"content\": \"Great Changes\",\n    \"userRole\": \"none_of_the_above\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -450,7 +560,12 @@
 								"variables": "{\n  \"id\": \"{{discussionID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -482,7 +597,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -498,7 +618,12 @@
 								"variables": "{\n  \"id\": \"{{discussionReplyID}}\",\n  \"changes\": {\n    \"content\": \"This is a resolution\",\n    \"userRole\": \"NONE_OF_THE_ABOVE\",\n    \"userRoleDescription\": \"this is a test\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -514,7 +639,12 @@
 								"variables": "{\n  \"id\": \"{{discussionReplyID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -530,7 +660,12 @@
 								"variables": "{\n    \n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -566,7 +701,12 @@
 								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"fileData\": \"Hello!\",\n    \"documentType\": \"POLICY_PAPER\",\n    \"restricted\": false\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -597,7 +737,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -613,7 +758,12 @@
 								"variables": "{\n  \"input\": {\n    \"id\": \"\",\n    \"modelPlanID\": \"\",\n    \"documentParameters\": {\n      \"fileName\": \"\",\n      \"fileSize\": 0,\n      \"fileType\": \"\",\n      \"documentType\": \"\",\n      \"otherTypeDescription\": \"\",\n      \"optionalNotes\": \"\"\n    },\n    \"url\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -629,7 +779,12 @@
 								"variables": "{\n  \"input\": {\n    \"id\": \"\",\n    \"modelPlanID\": \"\",\n    \"documentParameters\": {\n      \"fileName\": \"\",\n      \"fileSize\": 0,\n      \"fileType\": \"\",\n      \"documentType\": \"\",\n      \"otherTypeDescription\": \"\",\n      \"optionalNotes\": \"\"\n    },\n    \"url\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -645,7 +800,12 @@
 								"variables": "{\n  \"id\": \"{{documentID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -666,7 +826,12 @@
 								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"\",\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -682,7 +847,12 @@
 								"variables": "{\n  \"id\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -698,7 +868,12 @@
 								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -714,7 +889,12 @@
 								"variables": "{\n  \"id\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -735,7 +915,12 @@
 								"variables": "{\n  \"modelPlanID\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -751,7 +936,12 @@
 								"variables": "{\n  \"modelPlanID\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -767,7 +957,12 @@
 								"variables": "{\n  \"modelPlanID\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -783,7 +978,12 @@
 								"variables": "{\n  \"modelPlanID\": \"\",\n  \"section\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -799,7 +999,12 @@
 								"variables": "{\n  \"modelPlanID\": \"\",\n  \"section\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -815,7 +1020,12 @@
 								"variables": "{\n  \"modelPlanID\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -836,7 +1046,12 @@
 								"variables": "{\n  \"agree\": true\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -852,7 +1067,12 @@
 								"variables": "{}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -873,7 +1093,12 @@
 								"variables": "{}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -889,7 +1114,12 @@
 								"variables": "{}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -905,7 +1135,12 @@
 								"variables": "{\n  \"searchTerm\": \"\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -937,7 +1172,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -958,7 +1198,12 @@
 								"variables": "{\n  \"tableName\": \"model_plan\",\n  \"primaryKey\":\"{{modelPlanID}}\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -974,7 +1219,12 @@
 								"variables": "{\n    \"id\": \"{{modelPlanID}}\",\n    \"sort\": \"ASC\"\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1025,7 +1275,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1041,7 +1296,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1057,7 +1317,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1088,7 +1353,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1119,7 +1389,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1150,7 +1425,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1181,7 +1461,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1212,7 +1497,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1239,7 +1529,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1266,7 +1561,12 @@
 								"variables": "{\r\n  \"id\": \"{{operationalSolutionID}}\"\r\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1293,7 +1593,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1320,7 +1625,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1336,7 +1646,12 @@
 								"variables": "{\n  \"solutionID\": \"\",\n  \"documentIDs\": [\n    \"\"\n  ]\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1352,7 +1667,12 @@
 								"variables": "{\n  \"solutionID\": \"\",\n  \"documentIDs\": [\n    \"\"\n  ]\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1411,7 +1731,12 @@
 								"variables": "{\r\n  \"solutionID\": \"{{operationalSolutionID}}\",\r\n  \"inputs\": [\r\n      {\r\n          \"name\": \"Waffle Fries\",\r\n          \"status\": \"TODO\"\r\n      },\r\n      {\r\n          \"name\": \"Pancake Fries\",\r\n          \"status\": \"IN_PROGRESS\"\r\n      }\r\n  ]\r\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1427,7 +1752,12 @@
 								"variables": "{\r\n  \"id\": \"{{operationalSolutionSubtaskID0}}\"\r\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1443,7 +1773,12 @@
 								"variables": "{\r\n  \"inputs\": [\r\n      {\r\n          \"id\": \"{{operationalSolutionSubtaskID1}}\",\r\n          \"changes\": {\r\n            \"name\": \"Test\",\r\n            \"status\": \"IN_PROGRESS\"\r\n          }\r\n      }\r\n  ]\r\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1464,7 +1799,12 @@
 								"variables": "{\r\n  \"filters\": [\r\n    {\r\n        \"type\": \"CHANGED_AFTER\",\r\n        \"value\": \"2023-01-01T00:00:00.000Z\"\r\n    },\r\n    {\r\n        \"type\": \"CHANGED_BEFORE\",\r\n        \"value\": \"2024-01-01T00:00:00.000Z\"\r\n    },\r\n    {\r\n        \"type\": \"MODEL_PLAN_SECTION\",\r\n        \"value\": \"BASICS\"\r\n    },\r\n    {\r\n        \"type\": \"CHANGED_BY_ACTOR\",\r\n        \"value\": \"MINT\"\r\n    },\r\n    {\r\n        \"type\": \"FREE_TEXT\",\r\n        \"value\": \"high level note\"\r\n    },\r\n    {\r\n        \"type\": \"MODEL_PLAN_ID\",\r\n        \"value\": \"b7dbeec2-bbd0-4097-9a0e-650f74e4c307\"\r\n    }\r\n  ],\r\n  \"sortBy\": {\r\n    \"field\": \"CHANGE_DATE\",\r\n    \"order\": \"DESC\"   \r\n  },\r\n  \"page\": {\r\n    \"limit\": 200,\r\n    \"offset\": 0\r\n  }\r\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1480,7 +1820,12 @@
 								"variables": "{\n  \"interval\": \"5m\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1521,7 +1866,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1537,7 +1887,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1553,7 +1908,12 @@
 								"variables": ""
 							}
 						},
-						"url": "{{url}}"
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1562,10 +1922,18 @@
 	],
 	"auth": {
 		"type": "apikey",
-		"apikey": {
-			"value": "Local {\"EUAID\":\"{{EUAID}}\",\"jobCodes\":{{jobCodes}},\"favorLocalAuth\":true}",
-			"key": "Authorization"
-		}
+		"apikey": [
+			{
+				"key": "value",
+				"value": "Local {\"EUAID\":\"{{EUAID}}\",\"jobCodes\":{{jobCodes}},\"favorLocalAuth\":true}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
 	},
 	"event": [
 		{
