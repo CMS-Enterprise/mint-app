@@ -46,20 +46,12 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Disease-specific
-              </div>
+              Disease-specific
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Dually-eligible beneficiaries
-              </div>
+              Dually-eligible beneficiaries
             </li>
           </ul>
         </div>
@@ -296,11 +288,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Historical claims
-              </div>
+              Historical claims
             </li>
           </ul>
         </div>
@@ -427,11 +415,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Yes
-              </div>
+              Yes
             </li>
             <ul
               data-testid="other-entry"

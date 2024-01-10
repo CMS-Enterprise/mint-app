@@ -175,7 +175,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         data-scroll="dataSharingFrequency"
       >
         <label
-          class="usa-label maxw-none"
+          class="usa-label maxw-none text-normal"
           data-testid="label"
           for="ops-eval-and-learning-data-sharing-frequency"
         >
@@ -400,7 +400,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         data-scroll="dataCollectionFrequency"
       >
         <label
-          class="usa-label maxw-none"
+          class="usa-label maxw-none text-normal"
           data-testid="label"
           for="ops-eval-and-learning-data-collection-frequency"
         >

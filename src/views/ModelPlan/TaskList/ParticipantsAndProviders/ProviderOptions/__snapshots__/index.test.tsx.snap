@@ -98,113 +98,123 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       data-testid="fieldset"
     >
       <div
-        class="usa-form-group margin-bottom-8"
+        class="usa-form-group"
         data-scroll="providerAdditionFrequency"
       >
         <label
-          class="usa-label"
+          class="usa-label maxw-none"
           data-testid="label"
           for="participants-and-providers-additional-frequency"
         >
           How frequently are providers added?
         </label>
-        <fieldset
-          class="usa-fieldset"
-          data-testid="fieldset"
+        <div
+          class="mint-checkbox usa-checkbox"
         >
-          <div
-            class="usa-radio"
-            data-testid="radio"
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-annually"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="ANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-annually"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-ANNUALLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="ANNUALLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-ANNUALLY"
-            >
-              Annually
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-semianually"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="SEMIANUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-semianually"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-BIANNUALLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="BIANNUALLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-BIANNUALLY"
-            >
-              Biannually
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Semiannually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-quarterly"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-quarterly"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-MONTHLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="MONTHLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-MONTHLY"
-            >
-              Monthly
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-monthly"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-monthly"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-QUARTERLY"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="QUARTERLY"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-QUARTERLY"
-            >
-              Quarterly
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-additional-frequency-continually"
+            name="providerAdditionFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-additional-frequency-continually"
           >
-            <input
-              class="usa-radio__input"
-              id="participants-and-providers-additional-frequency-ROLLING"
-              name="providerAdditionFrequency"
-              type="radio"
-              value="ROLLING"
-            />
-            <label
-              class="usa-radio__label"
-              for="participants-and-providers-additional-frequency-ROLLING"
-            >
-              Rolling
-            </label>
-          </div>
-          <div
-            class="usa-radio"
-            data-testid="radio"
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="margin-left-4"
+        >
+          <label
+            class="usa-label text-normal margin-top-1"
+            data-testid="label"
+            for="participants-and-providers-additional-frequency-continually"
           >
             Please specify
           </label>

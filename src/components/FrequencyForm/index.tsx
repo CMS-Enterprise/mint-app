@@ -20,9 +20,11 @@ type FrequencyFormType = {
   config: TranslationFieldPropertiesWithOptions<FrequencyType>;
   nameSpace: keyof TranslationPlan;
   label: string;
+  boldLabel?: boolean;
   id: string;
   disabled: boolean;
   className?: string;
+  addNote?: boolean;
 };
 
 /*
@@ -37,15 +39,22 @@ const FrequencyForm = ({
   config,
   nameSpace,
   label,
+  boldLabel = true,
   id,
   disabled = false,
+  addNote = true,
   className
 }: FrequencyFormType) => {
   const { t } = useTranslation();
 
   return (
     <FieldGroup scrollElement={fieldName} className={classNames(className)}>
-      <Label htmlFor={id} className="maxw-none">
+      <Label
+        htmlFor={id}
+        className={classNames('maxw-none', {
+          'text-normal': !boldLabel
+        })}
+      >
         {label}
       </Label>
 
@@ -103,7 +112,7 @@ const FrequencyForm = ({
         );
       })}
 
-      <AddNote id={`${id}-note`} field={`${fieldName}Note`} />
+      {addNote && <AddNote id={`${id}-note`} field={`${fieldName}Note`} />}
     </FieldGroup>
   );
 };

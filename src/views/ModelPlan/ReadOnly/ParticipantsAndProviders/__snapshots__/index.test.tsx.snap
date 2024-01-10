@@ -46,38 +46,22 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Medicaid providers
-              </div>
+              Medicaid providers
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                States
-              </div>
+              States
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                State Medicaid agencies
-              </div>
+              State Medicaid agencies
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -318,20 +302,12 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Use an application review and scoring tool
-              </div>
+              Use an application review and scoring tool
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Another CMS component or process will provide support
-              </div>
+              Another CMS component or process will provide support
             </li>
           </ul>
         </div>
@@ -377,20 +353,12 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Manage ongoing communications with participants using an IT tool
-              </div>
+              Manage ongoing communications with participants using an IT tool
             </li>
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Send mass emails to new participants
-              </div>
+              Send mass emails to new participants
             </li>
           </ul>
         </div>
@@ -432,11 +400,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Capitation
-              </div>
+              Capitation
             </li>
           </ul>
         </div>
@@ -458,6 +422,25 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
               Note risk
             </p>
           </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+          >
+            Notes
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note risk
+          </p>
         </div>
       </div>
       <div
@@ -611,11 +594,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Other
-              </div>
+              Other
             </li>
             <ul
               data-testid="other-entry"
@@ -666,11 +645,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                CCNs
-              </div>
+              CCNs
             </li>
           </ul>
         </div>
@@ -708,11 +683,24 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           >
             How frequently are providers added?
           </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          <ul
+            class="margin-y-0 padding-left-3"
           >
-            Biannually
-          </p>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul
+              data-testid="other-entry"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Freq other
+              </li>
+            </ul>
+          </ul>
         </div>
         <div
           class="desktop:grid-col-12"
@@ -752,11 +740,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Add retrospectively (once an interaction happens this year)
-              </div>
+              Add retrospectively (once an interaction happens this year)
             </li>
           </ul>
         </div>
@@ -798,11 +782,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             <li
               class="font-sans-md line-height-sans-4"
             >
-              <div
-                class="display-flex flex-align-center"
-              >
-                Not applicable
-              </div>
+              Not applicable
             </li>
           </ul>
         </div>
