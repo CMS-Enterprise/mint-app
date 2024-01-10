@@ -298,15 +298,15 @@ exports[`Get Access Article > matches snapshot 1`] = `
                     <td
                       class="text-baseline"
                     >
-                      MINT Contractor in 
+                      MINT_NON_CMS in 
                       <a
-                        aria-label="Open IDM in a new tab"
+                        aria-label="Open EUA in a new tab"
                         class="usa-link usa-link--external"
-                        href="https://home.idm.cms.gov/"
+                        href="https://eua.cms.gov"
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        IDM
+                        EUA
                       </a>
                     </td>
                   </tr>
@@ -398,11 +398,17 @@ exports[`Get Access Article > matches snapshot 1`] = `
                       >
                         MINT_USER
                       </span>
-                       or 
+                      , 
                       <span
                         class="text-bold text-italic"
                       >
                         MINT_CONTRACTOR_FFS
+                      </span>
+                       or 
+                      <span
+                        class="text-bold text-italic"
+                      >
+                        MINT_NON_CMS
                       </span>
                        determined using the chart above) and click the 
                       <span
