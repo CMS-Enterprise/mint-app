@@ -6,6 +6,7 @@ package gqlresolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -758,6 +759,16 @@ func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context,
 func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error) {
 	selectionTypes := models.ConvertEnums[model.ParticipantSelectionType](obj.SelectionMethod)
 	return selectionTypes, nil
+}
+
+// ParticipantAddedFrequency is the resolver for the participantAddedFrequency field.
+func (r *planParticipantsAndProvidersResolver) ParticipantAddedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	panic(fmt.Errorf("not implemented: ParticipantAddedFrequency - participantAddedFrequency"))
+}
+
+// ParticipantRemovedFrequency is the resolver for the participantRemovedFrequency field.
+func (r *planParticipantsAndProvidersResolver) ParticipantRemovedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	panic(fmt.Errorf("not implemented: ParticipantRemovedFrequency - participantRemovedFrequency"))
 }
 
 // CommunicationMethod is the resolver for the communicationMethod field.

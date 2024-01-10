@@ -104,6 +104,14 @@ export default gql`
       }
       participantsAndProviders {
         id
+        participantAddedFrequency
+        participantAddedFrequencyContinually
+        participantAddedFrequencyOther
+        participantAddedFrequencyNote
+        participantRemovedFrequency
+        participantRemovedFrequencyContinually
+        participantRemovedFrequencyOther
+        participantRemovedFrequencyNote
         communicationMethod
         communicationMethodOther
         communicationNote
