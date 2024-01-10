@@ -638,6 +638,156 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
           </textarea>
         </div>
         <div
+          class="usa-form-group"
+          data-scroll="qualityReportingFrequency"
+        >
+          <label
+            class="usa-label maxw-none text-normal"
+            data-testid="label"
+            for="ops-eval-and-learning-quality-reporting-frequency"
+          >
+            How often do you anticipate collecting data?
+          </label>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-annually"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="ANNUALLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-annually"
+            >
+              Annually
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-semianually"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="SEMIANUALLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-semianually"
+            >
+              Semiannually
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-quarterly"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="QUARTERLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-quarterly"
+            >
+              Quarterly
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-monthly"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="MONTHLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-monthly"
+            >
+              Monthly
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-continually"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="CONTINUALLY"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-continually"
+            >
+              Continually
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+          <div
+            class="margin-left-4"
+          >
+            <label
+              class="usa-label text-normal margin-top-1"
+              data-testid="label"
+              for="ops-eval-and-learning-quality-reporting-frequency-continually"
+            >
+              Please specify
+            </label>
+            <input
+              class="usa-input"
+              data-testid="ops-eval-and-learning-quality-reporting-frequency-continually-text"
+              id="ops-eval-and-learning-quality-reporting-frequency-continually-text"
+              name="qualityReportingFrequencyContinually"
+              value="continual frequency"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="ops-eval-and-learning-quality-reporting-frequency-other"
+              name="qualityReportingFrequency"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="ops-eval-and-learning-quality-reporting-frequency-other"
+            >
+              Other
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            />
+          </div>
+        </div>
+        <div
           class="margin-top-4 margin-bottom-8"
         >
           <button
