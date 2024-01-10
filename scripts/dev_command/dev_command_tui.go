@@ -87,12 +87,16 @@ func (tm populateUserTableTuiModel) Init() tea.Cmd {
 func (tm populateUserTableTuiModel) View() string {
 	// The header
 	s := "Which commands would you like to execute?\n\n"
+
+	// tab.Render(s)
 	if tm.lastCmnd != "" {
 		s += fmt.Sprintf("%s\n\n", tm.lastCmnd)
 	}
 
 	// Iterate over our options
 	for i, option := range tm.options {
+
+		optionText := option.String()
 
 		// Is the cursor pointing at this choice?
 		cursor := " " // no cursor
@@ -104,12 +108,13 @@ func (tm populateUserTableTuiModel) View() string {
 		// Is this choice selected?
 		checked := " " // not selected
 		if _, ok := tm.selected[i]; ok {
-			checked = "x" // selected!
+			checked = "✔" // selected!
 			checked = selectedStyle.Render(checked)
+			optionText = selectedStyle.Render(optionText)
 		}
 
 		// Render the row
-		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, option)
+		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, optionText)
 	}
 
 	// The footer
