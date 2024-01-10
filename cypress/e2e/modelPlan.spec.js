@@ -179,7 +179,7 @@ describe('The Model Plan Form', () => {
 
     // updates model plan status
 
-    cy.get('.mint-tag').contains('Draft model plan');
+    cy.get('.mint-tag').contains('Draft Model Plan');
 
     cy.contains('a', 'Update').click();
 
