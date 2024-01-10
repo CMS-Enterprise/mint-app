@@ -1,7 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  GeographyType,
   KeyCharacteristic,
   useGetAllGeneralCharacteristicsQuery
 } from 'gql/gen/graphql';
@@ -12,7 +11,8 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection, {
-  formatListItems
+  formatListItems,
+  formatListOtherItems
 } from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
@@ -471,41 +471,30 @@ const ReadOnlyGeneralCharacteristics = ({
               geographiesTargetedTypesConfig,
               geographiesTargetedTypes
             )}
-            listOtherItems={geographiesTargetedTypes?.map((type):
-              | string
-              | React.ReactElement[] => {
-              if (type === GeographyType.STATE) {
-                if (geographiesStatesAndTerritories) {
-                  return geographiesStatesAndTerritories
-                    ?.map(
-                      state =>
-                        generalCharacteristicsT(
-                          `geographiesStatesAndTerritories.options.${state}`
-                        ).split(' - ')[1]
-                    )
-                    .join(', ');
-                }
+            listOtherItems={formatListOtherItems(
+              geographiesTargetedTypesConfig,
+              geographiesTargetedTypes,
+              {
+                geographiesStatesAndTerritories: geographiesStatesAndTerritories
+                  ?.map(
+                    state =>
+                      generalCharacteristicsT(
+                        `geographiesStatesAndTerritories.options.${state}`
+                      ).split(' - ')[1]
+                  )
+                  .join(', '),
+                geographiesRegionTypes: geographiesRegionTypes?.map(region => {
+                  return (
+                    <li key={region}>
+                      {generalCharacteristicsT(
+                        `geographiesRegionTypes.options.${region}`
+                      )}
+                    </li>
+                  );
+                }),
+                geographiesTargetedTypesOther
               }
-              if (type === GeographyType.REGION) {
-                if (geographiesRegionTypes) {
-                  return geographiesRegionTypes?.map(region => {
-                    return (
-                      <li key={region}>
-                        {generalCharacteristicsT(
-                          `geographiesRegionTypes.options.${region}`
-                        )}
-                      </li>
-                    );
-                  });
-                }
-              }
-              if (type === GeographyType.OTHER) {
-                if (geographiesTargetedTypesOther) {
-                  return geographiesTargetedTypesOther;
-                }
-              }
-              return '';
-            })}
+            )}
           />
         )}
 
