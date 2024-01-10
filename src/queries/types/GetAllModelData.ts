@@ -250,6 +250,9 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   qualityReportingStarts: DataStartsType | null;
   qualityReportingStartsOther: string | null;
   qualityReportingStartsNote: string | null;
+  qualityReportingFrequency: FrequencyType[];
+  qualityReportingFrequencyContinually: string | null;
+  qualityReportingFrequencyOther: string | null;
   evaluationApproaches: EvaluationApproachType[];
   evaluationApproachOther: string | null;
   evalutaionApproachNote: string | null;

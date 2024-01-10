@@ -392,6 +392,9 @@ export type TranslationOpsEvalAndLearning = {
   qualityReportingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   qualityReportingStartsOther: TranslationFieldProperties;
   qualityReportingStartsNote: TranslationFieldProperties;
+  qualityReportingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  qualityReportingFrequencyContinually: TranslationFieldProperties;
+  qualityReportingFrequencyOther: TranslationFieldProperties;
   // Learning
   modelLearningSystems: TranslationFieldPropertiesWithOptions<ModelLearningSystemType>;
   modelLearningSystemsOther: TranslationFieldProperties;

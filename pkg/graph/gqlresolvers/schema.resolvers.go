@@ -742,6 +742,12 @@ func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Con
 	return dataFrequencyTypes, nil
 }
 
+// QualityReportingFrequency is the resolver for the qualityReportingFrequency field.
+func (r *planOpsEvalAndLearningResolver) QualityReportingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.QualityReportingFrequency)
+	return dataFrequencyTypes, nil
+}
+
 // ModelLearningSystems is the resolver for the modelLearningSystems field.
 func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error) {
 	modelLearningSystemTypes := models.ConvertEnums[model.ModelLearningSystemType](obj.ModelLearningSystems)

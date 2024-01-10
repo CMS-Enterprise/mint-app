@@ -224,6 +224,9 @@ export default gql`
         qualityReportingStarts
         qualityReportingStartsOther
         qualityReportingStartsNote
+        qualityReportingFrequency
+        qualityReportingFrequencyContinually
+        qualityReportingFrequencyOther
         evaluationApproaches
         evaluationApproachOther
         evalutaionApproachNote

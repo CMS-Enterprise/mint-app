@@ -1064,6 +1064,39 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea'
   },
+  qualityReportingFrequency: {
+    gqlField: 'qualityReportingFrequency',
+    goField: 'QualityReportingFrequency',
+    dbField: 'quality_reporting_frequency',
+    label: 'How often do you anticipate collecting data?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'qualityReportingFrequencyContinually',
+      OTHER: 'qualityReportingFrequencyOther'
+    }
+  },
+  qualityReportingFrequencyContinually: {
+    gqlField: 'qualityReportingFrequencyContinually',
+    goField: 'QualityReportingFrequencyContinually',
+    dbField: 'quality_reporting_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  qualityReportingFrequencyOther: {
+    gqlField: 'qualityReportingFrequencyOther',
+    goField: 'QualityReportingFrequencyOther',
+    dbField: 'quality_reporting_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   modelLearningSystems: {
     gqlField: 'modelLearningSystems',
     goField: 'ModelLearningSystems',

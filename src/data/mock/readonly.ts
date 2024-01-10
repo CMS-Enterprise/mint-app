@@ -467,6 +467,9 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   qualityReportingStarts: DataStartsType.LATER_IN_THE_FIRST_PERFORMANCE_YEAR,
   qualityReportingStartsOther: 'Other qual report',
   qualityReportingStartsNote: 'Note for qual report',
+  qualityReportingFrequency: [FrequencyType.OTHER],
+  qualityReportingFrequencyContinually: '',
+  qualityReportingFrequencyOther: 'Other frequency',
   modelLearningSystems: [
     ModelLearningSystemType.IT_PLATFORM_CONNECT,
     ModelLearningSystemType.NO_LEARNING_SYSTEM,
