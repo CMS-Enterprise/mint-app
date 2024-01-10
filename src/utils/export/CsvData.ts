@@ -109,6 +109,14 @@ const csvFields = [
   'generalCharacteristics.status',
 
   // Participants and Providers
+  'participantsAndProviders.participantAddedFrequency',
+  'participantsAndProviders.participantAddedFrequencyContinually',
+  'participantsAndProviders.participantAddedFrequencyOther',
+  'participantsAndProviders.participantAddedFrequencyNote',
+  'participantsAndProviders.participantRemovedFrequency',
+  'participantsAndProviders.participantRemovedFrequencyContinually',
+  'participantsAndProviders.participantRemovedFrequencyOther',
+  'participantsAndProviders.participantRemovedFrequencyNote',
   'participantsAndProviders.communicationMethod', // array
   'participantsAndProviders.communicationMethodOther',
   'participantsAndProviders.communicationNote',

@@ -217,6 +217,88 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     formType: 'textarea',
     filterGroups: ['cmmi', 'iddoc', 'pbg']
   },
+  participantAddedFrequency: {
+    gqlField: 'participantAddedFrequency',
+    goField: 'ParticipantAddedFrequency',
+    dbField: 'participant_added_frequency',
+    label: 'How frequently are participants added?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'participantAddedFrequencyContinually',
+      OTHER: 'participantAddedFrequencyOther'
+    }
+  },
+  participantAddedFrequencyContinually: {
+    gqlField: 'participantAddedFrequencyContinually',
+    goField: 'ParticipantAddedFrequencyContinually',
+    dbField: 'participant_added_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantAddedFrequencyOther: {
+    gqlField: 'participantAddedFrequencyOther',
+    goField: 'ParticipantAddedFrequencyOther',
+    dbField: 'participant_added_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantAddedFrequencyNote: {
+    gqlField: 'participantAddedFrequencyNote',
+    goField: 'ParticipantAddedFrequencyNote',
+    dbField: 'participant_added_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantRemovedFrequency: {
+    gqlField: 'participantRemovedFrequency',
+    goField: 'ParticipantRemovedFrequency',
+    dbField: 'participant_removed_frequency',
+    label: 'How frequently are participants removed?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'participantRemovedFrequencyContinually',
+      OTHER: 'participantRemovedFrequencyOther'
+    }
+  },
+  participantRemovedFrequencyContinually: {
+    gqlField: 'participantRemovedFrequencyContinually',
+    goField: 'ParticipantRemovedFrequencyContinually',
+    dbField: 'participant_removed_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantRemovedFrequencyOther: {
+    gqlField: 'participantRemovedFrequencyOther',
+    goField: 'ParticipantRemovedFrequencyOther',
+    dbField: 'participant_removed_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text'
+  },
+  participantRemovedFrequencyNote: {
+    gqlField: 'participantRemovedFrequencyNote',
+    goField: 'ParticipantRemovedFrequencyNote',
+    dbField: 'participant_removed_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'text'
+  },
   communicationMethod: {
     gqlField: 'communicationMethod',
     goField: 'CommunicationMethod',
@@ -435,7 +517,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   providerAdditionFrequencyContinually: {
     gqlField: 'providerAdditionFrequencyContinually',
     goField: 'ProviderAdditionFrequencyContinually',
-    dbField: 'provide_addition_frequency_continually',
+    dbField: 'provider_addition_frequency_continually',
     label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
