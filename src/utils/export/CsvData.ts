@@ -223,6 +223,9 @@ const csvFields = [
   'opsEvalAndLearning.qualityReportingStarts',
   'opsEvalAndLearning.qualityReportingStartsOther',
   'opsEvalAndLearning.qualityReportingStartsNote',
+  'opsEvalAndLearning.qualityReportingFrequency', // array
+  'opsEvalAndLearning.qualityReportingFrequencyContinually',
+  'opsEvalAndLearning.qualityReportingFrequencyOther',
   'opsEvalAndLearning.evaluationApproaches', // array
   'opsEvalAndLearning.evaluationApproachOther',
   'opsEvalAndLearning.evalutaionApproachNote',
