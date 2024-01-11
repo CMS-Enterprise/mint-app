@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 
 	"github.com/cmsgov/mint-app/scripts/dev_command/command"
 )
@@ -85,14 +87,30 @@ func (tm populateUserTableTuiModel) Init() tea.Cmd {
 }
 
 func (tm populateUserTableTuiModel) View() string {
+	doc := strings.Builder{}
+	width := 96 //TODO static value to be refactored
+	// Tabs
+	{
+		row := lipgloss.JoinHorizontal(
+			lipgloss.Top,
+			activeTab.Render("Tab 1"),
+			tab.Render("Tab 2"),
+			tab.Render("Tab 3"),
+			tab.Render("Tab 4"),
+			tab.Render("Tab 5"),
+		)
+		gap := tabGap.Render(strings.Repeat(" ", max(0, width-lipgloss.Width(row)-2)))
+		row = lipgloss.JoinHorizontal(lipgloss.Bottom, row, gap)
+		doc.WriteString(row + "\n\n")
+	}
 	// The header
-	s := "Which commands would you like to execute?\n\n"
+	doc.WriteString("Which commands would you like to execute?\n\n")
 
 	// tab.Render(s)
 	if tm.lastCmnd != "" {
-		s += fmt.Sprintf("%s\n\n", tm.lastCmnd)
+		doc.WriteString(fmt.Sprintf("%s\n\n", tm.lastCmnd))
 	}
-
+	body := strings.Builder{}
 	// Iterate over our options
 	for i, option := range tm.options {
 
@@ -114,14 +132,15 @@ func (tm populateUserTableTuiModel) View() string {
 		}
 
 		// Render the row
-		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, optionText)
+		body.WriteString(fmt.Sprintf("%s [%s] %s\n", cursor, checked, optionText))
 	}
+	doc.WriteString(fullBorderStyle.Render(body.String()))
 
 	// The footer
-	s += "\nPress q to quit.\n"
+	doc.WriteString("\nPress q to quit.\n")
 
 	// Send the UI for rendering
-	return s
+	return fullBorderStyle.Render(doc.String())
 }
 
 func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
