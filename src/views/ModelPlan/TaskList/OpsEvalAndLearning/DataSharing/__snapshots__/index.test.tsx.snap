@@ -646,7 +646,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
             data-testid="label"
             for="ops-eval-and-learning-quality-reporting-frequency"
           >
-            How often do you anticipate collecting data?
+            How frequently does quality reporting happen?
           </label>
           <div
             class="mint-checkbox usa-checkbox"

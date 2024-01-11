@@ -4862,12 +4862,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--how-often-do-you-anticipate-collecting-data margin-bottom-3"
+                  class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    How often do you anticipate collecting data?
+                    How frequently does quality reporting happen?
                   </p>
                   <ul
                     class="margin-y-0 padding-left-3"
@@ -11251,12 +11251,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--how-often-do-you-anticipate-collecting-data margin-bottom-3"
+                  class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    How often do you anticipate collecting data?
+                    How frequently does quality reporting happen?
                   </p>
                   <ul
                     class="margin-y-0 padding-left-3"

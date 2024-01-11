@@ -1068,7 +1068,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'qualityReportingFrequency',
     goField: 'QualityReportingFrequency',
     dbField: 'quality_reporting_frequency',
-    label: 'How often do you anticipate collecting data?',
+    label: 'How frequently does quality reporting happen?',
     dataType: 'enum',
     formType: 'checkbox',
     options: frequencyOptions,
