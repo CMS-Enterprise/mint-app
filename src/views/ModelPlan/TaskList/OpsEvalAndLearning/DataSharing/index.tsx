@@ -321,6 +321,7 @@ const DataSharing = () => {
                     id="ops-eval-and-learning-data-sharing-frequency"
                     label={opsEvalAndLearningT('dataSharingFrequency.label')}
                     disabled={loading}
+                    boldLabel={false}
                   />
 
                   <FieldGroup
@@ -398,6 +399,7 @@ const DataSharing = () => {
                     id="ops-eval-and-learning-data-collection-frequency"
                     label={opsEvalAndLearningT('dataCollectionFrequency.label')}
                     disabled={loading}
+                    boldLabel={false}
                   />
 
                   <FieldGroup
