@@ -8,7 +8,8 @@ import {
   Button,
   Fieldset,
   Icon,
-  Label
+  Label,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -267,7 +268,10 @@ const TargetsAndOptions = () => {
                           error={!!flatErrors.geographiesTargetedTypes}
                           className="margin-top-4"
                         >
-                          <Label htmlFor="geographiesTargetedTypes">
+                          <Label
+                            htmlFor="geographiesTargetedTypes"
+                            className="text-normal"
+                          >
                             {generalCharacteristicsT(
                               'geographiesTargetedTypes.label'
                             )}
@@ -381,11 +385,9 @@ const TargetsAndOptions = () => {
                                         }
                                       </FieldErrorMsg>
                                       <Field
-                                        as={TextAreaField}
+                                        as={TextInput}
                                         data-testid="plan-characteristics-geographies-targeted-other"
                                         id="plan-characteristics-geographies-targeted-other"
-                                        maxLength={5000}
-                                        className="mint-textarea"
                                         name="geographiesTargetedTypesOther"
                                       />
                                     </FieldGroup>
@@ -398,7 +400,7 @@ const TargetsAndOptions = () => {
                         <FieldGroup
                           scrollElement="geographiesTargetedAppliedTo"
                           error={!!flatErrors.geographiesTargetedAppliedTo}
-                          className="margin-top-4"
+                          className="margin-top-4 text-normal"
                         >
                           <Label htmlFor="geographiesTargetedAppliedTo">
                             {generalCharacteristicsT(
