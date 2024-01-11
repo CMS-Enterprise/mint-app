@@ -157,7 +157,7 @@ const (
 	DataIncremental DataFullTimeOrIncrementalType = "INCREMENTAL"
 )
 
-// QualityPerformanceImpactsPaymentType represents the possible QUALITYPERFORMANCEIMPACTTYPE options
+// QualityPerformanceImpactType represents the possible QUALITYPERFORMANCEIMPACTTYPE options
 type QualityPerformanceImpactType string
 
 // These constants represent the choices for QUALITYPERFORMANCEIMPACTTYPE
