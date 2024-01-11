@@ -7,6 +7,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"golang.org/x/term"
 
 	"github.com/cmsgov/mint-app/scripts/dev_command/command"
 )
@@ -110,8 +111,10 @@ func (tm populateUserTableTuiModel) Init() tea.Cmd {
 }
 
 func (tm populateUserTableTuiModel) View() string {
+	physicalWidth, _, _ := term.GetSize(int(os.Stdout.Fd()))
 	doc := strings.Builder{}
-	width := 96 //TODO static value to be refactored
+	// width := 96 //TODO static value to be refactored
+	width := physicalWidth - 4
 	doc.WriteString(tm.RenderTabs(width))
 	doc.WriteString("\n\n")
 
