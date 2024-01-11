@@ -5652,7 +5652,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Semiannually
+                      Semi-annually
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -12009,7 +12009,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Semiannually
+                      Semi-annually
                     </li>
                     <ul
                       data-testid="other-entry"
