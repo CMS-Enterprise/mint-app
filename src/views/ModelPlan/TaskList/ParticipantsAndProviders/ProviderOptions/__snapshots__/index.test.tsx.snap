@@ -142,7 +142,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
             class="usa-checkbox__label"
             for="participants-and-providers-additional-frequency-semianually"
           >
-            Semiannually
+            Semi-annually
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

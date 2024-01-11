@@ -215,7 +215,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
             class="usa-checkbox__label"
             for="ops-eval-and-learning-data-sharing-frequency-semianually"
           >
-            Semiannually
+            Semi-annually
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -440,7 +440,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
             class="usa-checkbox__label"
             for="ops-eval-and-learning-data-collection-frequency-semianually"
           >
-            Semiannually
+            Semi-annually
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
