@@ -38,17 +38,31 @@ func (geo genericCommandOption) LastCMDMessage() string {
 	return "Ran " + geo.Name()
 }
 
+type commandTab struct {
+	Header string
+}
+
 type populateUserTableTuiModel struct {
-	options  []commandOption
-	cursor   int                   // which command option our cursor is pointing at
-	selected map[int]commandOption // which command options are selected
-	err      error
-	lastCmnd string
+	options   []commandOption
+	cursor    int                   // which command option our cursor is pointing at
+	selected  map[int]commandOption // which command options are selected
+	tabs      []commandTab
+	activeTab int
+	err       error
+	lastCmnd  string
 }
 
 func newPopulateUserTableModel() populateUserTableTuiModel {
 
 	return populateUserTableTuiModel{
+		tabs: []commandTab{
+			{
+				Header: "Common Commands",
+			},
+			{
+				Header: "My Commands",
+			},
+		},
 		options: []commandOption{
 			genericCommandOption{
 				CommandName: "Start Docker",
@@ -89,21 +103,9 @@ func (tm populateUserTableTuiModel) Init() tea.Cmd {
 func (tm populateUserTableTuiModel) View() string {
 	doc := strings.Builder{}
 	width := 96 //TODO static value to be refactored
-	// Tabs
-	{
-		row := lipgloss.JoinHorizontal(
-			lipgloss.Top,
-			activeTab.Render("Tab 1"),
-			tab.Render("Tab 2"),
-			tab.Render("Tab 3"),
-			tab.Render("Tab 4"),
-			tab.Render("Tab 5"),
-		)
-		gap := tabGap.Render(strings.Repeat(" ", max(0, width-lipgloss.Width(row)-2)))
-		row = lipgloss.JoinHorizontal(lipgloss.Bottom, row, gap)
-		doc.WriteString(row + "\n\n")
-	}
-	// The header
+	doc.WriteString(tm.RenderTabs(width))
+	doc.WriteString("\n\n")
+
 	doc.WriteString("Which commands would you like to execute?\n\n")
 
 	// tab.Render(s)
@@ -167,6 +169,17 @@ func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if tm.cursor < len(tm.options)-1 {
 				tm.cursor++
 			}
+		// The "left" and "u" keys move the activeTab left
+		case "left", "u":
+			if tm.activeTab > 0 {
+				tm.activeTab--
+			}
+
+		// The "right" and "i" keys move the activeTab right
+		case "right", "i":
+			if tm.activeTab < len(tm.options)-1 {
+				tm.activeTab++
+			}
 
 		// The spacebar (a literal space) toggle
 		// the selected state for the item that the cursor is pointing at.
@@ -205,6 +218,28 @@ func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	return tm, nil
 
+}
+func (tm populateUserTableTuiModel) RenderTabs(width int) string {
+	tabString := []string{}
+	for index, tab := range tm.tabs {
+		isActive := index == tm.activeTab
+		style := tabStyle
+
+		if isActive {
+			style = activeTabStyle
+		}
+		tabString = append(tabString, style.Render(tab.Header))
+
+	}
+
+	row := lipgloss.JoinHorizontal(
+		lipgloss.Top, tabString...,
+	)
+	gap := tabGapStyle.Render(strings.Repeat(" ", max(0, width-lipgloss.Width(row)-2)))
+	row = lipgloss.JoinHorizontal(lipgloss.Bottom, row, gap)
+	// row += "\n\n"
+
+	return row
 }
 
 // RunPopulateUserTableTUIModel runs the interactive tui version of the command

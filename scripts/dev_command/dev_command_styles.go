@@ -53,15 +53,15 @@ var (
 		BottomRight: "┘",
 	}
 
-	tab = lipgloss.NewStyle().
-		Border(tabBorder, true).
-		BorderForeground(oddballBlueCyan).
-		Padding(0, 1)
-	activeTab       = tab.Copy().Border(activeTabBorder, true)
-	fullBorderStyle = tab.Copy().Border(fullBorder, true)
+	tabStyle = lipgloss.NewStyle().
+			Border(tabBorder, true).
+			BorderForeground(oddballBlueCyan).
+			Padding(0, 1)
+	activeTabStyle  = tabStyle.Copy().Border(activeTabBorder, true)
+	fullBorderStyle = tabStyle.Copy().Border(fullBorder, true)
 
-	tabGap = tab.Copy().
-		BorderTop(false).
-		BorderLeft(false).
-		BorderRight(false)
+	tabGapStyle = tabStyle.Copy().
+			BorderTop(false).
+			BorderLeft(false).
+			BorderRight(false)
 )
