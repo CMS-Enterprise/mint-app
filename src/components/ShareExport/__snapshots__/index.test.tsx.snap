@@ -1491,6 +1491,43 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       <div
                         class="display-flex flex-align-center"
                       >
+                        States and territories
+                      </div>
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        California, Indiana
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      <div
+                        class="display-flex flex-align-center"
+                      >
+                        Region
+                      </div>
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      />
+                      <li>
+                        Core-based statistical areas (CBSAs)
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      <div
+                        class="display-flex flex-align-center"
+                      >
                         Other
                       </div>
                     </li>
@@ -8075,6 +8112,43 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                   <ul
                     class="margin-y-0 padding-left-3"
                   >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      <div
+                        class="display-flex flex-align-center"
+                      >
+                        States and territories
+                      </div>
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        California, Indiana
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      <div
+                        class="display-flex flex-align-center"
+                      >
+                        Region
+                      </div>
+                    </li>
+                    <ul
+                      data-testid="other-entry"
+                    >
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      />
+                      <li>
+                        Core-based statistical areas (CBSAs)
+                      </li>
+                    </ul>
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
