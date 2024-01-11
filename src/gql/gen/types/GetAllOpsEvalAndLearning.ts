@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, MonitoringFileType, DataFullTimeOrIncrementalType, BenchmarkForPerformanceType, EvaluationApproachType, CcmInvolvmentType, DataForMonitoringType, DataToSendParticipantsType, DataStartsType, DataFrequencyType, ModelLearningSystemType, TaskStatus } from "./../../../types/graphql-global-types";
+import { AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, MonitoringFileType, DataFullTimeOrIncrementalType, BenchmarkForPerformanceType, EvaluationApproachType, CcmInvolvmentType, DataForMonitoringType, DataToSendParticipantsType, QualityPerformanceImpactType, DataStartsType, DataFrequencyType, ModelLearningSystemType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllOpsEvalAndLearning
@@ -87,7 +87,8 @@ export interface GetAllOpsEvalAndLearning_modelPlan_opsEvalAndLearning {
   useCcwForFileDistribiutionToParticipantsNote: string | null;
   developNewQualityMeasures: boolean | null;
   developNewQualityMeasuresNote: string | null;
-  qualityPerformanceImpactsPayment: boolean | null;
+  qualityPerformanceImpactsPayment: QualityPerformanceImpactType | null;
+  qualityPerformanceImpactsPaymentOther: string | null;
   qualityPerformanceImpactsPaymentNote: string | null;
   dataSharingStarts: DataStartsType | null;
   dataSharingStartsOther: string | null;

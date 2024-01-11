@@ -8,11 +8,14 @@ import {
   Button,
   Fieldset,
   Icon,
-  Label
+  Label,
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetCcwAndQualityQuery,
+  QualityPerformanceImpactType,
   useGetCcwAndQualityQuery,
   useUpdatePlanOpsEvalAndLearningMutation
 } from 'gql/gen/graphql';
@@ -86,6 +89,7 @@ const CCWAndQuality = () => {
     developNewQualityMeasures,
     developNewQualityMeasuresNote,
     qualityPerformanceImpactsPayment,
+    qualityPerformanceImpactsPaymentOther,
     qualityPerformanceImpactsPaymentNote
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetCCWAndQualityFormType;
 
@@ -150,6 +154,8 @@ const CCWAndQuality = () => {
     developNewQualityMeasures: developNewQualityMeasures ?? null,
     developNewQualityMeasuresNote: developNewQualityMeasuresNote ?? '',
     qualityPerformanceImpactsPayment: qualityPerformanceImpactsPayment ?? null,
+    qualityPerformanceImpactsPaymentOther:
+      qualityPerformanceImpactsPaymentOther ?? '',
     qualityPerformanceImpactsPaymentNote:
       qualityPerformanceImpactsPaymentNote ?? ''
   };
@@ -428,15 +434,52 @@ const CCWAndQuality = () => {
                           {flatErrors.qualityPerformanceImpactsPayment}
                         </FieldErrorMsg>
 
-                        <BooleanRadio
-                          field="qualityPerformanceImpactsPayment"
-                          id="ops-eval-and-learning-performance-impact"
-                          value={values.qualityPerformanceImpactsPayment}
-                          setFieldValue={setFieldValue}
-                          options={
+                        <Fieldset>
+                          {getKeys(
                             qualityPerformanceImpactsPaymentConfig.options
-                          }
-                        />
+                          ).map(key => (
+                            <Fragment key={key}>
+                              <Field
+                                as={Radio}
+                                id={`ops-eval-and-learning-performance-impact-${key}`}
+                                data-testid={`ops-eval-and-learning-performance-impact-${key}`}
+                                name="qualityPerformanceImpactsPayment"
+                                label={
+                                  qualityPerformanceImpactsPaymentConfig
+                                    .options[key]
+                                }
+                                value={key}
+                                checked={
+                                  values.qualityPerformanceImpactsPayment ===
+                                  key
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'qualityPerformanceImpactsPayment',
+                                    key
+                                  );
+                                }}
+                              />
+
+                              {key === QualityPerformanceImpactType.OTHER &&
+                                values.qualityPerformanceImpactsPayment ===
+                                  QualityPerformanceImpactType.OTHER && (
+                                  <div className="margin-left-4 margin-top-1">
+                                    <Field
+                                      as={TextInput}
+                                      id="ops-eval-and-learning-performance-impact-other"
+                                      data-testid="ops-eval-and-learning-performance-impact-other"
+                                      disabled={
+                                        values.qualityPerformanceImpactsPayment !==
+                                        QualityPerformanceImpactType.OTHER
+                                      }
+                                      name="qualityPerformanceImpactsPaymentOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          ))}
+                        </Fieldset>
 
                         <AddNote
                           id="ops-eval-and-learning-performance-impact-note"

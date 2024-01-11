@@ -45,6 +45,7 @@ import {
   PayType,
   ProviderAddType,
   ProviderLeaveType,
+  QualityPerformanceImpactType,
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
@@ -374,7 +375,8 @@ export type TranslationOpsEvalAndLearning = {
   useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
   developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
   developNewQualityMeasuresNote: TranslationFieldProperties;
-  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<QualityPerformanceImpactType>;
+  qualityPerformanceImpactsPaymentOther: TranslationFieldProperties;
   qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
   // Data Sharing
   dataSharingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;

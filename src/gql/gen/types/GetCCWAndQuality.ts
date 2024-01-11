@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, DataForMonitoringType } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, DataForMonitoringType, QualityPerformanceImpactType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetCCWAndQuality
@@ -24,7 +24,8 @@ export interface GetCCWAndQuality_modelPlan_opsEvalAndLearning {
   useCcwForFileDistribiutionToParticipantsNote: string | null;
   developNewQualityMeasures: boolean | null;
   developNewQualityMeasuresNote: string | null;
-  qualityPerformanceImpactsPayment: boolean | null;
+  qualityPerformanceImpactsPayment: QualityPerformanceImpactType | null;
+  qualityPerformanceImpactsPaymentOther: string | null;
   qualityPerformanceImpactsPaymentNote: string | null;
 }
 

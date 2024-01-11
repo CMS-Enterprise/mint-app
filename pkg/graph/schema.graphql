@@ -1180,7 +1180,8 @@ type PlanOpsEvalAndLearning {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: QualityPerformanceImpactType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
@@ -1308,7 +1309,8 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: QualityPerformanceImpactType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
@@ -2185,6 +2187,12 @@ enum DataToSendParticipantsType {
     PROVIDER_LEVEL_DATA
     OTHER_MIPS_DATA
     NOT_PLANNING_TO_SEND_DATA
+}
+
+enum QualityPerformanceImpactType {
+    YES
+    NO
+    OTHER
 }
 
 enum DataFrequencyType {

@@ -547,6 +547,12 @@ export enum ProviderLeaveType {
   VOLUNTARILY_WITHOUT_IMPLICATIONS = "VOLUNTARILY_WITHOUT_IMPLICATIONS",
 }
 
+export enum QualityPerformanceImpactType {
+  NO = "NO",
+  OTHER = "OTHER",
+  YES = "YES",
+}
+
 export enum RecruitmentType {
   APPLICATION_COLLECTION_TOOL = "APPLICATION_COLLECTION_TOOL",
   LOI = "LOI",
@@ -953,7 +959,8 @@ export interface PlanOpsEvalAndLearningChanges {
   useCcwForFileDistribiutionToParticipantsNote?: string | null;
   developNewQualityMeasures?: boolean | null;
   developNewQualityMeasuresNote?: string | null;
-  qualityPerformanceImpactsPayment?: boolean | null;
+  qualityPerformanceImpactsPayment?: QualityPerformanceImpactType | null;
+  qualityPerformanceImpactsPaymentOther?: string | null;
   qualityPerformanceImpactsPaymentNote?: string | null;
   dataSharingStarts?: DataStartsType | null;
   dataSharingStartsOther?: string | null;
