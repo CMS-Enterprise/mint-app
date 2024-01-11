@@ -42,27 +42,34 @@ type commandTab struct {
 	Header string
 }
 
+var commonCommandTab = commandTab{
+	Header: "Common Commands",
+}
+var myCommandsTab = commandTab{
+	Header: "My Commands",
+}
+
+var tuiTabs = []*commandTab{
+	&commonCommandTab,
+	&myCommandsTab,
+}
+
 type populateUserTableTuiModel struct {
-	options   []commandOption
-	cursor    int                   // which command option our cursor is pointing at
-	selected  map[int]commandOption // which command options are selected
-	tabs      []commandTab
-	activeTab int
-	err       error
-	lastCmnd  string
+	options        []commandOption
+	cursor         int                   // which command option our cursor is pointing at
+	selected       map[int]commandOption // which command options are selected
+	tabs           []*commandTab
+	activeTabIndex int
+	activeTab      *commandTab
+	err            error
+	lastCmnd       string
 }
 
 func newPopulateUserTableModel() populateUserTableTuiModel {
 
-	return populateUserTableTuiModel{
-		tabs: []commandTab{
-			{
-				Header: "Common Commands",
-			},
-			{
-				Header: "My Commands",
-			},
-		},
+	model := populateUserTableTuiModel{
+		activeTabIndex: 0,
+		tabs:           tuiTabs,
 		options: []commandOption{
 			genericCommandOption{
 				CommandName: "Start Docker",
@@ -94,6 +101,8 @@ func newPopulateUserTableModel() populateUserTableTuiModel {
 		// of the `choices` slice, above.
 		selected: make(map[int]commandOption),
 	}
+	model.SetActiveTab(0)
+	return model
 }
 
 func (tm populateUserTableTuiModel) Init() tea.Cmd {
@@ -141,14 +150,17 @@ func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 		// The "left" and "u" keys move the activeTab left
 		case "left", "u":
-			if tm.activeTab > 0 {
-				tm.activeTab--
+			if tm.activeTabIndex > 0 {
+				tm.activeTabIndex--
+				tm.SetActiveTab(tm.activeTabIndex)
+
 			}
 
 		// The "right" and "i" keys move the activeTab right
 		case "right", "i":
-			if tm.activeTab < len(tm.options)-1 {
-				tm.activeTab++
+			if tm.activeTabIndex < len(tm.tabs)-1 {
+				tm.activeTabIndex++
+				tm.SetActiveTab(tm.activeTabIndex)
 			}
 
 		// The spacebar (a literal space) toggle
@@ -189,10 +201,14 @@ func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return tm, nil
 
 }
+func (tm *populateUserTableTuiModel) SetActiveTab(index int) {
+	tm.activeTab = tm.tabs[index]
+}
+
 func (tm populateUserTableTuiModel) RenderTabs(width int) string {
 	tabString := []string{}
 	for index, tab := range tm.tabs {
-		isActive := index == tm.activeTab
+		isActive := index == tm.activeTabIndex
 		style := tabStyle
 
 		if isActive {
@@ -211,8 +227,13 @@ func (tm populateUserTableTuiModel) RenderTabs(width int) string {
 
 	return row
 }
+
 func (tm populateUserTableTuiModel) RenderNestedView() string {
-	return tm.RenderCommandCommandsView()
+
+	if tm.activeTab == &commonCommandTab {
+		return tm.RenderCommandCommandsView()
+	}
+	return ""
 
 }
 
