@@ -33,7 +33,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
@@ -400,9 +399,12 @@ const TargetsAndOptions = () => {
                         <FieldGroup
                           scrollElement="geographiesTargetedAppliedTo"
                           error={!!flatErrors.geographiesTargetedAppliedTo}
-                          className="margin-top-4 text-normal"
+                          className="margin-top-4"
                         >
-                          <Label htmlFor="geographiesTargetedAppliedTo">
+                          <Label
+                            htmlFor="geographiesTargetedAppliedTo"
+                            className="text-normal"
+                          >
                             {generalCharacteristicsT(
                               'geographiesTargetedAppliedTo.label'
                             )}
@@ -456,10 +458,8 @@ const TargetsAndOptions = () => {
                                         }
                                       </FieldErrorMsg>
                                       <Field
-                                        as={TextAreaField}
+                                        as={TextInput}
                                         id="plan-characteristics-geographies-applied-to-other"
-                                        maxLength={5000}
-                                        className="mint-textarea"
                                         name="geographiesTargetedAppliedToOther"
                                       />
                                     </FieldGroup>
@@ -559,10 +559,8 @@ const TargetsAndOptions = () => {
                               </FieldErrorMsg>
 
                               <Field
-                                as={TextAreaField}
-                                className="mint-textarea"
+                                as={TextInput}
                                 id="plan-characteristics-agreement-type-other"
-                                maxLength={5000}
                                 name="agreementTypesOther"
                               />
                             </FieldGroup>
