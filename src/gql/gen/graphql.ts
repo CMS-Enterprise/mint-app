@@ -1356,7 +1356,7 @@ export type PlanCr = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  dateImplemented: Scalars['Time']['output'];
+  dateImplemented?: Maybe<Scalars['Time']['output']>;
   dateInitiated: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
   idNumber: Scalars['String']['output'];

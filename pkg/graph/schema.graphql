@@ -1390,7 +1390,7 @@ type PlanCR {
 
     idNumber: String!
     dateInitiated: Time!
-    dateImplemented: Time!
+    dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
     title: String!
     note: String
 

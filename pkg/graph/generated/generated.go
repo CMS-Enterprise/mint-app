@@ -8556,7 +8556,7 @@ type PlanCR {
 
     idNumber: String!
     dateInitiated: Time!
-    dateImplemented: Time!
+    dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
     title: String!
     note: String
 
@@ -27945,14 +27945,11 @@ func (ec *executionContext) _PlanCR_dateImplemented(ctx context.Context, field g
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*time.Time)
 	fc.Result = res
-	return ec.marshalNTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanCR_dateImplemented(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -58072,9 +58069,6 @@ func (ec *executionContext) _PlanCR(ctx context.Context, sel ast.SelectionSet, o
 			}
 		case "dateImplemented":
 			out.Values[i] = ec._PlanCR_dateImplemented(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
 		case "title":
 			out.Values[i] = ec._PlanCR_title(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
