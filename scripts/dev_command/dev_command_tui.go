@@ -106,37 +106,7 @@ func (tm populateUserTableTuiModel) View() string {
 	doc.WriteString(tm.RenderTabs(width))
 	doc.WriteString("\n\n")
 
-	doc.WriteString("Which commands would you like to execute?\n\n")
-
-	// tab.Render(s)
-	if tm.lastCmnd != "" {
-		doc.WriteString(fmt.Sprintf("%s\n\n", tm.lastCmnd))
-	}
-	body := strings.Builder{}
-	// Iterate over our options
-	for i, option := range tm.options {
-
-		optionText := option.String()
-
-		// Is the cursor pointing at this choice?
-		cursor := " " // no cursor
-		if tm.cursor == i {
-			cursor = ">" // cursor!
-			cursor = selectedStyle.Render(cursor)
-		}
-
-		// Is this choice selected?
-		checked := " " // not selected
-		if _, ok := tm.selected[i]; ok {
-			checked = "✔" // selected!
-			checked = selectedStyle.Render(checked)
-			optionText = selectedStyle.Render(optionText)
-		}
-
-		// Render the row
-		body.WriteString(fmt.Sprintf("%s [%s] %s\n", cursor, checked, optionText))
-	}
-	doc.WriteString(fullBorderStyle.Render(body.String()))
+	doc.WriteString(tm.RenderNestedView())
 
 	// The footer
 	doc.WriteString("\nPress q to quit.\n")
@@ -240,6 +210,46 @@ func (tm populateUserTableTuiModel) RenderTabs(width int) string {
 	// row += "\n\n"
 
 	return row
+}
+func (tm populateUserTableTuiModel) RenderNestedView() string {
+	return tm.RenderCommandCommandsView()
+
+}
+
+func (tm populateUserTableTuiModel) RenderCommandCommandsView() string {
+	doc := strings.Builder{}
+	doc.WriteString("Which commands would you like to execute?\n\n")
+
+	// tab.Render(s)
+	if tm.lastCmnd != "" {
+		doc.WriteString(fmt.Sprintf("%s\n\n", tm.lastCmnd))
+	}
+	body := strings.Builder{}
+	// Iterate over our options
+	for i, option := range tm.options {
+
+		optionText := option.String()
+
+		// Is the cursor pointing at this choice?
+		cursor := " " // no cursor
+		if tm.cursor == i {
+			cursor = ">" // cursor!
+			cursor = selectedStyle.Render(cursor)
+		}
+
+		// Is this choice selected?
+		checked := " " // not selected
+		if _, ok := tm.selected[i]; ok {
+			checked = "✔" // selected!
+			checked = selectedStyle.Render(checked)
+			optionText = selectedStyle.Render(optionText)
+		}
+
+		// Render the row
+		body.WriteString(fmt.Sprintf("%s [%s] %s\n", cursor, checked, optionText))
+	}
+	doc.WriteString(fullBorderStyle.Render(body.String()))
+	return doc.String()
 }
 
 // RunPopulateUserTableTUIModel runs the interactive tui version of the command
