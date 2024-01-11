@@ -5,6 +5,7 @@ INSERT INTO plan_cr_tdl(
     date_initiated,
     title,
     note,
+    type,
     created_by,
     modified_by
 )
@@ -15,6 +16,7 @@ VALUES (
     :date_initiated,
     :title,
     :note,
+    'TDL',
     :created_by,
     :modified_by
 )

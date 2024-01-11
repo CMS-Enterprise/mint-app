@@ -524,10 +524,10 @@ export type ModelPlan = {
   basics: PlanBasics;
   beneficiaries: PlanBeneficiaries;
   collaborators: Array<PlanCollaborator>;
-  crTdls: Array<PlanCrTdl>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  crs: Array<PlanCr>;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
   existingModelLinks: Array<ExistingModelLink>;
@@ -546,6 +546,7 @@ export type ModelPlan = {
   payments: PlanPayments;
   prepareForClearance: PrepareForClearance;
   status: ModelStatus;
+  tdls: Array<PlanTdl>;
 };
 
 
@@ -626,15 +627,17 @@ export type Mutation = {
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
+  createPlanCR: PlanCr;
   createPlanCollaborator: PlanCollaborator;
-  createPlanCrTdl: PlanCrTdl;
   createPlanDiscussion: PlanDiscussion;
   createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
+  createPlanTDL: PlanTdl;
   deleteOperationalSolutionSubtask: Scalars['Int']['output'];
+  deletePlanCR: PlanCr;
   deletePlanCollaborator: PlanCollaborator;
-  deletePlanCrTdl: PlanCrTdl;
   deletePlanDocument: Scalars['Int']['output'];
   deletePlanFavorite: PlanFavorite;
+  deletePlanTDL: PlanTdl;
   linkNewPlanDocument: PlanDocument;
   lockTaskListSection: Scalars['Boolean']['output'];
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
@@ -651,12 +654,13 @@ export type Mutation = {
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
   updatePlanBasics: PlanBasics;
   updatePlanBeneficiaries: PlanBeneficiaries;
+  updatePlanCR: PlanCr;
   updatePlanCollaborator: PlanCollaborator;
-  updatePlanCrTdl: PlanCrTdl;
   updatePlanGeneralCharacteristics: PlanGeneralCharacteristics;
   updatePlanOpsEvalAndLearning: PlanOpsEvalAndLearning;
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
   updatePlanPayments: PlanPayments;
+  updatePlanTDL: PlanTdl;
   uploadNewPlanDocument: PlanDocument;
 };
 
@@ -709,14 +713,14 @@ export type MutationCreateOperationalSolutionSubtasksArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationCreatePlanCollaboratorArgs = {
-  input: PlanCollaboratorCreateInput;
+export type MutationCreatePlanCrArgs = {
+  input: PlanCrCreateInput;
 };
 
 
 /** Mutations definition for the schema */
-export type MutationCreatePlanCrTdlArgs = {
-  input: PlanCrTdlCreateInput;
+export type MutationCreatePlanCollaboratorArgs = {
+  input: PlanCollaboratorCreateInput;
 };
 
 
@@ -734,19 +738,25 @@ export type MutationCreatePlanDocumentSolutionLinksArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationCreatePlanTdlArgs = {
+  input: PlanTdlCreateInput;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationDeleteOperationalSolutionSubtaskArgs = {
   id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
-export type MutationDeletePlanCollaboratorArgs = {
+export type MutationDeletePlanCrArgs = {
   id: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
-export type MutationDeletePlanCrTdlArgs = {
+export type MutationDeletePlanCollaboratorArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -760,6 +770,12 @@ export type MutationDeletePlanDocumentArgs = {
 /** Mutations definition for the schema */
 export type MutationDeletePlanFavoriteArgs = {
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeletePlanTdlArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -868,16 +884,16 @@ export type MutationUpdatePlanBeneficiariesArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationUpdatePlanCollaboratorArgs = {
+export type MutationUpdatePlanCrArgs = {
+  changes: PlanCrChanges;
   id: Scalars['UUID']['input'];
-  newRoles: Array<TeamRole>;
 };
 
 
 /** Mutations definition for the schema */
-export type MutationUpdatePlanCrTdlArgs = {
-  changes: PlanCrTdlChanges;
+export type MutationUpdatePlanCollaboratorArgs = {
   id: Scalars['UUID']['input'];
+  newRoles: Array<TeamRole>;
 };
 
 
@@ -905,6 +921,13 @@ export type MutationUpdatePlanParticipantsAndProvidersArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdatePlanPaymentsArgs = {
   changes: PlanPaymentsChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdatePlanTdlArgs = {
+  changes: PlanTdlChanges;
   id: Scalars['UUID']['input'];
 };
 
@@ -1328,6 +1351,40 @@ export type PlanBeneficiariesChanges = {
   treatDualElligibleDifferentNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type PlanCr = {
+  __typename: 'PlanCR';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dateImplemented: Scalars['Time']['output'];
+  dateInitiated: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  idNumber: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+};
+
+export type PlanCrChanges = {
+  dateImplemented?: InputMaybe<Scalars['Time']['input']>;
+  dateInitiated?: InputMaybe<Scalars['Time']['input']>;
+  idNumber?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PlanCrCreateInput = {
+  dateImplemented: Scalars['Time']['input'];
+  dateInitiated: Scalars['Time']['input'];
+  idNumber: Scalars['String']['input'];
+  modelPlanID: Scalars['UUID']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
 /** PlanCollaborator represents a collaborator on a plan */
 export type PlanCollaborator = {
   __typename: 'PlanCollaborator';
@@ -1349,37 +1406,6 @@ export type PlanCollaboratorCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   teamRoles: Array<TeamRole>;
   userName: Scalars['String']['input'];
-};
-
-export type PlanCrTdl = {
-  __typename: 'PlanCrTdl';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  dateInitiated: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  idNumber: Scalars['String']['output'];
-  modelPlanID: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  note?: Maybe<Scalars['String']['output']>;
-  title: Scalars['String']['output'];
-};
-
-export type PlanCrTdlChanges = {
-  dateInitiated?: InputMaybe<Scalars['Time']['input']>;
-  idNumber?: InputMaybe<Scalars['String']['input']>;
-  note?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type PlanCrTdlCreateInput = {
-  dateInitiated: Scalars['Time']['input'];
-  idNumber: Scalars['String']['input'];
-  modelPlanID: Scalars['UUID']['input'];
-  note?: InputMaybe<Scalars['String']['input']>;
-  title: Scalars['String']['input'];
 };
 
 /** PlanDiscussion represents plan discussion */
@@ -2106,6 +2132,37 @@ export type PlanPaymentsChanges = {
   willRecoverPaymentsNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type PlanTdl = {
+  __typename: 'PlanTDL';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dateInitiated: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  idNumber: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+};
+
+export type PlanTdlChanges = {
+  dateInitiated?: InputMaybe<Scalars['Time']['input']>;
+  idNumber?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PlanTdlCreateInput = {
+  dateInitiated: Scalars['Time']['input'];
+  idNumber: Scalars['String']['input'];
+  modelPlanID: Scalars['UUID']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
 export type PossibleOperationalNeed = {
   __typename: 'PossibleOperationalNeed';
   createdBy: Scalars['UUID']['output'];
@@ -2190,7 +2247,6 @@ export enum ProviderLeaveType {
 export type Query = {
   __typename: 'Query';
   auditChanges: Array<AuditChange>;
-  crTdl: PlanCrTdl;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
@@ -2201,9 +2257,11 @@ export type Query = {
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
   operationalSolutions: Array<OperationalSolution>;
+  planCR: PlanCr;
   planCollaboratorByID: PlanCollaborator;
   planDocument: PlanDocument;
   planPayments: PlanPayments;
+  planTDL: PlanTdl;
   possibleOperationalNeeds: Array<PossibleOperationalNeed>;
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchChangeTableDateHistogramConsolidatedAggregations: Array<DateHistogramAggregationBucket>;
@@ -2218,12 +2276,6 @@ export type Query = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: Scalars['String']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryCrTdlArgs = {
-  id: Scalars['UUID']['input'];
 };
 
 
@@ -2265,6 +2317,12 @@ export type QueryOperationalSolutionsArgs = {
 
 
 /** Query definition for the schema */
+export type QueryPlanCrArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
 export type QueryPlanCollaboratorByIdArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -2278,6 +2336,12 @@ export type QueryPlanDocumentArgs = {
 
 /** Query definition for the schema */
 export type QueryPlanPaymentsArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryPlanTdlArgs = {
   id: Scalars['UUID']['input'];
 };
 

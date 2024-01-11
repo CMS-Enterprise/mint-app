@@ -114,10 +114,16 @@ func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.Mode
 	return resolvers.IsPlanCollaborator(logger, principal, r.store, obj.ID)
 }
 
-// CrTdls is the resolver for the crTdls field.
-func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
+// Crs is the resolver for the crs field.
+func (r *modelPlanResolver) Crs(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCR, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanCRsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
+// Tdls is the resolver for the tdls field.
+func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanTDL, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.
@@ -359,25 +365,46 @@ func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID u
 	return resolvers.PlanFavoriteDelete(logger, principal, r.store, modelPlanID)
 }
 
-// CreatePlanCrTdl is the resolver for the createPlanCrTdl field.
-func (r *mutationResolver) CreatePlanCrTdl(ctx context.Context, input model.PlanCrTdlCreateInput) (*models.PlanCrTdl, error) {
+// CreatePlanCr is the resolver for the createPlanCR field.
+func (r *mutationResolver) CreatePlanCr(ctx context.Context, input model.PlanCRCreateInput) (*models.PlanCR, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlCreate(logger, &input, principal, r.store)
+	return resolvers.PlanCRCreate(logger, &input, principal, r.store)
 }
 
-// UpdatePlanCrTdl is the resolver for the updatePlanCrTdl field.
-func (r *mutationResolver) UpdatePlanCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCrTdl, error) {
+// CreatePlanTdl is the resolver for the createPlanTDL field.
+func (r *mutationResolver) CreatePlanTdl(ctx context.Context, input model.PlanTDLCreateInput) (*models.PlanTDL, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlUpdate(logger, id, changes, principal, r.store)
+	return resolvers.PlanTDLCreate(logger, &input, principal, r.store)
 }
 
-// DeletePlanCrTdl is the resolver for the deletePlanCrTdl field.
-func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+// UpdatePlanCr is the resolver for the updatePlanCR field.
+func (r *mutationResolver) UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCR, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
+	return resolvers.PlanCRUpdate(logger, id, changes, principal, r.store)
+}
+
+// UpdatePlanTdl is the resolver for the updatePlanTDL field.
+func (r *mutationResolver) UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanTDL, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanTDLUpdate(logger, id, changes, principal, r.store)
+}
+
+// DeletePlanCr is the resolver for the deletePlanCR field.
+func (r *mutationResolver) DeletePlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCRDelete(logger, id, principal, r.store)
+}
+
+// DeletePlanTdl is the resolver for the deletePlanTDL field.
+func (r *mutationResolver) DeletePlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanTDLDelete(logger, id, principal, r.store)
 }
 
 // AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
@@ -923,10 +950,16 @@ func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	return resolvers.NDAAgreementGetByUserID(logger, principal, r.store)
 }
 
-// CrTdl is the resolver for the crTdl field.
-func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+// PlanCr is the resolver for the planCR field.
+func (r *queryResolver) PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanCrTdlGet(logger, id, r.store)
+	return resolvers.PlanCRGet(logger, id, r.store)
+}
+
+// PlanTdl is the resolver for the planTDL field.
+func (r *queryResolver) PlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanTDLGet(logger, id, r.store)
 }
 
 // OperationalSolutions is the resolver for the operationalSolutions field.

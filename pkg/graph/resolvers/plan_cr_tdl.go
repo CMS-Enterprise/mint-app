@@ -11,45 +11,101 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// PlanCrTdlCreate creates a new plan_cr_tdl record in the database
-func PlanCrTdlCreate(logger *zap.Logger, input *model.PlanCrTdlCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanCrTdl, error) {
+// PlanCRCreate creates a new plan_cr_tdl record in the database
+func PlanCRCreate(logger *zap.Logger, input *model.PlanCRCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanCR, error) {
 
-	planCrTdl := models.NewPlanCrTdl(principal.Account().ID, input.ModelPlanID)
-	planCrTdl.IDNumber = input.IDNumber
-	planCrTdl.DateInitiated = &input.DateInitiated
-	planCrTdl.Title = input.Title
-	planCrTdl.Note = input.Note
+	planCR := models.NewPlanCR(principal.Account().ID, input.ModelPlanID)
+	planCR.IDNumber = input.IDNumber
+	planCR.DateInitiated = &input.DateInitiated
+	planCR.DateImplemented = &input.DateImplemented
+	planCR.Title = input.Title
+	planCR.Note = input.Note
 
-	err := BaseStructPreCreate(logger, planCrTdl, principal, store, true)
+	err := BaseStructPreCreate(logger, planCR, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
-	return store.PlanCrTdlCreate(logger, planCrTdl)
+	return store.PlanCRCreate(logger, planCR)
 }
 
-// PlanCrTdlUpdate updates a plan_cr_tdl record in the database
-func PlanCrTdlUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanCrTdl, error) {
+// PlanCRUpdate updates a plan_cr_tdl record in the database
+func PlanCRUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanCR, error) {
 	// Get PlanCrTdl
-	existingPlanCrTdl, err := store.PlanCrTdlGetByID(logger, id)
+	existingPlanCR, err := store.PlanCRGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(logger, existingPlanCrTdl, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existingPlanCR, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
 
-	result, err := store.PlanCrTdlUpdate(logger, existingPlanCrTdl)
+	result, err := store.PlanCRUpdate(logger, existingPlanCR)
 	return result, err
-
 }
 
-// PlanCrTdlDelete deletes a plan cr_tdl record in the database
-func PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCrTdl, error) {
+// PlanCRDelete deletes a plan cr_tdl record in the database
+func PlanCRDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCR, error) {
 
-	existingPlanCrTdl, err := store.PlanCrTdlGetByID(logger, id)
+	existingPlanCR, err := store.PlanCRGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+
+	err = BaseStructPreDelete(logger, existingPlanCR, principal, store, true)
+	if err != nil {
+		return nil, err
+	}
+
+	return store.PlanCRDelete(logger, id, principal.Account().ID)
+}
+
+// PlanCRGet returns a plan_cr_tdl record in the database
+func PlanCRGet(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCR, error) {
+	result, err := store.PlanCRGetByID(logger, id)
+	return result, err
+}
+
+// PlanTDLCreate creates a new plan_cr_tdl record in the database
+func PlanTDLCreate(logger *zap.Logger, input *model.PlanTDLCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanTDL, error) {
+
+	planTDL := models.NewPlanTDL(principal.Account().ID, input.ModelPlanID)
+	planTDL.IDNumber = input.IDNumber
+	planTDL.DateInitiated = &input.DateInitiated
+	planTDL.Title = input.Title
+	planTDL.Note = input.Note
+
+	err := BaseStructPreCreate(logger, planTDL, principal, store, true)
+	if err != nil {
+		return nil, err
+	}
+
+	return store.PlanTDLCreate(logger, planTDL)
+}
+
+// PlanTDLUpdate updates a plan_cr_tdl record in the database
+func PlanTDLUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanTDL, error) {
+	// Get PlanCrTdl
+	existingPlanTDL, err := store.PlanTDLGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+
+	err = BaseStructPreUpdate(logger, existingPlanTDL, changes, principal, store, true, true)
+	if err != nil {
+		return nil, err
+	}
+
+	result, err := store.PlanTDLUpdate(logger, existingPlanTDL)
+	return result, err
+}
+
+// PlanTDLDelete deletes a plan cr_tdl record in the database
+func PlanTDLDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanTDL, error) {
+
+	existingPlanCrTdl, err := store.PlanTDLGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -59,18 +115,23 @@ func PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID, principal authentication.
 		return nil, err
 	}
 
-	return store.PlanCrTdlDelete(logger, id, principal.Account().ID)
-
+	return store.PlanTDLDelete(logger, id, principal.Account().ID)
 }
 
-// PlanCrTdlGet returns a plan_cr_tdl record in the database
-func PlanCrTdlGet(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCrTdl, error) {
-	result, err := store.PlanCrTdlGetByID(logger, id)
+// PlanTDLGet returns a plan_cr_tdl record in the database
+func PlanTDLGet(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanTDL, error) {
+	result, err := store.PlanTDLGetByID(logger, id)
 	return result, err
 }
 
-// PlanCrTdlsGetByModelPlanID returns plan_cr_tdl records related to a model plan
-func PlanCrTdlsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanCrTdl, error) {
-	result, err := store.PlanCrTdlsGetByModelPlanID(logger, modelPlanID)
+// PlanCRsGetByModelPlanID returns plan_cr_tdl records related to a model plan
+func PlanCRsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]models.PlanCrTdl, error) {
+	result, err := store.PlanCRsGetByModelPlanID(logger, modelPlanID)
+	return result, err
+}
+
+// PlanTDLsGetByModelPlanID returns plan_cr_tdl records related to a model plan
+func PlanTDLsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]models.PlanCrTdl, error) {
+	result, err := store.PlanTDLsGetByModelPlanID(logger, modelPlanID)
 	return result, err
 }
