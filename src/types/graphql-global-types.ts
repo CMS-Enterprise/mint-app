@@ -647,6 +647,12 @@ export enum WaiverType {
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
 }
 
+export enum YesNoOtherType {
+  NO = "NO",
+  OTHER = "OTHER",
+  YES = "YES",
+}
+
 export enum YesNoType {
   NO = "NO",
   YES = "YES",
@@ -953,7 +959,8 @@ export interface PlanOpsEvalAndLearningChanges {
   useCcwForFileDistribiutionToParticipantsNote?: string | null;
   developNewQualityMeasures?: boolean | null;
   developNewQualityMeasuresNote?: string | null;
-  qualityPerformanceImpactsPayment?: boolean | null;
+  qualityPerformanceImpactsPayment?: YesNoOtherType | null;
+  qualityPerformanceImpactsPaymentOther?: string | null;
   qualityPerformanceImpactsPaymentNote?: string | null;
   dataSharingStarts?: DataStartsType | null;
   dataSharingStartsOther?: string | null;
