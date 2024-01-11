@@ -1,4 +1,4 @@
-CREATE TYPE QUALITY_PERFORMANCE_IMPACT_TYPE AS ENUM (
+CREATE TYPE YES_NO_OTHER_TYPE AS ENUM (
   'YES',
   'NO',
   'OTHER'
@@ -8,11 +8,11 @@ CREATE TYPE QUALITY_PERFORMANCE_IMPACT_TYPE AS ENUM (
 ALTER TABLE plan_ops_eval_and_learning
   ADD COLUMN quality_performance_impacts_payment_other zero_string;
 
--- Alter the quality_performance_impacts_payment column to use new QUALITY_PERFORMANCE_IMPACT_TYPE enum instead of BOOL
+-- Alter the quality_performance_impacts_payment column to use new YES_NO_OTHER_TYPE enum instead of BOOL
 ALTER TABLE plan_ops_eval_and_learning
-  ALTER COLUMN quality_performance_impacts_payment TYPE QUALITY_PERFORMANCE_IMPACT_TYPE USING (
+  ALTER COLUMN quality_performance_impacts_payment TYPE YES_NO_OTHER_TYPE USING (
         CASE quality_performance_impacts_payment
-        WHEN TRUE  THEN 'YES'::QUALITY_PERFORMANCE_IMPACT_TYPE
-        WHEN FALSE THEN 'NO'::QUALITY_PERFORMANCE_IMPACT_TYPE
+        WHEN TRUE  THEN 'YES'::YES_NO_OTHER_TYPE
+        WHEN FALSE THEN 'NO'::YES_NO_OTHER_TYPE
         END
     );

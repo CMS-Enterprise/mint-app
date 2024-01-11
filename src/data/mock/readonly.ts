@@ -53,7 +53,6 @@ import {
   PayType,
   ProviderAddType,
   ProviderLeaveType,
-  QualityPerformanceImpactType,
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
@@ -61,6 +60,7 @@ import {
   TeamRole,
   TriStateAnswer,
   WaiverType,
+  YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
 
@@ -453,7 +453,7 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   useCcwForFileDistribiutionToParticipantsNote: 'Note for ccw disctro',
   developNewQualityMeasures: true,
   developNewQualityMeasuresNote: 'Note for develop measures',
-  qualityPerformanceImpactsPayment: QualityPerformanceImpactType.OTHER,
+  qualityPerformanceImpactsPayment: YesNoOtherType.OTHER,
   qualityPerformanceImpactsPaymentOther: 'Other text',
   dataSharingStarts: DataStartsType.DURING_APPLICATION_PERIOD,
   dataSharingStartsOther: 'Data sharing starts other',

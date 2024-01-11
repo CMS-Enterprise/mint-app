@@ -7,7 +7,7 @@ import {
   DataForMonitoringType,
   GetCcwAndQualityDocument,
   GetCcwAndQualityQuery,
-  QualityPerformanceImpactType
+  YesNoOtherType
 } from 'gql/gen/graphql';
 
 import CCWAndQuality from '.';
@@ -31,7 +31,7 @@ const ccwAndQualityMockData: GetCCWAndQualityType = {
   useCcwForFileDistribiutionToParticipantsNote: '',
   developNewQualityMeasures: null,
   developNewQualityMeasuresNote: '',
-  qualityPerformanceImpactsPayment: QualityPerformanceImpactType.YES,
+  qualityPerformanceImpactsPayment: YesNoOtherType.YES,
   qualityPerformanceImpactsPaymentOther: 't',
   qualityPerformanceImpactsPaymentNote: ''
 };

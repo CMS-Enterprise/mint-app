@@ -1180,7 +1180,7 @@ type PlanOpsEvalAndLearning {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: QualityPerformanceImpactType
+    qualityPerformanceImpactsPayment: YesNoOtherType
     qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
@@ -1309,7 +1309,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: QualityPerformanceImpactType
+    qualityPerformanceImpactsPayment: YesNoOtherType
     qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
@@ -2189,7 +2189,7 @@ enum DataToSendParticipantsType {
     NOT_PLANNING_TO_SEND_DATA
 }
 
-enum QualityPerformanceImpactType {
+enum YesNoOtherType {
     YES
     NO
     OTHER

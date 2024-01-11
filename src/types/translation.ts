@@ -45,7 +45,6 @@ import {
   PayType,
   ProviderAddType,
   ProviderLeaveType,
-  QualityPerformanceImpactType,
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
@@ -53,6 +52,7 @@ import {
   TeamRole,
   TriStateAnswer,
   WaiverType,
+  YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
 
@@ -375,7 +375,7 @@ export type TranslationOpsEvalAndLearning = {
   useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
   developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
   developNewQualityMeasuresNote: TranslationFieldProperties;
-  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<QualityPerformanceImpactType>;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
   qualityPerformanceImpactsPaymentOther: TranslationFieldProperties;
   qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
   // Data Sharing

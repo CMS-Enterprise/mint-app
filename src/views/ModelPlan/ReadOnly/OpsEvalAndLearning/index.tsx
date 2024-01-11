@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   DataStartsType,
-  QualityPerformanceImpactType,
-  useGetAllOpsEvalAndLearningQuery
+  useGetAllOpsEvalAndLearningQuery,
+  YesNoOtherType
 } from 'gql/gen/graphql';
 
 import { formatDateUtc } from 'utils/date';
@@ -900,8 +900,7 @@ const ReadOnlyOpsEvalAndLearning = ({
               )}
               copy={
                 qualityPerformanceImpactsPayment &&
-                (qualityPerformanceImpactsPayment ===
-                QualityPerformanceImpactType.OTHER
+                (qualityPerformanceImpactsPayment === YesNoOtherType.OTHER
                   ? `${opsEvalAndLearningT(
                       `qualityPerformanceImpactsPayment.options.${qualityPerformanceImpactsPayment}`
                     )} \u2014  ${qualityPerformanceImpactsPaymentOther}`

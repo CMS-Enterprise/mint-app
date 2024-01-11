@@ -15,9 +15,9 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetCcwAndQualityQuery,
-  QualityPerformanceImpactType,
   useGetCcwAndQualityQuery,
-  useUpdatePlanOpsEvalAndLearningMutation
+  useUpdatePlanOpsEvalAndLearningMutation,
+  YesNoOtherType
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
@@ -461,9 +461,9 @@ const CCWAndQuality = () => {
                                 }}
                               />
 
-                              {key === QualityPerformanceImpactType.OTHER &&
+                              {key === YesNoOtherType.OTHER &&
                                 values.qualityPerformanceImpactsPayment ===
-                                  QualityPerformanceImpactType.OTHER && (
+                                  YesNoOtherType.OTHER && (
                                   <div className="margin-left-4 margin-top-1">
                                     <Field
                                       as={TextInput}
@@ -471,7 +471,7 @@ const CCWAndQuality = () => {
                                       data-testid="ops-eval-and-learning-performance-impact-other"
                                       disabled={
                                         values.qualityPerformanceImpactsPayment !==
-                                        QualityPerformanceImpactType.OTHER
+                                        YesNoOtherType.OTHER
                                       }
                                       name="qualityPerformanceImpactsPaymentOther"
                                     />

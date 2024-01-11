@@ -8173,7 +8173,7 @@ type PlanOpsEvalAndLearning {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: QualityPerformanceImpactType
+    qualityPerformanceImpactsPayment: YesNoOtherType
     qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
@@ -8302,7 +8302,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: QualityPerformanceImpactType
+    qualityPerformanceImpactsPayment: YesNoOtherType
     qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
@@ -9182,7 +9182,7 @@ enum DataToSendParticipantsType {
     NOT_PLANNING_TO_SEND_DATA
 }
 
-enum QualityPerformanceImpactType {
+enum YesNoOtherType {
     YES
     NO
     OTHER
@@ -36978,9 +36978,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_qualityPerformanceImpactsPay
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.QualityPerformanceImpactType)
+	res := resTmp.(*models.YesNoOtherType)
 	fc.Result = res
-	return ec.marshalOQualityPerformanceImpactType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐQualityPerformanceImpactType(ctx, field.Selections, res)
+	return ec.marshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -36990,7 +36990,7 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerforman
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type QualityPerformanceImpactType does not have child fields")
+			return nil, errors.New("field of type YesNoOtherType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -70215,23 +70215,6 @@ func (ec *executionContext) marshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
-func (ec *executionContext) unmarshalOQualityPerformanceImpactType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐQualityPerformanceImpactType(ctx context.Context, v interface{}) (*models.QualityPerformanceImpactType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.QualityPerformanceImpactType(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOQualityPerformanceImpactType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐQualityPerformanceImpactType(ctx context.Context, sel ast.SelectionSet, v *models.QualityPerformanceImpactType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	res := graphql.MarshalString(string(*v))
-	return res
-}
-
 func (ec *executionContext) unmarshalORecruitmentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐRecruitmentType(ctx context.Context, v interface{}) (*models.RecruitmentType, error) {
 	if v == nil {
 		return nil, nil
@@ -70742,6 +70725,23 @@ func (ec *executionContext) marshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx context.Context, v interface{}) (*models.YesNoOtherType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.YesNoOtherType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx context.Context, sel ast.SelectionSet, v *models.YesNoOtherType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) unmarshalOYesNoType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoTypeᚄ(ctx context.Context, v interface{}) ([]models.YesNoType, error) {
