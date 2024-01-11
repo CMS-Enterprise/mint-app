@@ -142,7 +142,7 @@ func (tm populateUserTableTuiModel) View() string {
 	doc.WriteString("\nPress q to quit.\n")
 
 	// Send the UI for rendering
-	return fullBorderStyle.Render(doc.String())
+	return fullBorderStyle.Render(doc.String()) + "\n"
 }
 
 func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
