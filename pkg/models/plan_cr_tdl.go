@@ -17,8 +17,6 @@ type PlanCR struct {
 	Note            *string    `json:"note" db:"note"`
 }
 
-func (PlanCR) IsPlanCrTdl() {}
-
 // NewPlanCR returns a New PlanCR
 func NewPlanCR(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanCR {
 	return &PlanCR{
@@ -37,16 +35,10 @@ type PlanTDL struct {
 	Note          *string    `json:"note" db:"note"`
 }
 
-func (PlanTDL) IsPlanCrTdl() {}
-
 // NewPlanTDL returns a New PlanTDL
 func NewPlanTDL(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanTDL {
 	return &PlanTDL{
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
-}
-
-type PlanCrTdl interface {
-	IsPlanCrTdl()
 }

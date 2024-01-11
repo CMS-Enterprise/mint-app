@@ -125,13 +125,13 @@ func PlanTDLGet(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models
 }
 
 // PlanCRsGetByModelPlanID returns plan_cr_tdl records related to a model plan
-func PlanCRsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]models.PlanCrTdl, error) {
+func PlanCRsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanCR, error) {
 	result, err := store.PlanCRsGetByModelPlanID(logger, modelPlanID)
 	return result, err
 }
 
 // PlanTDLsGetByModelPlanID returns plan_cr_tdl records related to a model plan
-func PlanTDLsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]models.PlanCrTdl, error) {
+func PlanTDLsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanTDL, error) {
 	result, err := store.PlanTDLsGetByModelPlanID(logger, modelPlanID)
 	return result, err
 }

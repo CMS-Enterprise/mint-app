@@ -35,8 +35,8 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// Add Documents
 	suite.createPlanDocument(plan)
 
-	// Add CrTdls
-	suite.createPlanCrTdl(plan, "123-456", time.Now().UTC(), "Title", "Note")
+	// Add a CR
+	suite.createPlanCR(plan, "123-456", time.Now().UTC(), time.Now().Add(time.Hour*48).UTC(), "Title", "Note")
 
 	// Add collaborator. Only model leads should be added
 	modelLead := suite.createPlanCollaborator(
