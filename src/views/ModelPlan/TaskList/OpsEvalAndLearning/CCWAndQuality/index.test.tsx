@@ -31,8 +31,8 @@ const ccwAndQualityMockData: GetCCWAndQualityType = {
   useCcwForFileDistribiutionToParticipantsNote: '',
   developNewQualityMeasures: null,
   developNewQualityMeasuresNote: '',
-  qualityPerformanceImpactsPayment: QualityPerformanceImpactType.OTHER,
-  qualityPerformanceImpactsPaymentOther: 'Other text',
+  qualityPerformanceImpactsPayment: QualityPerformanceImpactType.YES,
+  qualityPerformanceImpactsPaymentOther: 't',
   qualityPerformanceImpactsPaymentNote: ''
 };
 
@@ -85,7 +85,7 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-performance-impact-true')
+        screen.getByTestId('ops-eval-and-learning-performance-impact-YES')
       ).toBeChecked();
     });
   });
@@ -107,7 +107,7 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-performance-impact-true')
+        screen.getByTestId('ops-eval-and-learning-performance-impact-YES')
       ).toBeChecked();
     });
     expect(asFragment()).toMatchSnapshot();
