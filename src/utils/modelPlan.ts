@@ -237,6 +237,6 @@ export const collaboratorsOrderedByModelLeads = (
 };
 
 // Used to conditionally insert items into an array literal
-export const insertIf = (condition: any, ...elements: any) => {
+export const insertIf = (condition: boolean, ...elements: any) => {
   return condition ? elements : [];
 };

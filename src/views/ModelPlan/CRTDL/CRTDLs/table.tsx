@@ -273,7 +273,7 @@ const Table = ({
         }
       },
       ...insertIf(type === 'cr', {
-        Header: t<string>('crtdlsTable.date'),
+        Header: t<string>('crtdlsTable.dateImplemented'),
         accessor: ({ dateImplemented }: any) => {
           if (dateImplemented) {
             return formatDateUtc(dateImplemented, 'MM/dd/yyyy');

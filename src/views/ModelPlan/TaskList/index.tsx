@@ -174,7 +174,10 @@ const TaskList = () => {
     collaborators
   } = modelPlan;
 
-  const crTdls = [...crs, ...tdls] as CRTDLType[];
+  const planCRs = crs || [];
+  const planTDLs = tdls || [];
+
+  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const getITSolutionsStatus = (
     operationalNeedsArray: OperationalNeedsType[]

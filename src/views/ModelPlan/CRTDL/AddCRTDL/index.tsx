@@ -1,7 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
   DatePicker,
@@ -14,6 +13,9 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  GetCrQuery,
+  GetTdlQuery,
+  PlanCrCreateInput,
   useCreateCrMutation,
   useCreateTdlMutation,
   useGetCrQuery,
@@ -37,15 +39,16 @@ import flattenErrors from 'utils/flattenErrors';
 import CRTDLValidationSchema from 'validations/crtdl';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
-interface CRTDLInputType extends CreateCRTDLFormType, UpdateCRTDLIDType {}
+type CRTDLFormType = Omit<
+  PlanCrCreateInput,
+  'modelPlanID' | '__typename' | 'id'
+>;
 
-const initialFormValues: CRTDLInputType = {
-  __typename: 'PlanCrTdl',
-  id: '',
-  modelPlanID: '',
+const initialFormValues: CRTDLFormType = {
   title: '',
   idNumber: '',
   dateInitiated: '',
+  dateImplemented: '',
   note: null
 };
 
@@ -65,7 +68,7 @@ const AddCRTDL = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
-  const formikRef = useRef<FormikProps<CRTDLInputType>>(null);
+  const formikRef = useRef<FormikProps<CRTDLFormType>>(null);
 
   const history = useHistory();
   const readOnly = location.hash === '#read-only';
@@ -88,51 +91,78 @@ const AddCRTDL = () => {
     skip: !crtdlID || crtdlType !== 'tdl'
   });
 
-  const crtdl = data?.crTdl || initialFormValues;
+  const cr = (crData?.planCR || {}) as GetCrQuery['planCR'];
+  const { __typename, modelPlanID, id, ...crFormData } = cr;
 
-  const [create] = useMutation<CreateCRTDLType, CreateCRTDLVariables>(
-    CreateCRTDL
-  );
+  const tdl = (tdlData?.planTDL || {}) as GetTdlQuery['planTDL'];
+  const {
+    __typename: tdlTypename,
+    modelPlanID: tdlModelPlanID,
+    id: tdlId,
+    ...tdlFormData
+  } = tdl;
 
-  const [update] = useMutation<UpdateCRTDLType, UpdateCRTDLVariables>(
-    UpdateCRTDL
-  );
+  const selectedTypeData = crtdlType === 'cr' ? crFormData : tdlFormData;
 
-  const handleUpdateDraftModelPlan = (formikValues: CRTDLInputType) => {
-    const { __typename, modelPlanID, id, ...changes } = formikValues;
+  const crtdl = (selectedTypeData || initialFormValues) as CRTDLFormType;
+
+  const [createCR] = useCreateCrMutation();
+  const [createTDL] = useCreateTdlMutation();
+
+  const [updateCR] = useUpdateCrMutation();
+  const [updateTDL] = useUpdateTdlMutation();
+
+  const handleCreateOrUpdateCRTDL = (formikValues: CRTDLFormType) => {
+    const { ...changes } = formikValues;
+
+    const responseHandler = (response: any) => {
+      if (!response?.errors) {
+        showMessageOnNextPage(
+          <Alert
+            type="success"
+            slim
+            data-testid="mandatory-fields-alert"
+            className="margin-y-4"
+          >
+            <span className="mandatory-fields-alert__text">
+              {t(crtdlID ? 'successUpdate' : 'successAdd', {
+                crtdl: changes.idNumber,
+                modelName
+              })}
+            </span>
+          </Alert>
+        );
+        history.push(`/models/${modelID}/cr-and-tdl`);
+      }
+    };
+
+    const catchHandler = (errors: any) => {
+      formikRef?.current?.setErrors(errors);
+    };
 
     if (crtdlID) {
-      update({
-        variables: {
-          id: crtdlID,
-          changes
-        }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('successUpdate', {
-                    crtdl: changes.idNumber,
-                    modelName
-                  })}
-                </span>
-              </Alert>
-            );
-            history.push(`/models/${modelID}/cr-and-tdl`);
+      if (crtdlType === 'cr') {
+        updateCR({
+          variables: {
+            id: crtdlID,
+            changes
           }
         })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-    } else {
-      create({
+          .then(responseHandler)
+          .catch(catchHandler);
+      } else {
+        const { dateImplemented, ...tdlInput } = changes;
+        updateTDL({
+          variables: {
+            id: crtdlID,
+            changes: tdlInput
+          }
+        })
+          .then(responseHandler)
+          .catch(catchHandler);
+      }
+    } else if (crtdlType === 'cr') {
+      createCR({
         variables: {
           input: {
             modelPlanID: modelID,
@@ -140,29 +170,20 @@ const AddCRTDL = () => {
           }
         }
       })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('successAdd', {
-                    crtdl: changes.idNumber,
-                    modelName
-                  })}
-                </span>
-              </Alert>
-            );
-            history.push(`/models/${modelID}/cr-and-tdl`);
+        .then(responseHandler)
+        .catch(catchHandler);
+    } else {
+      const { dateImplemented, ...tdlInput } = changes;
+      createTDL({
+        variables: {
+          input: {
+            modelPlanID: modelID,
+            ...tdlInput
           }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
+        }
+      })
+        .then(responseHandler)
+        .catch(catchHandler);
     }
   };
 
@@ -183,7 +204,7 @@ const AddCRTDL = () => {
             {t('required2')}
           </p>
 
-          {error && (
+          {(crError || tdlError) && (
             <ErrorAlert
               testId="formik-validation-errors"
               classNames="margin-top-3"
@@ -196,14 +217,14 @@ const AddCRTDL = () => {
           <Formik
             initialValues={crtdl}
             enableReinitialize
-            onSubmit={handleUpdateDraftModelPlan}
+            onSubmit={handleCreateOrUpdateCRTDL}
             validationSchema={CRTDLValidationSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
             innerRef={formikRef}
           >
-            {(formikProps: FormikProps<CRTDLInputType>) => {
+            {(formikProps: FormikProps<CRTDLFormType>) => {
               const {
                 errors,
                 values,
@@ -225,7 +246,7 @@ const AddCRTDL = () => {
                 }
                 try {
                   setFieldValue(field, new Date(e.target.value).toISOString());
-                  delete errors[field as keyof CreateCRTDLFormType];
+                  delete errors[field as keyof CRTDLFormType];
                 } catch (err) {
                   setFieldError(field, t('validDate'));
                 }
@@ -256,7 +277,11 @@ const AddCRTDL = () => {
                       window.scrollTo(0, 0);
                     }}
                   >
-                    <Fieldset disabled={!!error || loading}>
+                    <Fieldset
+                      disabled={
+                        !!crError || crLoading || !!tdlError || tdlLoading
+                      }
+                    >
                       <Grid row>
                         <Grid desktop={{ col: 6 }}>
                           <FieldGroup
@@ -279,7 +304,7 @@ const AddCRTDL = () => {
                               name="idNumber"
                             />
                           </FieldGroup>
-                          {!loading && (
+                          {!crLoading && !tdlLoading && (
                             <FieldGroup
                               scrollElement="dateInitiated"
                               error={!!flatErrors.dateInitiated}

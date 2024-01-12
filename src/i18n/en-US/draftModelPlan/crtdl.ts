@@ -19,6 +19,7 @@ const crtdl = {
   crtdlsTable: {
     idNumber: 'ID number',
     date: 'Date initiatied',
+    dateImplemented: 'Date implemented',
     title: 'CR or TDL title',
     notes: 'Notes',
     noCRTDLs: 'No CRs or TDLs',
