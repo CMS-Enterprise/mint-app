@@ -5,6 +5,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import { GetCrtdLsQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { FavoriteIcon } from 'components/FavoriteCard';
@@ -55,7 +56,7 @@ import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
-type CRTDLsTypes =
+type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
@@ -272,7 +273,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     tdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
-  const crTdls = [...crs, ...tdls] as CRTDLsTypes[];
+  const planCRs = crs || [];
+  const planTDLs = tdls || [];
+
+  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const hasEditAccess: boolean =
     !isHelpArticle &&
