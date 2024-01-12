@@ -556,8 +556,8 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 }
 
 // BeneficiarySelectionFrequency is the resolver for the beneficiarySelectionFrequency field.
-func (r *planBeneficiariesResolver) BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyTypeNew, error) {
-	return models.ConvertEnums[models.FrequencyTypeNew](obj.BeneficiarySelectionFrequency), nil
+func (r *planBeneficiariesResolver) BeneficiarySelectionFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.BeneficiarySelectionFrequency), nil
 }
 
 // PrecedenceRules is the resolver for the precedenceRules field.
@@ -731,14 +731,14 @@ func (r *planOpsEvalAndLearningResolver) DataToSendParticicipants(ctx context.Co
 }
 
 // DataSharingFrequency is the resolver for the dataSharingFrequency field.
-func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyTypeNew, error) {
-	dataFrequencyTypes := models.ConvertEnums[models.FrequencyTypeNew](obj.DataSharingFrequency)
+func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.DataSharingFrequency)
 	return dataFrequencyTypes, nil
 }
 
 // DataCollectionFrequency is the resolver for the dataCollectionFrequency field.
-func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyTypeNew, error) {
-	dataFrequencyTypes := models.ConvertEnums[models.FrequencyTypeNew](obj.DataCollectionFrequency)
+func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.DataCollectionFrequency)
 	return dataFrequencyTypes, nil
 }
 
@@ -766,6 +766,11 @@ func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.C
 	return communicationTypes, nil
 }
 
+// RiskType is the resolver for the riskType field.
+func (r *planParticipantsAndProvidersResolver) RiskType(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantRiskType, error) {
+	return models.ConvertEnums[models.ParticipantRiskType](obj.RiskType), nil
+}
+
 // GainsharePaymentsEligibility is the resolver for the gainsharePaymentsEligibility field.
 func (r *planParticipantsAndProvidersResolver) GainsharePaymentsEligibility(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.GainshareArrangementEligibility, error) {
 	gainshareArrangementEligibilities := models.ConvertEnums[model.GainshareArrangementEligibility](obj.GainsharePaymentsEligibility)
@@ -779,8 +784,8 @@ func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Conte
 }
 
 // ProviderAdditionFrequency is the resolver for the providerAdditionFrequency field.
-func (r *planParticipantsAndProvidersResolver) ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyTypeNew, error) {
-	return models.ConvertEnums[models.FrequencyTypeNew](obj.ProviderAdditionFrequency), nil
+func (r *planParticipantsAndProvidersResolver) ProviderAdditionFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.ProviderAdditionFrequency), nil
 }
 
 // ProviderAddMethod is the resolver for the providerAddMethod field.
@@ -831,8 +836,8 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 }
 
 // AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
-func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyTypeNew, error) {
-	return models.ConvertEnums[models.FrequencyTypeNew](obj.AnticipatedPaymentFrequency), nil
+func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
 // PossibleSolutions is the resolver for the possibleSolutions field.

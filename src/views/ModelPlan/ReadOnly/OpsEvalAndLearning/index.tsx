@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import {
   DataStartsType,
   GetAllOpsEvalAndLearningQuery,
-  useGetAllOpsEvalAndLearningQuery
+  useGetAllOpsEvalAndLearningQuery,
+  YesNoOtherType
 } from 'gql/gen/graphql';
 
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -141,6 +142,7 @@ const ReadOnlyOpsEvalAndLearning = ({
     developNewQualityMeasures,
     developNewQualityMeasuresNote,
     qualityPerformanceImpactsPayment,
+    qualityPerformanceImpactsPaymentOther,
     qualityPerformanceImpactsPaymentNote,
     // Data Sharing
     dataSharingStarts,
@@ -907,10 +909,17 @@ const ReadOnlyOpsEvalAndLearning = ({
               heading={opsEvalAndLearningT(
                 'qualityPerformanceImpactsPayment.label'
               )}
-              copy={opsEvalAndLearningT(
-                `qualityPerformanceImpactsPayment.options.${qualityPerformanceImpactsPayment}`,
-                ''
-              )}
+              copy={
+                qualityPerformanceImpactsPayment &&
+                (qualityPerformanceImpactsPayment === YesNoOtherType.OTHER
+                  ? `${opsEvalAndLearningT(
+                      `qualityPerformanceImpactsPayment.options.${qualityPerformanceImpactsPayment}`
+                    )} \u2014  ${qualityPerformanceImpactsPaymentOther}`
+                  : opsEvalAndLearningT(
+                      `qualityPerformanceImpactsPayment.options.${qualityPerformanceImpactsPayment}`,
+                      ''
+                    ))
+              }
               notes={qualityPerformanceImpactsPaymentNote}
             />
           )}

@@ -1,4 +1,4 @@
-import { FrequencyTypeNew } from 'gql/gen/graphql';
+import { FrequencyType } from 'gql/gen/graphql';
 
 export const miscellaneous: Record<string, string> = {
   mandatoryFields: 'All fields are mandatory',
@@ -41,9 +41,9 @@ export const miscellaneous: Record<string, string> = {
 };
 
 // Reusable translated option for all frequency type questions
-export const frequencyOptions: Record<FrequencyTypeNew, string> = {
+export const frequencyOptions: Record<FrequencyType, string> = {
   ANNUALLY: 'Annually',
-  SEMIANNUALLY: 'Semiannually',
+  SEMIANNUALLY: 'Semi-annually',
   QUARTERLY: 'Quarterly',
   MONTHLY: 'Monthly',
   CONTINUALLY: 'Continually',

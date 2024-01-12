@@ -90,12 +90,12 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
               <option
                 value="PLAN_DRAFT"
               >
-                Draft model plan
+                Draft Model Plan
               </option>
               <option
                 value="PLAN_COMPLETE"
               >
-                Model plan complete
+                Model Plan complete
               </option>
               <option
                 value="ICIP_COMPLETE"
@@ -105,22 +105,22 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
               <option
                 value="INTERNAL_CMMI_CLEARANCE"
               >
-                Internal (CMMI) clearance
+                In internal (CMMI) clearance
               </option>
               <option
                 value="CMS_CLEARANCE"
               >
-                CMS clearance
+                In CMS clearance
               </option>
               <option
                 value="HHS_CLEARANCE"
               >
-                HHS clearance
+                In HHS clearance
               </option>
               <option
                 value="OMB_ASRF_CLEARANCE"
               >
-                OMB/ASRF clearance
+                In OMB clearance
               </option>
               <option
                 value="CLEARED"

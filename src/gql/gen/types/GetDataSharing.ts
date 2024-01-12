@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, DataForMonitoringType, DataStartsType, FrequencyTypeNew } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, DataForMonitoringType, DataStartsType, FrequencyType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetDataSharing
@@ -17,13 +17,13 @@ export interface GetDataSharing_modelPlan_opsEvalAndLearning {
   iddocSupport: boolean | null;
   dataSharingStarts: DataStartsType | null;
   dataSharingStartsOther: string | null;
-  dataSharingFrequency: FrequencyTypeNew[];
+  dataSharingFrequency: FrequencyType[];
   dataSharingFrequencyContinually: string | null;
   dataSharingFrequencyOther: string | null;
   dataSharingStartsNote: string | null;
   dataCollectionStarts: DataStartsType | null;
   dataCollectionStartsOther: string | null;
-  dataCollectionFrequency: FrequencyTypeNew[];
+  dataCollectionFrequency: FrequencyType[];
   dataCollectionFrequencyContinually: string | null;
   dataCollectionFrequencyOther: string | null;
   dataCollectionFrequencyNote: string | null;

@@ -40,4 +40,5 @@ const (
 	TeamRoleOACT             TeamRole = "OACT"
 	TeamRolePayment          TeamRole = "PAYMENT"
 	TeamRoleCMFFSCounterpart TeamRole = "CM_FFS_COUNTERPART"
+	TeamRoleCOR              TeamRole = "COR"
 )

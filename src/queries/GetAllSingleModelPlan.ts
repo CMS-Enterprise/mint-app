@@ -106,7 +106,6 @@ export default gql`
         communicationMethod
         communicationMethodOther
         communicationNote
-        participantAssumeRisk
         riskType
         riskOther
         riskNote
@@ -208,6 +207,7 @@ export default gql`
         developNewQualityMeasures
         developNewQualityMeasuresNote
         qualityPerformanceImpactsPayment
+        qualityPerformanceImpactsPaymentOther
         qualityPerformanceImpactsPaymentNote
         dataSharingStarts
         dataSharingStartsOther

@@ -37,7 +37,8 @@ const ReadOnlyParticipantsAndProviders = ({
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const {
-    providerAdditionFrequency: providerAdditionFrequencyConfig
+    providerAdditionFrequency: providerAdditionFrequencyConfig,
+    riskType: riskTypeConfig
   } = usePlanTranslation('participantsAndProviders');
 
   const { modelName } = useContext(ModelInfoContext);
@@ -77,7 +78,6 @@ const ReadOnlyParticipantsAndProviders = ({
     communicationMethod,
     communicationMethodOther,
     communicationNote,
-    participantAssumeRisk,
     riskType,
     riskOther,
     riskNote,
@@ -304,26 +304,16 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'participantAssumeRisk',
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: participantsAndProvidersT('participantAssumeRisk.label'),
-              copy: participantsAndProvidersT(
-                `participantAssumeRisk.options.${participantAssumeRisk}`,
-                ''
-              )
-            }}
-            secondSection={
-              participantAssumeRisk === true && {
-                heading: participantsAndProvidersT('riskType.label'),
-                copy:
-                  riskType &&
-                  participantsAndProvidersT(`riskType.options.${riskType}`, ''),
-                listOtherItem: riskOther
-              }
-            }
+          'riskType',
+          <ReadOnlySection
+            heading={participantsAndProvidersT('riskType.label')}
+            list
+            listItems={formatListItems(riskTypeConfig, riskType)}
+            listOtherItem={riskOther}
+            notes={riskNote}
           />
         )}
+
         {riskNote &&
           checkGroupMap(
             isViewingFilteredView,
