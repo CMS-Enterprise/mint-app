@@ -106,12 +106,12 @@ ALTER TABLE plan_ops_eval_and_learning
   ALTER COLUMN data_sharing_frequency TYPE FREQUENCY_TYPE[]
     USING CASE
             WHEN data_sharing_frequency IS NULL THEN NULL
-            ELSE ARRAY[data_sharing_frequency]::FREQUENCY_TYPE[]
+            ELSE data_sharing_frequency::FREQUENCY_TYPE[]
     END;
 
 ALTER TABLE plan_ops_eval_and_learning
   ALTER COLUMN data_collection_frequency TYPE FREQUENCY_TYPE[]
     USING CASE
             WHEN data_collection_frequency IS NULL THEN NULL
-            ELSE ARRAY[data_collection_frequency]::FREQUENCY_TYPE[]
+            ELSE data_collection_frequency::FREQUENCY_TYPE[]
     END;
