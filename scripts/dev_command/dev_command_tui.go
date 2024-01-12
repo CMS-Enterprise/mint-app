@@ -116,15 +116,20 @@ func (tm populateUserTableTuiModel) View() string {
 	// width := 96 //TODO static value to be refactored
 	width := physicalWidth - 4
 	doc.WriteString(tm.RenderTabs(width))
+	// doc.WriteString(backgroundFillStyle.Render(tm.RenderTabs(width)))
 	doc.WriteString("\n\n")
 
 	doc.WriteString(tm.RenderNestedView())
+	// doc.WriteString(backgroundFillStyle.Render(tm.RenderNestedView()))
 
 	// The footer
 	doc.WriteString("\nPress q to quit.\n")
 
+	filled := doc.String()
+	// filled := backgroundFillStyle.Render(doc.String())
+
 	// Send the UI for rendering
-	return fullBorderStyle.Render(doc.String()) + "\n"
+	return fullBorderStyle.Render(filled) + "\n"
 }
 
 func (tm populateUserTableTuiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -215,7 +220,7 @@ func (tm populateUserTableTuiModel) RenderTabs(width int) string {
 		style := tabStyle
 
 		if isActive {
-			style = activeTabStyle
+			style = activeTabStyleFilled
 		}
 		tabString = append(tabString, style.Render(tab.Header))
 

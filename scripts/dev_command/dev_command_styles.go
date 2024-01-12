@@ -14,6 +14,9 @@ var (
 	lightForegroundGreen = lipgloss.Color("#01BE85")
 	darkBackgroundGreen  = lipgloss.Color("#00432F")
 
+	backgroundFillStyle = lipgloss.NewStyle().Background(lightForegroundGreen)
+	_                   = backgroundFillStyle
+
 	selectedStyle = lipgloss.NewStyle().Foreground(lightForegroundGreen).Background(darkBackgroundGreen)
 	// selectedStyle = oddballStyle
 	_ = oddballGreen
@@ -57,8 +60,11 @@ var (
 			Border(tabBorder, true).
 			BorderForeground(oddballBlueCyan).
 			Padding(0, 1)
-	activeTabStyle  = tabStyle.Copy().Border(activeTabBorder, true)
-	fullBorderStyle = tabStyle.Copy().Border(fullBorder, true)
+	activeTabStyle       = tabStyle.Copy().Border(activeTabBorder, true)
+	fullBorderStyle      = tabStyle.Copy().Border(fullBorder, true)
+	tabStyleFilled       = tabStyle.Copy().Background(lightForegroundGreen)
+	activeTabStyleFilled = activeTabStyle.Copy().Background(lightForegroundGreen)
+	_                    = tabStyleFilled
 
 	tabGapStyle = tabStyle.Copy().
 			BorderTop(false).
