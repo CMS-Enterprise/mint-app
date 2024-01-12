@@ -45,10 +45,11 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"treatDualElligibleDifferent": "YES",
-		"beneficiariesOther":          "The Gumdrop Kids",
-		"beneficiarySelectionMethod":  []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()},
-		"beneficiarySelectionNote":    "Priority given to provider sign up",
+		"treatDualElligibleDifferent":              "YES",
+		"beneficiariesOther":                       "The Gumdrop Kids",
+		"beneficiarySelectionMethod":               []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()},
+		"beneficiarySelectionNote":                 "Priority given to provider sign up",
+		"beneficiarySelectionFrequencyContinually": "some test value",
 	}
 	updatedBeneficiary, err := PlanBeneficiariesUpdate(suite.testConfigs.Logger, b.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -59,6 +60,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	suite.EqualValues(*updatedBeneficiary.BeneficiariesOther, "The Gumdrop Kids")
 	suite.EqualValues(updatedBeneficiary.BeneficiarySelectionMethod, []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()})
 	suite.EqualValues(*updatedBeneficiary.BeneficiarySelectionNote, "Priority given to provider sign up")
+	suite.EqualValues(*updatedBeneficiary.BeneficiarySelectionFrequencyContinually, "some test value")
 
 	// Assert that no other fields got updated
 	suite.Nil(updatedBeneficiary.Beneficiaries)
