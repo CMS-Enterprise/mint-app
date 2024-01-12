@@ -13,6 +13,14 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import {
+  useCreateCrMutation,
+  useCreateTdlMutation,
+  useGetCrQuery,
+  useGetTdlQuery,
+  useUpdateCrMutation,
+  useUpdateTdlMutation
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -25,23 +33,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import useMessage from 'hooks/useMessage';
-import CreateCRTDL from 'queries/CRTDL/CreateCRTDL';
-import GetCRTDL from 'queries/CRTDL/GetCRTDL';
-import {
-  CreateCRTDL as CreateCRTDLType,
-  CreateCRTDL_createPlanCrTdl as CreateCRTDLFormType,
-  CreateCRTDLVariables
-} from 'queries/CRTDL/types/CreateCRTDL';
-import {
-  GetCRTDL as GetCRTDLType,
-  GetCRTDLVariables
-} from 'queries/CRTDL/types/GetCRTDL';
-import {
-  UpdateCRTDL as UpdateCRTDLType,
-  UpdateCRTDL_updatePlanCrTdl as UpdateCRTDLIDType,
-  UpdateCRTDLVariables
-} from 'queries/CRTDL/types/UpdateCRTDL';
-import UpdateCRTDL from 'queries/CRTDL/UpdateCRTDL';
 import flattenErrors from 'utils/flattenErrors';
 import CRTDLValidationSchema from 'validations/crtdl';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -59,10 +50,16 @@ const initialFormValues: CRTDLInputType = {
 };
 
 const AddCRTDL = () => {
-  const { modelID } = useParams<{ modelID: string }>();
-  const { crtdlID } = useParams<{ crtdlID: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('crtdl');
+
+  const { modelID } = useParams<{ modelID: string }>();
+
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const crtdlType = params.get('type');
+  const crtdlID = params.get('id');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -71,17 +68,25 @@ const AddCRTDL = () => {
   const formikRef = useRef<FormikProps<CRTDLInputType>>(null);
 
   const history = useHistory();
-  const readOnly = useLocation().hash === '#read-only';
+  const readOnly = location.hash === '#read-only';
 
-  const { data, loading, error } = useQuery<GetCRTDLType, GetCRTDLVariables>(
-    GetCRTDL,
-    {
-      variables: {
-        id: crtdlID
-      },
-      skip: !crtdlID
-    }
-  );
+  const { data: crData, loading: crLoading, error: crError } = useGetCrQuery({
+    variables: {
+      id: crtdlID!
+    },
+    skip: !crtdlID || crtdlType !== 'cr'
+  });
+
+  const {
+    data: tdlData,
+    loading: tdlLoading,
+    error: tdlError
+  } = useGetTdlQuery({
+    variables: {
+      id: crtdlID!
+    },
+    skip: !crtdlID || crtdlType !== 'tdl'
+  });
 
   const crtdl = data?.crTdl || initialFormValues;
 

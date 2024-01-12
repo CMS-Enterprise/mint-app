@@ -614,10 +614,18 @@ const summaryData: GetModelSummaryTypes = {
       __typename: 'PlanCollaborator'
     }
   ],
-  crTdls: [
+  crs: [
     {
-      __typename: 'PlanCrTdl',
-      idNumber: 'TDL-123'
+      __typename: 'PlanCR',
+      id: '123',
+      idNumber: 'CR 123'
+    }
+  ],
+  tdls: [
+    {
+      __typename: 'PlanTDL',
+      id: '456',
+      idNumber: 'TDL 456'
     }
   ]
 };

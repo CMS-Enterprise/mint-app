@@ -14,7 +14,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { TeamRole } from 'gql/gen/graphql';
+import { GetCrtdLsQuery, TeamRole } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -27,8 +27,7 @@ import GetAllModelPlans from 'queries/GetModelPlans';
 import {
   GetModelPlans as GetAllModelPlansType,
   GetModelPlans_modelPlanCollection as AllModelPlansType,
-  GetModelPlans_modelPlanCollection_collaborators as CollaboratorsType,
-  GetModelPlans_modelPlanCollection_crTdls as CRTDLType
+  GetModelPlans_modelPlanCollection_collaborators as CollaboratorsType
 } from 'queries/types/GetModelPlans';
 import {
   KeyCharacteristic,
@@ -45,6 +44,10 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
+
+type CRTDLType =
+  | GetCrtdLsQuery['modelPlan']['crs'][0]
+  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ModelPlansTableProps =
   | {
@@ -99,7 +102,13 @@ const ModelPlansTable = ({
   );
 
   const data = useMemo(() => {
-    return (modelPlans?.modelPlanCollection ?? []) as AllModelPlansType[];
+    const queryData = (modelPlans?.modelPlanCollection ??
+      []) as AllModelPlansType[];
+    // Combine crs and tdls into single data point for table column
+    queryData.forEach(plan => {
+      return { ...plan, crtdls: [...plan.crs, ...plan.tdls] };
+    });
+    return queryData;
   }, [modelPlans?.modelPlanCollection]);
 
   const columns = useMemo(() => {

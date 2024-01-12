@@ -2784,6 +2784,71 @@ export type UpdateModelPlanBeneficiariesMutationVariables = Exact<{
 
 export type UpdateModelPlanBeneficiariesMutation = { __typename: 'Mutation', updatePlanBeneficiaries: { __typename: 'PlanBeneficiaries', id: UUID } };
 
+export type CreateCrMutationVariables = Exact<{
+  input: PlanCrCreateInput;
+}>;
+
+
+export type CreateCrMutation = { __typename: 'Mutation', createPlanCR: { __typename: 'PlanCR', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, dateImplemented?: Time | null, title: string, note?: string | null } };
+
+export type CreateTdlMutationVariables = Exact<{
+  input: PlanTdlCreateInput;
+}>;
+
+
+export type CreateTdlMutation = { __typename: 'Mutation', createPlanTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
+
+export type DeleteCrMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteCrMutation = { __typename: 'Mutation', deletePlanCR: { __typename: 'PlanCR', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
+
+export type DeleteTdlMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteTdlMutation = { __typename: 'Mutation', deletePlanTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
+
+export type GetCrQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCrQuery = { __typename: 'Query', planCR: { __typename: 'PlanCR', id: UUID, modelPlanID: UUID, title: string, idNumber: string, dateInitiated: Time, dateImplemented?: Time | null, note?: string | null } };
+
+export type GetCrtdLsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCrtdLsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, isCollaborator: boolean, crs: Array<{ __typename: 'PlanCR', id: UUID, modelPlanID: UUID, title: string, idNumber: string, dateInitiated: Time, dateImplemented?: Time | null, note?: string | null }>, tdls: Array<{ __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, title: string, idNumber: string, dateInitiated: Time, note?: string | null }> } };
+
+export type GetTdlQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetTdlQuery = { __typename: 'Query', planTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, title: string, idNumber: string, dateInitiated: Time, note?: string | null } };
+
+export type UpdateCrMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanCrChanges;
+}>;
+
+
+export type UpdateCrMutation = { __typename: 'Mutation', updatePlanCR: { __typename: 'PlanCR', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, dateImplemented?: Time | null, title: string, note?: string | null } };
+
+export type UpdateTdlMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanTdlChanges;
+}>;
+
+
+export type UpdateTdlMutation = { __typename: 'Mutation', updatePlanTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
+
 export type CreateModelPlanDiscussionMutationVariables = Exact<{
   input: PlanDiscussionCreateInput;
 }>;
@@ -3691,6 +3756,388 @@ export function useUpdateModelPlanBeneficiariesMutation(baseOptions?: Apollo.Mut
 export type UpdateModelPlanBeneficiariesMutationHookResult = ReturnType<typeof useUpdateModelPlanBeneficiariesMutation>;
 export type UpdateModelPlanBeneficiariesMutationResult = Apollo.MutationResult<UpdateModelPlanBeneficiariesMutation>;
 export type UpdateModelPlanBeneficiariesMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanBeneficiariesMutation, UpdateModelPlanBeneficiariesMutationVariables>;
+export const CreateCrDocument = gql`
+    mutation CreateCR($input: PlanCRCreateInput!) {
+  createPlanCR(input: $input) {
+    id
+    modelPlanID
+    idNumber
+    dateInitiated
+    dateImplemented
+    title
+    note
+  }
+}
+    `;
+export type CreateCrMutationFn = Apollo.MutationFunction<CreateCrMutation, CreateCrMutationVariables>;
+
+/**
+ * __useCreateCrMutation__
+ *
+ * To run a mutation, you first call `useCreateCrMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCrMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCrMutation, { data, loading, error }] = useCreateCrMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCrMutation(baseOptions?: Apollo.MutationHookOptions<CreateCrMutation, CreateCrMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCrMutation, CreateCrMutationVariables>(CreateCrDocument, options);
+      }
+export type CreateCrMutationHookResult = ReturnType<typeof useCreateCrMutation>;
+export type CreateCrMutationResult = Apollo.MutationResult<CreateCrMutation>;
+export type CreateCrMutationOptions = Apollo.BaseMutationOptions<CreateCrMutation, CreateCrMutationVariables>;
+export const CreateTdlDocument = gql`
+    mutation CreateTDL($input: PlanTDLCreateInput!) {
+  createPlanTDL(input: $input) {
+    id
+    modelPlanID
+    idNumber
+    dateInitiated
+    title
+    note
+  }
+}
+    `;
+export type CreateTdlMutationFn = Apollo.MutationFunction<CreateTdlMutation, CreateTdlMutationVariables>;
+
+/**
+ * __useCreateTdlMutation__
+ *
+ * To run a mutation, you first call `useCreateTdlMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTdlMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTdlMutation, { data, loading, error }] = useCreateTdlMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateTdlMutation(baseOptions?: Apollo.MutationHookOptions<CreateTdlMutation, CreateTdlMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTdlMutation, CreateTdlMutationVariables>(CreateTdlDocument, options);
+      }
+export type CreateTdlMutationHookResult = ReturnType<typeof useCreateTdlMutation>;
+export type CreateTdlMutationResult = Apollo.MutationResult<CreateTdlMutation>;
+export type CreateTdlMutationOptions = Apollo.BaseMutationOptions<CreateTdlMutation, CreateTdlMutationVariables>;
+export const DeleteCrDocument = gql`
+    mutation DeleteCR($id: UUID!) {
+  deletePlanCR(id: $id) {
+    id
+    modelPlanID
+    idNumber
+    dateInitiated
+    title
+    note
+  }
+}
+    `;
+export type DeleteCrMutationFn = Apollo.MutationFunction<DeleteCrMutation, DeleteCrMutationVariables>;
+
+/**
+ * __useDeleteCrMutation__
+ *
+ * To run a mutation, you first call `useDeleteCrMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCrMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCrMutation, { data, loading, error }] = useDeleteCrMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCrMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCrMutation, DeleteCrMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCrMutation, DeleteCrMutationVariables>(DeleteCrDocument, options);
+      }
+export type DeleteCrMutationHookResult = ReturnType<typeof useDeleteCrMutation>;
+export type DeleteCrMutationResult = Apollo.MutationResult<DeleteCrMutation>;
+export type DeleteCrMutationOptions = Apollo.BaseMutationOptions<DeleteCrMutation, DeleteCrMutationVariables>;
+export const DeleteTdlDocument = gql`
+    mutation DeleteTDL($id: UUID!) {
+  deletePlanTDL(id: $id) {
+    id
+    modelPlanID
+    idNumber
+    dateInitiated
+    title
+    note
+  }
+}
+    `;
+export type DeleteTdlMutationFn = Apollo.MutationFunction<DeleteTdlMutation, DeleteTdlMutationVariables>;
+
+/**
+ * __useDeleteTdlMutation__
+ *
+ * To run a mutation, you first call `useDeleteTdlMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTdlMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTdlMutation, { data, loading, error }] = useDeleteTdlMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteTdlMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTdlMutation, DeleteTdlMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTdlMutation, DeleteTdlMutationVariables>(DeleteTdlDocument, options);
+      }
+export type DeleteTdlMutationHookResult = ReturnType<typeof useDeleteTdlMutation>;
+export type DeleteTdlMutationResult = Apollo.MutationResult<DeleteTdlMutation>;
+export type DeleteTdlMutationOptions = Apollo.BaseMutationOptions<DeleteTdlMutation, DeleteTdlMutationVariables>;
+export const GetCrDocument = gql`
+    query GetCR($id: UUID!) {
+  planCR(id: $id) {
+    id
+    modelPlanID
+    title
+    idNumber
+    dateInitiated
+    dateImplemented
+    note
+  }
+}
+    `;
+
+/**
+ * __useGetCrQuery__
+ *
+ * To run a query within a React component, call `useGetCrQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCrQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCrQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCrQuery(baseOptions: Apollo.QueryHookOptions<GetCrQuery, GetCrQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCrQuery, GetCrQueryVariables>(GetCrDocument, options);
+      }
+export function useGetCrLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCrQuery, GetCrQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCrQuery, GetCrQueryVariables>(GetCrDocument, options);
+        }
+export function useGetCrSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCrQuery, GetCrQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCrQuery, GetCrQueryVariables>(GetCrDocument, options);
+        }
+export type GetCrQueryHookResult = ReturnType<typeof useGetCrQuery>;
+export type GetCrLazyQueryHookResult = ReturnType<typeof useGetCrLazyQuery>;
+export type GetCrSuspenseQueryHookResult = ReturnType<typeof useGetCrSuspenseQuery>;
+export type GetCrQueryResult = Apollo.QueryResult<GetCrQuery, GetCrQueryVariables>;
+export const GetCrtdLsDocument = gql`
+    query GetCRTDLs($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    isCollaborator
+    crs {
+      id
+      modelPlanID
+      title
+      idNumber
+      dateInitiated
+      dateImplemented
+      note
+    }
+    tdls {
+      id
+      modelPlanID
+      title
+      idNumber
+      dateInitiated
+      note
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCrtdLsQuery__
+ *
+ * To run a query within a React component, call `useGetCrtdLsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCrtdLsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCrtdLsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCrtdLsQuery(baseOptions: Apollo.QueryHookOptions<GetCrtdLsQuery, GetCrtdLsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCrtdLsQuery, GetCrtdLsQueryVariables>(GetCrtdLsDocument, options);
+      }
+export function useGetCrtdLsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCrtdLsQuery, GetCrtdLsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCrtdLsQuery, GetCrtdLsQueryVariables>(GetCrtdLsDocument, options);
+        }
+export function useGetCrtdLsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCrtdLsQuery, GetCrtdLsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCrtdLsQuery, GetCrtdLsQueryVariables>(GetCrtdLsDocument, options);
+        }
+export type GetCrtdLsQueryHookResult = ReturnType<typeof useGetCrtdLsQuery>;
+export type GetCrtdLsLazyQueryHookResult = ReturnType<typeof useGetCrtdLsLazyQuery>;
+export type GetCrtdLsSuspenseQueryHookResult = ReturnType<typeof useGetCrtdLsSuspenseQuery>;
+export type GetCrtdLsQueryResult = Apollo.QueryResult<GetCrtdLsQuery, GetCrtdLsQueryVariables>;
+export const GetTdlDocument = gql`
+    query GetTDL($id: UUID!) {
+  planTDL(id: $id) {
+    id
+    modelPlanID
+    title
+    idNumber
+    dateInitiated
+    note
+  }
+}
+    `;
+
+/**
+ * __useGetTdlQuery__
+ *
+ * To run a query within a React component, call `useGetTdlQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTdlQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTdlQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTdlQuery(baseOptions: Apollo.QueryHookOptions<GetTdlQuery, GetTdlQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTdlQuery, GetTdlQueryVariables>(GetTdlDocument, options);
+      }
+export function useGetTdlLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTdlQuery, GetTdlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTdlQuery, GetTdlQueryVariables>(GetTdlDocument, options);
+        }
+export function useGetTdlSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetTdlQuery, GetTdlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetTdlQuery, GetTdlQueryVariables>(GetTdlDocument, options);
+        }
+export type GetTdlQueryHookResult = ReturnType<typeof useGetTdlQuery>;
+export type GetTdlLazyQueryHookResult = ReturnType<typeof useGetTdlLazyQuery>;
+export type GetTdlSuspenseQueryHookResult = ReturnType<typeof useGetTdlSuspenseQuery>;
+export type GetTdlQueryResult = Apollo.QueryResult<GetTdlQuery, GetTdlQueryVariables>;
+export const UpdateCrDocument = gql`
+    mutation UpdateCR($id: UUID!, $changes: PlanCRChanges!) {
+  updatePlanCR(id: $id, changes: $changes) {
+    id
+    modelPlanID
+    idNumber
+    dateInitiated
+    dateImplemented
+    title
+    note
+  }
+}
+    `;
+export type UpdateCrMutationFn = Apollo.MutationFunction<UpdateCrMutation, UpdateCrMutationVariables>;
+
+/**
+ * __useUpdateCrMutation__
+ *
+ * To run a mutation, you first call `useUpdateCrMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCrMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCrMutation, { data, loading, error }] = useUpdateCrMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateCrMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCrMutation, UpdateCrMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCrMutation, UpdateCrMutationVariables>(UpdateCrDocument, options);
+      }
+export type UpdateCrMutationHookResult = ReturnType<typeof useUpdateCrMutation>;
+export type UpdateCrMutationResult = Apollo.MutationResult<UpdateCrMutation>;
+export type UpdateCrMutationOptions = Apollo.BaseMutationOptions<UpdateCrMutation, UpdateCrMutationVariables>;
+export const UpdateTdlDocument = gql`
+    mutation UpdateTDL($id: UUID!, $changes: PlanTDLChanges!) {
+  updatePlanTDL(id: $id, changes: $changes) {
+    id
+    modelPlanID
+    idNumber
+    dateInitiated
+    title
+    note
+  }
+}
+    `;
+export type UpdateTdlMutationFn = Apollo.MutationFunction<UpdateTdlMutation, UpdateTdlMutationVariables>;
+
+/**
+ * __useUpdateTdlMutation__
+ *
+ * To run a mutation, you first call `useUpdateTdlMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTdlMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTdlMutation, { data, loading, error }] = useUpdateTdlMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateTdlMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTdlMutation, UpdateTdlMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTdlMutation, UpdateTdlMutationVariables>(UpdateTdlDocument, options);
+      }
+export type UpdateTdlMutationHookResult = ReturnType<typeof useUpdateTdlMutation>;
+export type UpdateTdlMutationResult = Apollo.MutationResult<UpdateTdlMutation>;
+export type UpdateTdlMutationOptions = Apollo.BaseMutationOptions<UpdateTdlMutation, UpdateTdlMutationVariables>;
 export const CreateModelPlanDiscussionDocument = gql`
     mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
   createPlanDiscussion(input: $input) {

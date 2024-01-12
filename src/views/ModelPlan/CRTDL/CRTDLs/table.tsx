@@ -2,8 +2,13 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  GetCrtdLsQuery,
+  useDeleteCrMutation,
+  useDeleteTdlMutation,
+  useGetCrtdLsQuery
+} from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -12,15 +17,9 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import TablePagination from 'components/TablePagination';
-import DeleteCRTDL from 'queries/CRTDL/DeleteCRTDL';
-import GetCRDTLs from 'queries/CRTDL/GetCRDTLs';
-import { DeleteCRTDLVariables } from 'queries/CRTDL/types/DeleteCRTDL';
-import {
-  GetCRTDLs as GetCRTDLsType,
-  GetCRTDLs_modelPlan_crTdls as CDTRLType
-} from 'queries/CRTDL/types/GetCRTDLs';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
+import { insertIf } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -28,6 +27,17 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
+
+type GetCRsType = GetCrtdLsQuery['modelPlan']['crs'][0];
+type GetTDLsType = GetCrtdLsQuery['modelPlan']['tdls'][0];
+
+// Type guard to check union type
+export const isCRType = (
+  crtdl: GetCRsType | GetTDLsType
+): crtdl is GetCRsType => {
+  /* eslint no-underscore-dangle: 0 */
+  return crtdl.__typename === 'PlanCR';
+};
 
 type CRTDLTableProps = {
   hiddenColumns?: string[];
@@ -49,12 +59,7 @@ const CRTDLTable = ({
   isHelpArticle
 }: CRTDLTableProps) => {
   const { t } = useTranslation('crtdl');
-  const {
-    error,
-    loading,
-    data,
-    refetch: refetchCRTDLs
-  } = useQuery<GetCRTDLsType>(GetCRDTLs, {
+  const { error, loading, data, refetch: refetchCRTDLs } = useGetCrtdLsQuery({
     variables: {
       id: modelID
     }
@@ -62,7 +67,8 @@ const CRTDLTable = ({
 
   const flags = useFlags();
 
-  const crtdls = (data?.modelPlan?.crTdls ?? []) as CDTRLType[];
+  const crs = data?.modelPlan?.crs ?? [];
+  const tdls = data?.modelPlan?.tdls ?? [];
 
   const modelName = data?.modelPlan.modelName;
 
@@ -91,24 +97,41 @@ const CRTDLTable = ({
   }
 
   return (
-    <Table
-      data={crtdls}
-      modelID={modelID}
-      modelName={modelName}
-      hiddenColumns={hiddenColumns}
-      refetch={refetchCRTDLs}
-      setCRTDLMessage={setCRTDLMessage}
-      setCRTDLStatus={setCRTDLStatus}
-      readOnly={readOnly}
-      hasEditAccess={hasEditAccess}
-    />
+    <>
+      <Table
+        data={crs}
+        type="cr"
+        modelID={modelID}
+        modelName={modelName}
+        hiddenColumns={hiddenColumns}
+        refetch={refetchCRTDLs}
+        setCRTDLMessage={setCRTDLMessage}
+        setCRTDLStatus={setCRTDLStatus}
+        readOnly={readOnly}
+        hasEditAccess={hasEditAccess}
+      />
+
+      <Table
+        data={tdls}
+        type="tdl"
+        modelID={modelID}
+        modelName={modelName}
+        hiddenColumns={hiddenColumns}
+        refetch={refetchCRTDLs}
+        setCRTDLMessage={setCRTDLMessage}
+        setCRTDLStatus={setCRTDLStatus}
+        readOnly={readOnly}
+        hasEditAccess={hasEditAccess}
+      />
+    </>
   );
 };
 
 export default CRTDLTable;
 
 type TableProps = {
-  data: CDTRLType[];
+  data: GetCRsType[] | GetTDLsType[];
+  type: 'cr' | 'tdl';
   modelID: string;
   modelName?: string;
   hiddenColumns?: string[];
@@ -121,6 +144,7 @@ type TableProps = {
 
 const Table = ({
   data,
+  type,
   modelID,
   modelName,
   hiddenColumns,
@@ -132,49 +156,72 @@ const Table = ({
 }: TableProps) => {
   const { t } = useTranslation('crtdl');
   const [isModalOpen, setModalOpen] = useState(false);
-  const [crtdlToRemove, setCRTDLToRemove] = useState<CDTRLType>(
-    {} as CDTRLType
+  const [crtdlToRemove, setCRTDLToRemove] = useState<GetCRsType | GetTDLsType>(
+    {} as GetCRsType | GetTDLsType
   );
 
-  const [deleteCRTDL] = useMutation<DeleteCRTDLVariables>(DeleteCRTDL);
+  const [deleteCR] = useDeleteCrMutation();
+  const [deleteTDL] = useDeleteTdlMutation();
 
   const handleDelete = useMemo(() => {
-    return (crtdl: CDTRLType) => {
-      deleteCRTDL({
-        variables: {
-          id: crtdl.id
-        }
-      })
-        .then((response: any) => {
-          if (response?.errors) {
-            setCRTDLMessage(
-              t('removeCRTDLModal.removeCRTDLFail', {
-                crtdl: crtdl.idNumber
-              })
-            );
-            setCRTDLStatus('error');
-          } else {
-            setCRTDLMessage(
-              t('removeCRTDLModal.removeCRTDLSuccess', {
-                crtdl: crtdl.idNumber,
-                modelName
-              })
-            );
-            setCRTDLStatus('success');
-            refetch();
-          }
-          setModalOpen(false);
-        })
-        .catch(() => {
+    return (crtdl: GetCRsType | GetTDLsType) => {
+      const responseHandler = (response: any): void => {
+        if (response?.errors) {
           setCRTDLMessage(
             t('removeCRTDLModal.removeCRTDLFail', {
               crtdl: crtdl.idNumber
             })
           );
           setCRTDLStatus('error');
-        });
+        } else {
+          setCRTDLMessage(
+            t('removeCRTDLModal.removeCRTDLSuccess', {
+              crtdl: crtdl.idNumber,
+              modelName
+            })
+          );
+          setCRTDLStatus('success');
+          refetch();
+        }
+        setModalOpen(false);
+      };
+
+      const catchHandler = (): void => {
+        setCRTDLMessage(
+          t('removeCRTDLModal.removeCRTDLFail', {
+            crtdl: crtdl.idNumber
+          })
+        );
+        setCRTDLStatus('error');
+      };
+
+      if (isCRType(crtdl)) {
+        deleteCR({
+          variables: {
+            id: crtdl.id
+          }
+        })
+          .then(responseHandler)
+          .catch(catchHandler);
+      } else {
+        deleteTDL({
+          variables: {
+            id: crtdl.id
+          }
+        })
+          .then(responseHandler)
+          .catch(catchHandler);
+      }
     };
-  }, [deleteCRTDL, refetch, t, setCRTDLMessage, setCRTDLStatus, modelName]);
+  }, [
+    deleteCR,
+    deleteTDL,
+    refetch,
+    t,
+    setCRTDLMessage,
+    setCRTDLStatus,
+    modelName
+  ]);
 
   const renderModal = () => {
     return (
@@ -213,6 +260,10 @@ const Table = ({
         accessor: 'idNumber'
       },
       {
+        Header: t<string>('crtdlsTable.title'),
+        accessor: 'title'
+      },
+      {
         Header: t<string>('crtdlsTable.date'),
         accessor: ({ dateInitiated }: any) => {
           if (dateInitiated) {
@@ -221,10 +272,15 @@ const Table = ({
           return null;
         }
       },
-      {
-        Header: t<string>('crtdlsTable.title'),
-        accessor: 'title'
-      },
+      ...insertIf(type === 'cr', {
+        Header: t<string>('crtdlsTable.date'),
+        accessor: ({ dateImplemented }: any) => {
+          if (dateImplemented) {
+            return formatDateUtc(dateImplemented, 'MM/dd/yyyy');
+          }
+          return null;
+        }
+      }),
       {
         Header: t<string>('crtdlsTable.notes'),
         accessor: 'note'
@@ -236,7 +292,7 @@ const Table = ({
           return (
             <>
               <UswdsReactLink
-                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${
+                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl?type=${type}&id=${
                   row.original.id
                 }${readOnly ? '#read-only' : ''}`}
                 className="margin-right-2"
@@ -260,7 +316,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, modelID, readOnly]);
+  }, [t, modelID, readOnly, type]);
 
   const {
     getTableProps,

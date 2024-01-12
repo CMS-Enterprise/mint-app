@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client';
 
-export default gql`
-  mutation CreateCRTDL($input: PlanCrTdlCreateInput!) {
-    createPlanCrTdl(input: $input) {
+export default gql(/* GraphQL */ `
+  query GetTDL($id: UUID!) {
+    planTDL(id: $id) {
+      id
       modelPlanID
       title
       idNumber
@@ -10,4 +11,4 @@ export default gql`
       note
     }
   }
-`;
+`);

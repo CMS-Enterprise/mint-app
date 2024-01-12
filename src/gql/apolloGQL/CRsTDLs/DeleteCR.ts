@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client';
 
-export default gql`
-  query GetCRTDL($id: UUID!) {
-    crTdl(id: $id) {
+export default gql(/* GraphQL */ `
+  mutation DeleteCR($id: UUID!) {
+    deletePlanCR(id: $id) {
       id
       modelPlanID
-      title
       idNumber
       dateInitiated
+      title
       note
     }
   }
-`;
+`);

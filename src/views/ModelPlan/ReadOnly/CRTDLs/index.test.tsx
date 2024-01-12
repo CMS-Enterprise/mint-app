@@ -3,11 +3,11 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { GetCrtdLsDocument } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import GetCRTDLs from 'queries/CRTDL/GetCRDTLs';
 
 import ReadOnlyCRTDLs from './index';
 
@@ -16,7 +16,7 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mocks = [
   {
     request: {
-      query: GetCRTDLs,
+      query: GetCrtdLsDocument,
       variables: { id: modelID }
     },
     result: {
@@ -26,7 +26,7 @@ const mocks = [
           id: modelID,
           modelName: 'modelName',
           isCollaborator: true,
-          crTdls: [
+          crs: [
             {
               __typename: 'PlanCrTdl',
               id: '123',
@@ -35,6 +35,12 @@ const mocks = [
               idNumber: '321',
               dateInitiated: '2022-05-12T15:01:39.190679Z',
               note: 'string'
+            }
+          ],
+          tdls: [
+            {
+              __typename: 'PlanTDL',
+              idNumber: 'TDL 456'
             }
           ]
         }

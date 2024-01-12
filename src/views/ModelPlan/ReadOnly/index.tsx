@@ -55,6 +55,10 @@ import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
+type CRTDLsTypes =
+  | GetCrtdLsQuery['modelPlan']['crs'][0]
+  | GetCrtdLsQuery['modelPlan']['tdls'][0];
+
 export type subComponentProps = {
   route: string;
   helpRoute: string;
@@ -264,8 +268,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     generalCharacteristics,
     collaborators,
     isCollaborator,
-    crTdls
+    crs,
+    tdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
+
+  const crTdls = [...crs, ...tdls] as CRTDLsTypes[];
 
   const hasEditAccess: boolean =
     !isHelpArticle &&

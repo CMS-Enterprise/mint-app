@@ -3,14 +3,13 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PlanCrTdlCreateInput } from "./../../../types/graphql-global-types";
-
 // ====================================================
-// GraphQL mutation operation: CreateCRTDL
+// GraphQL query operation: GetTDL
 // ====================================================
 
-export interface CreateCRTDL_createPlanCrTdl {
-  __typename: "PlanCrTdl";
+export interface GetTDL_planTDL {
+  __typename: "PlanTDL";
+  id: UUID;
   modelPlanID: UUID;
   title: string;
   idNumber: string;
@@ -18,10 +17,10 @@ export interface CreateCRTDL_createPlanCrTdl {
   note: string | null;
 }
 
-export interface CreateCRTDL {
-  createPlanCrTdl: CreateCRTDL_createPlanCrTdl;
+export interface GetTDL {
+  planTDL: GetTDL_planTDL;
 }
 
-export interface CreateCRTDLVariables {
-  input: PlanCrTdlCreateInput;
+export interface GetTDLVariables {
+  id: UUID;
 }
