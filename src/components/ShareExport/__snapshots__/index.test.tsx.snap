@@ -60,7 +60,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="mint-tag bg-base text-white margin-right-0"
                       data-testid="tag"
                     >
-                      Draft model plan
+                      Draft Model Plan
                     </span>
                   </div>
                   <div
@@ -2223,55 +2223,44 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
+                    What type of risk will the participant assume?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        Will the participants assume risk?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Yes
-                      </p>
-                    </div>
-                  </div>
+                      Capitation
+                    </li>
+                  </ul>
                 </div>
                 <div
-                  class="desktop:grid-col-6"
+                  class="desktop:grid-col-12"
                   data-testid="grid"
                 >
                   <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    <div
-                      class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        What type of risk will the participant assume?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Capitation
-                      </p>
-                    </div>
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note risk
+                    </p>
                   </div>
                 </div>
               </div>
@@ -3018,12 +3007,12 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-chosen margin-bottom-3"
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-added margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    How frequently are beneficiaries chosen?
+                    How frequently are beneficiaries added?
                   </p>
                   <ul
                     class="margin-y-0 padding-left-3"
@@ -5663,7 +5652,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Semiannually
+                      Semi-annually
                     </li>
                     <ul
                       data-testid="other-entry"
@@ -6428,7 +6417,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="mint-tag bg-base text-white margin-right-0"
                       data-testid="tag"
                     >
-                      Draft model plan
+                      Draft Model Plan
                     </span>
                   </div>
                   <div
@@ -8591,55 +8580,44 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 </div>
               </div>
               <div
-                class="grid-row grid-gap"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
-                  data-testid="grid"
+                  class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
                 >
-                  <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    <div
-                      class="read-only-section read-only-section--will-the-participants-assume-risk margin-bottom-3"
+                    What type of risk will the participant assume?
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        Will the participants assume risk?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Yes
-                      </p>
-                    </div>
-                  </div>
+                      Capitation
+                    </li>
+                  </ul>
                 </div>
                 <div
-                  class="desktop:grid-col-6"
+                  class="desktop:grid-col-12"
                   data-testid="grid"
                 >
                   <div
-                    class="desktop:grid-col-12"
-                    data-testid="grid"
+                    class="read-only-section read-only-section--notes margin-bottom-3"
                   >
-                    <div
-                      class="read-only-section read-only-section--what-type-of-risk-will-the-participant-assume margin-bottom-3"
+                    <p
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
-                      <p
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-                      >
-                        What type of risk will the participant assume?
-                      </p>
-                      <p
-                        class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-                      >
-                        Capitation
-                      </p>
-                    </div>
+                      Notes
+                    </p>
+                    <p
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                    >
+                      Note risk
+                    </p>
                   </div>
                 </div>
               </div>
@@ -9386,12 +9364,12 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 data-testid="grid"
               >
                 <div
-                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-chosen margin-bottom-3"
+                  class="read-only-section read-only-section--how-frequently-are-beneficiaries-added margin-bottom-3"
                 >
                   <p
                     class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                   >
-                    How frequently are beneficiaries chosen?
+                    How frequently are beneficiaries added?
                   </p>
                   <ul
                     class="margin-y-0 padding-left-3"
@@ -12031,7 +12009,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                     <li
                       class="font-sans-md line-height-sans-4"
                     >
-                      Semiannually
+                      Semi-annually
                     </li>
                     <ul
                       data-testid="other-entry"

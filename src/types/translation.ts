@@ -21,7 +21,7 @@ import {
   DataStartsType,
   DataToSendParticipantsType,
   EvaluationApproachType,
-  FrequencyTypeNew,
+  FrequencyType,
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
@@ -50,6 +50,7 @@ import {
   TeamRole,
   TriStateAnswer,
   WaiverType,
+  YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
 
@@ -226,7 +227,6 @@ export type TranslationParticipantsAndProviders = {
   communicationMethod: TranslationFieldPropertiesWithOptions<ParticipantCommunicationType>;
   communicationMethodOther: TranslationFieldProperties;
   communicationNote: TranslationFieldProperties;
-  participantAssumeRisk: TranslationFieldPropertiesWithOptions<Bool>;
   riskType: TranslationFieldPropertiesWithOptions<ParticipantRiskType>;
   riskOther: TranslationFieldProperties;
   riskNote: TranslationFieldProperties;
@@ -244,7 +244,7 @@ export type TranslationParticipantsAndProviders = {
   participantsIdsOther: TranslationFieldProperties;
   participantsIDSNote: TranslationFieldProperties;
   // Provider Options
-  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  providerAdditionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   providerAdditionFrequencyContinually: TranslationFieldProperties;
   providerAdditionFrequencyOther: TranslationFieldProperties;
   providerAdditionFrequencyNote: TranslationFieldProperties;
@@ -280,7 +280,7 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionNote: TranslationFieldProperties;
   beneficiarySelectionOther: TranslationFieldProperties;
   // Frequency
-  beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  beneficiarySelectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
   beneficiarySelectionFrequencyNote: TranslationFieldProperties;
@@ -375,18 +375,19 @@ export type TranslationOpsEvalAndLearning = {
   useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
   developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
   developNewQualityMeasuresNote: TranslationFieldProperties;
-  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  qualityPerformanceImpactsPaymentOther: TranslationFieldProperties;
   qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
   // Data Sharing
   dataSharingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataSharingStartsOther: TranslationFieldProperties;
-  dataSharingFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  dataSharingFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   dataSharingFrequencyContinually: TranslationFieldProperties;
   dataSharingFrequencyOther: TranslationFieldProperties;
   dataSharingStartsNote: TranslationFieldProperties;
   dataCollectionStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
   dataCollectionStartsOther: TranslationFieldProperties;
-  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  dataCollectionFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   dataCollectionFrequencyContinually: TranslationFieldProperties;
   dataCollectionFrequencyOther: TranslationFieldProperties;
   dataCollectionFrequencyNote: TranslationFieldProperties;
@@ -460,7 +461,7 @@ export type TranslationPayments = {
   canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldPropertiesWithOptions<Bool>;
   canParticipantsSelectBetweenPaymentMechanismsHow: TranslationFieldProperties;
   canParticipantsSelectBetweenPaymentMechanismsNote: TranslationFieldProperties;
-  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  anticipatedPaymentFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
   anticipatedPaymentFrequencyContinually: TranslationFieldProperties;
   anticipatedPaymentFrequencyOther: TranslationFieldProperties;
   anticipatedPaymentFrequencyNote: TranslationFieldProperties;
@@ -476,7 +477,7 @@ export type TranslationPayments = {
 
 // Collaborators
 export type TranslationCollaborators = {
-  teamRole: TranslationFieldPropertiesWithOptions<TeamRole>;
+  teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
   username: TranslationFieldProperties;
 };
 

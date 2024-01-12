@@ -196,7 +196,7 @@ export enum EvaluationApproachType {
   OTHER = "OTHER",
 }
 
-export enum FrequencyTypeNew {
+export enum FrequencyType {
   ANNUALLY = "ANNUALLY",
   CONTINUALLY = "CONTINUALLY",
   MONTHLY = "MONTHLY",
@@ -441,6 +441,7 @@ export enum ParticipantCommunicationType {
 
 export enum ParticipantRiskType {
   CAPITATION = "CAPITATION",
+  NOT_RISK_BASED = "NOT_RISK_BASED",
   ONE_SIDED = "ONE_SIDED",
   OTHER = "OTHER",
   TWO_SIDED = "TWO_SIDED",
@@ -599,6 +600,7 @@ export enum TaskStatusInput {
 
 export enum TeamRole {
   CM_FFS_COUNTERPART = "CM_FFS_COUNTERPART",
+  COR = "COR",
   EVALUATION = "EVALUATION",
   IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",
@@ -620,6 +622,12 @@ export enum WaiverType {
   FRAUD_ABUSE = "FRAUD_ABUSE",
   MEDICAID = "MEDICAID",
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
+}
+
+export enum YesNoOtherType {
+  NO = "NO",
+  OTHER = "OTHER",
+  YES = "YES",
 }
 
 export enum YesNoType {
@@ -716,7 +724,7 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionMethod?: SelectionMethodType[] | null;
   beneficiarySelectionOther?: string | null;
   beneficiarySelectionNote?: string | null;
-  beneficiarySelectionFrequency?: FrequencyTypeNew[] | null;
+  beneficiarySelectionFrequency?: FrequencyType[] | null;
   beneficiarySelectionFrequencyContinually?: string | null;
   beneficiarySelectionFrequencyOther?: string | null;
   beneficiarySelectionFrequencyNote?: string | null;
@@ -929,17 +937,18 @@ export interface PlanOpsEvalAndLearningChanges {
   useCcwForFileDistribiutionToParticipantsNote?: string | null;
   developNewQualityMeasures?: boolean | null;
   developNewQualityMeasuresNote?: string | null;
-  qualityPerformanceImpactsPayment?: boolean | null;
+  qualityPerformanceImpactsPayment?: YesNoOtherType | null;
+  qualityPerformanceImpactsPaymentOther?: string | null;
   qualityPerformanceImpactsPaymentNote?: string | null;
   dataSharingStarts?: DataStartsType | null;
   dataSharingStartsOther?: string | null;
-  dataSharingFrequency?: FrequencyTypeNew[] | null;
+  dataSharingFrequency?: FrequencyType[] | null;
   dataSharingFrequencyContinually?: string | null;
   dataSharingFrequencyOther?: string | null;
   dataSharingStartsNote?: string | null;
   dataCollectionStarts?: DataStartsType | null;
   dataCollectionStartsOther?: string | null;
-  dataCollectionFrequency?: FrequencyTypeNew[] | null;
+  dataCollectionFrequency?: FrequencyType[] | null;
   dataCollectionFrequencyContinually?: string | null;
   dataCollectionFrequencyOther?: string | null;
   dataCollectionFrequencyNote?: string | null;
@@ -980,8 +989,7 @@ export interface PlanParticipantsAndProvidersChanges {
   communicationMethod?: ParticipantCommunicationType[] | null;
   communicationMethodOther?: string | null;
   communicationNote?: string | null;
-  participantAssumeRisk?: boolean | null;
-  riskType?: ParticipantRiskType | null;
+  riskType?: ParticipantRiskType[] | null;
   riskOther?: string | null;
   riskNote?: string | null;
   willRiskChange?: boolean | null;
@@ -996,7 +1004,7 @@ export interface PlanParticipantsAndProvidersChanges {
   participantsIds?: ParticipantsIDType[] | null;
   participantsIdsOther?: string | null;
   participantsIDSNote?: string | null;
-  providerAdditionFrequency?: FrequencyTypeNew[] | null;
+  providerAdditionFrequency?: FrequencyType[] | null;
   providerAdditionFrequencyContinually?: string | null;
   providerAdditionFrequencyOther?: string | null;
   providerAdditionFrequencyNote?: string | null;
@@ -1065,9 +1073,9 @@ export interface PlanPaymentsChanges {
   canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
   canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
   canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
-  anticipatedPaymentFrequency?: FrequencyTypeNew[] | null;
-  anticipatedPaymentFrequencyOther?: string | null;
+  anticipatedPaymentFrequency?: FrequencyType[] | null;
   anticipatedPaymentFrequencyContinually?: string | null;
+  anticipatedPaymentFrequencyOther?: string | null;
   anticipatedPaymentFrequencyNote?: string | null;
   willRecoverPayments?: boolean | null;
   willRecoverPaymentsNote?: string | null;

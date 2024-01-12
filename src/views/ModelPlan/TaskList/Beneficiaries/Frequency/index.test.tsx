@@ -3,7 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
-  FrequencyTypeNew,
+  FrequencyType,
   GetFrequencyDocument,
   GetFrequencyQuery,
   OperationalNeedKey,
@@ -22,7 +22,7 @@ const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 const mockData: BeneficiaryFrequencyType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
-  beneficiarySelectionFrequency: [FrequencyTypeNew.OTHER],
+  beneficiarySelectionFrequency: [FrequencyType.OTHER],
   beneficiarySelectionFrequencyNote: '',
   beneficiarySelectionFrequencyContinually: 'continually',
   beneficiarySelectionFrequencyOther: 'Very often',

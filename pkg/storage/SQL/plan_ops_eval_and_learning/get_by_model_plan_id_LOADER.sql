@@ -84,6 +84,7 @@ SELECT
     oel.develop_new_quality_measures,
     oel.develop_new_quality_measures_note,
     oel.quality_performance_impacts_payment,
+    oel.quality_performance_impacts_payment_other,
     oel.quality_performance_impacts_payment_note,
     oel.data_sharing_starts,
     oel.data_sharing_starts_other,

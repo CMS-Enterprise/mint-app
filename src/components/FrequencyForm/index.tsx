@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Label, TextInput } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
-import { FrequencyTypeNew } from 'gql/gen/graphql';
+import { FrequencyType } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import CheckboxField from 'components/shared/CheckboxField';
@@ -16,13 +16,15 @@ import {
 
 type FrequencyFormType = {
   field: string;
-  values: FrequencyTypeNew[] | null | undefined;
-  config: TranslationFieldPropertiesWithOptions<FrequencyTypeNew>;
+  values: FrequencyType[] | null | undefined;
+  config: TranslationFieldPropertiesWithOptions<FrequencyType>;
   nameSpace: keyof TranslationPlan;
   label: string;
+  boldLabel?: boolean;
   id: string;
   disabled: boolean;
   className?: string;
+  addNote?: boolean;
 };
 
 /*
@@ -37,15 +39,22 @@ const FrequencyForm = ({
   config,
   nameSpace,
   label,
+  boldLabel = true,
   id,
   disabled = false,
+  addNote = true,
   className
 }: FrequencyFormType) => {
   const { t } = useTranslation();
 
   return (
     <FieldGroup scrollElement={fieldName} className={classNames(className)}>
-      <Label htmlFor={id} className="maxw-none">
+      <Label
+        htmlFor={id}
+        className={classNames('maxw-none', {
+          'text-normal': !boldLabel
+        })}
+      >
         {label}
       </Label>
 
@@ -62,7 +71,7 @@ const FrequencyForm = ({
               checked={values?.includes(type)}
             />
 
-            {type === FrequencyTypeNew.CONTINUALLY && values?.includes(type) && (
+            {type === FrequencyType.CONTINUALLY && values?.includes(type) && (
               <div className="margin-left-4">
                 <Label
                   htmlFor={`${id}-continually`}
@@ -81,7 +90,7 @@ const FrequencyForm = ({
               </div>
             )}
 
-            {type === FrequencyTypeNew.OTHER && values?.includes(type) && (
+            {type === FrequencyType.OTHER && values?.includes(type) && (
               <div className="margin-left-4">
                 <Label
                   htmlFor={`${id}-other`}
@@ -103,7 +112,7 @@ const FrequencyForm = ({
         );
       })}
 
-      <AddNote id={`${id}-note`} field={`${fieldName}Note`} />
+      {addNote && <AddNote id={`${id}-note`} field={`${fieldName}Note`} />}
     </FieldGroup>
   );
 };
