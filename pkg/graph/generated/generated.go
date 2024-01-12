@@ -652,6 +652,7 @@ type ComplexityRoot struct {
 		ProduceBenefitEnhancementFiles               func(childComplexity int) int
 		QualityPerformanceImpactsPayment             func(childComplexity int) int
 		QualityPerformanceImpactsPaymentNote         func(childComplexity int) int
+		QualityPerformanceImpactsPaymentOther        func(childComplexity int) int
 		QualityReportingStarts                       func(childComplexity int) int
 		QualityReportingStartsNote                   func(childComplexity int) int
 		QualityReportingStartsOther                  func(childComplexity int) int
@@ -4905,6 +4906,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentNote(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.qualityPerformanceImpactsPaymentOther":
+		if e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentOther(childComplexity), true
+
 	case "PlanOpsEvalAndLearning.qualityReportingStarts":
 		if e.complexity.PlanOpsEvalAndLearning.QualityReportingStarts == nil {
 			break
@@ -8215,7 +8223,8 @@ type PlanOpsEvalAndLearning {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
@@ -8345,7 +8354,8 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
@@ -9259,6 +9269,12 @@ enum DataToSendParticipantsType {
     PROVIDER_LEVEL_DATA
     OTHER_MIPS_DATA
     NOT_PLANNING_TO_SEND_DATA
+}
+
+enum YesNoOtherType {
+    YES
+    NO
+    OTHER
 }
 
 enum ModelLearningSystemType {
@@ -15852,6 +15868,8 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
 			case "qualityPerformanceImpactsPayment":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
+			case "qualityPerformanceImpactsPaymentOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field)
 			case "qualityPerformanceImpactsPaymentNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
 			case "dataSharingStarts":
@@ -18352,6 +18370,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
 			case "qualityPerformanceImpactsPayment":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
+			case "qualityPerformanceImpactsPaymentOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field)
 			case "qualityPerformanceImpactsPaymentNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
 			case "dataSharingStarts":
@@ -37088,9 +37108,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_qualityPerformanceImpactsPay
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(*models.YesNoOtherType)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37100,7 +37120,48 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerforman
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
+			return nil, errors.New("field of type YesNoOtherType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityPerformanceImpactsPaymentOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -59062,6 +59123,8 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			out.Values[i] = ec._PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field, obj)
 		case "qualityPerformanceImpactsPayment":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field, obj)
+		case "qualityPerformanceImpactsPaymentOther":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentOther(ctx, field, obj)
 		case "qualityPerformanceImpactsPaymentNote":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field, obj)
 		case "dataSharingStarts":
@@ -70884,6 +70947,23 @@ func (ec *executionContext) marshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx context.Context, v interface{}) (*models.YesNoOtherType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.YesNoOtherType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOYesNoOtherType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoOtherType(ctx context.Context, sel ast.SelectionSet, v *models.YesNoOtherType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) unmarshalOYesNoType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐYesNoTypeᚄ(ctx context.Context, v interface{}) ([]models.YesNoType, error) {

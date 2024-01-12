@@ -862,9 +862,19 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'boolean',
     formType: 'radio',
     options: {
-      true: 'Yes',
-      false: 'No'
+      YES: 'Yes',
+      NO: 'No',
+      OTHER: 'Other'
     },
+    filterGroups: ['cmmi']
+  },
+  qualityPerformanceImpactsPaymentOther: {
+    gqlField: 'qualityPerformanceImpactsPaymentOther',
+    goField: 'QualityPerformanceImpactsPaymentOther',
+    dbField: 'quality_performance_impacts_payment_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   qualityPerformanceImpactsPaymentNote: {
@@ -873,7 +883,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'quality_performance_impacts_payment_note',
     label: 'Notes',
     dataType: 'string',
-    formType: 'textarea',
+    formType: 'text',
     filterGroups: ['cmmi']
   },
   dataSharingStarts: {

@@ -207,6 +207,7 @@ export default gql`
         developNewQualityMeasures
         developNewQualityMeasuresNote
         qualityPerformanceImpactsPayment
+        qualityPerformanceImpactsPaymentOther
         qualityPerformanceImpactsPaymentNote
         dataSharingStarts
         dataSharingStartsOther
