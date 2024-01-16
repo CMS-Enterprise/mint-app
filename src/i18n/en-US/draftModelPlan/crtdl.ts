@@ -10,6 +10,7 @@ const crtdl = {
   echimp:
     'To get access to the ECHIMP system, please request the proper job code through EUA. If you need assistance, please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963.',
   visitECHIMP: 'Visit ECHIMP',
+  visitECHIMPReadonly: 'Visit CR and TDL details in ECHIMP',
   readOnlyDescription:
     'More information about each Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',
   crButton: 'Change Request (CR)',
