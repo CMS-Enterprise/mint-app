@@ -286,7 +286,7 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                         <option
                           value="0"
                         >
-                          01- January
+                          01 - January
                         </option>
                         <option
                           value="1"
