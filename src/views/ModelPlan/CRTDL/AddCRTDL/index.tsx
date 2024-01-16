@@ -52,8 +52,8 @@ type CRTDLType = Omit<
 >;
 
 interface CRTDLFormType extends CRTDLType {
-  dateImplementedMonth: number | undefined;
-  dateImplementedYear: number | undefined;
+  dateImplementedMonth: string;
+  dateImplementedYear: string;
 }
 
 type CRTDLParamType = 'cr' | 'tdl' | null;
@@ -62,9 +62,9 @@ const initialFormValues: CRTDLFormType = {
   title: '',
   idNumber: '',
   dateInitiated: '',
-  dateImplementedMonth: undefined,
-  dateImplementedYear: undefined,
-  note: null
+  dateImplementedMonth: '',
+  dateImplementedYear: '',
+  note: ''
 };
 
 const AddCRTDL = () => {
@@ -120,12 +120,12 @@ const AddCRTDL = () => {
 
   // Formating ISO date string to month and year number
   if (dateImplemented) {
-    crFormDataFormatted.dateImplementedMonth = new Date(
-      dateImplemented
-    ).getMonth();
-    crFormDataFormatted.dateImplementedYear = new Date(
-      dateImplemented
-    ).getFullYear();
+    crFormDataFormatted.dateImplementedMonth = new Date(dateImplemented)
+      .getMonth()
+      .toString();
+    crFormDataFormatted.dateImplementedYear = new Date(dateImplemented)
+      .getFullYear()
+      .toString();
   }
 
   // Removing the metadata from the query payload to use in form
@@ -135,7 +135,9 @@ const AddCRTDL = () => {
   // Setting the form data from queries based on the type/query param
   const selectedTypeData =
     crtdlType === 'cr' ? crFormDataFormatted : tdlFormData;
-  const crtdl = (selectedTypeData || initialFormValues) as CRTDLFormType;
+  const crtdl = Object.keys(selectedTypeData).length
+    ? (selectedTypeData as CRTDLFormType)
+    : (initialFormValues as CRTDLFormType);
 
   const [createCR] = useCreateCrMutation();
   const [createTDL] = useCreateTdlMutation();
@@ -469,7 +471,13 @@ const AddCRTDL = () => {
                                     id="date-implemented-month"
                                     name="dateImplementedMonth"
                                   >
-                                    <option>{t('dateSelect')}</option>
+                                    <option
+                                      key="default-select"
+                                      disabled
+                                      value=""
+                                    >
+                                      {t('dateSelect')}
+                                    </option>
                                     {dateMonths.map((month, index) => (
                                       <option value={index} key={month}>
                                         {month}
@@ -493,6 +501,7 @@ const AddCRTDL = () => {
                           )}
 
                           <Divider className="margin-top-4 margin-bottom-2" />
+
                           <FieldGroup
                             scrollElement="note"
                             error={!!flatErrors.note}

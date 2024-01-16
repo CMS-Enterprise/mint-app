@@ -19,9 +19,9 @@ const mocks = [
     },
     result: {
       data: {
-        crTdl: {
+        planCR: {
           __typename: 'PlanCR',
-          id: '123',
+          id: crtdlID,
           title: 'My CR',
           idNumber: 'CR123',
           dateInitiated: '2022-07-30T05:00:00Z',
@@ -38,9 +38,9 @@ const mocks = [
     },
     result: {
       data: {
-        crTdl: {
+        planTDL: {
           __typename: 'PlanTDL',
-          id: '123',
+          id: crtdlID,
           title: 'My TDL',
           idNumber: 'TDL123',
           dateInitiated: '2022-07-30T05:00:00Z',
@@ -83,14 +83,12 @@ describe('Model Plan Add CR and TDL page', () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${crtdlID}`
+          `/models/${modelID}/cr-and-tdl/add-cr-and-tdl?type=cr&id=${crtdlID}`
         ]}
       >
         <MessageProvider>
           <MockedProvider mocks={mocks} addTypename={false}>
-            <Route
-              path={`/models/:modelID/cr-and-tdl/add-cr-and-tdl?type=cr&id=${crtdlID}`}
-            >
+            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl">
               <AddCRTDL />
             </Route>
           </MockedProvider>

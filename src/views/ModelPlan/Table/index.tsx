@@ -106,7 +106,7 @@ const ModelPlansTable = ({
       []) as AllModelPlansType[];
     // Combine crs and tdls into single data point for table column
     queryData.forEach(plan => {
-      return { ...plan, crtdls: [...plan.crs, ...plan.tdls] };
+      return { ...plan, crtdls: [...(plan.crs || []), ...(plan.tdls || [])] };
     });
     return queryData;
   }, [modelPlans?.modelPlanCollection]);

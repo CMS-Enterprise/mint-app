@@ -34,6 +34,7 @@ const mocks = [
               title: 'My CR',
               idNumber: 'CR123',
               dateInitiated: '2022-07-30T05:00:00Z',
+              dateImplemented: '2022-07-30T05:00:00Z',
               note: 'note'
             }
           ],
@@ -77,10 +78,10 @@ describe('Model Plan CR and TDL table', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('My CR');
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('CR123');
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('7/30/2022');
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('note');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('My CR');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('CR123');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('7/30/2022');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('note');
     });
   });
 
@@ -108,7 +109,7 @@ describe('Model Plan CR and TDL table', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('My CR');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('My CR');
     });
 
     expect(asFragment()).toMatchSnapshot();

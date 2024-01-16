@@ -369,7 +369,7 @@ const Table = ({
   );
 
   return (
-    <div className="model-plan-table" data-testid="cr-tdl-table">
+    <div className="model-plan-table" data-testid={`cr-tdl-table-${type}`}>
       {renderModal()}
       <UswdsTable bordered={false} {...getTableProps()} scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>

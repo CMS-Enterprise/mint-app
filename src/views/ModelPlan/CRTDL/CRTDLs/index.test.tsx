@@ -53,13 +53,20 @@ const mocks = [
               title: 'My CR',
               idNumber: 'CR123',
               dateInitiated: '2022-07-30T05:00:00Z',
+              dateImplemented: '2022-07-30T05:00:00Z',
               note: 'note'
             }
           ],
           tdls: [
             {
               __typename: 'PlanTDL',
-              idNumber: 'TDL 456'
+              idNumber: 'TDL 456',
+              id: '456',
+              modelPlanID: modelID,
+              title: 'My TDL',
+              dateInitiated: '2022-07-30T05:00:00Z',
+              dateImplemented: '2022-07-30T05:00:00Z',
+              note: 'note'
             }
           ]
         }
@@ -94,7 +101,7 @@ describe('Model Plan CR and TDL page', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('cr-tdl-table')).toHaveTextContent('My CR');
+      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('My CR');
     });
 
     expect(asFragment()).toMatchSnapshot();

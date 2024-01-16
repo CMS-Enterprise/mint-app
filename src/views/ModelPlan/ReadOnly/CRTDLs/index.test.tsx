@@ -34,13 +34,20 @@ const mocks = [
               title: 'This is a CR and TDL plan',
               idNumber: '321',
               dateInitiated: '2022-05-12T15:01:39.190679Z',
+              dateImplemented: '2022-07-30T05:00:00Z',
               note: 'string'
             }
           ],
           tdls: [
             {
               __typename: 'PlanTDL',
-              idNumber: 'TDL 456'
+              idNumber: 'TDL 456',
+              id: '456',
+              modelPlanID: modelID,
+              title: 'My TDL',
+              dateInitiated: '2022-07-30T05:00:00Z',
+              dateImplemented: '2022-07-30T05:00:00Z',
+              note: 'note'
             }
           ]
         }
@@ -78,8 +85,8 @@ describe('Read Only CR and TDLs page', () => {
 
     await waitFor(() => {
       expect(screen.getByText('CR and TDLs')).toBeInTheDocument();
-      expect(screen.getByTestId('cr-tdl-table')).toBeInTheDocument();
-      expect(screen.getByText('Edit').closest('a')).toHaveAttribute(
+      expect(screen.getByTestId('cr-tdl-table-cr')).toBeInTheDocument();
+      expect(screen.queryAllByText('Edit')[0].closest('a')).toHaveAttribute(
         'href',
         expect.stringMatching(/models.*#read-only$/)
       );
@@ -104,8 +111,8 @@ describe('Read Only CR and TDLs page', () => {
     );
     await waitFor(() => {
       expect(screen.getByText('CR and TDLs')).toBeInTheDocument();
-      expect(screen.getByTestId('cr-tdl-table')).toBeInTheDocument();
-      expect(screen.getByText('Edit').closest('a')).toHaveAttribute(
+      expect(screen.getByTestId('cr-tdl-table-cr')).toBeInTheDocument();
+      expect(screen.queryAllByText('Edit')[0].closest('a')).toHaveAttribute(
         'href',
         expect.stringMatching(/models.*#read-only$/)
       );

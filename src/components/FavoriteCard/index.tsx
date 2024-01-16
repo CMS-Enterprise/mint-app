@@ -43,7 +43,9 @@ const FavoriteCard = ({
   const filteredList = nameHistory.slice(1);
   const firstThreeNames = filteredList.slice(0, 3).join(', ');
 
-  const crtdlIDs = [...crs, ...tdls].map(crtdl => crtdl.idNumber);
+  const crtdlIDs = [...(crs || []), ...(tdls || [])].map(
+    crtdl => crtdl.idNumber
+  );
 
   return (
     <Card
