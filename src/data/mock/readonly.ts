@@ -60,6 +60,7 @@ import {
   TeamRole,
   TriStateAnswer,
   WaiverType,
+  YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
 
@@ -452,8 +453,8 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   useCcwForFileDistribiutionToParticipantsNote: 'Note for ccw disctro',
   developNewQualityMeasures: true,
   developNewQualityMeasuresNote: 'Note for develop measures',
-  qualityPerformanceImpactsPayment: true,
-  qualityPerformanceImpactsPaymentNote: 'Note for qual perf',
+  qualityPerformanceImpactsPayment: YesNoOtherType.OTHER,
+  qualityPerformanceImpactsPaymentOther: 'Other text',
   dataSharingStarts: DataStartsType.DURING_APPLICATION_PERIOD,
   dataSharingStartsOther: 'Data sharing starts other',
   dataSharingFrequency: [DataFrequencyType.DAILY],
