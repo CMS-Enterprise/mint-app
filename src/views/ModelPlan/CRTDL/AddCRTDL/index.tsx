@@ -323,6 +323,7 @@ const AddCRTDL = () => {
                             type="button"
                             outline={crtdlFormType !== 'cr'}
                             onClick={() => setCrtdlFormType('cr')}
+                            disabled={!!crtdlID}
                           >
                             {t('crButton')}
                           </Button>
@@ -330,12 +331,13 @@ const AddCRTDL = () => {
                             type="button"
                             outline={crtdlFormType !== 'tdl'}
                             onClick={() => setCrtdlFormType('tdl')}
+                            disabled={!!crtdlID}
                           >
                             {t('tdlButton')}
                           </Button>
                         </ButtonGroup>
 
-                        <Grid desktop={{ col: 6 }}>
+                        <Grid desktop={{ col: 12 }}>
                           <FieldGroup
                             scrollElement="idNumber"
                             error={!!flatErrors.idNumber}
@@ -346,22 +348,24 @@ const AddCRTDL = () => {
                             </Label>
 
                             <div className="usa-hint margin-top-1">
-                              {t('idNumberInfo')}
+                              {t('idNumberInfo', {
+                                type: crtdlFormType?.toUpperCase()
+                              })}
                             </div>
 
                             <FieldErrorMsg>{flatErrors.idNumber}</FieldErrorMsg>
 
-                            <Field
-                              as={TextInput}
-                              id="cr-tdl-id-number"
-                              data-testid="cr-tdl-id-number"
-                              maxLength={50}
-                              name="idNumber"
-                            />
+                            <div className="input-maxw">
+                              <Field
+                                as={TextInput}
+                                id="cr-tdl-id-number"
+                                data-testid="cr-tdl-id-number"
+                                maxLength={50}
+                                name="idNumber"
+                              />
+                            </div>
                           </FieldGroup>
-                        </Grid>
 
-                        <Grid desktop={{ col: 12 }}>
                           <FieldGroup
                             scrollElement="title"
                             error={!!flatErrors.title}
@@ -473,10 +477,15 @@ const AddCRTDL = () => {
                             error={!!flatErrors.note}
                           >
                             <Label htmlFor="cr-tdl-note">{t('notes')}</Label>
+
                             <div className="usa-hint margin-top-1">
-                              {t('notesInfo')}
+                              {t('notesInfo', {
+                                type: crtdlFormType?.toUpperCase()
+                              })}
                             </div>
+
                             <FieldErrorMsg>{flatErrors.note}</FieldErrorMsg>
+
                             <Field
                               as={Textarea}
                               className="height-15"
@@ -500,7 +509,11 @@ const AddCRTDL = () => {
                           }
                           onClick={() => setErrors({})}
                         >
-                          {!crtdlID ? t('addCRTDL') : t('updateCRTDL')}
+                          {!crtdlID
+                            ? t('addCRTDLForm', {
+                                type: crtdlFormType?.toUpperCase()
+                              })
+                            : t('updateCRTDL')}
                         </Button>
                       </div>
                     </Fieldset>

@@ -4,13 +4,16 @@ const crtdl = {
   breadcrumb: 'Model Plan task list',
   breadcrumb2: 'CRs and TDLs',
   description:
-    'Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model. More information about each CR or TDL can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',
-  emailContact: 'MINTTeam@cms.hhs.gov.',
+    'Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with the model. CRs and TDLs are created and stored in Enterprise Electronic Change Information Management Portal (ECHIMP).',
+  echimp:
+    'To get access to the ECHIMP system, please request the proper job code through EUA. If you need assistance, please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963.',
+  visitECHIMP: 'Visit ECHIMP',
   readOnlyDescription:
     'More information about each Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',
   crButton: 'Change Request (CR)',
   tdlButton: 'Technical Direction Letter (TDL)',
   addCRTDL: 'Add a CR or TDL',
+  addCRTDLForm: 'Add a {{-type}}',
   updateCRTDL: 'Update a CR or TDL',
   addRedirect: 'Don’t add a CR or TDL and return to previous page',
   updateRedirect: 'Don’t update CR or TDL and return to previous page',
@@ -54,7 +57,7 @@ const crtdl = {
   successAdd: 'Success! {{-crtdl}} added to {{-modelName}}',
   successUpdate: 'Success! {{-crtdl}} updated on {{-modelName}}',
   idNumber: 'ID number',
-  idNumberInfo: 'Ex. TDL-123456',
+  idNumberInfo: 'Please include the prefix. Ex. {{-type}}-123456',
   dateInitiated: 'Date initiated',
   dateImplemented: 'Implementation date',
   dateMonth: 'Month',
@@ -81,7 +84,7 @@ const crtdl = {
   },
   notes: 'Optional notes',
   notesInfo:
-    'Add any details about this CR or TDL that would be helpful to know at a glance',
+    'Add any details about this {{-type}} that would be helpful to know at a glance',
   validDate: 'Please use a valid date format',
   error: 'There was an error loading CR and TDL data.',
   errorInfo: 'Please try loading the page again.',
