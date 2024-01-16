@@ -10,7 +10,6 @@
 export interface GetTDL_planTDL {
   __typename: "PlanTDL";
   id: UUID;
-  modelPlanID: UUID;
   title: string;
   idNumber: string;
   dateInitiated: Time;

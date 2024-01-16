@@ -10,7 +10,6 @@
 export interface GetCR_planCR {
   __typename: "PlanCR";
   id: UUID;
-  modelPlanID: UUID;
   title: string;
   idNumber: string;
   dateInitiated: Time;

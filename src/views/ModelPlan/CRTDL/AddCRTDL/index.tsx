@@ -1,13 +1,18 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
+  ButtonGroup,
+  DateInput,
+  DateInputGroup,
   DatePicker,
   Fieldset,
+  FormGroup,
   Grid,
   GridContainer,
   Label,
+  Select,
   Textarea,
   TextInput
 } from '@trussworks/react-uswds';
@@ -33,11 +38,12 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import TextAreaField from 'components/shared/TextAreaField';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
 import CRTDLValidationSchema from 'validations/crtdl';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+
+import './index.scss';
 
 type CRTDLFormType = Omit<
   PlanCrCreateInput,
@@ -57,21 +63,25 @@ const AddCRTDL = () => {
   const { t } = useTranslation('crtdl');
 
   const { modelID } = useParams<{ modelID: string }>();
+  const { modelName } = useContext(ModelInfoContext);
 
+  const history = useHistory();
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
   const crtdlType = params.get('type');
   const crtdlID = params.get('id');
-
-  const { modelName } = useContext(ModelInfoContext);
+  const readOnly = location.hash === '#read-only';
 
   const { showMessageOnNextPage } = useMessage();
 
-  const formikRef = useRef<FormikProps<CRTDLFormType>>(null);
+  const [crtdlFormType, setCrtdlFormType] = useState<'cr' | 'tdl'>('cr');
 
-  const history = useHistory();
-  const readOnly = location.hash === '#read-only';
+  const dateMonths: string[] = t('dateMonths', {
+    returnObjects: true
+  });
+
+  const formikRef = useRef<FormikProps<CRTDLFormType>>(null);
 
   const { data: crData, loading: crLoading, error: crError } = useGetCrQuery({
     variables: {
@@ -91,19 +101,15 @@ const AddCRTDL = () => {
     skip: !crtdlID || crtdlType !== 'tdl'
   });
 
+  // Removing the metadata from the query payload to use in form
   const cr = (crData?.planCR || {}) as GetCrQuery['planCR'];
-  const { __typename, modelPlanID, id, ...crFormData } = cr;
+  const { __typename, id, ...crFormData } = cr;
 
   const tdl = (tdlData?.planTDL || {}) as GetTdlQuery['planTDL'];
-  const {
-    __typename: tdlTypename,
-    modelPlanID: tdlModelPlanID,
-    id: tdlId,
-    ...tdlFormData
-  } = tdl;
+  const { __typename: tdlTypename, id: tdlId, ...tdlFormData } = tdl;
 
+  // Setting the form data from queries based on the type/query param
   const selectedTypeData = crtdlType === 'cr' ? crFormData : tdlFormData;
-
   const crtdl = (selectedTypeData || initialFormValues) as CRTDLFormType;
 
   const [createCR] = useCreateCrMutation();
@@ -151,6 +157,7 @@ const AddCRTDL = () => {
           .then(responseHandler)
           .catch(catchHandler);
       } else {
+        // Removing dateImplemented from mutation input for TDL
         const { dateImplemented, ...tdlInput } = changes;
         updateTDL({
           variables: {
@@ -173,6 +180,7 @@ const AddCRTDL = () => {
         .then(responseHandler)
         .catch(catchHandler);
     } else {
+      // Removing dateImplemented from mutation input for TDL
       const { dateImplemented, ...tdlInput } = changes;
       createTDL({
         variables: {
@@ -283,6 +291,26 @@ const AddCRTDL = () => {
                       }
                     >
                       <Grid row>
+                        <ButtonGroup
+                          type="segmented"
+                          className="margin-top-4 margin-bottom-2"
+                        >
+                          <Button
+                            type="button"
+                            outline={crtdlFormType !== 'cr'}
+                            onClick={() => setCrtdlFormType('cr')}
+                          >
+                            {t('crButton')}
+                          </Button>
+                          <Button
+                            type="button"
+                            outline={crtdlFormType !== 'tdl'}
+                            onClick={() => setCrtdlFormType('tdl')}
+                          >
+                            {t('tdlButton')}
+                          </Button>
+                        </ButtonGroup>
+
                         <Grid desktop={{ col: 6 }}>
                           <FieldGroup
                             scrollElement="idNumber"
@@ -292,10 +320,13 @@ const AddCRTDL = () => {
                               {t('idNumber')}
                               <RequiredAsterisk />
                             </Label>
+
                             <div className="usa-hint margin-top-1">
                               {t('idNumberInfo')}
                             </div>
+
                             <FieldErrorMsg>{flatErrors.idNumber}</FieldErrorMsg>
+
                             <Field
                               as={TextInput}
                               id="cr-tdl-id-number"
@@ -304,6 +335,29 @@ const AddCRTDL = () => {
                               name="idNumber"
                             />
                           </FieldGroup>
+                        </Grid>
+
+                        <Grid desktop={{ col: 12 }}>
+                          <FieldGroup
+                            scrollElement="title"
+                            error={!!flatErrors.title}
+                          >
+                            <Label htmlFor="cr-tdl-title">
+                              {t('title')}
+                              <RequiredAsterisk />
+                            </Label>
+
+                            <FieldErrorMsg>{flatErrors.title}</FieldErrorMsg>
+                            <Field
+                              as={TextInput}
+                              id="cr-tdl-title"
+                              data-testid="cr-tdl-title"
+                              name="title"
+                            />
+                          </FieldGroup>
+                        </Grid>
+
+                        <Grid desktop={{ col: 6 }}>
                           {!crLoading && !tdlLoading && (
                             <FieldGroup
                               scrollElement="dateInitiated"
@@ -316,12 +370,15 @@ const AddCRTDL = () => {
                                 {t('dateInitiated')}
                                 <RequiredAsterisk />
                               </Label>
+
                               <div className="usa-hint margin-top-1">
                                 {h('datePlaceholder')}
                               </div>
+
                               <FieldErrorMsg>
                                 {flatErrors.dateInitiated}
                               </FieldErrorMsg>
+
                               <div className="width-card-lg position-relative">
                                 <Field
                                   as={DatePicker}
@@ -343,26 +400,48 @@ const AddCRTDL = () => {
                       </Grid>
                       <Grid row>
                         <Grid desktop={{ col: 12 }}>
-                          <FieldGroup
-                            scrollElement="title"
-                            error={!!flatErrors.title}
-                          >
+                          <Fieldset>
                             <Label htmlFor="cr-tdl-title">
-                              {t('title')}
+                              {t('dateImplemented')}
                               <RequiredAsterisk />
                             </Label>
 
-                            <FieldErrorMsg>{flatErrors.title}</FieldErrorMsg>
-                            <Field
-                              as={TextAreaField}
-                              className="maxw-none mint-textarea"
-                              id="cr-tdl-title"
-                              data-testid="cr-tdl-title"
-                              maxLength={5000}
-                              name="title"
-                            />
-                          </FieldGroup>
-                          <Divider className="margin-y-4" />
+                            <div className="usa-hint margin-top-0">
+                              {t('dateImplementedInfo')}
+                            </div>
+
+                            <DateInputGroup className="display-flex flex-wrap margin-top-neg-1">
+                              <FormGroup className="usa-form-group--month usa-form-group--select width-card-lg margin-right-2">
+                                <Label
+                                  htmlFor="date-implemented-month"
+                                  className="text-normal"
+                                >
+                                  {t('dateMonth')}
+                                </Label>
+                                <Select
+                                  id="date-implemented-month"
+                                  name="dateImplementedMonth"
+                                >
+                                  <option>{t('dateSelect')}</option>
+                                  {dateMonths.map((month, index) => (
+                                    <option value={index + 1}>{month}</option>
+                                  ))}
+                                </Select>
+                              </FormGroup>
+
+                              <DateInput
+                                id="date-implemented-year"
+                                className="width-10"
+                                name="dateImplementedYear"
+                                label={t('dateYear')}
+                                unit="year"
+                                maxLength={4}
+                                minLength={4}
+                              />
+                            </DateInputGroup>
+                          </Fieldset>
+
+                          <Divider className="margin-top-4 margin-bottom-2" />
                           <FieldGroup
                             scrollElement="note"
                             error={!!flatErrors.note}

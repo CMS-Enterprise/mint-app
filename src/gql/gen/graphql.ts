@@ -2817,7 +2817,7 @@ export type GetCrQueryVariables = Exact<{
 }>;
 
 
-export type GetCrQuery = { __typename: 'Query', planCR: { __typename: 'PlanCR', id: UUID, modelPlanID: UUID, title: string, idNumber: string, dateInitiated: Time, dateImplemented?: Time | null, note?: string | null } };
+export type GetCrQuery = { __typename: 'Query', planCR: { __typename: 'PlanCR', id: UUID, title: string, idNumber: string, dateInitiated: Time, dateImplemented?: Time | null, note?: string | null } };
 
 export type GetCrtdLsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2831,7 +2831,7 @@ export type GetTdlQueryVariables = Exact<{
 }>;
 
 
-export type GetTdlQuery = { __typename: 'Query', planTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, title: string, idNumber: string, dateInitiated: Time, note?: string | null } };
+export type GetTdlQuery = { __typename: 'Query', planTDL: { __typename: 'PlanTDL', id: UUID, title: string, idNumber: string, dateInitiated: Time, note?: string | null } };
 
 export type UpdateCrMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3913,7 +3913,6 @@ export const GetCrDocument = gql`
     query GetCR($id: UUID!) {
   planCR(id: $id) {
     id
-    modelPlanID
     title
     idNumber
     dateInitiated
@@ -4018,7 +4017,6 @@ export const GetTdlDocument = gql`
     query GetTDL($id: UUID!) {
   planTDL(id: $id) {
     id
-    modelPlanID
     title
     idNumber
     dateInitiated
