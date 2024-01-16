@@ -7,8 +7,9 @@ SET
     note = :note,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
-WHERE id = :id
-AND type = 'TDL'
+WHERE
+    id = :id
+    AND type = 'TDL'
 RETURNING
 id,
 model_plan_id,

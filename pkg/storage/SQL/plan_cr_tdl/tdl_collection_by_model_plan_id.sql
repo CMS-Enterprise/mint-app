@@ -10,5 +10,6 @@ SELECT
     modified_by,
     modified_dts
 FROM plan_cr_tdl
-WHERE model_plan_id = :model_plan_id
-AND type = 'TDL';
+WHERE
+    model_plan_id = :model_plan_id
+    AND type = 'TDL';

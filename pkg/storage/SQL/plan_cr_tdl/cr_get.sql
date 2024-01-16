@@ -11,5 +11,6 @@ SELECT
     modified_by,
     modified_dts
 FROM plan_cr_tdl
-WHERE id = :id
-AND type = 'CR';
+WHERE
+    id = :id
+    AND type = 'CR';
