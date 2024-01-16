@@ -96,6 +96,9 @@ const CRTDLTable = ({
     );
   }
 
+  console.log(crs);
+  console.log(tdls);
+
   return (
     <>
       <Table

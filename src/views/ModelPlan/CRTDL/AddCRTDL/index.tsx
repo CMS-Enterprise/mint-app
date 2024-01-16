@@ -28,7 +28,6 @@ import {
   useUpdateCrMutation,
   useUpdateTdlMutation
 } from 'gql/gen/graphql';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -130,8 +129,6 @@ const AddCRTDL = () => {
   const [updateTDL] = useUpdateTdlMutation();
 
   const handleCreateOrUpdateCRTDL = (formikValues: CRTDLFormType) => {
-    const { ...formChanges } = formikValues;
-
     const responseHandler = (response: any) => {
       if (!response?.errors) {
         showMessageOnNextPage(
@@ -162,19 +159,19 @@ const AddCRTDL = () => {
       dateImplementedMonth,
       dateImplementedYear,
       ...changes
-    } = formChanges;
+    } = formikValues;
 
     if (crtdlID) {
-      if (crtdlType === 'cr') {
+      if (crtdlFormType === 'cr') {
         updateCR({
           variables: {
             id: crtdlID,
             changes: {
               ...changes,
-              dateImplemented: DateTime.utc(
-                dateImplementedYear,
-                dateImplementedMonth
-              ).toString()
+              dateImplemented: new Date(
+                Number(dateImplementedYear),
+                Number(dateImplementedMonth)
+              ).toISOString()
             }
           }
         })
@@ -190,16 +187,16 @@ const AddCRTDL = () => {
           .then(responseHandler)
           .catch(catchHandler);
       }
-    } else if (crtdlType === 'cr') {
+    } else if (crtdlFormType === 'cr') {
       createCR({
         variables: {
           input: {
             modelPlanID: modelID,
             ...changes,
-            dateImplemented: DateTime.utc(
-              dateImplementedYear,
-              dateImplementedMonth
-            ).toString()
+            dateImplemented: new Date(
+              Number(dateImplementedYear),
+              Number(dateImplementedMonth)
+            ).toISOString()
           }
         }
       })
@@ -447,18 +444,22 @@ const AddCRTDL = () => {
                                   >
                                     {t('dateMonth')}
                                   </Label>
-                                  <Select
+                                  <Field
+                                    as={Select}
                                     id="date-implemented-month"
                                     name="dateImplementedMonth"
                                   >
                                     <option>{t('dateSelect')}</option>
                                     {dateMonths.map((month, index) => (
-                                      <option value={index + 1}>{month}</option>
+                                      <option value={index + 1} key={month}>
+                                        {month}
+                                      </option>
                                     ))}
-                                  </Select>
+                                  </Field>
                                 </FormGroup>
 
-                                <DateInput
+                                <Field
+                                  as={DateInput}
                                   id="date-implemented-year"
                                   className="width-10"
                                   name="dateImplementedYear"
