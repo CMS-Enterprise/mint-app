@@ -9,7 +9,7 @@ ALTER TABLE plan_cr_tdl ADD COLUMN date_implemented TIMESTAMP;
 -- because all existing cr_tdl entries will not have them set.
 --
 -- They're required in the API, but not in the DB, at this time.
-ALTER TABLE plan_cr_tdl ADD CONSTRAINT date_implemented_not_set_on_tdl CHECK (type = 'TDL' AND date_implemented IS NULL);
+ALTER TABLE plan_cr_tdl ADD CONSTRAINT date_implemented_not_set_on_tdl CHECK (type = 'CR' OR (type = 'TDL' AND date_implemented IS NULL));
 
 -- Set all existing entries to CRs by default
 UPDATE plan_cr_tdl SET type = 'CR';

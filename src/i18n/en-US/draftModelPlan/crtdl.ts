@@ -3,6 +3,8 @@ const crtdl = {
   subheading: 'for <1>{{modelName}}</1>',
   breadcrumb: 'Model Plan task list',
   breadcrumb2: 'CRs and TDLs',
+  crs: 'CRs',
+  tdls: 'TDLs',
   description:
     'Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with the model. CRs and TDLs are created and stored in Enterprise Electronic Change Information Management Portal (ECHIMP).',
   echimp:
@@ -24,10 +26,10 @@ const crtdl = {
   crtdlsTable: {
     idNumber: 'ID number',
     date: 'Date initiatied',
-    dateImplemented: 'Date implemented',
+    dateImplemented: 'Implementation date',
     title: 'CR or TDL title',
     notes: 'Notes',
-    noCRTDLs: 'No CRs or TDLs',
+    noCRTDLs: 'No {{-type}}s added',
     actions: 'Actions',
     edit: 'Edit',
     remove: 'Remove',
@@ -58,7 +60,7 @@ const crtdl = {
   successUpdate: 'Success! {{-crtdl}} updated on {{-modelName}}',
   idNumber: 'ID number',
   idNumberInfo: 'Please include the prefix. Ex. {{-type}}-123456',
-  dateInitiated: 'Date initiated',
+  dateInitiated: 'Initiated date',
   dateImplemented: 'Implementation date',
   dateMonth: 'Month',
   dateYear: 'Year',

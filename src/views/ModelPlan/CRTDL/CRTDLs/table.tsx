@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import {
   GetCrtdLsQuery,
   useDeleteCrMutation,
@@ -96,11 +97,9 @@ const CRTDLTable = ({
     );
   }
 
-  console.log(crs);
-  console.log(tdls);
-
   return (
     <>
+      <h2 className="margin-bottom-0 margin-top-4">{t('crs')}</h2>
       <Table
         data={crs}
         type="cr"
@@ -114,6 +113,7 @@ const CRTDLTable = ({
         hasEditAccess={hasEditAccess}
       />
 
+      <h2 className="margin-bottom-0 margin-top-4">{t('tdls')}</h2>
       <Table
         data={tdls}
         type="tdl"
@@ -260,11 +260,13 @@ const Table = ({
     return [
       {
         Header: t<string>('crtdlsTable.idNumber'),
-        accessor: 'idNumber'
+        accessor: 'idNumber',
+        width: 150
       },
       {
         Header: t<string>('crtdlsTable.title'),
-        accessor: 'title'
+        accessor: 'title',
+        width: 250
       },
       {
         Header: t<string>('crtdlsTable.date'),
@@ -273,20 +275,23 @@ const Table = ({
             return formatDateUtc(dateInitiated, 'MM/dd/yyyy');
           }
           return null;
-        }
+        },
+        width: 150
       },
       ...insertIf(type === 'cr', {
         Header: t<string>('crtdlsTable.dateImplemented'),
         accessor: ({ dateImplemented }: any) => {
           if (dateImplemented) {
-            return formatDateUtc(dateImplemented, 'MM/dd/yyyy');
+            return formatDateUtc(dateImplemented, 'MMMM yyyy');
           }
           return null;
-        }
+        },
+        width: 150
       }),
       {
         Header: t<string>('crtdlsTable.notes'),
-        accessor: 'note'
+        accessor: 'note',
+        width: type === 'cr' ? 285 : 435
       },
       {
         Header: t<string>('crtdlsTable.actions'),
@@ -365,7 +370,7 @@ const Table = ({
   return (
     <div className="model-plan-table" data-testid="cr-tdl-table">
       {renderModal()}
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
+      <UswdsTable bordered={false} {...getTableProps()} scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -380,14 +385,22 @@ const Table = ({
                     className="table-header"
                     scope="col"
                     style={{
-                      minWidth: '138px',
+                      // minWidth: '138px',
                       paddingLeft: '0',
                       paddingBottom: '.5rem',
-                      position: 'relative'
+                      position: 'relative',
+                      minWidth: column.width,
+                      maxWidth: column.width
                     }}
                   >
                     <button
-                      className="usa-button usa-button--unstyled position-relative"
+                      className={classNames(
+                        'usa-button usa-button--unstyled position-relative',
+                        {
+                          'text-no-underline text-bold text-black':
+                            column.Header === 'Actions'
+                        }
+                      )}
                       type="button"
                       {...column.getSortByToggleProps()}
                     >
@@ -410,21 +423,6 @@ const Table = ({
                     return !hiddenColumns?.includes(cell.column.Header);
                   })
                   .map((cell, i) => {
-                    if (i === 0) {
-                      return (
-                        <th
-                          {...cell.getCellProps()}
-                          scope="row"
-                          style={{
-                            paddingLeft: '0',
-                            borderBottom:
-                              index === page.length - 1 ? 'none' : 'auto'
-                          }}
-                        >
-                          {cell.render('Cell')}
-                        </th>
-                      );
-                    }
                     return (
                       <td
                         {...cell.getCellProps()}
@@ -445,7 +443,7 @@ const Table = ({
         </tbody>
       </UswdsTable>
 
-      {data.length > 10 && (
+      {data.length > 5 && (
         <TablePagination
           gotoPage={gotoPage}
           previousPage={previousPage}
@@ -469,7 +467,9 @@ const Table = ({
       </div>
 
       {data.length === 0 && (
-        <p data-testid="no-crtdls">{t('crtdlsTable.noCRTDLs')}</p>
+        <p data-testid="no-crtdls">
+          {t('crtdlsTable.noCRTDLs', { type: type.toUpperCase() })}
+        </p>
       )}
     </div>
   );

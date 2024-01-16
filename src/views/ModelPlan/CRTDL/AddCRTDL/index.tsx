@@ -16,6 +16,7 @@ import {
   Textarea,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetCrQuery,
@@ -45,6 +46,9 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import './index.scss';
 
+type CRTDLTypeName = 'cr' | 'tdl';
+type CRTDLParamType = CRTDLTypeName | null;
+
 type CRTDLType = Omit<
   PlanCrCreateInput,
   'modelPlanID' | '__typename' | 'id' | 'dateImplemented'
@@ -53,11 +57,11 @@ type CRTDLType = Omit<
 interface CRTDLFormType extends CRTDLType {
   dateImplementedMonth: number | undefined;
   dateImplementedYear: number | undefined;
+  type: CRTDLTypeName;
 }
 
-type CRTDLParamType = 'cr' | 'tdl' | null;
-
 const initialFormValues: CRTDLFormType = {
+  type: 'cr',
   title: '',
   idNumber: '',
   dateInitiated: '',
@@ -77,15 +81,13 @@ const AddCRTDL = () => {
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  const crtdlType = params.get('type') as CRTDLParamType;
+  // If updating extracts CRTDL type param, else default to 'cr' type
+  const crtdlType = (params.get('type') || 'cr') as CRTDLParamType;
   const crtdlID = params.get('id');
+
   const readOnly = location.hash === '#read-only';
 
   const { showMessageOnNextPage } = useMessage();
-
-  const [crtdlFormType, setCrtdlFormType] = useState<CRTDLParamType>(
-    crtdlType || 'cr'
-  );
 
   const dateMonths: string[] = t('dateMonths', {
     returnObjects: true
@@ -113,13 +115,33 @@ const AddCRTDL = () => {
 
   // Removing the metadata from the query payload to use in form
   const cr = (crData?.planCR || {}) as GetCrQuery['planCR'];
-  const { __typename, id, ...crFormData } = cr;
+  const { __typename, id, dateImplemented, ...crFormData } = cr;
 
+  // Added type (cr/tdl) to data for use in form/buttons/validation
+  const crFormDataFormatted = { ...crFormData } as CRTDLFormType;
+  crFormDataFormatted.type = 'cr';
+
+  // Formating ISO date string to month and year number
+  if (dateImplemented) {
+    crFormDataFormatted.dateImplementedMonth = new Date(
+      dateImplemented
+    ).getMonth();
+    crFormDataFormatted.dateImplementedYear = new Date(
+      dateImplemented
+    ).getFullYear();
+  }
+
+  // Removing the metadata from the query payload to use in form
   const tdl = (tdlData?.planTDL || {}) as GetTdlQuery['planTDL'];
   const { __typename: tdlTypename, id: tdlId, ...tdlFormData } = tdl;
 
+  // Added type (cr/tdl) to data for use in form/buttons/validation
+  const tdlFormDataFormatted = { ...tdlFormData } as CRTDLFormType;
+  tdlFormDataFormatted.type = 'tdl';
+
   // Setting the form data from queries based on the type/query param
-  const selectedTypeData = crtdlType === 'cr' ? crFormData : tdlFormData;
+  const selectedTypeData =
+    crtdlType === 'cr' ? crFormDataFormatted : tdlFormDataFormatted;
   const crtdl = (selectedTypeData || initialFormValues) as CRTDLFormType;
 
   const [createCR] = useCreateCrMutation();
@@ -162,7 +184,7 @@ const AddCRTDL = () => {
     } = formikValues;
 
     if (crtdlID) {
-      if (crtdlFormType === 'cr') {
+      if (changes.type === 'cr') {
         updateCR({
           variables: {
             id: crtdlID,
@@ -187,7 +209,7 @@ const AddCRTDL = () => {
           .then(responseHandler)
           .catch(catchHandler);
       }
-    } else if (crtdlFormType === 'cr') {
+    } else if (changes.type === 'cr') {
       createCR({
         variables: {
           input: {
@@ -316,22 +338,27 @@ const AddCRTDL = () => {
                           type="segmented"
                           className="margin-top-4 margin-bottom-2"
                         >
-                          <Button
+                          <Field
+                            as={Button}
                             type="button"
-                            outline={crtdlFormType !== 'cr'}
-                            onClick={() => setCrtdlFormType('cr')}
+                            outline={values.type !== 'cr'}
+                            onClick={() => setFieldValue('type', 'cr')}
+                            className={classNames({
+                              'margin-right-0': !!crtdlID
+                            })}
                             disabled={!!crtdlID}
                           >
                             {t('crButton')}
-                          </Button>
-                          <Button
+                          </Field>
+                          <Field
+                            as={Button}
                             type="button"
-                            outline={crtdlFormType !== 'tdl'}
-                            onClick={() => setCrtdlFormType('tdl')}
+                            outline={values.type !== 'tdl'}
+                            onClick={() => setFieldValue('type', 'tdl')}
                             disabled={!!crtdlID}
                           >
                             {t('tdlButton')}
-                          </Button>
+                          </Field>
                         </ButtonGroup>
 
                         <Grid desktop={{ col: 12 }}>
@@ -346,7 +373,7 @@ const AddCRTDL = () => {
 
                             <div className="usa-hint margin-top-1">
                               {t('idNumberInfo', {
-                                type: crtdlFormType?.toUpperCase()
+                                type: values.type.toUpperCase()
                               })}
                             </div>
 
@@ -368,7 +395,7 @@ const AddCRTDL = () => {
                             error={!!flatErrors.title}
                           >
                             <Label htmlFor="cr-tdl-title">
-                              {t(`title.${crtdlFormType}`)}
+                              {t(`title.${values.type}`)}
                               <RequiredAsterisk />
                             </Label>
 
@@ -423,9 +450,10 @@ const AddCRTDL = () => {
                           )}
                         </Grid>
                       </Grid>
+
                       <Grid row>
                         <Grid desktop={{ col: 12 }}>
-                          {crtdlFormType === 'cr' && (
+                          {values.type === 'cr' && (
                             <Fieldset>
                               <Label htmlFor="cr-tdl-title">
                                 {t('dateImplemented')}
@@ -451,7 +479,7 @@ const AddCRTDL = () => {
                                   >
                                     <option>{t('dateSelect')}</option>
                                     {dateMonths.map((month, index) => (
-                                      <option value={index + 1} key={month}>
+                                      <option value={index} key={month}>
                                         {month}
                                       </option>
                                     ))}
@@ -473,6 +501,7 @@ const AddCRTDL = () => {
                           )}
 
                           <Divider className="margin-top-4 margin-bottom-2" />
+
                           <FieldGroup
                             scrollElement="note"
                             error={!!flatErrors.note}
@@ -481,7 +510,7 @@ const AddCRTDL = () => {
 
                             <div className="usa-hint margin-top-1">
                               {t('notesInfo', {
-                                type: crtdlFormType?.toUpperCase()
+                                type: values.type.toUpperCase()
                               })}
                             </div>
 
@@ -512,7 +541,7 @@ const AddCRTDL = () => {
                         >
                           {!crtdlID
                             ? t('addCRTDLForm', {
-                                type: crtdlFormType?.toUpperCase()
+                                type: values.type.toUpperCase()
                               })
                             : t('updateCRTDL')}
                         </Button>
