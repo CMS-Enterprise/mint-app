@@ -1,13 +1,16 @@
 import * as Yup from 'yup';
 
-const CRTDLValidationSchema = Yup.object().shape({
-  idNumber: Yup.string().trim().required('Enter an ID number'),
-  title: Yup.string().required('Enter a title'),
-  dateInitiated: Yup.string().required('Enter a date initiated')
-  // dateImplementedMonth: Yup.string().when('type', {
-  //   is: true,
-  //   then: Yup.string().required('Must enter implementation date month')
-  // })
+export const TDLValidationSchema = Yup.object().shape({
+  idNumber: Yup.string().trim().required('Must enter an ID number'),
+  title: Yup.string().required('Must enter a title'),
+  dateInitiated: Yup.string().required('Must enter a intiated date')
 });
 
-export default CRTDLValidationSchema;
+export const CRValidationSchema = TDLValidationSchema.shape({
+  dateImplementedMonth: Yup.string().required(
+    'Must enter implementation date month'
+  ),
+  dateImplementedYear: Yup.string().required(
+    'Must enter implementation date year'
+  )
+});

@@ -41,13 +41,10 @@ import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
-import CRTDLValidationSchema from 'validations/crtdl';
+import { CRValidationSchema, TDLValidationSchema } from 'validations/crtdl';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import './index.scss';
-
-type CRTDLTypeName = 'cr' | 'tdl';
-type CRTDLParamType = CRTDLTypeName | null;
 
 type CRTDLType = Omit<
   PlanCrCreateInput,
@@ -57,11 +54,11 @@ type CRTDLType = Omit<
 interface CRTDLFormType extends CRTDLType {
   dateImplementedMonth: number | undefined;
   dateImplementedYear: number | undefined;
-  type: CRTDLTypeName;
 }
 
+type CRTDLParamType = 'cr' | 'tdl' | null;
+
 const initialFormValues: CRTDLFormType = {
-  type: 'cr',
   title: '',
   idNumber: '',
   dateInitiated: '',
@@ -81,13 +78,15 @@ const AddCRTDL = () => {
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  // If updating extracts CRTDL type param, else default to 'cr' type
-  const crtdlType = (params.get('type') || 'cr') as CRTDLParamType;
+  const crtdlType = params.get('type') as CRTDLParamType;
   const crtdlID = params.get('id');
-
   const readOnly = location.hash === '#read-only';
 
   const { showMessageOnNextPage } = useMessage();
+
+  const [crtdlFormType, setCrtdlFormType] = useState<CRTDLParamType>(
+    crtdlType || 'cr'
+  );
 
   const dateMonths: string[] = t('dateMonths', {
     returnObjects: true
@@ -117,9 +116,7 @@ const AddCRTDL = () => {
   const cr = (crData?.planCR || {}) as GetCrQuery['planCR'];
   const { __typename, id, dateImplemented, ...crFormData } = cr;
 
-  // Added type (cr/tdl) to data for use in form/buttons/validation
   const crFormDataFormatted = { ...crFormData } as CRTDLFormType;
-  crFormDataFormatted.type = 'cr';
 
   // Formating ISO date string to month and year number
   if (dateImplemented) {
@@ -135,13 +132,9 @@ const AddCRTDL = () => {
   const tdl = (tdlData?.planTDL || {}) as GetTdlQuery['planTDL'];
   const { __typename: tdlTypename, id: tdlId, ...tdlFormData } = tdl;
 
-  // Added type (cr/tdl) to data for use in form/buttons/validation
-  const tdlFormDataFormatted = { ...tdlFormData } as CRTDLFormType;
-  tdlFormDataFormatted.type = 'tdl';
-
   // Setting the form data from queries based on the type/query param
   const selectedTypeData =
-    crtdlType === 'cr' ? crFormDataFormatted : tdlFormDataFormatted;
+    crtdlType === 'cr' ? crFormDataFormatted : tdlFormData;
   const crtdl = (selectedTypeData || initialFormValues) as CRTDLFormType;
 
   const [createCR] = useCreateCrMutation();
@@ -184,7 +177,7 @@ const AddCRTDL = () => {
     } = formikValues;
 
     if (crtdlID) {
-      if (changes.type === 'cr') {
+      if (crtdlFormType === 'cr') {
         updateCR({
           variables: {
             id: crtdlID,
@@ -209,7 +202,7 @@ const AddCRTDL = () => {
           .then(responseHandler)
           .catch(catchHandler);
       }
-    } else if (changes.type === 'cr') {
+    } else if (crtdlFormType === 'cr') {
       createCR({
         variables: {
           input: {
@@ -269,7 +262,9 @@ const AddCRTDL = () => {
             initialValues={crtdl}
             enableReinitialize
             onSubmit={handleCreateOrUpdateCRTDL}
-            validationSchema={CRTDLValidationSchema}
+            validationSchema={
+              crtdlFormType === 'cr' ? CRValidationSchema : TDLValidationSchema
+            }
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
@@ -338,27 +333,25 @@ const AddCRTDL = () => {
                           type="segmented"
                           className="margin-top-4 margin-bottom-2"
                         >
-                          <Field
-                            as={Button}
+                          <Button
                             type="button"
-                            outline={values.type !== 'cr'}
-                            onClick={() => setFieldValue('type', 'cr')}
+                            outline={crtdlFormType !== 'cr'}
+                            onClick={() => setCrtdlFormType('cr')}
                             className={classNames({
                               'margin-right-0': !!crtdlID
                             })}
                             disabled={!!crtdlID}
                           >
                             {t('crButton')}
-                          </Field>
-                          <Field
-                            as={Button}
+                          </Button>
+                          <Button
                             type="button"
-                            outline={values.type !== 'tdl'}
-                            onClick={() => setFieldValue('type', 'tdl')}
+                            outline={crtdlFormType !== 'tdl'}
+                            onClick={() => setCrtdlFormType('tdl')}
                             disabled={!!crtdlID}
                           >
                             {t('tdlButton')}
-                          </Field>
+                          </Button>
                         </ButtonGroup>
 
                         <Grid desktop={{ col: 12 }}>
@@ -373,7 +366,7 @@ const AddCRTDL = () => {
 
                             <div className="usa-hint margin-top-1">
                               {t('idNumberInfo', {
-                                type: values.type.toUpperCase()
+                                type: crtdlFormType?.toUpperCase()
                               })}
                             </div>
 
@@ -395,7 +388,7 @@ const AddCRTDL = () => {
                             error={!!flatErrors.title}
                           >
                             <Label htmlFor="cr-tdl-title">
-                              {t(`title.${values.type}`)}
+                              {t(`title.${crtdlFormType}`)}
                               <RequiredAsterisk />
                             </Label>
 
@@ -450,10 +443,9 @@ const AddCRTDL = () => {
                           )}
                         </Grid>
                       </Grid>
-
                       <Grid row>
                         <Grid desktop={{ col: 12 }}>
-                          {values.type === 'cr' && (
+                          {crtdlFormType === 'cr' && (
                             <Fieldset>
                               <Label htmlFor="cr-tdl-title">
                                 {t('dateImplemented')}
@@ -501,7 +493,6 @@ const AddCRTDL = () => {
                           )}
 
                           <Divider className="margin-top-4 margin-bottom-2" />
-
                           <FieldGroup
                             scrollElement="note"
                             error={!!flatErrors.note}
@@ -510,7 +501,7 @@ const AddCRTDL = () => {
 
                             <div className="usa-hint margin-top-1">
                               {t('notesInfo', {
-                                type: values.type.toUpperCase()
+                                type: crtdlFormType?.toUpperCase()
                               })}
                             </div>
 
@@ -535,13 +526,16 @@ const AddCRTDL = () => {
                           disabled={
                             !values.idNumber ||
                             !values.dateInitiated ||
-                            !values.title
+                            !values.title ||
+                            (crtdlFormType === 'cr' &&
+                              (!values.dateImplementedMonth ||
+                                !values.dateImplementedYear))
                           }
                           onClick={() => setErrors({})}
                         >
                           {!crtdlID
                             ? t('addCRTDLForm', {
-                                type: values.type.toUpperCase()
+                                type: crtdlFormType?.toUpperCase()
                               })
                             : t('updateCRTDL')}
                         </Button>
