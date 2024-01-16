@@ -67,7 +67,7 @@ const crtdl = {
   dateYear: 'Year',
   dateSelect: '- Select -',
   dateMonths: [
-    '01- January',
+    '01 - January',
     '02 - February',
     '03 - March',
     '04 - April',
