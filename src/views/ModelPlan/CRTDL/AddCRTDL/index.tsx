@@ -28,6 +28,7 @@ import {
   useUpdateCrMutation,
   useUpdateTdlMutation
 } from 'gql/gen/graphql';
+import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -45,16 +46,24 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import './index.scss';
 
-type CRTDLFormType = Omit<
+type CRTDLType = Omit<
   PlanCrCreateInput,
-  'modelPlanID' | '__typename' | 'id'
+  'modelPlanID' | '__typename' | 'id' | 'dateImplemented'
 >;
+
+interface CRTDLFormType extends CRTDLType {
+  dateImplementedMonth: number | undefined;
+  dateImplementedYear: number | undefined;
+}
+
+type CRTDLParamType = 'cr' | 'tdl' | null;
 
 const initialFormValues: CRTDLFormType = {
   title: '',
   idNumber: '',
   dateInitiated: '',
-  dateImplemented: '',
+  dateImplementedMonth: undefined,
+  dateImplementedYear: undefined,
   note: null
 };
 
@@ -69,13 +78,15 @@ const AddCRTDL = () => {
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  const crtdlType = params.get('type');
+  const crtdlType = params.get('type') as CRTDLParamType;
   const crtdlID = params.get('id');
   const readOnly = location.hash === '#read-only';
 
   const { showMessageOnNextPage } = useMessage();
 
-  const [crtdlFormType, setCrtdlFormType] = useState<'cr' | 'tdl'>('cr');
+  const [crtdlFormType, setCrtdlFormType] = useState<CRTDLParamType>(
+    crtdlType || 'cr'
+  );
 
   const dateMonths: string[] = t('dateMonths', {
     returnObjects: true
@@ -119,7 +130,7 @@ const AddCRTDL = () => {
   const [updateTDL] = useUpdateTdlMutation();
 
   const handleCreateOrUpdateCRTDL = (formikValues: CRTDLFormType) => {
-    const { ...changes } = formikValues;
+    const { ...formChanges } = formikValues;
 
     const responseHandler = (response: any) => {
       if (!response?.errors) {
@@ -146,23 +157,34 @@ const AddCRTDL = () => {
       formikRef?.current?.setErrors(errors);
     };
 
+    // Removing dateImplemented from mutation input for TDL or to format CR date
+    const {
+      dateImplementedMonth,
+      dateImplementedYear,
+      ...changes
+    } = formChanges;
+
     if (crtdlID) {
       if (crtdlType === 'cr') {
         updateCR({
           variables: {
             id: crtdlID,
-            changes
+            changes: {
+              ...changes,
+              dateImplemented: DateTime.utc(
+                dateImplementedYear,
+                dateImplementedMonth
+              ).toString()
+            }
           }
         })
           .then(responseHandler)
           .catch(catchHandler);
       } else {
-        // Removing dateImplemented from mutation input for TDL
-        const { dateImplemented, ...tdlInput } = changes;
         updateTDL({
           variables: {
             id: crtdlID,
-            changes: tdlInput
+            changes
           }
         })
           .then(responseHandler)
@@ -173,20 +195,22 @@ const AddCRTDL = () => {
         variables: {
           input: {
             modelPlanID: modelID,
-            ...changes
+            ...changes,
+            dateImplemented: DateTime.utc(
+              dateImplementedYear,
+              dateImplementedMonth
+            ).toString()
           }
         }
       })
         .then(responseHandler)
         .catch(catchHandler);
     } else {
-      // Removing dateImplemented from mutation input for TDL
-      const { dateImplemented, ...tdlInput } = changes;
       createTDL({
         variables: {
           input: {
             modelPlanID: modelID,
-            ...tdlInput
+            ...changes
           }
         }
       })
@@ -343,7 +367,7 @@ const AddCRTDL = () => {
                             error={!!flatErrors.title}
                           >
                             <Label htmlFor="cr-tdl-title">
-                              {t('title')}
+                              {t(`title.${crtdlFormType}`)}
                               <RequiredAsterisk />
                             </Label>
 
@@ -400,46 +424,48 @@ const AddCRTDL = () => {
                       </Grid>
                       <Grid row>
                         <Grid desktop={{ col: 12 }}>
-                          <Fieldset>
-                            <Label htmlFor="cr-tdl-title">
-                              {t('dateImplemented')}
-                              <RequiredAsterisk />
-                            </Label>
+                          {crtdlFormType === 'cr' && (
+                            <Fieldset>
+                              <Label htmlFor="cr-tdl-title">
+                                {t('dateImplemented')}
+                                <RequiredAsterisk />
+                              </Label>
 
-                            <div className="usa-hint margin-top-0">
-                              {t('dateImplementedInfo')}
-                            </div>
+                              <div className="usa-hint margin-top-0">
+                                {t('dateImplementedInfo')}
+                              </div>
 
-                            <DateInputGroup className="display-flex flex-wrap margin-top-neg-1">
-                              <FormGroup className="usa-form-group--month usa-form-group--select width-card-lg margin-right-2">
-                                <Label
-                                  htmlFor="date-implemented-month"
-                                  className="text-normal"
-                                >
-                                  {t('dateMonth')}
-                                </Label>
-                                <Select
-                                  id="date-implemented-month"
-                                  name="dateImplementedMonth"
-                                >
-                                  <option>{t('dateSelect')}</option>
-                                  {dateMonths.map((month, index) => (
-                                    <option value={index + 1}>{month}</option>
-                                  ))}
-                                </Select>
-                              </FormGroup>
+                              <DateInputGroup className="display-flex flex-wrap margin-top-neg-1">
+                                <FormGroup className="usa-form-group--month usa-form-group--select width-card-lg margin-right-2">
+                                  <Label
+                                    htmlFor="date-implemented-month"
+                                    className="text-normal"
+                                  >
+                                    {t('dateMonth')}
+                                  </Label>
+                                  <Select
+                                    id="date-implemented-month"
+                                    name="dateImplementedMonth"
+                                  >
+                                    <option>{t('dateSelect')}</option>
+                                    {dateMonths.map((month, index) => (
+                                      <option value={index + 1}>{month}</option>
+                                    ))}
+                                  </Select>
+                                </FormGroup>
 
-                              <DateInput
-                                id="date-implemented-year"
-                                className="width-10"
-                                name="dateImplementedYear"
-                                label={t('dateYear')}
-                                unit="year"
-                                maxLength={4}
-                                minLength={4}
-                              />
-                            </DateInputGroup>
-                          </Fieldset>
+                                <DateInput
+                                  id="date-implemented-year"
+                                  className="width-10"
+                                  name="dateImplementedYear"
+                                  label={t('dateYear')}
+                                  unit="year"
+                                  maxLength={4}
+                                  minLength={4}
+                                />
+                              </DateInputGroup>
+                            </Fieldset>
+                          )}
 
                           <Divider className="margin-top-4 margin-bottom-2" />
                           <FieldGroup

@@ -75,7 +75,10 @@ const crtdl = {
     '12 - December'
   ],
   dateImplementedInfo: 'For example: April 2024',
-  title: 'CR or TDL title',
+  title: {
+    cr: 'CR title',
+    tdl: 'TDL title'
+  },
   notes: 'Optional notes',
   notesInfo:
     'Add any details about this CR or TDL that would be helpful to know at a glance',
