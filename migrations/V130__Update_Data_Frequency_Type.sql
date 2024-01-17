@@ -3,23 +3,6 @@ ALTER TABLE plan_ops_eval_and_learning
   ALTER COLUMN data_sharing_frequency TYPE TEXT[] USING data_sharing_frequency::TEXT[],
   ALTER COLUMN data_collection_frequency TYPE TEXT[] USING data_collection_frequency::TEXT[];
 
--- Set the modified_dts and modified_by in the case where we perform any modifications
-UPDATE plan_ops_eval_and_learning
-SET
-  modified_dts = now(),
-  modified_by = '00000001-0001-0001-0001-000000000001'
-WHERE
-  'BIANNUALLY' = ANY(data_sharing_frequency) OR
-  'DAILY' = ANY(data_sharing_frequency) OR
-  'WEEKLY' = ANY(data_sharing_frequency) OR
-  'SEMI_MONTHLY' = ANY(data_sharing_frequency) OR
-  'NOT_PLANNING_TO_DO_THIS' = ANY(data_sharing_frequency) OR
-  'BIANNUALLY' = ANY(data_collection_frequency) OR
-  'DAILY' = ANY(data_collection_frequency) OR
-  'WEEKLY' = ANY(data_collection_frequency) OR
-  'SEMI_MONTHLY' = ANY(data_collection_frequency) OR
-  'NOT_PLANNING_TO_DO_THIS' = ANY(data_collection_frequency);
-
 -- Alter plan_ops_eval_and_learning.data_sharing_frequency to use this new type
 UPDATE plan_ops_eval_and_learning
 SET data_sharing_frequency_continually =
@@ -39,7 +22,9 @@ SET data_sharing_frequency_continually =
                                 END, ', ')
             FROM unnest(data_sharing_frequency) AS val
             WHERE val IN ('DAILY', 'WEEKLY'))
-        END
+        END,
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
 WHERE 'DAILY' = ANY(data_sharing_frequency) OR 'WEEKLY' = ANY(data_sharing_frequency);
 
 UPDATE plan_ops_eval_and_learning
@@ -63,7 +48,9 @@ SET data_sharing_frequency_other =
             FROM unnest(data_sharing_frequency) AS val
             WHERE val IN ('SEMI_MONTHLY', 'NOT_PLANNING_TO_DO_THIS')
           )
-        END
+        END,
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
 WHERE 'SEMI_MONTHLY' = ANY(data_sharing_frequency) OR 'NOT_PLANNING_TO_DO_THIS' = ANY(data_sharing_frequency);
 
 ALTER TABLE plan_ops_eval_and_learning
@@ -71,11 +58,15 @@ ALTER TABLE plan_ops_eval_and_learning
 
 -- Append new values to data_sharing_frequency_new based on conditions
 UPDATE plan_ops_eval_and_learning
-SET data_sharing_frequency_new = array_append(data_sharing_frequency_new, 'CONTINUALLY')
+SET data_sharing_frequency_new = array_append(data_sharing_frequency_new, 'CONTINUALLY'),
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
 WHERE 'DAILY' = ANY(data_sharing_frequency) OR 'WEEKLY' = ANY(data_sharing_frequency);
 
 UPDATE plan_ops_eval_and_learning
-SET data_sharing_frequency_new = array_append(data_sharing_frequency_new, 'OTHER')
+SET data_sharing_frequency_new = array_append(data_sharing_frequency_new, 'OTHER'),
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
 WHERE 'SEMI_MONTHLY' = ANY(data_sharing_frequency) OR 'NOT_PLANNING_TO_DO_THIS' = ANY(data_sharing_frequency);
 
 -- Drop old column and rename the new one
@@ -107,7 +98,9 @@ SET data_collection_frequency_continually =
             FROM unnest(data_collection_frequency) AS val
             WHERE val IN ('DAILY', 'WEEKLY')
           )
-        END
+        END,
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
 WHERE 'DAILY' = ANY(data_collection_frequency) OR 'WEEKLY' = ANY(data_collection_frequency);
 
 UPDATE plan_ops_eval_and_learning
@@ -131,7 +124,9 @@ SET data_collection_frequency_other =
             FROM unnest(data_collection_frequency) AS val
             WHERE val IN ('SEMI_MONTHLY', 'NOT_PLANNING_TO_DO_THIS')
           )
-        END
+        END,
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
 WHERE 'SEMI_MONTHLY' = ANY(data_collection_frequency) OR 'NOT_PLANNING_TO_DO_THIS' = ANY(data_collection_frequency);
 
 ALTER TABLE plan_ops_eval_and_learning
@@ -139,11 +134,15 @@ ALTER TABLE plan_ops_eval_and_learning
 
 -- Append new values to data_collection_frequency_new based on conditions
 UPDATE plan_ops_eval_and_learning
-  SET data_collection_frequency_new = array_append(data_collection_frequency_new, 'CONTINUALLY')
+  SET data_collection_frequency_new = array_append(data_collection_frequency_new, 'CONTINUALLY'),
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
   WHERE 'DAILY' = ANY(data_collection_frequency) OR 'WEEKLY' = ANY(data_collection_frequency);
 
 UPDATE plan_ops_eval_and_learning
-  SET data_collection_frequency_new = array_append(data_collection_frequency_new, 'OTHER')
+  SET data_collection_frequency_new = array_append(data_collection_frequency_new, 'OTHER'),
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
   WHERE 'SEMI_MONTHLY' = ANY(data_collection_frequency) OR 'NOT_PLANNING_TO_DO_THIS' = ANY(data_collection_frequency);
 
 -- Drop old column and rename the new one
@@ -163,7 +162,9 @@ SET data_collection_frequency = ARRAY(
            ELSE val
            END
   FROM unnest(data_collection_frequency) AS val
-  WHERE val IN ('DAILY', 'WEEKLY'))
+  WHERE val IN ('DAILY', 'WEEKLY')),
+  modified_by = '00000001-0001-0001-0001-000000000001',
+  modified_dts = now()
 WHERE 'BIANNUALLY' = ANY(data_collection_frequency) OR
   'DAILY' = ANY(data_collection_frequency) OR
   'WEEKLY' = ANY(data_collection_frequency) OR

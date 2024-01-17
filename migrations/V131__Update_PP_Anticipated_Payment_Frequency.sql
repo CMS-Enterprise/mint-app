@@ -2,15 +2,6 @@
 ALTER TABLE plan_payments
   ALTER COLUMN anticipated_payment_frequency TYPE TEXT[] USING anticipated_payment_frequency::TEXT[];
 
--- Set the modified_dts and modified_by in the case where we perform any modifications
-UPDATE plan_payments
-SET
-  modified_dts = now(),
-  modified_by = '00000001-0001-0001-0001-000000000001'
-WHERE 'DAILY' = ANY(anticipated_payment_frequency) OR
-  'WEEKLY' = ANY(anticipated_payment_frequency) OR
-  'SEMIMONTHLY' = ANY(anticipated_payment_frequency);
-
 -- Alter plan_ops_eval_and_learning.data_sharing_frequency to use this new type
 UPDATE plan_payments
 SET anticipated_payment_frequency_continually =
@@ -33,7 +24,9 @@ SET anticipated_payment_frequency_continually =
             FROM unnest(anticipated_payment_frequency) AS val
             WHERE val IN ('DAILY', 'WEEKLY')
           )
-        END
+        END,
+      modified_by = '00000001-0001-0001-0001-000000000001',
+      modified_dts = now()
 WHERE 'DAILY' = ANY(anticipated_payment_frequency) OR 'WEEKLY' = ANY(anticipated_payment_frequency);
 
 UPDATE plan_payments
@@ -55,7 +48,9 @@ SET anticipated_payment_frequency_other =
             FROM unnest(anticipated_payment_frequency) AS val
             WHERE val IN ('SEMIMONTHLY')
           )
-        END
+        END,
+      modified_by = '00000001-0001-0001-0001-000000000001',
+      modified_dts = now()
 WHERE 'SEMIMONTHLY' = ANY(anticipated_payment_frequency);
 
 ALTER TABLE plan_payments
@@ -63,11 +58,15 @@ ALTER TABLE plan_payments
 
 -- Append new values to data_sharing_frequency_new based on conditions
 UPDATE plan_payments
-  SET anticipated_payment_frequency_new = array_append(anticipated_payment_frequency_new, 'CONTINUALLY')
+  SET anticipated_payment_frequency_new = array_append(anticipated_payment_frequency_new, 'CONTINUALLY'),
+        modified_by = '00000001-0001-0001-0001-000000000001',
+        modified_dts = now()
   WHERE 'DAILY' = ANY(anticipated_payment_frequency) OR 'WEEKLY' = ANY(anticipated_payment_frequency);
 
 UPDATE plan_payments
-  SET anticipated_payment_frequency_new = array_append(anticipated_payment_frequency_new, 'OTHER')
+  SET anticipated_payment_frequency_new = array_append(anticipated_payment_frequency_new, 'OTHER'),
+        modified_by = '00000001-0001-0001-0001-000000000001',
+        modified_dts = now()
   WHERE 'SEMIMONTHLY' = ANY(anticipated_payment_frequency);
 
 -- Drop old column and rename the new one
