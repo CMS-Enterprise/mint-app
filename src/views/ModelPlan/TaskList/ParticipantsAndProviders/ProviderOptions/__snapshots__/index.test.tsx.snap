@@ -133,14 +133,14 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="participants-and-providers-additional-frequency-semianually"
+            id="participants-and-providers-additional-frequency-semiannually"
             name="providerAdditionFrequency"
             type="checkbox"
-            value="SEMIANUALLY"
+            value="SEMIANNUALLY"
           />
           <label
             class="usa-checkbox__label"
-            for="participants-and-providers-additional-frequency-semianually"
+            for="participants-and-providers-additional-frequency-semiannually"
           >
             Semi-annually
           </label>
