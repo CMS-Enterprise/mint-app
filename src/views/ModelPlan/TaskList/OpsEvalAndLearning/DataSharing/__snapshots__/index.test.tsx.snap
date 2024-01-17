@@ -206,14 +206,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-sharing-frequency-semianually"
+            id="ops-eval-and-learning-data-sharing-frequency-semiannually"
             name="dataSharingFrequency"
             type="checkbox"
-            value="SEMIANUALLY"
+            value="SEMIANNUALLY"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-sharing-frequency-semianually"
+            for="ops-eval-and-learning-data-sharing-frequency-semiannually"
           >
             Semi-annually
           </label>
@@ -431,14 +431,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-collection-frequency-semianually"
+            id="ops-eval-and-learning-data-collection-frequency-semiannually"
             name="dataCollectionFrequency"
             type="checkbox"
-            value="SEMIANUALLY"
+            value="SEMIANNUALLY"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-collection-frequency-semianually"
+            for="ops-eval-and-learning-data-collection-frequency-semiannually"
           >
             Semi-annually
           </label>

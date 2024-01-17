@@ -141,14 +141,14 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
-                id="beneficiary-selection-frequency-semianually"
+                id="beneficiary-selection-frequency-semiannually"
                 name="beneficiarySelectionFrequency"
                 type="checkbox"
-                value="SEMIANUALLY"
+                value="SEMIANNUALLY"
               />
               <label
                 class="usa-checkbox__label"
-                for="beneficiary-selection-frequency-semianually"
+                for="beneficiary-selection-frequency-semiannually"
               >
                 Semi-annually
               </label>

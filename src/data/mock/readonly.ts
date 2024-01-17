@@ -551,7 +551,7 @@ const paymentsData: PaymentTypes = {
   canParticipantsSelectBetweenPaymentMechanismsHow:
     'Can participants select how',
   canParticipantsSelectBetweenPaymentMechanismsNote: 'Payment mechanisms note',
-  anticipatedPaymentFrequency: [FrequencyType.SEMIANUALLY],
+  anticipatedPaymentFrequency: [FrequencyType.SEMIANNUALLY],
   anticipatedPaymentFrequencyContinually: 'Continually frequency',
   anticipatedPaymentFrequencyOther: 'Other frequency',
   anticipatedPaymentFrequencyNote: 'Payment frequency note',

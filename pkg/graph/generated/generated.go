@@ -9104,7 +9104,7 @@ enum ConfidenceType {
 
 enum FrequencyType {
   ANNUALLY
-  SEMIANUALLY
+  SEMIANNUALLY
   QUARTERLY
   MONTHLY
   CONTINUALLY
