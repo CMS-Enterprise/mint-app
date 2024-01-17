@@ -254,6 +254,10 @@ export type TranslationParticipantsAndProviders = {
   providerLeaveMethod: TranslationFieldPropertiesWithOptions<ProviderLeaveType>;
   providerLeaveMethodOther: TranslationFieldProperties;
   providerLeaveMethodNote: TranslationFieldProperties;
+  providerRemovalFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  providerRemovalFrequencyContinually: TranslationFieldProperties;
+  providerRemovalFrequencyOther: TranslationFieldProperties;
+  providerRemovalFrequencyNote: TranslationFieldProperties;
   providerOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   providerOverlapHierarchy: TranslationFieldProperties;
   providerOverlapNote: TranslationFieldProperties;

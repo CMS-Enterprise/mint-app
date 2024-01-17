@@ -148,6 +148,10 @@ export default gql`
         providerLeaveMethod
         providerLeaveMethodOther
         providerLeaveMethodNote
+        providerRemovalFrequency
+        providerRemovalFrequencyContinually
+        providerRemovalFrequencyOther
+        providerRemovalFrequencyNote
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote

@@ -154,6 +154,10 @@ const csvFields = [
   'participantsAndProviders.providerLeaveMethod', // array
   'participantsAndProviders.providerLeaveMethodOther',
   'participantsAndProviders.providerLeaveMethodNote',
+  'participantsAndProviders.providerRemovalFrequency',
+  'participantsAndProviders.providerRemovalFrequencyContinually',
+  'participantsAndProviders.providerRemovalFrequencyOther',
+  'participantsAndProviders.providerRemovalFrequencyNote',
   'participantsAndProviders.providerOverlap',
   'participantsAndProviders.providerOverlapHierarchy',
   'participantsAndProviders.providerOverlapNote',
