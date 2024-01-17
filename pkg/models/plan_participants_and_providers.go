@@ -62,6 +62,10 @@ type PlanParticipantsAndProviders struct {
 	ProviderLeaveMethod                  pq.StringArray `json:"providerLeaveMethod" db:"provider_leave_method"`
 	ProviderLeaveMethodOther             *string        `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
 	ProviderLeaveMethodNote              *string        `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
+	ProviderRemovalFrequency             pq.StringArray `json:"providerRemovalFrequency" db:"provider_removal_frequency" statusWeight:"1"`
+	ProviderRemovalFrequencyContinually  *string        `json:"providerRemovalFrequencyContinually" db:"provider_removal_frequency_continually"`
+	ProviderRemovalFrequencyOther        *string        `json:"providerRemovalFrequencyOther" db:"provider_removal_frequency_other"`
+	ProviderRemovalFrequencyNote         *string        `json:"providerRemovalFrequencyNote" db:"provider_removal_frequency_note"`
 	ProviderOverlap                      *OverlapType   `json:"providerOverlap" db:"provider_overlap" statusWeight:"1"`
 	ProviderOverlapHierarchy             *string        `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
 	ProviderOverlapNote                  *string        `json:"providerOverlapNote" db:"provider_overlap_note"`

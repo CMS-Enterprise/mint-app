@@ -1868,6 +1868,10 @@ export type PlanParticipantsAndProviders = {
   providerOverlap?: Maybe<OverlapType>;
   providerOverlapHierarchy?: Maybe<Scalars['String']['output']>;
   providerOverlapNote?: Maybe<Scalars['String']['output']>;
+  providerRemovalFrequency: Array<FrequencyType>;
+  providerRemovalFrequencyContinually?: Maybe<Scalars['String']['output']>;
+  providerRemovalFrequencyNote?: Maybe<Scalars['String']['output']>;
+  providerRemovalFrequencyOther?: Maybe<Scalars['String']['output']>;
   readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
   readyForClearanceByUserAccount?: Maybe<UserAccount>;
   readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
@@ -1932,6 +1936,10 @@ export type PlanParticipantsAndProvidersChanges = {
   providerOverlap?: InputMaybe<OverlapType>;
   providerOverlapHierarchy?: InputMaybe<Scalars['String']['input']>;
   providerOverlapNote?: InputMaybe<Scalars['String']['input']>;
+  providerRemovalFrequency?: InputMaybe<Array<FrequencyType>>;
+  providerRemovalFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
+  providerRemovalFrequencyNote?: InputMaybe<Scalars['String']['input']>;
+  providerRemovalFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   recruitmentMethod?: InputMaybe<RecruitmentType>;
   recruitmentNote?: InputMaybe<Scalars['String']['input']>;
   recruitmentOther?: InputMaybe<Scalars['String']['input']>;

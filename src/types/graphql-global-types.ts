@@ -1014,6 +1014,10 @@ export interface PlanParticipantsAndProvidersChanges {
   providerLeaveMethod?: ProviderLeaveType[] | null;
   providerLeaveMethodOther?: string | null;
   providerLeaveMethodNote?: string | null;
+  providerRemovalFrequency?: FrequencyType[] | null;
+  providerRemovalFrequencyContinually?: string | null;
+  providerRemovalFrequencyOther?: string | null;
+  providerRemovalFrequencyNote?: string | null;
   providerOverlap?: OverlapType | null;
   providerOverlapHierarchy?: string | null;
   providerOverlapNote?: string | null;
