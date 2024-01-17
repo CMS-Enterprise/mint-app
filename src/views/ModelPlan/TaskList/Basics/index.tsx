@@ -417,6 +417,8 @@ const BasicsContent = () => {
                                   }
                                   value={key}
                                   checked={values.basics.modelCategory === key}
+                                  // the onChange below is necessary to have a dynamic interaction
+                                  // with the Additional Model Categories question
                                   onChange={() => {
                                     setFieldValue('basics.modelCategory', key);
                                     if (
