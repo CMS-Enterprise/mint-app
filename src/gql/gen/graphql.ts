@@ -470,6 +470,8 @@ export enum GeographyType {
 
 export enum KeyCharacteristic {
   EPISODE_BASED = 'EPISODE_BASED',
+  MEDICAID_MODEL = 'MEDICAID_MODEL',
+  MEDICARE_FFS_MODEL = 'MEDICARE_FFS_MODEL',
   OTHER = 'OTHER',
   PART_C = 'PART_C',
   PART_D = 'PART_D',
