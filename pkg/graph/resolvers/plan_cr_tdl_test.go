@@ -27,8 +27,8 @@ func (suite *ResolverSuite) TestPlanCRCreate() {
 	suite.NoError(err)
 	suite.EqualValues(cr.ModelPlanID, plan.ID)
 	suite.EqualValues(cr.IDNumber, "123-456")
-	suite.EqualValues(cr.DateInitiated.UTC(), dateInitiated)
-	suite.EqualValues(cr.DateImplemented.UTC(), dateImplemented)
+	suite.WithinDuration(cr.DateInitiated.UTC(), dateInitiated, time.Second)     // psql truncates dates, so just make sure they're close
+	suite.WithinDuration(cr.DateImplemented.UTC(), dateImplemented, time.Second) // psql truncates dates, so just make sure they're close
 	suite.EqualValues(cr.Title, "My CR")
 	suite.EqualValues(*cr.Note, note)
 }
@@ -52,7 +52,7 @@ func (suite *ResolverSuite) TestPlanTDLCreate() {
 	suite.NoError(err)
 	suite.EqualValues(tdl.ModelPlanID, plan.ID)
 	suite.EqualValues(tdl.IDNumber, "123-456")
-	suite.EqualValues(tdl.DateInitiated.UTC(), dateInitiated)
+	suite.WithinDuration(tdl.DateInitiated.UTC(), dateInitiated, time.Second) // psql truncates dates, so just make sure they're close
 	suite.EqualValues(tdl.Title, "My TDL")
 	suite.EqualValues(*tdl.Note, note)
 }
@@ -80,8 +80,8 @@ func (suite *ResolverSuite) TestPlanCRUpdate() {
 	suite.EqualValues(cr.ID, result.ID)
 	suite.EqualValues(cr.ModelPlanID, result.ModelPlanID)
 	suite.EqualValues(result.Title, changes["title"])
-	suite.EqualValues(result.DateInitiated.UTC(), dateInitiatedNew)
-	suite.EqualValues(result.DateImplemented.UTC(), dateImplementedNew)
+	suite.WithinDuration(result.DateInitiated.UTC(), dateInitiatedNew, time.Second)     // psql truncates dates, so just make sure they're close
+	suite.WithinDuration(result.DateImplemented.UTC(), dateImplementedNew, time.Second) // psql truncates dates, so just make sure they're close
 	suite.EqualValues(result.IDNumber, changes["idNumber"])
 	suite.EqualValues(*result.Note, changes["note"])
 }
@@ -106,7 +106,7 @@ func (suite *ResolverSuite) TestPlanTDLUpdate() {
 	suite.EqualValues(tdl.ID, result.ID)
 	suite.EqualValues(tdl.ModelPlanID, result.ModelPlanID)
 	suite.EqualValues(result.Title, changes["title"])
-	suite.EqualValues(result.DateInitiated.UTC(), dateInitiatedNew)
+	suite.WithinDuration(result.DateInitiated.UTC(), dateInitiatedNew, time.Second) // psql truncates dates, so just make sure they're close
 	suite.EqualValues(result.IDNumber, changes["idNumber"])
 	suite.EqualValues(*result.Note, changes["note"])
 }
