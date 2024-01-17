@@ -9,8 +9,8 @@ import (
 // TestPlanCRCreate tests creating a new plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCRCreate() {
 	plan := suite.createModelPlan("My Plan")
-	dateInitiated := time.Now()
-	dateImplemented := time.Now().Add(time.Hour * 48)
+	dateInitiated := time.Now().UTC()
+	dateImplemented := time.Now().Add(time.Hour * 48).UTC()
 	note := "My comments"
 
 	input := &model.PlanCRCreateInput{
@@ -27,8 +27,8 @@ func (suite *ResolverSuite) TestPlanCRCreate() {
 	suite.NoError(err)
 	suite.EqualValues(cr.ModelPlanID, plan.ID)
 	suite.EqualValues(cr.IDNumber, "123-456")
-	suite.EqualValues(*cr.DateInitiated, dateInitiated)
-	suite.EqualValues(*cr.DateImplemented, dateImplemented)
+	suite.EqualValues(cr.DateInitiated.UTC(), dateInitiated)
+	suite.EqualValues(cr.DateImplemented.UTC(), dateImplemented)
 	suite.EqualValues(cr.Title, "My CR")
 	suite.EqualValues(*cr.Note, note)
 }
@@ -36,7 +36,7 @@ func (suite *ResolverSuite) TestPlanCRCreate() {
 // TestPlanTDLCreate tests creating a new plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanTDLCreate() {
 	plan := suite.createModelPlan("My Plan")
-	dateInitiated := time.Now()
+	dateInitiated := time.Now().UTC()
 	note := "My comments"
 
 	input := &model.PlanTDLCreateInput{
@@ -52,7 +52,7 @@ func (suite *ResolverSuite) TestPlanTDLCreate() {
 	suite.NoError(err)
 	suite.EqualValues(tdl.ModelPlanID, plan.ID)
 	suite.EqualValues(tdl.IDNumber, "123-456")
-	suite.EqualValues(*tdl.DateInitiated, dateInitiated)
+	suite.EqualValues(tdl.DateInitiated.UTC(), dateInitiated)
 	suite.EqualValues(tdl.Title, "My TDL")
 	suite.EqualValues(*tdl.Note, note)
 }
@@ -60,10 +60,10 @@ func (suite *ResolverSuite) TestPlanTDLCreate() {
 // TestPlanCRUpdate tests updateing a plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCRUpdate() {
 	plan := suite.createModelPlan("My Plan")
-	dateInitiated := time.Now()
-	dateImplemented := time.Now().Add(time.Hour * 48)
-	dateInitiatedNew := dateInitiated.Add(time.Hour * 48)
-	dateImplementedNew := dateImplemented.Add(time.Hour * 48)
+	dateInitiated := time.Now().UTC()
+	dateImplemented := time.Now().Add(time.Hour * 48).UTC()
+	dateInitiatedNew := dateInitiated.Add(time.Hour * 48).UTC()
+	dateImplementedNew := dateImplemented.Add(time.Hour * 48).UTC()
 	cr := suite.createPlanCR(plan, "123-456", dateInitiated, dateImplemented, "My CR", "My comments")
 
 	changes := map[string]interface{}{
@@ -80,8 +80,8 @@ func (suite *ResolverSuite) TestPlanCRUpdate() {
 	suite.EqualValues(cr.ID, result.ID)
 	suite.EqualValues(cr.ModelPlanID, result.ModelPlanID)
 	suite.EqualValues(result.Title, changes["title"])
-	suite.EqualValues(*result.DateInitiated, dateInitiatedNew)
-	suite.EqualValues(*result.DateImplemented, dateImplementedNew)
+	suite.EqualValues(result.DateInitiated.UTC(), dateInitiatedNew)
+	suite.EqualValues(result.DateImplemented.UTC(), dateImplementedNew)
 	suite.EqualValues(result.IDNumber, changes["idNumber"])
 	suite.EqualValues(*result.Note, changes["note"])
 }
@@ -89,8 +89,8 @@ func (suite *ResolverSuite) TestPlanCRUpdate() {
 // TestPlanTDLUpdate tests updateing a plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanTDLUpdate() {
 	plan := suite.createModelPlan("My Plan")
-	dateInitiated := time.Now()
-	dateInitiatedNew := dateInitiated.Add(time.Hour * 48)
+	dateInitiated := time.Now().UTC()
+	dateInitiatedNew := dateInitiated.Add(time.Hour * 48).UTC()
 	tdl := suite.createPlanTDL(plan, "123-456", dateInitiated, "My TDL", "My comments")
 
 	changes := map[string]interface{}{
@@ -100,13 +100,13 @@ func (suite *ResolverSuite) TestPlanTDLUpdate() {
 		"dateInitiated": dateInitiatedNew,
 	}
 
-	result, err := PlanCRUpdate(suite.testConfigs.Logger, tdl.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	result, err := PlanTDLUpdate(suite.testConfigs.Logger, tdl.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(tdl.ID, result.ID)
 	suite.EqualValues(tdl.ModelPlanID, result.ModelPlanID)
 	suite.EqualValues(result.Title, changes["title"])
-	suite.EqualValues(*result.DateInitiated, dateInitiatedNew)
+	suite.EqualValues(result.DateInitiated.UTC(), dateInitiatedNew)
 	suite.EqualValues(result.IDNumber, changes["idNumber"])
 	suite.EqualValues(*result.Note, changes["note"])
 }
@@ -142,8 +142,8 @@ func (suite *ResolverSuite) TestPlanTDLDelete() {
 // TestPlanCRGet returns a plan_cr_tdl record
 func (suite *ResolverSuite) TestPlanCRGet() {
 	plan := suite.createModelPlan("My Plan")
-	dateInitiated := time.Now()
-	dateImplemented := time.Now().Add(time.Hour * 48)
+	dateInitiated := time.Now().UTC()
+	dateImplemented := time.Now().Add(time.Hour * 48).UTC()
 
 	cr := suite.createPlanCR(plan, "123-456", dateInitiated, dateImplemented, "My CR", "My comments")
 
@@ -156,7 +156,7 @@ func (suite *ResolverSuite) TestPlanCRGet() {
 // TestPlanTDLGet returns a plan_cr_tdl record
 func (suite *ResolverSuite) TestPlanTDLGet() {
 	plan := suite.createModelPlan("My Plan")
-	dateInitiated := time.Now()
+	dateInitiated := time.Now().UTC()
 
 	tdl := suite.createPlanTDL(plan, "123-456", dateInitiated, "My TDL", "My comments")
 
