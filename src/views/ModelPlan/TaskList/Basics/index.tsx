@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
@@ -17,7 +17,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   CmsCenter,
   GetBasicsQuery,
@@ -69,10 +69,6 @@ const BasicsContent = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const history = useHistory();
-
-  const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(
-    formikRef?.current?.values.basics.cmsCenters.includes(CmsCenter.CMMI)
-  );
 
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
@@ -514,63 +510,32 @@ const BasicsContent = () => {
                           error={!!flatErrors['basics.cmsCenters']}
                           className="margin-top-4"
                         >
-                          <Fieldset>
-                            <FieldArray
-                              name="basics.cmsCenters"
-                              render={arrayHelpers => (
-                                <>
-                                  <Label htmlFor="plan-basics-cmsCenters">
-                                    {basicsT('cmsCenters.label')}
-                                    <RequiredAsterisk />
-                                  </Label>
+                          <Label htmlFor="plan-basics-cmsCenters">
+                            {basicsT('cmsCenters.label')}
+                            <RequiredAsterisk />
+                          </Label>
 
-                                  <FieldErrorMsg>
-                                    {flatErrors['basics.cmsCenters']}
-                                  </FieldErrorMsg>
+                          <FieldErrorMsg>
+                            {flatErrors['basics.cmsCenters']}
+                          </FieldErrorMsg>
 
-                                  {getKeys(cmsCentersConfig.options).map(
-                                    center => {
-                                      return (
-                                        <Field
-                                          key={center}
-                                          as={CheckboxField}
-                                          id={`new-plan-cmsCenters-${center}`}
-                                          name="basics.cmsCenters"
-                                          label={
-                                            cmsCentersConfig.options[center]
-                                          }
-                                          value={center}
-                                          checked={values.basics.cmsCenters.includes(
-                                            center
-                                          )}
-                                          onChange={(
-                                            e: React.ChangeEvent<HTMLInputElement>
-                                          ) => {
-                                            if (e.target.checked) {
-                                              arrayHelpers.push(e.target.value);
-                                            } else {
-                                              const idx = values.basics.cmsCenters.indexOf(
-                                                e.target.value as CmsCenter
-                                              );
-                                              arrayHelpers.remove(idx);
-                                            }
-                                            if (
-                                              e.target.value === CmsCenter.CMMI
-                                            ) {
-                                              setAreCmmiGroupsShown(
-                                                !areCmmiGroupsShown
-                                              );
-                                            }
-                                          }}
-                                        />
-                                      );
-                                    }
-                                  )}
-                                </>
-                              )}
-                            />
-                          </Fieldset>
+                          {getKeys(cmsCentersConfig.options).map(center => {
+                            return (
+                              <Field
+                                key={center}
+                                as={CheckboxField}
+                                id={`new-plan-cmsCenters-${center}`}
+                                name="basics.cmsCenters"
+                                label={cmsCentersConfig.options[center]}
+                                value={center}
+                                checked={values.basics.cmsCenters.includes(
+                                  center
+                                )}
+                              />
+                            );
+                          })}
                         </FieldGroup>
+
                         <FieldGroup
                           error={!!flatErrors['basics.cmmiGroups']}
                           className="margin-top-4"
