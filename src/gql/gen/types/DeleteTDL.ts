@@ -4,23 +4,23 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCRTDL
+// GraphQL mutation operation: DeleteTDL
 // ====================================================
 
-export interface GetCRTDL_crTdl {
-  __typename: "PlanCrTdl";
+export interface DeleteTDL_deletePlanTDL {
+  __typename: "PlanTDL";
   id: UUID;
   modelPlanID: UUID;
-  title: string;
   idNumber: string;
   dateInitiated: Time;
+  title: string;
   note: string | null;
 }
 
-export interface GetCRTDL {
-  crTdl: GetCRTDL_crTdl;
+export interface DeleteTDL {
+  deletePlanTDL: DeleteTDL_deletePlanTDL;
 }
 
-export interface GetCRTDLVariables {
+export interface DeleteTDLVariables {
   id: UUID;
 }

@@ -50,8 +50,36 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
               class="grid-row"
               data-testid="grid"
             >
+              <ul
+                class="usa-button-group usa-button-group--segmented margin-top-4 margin-bottom-2"
+              >
+                <li
+                  class="usa-button-group__item"
+                >
+                  <button
+                    class="usa-button margin-right-0"
+                    data-testid="button"
+                    disabled=""
+                    type="button"
+                  >
+                    Change Request (CR)
+                  </button>
+                </li>
+                <li
+                  class="usa-button-group__item"
+                >
+                  <button
+                    class="usa-button usa-button--outline"
+                    data-testid="button"
+                    disabled=""
+                    type="button"
+                  >
+                    Technical Direction Letter (TDL)
+                  </button>
+                </li>
+              </ul>
               <div
-                class="desktop:grid-col-6"
+                class="desktop:grid-col-12"
                 data-testid="grid"
               >
                 <div
@@ -74,17 +102,51 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                   <div
                     class="usa-hint margin-top-1"
                   >
-                    Ex. TDL-123456
+                    Please include the prefix. Ex. CR-123456
                   </div>
+                  <div
+                    class="input-maxw"
+                  >
+                    <input
+                      class="usa-input"
+                      data-testid="cr-tdl-id-number"
+                      id="cr-tdl-id-number"
+                      maxlength="50"
+                      name="idNumber"
+                      value="CR123"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="usa-form-group"
+                  data-scroll="title"
+                >
+                  <label
+                    class="usa-label"
+                    data-testid="label"
+                    for="cr-tdl-title"
+                  >
+                    CR title
+                    <span
+                      aria-label="(Field required)"
+                      class="text-red margin-x-05"
+                    >
+                      *
+                    </span>
+                  </label>
                   <input
                     class="usa-input"
-                    data-testid="cr-tdl-id-number"
-                    id="cr-tdl-id-number"
-                    maxlength="50"
-                    name="idNumber"
-                    value="CR123"
+                    data-testid="cr-tdl-title"
+                    id="cr-tdl-title"
+                    name="title"
+                    value="My CR"
                   />
                 </div>
+              </div>
+              <div
+                class="desktop:grid-col-6"
+                data-testid="grid"
+              >
                 <div
                   class="usa-form-group"
                   data-scroll="dateInitiated"
@@ -94,7 +156,7 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                     data-testid="label"
                     for="cr-tdl-date-initiated"
                   >
-                    Date initiated
+                    Initiated date
                     <span
                       aria-label="(Field required)"
                       class="text-red margin-x-05"
@@ -172,16 +234,16 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                 class="desktop:grid-col-12"
                 data-testid="grid"
               >
-                <div
-                  class="usa-form-group"
-                  data-scroll="title"
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
                 >
                   <label
                     class="usa-label"
                     data-testid="label"
                     for="cr-tdl-title"
                   >
-                    CR or TDL title
+                    Implementation date
                     <span
                       aria-label="(Field required)"
                       class="text-red margin-x-05"
@@ -189,19 +251,128 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                       *
                     </span>
                   </label>
-                  <textarea
-                    aria-labelledby="label-cr-tdl-title hint-cr-tdl-title"
-                    class="maxw-none mint-textarea usa-textarea"
-                    data-testid="cr-tdl-title"
-                    id="cr-tdl-title"
-                    maxlength="5000"
-                    name="title"
+                  <div
+                    class="usa-hint margin-top-0"
                   >
-                    My CR
-                  </textarea>
-                </div>
+                    For example: April 2024
+                  </div>
+                  <div
+                    class="usa-memorable-date display-flex flex-wrap margin-top-neg-1"
+                    data-testid="dateInputGroup"
+                  >
+                    <div
+                      class="usa-form-group usa-form-group--month usa-form-group--select width-card-lg margin-right-2"
+                      data-testid="formGroup"
+                    >
+                      <label
+                        class="usa-label text-normal"
+                        data-testid="label"
+                        for="date-implemented-month"
+                      >
+                        Month
+                      </label>
+                      <select
+                        class="usa-select"
+                        data-testid="Select"
+                        id="date-implemented-month"
+                        name="dateImplementedMonth"
+                      >
+                        <option
+                          disabled=""
+                          value=""
+                        >
+                          - Select -
+                        </option>
+                        <option
+                          value="0"
+                        >
+                          01 - January
+                        </option>
+                        <option
+                          value="1"
+                        >
+                          02 - February
+                        </option>
+                        <option
+                          value="2"
+                        >
+                          03 - March
+                        </option>
+                        <option
+                          value="3"
+                        >
+                          04 - April
+                        </option>
+                        <option
+                          value="4"
+                        >
+                          05 - May
+                        </option>
+                        <option
+                          value="5"
+                        >
+                          06 - June
+                        </option>
+                        <option
+                          value="6"
+                        >
+                          07 - July
+                        </option>
+                        <option
+                          value="7"
+                        >
+                          08 - August
+                        </option>
+                        <option
+                          value="8"
+                        >
+                          09 - September
+                        </option>
+                        <option
+                          value="9"
+                        >
+                          10 - October
+                        </option>
+                        <option
+                          value="10"
+                        >
+                          11 - November
+                        </option>
+                        <option
+                          value="11"
+                        >
+                          12 - December
+                        </option>
+                      </select>
+                    </div>
+                    <div
+                      class="usa-form-group usa-form-group--year"
+                      data-testid="formGroup"
+                    >
+                      <label
+                        class="usa-label"
+                        data-testid="label"
+                        for="date-implemented-year"
+                      >
+                        Year
+                      </label>
+                      <input
+                        class="usa-input width-10"
+                        data-testid="textInput"
+                        id="date-implemented-year"
+                        inputmode="numeric"
+                        maxlength="4"
+                        minlength="4"
+                        name="dateImplementedYear"
+                        pattern="[0-9]*"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </fieldset>
                 <div
-                  class="mint-divider margin-y-4"
+                  class="mint-divider margin-top-4 margin-bottom-2"
                 />
                 <div
                   class="usa-form-group"
@@ -217,7 +388,7 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
                   <div
                     class="usa-hint margin-top-1"
                   >
-                    Add any details about this CR or TDL that would be helpful to know at a glance
+                    Add any details about this CR that would be helpful to know at a glance
                   </div>
                   <textarea
                     class="usa-textarea height-15"
@@ -236,6 +407,7 @@ exports[`Model Plan Add CR and TDL page > matches snapshot 1`] = `
               <button
                 class="usa-button"
                 data-testid="button"
+                disabled=""
                 id="submit-cr-and-tdl"
                 type="submit"
               >
