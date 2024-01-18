@@ -389,7 +389,7 @@ export enum FrequencyType {
   MONTHLY = 'MONTHLY',
   OTHER = 'OTHER',
   QUARTERLY = 'QUARTERLY',
-  SEMIANUALLY = 'SEMIANUALLY'
+  SEMIANNUALLY = 'SEMIANNUALLY'
 }
 
 export enum FundingSource {

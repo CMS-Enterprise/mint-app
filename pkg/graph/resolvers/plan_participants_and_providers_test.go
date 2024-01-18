@@ -74,13 +74,16 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"confidenceNote":     "This is a confidence note",
-		"recruitmentNote":    "This is a recruitment note",
-		"estimateConfidence": string(models.ConfidenceSlightly),
+		"confidenceNote":                       "This is a confidence note",
+		"recruitmentNote":                      "This is a recruitment note",
+		"estimateConfidence":                   string(models.ConfidenceSlightly),
+		"providerAdditionFrequencyContinually": "This is a provider addition frequency continually note",
 	}
 
 	updatedPP, err := PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
+
+	suite.EqualValues("This is a provider addition frequency continually note", *updatedPP.ProviderAdditionFrequencyContinually)
 
 	suite.Nil(updatedPP.Participants)
 	suite.Nil(updatedPP.MedicareProviderType)
@@ -184,6 +187,7 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersGetByModelPlanID() {
 	suite.Nil(pp.ParticipantsIdsOther)
 	suite.Nil(pp.ParticipantsIDSNote)
 	suite.Nil(pp.ProviderAdditionFrequency)
+	suite.Nil(pp.ProviderAdditionFrequencyContinually)
 	suite.Nil(pp.ProviderAdditionFrequencyOther)
 	suite.Nil(pp.ProviderAdditionFrequencyNote)
 	suite.Nil(pp.ProviderAddMethod)

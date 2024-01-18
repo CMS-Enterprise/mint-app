@@ -212,7 +212,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'beneficiarySelectionFrequencyContinually',

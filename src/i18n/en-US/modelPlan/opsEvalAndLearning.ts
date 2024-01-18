@@ -928,7 +928,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'dataSharingFrequencyContinually',
@@ -1003,7 +1003,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'dataCollectionFrequencyContinually',
