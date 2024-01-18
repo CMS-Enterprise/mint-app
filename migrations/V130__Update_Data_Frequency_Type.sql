@@ -197,7 +197,7 @@ ALTER TABLE plan_beneficiaries
 
 -- Create a new beneficiary_selection_frequency column with the new type
 ALTER TABLE plan_beneficiaries
-  ADD COLUMN beneficiary_selection_frequency TYPE FREQUENCY_TYPE[];
+  ADD COLUMN beneficiary_selection_frequency FREQUENCY_TYPE[];
 
 -- Update the values for already existing rows
 UPDATE plan_beneficiaries
@@ -218,7 +218,7 @@ ALTER TABLE plan_participants_and_providers
 
 -- Create a new provider_addition_frequency column with the new type
 ALTER TABLE plan_participants_and_providers
-  ADD COLUMN provider_addition_frequency TYPE FREQUENCY_TYPE[];
+  ADD COLUMN provider_addition_frequency FREQUENCY_TYPE[];
 
 -- Update the values for already existing rows
 UPDATE plan_participants_and_providers
