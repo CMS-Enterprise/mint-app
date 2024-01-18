@@ -407,7 +407,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     gqlField: 'geographiesRegionTypes',
     goField: 'GeographiesRegionTypes',
     dbField: 'geographies_region_types',
-    label: '',
+    label: 'Geography region types',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
