@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"go.uber.org/zap"
 
@@ -30,6 +31,19 @@ func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uu
 	return result.([]*models.ExistingModelLink), nil
 }
 
+// ExistingModelLinksGetByModelPlanIDLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
+func ExistingModelLinksGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.ExistingModelLinks, error) {
+	linkCollection, err := ExistingModelLinkGetByModelPlanIDLOADER(ctx, modelPlanID)
+
+	if err != nil {
+		return nil, err
+	}
+	links := models.ExistingModelLinks{
+		Links: linkCollection,
+	}
+	return &links, nil
+}
+
 // ExistingModelLinksUpdate creates or deletes existing model links based on the list provided.
 func ExistingModelLinksUpdate(logger *zap.Logger, store *storage.Store, principal authentication.Principal, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
 	link := models.NewExistingModelLink(principal.Account().ID, modelPlanID, nil, nil) // this is for access check
@@ -54,5 +68,19 @@ func ExistingModelLinkGetByID(logger *zap.Logger, store *storage.Store, principa
 		return nil, err
 	}
 	return retLink, err
+
+}
+
+// ExistingModelLinkGetModel conditionally returns either an ExistingModel, or a ModelPlan that is connected in an existing model link
+func ExistingModelLinkGetModel(ctx context.Context, link *models.ExistingModelLink) (models.LinkedExistingModel, error) {
+	if link.CurrentModelPlanID != nil {
+		//TODO: figure this out, potential nil pointer dereference
+		return ModelPlanGetByIDLOADER(ctx, *link.CurrentModelPlanID)
+	}
+
+	if link.ExistingModelID != nil {
+		return ExistingModelGetByIDLOADER(ctx, *link.ExistingModelID)
+	}
+	return nil, fmt.Errorf("no valid model for existing model link %s for model_plan_id %s", link.ID, link.ModelPlanID)
 
 }

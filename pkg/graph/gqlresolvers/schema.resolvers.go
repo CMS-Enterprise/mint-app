@@ -48,6 +48,11 @@ func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *m
 	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
 }
 
+// Model is the resolver for the model field.
+func (r *existingModelLinkResolver) Model(ctx context.Context, obj *models.ExistingModelLink) (models.LinkedExistingModel, error) {
+	return resolvers.ExistingModelLinkGetModel(ctx, obj)
+}
+
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
@@ -136,11 +141,6 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
 	return resolvers.OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
-}
-
-// ExistingModelLinks is the resolver for the existingModelLinks field.
-func (r *modelPlanResolver) ExistingModelLinks(ctx context.Context, obj *models.ModelPlan) ([]*models.ExistingModelLink, error) {
-	return resolvers.ExistingModelLinkGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -633,6 +633,12 @@ func (r *planGeneralCharacteristicsResolver) ExistingModelPlan(ctx context.Conte
 	}
 
 	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
+}
+
+// ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
+func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModelLinks, error) {
+	return resolvers.ExistingModelLinksGetByModelPlanIDLOADER(ctx, obj.ID)
+	//TODO: Refactor this to use the question field
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
