@@ -2032,39 +2032,6 @@ enum ConfidenceType {
   COMPLETELY
 }
 
-# enum FrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   ROLLING
-#   OTHER
-# }
-
-
-# enum DataFrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   SEMI_MONTHLY
-#   WEEKLY
-#   DAILY
-#   OTHER
-#   NOT_PLANNING_TO_DO_THIS
-# }
-
-# enum AnticipatedPaymentFrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   SEMIMONTHLY
-#   WEEKLY
-#   DAILY
-#   OTHER
-# }
-
 enum FrequencyType {
   ANNUALLY
   SEMIANNUALLY
