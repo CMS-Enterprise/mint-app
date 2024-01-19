@@ -254,6 +254,18 @@ describe('The Model Plan Payment Form', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.get('#payment-reconciliation-frequency-quarterly')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-reconciliation-frequency-other')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#payment-reconciliation-frequency-other-text')
+      .type('Payment Frequency Payments Other')
+      .should('have.value', 'Payment Frequency Payments Other');
+
     cy.get('#payment-payment-start-date')
       .type('10/26/2028')
       .should('have.value', '10/26/2028');

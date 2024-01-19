@@ -845,6 +845,11 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 	return models.ConvertEnums[models.FrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
+// PaymentReconciliationFrequency is the resolver for the paymentReconciliationFrequency field.
+func (r *planPaymentsResolver) PaymentReconciliationFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.PaymentReconciliationFrequency), nil
+}
+
 // PossibleSolutions is the resolver for the possibleSolutions field.
 func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)

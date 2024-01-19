@@ -359,6 +359,10 @@ export default gql`
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively
         anticipateReconcilingPaymentsRetrospectivelyNote
+        paymentReconciliationFrequency
+        paymentReconciliationFrequencyContinually
+        paymentReconciliationFrequencyOther
+        paymentReconciliationFrequencyNote
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {
