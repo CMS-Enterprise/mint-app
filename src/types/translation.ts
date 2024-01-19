@@ -224,6 +224,14 @@ export type TranslationParticipantsAndProviders = {
   selectionOther: TranslationFieldProperties;
   selectionNote: TranslationFieldProperties;
   // Communication
+  participantAddedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  participantAddedFrequencyContinually: TranslationFieldProperties;
+  participantAddedFrequencyOther: TranslationFieldProperties;
+  participantAddedFrequencyNote: TranslationFieldProperties;
+  participantRemovedFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  participantRemovedFrequencyContinually: TranslationFieldProperties;
+  participantRemovedFrequencyOther: TranslationFieldProperties;
+  participantRemovedFrequencyNote: TranslationFieldProperties;
   communicationMethod: TranslationFieldPropertiesWithOptions<ParticipantCommunicationType>;
   communicationMethodOther: TranslationFieldProperties;
   communicationNote: TranslationFieldProperties;

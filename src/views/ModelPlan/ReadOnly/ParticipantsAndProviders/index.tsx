@@ -37,6 +37,8 @@ const ReadOnlyParticipantsAndProviders = ({
   const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const {
+    participantAddedFrequency: participantAddedFrequencyConfig,
+    participantRemovedFrequency: participantRemovedFrequencyConfig,
     providerAdditionFrequency: providerAdditionFrequencyConfig,
     providerRemovalFrequency: providerRemovalFrequencyConfig,
     riskType: riskTypeConfig
@@ -76,6 +78,10 @@ const ReadOnlyParticipantsAndProviders = ({
     selectionMethod,
     selectionOther,
     selectionNote,
+    participantAddedFrequency,
+    participantAddedFrequencyNote,
+    participantRemovedFrequency,
+    participantRemovedFrequencyNote,
     communicationMethod,
     communicationMethodOther,
     communicationNote,
@@ -289,6 +295,50 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participantAddedFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'participantAddedFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              participantAddedFrequencyConfig,
+              participantAddedFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              participantAddedFrequencyConfig,
+              participantAddedFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={participantAddedFrequencyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participantRemovedFrequency',
+          <ReadOnlySection
+            heading={participantsAndProvidersT(
+              'participantRemovedFrequency.label'
+            )}
+            list
+            listItems={formatListItems(
+              participantRemovedFrequencyConfig,
+              participantRemovedFrequency
+            )}
+            listOtherItems={formatListOtherItems(
+              participantRemovedFrequencyConfig,
+              participantRemovedFrequency,
+              allparticipantsAndProvidersData
+            )}
+            notes={participantRemovedFrequencyNote}
+          />
+        )}
+
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,

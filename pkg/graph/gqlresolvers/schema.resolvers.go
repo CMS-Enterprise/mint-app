@@ -771,6 +771,16 @@ func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Conte
 	return selectionTypes, nil
 }
 
+// ParticipantAddedFrequency is the resolver for the participantAddedFrequency field.
+func (r *planParticipantsAndProvidersResolver) ParticipantAddedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.ParticipantAddedFrequency), nil
+}
+
+// ParticipantRemovedFrequency is the resolver for the participantRemovedFrequency field.
+func (r *planParticipantsAndProvidersResolver) ParticipantRemovedFrequency(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.ParticipantRemovedFrequency), nil
+}
+
 // CommunicationMethod is the resolver for the communicationMethod field.
 func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
 	communicationTypes := models.ConvertEnums[model.ParticipantCommunicationType](obj.CommunicationMethod)
