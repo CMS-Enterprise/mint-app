@@ -202,7 +202,7 @@ export enum FrequencyType {
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
-  SEMIANUALLY = "SEMIANUALLY",
+  SEMIANNUALLY = "SEMIANNUALLY",
 }
 
 export enum FundingSource {
@@ -624,6 +624,12 @@ export enum WaiverType {
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
 }
 
+export enum YesNoOtherType {
+  NO = "NO",
+  OTHER = "OTHER",
+  YES = "YES",
+}
+
 export enum YesNoType {
   NO = "NO",
   YES = "YES",
@@ -722,6 +728,10 @@ export interface PlanBeneficiariesChanges {
   beneficiarySelectionFrequencyContinually?: string | null;
   beneficiarySelectionFrequencyOther?: string | null;
   beneficiarySelectionFrequencyNote?: string | null;
+  beneficiaryRemovalFrequency?: FrequencyType[] | null;
+  beneficiaryRemovalFrequencyContinually?: string | null;
+  beneficiaryRemovalFrequencyOther?: string | null;
+  beneficiaryRemovalFrequencyNote?: string | null;
   beneficiaryOverlap?: OverlapType | null;
   beneficiaryOverlapNote?: string | null;
   precedenceRules?: YesNoType[] | null;
@@ -931,7 +941,8 @@ export interface PlanOpsEvalAndLearningChanges {
   useCcwForFileDistribiutionToParticipantsNote?: string | null;
   developNewQualityMeasures?: boolean | null;
   developNewQualityMeasuresNote?: string | null;
-  qualityPerformanceImpactsPayment?: boolean | null;
+  qualityPerformanceImpactsPayment?: YesNoOtherType | null;
+  qualityPerformanceImpactsPaymentOther?: string | null;
   qualityPerformanceImpactsPaymentNote?: string | null;
   dataSharingStarts?: DataStartsType | null;
   dataSharingStartsOther?: string | null;

@@ -389,7 +389,7 @@ export enum FrequencyType {
   MONTHLY = 'MONTHLY',
   OTHER = 'OTHER',
   QUARTERLY = 'QUARTERLY',
-  SEMIANUALLY = 'SEMIANUALLY'
+  SEMIANNUALLY = 'SEMIANNUALLY'
 }
 
 export enum FundingSource {
@@ -1239,6 +1239,10 @@ export type PlanBeneficiaries = {
   beneficiariesOther?: Maybe<Scalars['String']['output']>;
   beneficiaryOverlap?: Maybe<OverlapType>;
   beneficiaryOverlapNote?: Maybe<Scalars['String']['output']>;
+  beneficiaryRemovalFrequency: Array<FrequencyType>;
+  beneficiaryRemovalFrequencyContinually?: Maybe<Scalars['String']['output']>;
+  beneficiaryRemovalFrequencyNote?: Maybe<Scalars['String']['output']>;
+  beneficiaryRemovalFrequencyOther?: Maybe<Scalars['String']['output']>;
   beneficiarySelectionFrequency: Array<FrequencyType>;
   beneficiarySelectionFrequencyContinually?: Maybe<Scalars['String']['output']>;
   beneficiarySelectionFrequencyNote?: Maybe<Scalars['String']['output']>;
@@ -1283,6 +1287,10 @@ export type PlanBeneficiariesChanges = {
   beneficiariesOther?: InputMaybe<Scalars['String']['input']>;
   beneficiaryOverlap?: InputMaybe<OverlapType>;
   beneficiaryOverlapNote?: InputMaybe<Scalars['String']['input']>;
+  beneficiaryRemovalFrequency?: InputMaybe<Array<FrequencyType>>;
+  beneficiaryRemovalFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
+  beneficiaryRemovalFrequencyNote?: InputMaybe<Scalars['String']['input']>;
+  beneficiaryRemovalFrequencyOther?: InputMaybe<Scalars['String']['input']>;
   beneficiarySelectionFrequency?: InputMaybe<Array<FrequencyType>>;
   beneficiarySelectionFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   beneficiarySelectionFrequencyNote?: InputMaybe<Scalars['String']['input']>;
@@ -1678,8 +1686,9 @@ export type PlanOpsEvalAndLearning = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   produceBenefitEnhancementFiles?: Maybe<Scalars['Boolean']['output']>;
-  qualityPerformanceImpactsPayment?: Maybe<Scalars['Boolean']['output']>;
+  qualityPerformanceImpactsPayment?: Maybe<YesNoOtherType>;
   qualityPerformanceImpactsPaymentNote?: Maybe<Scalars['String']['output']>;
+  qualityPerformanceImpactsPaymentOther?: Maybe<Scalars['String']['output']>;
   qualityReportingFrequency: Array<FrequencyType>;
   qualityReportingFrequencyContinually?: Maybe<Scalars['String']['output']>;
   qualityReportingFrequencyOther?: Maybe<Scalars['String']['output']>;
@@ -1792,8 +1801,9 @@ export type PlanOpsEvalAndLearningChanges = {
   modelLearningSystemsNote?: InputMaybe<Scalars['String']['input']>;
   modelLearningSystemsOther?: InputMaybe<Scalars['String']['input']>;
   produceBenefitEnhancementFiles?: InputMaybe<Scalars['Boolean']['input']>;
-  qualityPerformanceImpactsPayment?: InputMaybe<Scalars['Boolean']['input']>;
+  qualityPerformanceImpactsPayment?: InputMaybe<YesNoOtherType>;
   qualityPerformanceImpactsPaymentNote?: InputMaybe<Scalars['String']['input']>;
+  qualityPerformanceImpactsPaymentOther?: InputMaybe<Scalars['String']['input']>;
   qualityReportingFrequency?: InputMaybe<Array<FrequencyType>>;
   qualityReportingFrequencyContinually?: InputMaybe<Scalars['String']['input']>;
   qualityReportingFrequencyOther?: InputMaybe<Scalars['String']['input']>;
@@ -2618,6 +2628,12 @@ export enum WaiverType {
   PROGRAM_PAYMENT = 'PROGRAM_PAYMENT'
 }
 
+export enum YesNoOtherType {
+  NO = 'NO',
+  OTHER = 'OTHER',
+  YES = 'YES'
+}
+
 export enum YesNoType {
   NO = 'NO',
   YES = 'YES'
@@ -2674,7 +2690,7 @@ export type GetAllBeneficiariesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBeneficiariesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, modelPlanID: UUID, beneficiaries: Array<BeneficiariesType>, diseaseSpecificGroup?: string | null, beneficiariesOther?: string | null, beneficiariesNote?: string | null, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, beneficiarySelectionOther?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, status: TaskStatus } } };
+export type GetAllBeneficiariesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, modelPlanID: UUID, beneficiaries: Array<BeneficiariesType>, diseaseSpecificGroup?: string | null, beneficiariesOther?: string | null, beneficiariesNote?: string | null, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, beneficiarySelectionOther?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, status: TaskStatus } } };
 
 export type GetBeneficiaryIdentificationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2688,7 +2704,7 @@ export type GetFrequencyQueryVariables = Exact<{
 }>;
 
 
-export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetPeopleImpactedQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -2828,14 +2844,14 @@ export type GetAllOpsEvalAndLearningQueryVariables = Exact<{
 }>;
 
 
-export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: boolean | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
+export type GetAllOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, modelPlanID: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, status: TaskStatus } } };
 
 export type GetCcwAndQualityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetCcwAndQualityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: boolean | null, qualityPerformanceImpactsPaymentNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetCcwAndQualityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
 
 export type GetDataSharingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -3368,6 +3384,10 @@ export const GetAllBeneficiariesDocument = gql`
       beneficiarySelectionFrequencyContinually
       beneficiarySelectionFrequencyOther
       beneficiarySelectionFrequencyNote
+      beneficiaryRemovalFrequency
+      beneficiaryRemovalFrequencyContinually
+      beneficiaryRemovalFrequencyNote
+      beneficiaryRemovalFrequencyOther
       beneficiaryOverlap
       beneficiaryOverlapNote
       precedenceRules
@@ -3477,6 +3497,10 @@ export const GetFrequencyDocument = gql`
       beneficiarySelectionFrequencyContinually
       beneficiarySelectionFrequencyNote
       beneficiarySelectionFrequencyOther
+      beneficiaryRemovalFrequency
+      beneficiaryRemovalFrequencyContinually
+      beneficiaryRemovalFrequencyNote
+      beneficiaryRemovalFrequencyOther
       beneficiaryOverlap
       beneficiaryOverlapNote
       precedenceRules
@@ -4530,6 +4554,7 @@ export const GetAllOpsEvalAndLearningDocument = gql`
       developNewQualityMeasures
       developNewQualityMeasuresNote
       qualityPerformanceImpactsPayment
+      qualityPerformanceImpactsPaymentOther
       qualityPerformanceImpactsPaymentNote
       dataSharingStarts
       dataSharingStartsOther
@@ -4611,6 +4636,7 @@ export const GetCcwAndQualityDocument = gql`
       developNewQualityMeasures
       developNewQualityMeasuresNote
       qualityPerformanceImpactsPayment
+      qualityPerformanceImpactsPaymentOther
       qualityPerformanceImpactsPaymentNote
     }
     operationalNeeds {

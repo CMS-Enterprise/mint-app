@@ -20,6 +20,7 @@ export default gql(/* GraphQL */ `
         developNewQualityMeasures
         developNewQualityMeasuresNote
         qualityPerformanceImpactsPayment
+        qualityPerformanceImpactsPaymentOther
         qualityPerformanceImpactsPaymentNote
       }
       operationalNeeds {

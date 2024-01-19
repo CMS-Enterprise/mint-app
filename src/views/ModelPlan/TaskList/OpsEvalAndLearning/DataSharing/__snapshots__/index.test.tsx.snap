@@ -206,14 +206,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-sharing-frequency-semianually"
+            id="ops-eval-and-learning-data-sharing-frequency-semiannually"
             name="dataSharingFrequency"
             type="checkbox"
-            value="SEMIANUALLY"
+            value="SEMIANNUALLY"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-sharing-frequency-semianually"
+            for="ops-eval-and-learning-data-sharing-frequency-semiannually"
           >
             Semi-annually
           </label>
@@ -301,31 +301,31 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
           />
         </div>
-        <div
-          class="margin-top-4 margin-bottom-8"
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
         >
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
-            type="button"
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              aria-hidden="true"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-              />
-            </svg>
-            Add an additional note
-          </button>
-        </div>
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
       </div>
       <div
         class="usa-form-group"
@@ -431,14 +431,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-collection-frequency-semianually"
+            id="ops-eval-and-learning-data-collection-frequency-semiannually"
             name="dataCollectionFrequency"
             type="checkbox"
-            value="SEMIANUALLY"
+            value="SEMIANNUALLY"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-collection-frequency-semianually"
+            for="ops-eval-and-learning-data-collection-frequency-semiannually"
           >
             Semi-annually
           </label>
@@ -673,16 +673,16 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
           >
             <input
               class="usa-checkbox__input"
-              id="ops-eval-and-learning-quality-reporting-frequency-semianually"
+              id="ops-eval-and-learning-quality-reporting-frequency-semiannually"
               name="qualityReportingFrequency"
               type="checkbox"
-              value="SEMIANUALLY"
+              value="SEMIANNUALLY"
             />
             <label
               class="usa-checkbox__label"
-              for="ops-eval-and-learning-quality-reporting-frequency-semianually"
+              for="ops-eval-and-learning-quality-reporting-frequency-semiannually"
             >
-              Semiannually
+              Semi-annually
             </label>
             <p
               class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

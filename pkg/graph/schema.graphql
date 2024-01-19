@@ -704,6 +704,10 @@ type PlanBeneficiaries {
   beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]!
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]!
@@ -752,6 +756,10 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionFrequencyContinually: String
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
+  beneficiaryRemovalFrequency: [FrequencyType!]
+  beneficiaryRemovalFrequencyContinually: String
+  beneficiaryRemovalFrequencyOther: String
+  beneficiaryRemovalFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: [YesNoType!]
@@ -1186,7 +1194,8 @@ type PlanOpsEvalAndLearning {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
@@ -1319,7 +1328,8 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
     developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPayment: YesNoOtherType
+    qualityPerformanceImpactsPaymentOther: String
     qualityPerformanceImpactsPaymentNote: String
     #Page 8
     dataSharingStarts: DataStartsType
@@ -2036,42 +2046,9 @@ enum ConfidenceType {
   COMPLETELY
 }
 
-# enum FrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   ROLLING
-#   OTHER
-# }
-
-
-# enum DataFrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   SEMI_MONTHLY
-#   WEEKLY
-#   DAILY
-#   OTHER
-#   NOT_PLANNING_TO_DO_THIS
-# }
-
-# enum AnticipatedPaymentFrequencyType {
-#   ANNUALLY
-#   BIANNUALLY
-#   QUARTERLY
-#   MONTHLY
-#   SEMIMONTHLY
-#   WEEKLY
-#   DAILY
-#   OTHER
-# }
-
 enum FrequencyType {
   ANNUALLY
-  SEMIANUALLY
+  SEMIANNUALLY
   QUARTERLY
   MONTHLY
   CONTINUALLY
@@ -2236,6 +2213,12 @@ enum DataToSendParticipantsType {
     PROVIDER_LEVEL_DATA
     OTHER_MIPS_DATA
     NOT_PLANNING_TO_SEND_DATA
+}
+
+enum YesNoOtherType {
+    YES
+    NO
+    OTHER
 }
 
 enum ModelLearningSystemType {

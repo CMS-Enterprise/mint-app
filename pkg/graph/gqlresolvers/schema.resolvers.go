@@ -6,6 +6,7 @@ package gqlresolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -560,6 +561,11 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionFrequency(ctx context.Co
 	return models.ConvertEnums[models.FrequencyType](obj.BeneficiarySelectionFrequency), nil
 }
 
+// BeneficiaryRemovalFrequency is the resolver for the beneficiaryRemovalFrequency field.
+func (r *planBeneficiariesResolver) BeneficiaryRemovalFrequency(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.BeneficiaryRemovalFrequency), nil
+}
+
 // PrecedenceRules is the resolver for the precedenceRules field.
 func (r *planBeneficiariesResolver) PrecedenceRules(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.YesNoType, error) {
 	return models.ConvertEnums[models.YesNoType](obj.PrecedenceRules), nil
@@ -744,8 +750,7 @@ func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Con
 
 // QualityReportingFrequency is the resolver for the qualityReportingFrequency field.
 func (r *planOpsEvalAndLearningResolver) QualityReportingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
-	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.QualityReportingFrequency)
-	return dataFrequencyTypes, nil
+	panic(fmt.Errorf("not implemented: QualityReportingFrequency - qualityReportingFrequency"))
 }
 
 // ModelLearningSystems is the resolver for the modelLearningSystems field.

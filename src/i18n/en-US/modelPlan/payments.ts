@@ -641,7 +641,7 @@ export const payments: TranslationPayments = {
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
-      SEMIANUALLY: '',
+      SEMIANNUALLY: '',
       QUARTERLY: '',
       MONTHLY: '',
       CONTINUALLY: 'anticipatedPaymentFrequencyContinually',
@@ -662,7 +662,7 @@ export const payments: TranslationPayments = {
     gqlField: 'anticipatedPaymentFrequencyOther',
     goField: 'AnticipatedPaymentFrequencyOther',
     dbField: 'anticipated_payment_frequency_other',
-    label: 'Please describe the other payment frequency.',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: ['cmmi', 'dfsdm', 'ipc']

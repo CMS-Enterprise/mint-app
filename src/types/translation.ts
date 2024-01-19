@@ -50,6 +50,7 @@ import {
   TeamRole,
   TriStateAnswer,
   WaiverType,
+  YesNoOtherType,
   YesNoType
 } from 'gql/gen/graphql';
 
@@ -283,6 +284,10 @@ export type TranslationBeneficiaries = {
   beneficiarySelectionFrequencyContinually: TranslationFieldProperties;
   beneficiarySelectionFrequencyOther: TranslationFieldProperties;
   beneficiarySelectionFrequencyNote: TranslationFieldProperties;
+  beneficiaryRemovalFrequency: TranslationFieldPropertiesWithOptions<FrequencyType>;
+  beneficiaryRemovalFrequencyContinually: TranslationFieldProperties;
+  beneficiaryRemovalFrequencyOther: TranslationFieldProperties;
+  beneficiaryRemovalFrequencyNote: TranslationFieldProperties;
   beneficiaryOverlap: TranslationFieldPropertiesWithOptions<OverlapType>;
   beneficiaryOverlapNote: TranslationFieldProperties;
   precedenceRules: TranslationFieldPropertiesWithOptions<YesNoType>;
@@ -374,7 +379,8 @@ export type TranslationOpsEvalAndLearning = {
   useCcwForFileDistribiutionToParticipantsNote: TranslationFieldProperties;
   developNewQualityMeasures: TranslationFieldPropertiesWithOptions<Bool>;
   developNewQualityMeasuresNote: TranslationFieldProperties;
-  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<Bool>;
+  qualityPerformanceImpactsPayment: TranslationFieldPropertiesWithOptions<YesNoOtherType>;
+  qualityPerformanceImpactsPaymentOther: TranslationFieldProperties;
   qualityPerformanceImpactsPaymentNote: TranslationFieldProperties;
   // Data Sharing
   dataSharingStarts: TranslationFieldPropertiesWithOptions<DataStartsType>;
