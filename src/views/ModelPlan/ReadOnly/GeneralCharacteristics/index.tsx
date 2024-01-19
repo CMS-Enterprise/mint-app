@@ -484,22 +484,16 @@ const ReadOnlyGeneralCharacteristics = ({
                   )
                   .join(', '),
                 geographiesRegionTypes:
-                  geographiesRegionTypes?.length !== 0 ? (
-                    geographiesRegionTypes?.map(region => {
-                      return (
-                        <li key={region}>
-                          {generalCharacteristicsT(
-                            `geographiesRegionTypes.options.${region}`
-                          )}
-                        </li>
-                      );
-                    })
-                  ) : (
-                    <em className="text-base">
-                      {generalCharacteristicsMiscT('noAdditionalInformation')}
-                    </em>
-                  ),
-
+                  geographiesRegionTypes?.length !== 0 &&
+                  geographiesRegionTypes?.map(region => {
+                    return (
+                      <li key={region}>
+                        {generalCharacteristicsT(
+                          `geographiesRegionTypes.options.${region}`
+                        )}
+                      </li>
+                    );
+                  }),
                 geographiesTargetedTypesOther
               }
             )}

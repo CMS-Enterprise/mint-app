@@ -658,8 +658,7 @@ export const generalCharacteristicsMisc: Record<string, string> = {
   heading: 'General characteristics',
   clearanceHeading: 'Review general characteristics',
   breadcrumb: 'General characteristics',
-  specificQuestions: 'Key characteristic specific questions',
-  noAdditionalInformation: 'No additional information specified'
+  specificQuestions: 'Key characteristic specific questions'
 };
 
 export default generalCharacteristics;
