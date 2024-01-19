@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
+import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelectionType, FrequencyType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ProviderAddType, ProviderLeaveType, OverlapType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllParticipantsAndProviders
@@ -29,6 +29,14 @@ export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProvide
   selectionMethod: ParticipantSelectionType[];
   selectionOther: string | null;
   selectionNote: string | null;
+  participantAddedFrequency: FrequencyType[];
+  participantAddedFrequencyContinually: string | null;
+  participantAddedFrequencyOther: string | null;
+  participantAddedFrequencyNote: string | null;
+  participantRemovedFrequency: FrequencyType[];
+  participantRemovedFrequencyContinually: string | null;
+  participantRemovedFrequencyOther: string | null;
+  participantRemovedFrequencyNote: string | null;
   communicationMethod: ParticipantCommunicationType[];
   communicationMethodOther: string | null;
   communicationNote: string | null;
@@ -57,6 +65,10 @@ export interface GetAllParticipantsAndProviders_modelPlan_participantsAndProvide
   providerLeaveMethod: ProviderLeaveType[];
   providerLeaveMethodOther: string | null;
   providerLeaveMethodNote: string | null;
+  providerRemovalFrequency: FrequencyType[];
+  providerRemovalFrequencyContinually: string | null;
+  providerRemovalFrequencyOther: string | null;
+  providerRemovalFrequencyNote: string | null;
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;

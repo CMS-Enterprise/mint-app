@@ -5,6 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import {
   CcmInvolvmentType,
   DataStartsType,
+  FrequencyType,
   GetDataSharingDocument,
   GetDataSharingQuery
 } from 'gql/gen/graphql';
@@ -33,7 +34,10 @@ const dataSharingMockData: GetDataSharingType = {
   dataCollectionFrequencyNote: '',
   qualityReportingStarts: DataStartsType.OTHER,
   qualityReportingStartsOther: 'Other Value',
-  qualityReportingStartsNote: ''
+  qualityReportingStartsNote: '',
+  qualityReportingFrequency: [FrequencyType.CONTINUALLY],
+  qualityReportingFrequencyContinually: 'continual frequency',
+  qualityReportingFrequencyOther: ''
 };
 
 const dataSharingMock = [

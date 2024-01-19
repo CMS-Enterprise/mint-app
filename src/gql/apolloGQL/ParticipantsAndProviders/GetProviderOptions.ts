@@ -17,6 +17,10 @@ export default gql(/* GraphQL */ `
         providerLeaveMethod
         providerLeaveMethodOther
         providerLeaveMethodNote
+        providerRemovalFrequency
+        providerRemovalFrequencyContinually
+        providerRemovalFrequencyOther
+        providerRemovalFrequencyNote
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote

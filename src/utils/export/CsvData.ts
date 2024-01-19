@@ -109,6 +109,14 @@ const csvFields = [
   'generalCharacteristics.status',
 
   // Participants and Providers
+  'participantsAndProviders.participantAddedFrequency',
+  'participantsAndProviders.participantAddedFrequencyContinually',
+  'participantsAndProviders.participantAddedFrequencyOther',
+  'participantsAndProviders.participantAddedFrequencyNote',
+  'participantsAndProviders.participantRemovedFrequency',
+  'participantsAndProviders.participantRemovedFrequencyContinually',
+  'participantsAndProviders.participantRemovedFrequencyOther',
+  'participantsAndProviders.participantRemovedFrequencyNote',
   'participantsAndProviders.communicationMethod', // array
   'participantsAndProviders.communicationMethodOther',
   'participantsAndProviders.communicationNote',
@@ -154,6 +162,10 @@ const csvFields = [
   'participantsAndProviders.providerLeaveMethod', // array
   'participantsAndProviders.providerLeaveMethodOther',
   'participantsAndProviders.providerLeaveMethodNote',
+  'participantsAndProviders.providerRemovalFrequency',
+  'participantsAndProviders.providerRemovalFrequencyContinually',
+  'participantsAndProviders.providerRemovalFrequencyOther',
+  'participantsAndProviders.providerRemovalFrequencyNote',
   'participantsAndProviders.providerOverlap',
   'participantsAndProviders.providerOverlapHierarchy',
   'participantsAndProviders.providerOverlapNote',
@@ -227,6 +239,9 @@ const csvFields = [
   'opsEvalAndLearning.qualityReportingStarts',
   'opsEvalAndLearning.qualityReportingStartsOther',
   'opsEvalAndLearning.qualityReportingStartsNote',
+  'opsEvalAndLearning.qualityReportingFrequency', // array
+  'opsEvalAndLearning.qualityReportingFrequencyContinually',
+  'opsEvalAndLearning.qualityReportingFrequencyOther',
   'opsEvalAndLearning.evaluationApproaches', // array
   'opsEvalAndLearning.evaluationApproachOther',
   'opsEvalAndLearning.evalutaionApproachNote',
@@ -355,6 +370,10 @@ const csvFields = [
   'payments.willRecoverPaymentsNote',
   'payments.anticipateReconcilingPaymentsRetrospectively',
   'payments.anticipateReconcilingPaymentsRetrospectivelyNote',
+  'payments.paymentReconciliationFrequency',
+  'payments.paymentReconciliationFrequencyContinually',
+  'payments.paymentReconciliationFrequencyOther',
+  'payments.paymentReconciliationFrequencyNote',
   'payments.paymentStartDate',
   'payments.paymentStartDateNote',
   'payments.readyForReviewByUserAccount.commonName',

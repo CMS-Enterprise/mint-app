@@ -57,7 +57,8 @@ const DataSharing = () => {
     dataSharingFrequency: dataSharingFrequencyConfig,
     dataCollectionStarts: dataCollectionStartsConfig,
     dataCollectionFrequency: dataCollectionFrequencyConfig,
-    qualityReportingStarts: qualityReportingStartsConfig
+    qualityReportingStarts: qualityReportingStartsConfig,
+    qualityReportingFrequency: qualityReportingFrequencyConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -90,7 +91,10 @@ const DataSharing = () => {
     dataCollectionFrequencyNote,
     qualityReportingStarts,
     qualityReportingStartsOther,
-    qualityReportingStartsNote
+    qualityReportingStartsNote,
+    qualityReportingFrequency,
+    qualityReportingFrequencyContinually,
+    qualityReportingFrequencyOther
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetDataSharingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -159,7 +163,11 @@ const DataSharing = () => {
     dataCollectionFrequencyNote: dataCollectionFrequencyNote ?? '',
     qualityReportingStarts: qualityReportingStarts ?? null,
     qualityReportingStartsOther: qualityReportingStartsOther ?? '',
-    qualityReportingStartsNote: qualityReportingStartsNote ?? ''
+    qualityReportingStartsNote: qualityReportingStartsNote ?? '',
+    qualityReportingFrequency: qualityReportingFrequency ?? [],
+    qualityReportingFrequencyContinually:
+      qualityReportingFrequencyContinually ?? '',
+    qualityReportingFrequencyOther: qualityReportingFrequencyOther ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -472,6 +480,20 @@ const DataSharing = () => {
                         />
                       </div>
                     )}
+
+                    <FrequencyForm
+                      field="qualityReportingFrequency"
+                      values={values.qualityReportingFrequency}
+                      config={qualityReportingFrequencyConfig}
+                      nameSpace="opsEvalAndLearning"
+                      id="ops-eval-and-learning-quality-reporting-frequency"
+                      label={opsEvalAndLearningT(
+                        'qualityReportingFrequency.label'
+                      )}
+                      disabled={loading}
+                      boldLabel={false}
+                      addNote={false}
+                    />
 
                     <AddNote
                       id="ops-eval-and-learning-data-reporting-frequency-note"
