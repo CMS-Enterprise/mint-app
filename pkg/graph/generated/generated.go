@@ -657,6 +657,9 @@ type ComplexityRoot struct {
 		QualityPerformanceImpactsPayment             func(childComplexity int) int
 		QualityPerformanceImpactsPaymentNote         func(childComplexity int) int
 		QualityPerformanceImpactsPaymentOther        func(childComplexity int) int
+		QualityReportingFrequency                    func(childComplexity int) int
+		QualityReportingFrequencyContinually         func(childComplexity int) int
+		QualityReportingFrequencyOther               func(childComplexity int) int
 		QualityReportingStarts                       func(childComplexity int) int
 		QualityReportingStartsNote                   func(childComplexity int) int
 		QualityReportingStartsOther                  func(childComplexity int) int
@@ -817,6 +820,10 @@ type ComplexityRoot struct {
 		PayType                                           func(childComplexity int) int
 		PayTypeNote                                       func(childComplexity int) int
 		PaymentCalculationOwner                           func(childComplexity int) int
+		PaymentReconciliationFrequency                    func(childComplexity int) int
+		PaymentReconciliationFrequencyContinually         func(childComplexity int) int
+		PaymentReconciliationFrequencyNote                func(childComplexity int) int
+		PaymentReconciliationFrequencyOther               func(childComplexity int) int
 		PaymentStartDate                                  func(childComplexity int) int
 		PaymentStartDateNote                              func(childComplexity int) int
 		PlanningToUseInnovationPaymentContractor          func(childComplexity int) int
@@ -1130,6 +1137,8 @@ type PlanOpsEvalAndLearningResolver interface {
 
 	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
 
+	QualityReportingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error)
+
 	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
 }
 type PlanParticipantsAndProvidersResolver interface {
@@ -1168,6 +1177,8 @@ type PlanPaymentsResolver interface {
 	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
 
 	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
+
+	PaymentReconciliationFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
 }
 type PossibleOperationalNeedResolver interface {
 	PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error)
@@ -4953,6 +4964,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentOther(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.qualityReportingFrequency":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequency(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityReportingFrequencyContinually":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequencyContinually(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityReportingFrequencyOther":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingFrequencyOther(childComplexity), true
+
 	case "PlanOpsEvalAndLearning.qualityReportingStarts":
 		if e.complexity.PlanOpsEvalAndLearning.QualityReportingStarts == nil {
 			break
@@ -6030,6 +6062,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.PaymentCalculationOwner(childComplexity), true
+
+	case "PlanPayments.paymentReconciliationFrequency":
+		if e.complexity.PlanPayments.PaymentReconciliationFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentReconciliationFrequency(childComplexity), true
+
+	case "PlanPayments.paymentReconciliationFrequencyContinually":
+		if e.complexity.PlanPayments.PaymentReconciliationFrequencyContinually == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentReconciliationFrequencyContinually(childComplexity), true
+
+	case "PlanPayments.paymentReconciliationFrequencyNote":
+		if e.complexity.PlanPayments.PaymentReconciliationFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentReconciliationFrequencyNote(childComplexity), true
+
+	case "PlanPayments.paymentReconciliationFrequencyOther":
+		if e.complexity.PlanPayments.PaymentReconciliationFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentReconciliationFrequencyOther(childComplexity), true
 
 	case "PlanPayments.paymentStartDate":
 		if e.complexity.PlanPayments.PaymentStartDate == nil {
@@ -8115,6 +8175,10 @@ type PlanPayments {
   willRecoverPaymentsNote:                           String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote:  String
+  paymentReconciliationFrequency:                    [FrequencyType!]!
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                              String
 
@@ -8213,6 +8277,10 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   willRecoverPaymentsNote:                          String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentReconciliationFrequency:                    [FrequencyType!]
+  paymentReconciliationFrequencyContinually:         String
+  paymentReconciliationFrequencyOther:               String
+  paymentReconciliationFrequencyNote:                String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
 
@@ -8322,10 +8390,13 @@ type PlanOpsEvalAndLearning {
     dataCollectionFrequency: [FrequencyType!]!
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
+    dataCollectionFrequencyNote: String    
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]!
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]!
     modelLearningSystemsOther: String
@@ -8453,10 +8524,13 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     dataCollectionFrequency: [FrequencyType!]
     dataCollectionFrequencyContinually: String
     dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
+    dataCollectionFrequencyNote: String    
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
+    qualityReportingFrequency: [FrequencyType!]
+    qualityReportingFrequencyContinually: String
+    qualityReportingFrequencyOther: String
     #Page 9
     modelLearningSystems: [ModelLearningSystemType!]
     modelLearningSystemsOther: String
@@ -15969,6 +16043,12 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
 			case "qualityReportingStartsNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
+			case "qualityReportingFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field)
+			case "qualityReportingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field)
+			case "qualityReportingFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field)
 			case "modelLearningSystems":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
 			case "modelLearningSystemsOther":
@@ -16407,6 +16487,14 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectivelyNote":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentReconciliationFrequency":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+			case "paymentReconciliationFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+			case "paymentReconciliationFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+			case "paymentReconciliationFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -18487,6 +18575,12 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
 			case "qualityReportingStartsNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
+			case "qualityReportingFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field)
+			case "qualityReportingFrequencyContinually":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field)
+			case "qualityReportingFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field)
 			case "modelLearningSystems":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
 			case "modelLearningSystemsOther":
@@ -19522,6 +19616,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectivelyNote":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentReconciliationFrequency":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+			case "paymentReconciliationFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+			case "paymentReconciliationFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+			case "paymentReconciliationFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -38079,6 +38181,132 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReporting
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().QualityReportingFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityReportingFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityReportingFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanOpsEvalAndLearning_modelLearningSystems(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
 	if err != nil {
@@ -44331,6 +44559,173 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPayme
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanPayments_paymentReconciliationFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().PaymentReconciliationFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.FrequencyType)
+	fc.Result = res
+	return ec.marshalNFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentReconciliationFrequencyContinually(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentReconciliationFrequencyContinually, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentReconciliationFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentReconciliationFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentReconciliationFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentReconciliationFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanPayments_paymentStartDate(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 	if err != nil {
@@ -47848,6 +48243,14 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectivelyNote":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentReconciliationFrequency":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequency(ctx, field)
+			case "paymentReconciliationFrequencyContinually":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyContinually(ctx, field)
+			case "paymentReconciliationFrequencyOther":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyOther(ctx, field)
+			case "paymentReconciliationFrequencyNote":
+				return ec.fieldContext_PlanPayments_paymentReconciliationFrequencyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
 			case "paymentStartDateNote":
@@ -59684,6 +60087,46 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field, obj)
 		case "qualityReportingStartsNote":
 			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field, obj)
+		case "qualityReportingFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_qualityReportingFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "qualityReportingFrequencyContinually":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingFrequencyContinually(ctx, field, obj)
+		case "qualityReportingFrequencyOther":
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingFrequencyOther(ctx, field, obj)
 		case "modelLearningSystems":
 			field := field
 
@@ -60971,6 +61414,48 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field, obj)
 		case "anticipateReconcilingPaymentsRetrospectivelyNote":
 			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field, obj)
+		case "paymentReconciliationFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_paymentReconciliationFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "paymentReconciliationFrequencyContinually":
+			out.Values[i] = ec._PlanPayments_paymentReconciliationFrequencyContinually(ctx, field, obj)
+		case "paymentReconciliationFrequencyOther":
+			out.Values[i] = ec._PlanPayments_paymentReconciliationFrequencyOther(ctx, field, obj)
+		case "paymentReconciliationFrequencyNote":
+			out.Values[i] = ec._PlanPayments_paymentReconciliationFrequencyNote(ctx, field, obj)
 		case "paymentStartDate":
 			out.Values[i] = ec._PlanPayments_paymentStartDate(ctx, field, obj)
 		case "paymentStartDateNote":

@@ -720,6 +720,47 @@ export const payments: TranslationPayments = {
     formType: 'textarea',
     filterGroups: ['iddoc', 'ipc', 'pbg']
   },
+  paymentReconciliationFrequency: {
+    gqlField: 'paymentReconciliationFrequency',
+    goField: 'PaymentReconciliationFrequency',
+    dbField: 'payment_reconciliation_frequency',
+    label: 'How often are payments reconciled?',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: frequencyOptions,
+    optionsRelatedInfo: {
+      ANNUALLY: '',
+      SEMIANNUALLY: '',
+      QUARTERLY: '',
+      MONTHLY: '',
+      CONTINUALLY: 'paymentReconciliationFrequencyContinually',
+      OTHER: 'paymentReconciliationFrequencyOther'
+    }
+  },
+  paymentReconciliationFrequencyContinually: {
+    gqlField: 'paymentReconciliationFrequencyContinually',
+    goField: 'PaymentReconciliationFrequencyContinually',
+    dbField: 'payment_reconciliation_frequency_continually',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentReconciliationFrequencyOther: {
+    gqlField: 'paymentReconciliationFrequencyOther',
+    goField: 'PaymentReconciliationFrequencyOther',
+    dbField: 'payment_reconciliation_frequency_other',
+    label: 'Please specify',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  paymentReconciliationFrequencyNote: {
+    gqlField: 'paymentReconciliationFrequencyNote',
+    goField: 'PaymentReconciliationFrequencyNote',
+    dbField: 'payment_reconciliation_frequency_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   paymentStartDate: {
     gqlField: 'paymentStartDate',
     goField: 'PaymentStartDate',

@@ -476,6 +476,9 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   qualityReportingStarts: DataStartsType.LATER_IN_THE_FIRST_PERFORMANCE_YEAR,
   qualityReportingStartsOther: 'Other qual report',
   qualityReportingStartsNote: 'Note for qual report',
+  qualityReportingFrequency: [FrequencyType.OTHER],
+  qualityReportingFrequencyContinually: '',
+  qualityReportingFrequencyOther: 'Other frequency',
   modelLearningSystems: [
     ModelLearningSystemType.IT_PLATFORM_CONNECT,
     ModelLearningSystemType.NO_LEARNING_SYSTEM,
@@ -567,6 +570,10 @@ const paymentsData: PaymentTypes = {
   willRecoverPaymentsNote: 'Will recover note',
   anticipateReconcilingPaymentsRetrospectively: true,
   anticipateReconcilingPaymentsRetrospectivelyNote: 'Anticipate note',
+  paymentReconciliationFrequency: [FrequencyType.CONTINUALLY],
+  paymentReconciliationFrequencyContinually: 'Continual Frequency',
+  paymentReconciliationFrequencyOther: '',
+  paymentReconciliationFrequencyNote: 'Reconciliation note',
   paymentStartDate: '2022-06-03T19:32:24.412662Z',
   paymentStartDateNote: 'Note for payment start date',
   status: TaskStatus.IN_PROGRESS

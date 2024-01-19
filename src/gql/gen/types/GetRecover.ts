@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PayType, ClaimsBasedPayType, TaskStatus } from "./../../../types/graphql-global-types";
+import { PayType, ClaimsBasedPayType, FrequencyType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetRecover
@@ -24,6 +24,10 @@ export interface GetRecover_modelPlan_payments {
   willRecoverPaymentsNote: string | null;
   anticipateReconcilingPaymentsRetrospectively: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
+  paymentReconciliationFrequency: FrequencyType[];
+  paymentReconciliationFrequencyContinually: string | null;
+  paymentReconciliationFrequencyOther: string | null;
+  paymentReconciliationFrequencyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
   readyForReviewByUserAccount: GetRecover_modelPlan_payments_readyForReviewByUserAccount | null;

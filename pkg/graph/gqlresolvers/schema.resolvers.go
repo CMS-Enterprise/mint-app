@@ -747,6 +747,12 @@ func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Con
 	return dataFrequencyTypes, nil
 }
 
+// QualityReportingFrequency is the resolver for the qualityReportingFrequency field.
+func (r *planOpsEvalAndLearningResolver) QualityReportingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.QualityReportingFrequency)
+	return dataFrequencyTypes, nil
+}
+
 // ModelLearningSystems is the resolver for the modelLearningSystems field.
 func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error) {
 	modelLearningSystemTypes := models.ConvertEnums[model.ModelLearningSystemType](obj.ModelLearningSystems)
@@ -848,6 +854,11 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 // AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
 func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
 	return models.ConvertEnums[models.FrequencyType](obj.AnticipatedPaymentFrequency), nil
+}
+
+// PaymentReconciliationFrequency is the resolver for the paymentReconciliationFrequency field.
+func (r *planPaymentsResolver) PaymentReconciliationFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error) {
+	return models.ConvertEnums[models.FrequencyType](obj.PaymentReconciliationFrequency), nil
 }
 
 // PossibleSolutions is the resolver for the possibleSolutions field.

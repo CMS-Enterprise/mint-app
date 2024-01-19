@@ -959,6 +959,9 @@ export interface PlanOpsEvalAndLearningChanges {
   qualityReportingStarts?: DataStartsType | null;
   qualityReportingStartsOther?: string | null;
   qualityReportingStartsNote?: string | null;
+  qualityReportingFrequency?: FrequencyType[] | null;
+  qualityReportingFrequencyContinually?: string | null;
+  qualityReportingFrequencyOther?: string | null;
   modelLearningSystems?: ModelLearningSystemType[] | null;
   modelLearningSystemsOther?: string | null;
   modelLearningSystemsNote?: string | null;
@@ -1089,6 +1092,10 @@ export interface PlanPaymentsChanges {
   willRecoverPaymentsNote?: string | null;
   anticipateReconcilingPaymentsRetrospectively?: boolean | null;
   anticipateReconcilingPaymentsRetrospectivelyNote?: string | null;
+  paymentReconciliationFrequency?: FrequencyType[] | null;
+  paymentReconciliationFrequencyContinually?: string | null;
+  paymentReconciliationFrequencyOther?: string | null;
+  paymentReconciliationFrequencyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
