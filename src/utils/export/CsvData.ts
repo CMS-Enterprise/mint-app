@@ -94,6 +94,8 @@ const csvFields = [
   'generalCharacteristics.planContractUpdatedNote',
   'generalCharacteristics.geographiesTargeted',
   'generalCharacteristics.geographiesTargetedTypes', // array
+  'generalCharacteristics.geographiesStatesAndTerritories', // array
+  'generalCharacteristics.geographiesRegionTypes', // array
   'generalCharacteristics.geographiesTargetedTypesOther',
   'generalCharacteristics.geographiesTargetedAppliedTo', // array
   'generalCharacteristics.geographiesTargetedAppliedToOther',

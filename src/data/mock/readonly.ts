@@ -23,6 +23,7 @@ import {
   FundingSource,
   GainshareArrangementEligibility,
   GeographyApplication,
+  GeographyRegionType,
   GeographyType,
   GetAllBasicsDocument,
   GetAllBasicsQuery,
@@ -56,6 +57,7 @@ import {
   RecruitmentType,
   SelectionMethodType,
   StakeholdersType,
+  StatesAndTerritories,
   TaskStatus,
   TeamRole,
   TriStateAnswer,
@@ -171,7 +173,16 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
   communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
   geographiesTargeted: true,
-  geographiesTargetedTypes: [GeographyType.OTHER],
+  geographiesTargetedTypes: [
+    GeographyType.OTHER,
+    GeographyType.STATE,
+    GeographyType.REGION
+  ],
+  geographiesStatesAndTerritories: [
+    StatesAndTerritories.CA,
+    StatesAndTerritories.IN
+  ],
+  geographiesRegionTypes: [GeographyRegionType.CBSA],
   geographiesTargetedTypesOther: 'Geography type other',
   geographiesTargetedAppliedTo: [
     GeographyApplication.BENEFICIARIES,

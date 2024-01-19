@@ -14,7 +14,9 @@ export type ReadOnlySectionProps = {
   list?: boolean;
   listItems?: (string | number | React.ReactElement)[];
   listOtherItem?: string | null;
-  listOtherItems?: (string | null | undefined)[] | undefined;
+  listOtherItems?:
+    | (string | null | undefined | React.ReactElement[])[]
+    | undefined;
   tooltips?: (string | null | undefined)[];
   notes?: string | null;
 };
@@ -153,7 +155,7 @@ const ReadOnlySection = ({
   );
 };
 
-/* 
+/*
   Util function for prepping data to listItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
@@ -166,7 +168,7 @@ export const formatListItems = <T extends string | keyof T>(
     .map((option): string => config.options[option]);
 };
 
-/* 
+/*
   Util function for prepping data to listOtherItems prop of ReadOnlySection
   Using translation config instead of raw data allows us to ensure a predetermined order of render
 */
