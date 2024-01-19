@@ -31,23 +31,6 @@ func (r *discussionReplyResolver) Content(ctx context.Context, obj *models.Discu
 	return resolvers.TaggedContentGet(logger, r.store, string(obj.Content.RawContent), "discussion_reply", "content", obj.ID)
 }
 
-// ExistingModel is the resolver for the existingModel field.
-func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
-	if obj.ExistingModelID == nil { //Don't do a DB call if nil
-		return nil, nil
-	}
-
-	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
-}
-
-// CurrentModelPlan is the resolver for the currentModelPlan field.
-func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error) {
-	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
-		return nil, nil
-	}
-	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
-}
-
 // Model is the resolver for the model field.
 func (r *existingModelLinkResolver) Model(ctx context.Context, obj *models.ExistingModelLink) (models.LinkedExistingModel, error) {
 	return resolvers.ExistingModelLinkGetModel(ctx, obj)
@@ -457,10 +440,10 @@ func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context,
 }
 
 // UpdateExistingModelLinks is the resolver for the updateExistingModelLinks field.
-func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
+func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	return resolvers.ExistingModelLinksUpdate(logger, r.store, principal, modelPlanID, existingModelIDs, currentModelPlanIDs)
+	return resolvers.ExistingModelLinksUpdate(logger, r.store, principal, modelPlanID, fieldName, existingModelIDs, currentModelPlanIDs)
 }
 
 // ShareModelPlan is the resolver for the shareModelPlan field.
@@ -647,8 +630,7 @@ func (r *planGeneralCharacteristicsResolver) ExistingModelPlan(ctx context.Conte
 
 // ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
 func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*models.ExistingModelLinks, error) {
-	return resolvers.ExistingModelLinksGetByModelPlanIDLOADER(ctx, obj.ID)
-	//TODO: Refactor this to use the question field
+	return resolvers.ExistingModelLinksGetByModelPlanIDLOADER(ctx, obj.ID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich)
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
@@ -1159,3 +1141,23 @@ type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type tagResolver struct{ *Resolver }
 type taggedContentResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
+	if obj.ExistingModelID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
+}
+func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error) {
+	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
+}

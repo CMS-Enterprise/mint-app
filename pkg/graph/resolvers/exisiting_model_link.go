@@ -15,11 +15,12 @@ import (
 )
 
 // ExistingModelLinkGetByModelPlanIDLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
-func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.ExistingModelLink, error) {
+func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) ([]*models.ExistingModelLink, error) {
 	allLoaders := loaders.Loaders(ctx)
 	linkLoader := allLoaders.ExistingModelLinkLoader
 	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID
+	key.Args["field_name"] = fieldName
 
 	thunk := linkLoader.Loader.Load(ctx, key)
 	result, err := thunk()
@@ -32,8 +33,8 @@ func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uu
 }
 
 // ExistingModelLinksGetByModelPlanIDLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
-func ExistingModelLinksGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.ExistingModelLinks, error) {
-	linkCollection, err := ExistingModelLinkGetByModelPlanIDLOADER(ctx, modelPlanID)
+func ExistingModelLinksGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) (*models.ExistingModelLinks, error) {
+	linkCollection, err := ExistingModelLinkGetByModelPlanIDLOADER(ctx, modelPlanID, fieldName)
 
 	if err != nil {
 		return nil, err
@@ -45,18 +46,21 @@ func ExistingModelLinksGetByModelPlanIDLOADER(ctx context.Context, modelPlanID u
 }
 
 // ExistingModelLinksUpdate creates or deletes existing model links based on the list provided.
-func ExistingModelLinksUpdate(logger *zap.Logger, store *storage.Store, principal authentication.Principal, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
+func ExistingModelLinksUpdate(logger *zap.Logger, store *storage.Store, principal authentication.Principal, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error) {
 	link := models.NewExistingModelLink(principal.Account().ID, modelPlanID, nil, nil) // this is for access check
 	err := BaseStructPreCreate(logger, link, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
-	retLink, err := store.ExistingModelLinksUpdate(logger, principal.Account().ID, modelPlanID, existingModelIDs, currentModelPlanIDs)
+	retLink, err := store.ExistingModelLinksUpdate(logger, principal.Account().ID, modelPlanID, fieldName, existingModelIDs, currentModelPlanIDs)
 	if err != nil {
 		return nil, err
 	}
-	return retLink, err
+	links := models.ExistingModelLinks{
+		Links: retLink,
+	}
+	return &links, err
 
 }
 

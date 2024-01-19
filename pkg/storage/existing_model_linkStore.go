@@ -18,18 +18,18 @@ var existingModelLinkMergeSQL string
 //go:embed SQL/existing_model_link/get_by_id.sql
 var existingModelLinkGetByIDSQL string
 
-//go:embed SQL/existing_model_link/get_by_model_plan_id_LOADER.sql
-var existingModelLinkGetByModelPlanIDLoaderSQL string
+//go:embed SQL/existing_model_link/get_by_model_plan_id_and_field_name_LOADER.sql
+var existingModelLinkGetByModelPlanIDAndFieldNameLoaderSQL string
 
-// ExistingModelLinkGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(
+// ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(
 	logger *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.ExistingModelLink, error) {
 
 	var linkSlice []*models.ExistingModelLink
 
-	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDAndFieldNameLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -53,6 +53,7 @@ func (s *Store) ExistingModelLinksUpdate(
 	logger *zap.Logger,
 	userID uuid.UUID,
 	modelPlanID uuid.UUID,
+	fieldName models.ExisitingModelLinkFieldType,
 	existingModelIDs []int,
 	currentModelPlanIDs []uuid.UUID,
 ) ([]*models.ExistingModelLink, error) {
@@ -69,6 +70,7 @@ func (s *Store) ExistingModelLinksUpdate(
 	existingModelIDsArray := convertIntToPQStringArray(existingModelIDs)
 	arg := map[string]interface{}{
 		"model_plan_id":          modelPlanID,
+		"field_name":             fieldName, //TODO: implement in SQL
 		"current_model_plan_ids": currentModelPlanIDsArray,
 		"existing_model_ids":     existingModelIDsArray,
 		"created_by":             userID,

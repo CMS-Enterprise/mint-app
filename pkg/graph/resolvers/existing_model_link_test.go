@@ -21,16 +21,16 @@ func (suite *ResolverSuite) TestExistingModelLinksUpdate() {
 	})
 
 	/* LINK ALL EXISTING MODELS AND ASSERT LENGTH MATCHES */
-	links, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan.ID, ids, nil)
+	links, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan.ID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, ids, nil)
 	suite.NoError(err)
 	suite.Len(links, len(ids))
 
 	/* Link the model plan, make sure other links were deleted, and that there is only the one link*/
-	links2, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan.ID, nil, []uuid.UUID{modelToLink.ID})
+	links2, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan.ID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, nil, []uuid.UUID{modelToLink.ID})
 	suite.NoError(err)
 	suite.Len(links2, 1)
-	suite.Equal(links2[0].ModelPlanID, plan.ID)
-	suite.Equal(links2[0].CurrentModelPlanID, &modelToLink.ID)
+	suite.Equal(links2.Links[0].ModelPlanID, plan.ID)
+	suite.Equal(links2.Links[0].CurrentModelPlanID, &modelToLink.ID)
 
 }
 
@@ -38,10 +38,10 @@ func (suite *ResolverSuite) ExistingModelLinkGetByID() {
 	plan1 := suite.createModelPlan("Plan For Link 1")
 	existingModels, _ := ExistingModelCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store)
 
-	links, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan1.ID, []int{existingModels[0].ID}, nil)
+	links, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan1.ID, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{existingModels[0].ID}, nil)
 	suite.NoError(err)
 	suite.Len(links, 1)
-	link1 := links[0]
+	link1 := links.Links[0]
 	suite.NotNil(link1)
 
 	retLink, err := ExistingModelLinkGetByID(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, link1.ID)
@@ -58,26 +58,28 @@ func (suite *ResolverSuite) ExistingModelLinkGetByID() {
 func (suite *ResolverSuite) TestExistingModelLinkDataLoader() {
 	plan1 := suite.createModelPlan("Plan For Link 1")
 	plan2 := suite.createModelPlan("Plan For Link 2")
-	_, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan1.ID, nil, []uuid.UUID{plan2.ID, plan1.ID})
+
+	genCharWhichField := models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich
+	_, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan1.ID, genCharWhichField, nil, []uuid.UUID{plan2.ID, plan1.ID})
 	suite.NoError(err)
 
-	_, err2 := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan2.ID, nil, []uuid.UUID{plan2.ID, plan1.ID})
+	_, err2 := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan2.ID, genCharWhichField, nil, []uuid.UUID{plan2.ID, plan1.ID})
 	suite.NoError(err2)
 
 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 	g.Go(func() error {
-		return verifyExistingModelLinkLoader(ctx, plan1.ID)
+		return verifyExistingModelLinkLoader(ctx, plan1.ID, genCharWhichField)
 	})
 	g.Go(func() error {
-		return verifyExistingModelLinkLoader(ctx, plan2.ID)
+		return verifyExistingModelLinkLoader(ctx, plan2.ID, genCharWhichField)
 	})
 	err3 := g.Wait()
 	suite.NoError(err3)
 
 }
-func verifyExistingModelLinkLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+func verifyExistingModelLinkLoader(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) error {
 
-	links, err := ExistingModelLinkGetByModelPlanIDLOADER(ctx, modelPlanID)
+	links, err := ExistingModelLinkGetByModelPlanIDLOADER(ctx, modelPlanID, fieldName)
 	if err != nil {
 		return err
 	}

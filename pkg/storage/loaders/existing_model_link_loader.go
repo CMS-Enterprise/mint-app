@@ -25,7 +25,8 @@ func (loaders *DataLoaders) GetExistingModelLinkByModelPlanID(ctx context.Contex
 		logger.Error("issue converting keys to JSON for data loader in Existing Model Link", zap.Error(*err))
 	}
 
-	links, _ := dr.Store.ExistingModelLinkGetByModelPlanIDLOADER(logger, marshaledParams)
+	// TODO: update this to get the link by id and field, not just by modelPlanID
+	links, _ := dr.Store.ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(logger, marshaledParams)
 	linksByID := map[string][]*models.ExistingModelLink{}
 	for _, link := range links {
 		slice, ok := linksByID[string(link.ModelPlanID.String())]

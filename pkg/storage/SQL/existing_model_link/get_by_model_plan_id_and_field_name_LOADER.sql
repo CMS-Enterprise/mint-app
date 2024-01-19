@@ -1,9 +1,11 @@
 WITH QUERIED_IDS AS (
     /*Translate the input to a table */
-    SELECT model_plan_id
+    SELECT 
+        model_plan_id,
+        field_name
     FROM
         JSON_TO_RECORDSET(:paramTableJSON)
-        AS x("model_plan_id" UUID) --noqa
+        AS x("model_plan_id" UUID, "field_name" EXISITING_MODEL_LINK_FIELD_TYPE) --noqa
 ) --TODO: add the other field to verify the field name as well, and return per field
 
 SELECT
@@ -18,4 +20,4 @@ SELECT
     link.modified_dts
 
 FROM QUERIED_IDS AS qIDs
-INNER JOIN existing_model_link AS link ON link.model_plan_id = qIDs.model_plan_id;
+INNER JOIN existing_model_link AS link ON link.model_plan_id = qIDs.model_plan_id AND link.field_name = qIDS.field_name;

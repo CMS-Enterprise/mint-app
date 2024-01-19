@@ -11,11 +11,13 @@ export default gql(/* GraphQL */ `
       existingModelIDs: $existingModelIDs
       currentModelPlanIDs: $currentModelPlanIDs
     ) {
-      id
-      existingModelID
-      existingModel {
+      links {
         id
-        modelName
+        existingModelID
+        existingModel {
+          id
+          modelName
+        }
       }
     }
   }
