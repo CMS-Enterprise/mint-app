@@ -201,7 +201,9 @@ ALTER TABLE plan_beneficiaries
 
 -- Update the values for already existing rows
 UPDATE plan_beneficiaries
-SET beneficiary_selection_frequency = ARRAY[beneficiary_selection_frequency_old]
+SET beneficiary_selection_frequency = ARRAY[beneficiary_selection_frequency_old],
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = now()
 WHERE beneficiary_selection_frequency_old IS NOT NULL;
 
 -- Delete the old data
@@ -222,7 +224,9 @@ ALTER TABLE plan_participants_and_providers
 
 -- Update the values for already existing rows
 UPDATE plan_participants_and_providers
-SET provider_addition_frequency = ARRAY[provider_addition_frequency_old]
+SET provider_addition_frequency = ARRAY[provider_addition_frequency_old],
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = now()
 WHERE provider_addition_frequency_old IS NOT NULL;
 
 -- Delete the old data
