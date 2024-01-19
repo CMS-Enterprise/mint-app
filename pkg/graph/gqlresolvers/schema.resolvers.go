@@ -6,7 +6,6 @@ package gqlresolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -750,7 +749,8 @@ func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Con
 
 // QualityReportingFrequency is the resolver for the qualityReportingFrequency field.
 func (r *planOpsEvalAndLearningResolver) QualityReportingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]models.FrequencyType, error) {
-	panic(fmt.Errorf("not implemented: QualityReportingFrequency - qualityReportingFrequency"))
+	dataFrequencyTypes := models.ConvertEnums[models.FrequencyType](obj.QualityReportingFrequency)
+	return dataFrequencyTypes, nil
 }
 
 // ModelLearningSystems is the resolver for the modelLearningSystems field.
