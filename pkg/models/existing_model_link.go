@@ -6,12 +6,21 @@ import (
 
 // ExistingModelLink represents a link between another current model, or an existing model from the existing model table.
 type ExistingModelLink struct {
-	ExistingModelID    *int       `json:"existingModelID" db:"existing_model_id"`
-	CurrentModelPlanID *uuid.UUID `json:"currentModelPlanID" db:"current_model_plan_id"`
+	ExistingModelID    *int                        `json:"existingModelID" db:"existing_model_id"`
+	CurrentModelPlanID *uuid.UUID                  `json:"currentModelPlanID" db:"current_model_plan_id"`
+	FieldName          ExisitingModelLinkFieldType `json:"fieldName" db:"field_name"`
 
 	baseStruct
 	modelPlanRelation
 }
+
+// ExisitingModelLinkFieldType is used to distinguish what part of the model plan this link refers to.
+type ExisitingModelLinkFieldType string
+
+const (
+	// EMLFTGeneralCharacteristicsResemblesExistingModelWhich is used to denote the link is in reference to the ResemblesExistingModelWhich question on Plan_General_Characteristics
+	EMLFTGeneralCharacteristicsResemblesExistingModelWhich ExisitingModelLinkFieldType = "GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH"
+)
 
 // LinkedExistingModel is an interface which is used to return a Union type for graphql.
 // Specifically, it allows us to return either a model plan or an existing model.

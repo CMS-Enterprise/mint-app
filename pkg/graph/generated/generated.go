@@ -164,6 +164,7 @@ type ComplexityRoot struct {
 		CurrentModelPlanID    func(childComplexity int) int
 		ExistingModel         func(childComplexity int) int
 		ExistingModelID       func(childComplexity int) int
+		FieldName             func(childComplexity int) int
 		ID                    func(childComplexity int) int
 		Model                 func(childComplexity int) int
 		ModelPlanID           func(childComplexity int) int
@@ -1702,6 +1703,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ExistingModelLink.ExistingModelID(childComplexity), true
+
+	case "ExistingModelLink.fieldName":
+		if e.complexity.ExistingModelLink.FieldName == nil {
+			break
+		}
+
+		return e.complexity.ExistingModelLink.FieldName(childComplexity), true
 
 	case "ExistingModelLink.id":
 		if e.complexity.ExistingModelLink.ID == nil {
@@ -7323,6 +7331,7 @@ type ExistingModelLink {
   existingModelID: Int
   existingModel: ExistingModel
   currentModelPlanID: UUID
+  fieldName: ExisitingModelLinkFieldType!
   currentModelPlan: ModelPlan
   model: LinkedExistingModel!
 
@@ -8480,6 +8489,10 @@ input ReportAProblemInput {
   whatWentWrong: String
   severity: ReportAProblemSeverity
   severityOther: String
+}
+
+enum ExisitingModelLinkFieldType {
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH
 }
 
 enum ReportAProblemSection {
@@ -13942,6 +13955,50 @@ func (ec *executionContext) fieldContext_ExistingModelLink_currentModelPlanID(ct
 	return fc, nil
 }
 
+func (ec *executionContext) _ExistingModelLink_fieldName(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModelLink) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModelLink_fieldName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FieldName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ExisitingModelLinkFieldType)
+	fc.Result = res
+	return ec.marshalNExisitingModelLinkFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExisitingModelLinkFieldType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModelLink_fieldName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModelLink",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ExisitingModelLinkFieldType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ExistingModelLink_currentModelPlan(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModelLink) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ExistingModelLink_currentModelPlan(ctx, field)
 	if err != nil {
@@ -14429,6 +14486,8 @@ func (ec *executionContext) fieldContext_ExistingModelLinks_links(ctx context.Co
 				return ec.fieldContext_ExistingModelLink_existingModel(ctx, field)
 			case "currentModelPlanID":
 				return ec.fieldContext_ExistingModelLink_currentModelPlanID(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_ExistingModelLink_fieldName(ctx, field)
 			case "currentModelPlan":
 				return ec.fieldContext_ExistingModelLink_currentModelPlan(ctx, field)
 			case "model":
@@ -21237,6 +21296,8 @@ func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx c
 				return ec.fieldContext_ExistingModelLink_existingModel(ctx, field)
 			case "currentModelPlanID":
 				return ec.fieldContext_ExistingModelLink_currentModelPlanID(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_ExistingModelLink_fieldName(ctx, field)
 			case "currentModelPlan":
 				return ec.fieldContext_ExistingModelLink_currentModelPlan(ctx, field)
 			case "model":
@@ -48843,6 +48904,8 @@ func (ec *executionContext) fieldContext_Query_existingModelLink(ctx context.Con
 				return ec.fieldContext_ExistingModelLink_existingModel(ctx, field)
 			case "currentModelPlanID":
 				return ec.fieldContext_ExistingModelLink_currentModelPlanID(ctx, field)
+			case "fieldName":
+				return ec.fieldContext_ExistingModelLink_fieldName(ctx, field)
 			case "currentModelPlan":
 				return ec.fieldContext_ExistingModelLink_currentModelPlan(ctx, field)
 			case "model":
@@ -54572,6 +54635,11 @@ func (ec *executionContext) _ExistingModelLink(ctx context.Context, sel ast.Sele
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "currentModelPlanID":
 			out.Values[i] = ec._ExistingModelLink_currentModelPlanID(ctx, field, obj)
+		case "fieldName":
+			out.Values[i] = ec._ExistingModelLink_fieldName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "currentModelPlan":
 			field := field
 
@@ -64380,6 +64448,22 @@ func (ec *executionContext) marshalNEvaluationApproachType2ᚕgithubᚗcomᚋcms
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNExisitingModelLinkFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExisitingModelLinkFieldType(ctx context.Context, v interface{}) (models.ExisitingModelLinkFieldType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ExisitingModelLinkFieldType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNExisitingModelLinkFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExisitingModelLinkFieldType(ctx context.Context, sel ast.SelectionSet, v models.ExisitingModelLinkFieldType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) marshalNExistingModel2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ExistingModel) graphql.Marshaler {

@@ -16,6 +16,7 @@ existing_model_links AS (
     SELECT * FROM existing_model_link
     WHERE model_plan_id = :model_plan_id
 ),
+--TODO: Update this to join on not only the model_plan_id, but also the field_name
 
 /* Find the links that already exist */
 matchedLinks AS ( 
@@ -63,6 +64,7 @@ id,
 model_plan_id,
 existing_model_id,
 current_model_plan_id,
+field_name,
 created_by,
 created_dts,
 modified_by,
@@ -79,6 +81,7 @@ deletedRows AS (
     model_plan_id,
     existing_model_id,
     current_model_plan_id,
+    field_name,
     created_by,
     created_dts,
     modified_by,
@@ -91,6 +94,7 @@ SELECT
     eml.model_plan_id,
     eml.existing_model_id,
     eml.current_model_plan_id,
+    eml.field_name,
     eml.created_by,
     eml.created_dts,
     eml.modified_by,
@@ -105,6 +109,7 @@ SELECT
     inserted.model_plan_id,
     inserted.existing_model_id,
     inserted.current_model_plan_id,
+    inserted.field_name
     inserted.created_by,
     inserted.created_dts,
     inserted.modified_by,

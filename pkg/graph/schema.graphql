@@ -223,6 +223,7 @@ type ExistingModelLink {
   existingModelID: Int
   existingModel: ExistingModel
   currentModelPlanID: UUID
+  fieldName: ExisitingModelLinkFieldType!
   currentModelPlan: ModelPlan
   model: LinkedExistingModel!
 
@@ -1380,6 +1381,10 @@ input ReportAProblemInput {
   whatWentWrong: String
   severity: ReportAProblemSeverity
   severityOther: String
+}
+
+enum ExisitingModelLinkFieldType {
+  GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH
 }
 
 enum ReportAProblemSection {
