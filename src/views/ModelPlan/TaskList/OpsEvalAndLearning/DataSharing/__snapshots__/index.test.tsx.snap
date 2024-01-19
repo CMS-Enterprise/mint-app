@@ -302,30 +302,130 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
           />
         </div>
         <div
-          class="margin-top-4 margin-bottom-8"
+          class="mint-checkbox usa-checkbox"
         >
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
-            type="button"
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-semiannually"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-semiannually"
           >
-            <svg
-              aria-hidden="true"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-              />
-            </svg>
-            Add an additional note
-          </button>
+            Semi-annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
         </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-quarterly"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-quarterly"
+          >
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-monthly"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-monthly"
+          >
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-continually"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-continually"
+          >
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="ops-eval-and-learning-data-sharing-frequency-other"
+            name="dataSharingFrequency"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="ops-eval-and-learning-data-sharing-frequency-other"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+          />
+        </div>
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
       </div>
       <div
         class="usa-form-group"

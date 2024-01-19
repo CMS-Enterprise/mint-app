@@ -60,7 +60,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="mint-tag bg-base text-white margin-right-0"
                       data-testid="tag"
                     >
-                      Draft model plan
+                      Draft Model Plan
                     </span>
                   </div>
                   <div
@@ -6474,7 +6474,7 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                       class="mint-tag bg-base text-white margin-right-0"
                       data-testid="tag"
                     >
-                      Draft model plan
+                      Draft Model Plan
                     </span>
                   </div>
                   <div

@@ -76,6 +76,7 @@ SELECT
     develop_new_quality_measures,
     develop_new_quality_measures_note,
     quality_performance_impacts_payment,
+    quality_performance_impacts_payment_other,
     quality_performance_impacts_payment_note,
     data_sharing_starts,
     data_sharing_starts_other,

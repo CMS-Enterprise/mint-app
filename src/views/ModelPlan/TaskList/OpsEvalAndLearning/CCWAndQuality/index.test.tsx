@@ -6,7 +6,8 @@ import {
   CcmInvolvmentType,
   DataForMonitoringType,
   GetCcwAndQualityDocument,
-  GetCcwAndQualityQuery
+  GetCcwAndQualityQuery,
+  YesNoOtherType
 } from 'gql/gen/graphql';
 
 import CCWAndQuality from '.';
@@ -30,7 +31,8 @@ const ccwAndQualityMockData: GetCCWAndQualityType = {
   useCcwForFileDistribiutionToParticipantsNote: '',
   developNewQualityMeasures: null,
   developNewQualityMeasuresNote: '',
-  qualityPerformanceImpactsPayment: true,
+  qualityPerformanceImpactsPayment: YesNoOtherType.YES,
+  qualityPerformanceImpactsPaymentOther: 't',
   qualityPerformanceImpactsPaymentNote: ''
 };
 
@@ -83,7 +85,7 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-performance-impact-true')
+        screen.getByTestId('ops-eval-and-learning-performance-impact-YES')
       ).toBeChecked();
     });
   });
@@ -105,7 +107,7 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-performance-impact-true')
+        screen.getByTestId('ops-eval-and-learning-performance-impact-YES')
       ).toBeChecked();
     });
     expect(asFragment()).toMatchSnapshot();

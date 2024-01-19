@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, DataStartsType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, ParticipantCommunicationType, ParticipantRiskType, GainshareArrangementEligibility, ParticipantsIDType, ConfidenceType, RecruitmentType, ParticipantSelectionType, ParticipantsType, FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, BeneficiariesType, SelectionMethodType, TriStateAnswer, YesNoType, CcmInvolvmentType, YesNoOtherType, DataStartsType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, FundingSource, PayRecipient, NonClaimsBasedPayType, TeamRole, DiscussionUserRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllModelData
@@ -237,7 +237,8 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   useCcwForFileDistribiutionToParticipantsNote: string | null;
   developNewQualityMeasures: boolean | null;
   developNewQualityMeasuresNote: string | null;
-  qualityPerformanceImpactsPayment: boolean | null;
+  qualityPerformanceImpactsPayment: YesNoOtherType | null;
+  qualityPerformanceImpactsPaymentOther: string | null;
   qualityPerformanceImpactsPaymentNote: string | null;
   dataSharingStarts: DataStartsType | null;
   dataSharingStartsOther: string | null;

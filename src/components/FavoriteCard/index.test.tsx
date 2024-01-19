@@ -62,6 +62,6 @@ describe('FavoriteCard', () => {
 
     expect(getByText('Plan For General Characteristics')).toBeInTheDocument();
     expect(getByText('The goal')).toBeInTheDocument();
-    expect(getByText('Draft model plan')).toBeInTheDocument();
+    expect(getByText('Draft Model Plan')).toBeInTheDocument();
   });
 });
